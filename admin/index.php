@@ -24,7 +24,7 @@
           </div>
             <div class="row">
                 <div class="col-xs-4">
-                    <button type="submit" class="btnlogin"><a href="home.php"></a><i class="fa fa-sign-in"></i> Sign In</a></button>
+                    <button type="submit" class="btnlogin" name="login"><i class="fa fa-sign-in"></i> Sign In</button>
                 </div>
             </div>
         </form>
