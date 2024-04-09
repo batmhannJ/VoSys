@@ -1,226 +1,230 @@
 <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-        <link rel="shortcut icon" href="assets/img/olshco.png" type="image/png">
+    <link rel="shortcut icon" href="assets/img/olshco.png" type="image/png">
 
-        <!--=============== REMIXICONS ===============-->
-        <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-        
-        <!--=============== SWIPER CSS ===============-->
-        <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <!--=============== REMIXICONS ===============-->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    
+    <!--=============== SWIPER CSS ===============-->
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
 
-        <!--=============== CSS ===============-->
-        <link rel="stylesheet" href="assets/css/styles.css">
+    <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="assets/css/styles.css">
 
-        <title>OLSHCO College Online Voting System</title>
-    </head>
-    <body>
-        <header class="header" id="header">
-            <nav class="nav container">
-                 <a href="#" class="nav__logo">
-                    <img src="assets/img/logo.png" alt="" class="nav__logo-img"> 
-                    OLSHCO <br>College Online Voting System
-                </a>
+    <title>OLSHCO College Online Voting System</title>
+</head>
+<body>
+    <header class="header" id="header">
+        <nav class="nav container">
+             <a href="#" class="nav__logo">
+                <img src="assets/img/logo.png" alt="" class="nav__logo-img"> 
+                OLSHCO VoSys
+            </a>
+            
+            <!-- Menu button for responsive design -->
+            <div class="nav__toggle" id="nav-toggle">
+                <i class="ri-function-line"></i>
+            </div>
+
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a href="#home" class="nav__link active-link">Home</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#about" class="nav__link">About</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#service" class="nav__link">Services</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#place" class="nav__link">Organizations</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#location" class="nav__link">Location</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#discover" class="nav__link">Countdown</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="index.php" class="nav__link">Login</a>
+                    </li>
+                </ul>
                 
-
-                <div class="nav__menu" id="nav-menu">
-                    <ul class="nav__list">
-                        <li class="nav__item">
-                            <a href="#home" class="nav__link active-link">Home</a>
-                        </li>
-                        <li class="nav__item">
-                            <a href="#about" class="nav__link">About</a>
-                        </li>
-                        <li class="nav__item">
-                            <a href="#service" class="nav__link">Services</a>
-                        </li>
-                        <li class="nav__item">
-                            <a href="#place" class="nav__link">Organizations</a>
-                        </li>
-                        <li class="nav__item">
-                            <a href="#location" class="nav__link">Location</a>
-                        </li>
-                        <li class="nav__item">
-                            <a href="#discover" class="nav__link">Countdown</a>
-                        </li>
-                        <li class="nav__item">
-                            <a href="voters_login.php" class="nav__link">Login</a>
-                        </li>
-                    </ul>
-
-                    <div class="nav__dark">
-    <!-- Theme change button -->
-    <span class="change-theme-name">Dark mode</span>
-    <i class="ri-moon-line change-theme" id="theme-button"></i>
-  </div>
-
-  <i class="ri-close-line nav__close" id="nav-close"></i>
-
-  <div class="nav__toggle" id="nav-toggle">
-    <i class="ri-function-line"></i>
-  </div>
-            </nav>
-        </header>
+                <i class="ri-close-line nav__close" id="nav-close"></i>
+            </div>
+        </nav>
+    </header>
 
         <main class="main">
             <!--==================== HOME ====================-->
             <section class="home" id="home">
-                <img src="assets/img/home.jpg" alt="" class="home__img">
+    <img src="assets/img/home.jpg" alt="" class="home__img">
 
-                <div class="home__container container grid">
-                    <div class="home__data">
-                        <h1 class="home__data-title">OLSHCO <br> College <b>Online Voting <br> System</b></h1>
-                        <a href="#about" class="button">Explore</a>
+    <div class="home__container container grid">
+        <div class="home__data">
+            <h1 class="home__data-title">OLSHCO <br> College <b>Online Voting <br> System</b></h1>
+            <a href="#about" class="button">Explore</a>
+        </div>
 
-                    </div>
+        <!--<div class="home__social">
+            <a href="https://www.facebook.com/" target="_blank" class="home__social-link">
+                <i class="ri-facebook-box-fill"></i>
+            </a>
+            <a href="https://www.instagram.com/" target="_blank" class="home__social-link">
+                <i class="ri-instagram-fill"></i>
+            </a>
+            <a href="https://twitter.com/" target="_blank" class="home__social-link">
+                <i class="ri-twitter-fill"></i>
+            </a>
+        </div>-->
+    </div>
+</section>
 
-                    <!--<div class="home__social">
-                        <a href="https://www.facebook.com/" target="_blank" class="home__social-link">
-                            <i class="ri-facebook-box-fill"></i>
-                        </a>
-                        <a href="https://www.instagram.com/" target="_blank" class="home__social-link">
-                            <i class="ri-instagram-fill"></i>
-                        </a>
-                        <a href="https://twitter.com/" target="_blank" class="home__social-link">
-                            <i class="ri-twitter-fill"></i>
-                        </a>
-                    </div>-->
 
-                
-                </div>
-            </section>
+            <section class="about-section" id="about">
+    <div class="about__container container grid">
+        <div class="about__data">
+            <h2 class="section__title about__title">VISION <br></h2>
+            <p class="about__description">At the College Online Voting System, our vision is to be a trailblazer in the evolution of democratic processes within academic organizations. We envision a future where every college and university operates with complete transparency, inclusivity, and security, fostering an environment of active participation, trust, and progress. 
+            </p>
+            <h2 class="section__title about__title">MISSION <br></h2>
+            <p class="about__description">
+                Our mission is to empower academic organizations to redefine the way they conduct elections and surveys, providing a cutting-edge, user-friendly, and secure online voting platform that not only meets their unique needs but also exceeds their expectations. 
+            </p>
+        </div>
 
-            <!--==================== ABOUT ====================-->
-            <section class="about section" id="about">
-                <div class="about__container container grid">
-                    <div class="about__data">
-                        <h2 class="section__title about__title">VISION <br></h2>
-                        <p class="about__description">At the College Online Voting System, our vision is to be a trailblazer in the evolution of democratic processes within academic organizations. We envision a future where every college and university operates with complete transparency, inclusivity, and security, fostering an environment of active participation, trust, and progress. 
-                        </p>
-                        <h2 class="section__title about__title">MISSION <br></h2>
-                        <p class="about__description">
-                            Our mission is to empower academic organizations to redefine the way they conduct elections and surveys, providing a cutting-edge, user-friendly, and secure online voting platform that not only meets their unique needs but also exceeds their expectations. 
-                        </p>
-                    </div>
+        <div class="about__img">
+            <div class="about__img-overlay">
+                <img src="assets/img/logo.png" alt="">
+            </div>
+        </div>
+    </div>
+</section>
 
-                    <div class="about__img">
-                        <div class="about__img-overlay">
-                            <img src="assets/img/logo.png" alt="" >
-                        </div>
-                    </div>
-                </div>
-            </section>
 
  <section class="service" id="service">
-      <div class="row" id="service">
-        <h2 class="section-heading"><br><br><br>OUR SERVICES<br><br></h2>
-      </div>
-      <div class="row">
+    <div class="row" id="service">
+        <h2 class="services-heading"><br><br><br>OUR SERVICES<br><br></h2>
+    </div>
+    <div class="row">
         <div class="column">
-          <div class="card">
-            <div class="icon-wrapper">
-              <i class="fas fa-hammer"></i>
+            <div class="card">
+                <div class="icon-wrapper">
+                    <i class="fas fa-hammer"></i>
+                </div>
+                <br><h3>Secure and Reliable Elections</h3>
+                <p>
+                    <br>Ensuring the security and integrity of the voting process is of utmost importance. This service includes robust security measures, such as secure authentication, data encryption, and safeguards against hacking and fraud, to protect the voting process from unauthorized access and manipulation.
+                </p>
             </div>
-            <br><h3>Secure and Reliable Elections</h3>
-            <p>
-              <br>Ensuring the security and integrity of the voting process is of utmost importance. This service includes robust security measures, such as secure authentication, data encryption, and safeguards against hacking and fraud, to protect the voting process from unauthorized access and manipulation.
-            </p>
-          </div>
         </div>
         <div class="column">
-          <div class="card">
-            <div class="icon-wrapper">
-              <i class="fas fa-brush"></i>
+            <div class="card">
+                <div class="icon-wrapper">
+                    <i class="fas fa-brush"></i>
+                </div>
+                <br><h3>Accessible Voting</h3>
+                <p>
+                    <br>Making the democratic process accessible to all members of the college community is crucial. This service ensures a user-friendly platform that works on a variety of devices and operating systems, allowing all eligible voters, including those with disabilities, to easily and inclusively participate in elections and surveys.
+                </p>
             </div>
-            <br><h3>Accessible Voting</h3>
-            <p>
-              <br>Making the democratic process accessible to all members of the college community is crucial. This service ensures a user-friendly platform that works on a variety of devices and operating systems, allowing all eligible voters, including those with disabilities, to easily and inclusively participate in elections and surveys.
-            </p>
-          </div>
         </div>
         <div class="column">
-          <div class="card">
-            <div class="icon-wrapper">
-              <i class="fas fa-wrench"></i>
+            <div class="card">
+                <div class="icon-wrapper">
+                    <i class="fas fa-wrench"></i>
+                </div>
+                <br><h3>Transparency and Accountability</h3>
+                <p>
+                    <br>Providing transparency in the election process is essential. This service offers real-time monitoring and reporting tools, allowing administrators and voters to track the progress of elections, view results, and promote accountability and trust in the system. Transparency enhances the credibility of the voting system.
+                </p>
             </div>
-            <br><h3>Transparency and Accountability</h3>
-            <p>
-              <br>Providing transparency in the election process is essential. This service offers real-time monitoring and reporting tools, allowing administrators and voters to track the progress of elections, view results, and promote accountability and trust in the system. Transparency enhances the credibility of the voting system.
-            </p>
-          </div>
         </div>
-      </div>
-    </section>
+    </div>
+</section>
 
 
-            <!--==================== PLACES ====================-->
+
             <section class="place section" id="place">
-        <h2 class="section__title">COLLEGE ORGANIZATIONS</h2>
-        <div class="place__container container grid">
-            <!-- Organization Card 1 -->
-            <div class="place__card" onclick="showDescription('CSC')">
-                <img src="assets/img/csc.jpg" alt="" class="place__img">
-                <div class="place__content">
-                    <div class="place__data">
-                        <h3 class="place__title">CSC</h3>
-                    </div>
+    <h2 class="organization__title">COLLEGE ORGANIZATIONS</h2>
+    <div class="place__container container grid">
+        <!-- Organization Card 1 -->
+        <div class="place__card" onclick="showDescription('CSC')">
+            <img src="assets/img/csc.jpg" alt="" class="place__img">
+            <div class="place__content">
+                <div class="place__data">
+                    <h3 class="place__title">CSC</h3>
                 </div>
             </div>
-
-
-
-                    <!--==================== PLACES CARD 2 ====================-->
-                     <div class="place__card" onclick="showDescription('JPCS')">
-        <img src="assets/img/jpcs.jpg" alt="" class="place__img">
-        <div class="place__content">
-          <div class="place__data">
-            <h3 class="place__title">JPCS</h3>
-          </div>
         </div>
-      </div>
 
-                    <!--==================== PLACES CARD 3 ====================-->
-                    <div class="place__card" onclick="showDescription('CODE-TG')">
-        <img src="assets/img/codg.jpg" alt="" class="place__img">
-        <div class="place__content">
-          <div class="place__data">
-            <h3 class="place__title">CODE-TG</h3>
-          </div>
-        </div>
-      </div>
-                    <!--==================== PLACES CARD 4 ====================-->
-                    <div class="place__card" onclick="showDescription('YMF')">
-        <img src="assets/img/ymf.jpg" alt="" class="place__img">
-        <div class="place__content">
-          <div class="place__data">
-            <h3 class="place__title">YMF</h3>
-          </div>
-        </div>
-      </div>
-                    <!--==================== PLACES CARD 5 ====================-->
-                    <div class="place__card" onclick="showDescription('PASOA')">
-        <img src="assets/img/posoa.jpg" alt="" class="place__img">
-        <div class="place__content">
-          <div class="place__data">
-            <h3 class="place__title">PASOA</h3>
-          </div>
-        </div>
-      </div>
+        <!-- Repeat for other organization cards -->
 
-                     <!--==================== PLACES CARD 5 ====================-->
-                     <div class="place__card" onclick="showDescription('HMSO')">
-        <img src="assets/img/hmso.jpg" alt="" class="place__img">
-        <div class="place__content">
-          <div class="place__data">
-            <h3 class="place__title">HMSO</h3>
-          </div>
+        <!-- Organization Card 2 -->
+        <div class="place__card" onclick="showDescription('JPCS')">
+            <img src="assets/img/jpcs.jpg" alt="" class="place__img">
+            <div class="place__content">
+                <div class="place__data">
+                    <h3 class="place__title">JPCS</h3>
+                </div>
+            </div>
         </div>
-      </div>
-            </section>
+
+        <!-- Repeat for other organization cards -->
+
+        <!-- Organization Card 3 -->
+        <div class="place__card" onclick="showDescription('CODE-TG')">
+            <img src="assets/img/codg.jpg" alt="" class="place__img">
+            <div class="place__content">
+                <div class="place__data">
+                    <h3 class="place__title">CODE-TG</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Repeat for other organization cards -->
+
+        <!-- Organization Card 4 -->
+        <div class="place__card" onclick="showDescription('YMF')">
+            <img src="assets/img/ymf.jpg" alt="" class="place__img">
+            <div class="place__content">
+                <div class="place__data">
+                    <h3 class="place__title">YMF</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Repeat for other organization cards -->
+
+        <!-- Organization Card 5 -->
+        <div class="place__card" onclick="showDescription('PASOA')">
+            <img src="assets/img/posoa.jpg" alt="" class="place__img">
+            <div class="place__content">
+                <div class="place__data">
+                    <h3 class="place__title">PASOA</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Repeat for other organization cards -->
+
+        <!-- Organization Card 6 -->
+        <div class="place__card" onclick="showDescription('HMSO')">
+            <img src="assets/img/hmso.jpg" alt="" class="place__img">
+            <div class="place__content">
+                <div class="place__data">
+                    <h3 class="place__title">HMSO</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
     <div id="descriptionPopup" style="display: none;" onclick="hideDescription()">
     <div class="description-container">
@@ -385,7 +389,20 @@
 <!-- Include the countdown timer library (if applicable) -->
 <script src="path/to/countdown-library.js"></script>
 
+
+<script>
+        // JavaScript to toggle the visibility of the menu
+        $(document).ready(function() {
+            $('#nav-toggle').click(function() {
+                $('#nav-menu').toggleClass('show');
+            });
+            $('#nav-close').click(function() {
+                $('#nav-menu').removeClass('show');
+            });
+        });
+    </script>
 <!-- Include your countdown.js file -->
+
 <script>
     // Function to update the countdown timer
     function updateCountdown(endTime) {
@@ -969,6 +986,175 @@
     background-color: #eee;
 }
   }
+
+/* CSS for responsive menu */
+.nav__toggle {
+    display: none; /* Hide toggle button by default for larger screens */
+}
+
+@media screen and (max-width: 768px) {
+    .nav__menu {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: maroon; /* Change background color as needed */
+        color: white;
+        z-index: 1000;
+        padding-top: 80px; /* Adjust top padding to avoid overlapping with header */
+        transform: translateY(-100%);
+        transition: transform 0.3s ease-in-out;
+        width: 200px;
+    }
+
+    .nav__toggle {
+        display: block; /* Display toggle button for smaller screens */
+        cursor: pointer;
+        position: absolute;
+        top: 13px;
+        right: 20px;
+        z-index: 1500;
+    }
+
+    .nav__menu.show {
+        transform: translateY(0%);
+    }
+}
+    
+    .home__data-title{
+        font-size: 13px; /* Adjust font size */
+        margin-top: 100px; /* Add top margin for spacing */
+        margin-bottom: 10px; /* Add bottom margin for spacing */
+        margin-left: 70px;
+        font-size: 50px;
+    }
+
+    .button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: maroon; /* Change to your desired background color */
+    color: #fff; /* Text color */
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin-left: 75px;
+}
+
+.button:hover {
+    background-color: maroon; /* Change to your desired hover background color */
+}
+
+
+/* CSS for responsiveness  HOMEEEEEEEEEEEEEEEE*/ 
+@media only screen and (max-width: 768px) {
+    .home__container {
+        grid-template-columns: 1fr; /* Set single column layout for smaller screens */
+        gap: 10px; /* Adjust gap between elements */
+        text-align: center; /* Center align text */
+    }
+
+    .home__data {
+        margin-bottom: 20px; /* Add some bottom margin for better spacing */
+    }
+
+}
+
+/* CSS for responsiveness ABOUTTTTTTTTTTTTTTT*/
+@media only screen and (max-width: 375px) {
+    .about__container {
+        grid-template-columns: 3fr; /* Set single column layout for smaller screens */
+        gap: 50px; /* Adjust gap between elements */
+    }
+
+    .about__data {
+        margin-bottom: 20px; /* Add some bottom margin for better spacing */
+    }
+
+    .about__title {
+        margin-top: 40px;
+        margin-left: 100px;
+        margin-bottom: 10px; /* Add some bottom margin to the titles for better spacing */
+    }
+
+    .about__img {
+        text-align: center; /* Center align the image */
+    }
+    .about-section {
+        text-align: center; /* Center align the text */
+    font-size: 13px; /* Adjust font size */
+    margin-top: 10px; /* Add top margin for spacing */
+    margin-bottom: -10px; /* Add bottom margin for spacing */
+    
+    }
+}
+.about__img img {
+    max-width: 100%; /* Ensure the image doesn't exceed its container width */
+    height: auto; /* Maintain aspect ratio */
+}
+
+@media only screen and (max-width: 768px) {
+    .about__img img {
+        max-width: 30%; /* Adjust the maximum width for smaller screens */
+        margin-left: 170px;
+        margin-top: 20px;
+    }
+}
+
+/* CSS for responsiveness SERVICEEEEEEEES*/
+@media only screen and (max-width: 768px) {
+    .row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        margin-top: 5px;
+        width: 100%; /* Adjust width of cards for smaller screens */
+        margin-bottom: 20px; /* Add some bottom margin for better spacing */
+    }
+
+    .icon-wrapper {
+        font-size: 30px; /* Adjust font size of icons for smaller screens */
+    }
+
+    .service-heading {
+        font-size: 24px; /* Adjust font size of section heading for smaller screens */
+    }
+
+    .service-heading {
+    text-align: center; /* Center align the text */
+    font-size: 36px; /* Adjust font size */
+    margin-top: 5px; /* Add top margin for spacing */
+    margin-bottom: 40px; /* Add bottom margin for spacing */
+    }
+}
+
+    /* CSS for responsiveness */
+@media only screen and (max-width: 768px) {
+    .place__container.grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Make cards stack in a single column */
+        gap: 20px; /* Add gap between cards */
+    }
+
+    .place__card {
+        width: 100%; /* Ensure cards take up full width */
+    }
+
+    .place__img {
+        width: 100%; /* Ensure images take up full width of their containers */
+        height: auto; /* Maintain aspect ratio */
+    }
+    .organization__title {
+    font-size: 32px; /* Set the font size */
+    text-align: center; /* Center align the text */
+    margin-top: 1000px; /* Add top margin for spacing */
+    margin-bottom: 20px; /* Add bottom margin for spacing */
+        }
+}
+
+
 </style>
 
 </html>
