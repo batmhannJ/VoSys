@@ -48,7 +48,7 @@
                             <a href="#discover" class="nav__link">Countdown</a>
                         </li>
                         <li class="nav__item">
-                            <a href="index.php" class="nav__link">Login</a>
+                            <a href="voters_login.php" class="nav__link">Login</a>
                         </li>
                     </ul>
 

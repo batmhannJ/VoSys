@@ -37,7 +37,7 @@ if (isset($_POST['login'])) {
                 exit();
             } else {
                 // Redirect to a generic home page if the organization is not recognized
-                header('location: index.php');
+                header('location: voters_login.php');
                 exit();
             }
         } else {
@@ -49,6 +49,6 @@ if (isset($_POST['login'])) {
 }
 
 // Redirect to the main page in case of any other conditions
-header('location: index.php');
+header('location: voters_login.php');
 exit();
 ?>
