@@ -14,7 +14,7 @@
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">REPORTS</li>
-      <li class=""><a href="home.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+      <li class=""><a href="home_jpcs.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
       <li class=""><a href="votes.php"><span class="glyphicon glyphicon-lock"></span> <span>Votes Result</span></a></li>
       <li class="header">MANAGE</li>
       <!--<li class=""><a href="sub_admin.php"><i class="fa fa-user-plus"></i> <span>Sub Admins</span></a></li>-->
