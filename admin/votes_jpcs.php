@@ -84,7 +84,8 @@
                 <td>".$row['votfirst'].' '.$row['votlast']."</td>
             </tr>
         ";
-                    }
+                        $counter++;
+    }
                   ?>
                 </tbody>
               </table>
