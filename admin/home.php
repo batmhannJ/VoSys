@@ -148,7 +148,7 @@
             <div class="inner">
               <?php
                 $sql = "SELECT voters.id, voters.lastname
-        FROM Voters
+        FROM voters
         LEFT JOIN votes ON voters.id = votes.voters_id
         WHERE votes.voters_id IS NULL";
                 $query = $conn->query($sql);
