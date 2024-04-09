@@ -18,12 +18,12 @@
                 $_SESSION['admin'] = $row['id'];
                 // Redirect to respective landing pages
                 if ($username == 'OSAadmin') {
-                    //header('location: home.php');
+                    header('location: home.php');
                 } elseif ($username == 'JPCSadmin') {
-                    //header('location: home_jpcs.php');
+                    header('location: home_jpcs.php');
                 } else {
                     // Redirect to a default landing page if no specific landing page is defined for the admin
-                    //header('location: index.php');
+                    header('location: index.php');
                 }
                 exit(); // Stop further execution after redirection
             }
