@@ -14,7 +14,7 @@
           <?php
             if(isset($_SESSION['student'])){
               echo "
-                <li><a href='index.php'>HOME</a></li>
+                <li><a href='voters_login.php'>HOME</a></li>
                 <li><a href='transaction.php'>TRANSACTION</a></li>
               ";
             } 

@@ -8,7 +8,7 @@
 		$voter = $query->fetch_assoc();
 	}
 	else{
-		header('location: index.php');
+		header('location: voters_login.php');
 		exit();
 	}
 
