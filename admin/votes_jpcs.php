@@ -78,7 +78,7 @@
         echo "
             <tr>
                 <td class='hidden'></td>
-                <td>".$row['counter.']."</td>
+                <td>".$counter."</td>
                 <td>".$row['description']."</td>
                 <td>".$row['canfirst'].' '.$row['canlast']."</td>
                 <td>".$row['votfirst'].' '.$row['votlast']."</td>
