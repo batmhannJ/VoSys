@@ -17,6 +17,7 @@
       <li class=""><a href="home.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
       <li class=""><a href="votes.php"><span class="glyphicon glyphicon-lock"></span> <span>Votes Result</span></a></li>
       <li class="header">MANAGE</li>
+      <li class=""><a href="announcement.php"><i class="fa fa-user-plus"></i> <span>Announcement</span></a></li>
       <li class=""><a href="sub_admin.php"><i class="fa fa-user-plus"></i> <span>Sub Admins</span></a></li>
       <li class=""><a href="voters.php"><i class="fa fa-users"></i> <span>Voters</span></a></li>
       <!--<li class=""><a href="positions.php"><i class="fa fa-tasks"></i> <span>Positions</span></a></li>
