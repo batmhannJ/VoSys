@@ -56,7 +56,7 @@
                 echo "<h3>".$query->num_rows."</h3>";
               ?>
 
-              <p>No. of Elections</p>
+              <p>No. of Positions</p>
             </div>
             <div class="icon">
               <i class="fa fa-tasks"></i>
@@ -67,7 +67,7 @@
           <!--<div class="small-box">
             <div class="inner">
               <?php
-                $sql = "SELECT * FROM positions";
+                $sql = "SELECT * FROM categories WHERE election_id = 1";
                 $query = $conn->query($sql);
 
                 echo "<h3>".$query->num_rows."</h3>";
@@ -87,18 +87,19 @@
           <div class="small-box">
             <div class="inner">
               <?php
-                $sql = "SELECT * FROM categories";
+                $sql = "SELECT * FROM candidates WHERE election_id = 1";
+
                 $query = $conn->query($sql);
 
                 echo "<h3>".$query->num_rows."</h3>";
               ?>
           
-              <p>Categories</p>
+              <p>Candidates</p>
             </div>
             <div class="icon">
               <i class="fa fa-black-tie"></i>
             </div>
-            <a href="categories.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="candidates.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -107,7 +108,7 @@
           <div class="small-box">
             <div class="inner">
               <?php
-                $sql = "SELECT * FROM voters";
+                $sql = "SELECT * FROM voters WHERE";
                 $query = $conn->query($sql);
 
                 echo "<h3>".$query->num_rows."</h3>";
