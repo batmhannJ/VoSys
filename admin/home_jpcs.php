@@ -127,7 +127,11 @@
           <div class="small-box">
             <div class="inner">
               <?php
-                $sql = "SELECT * FROM votes GROUP BY voters_id";
+                $sql = "SELECT * FROM votes
+                INNER JOIN voters ON votes.voters_id = voters.id
+                WHERE voters.organization = 'JPCS'
+                GROUP BY votes.voters_id";
+        
                 $query = $conn->query($sql);
 
                 echo "<h3>".$query->num_rows."</h3>";
@@ -172,10 +176,31 @@
           <div class="small-box">
             <div class="inner">
               <?php
-                $sql = "SELECT voters.id, voters.lastname
-        FROM voters
-        LEFT JOIN votes ON voters.id = votes.voters_id
-        WHERE votes.voters_id IS NULL";
+                <?php
+                // Get the total number of votes from voters of the 'JPCS' organization
+                $sql_jpcs_votes = "SELECT COUNT(*) AS jpcs_votes FROM votes
+                                   INNER JOIN voters ON votes.voters_id = voters.id
+                                   WHERE voters.organization = 'JPCS'";
+                $query_jpcs_votes = $conn->query($sql_jpcs_votes);
+                $row_jpcs_votes = $query_jpcs_votes->fetch_assoc();
+                $jpcs_votes = $row_jpcs_votes['jpcs_votes'];
+                
+                // Get the total number of votes
+                $sql_total_votes = "SELECT COUNT(*) AS total_votes FROM votes";
+                $query_total_votes = $conn->query($sql_total_votes);
+                $row_total_votes = $query_total_votes->fetch_assoc();
+                $total_votes = $row_total_votes['total_votes'];
+                
+                // Calculate the percentage
+                if ($total_votes > 0) {
+                    $percentage_jpcs_votes = ($jpcs_votes / $total_votes) * 100;
+                } else {
+                    $percentage_jpcs_votes = 0; // Handle division by zero error
+                }
+                
+                echo "Percentage of votes from JPCS voters: " . $percentage_jpcs_votes . "%";
+                ?>
+                
                 $query = $conn->query($sql);
 
                 echo "<h3>".$query->num_rows."</h3>";
