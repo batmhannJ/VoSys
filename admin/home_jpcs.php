@@ -108,12 +108,11 @@
           <div class="small-box">
             <div class="inner">
               <?php
-                $sql = "SELECT * FROM voters WHERE";
+                $sql = "SELECT * FROM voters WHERE organization = 'JPCS'";
                 $query = $conn->query($sql);
 
                 echo "<h3>".$query->num_rows."</h3>";
               ?>
-             
               <p>Total Voters</p>
             </div>
             <div class="icon">
