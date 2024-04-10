@@ -11,11 +11,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Candidates List
+        Voters List
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Candidates</li>
+        <li class="active">Voters</li>
       </ol>
     </section>
     <!-- Main content -->
@@ -51,34 +51,36 @@
             <div class="box-body">
               <table id="example1" class="table table-bordered">
                 <thead>
-                  <th class="hidden"></th>
-                  <th>Position</th>
-                  <th>Photo</th>
-                  <th>Firstname</th>
                   <th>Lastname</th>
-                  <th>Platform</th>
+                  <th>Firstname</th>
+                  <th>Photo</th>
+                  <th>Voters ID</th>
+                  <th>Email</th>
+                  <th>Year Level</th>
+                  <th>Organization</th>
                   <th>Tools</th>
                 </thead>
                 <tbody>
                   <?php
-                    $sql = "SELECT *, candidates.id AS canid FROM candidates LEFT JOIN positions ON positions.id=candidates.position_id ORDER BY positions.priority ASC";
+                    $sql = "SELECT * FROM voters";
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
                       $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
                       echo "
                         <tr>
-                          <td class='hidden'></td>
-                          <td>".$row['description']."</td>
+                          <td>".$row['lastname']."</td>
+                          <td>".$row['firstname']."</td>
                           <td>
                             <img src='".$image."' width='30px' height='30px'>
-                            <a href='#edit_photo' data-toggle='modal' class='pull-right photo' data-id='".$row['canid']."'><span class='fa fa-edit'></span></a>
+                            <a href='#edit_photo' data-toggle='modal' class='pull-right photo' data-id='".$row['id']."'></a>
                           </td>
-                          <td>".$row['firstname']."</td>
-                          <td>".$row['lastname']."</td>
-                          <td><a href='#platform' data-toggle='modal' class='btn btn-info btn-sm btn-flat platform' data-id='".$row['canid']."'><i class='fa fa-search'></i> View</a></td>
+                          <td>".$row['voters_id']."</td>
+                          <td>".$row['email']."</td>
+                          <td>".$row['yearLvl']."</td>
+                          <td>".$row['organization']."</td>
                           <td>
-                            <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['canid']."'><i class='fa fa-edit'></i> Edit</button>
-                            <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['canid']."'><i class='fa fa-trash'></i> Delete</button>
+                            <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
+                            <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."'><i class='fa fa-trash'></i> Delete</button>
                           </td>
                         </tr>
                       ";
@@ -90,11 +92,47 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <?php
+                if(isset($_SESSION['message']))
+                {
+                  echo "<div class='alert alert-danger alert-dismissible'>
+                    <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                    <h4><i class='icon fa fa-warning'></i> Error!</h4>
+                    ".$_SESSION['message']."
+                  </div>
+                ";
+                    unset($_SESSION['message']);
+                }
+                if(isset($_SESSION['success'])){
+                  echo "
+                    <div class='alert alert-success alert-dismissible'>
+                      <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                      <h4><i class='icon fa fa-check'></i> Success!</h4>
+                      ".$_SESSION['success']."
+                    </div>
+                  ";
+                  unset($_SESSION['success']);
+                }
+                ?>
+          <div class="box">
+            <div class="box-header with-border">
+              <h4>Upload Voters</h4>
+            <form action="upload_voter.php" method="POST" enctype="multipart/form-data">
+              <input type="file" name="import_file" class="form-control" />
+            <button type="submit" name="save_excel_data" class="btn btn-primary mt-3">Import</button>
+          </form>
+          </div>
+        </div>
+        </div>
+      </div>
+
     </section>   
   </div>
     
   <?php include 'includes/footer.php'; ?>
-  <?php include 'includes/candidates_modal.php'; ?>
+  <?php include 'includes/voters_modal.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
 <script>
@@ -119,28 +157,22 @@ $(function(){
     getRow(id);
   });
 
-  $(document).on('click', '.platform', function(e){
-    e.preventDefault();
-    var id = $(this).data('id');
-    getRow(id);
-  });
-
 });
 
 function getRow(id){
   $.ajax({
     type: 'POST',
-    url: 'candidates_row.php',
+    url: 'voters_row.php',
     data: {id:id},
     dataType: 'json',
     success: function(response){
-      $('.id').val(response.canid);
+      $('.id').val(response.id);
       $('#edit_firstname').val(response.firstname);
       $('#edit_lastname').val(response.lastname);
-      $('#posselect').val(response.position_id).html(response.description);      
-      $('#edit_platform').val(response.platform);
+      $('#edit_email').val(response.email);
+      $('#edit_yearlvl').val(response.yearLvl);
+      $('#edit_password').val(response.password);
       $('.fullname').html(response.firstname+' '+response.lastname);
-      $('#desc').html(response.platform);
     }
   });
 }

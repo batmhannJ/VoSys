@@ -18,10 +18,10 @@
       <li class=""><a href="votes_jpcs.php"><span class="glyphicon glyphicon-lock"></span> <span>Votes Result</span></a></li>
       <li class="header">MANAGE</li>
       <!--<li class=""><a href="sub_admin.php"><i class="fa fa-user-plus"></i> <span>Sub Admins</span></a></li>-->
-      <li class=""><a href="voters.php"><i class="fa fa-users"></i> <span>Voters</span></a></li>
-      <li class=""><a href="positions.php"><i class="fa fa-tasks"></i> <span>Positions</span></a></li>
-      <li class=""><a href="candidates.php"><i class="fa fa-black-tie"></i> <span>Candidates</span></a></li>
-      <li class=""><a href="elections.php"><i class="fa fa-cog"></i> <span>Elections</span></a></li>
+      <li class=""><a href="voters_jpcs.php"><i class="fa fa-users"></i> <span>Voters</span></a></li>
+      <li class=""><a href="positions_jpcs.php"><i class="fa fa-tasks"></i> <span>Positions</span></a></li>
+      <li class=""><a href="candidates_jpcs.php"><i class="fa fa-black-tie"></i> <span>Candidates</span></a></li>
+      <li class=""><a href="elections_jpcs.php"><i class="fa fa-cog"></i> <span>Elections</span></a></li>
       <!--<li class=""><a href="categories.php"><i class="fa fa-cog"></i> <span>Categories</span></a></li>-->
       <li class="header">SETTINGS</li>
       
