@@ -50,7 +50,7 @@
           <div class="small-box">
             <div class="inner">
               <?php
-                $sql = "SELECT * FROM election";
+                $sql = "SELECT * FROM categories WHERE election_id = 1";
                 $query = $conn->query($sql);
 
                 echo "<h3>".$query->num_rows."</h3>";
