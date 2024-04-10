@@ -26,9 +26,9 @@
       <li class="header">SETTINGS</li>
       
       <!--<li class=""><a href="#" data-toggle="modal"><i class="fa fa-book"></i> <span>Archives</span></a></li>-->
-      <li class=""><a href="history.php"><i class="fa fa-clock-o"></i> <span>History</span></a></li>
+      <li class=""><a href="history_jpcs.php"><i class="fa fa-clock-o"></i> <span>History</span></a></li>
       
-      <li class=""><a href="ballot.php"><i class="fa fa-file-text"></i> <span>Ballot Position</span></a></li>
+      <li class=""><a href="ballot_jpcs.php"><i class="fa fa-file-text"></i> <span>Ballot Position</span></a></li>
     </ul>
   </section>
   <!-- /.sidebar -->
