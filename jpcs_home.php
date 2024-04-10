@@ -396,6 +396,7 @@ if(!is_active_election($conn)){
     overflow: hidden;
     height: 100px;
     margin-left: 10px;
+    margin-bottom: 50px;
 }
 .digit {
     color: black;
