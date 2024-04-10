@@ -385,7 +385,7 @@ if(!is_active_election($conn)){
     justify-content: center;
     margin-top: 570px;
     margin-right: 12px; /* Adjust margin as needed */
-    margin-bottom: 30px;
+    margin-bottom: 50px;
     
 }
 .sub_timer {
