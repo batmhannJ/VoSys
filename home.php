@@ -100,7 +100,7 @@ if(!is_active_election($conn)){
 				    		?>
  					<!--countdown-->
  						<section class="discover section" id="discover">      
- 							<center><h4 id="electionTitle" class="heading">Remaining time to vote</h4></center>
+ 							<!--<center><h4 id="electionTitle" class="heading">Remaining time to vote</h4></center>-->
 					        <div class="timer">
 					            <!--<div class="sub_timer">
 					                <h1 id="day" class="digit">00</h1>

@@ -111,7 +111,7 @@ if(!is_active_election($conn)){
                             ?>
                             <!--countdown-->
                             <section class="discover section" id="discover">      
-                                <center><h4 id="electionTitle" class="heading">Remaining time to vote</h4></center>
+                                <!--<center><h4 id="electionTitle" class="heading">Remaining time to vote</h4></center>-->
                                 <div class="timer">
                                     <!--<div class="sub_timer">
                                         <h1 id="day" class="digit">00</h1>
@@ -385,7 +385,7 @@ if(!is_active_election($conn)){
     justify-content: center;
     margin-top: 570px;
     margin-right: 12px; /* Adjust margin as needed */
-    margin-bottom: 30px;
+    margin-bottom: 50px;
     
 }
 .sub_timer {
@@ -396,6 +396,7 @@ if(!is_active_election($conn)){
     overflow: hidden;
     height: 100px;
     margin-left: 10px;
+    margin-bottom: 50px;
 }
 .digit {
     color: black;
