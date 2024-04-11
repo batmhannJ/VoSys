@@ -127,7 +127,11 @@
           <div class="small-box">
             <div class="inner">
               <?php
-                $sql = "SELECT * FROM votes GROUP BY voters_id";
+                $sql = "SELECT * 
+                        FROM votes 
+                        JOIN voters ON votes.voters_id = voters.id 
+                        WHERE voters.organization = 'JPCS' 
+                        GROUP BY votes.voters_id";
                 $query = $conn->query($sql);
 
                 echo "<h3>".$query->num_rows."</h3>";
