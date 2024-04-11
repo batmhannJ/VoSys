@@ -117,7 +117,7 @@
             <div class="icon">
               <i class="fa fa-tasks"></i>
             </div>
-            <a href="positions.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="candidates.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -126,7 +126,7 @@
           <div class="small-box">
             <div class="inner">
               <?php
-                $sql = "SELECT * FROM voters";
+                $sql = "SELECT * FROM voters WHERE organization = 'JPCS'";
                 $query = $conn->query($sql);
 
                 echo "<h3>".$query->num_rows."</h3>";
