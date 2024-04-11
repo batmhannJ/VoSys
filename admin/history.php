@@ -248,10 +248,13 @@
             WHERE voters1.organization != ''
             GROUP BY candidates.id";
     $query = $conn->query($sql);
+    $presidentColor = $query->num_rows > 10 ? "#2196F3" : "#4CAF50";
     while($row = $query->fetch_assoc()) {
-      $color = $row['vote_count'] > 10 ? "#2196F3" : "#4CAF50";
       $presidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
     }
+    array_walk($presidentData, function(&$point) use ($presidentColor) {
+      $point['color'] = $presidentColor;
+    });
   ?>
 
   // Generate president bar graph
