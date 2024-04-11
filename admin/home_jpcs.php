@@ -107,7 +107,7 @@
           <div class="small-box">
             <div class="inner">
               <?php
-                $sql = "SELECT * FROM voters WHERE orgnization = 'JPCS'";
+                $sql = "SELECT * FROM voters WHERE organization = 'JPCS'";
                 $query = $conn->query($sql);
 
                 echo "<h3>".$query->num_rows."</h3>";
