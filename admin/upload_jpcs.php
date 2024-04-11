@@ -8,9 +8,9 @@ include 'includes/session.php';
 include 'includes/conn.php';
 
 require 'vendor/autoload.php';
-require 'public_html\admin\PHPMailer\src\PHPMailer.php';
-require 'public_html\admin\PHPMailer\src\SMTP.php';
-require 'public_html\admin\PHPMailer\src\Exception.php';
+require '/home/u247141684/domains/vosys.org/public_html/admin/PHPMailer/src/PHPMailer.php';
+require '/home/u247141684/domains/vosys.org/public_html/admin/PHPMailer/src/SMTP.php';
+require '/home/u247141684/domains/vosys.org/public_html/admin/PHPMailer/src/Exception.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
