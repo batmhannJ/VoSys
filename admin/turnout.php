@@ -1,6 +1,8 @@
-<?php include 'includes/session.php'; ?>
-<?php include 'includes/slugify.php'; ?>
-<?php include 'includes/header.php'; ?>
+<?php
+include 'includes/session.php';
+include 'includes/header.php';
+?>
+
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
@@ -12,132 +14,95 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Voters Turnout
+        Voter Turnout
       </h1>
       <ol class="breadcrumb">
-        <li><a href="dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Voters Turnout</li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Voter Turnout</li>
       </ol>
     </section>
-<section class="content">
-<div class="row">
-        <!--<div class="col-xs-12">
-          <h3>Votes Tally
-            <span class="pull-right">
-              <a href="print.php" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Print</a>
-            </span>
-          </h3>
-        </div>-->
+    <!-- Main content -->
+    <section class="content">
+      <!-- Add organization dropdown -->
+      <div>
+        <label for="organization">Select Organization:</label>
+        <select id="organization" onchange="filterData()">
+          <option value="all">All Organizations</option>
+          <option value="JPCS">JPCS</option>
+          <option value="CODE-TG">CODE-TG</option>
+          <option value="CSC">CSC</option>
+          <option value="YMF">YMF</option>
+          <option value="HMSO">HMSO</option>
+        </select>
       </div>
+      <!-- Display the CanvasJS pie chart -->
+      <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 
       <?php
-        $sql = "SELECT * FROM election WHERE status=1";
-        $query = $conn->query($sql);
-        $inc = 2;
-        while($row = $query->fetch_assoc()){
-          $inc = ($inc == 2) ? 1 : $inc+1; 
-          if($inc == 1) echo "<div class='row'>";
-          echo "
-            <div class='col-sm-6'>
-              <div class='box box-solid'>
-                <div class='box-header with-border'>
-                  <h4 class='box-title'><b>".$row['title']."</b></h4>
-                </div>
-                <div class='box-body'>
-                  <div class='chart'>
-                    <canvas id='".slugify($row['title'])."' style='height:200px'></canvas>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ";
-          if($inc == 2) echo "</div>";  
-        }
-        if($inc == 1) echo "<div class='col-sm-6'></div></div>";
+      // Assuming you have the $dataPoints array from the previous chart
+      $dataPoints = array( 
+        array("organization" => "JPCS", "label"=>"Remaining Voters", "y"=>1000), // Assuming 1000 remaining voters for JPCS
+        array("organization" => "JPCS", "label"=>"Voters Voted", "y"=>500), // Assuming 500 voters voted for JPCS
+        array("organization" => "CODE-TG", "label"=>"Remaining Voters", "y"=>800), // Assuming 800 remaining voters for CODE-TG
+        array("organization" => "CODE-TG", "label"=>"Voters Voted", "y"=>300), // Assuming 300 voters voted for CODE-TG
+        array("organization" => "CSC", "label"=>"Remaining Voters", "y"=>1200), // Assuming 1200 remaining voters for CSC
+        array("organization" => "CSC", "label"=>"Voters Voted", "y"=>600), // Assuming 600 voters voted for CSC
+        array("organization" => "YMF", "label"=>"Remaining Voters", "y"=>900), // Assuming 900 remaining voters for YMF
+        array("organization" => "YMF", "label"=>"Voters Voted", "y"=>400), // Assuming 400 voters voted for YMF
+        array("organization" => "HMSO", "label"=>"Remaining Voters", "y"=>700), // Assuming 700 remaining voters for HMSO
+        array("organization" => "HMSO", "label"=>"Voters Voted", "y"=>300) // Assuming 300 voters voted for HMSO
+      );
       ?>
 
-      </section>
-     <!-- right col -->
-    </div>
-  	<?php include 'includes/footer.php'; ?>
+    </section>   
+  </div>
 
+  <?php include 'includes/footer.php'; ?>
+  <?php include 'includes/voters_modal.php'; ?>
 </div>
-<!-- ./wrapper -->
-
 <?php include 'includes/scripts.php'; ?>
-<?php
-  $sql = "SELECT * FROM election WHERE status=1";
-  $query = $conn->query($sql);
-  while($row = $query->fetch_assoc()){
-    $sql = "SELECT * FROM candidates WHERE position_id = '".$row['id']."'";
-    $cquery = $conn->query($sql);
-    $carray = array();
-    $varray = array();
-    while($crow = $cquery->fetch_assoc()){
-      array_push($carray, $crow['lastname']);
-      $sql = "SELECT * FROM votes WHERE candidate_id = '".$crow['id']."'";
-      $vquery = $conn->query($sql);
-      array_push($varray, $vquery->num_rows);
-    }
-    $carray = json_encode($carray);
-    $varray = json_encode($varray);
-    ?>
-    <script>
-    $(function(){
-      var rowid = '<?php echo $row['id']; ?>';
-      var description = '<?php echo slugify($row['description']); ?>';
-      var barChartCanvas = $('#'+description).get(0).getContext('2d')
-      var barChart = new Chart(barChartCanvas)
-      var barChartData = {
-        labels  : <?php echo $carray; ?>,
-        datasets: [
-          {
-            label               : 'Votes',
-            fillColor           : 'rgba(255, 200, 200, 0.9)',
-            strokeColor         : 'rgba(255, 100, 100, 0.9)',
-            pointColor          : '#3b8bba',
-            pointStrokeColor    : 'rgba(255, 200, 200, 0.9)',
-            pointHighlightFill  : '#fff',
-            pointHighlightStroke: 'rgba(255, 250, 250, 0.9)',
-            data                : <?php echo $varray; ?>
-          }
-        ]
-      }
-      var barChartOptions                  = {
-        //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
-        scaleBeginAtZero        : true,
-        //Boolean - Whether grid lines are shown across the chart
-        scaleShowGridLines      : true,
-        //String - Colour of the grid lines
-        scaleGridLineColor      : 'rgba(0,0,0,.05)',
-        //Number - Width of the grid lines
-        scaleGridLineWidth      : 1,
-        //Boolean - Whether to show horizontal lines (except X axis)
-        scaleShowHorizontalLines: true,
-        //Boolean - Whether to show vertical lines (except Y axis)
-        scaleShowVerticalLines  : true,
-        //Boolean - If there is a stroke on each bar
-        barShowStroke           : true,
-        //Number - Pixel width of the bar stroke
-        barStrokeWidth          : 2,
-        //Number - Spacing between each of the X value sets
-        barValueSpacing         : 5,
-        //Number - Spacing between data sets within X values
-        barDatasetSpacing       : 1,
-        //String - A legend template
-        legendTemplate          : '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].fillColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
-        //Boolean - whether to make the chart responsive
-        responsive              : true,
-        maintainAspectRatio     : true
-      }
 
-      barChartOptions.datasetFill = false
-      var myChart = barChart.HorizontalBar(barChartData, barChartOptions)
-      //document.getElementById('legend_'+rowid).innerHTML = myChart.generateLegend();
+<!-- CanvasJS library -->
+<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+
+<!-- Script to render CanvasJS chart -->
+<script>
+window.onload = function() {
+  renderChart(<?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>);
+}
+
+function renderChart(dataPoints) {
+  var chart = new CanvasJS.Chart("chartContainer", {
+    animationEnabled: true,
+    title: {
+      text: "Voter Turnout by Organization"
+    },
+    data: [{
+      type: "pie",
+      showInLegend: true,
+      legendText: "{label}",
+      indexLabel: "{label}: {y}",
+      dataPoints: dataPoints
+    }]
+  });
+  chart.render();
+}
+
+function filterData() {
+  var organization = document.getElementById("organization").value;
+  var filteredDataPoints;
+  
+  if (organization === "all") {
+    filteredDataPoints = <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>;
+  } else {
+    filteredDataPoints = <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>.filter(function(item) {
+      return item.organization === organization;
     });
-    </script>
-    <?php
   }
-?>
+  
+  renderChart(filteredDataPoints);
+}
+</script>
+
 </body>
 </html>
