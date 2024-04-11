@@ -112,7 +112,7 @@
                 echo "<h3>".$query->num_rows."</h3>";
               ?>
 
-              <p>No. of Candidates</p>
+              <p>Candidates</p>
             </div>
             <div class="icon">
               <i class="fa fa-tasks"></i>
