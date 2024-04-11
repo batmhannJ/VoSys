@@ -45,9 +45,9 @@
   <div class="row">
     <div class="col-xs-12">
     <div class="box">
-      <div class="box-header with-border">
+      <!--<div class="box-header with-border">
               <a href="#addElection" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
-      </div>
+      </div>-->
       <!-- Table with hoverable rows -->
       <div class="box-body">
       <table id="example1" class="table table-bordered">
@@ -62,7 +62,7 @@
         <tbody class="election">
           <?php
           $i = 1;
-          $election = $conn->prepare("SELECT * FROM election ORDER BY id DESC");
+          $election = $conn->prepare("SELECT * FROM election WHERE title = 'JPCS - Junior Philippine Computer Society Election'");
           $election->execute();
           $result = $election->get_result();
           while ($row = $result->fetch_assoc()) {

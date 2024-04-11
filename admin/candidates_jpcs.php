@@ -61,7 +61,12 @@
                 </thead>
                 <tbody>
                   <?php
-                    $sql = "SELECT *, candidates.id AS canid FROM candidates LEFT JOIN positions ON positions.id=candidates.position_id ORDER BY positions.priority ASC";
+                    $sql = "SELECT *, candidates.id AS canid 
+                    FROM candidates 
+                    LEFT JOIN positions ON positions.id = candidates.position_id 
+                    WHERE candidates.election_id = 1 
+                    ORDER BY positions.priority ASC";
+
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
                       $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
