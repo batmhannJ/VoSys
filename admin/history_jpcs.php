@@ -263,6 +263,7 @@
   // Fetch and process vice president data
   <?php
     $vicePresidentData = array();
+    $vicePresidentColor = "#4CAF50";
     $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
             COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
             FROM positions 
@@ -273,7 +274,7 @@
             GROUP BY candidates.id";
     $query = $conn->query($sql);
     while($row = $query->fetch_assoc()) {
-      $vicePresidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+      $vicePresidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name'], "color" => $vicePresidentColor);
     }
   ?>
 
