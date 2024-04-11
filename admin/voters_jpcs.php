@@ -130,7 +130,7 @@
   </div>
     
   <?php include 'includes/footer.php'; ?>
-  <?php include 'includes/voters_modal.php'; ?>
+  <?php include 'includes/voters_jpcs_modal.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
 <script>
