@@ -1,4 +1,6 @@
-<?php include 'includes/session.php'; ?>
+<?php include 'includes/session.php'; 
+  ini_set('dislay errors', 1);
+?>
 <?php include 'includes/slugify.php'; ?>
 <?php include 'includes/header_jpcs.php'; ?>
 <body class="hold-transition skin-blue sidebar-mini">
