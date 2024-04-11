@@ -58,7 +58,7 @@
                 </thead>
                 <tbody>
                   <?php
-                    $sql = "SELECT * FROM categories WHERE election_id = 1 ORDER BY priority ASC";
+                    $sql = "SELECT * FROM positions ORDER BY priority ASC";
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
                       echo "
