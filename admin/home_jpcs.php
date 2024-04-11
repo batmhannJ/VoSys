@@ -1,5 +1,7 @@
 <?php include 'includes/session.php'; 
-  ini_set('dislay errors', 1);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 ?>
 <?php include 'includes/slugify.php'; ?>
 <?php include 'includes/header_jpcs.php'; ?>
