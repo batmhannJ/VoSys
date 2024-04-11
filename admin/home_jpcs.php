@@ -2,9 +2,8 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-?>
-<?php include 'includes/slugify.php'; ?>
-<?php include 'includes/header_jpcs.php'; ?>
+include 'includes/slugify.php'; 
+include 'includes/header_jpcs.php'; ?>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
