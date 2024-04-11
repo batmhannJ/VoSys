@@ -64,7 +64,7 @@
             <a href="elections.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>-->
           <!-- small box -->
-          <div class="small-box">
+          <!--<div class="small-box">
             <div class="inner">
               <?php
                 $sql = "SELECT * FROM positions";
@@ -80,7 +80,7 @@
             </div>
             <a href="positions.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
-        </div>
+        </div>-->
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
@@ -99,6 +99,25 @@
               <i class="fa fa-black-tie"></i>
             </div>
             <a href="categories.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <!-- small box -->
+        <div class="small-box">
+            <div class="inner">
+              <?php
+                $sql = "SELECT * FROM candidates WHERE election_id = 1";
+                $query = $conn->query($sql);
+
+                echo "<h3>".$query->num_rows."</h3>";
+              ?>
+
+              <p>No. of Candidates</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-tasks"></i>
+            </div>
+            <a href="positions.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
