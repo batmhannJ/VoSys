@@ -61,7 +61,7 @@
             <div class="icon">
               <i class="fa fa-tasks"></i>
             </div>
-            <a href="categories.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="elections.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
           <!-- small box -->
           <!--<div class="small-box">
