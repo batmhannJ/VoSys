@@ -56,7 +56,7 @@
                 echo "<h3>".$query->num_rows."</h3>";
               ?>
 
-              <p>Categories</p>
+              <p>No. of Positions</p>
             </div>
             <div class="icon">
               <i class="fa fa-tasks"></i>
