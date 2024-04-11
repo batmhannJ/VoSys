@@ -3,7 +3,7 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
-  <?php include 'includes/navbar.php'; ?>
+  <?php include 'includes/navbar_jpcs.php'; ?>
   <?php include 'includes/menubar_jpcs.php'; ?>
 
   <!-- Content Wrapper. Contains page content -->
@@ -11,7 +11,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Voters List 
+        Voters List
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -57,12 +57,11 @@
                   <th>Voters ID</th>
                   <th>Email</th>
                   <th>Year Level</th>
-                  <th>Organization</th>
                   <th>Tools</th>
                 </thead>
                 <tbody>
                   <?php
-                    $sql = "SELECT * FROM voters";
+                    $sql = "SELECT * FROM voters WHERE organization = 'JPCS'";
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
                       $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
@@ -77,7 +76,6 @@
                           <td>".$row['voters_id']."</td>
                           <td>".$row['email']."</td>
                           <td>".$row['yearLvl']."</td>
-                          <td>".$row['organization']."</td>
                           <td>
                             <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
                             <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."'><i class='fa fa-trash'></i> Delete</button>
