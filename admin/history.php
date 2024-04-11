@@ -230,7 +230,13 @@
       },
       data: [{
         type: "column",
-        dataPoints: dataPoints
+        dataPoints: dataPoints.map(function(point) {
+          return {
+            y: point.y,
+            label: point.label,
+            color: point.color // Include color attribute
+          };
+        })
       }]
     });
     chart.render();
