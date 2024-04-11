@@ -47,7 +47,7 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-lg-3 col-xs-6">
-          <div class="small-box">
+          <!--<div class="small-box">
             <div class="inner">
               <?php
                 $sql = "SELECT * FROM election";
@@ -62,9 +62,9 @@
               <i class="fa fa-tasks"></i>
             </div>
             <a href="elections.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
+          </div>-->
           <!-- small box -->
-          <!--<div class="small-box">
+          <div class="small-box">
             <div class="inner">
               <?php
                 $sql = "SELECT * FROM positions";
@@ -79,7 +79,7 @@
               <i class="fa fa-tasks"></i>
             </div>
             <a href="positions.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>-->
+          </div>
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
