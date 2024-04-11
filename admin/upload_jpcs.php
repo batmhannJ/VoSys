@@ -4,9 +4,9 @@ include 'includes/session.php';
 include 'includes/conn.php';
 
 require 'vendor/autoload.php';
-require 'C:\Xampp\htdocs\votesystem\admin\PHPMailer\src\PHPMailer.php';
-require 'C:\Xampp\htdocs\votesystem\admin\PHPMailer\src\SMTP.php';
-require 'C:\Xampp\htdocs\votesystem\admin\PHPMailer\src\Exception.php';
+require 'public_html\admin\PHPMailer\src\PHPMailer.php';
+require 'public_html\admin\PHPMailer\src\SMTP.php';
+require 'public_html\admin\PHPMailer\src\Exception.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
