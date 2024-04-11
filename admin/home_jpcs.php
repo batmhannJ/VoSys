@@ -182,8 +182,6 @@
                       GROUP BY votes.voters_id";
               $query = $conn->query($sql);
 
-              echo "<h3>".$query->num_rows."</h3>";
-
               $totalRows = $query->num_rows; // Total number of rows fetched
               $totalNumberOfVoters = 1000; // Assuming this is the total number of voters in your database
 
@@ -197,7 +195,7 @@
               // Calculate and display the percentage
               if ($totalNumberOfVoters > 0) {
                   $percentage = ($totalRows / $totalNumberOfVoters) * 100;
-                  echo "Percentage of voters from JPCS: " . $percentage . "%";
+                  echo "<h3>" . $percentage . "%";
               } else {
                   echo "Total number of voters is 0. Cannot calculate percentage.";
               }
