@@ -249,6 +249,7 @@
             GROUP BY candidates.id";
     $query = $conn->query($sql);
     while($row = $query->fetch_assoc()) {
+      $color = $row['vote_count'] > 10 ? "#4CAF50" : "#2196F3";
       $presidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
     }
   ?>
