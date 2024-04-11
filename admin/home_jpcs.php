@@ -61,7 +61,7 @@
             <div class="icon">
               <i class="fa fa-tasks"></i>
             </div>
-            <a href="positions.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="positions_jpcs.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
           <!-- small box -->
           <!--<div class="small-box">
@@ -98,7 +98,7 @@
             <div class="icon">
               <i class="fa fa-black-tie"></i>
             </div>
-            <a href="candidates.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="candidates_jpcs.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -118,7 +118,7 @@
             <div class="icon">
               <i class="fa fa-users"></i>
             </div>
-            <a href="voters.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="voters_jpcs.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -142,7 +142,7 @@
             <div class="icon">
               <i class="fa fa-edit"></i>
             </div>
-            <a href="votersVoted.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="votersVoted_jpcs.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -166,7 +166,7 @@
             <div class="icon">
               <i class="fa fa-black-tie"></i>
             </div>
-            <a href="remainingVoters.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="remainingVoters_jpcs.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -206,7 +206,7 @@
             <div class="icon">
               <i class="fa fa-black-tie"></i>
             </div>
-            <a href="turnout.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="turnout_jpcs.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
