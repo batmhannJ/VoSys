@@ -227,7 +227,13 @@
       },
       data: [{
         type: "column",
-        dataPoints: dataPoints
+        dataPoints: dataPoints.map(function(point) {
+          return {
+            y: point.y,
+            label: point.label,
+            color: point.color // Include color attribute
+          };
+        })
       }]
     });
     chart.render();
@@ -236,6 +242,7 @@
   // Fetch and process president data
   <?php
     $presidentData = array();
+    $presidentColor = "#4CAF50";
     $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
             COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
             FROM positions 
@@ -246,7 +253,7 @@
             GROUP BY candidates.id";
     $query = $conn->query($sql);
     while($row = $query->fetch_assoc()) {
-      $presidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+      $presidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name'], "color" => $presidentColor);
     }
   ?>
 
