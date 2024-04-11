@@ -239,6 +239,7 @@
   // Fetch and process president data
   <?php
     $presidentData = array();
+    $presidentColor = "#4CAF50";
     $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
             COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
             FROM positions 
@@ -248,13 +249,9 @@
             WHERE voters1.organization != ''
             GROUP BY candidates.id";
     $query = $conn->query($sql);
-    $presidentColor = $query->num_rows > 10 ? "#2196F3" : "#4CAF50";
     while($row = $query->fetch_assoc()) {
-      $presidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+      $presidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name'], "color" => $presidentColor);
     }
-    array_walk($presidentData, function(&$point) use ($presidentColor) {
-      $point['color'] = $presidentColor;
-    });
   ?>
 
   // Generate president bar graph
