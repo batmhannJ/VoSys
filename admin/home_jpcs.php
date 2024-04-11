@@ -126,7 +126,7 @@
           <!-- small box -->
           <div class="small-box">
             <div class="inner">
-            <?php
+              <?php
                 $sql = "SELECT * 
                         FROM votes 
                         JOIN voters ON votes.voters_id = voters.id 
@@ -134,26 +134,9 @@
                         GROUP BY votes.voters_id";
                 $query = $conn->query($sql);
 
-                echo "<h3>Total Number of Voters from JPCS: ".$query->num_rows."</h3>";
+                echo "<h3>".$query->num_rows."</h3>";
+              ?>
 
-                $totalRows = $query->num_rows; // Total number of rows fetched
-                $totalNumberOfVoters = 1000; // Assuming this is the total number of voters in your database
-
-                // Display each row and calculate the percentage
-                while ($row = $query->fetch_assoc()) {
-                    // Display your data here
-                    // For example:
-                    echo "Voter ID: " . $row['voters_id'] . ", Last Name: " . $row['lastname'] . "<br>";
-                }
-
-                // Calculate and display the percentage
-                if ($totalNumberOfVoters > 0) {
-                    $percentage = ($totalRows / $totalNumberOfVoters) * 100;
-                    echo "Percentage of voters from JPCS: " . $percentage . "%";
-                } else {
-                    echo "Total number of voters is 0. Cannot calculate percentage.";
-                }
-                ?>
               <p>Voters Voted</p>
             </div>
             <div class="icon">
@@ -191,16 +174,35 @@
           <!-- small box -->
           <div class="small-box">
             <div class="inner">
-              <?php
-                $sql = "SELECT voters.id, voters.lastname
-        FROM voters
-        LEFT JOIN votes ON voters.id = votes.voters_id
-        WHERE votes.voters_id IS NULL";
-                $query = $conn->query($sql);
+            <?php
+              $sql = "SELECT * 
+                      FROM votes 
+                      JOIN voters ON votes.voters_id = voters.id 
+                      WHERE voters.organization = 'JPCS' 
+                      GROUP BY votes.voters_id";
+              $query = $conn->query($sql);
 
-                echo "<h3>".$query->num_rows."</h3>";
+              echo "<h3>".$query->num_rows."</h3>";
+
+              $totalRows = $query->num_rows; // Total number of rows fetched
+              $totalNumberOfVoters = 1000; // Assuming this is the total number of voters in your database
+
+              // Display each row and calculate the percentage
+              while ($row = $query->fetch_assoc()) {
+                  // Display your data here
+                  // For example:
+                  echo "Voter ID: " . $row['voters_id'] . ", Last Name: " . $row['lastname'] . "<br>";
+              }
+
+              // Calculate and display the percentage
+              if ($totalNumberOfVoters > 0) {
+                  $percentage = ($totalRows / $totalNumberOfVoters) * 100;
+                  echo "Percentage of voters from JPCS: " . $percentage . "%";
+              } else {
+                  echo "Total number of voters is 0. Cannot calculate percentage.";
+              }
               ?>
-          
+
               <p>Voters Turnout</p>
             </div>
             <div class="icon">
