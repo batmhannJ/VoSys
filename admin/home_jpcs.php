@@ -183,14 +183,19 @@
               $query = $conn->query($sql);
 
               $totalRows = $query->num_rows; // Total number of rows fetched
-              $totalNumberOfVoters = 1000; // Assuming this is the total number of voters in your database
+              // Assuming you have a database connection, replace 'your_db_connection' with your actual database connection variable
+              $sql_count_voters = "SELECT COUNT(*) AS total_voters FROM voters WHERE organization = 'JPCS'";
+              $result_count_voters = $conn->query($sql_count_voters);
+              $row_count_voters = $result_count_voters->fetch_assoc();
+              $totalNumberOfVoters = $row_count_voters['total_voters'];
+              // Assuming this is the total number of voters in your database
 
               // Display each row and calculate the percentage
-              while ($row = $query->fetch_assoc()) {
+              /*while ($row = $query->fetch_assoc()) {
                   // Display your data here
                   // For example:
                   echo "Voter ID: " . $row['voters_id'] . ", Last Name: " . $row['lastname'] . "<br>";
-              }
+              }*/
 
               // Calculate and display the percentage
               if ($totalNumberOfVoters > 0) {
