@@ -42,7 +42,7 @@ include 'includes/header.php';
       <?php
 
 $colors = array(
-  "JPCS" => array("remaining" => "#FF5733", "voted" => "#33614C"), // Example color for JPCS
+  "JPCS" => array("remaining" => "#4CAF50", "voted" => "#95d097"), // Example color for JPCS
   "CODE-TG" => array("remaining" => "#800000", "voted" => "#450000"), // Example color for CODE-TG
   "CSC" => array("remaining" => "#000000", "voted" => "#595959"), // Example color for CSC
   "YMF" => array("remaining" => "#00008b", "voted" => "#4d4dff"), // Example color for YMF
