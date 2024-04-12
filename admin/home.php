@@ -177,13 +177,33 @@
             <div class="inner">
               <?php
                 $sql = "SELECT voters.id, voters.lastname
-        FROM voters
-        LEFT JOIN votes ON voters.id = votes.voters_id
-        WHERE votes.voters_id IS NULL";
-                $query = $conn->query($sql);
-
-                echo "<h3>".$query->num_rows."</h3>";
-              ?>
+                        FROM voters
+                        LEFT JOIN votes ON voters.id = votes.voters_id
+                        WHERE votes.voters_id IS NULL";
+                                $query = $conn->query($sql);
+                $totalRows = $query->num_rows; // Total number of rows fetched
+                // Assuming you have a database connection, replace 'your_db_connection' with your actual database connection variable
+                $sql_count_voters = "SELECT COUNT(*) AS total_voters FROM voters";
+                $result_count_voters = $conn->query($sql_count_voters);
+                $row_count_voters = $result_count_voters->fetch_assoc();
+                $totalNumberOfVoters = $row_count_voters['total_voters'];
+                // Assuming this is the total number of voters in your database
+  
+                // Display each row and calculate the percentage
+                /*while ($row = $query->fetch_assoc()) {
+                    // Display your data here
+                    // For example:
+                    echo "Voter ID: " . $row['voters_id'] . ", Last Name: " . $row['lastname'] . "<br>";
+                }*/
+  
+                // Calculate and display the percentage
+                if ($totalNumberOfVoters > 0) {
+                    $percentage = ($totalRows / $totalNumberOfVoters) * 100;
+                    echo "<h3>" . $percentage . "%" ."</h3>";
+                } else {
+                    echo "Total number of voters is 0. Cannot calculate percentage.";
+                }
+                ?>
           
               <p>Voters Turnout</p>
             </div>
