@@ -1,6 +1,6 @@
 <?php include 'includes/session.php'; ?>
 <?php include 'includes/slugify.php'; ?>
-<?php include 'includes/header_jpcs.php'; ?>
+<?php include 'includes/header.php'; ?>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
@@ -56,18 +56,18 @@
                 echo "<h3>".$query->num_rows."</h3>";
               ?>
 
-              <p>No. of Positions</p>
+              <p>Positions</p>
             </div>
             <div class="icon">
               <i class="fa fa-tasks"></i>
             </div>
-            <a href="elections.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="positions_jpcs.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
           <!-- small box -->
           <!--<div class="small-box">
             <div class="inner">
               <?php
-                $sql = "SELECT * FROM categories WHERE election_id = 1";
+                $sql = "SELECT * FROM positions";
                 $query = $conn->query($sql);
 
                 echo "<h3>".$query->num_rows."</h3>";
@@ -88,7 +88,6 @@
             <div class="inner">
               <?php
                 $sql = "SELECT * FROM candidates WHERE election_id = 1";
-
                 $query = $conn->query($sql);
 
                 echo "<h3>".$query->num_rows."</h3>";
@@ -99,7 +98,7 @@
             <div class="icon">
               <i class="fa fa-black-tie"></i>
             </div>
-            <a href="candidates.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="candidates_jpcs.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -113,12 +112,13 @@
 
                 echo "<h3>".$query->num_rows."</h3>";
               ?>
+             
               <p>Total Voters</p>
             </div>
             <div class="icon">
               <i class="fa fa-users"></i>
             </div>
-            <a href="voters.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="voters_jpcs.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -127,11 +127,11 @@
           <div class="small-box">
             <div class="inner">
               <?php
-                $sql = "SELECT * FROM votes
-                INNER JOIN voters ON votes.voters_id = voters.id
-                WHERE voters.organization = 'JPCS'
-                GROUP BY votes.voters_id";
-        
+                $sql = "SELECT * 
+                        FROM votes 
+                        JOIN voters ON votes.voters_id = voters.id 
+                        WHERE voters.organization = 'JPCS' 
+                        GROUP BY votes.voters_id";
                 $query = $conn->query($sql);
 
                 echo "<h3>".$query->num_rows."</h3>";
@@ -142,7 +142,7 @@
             <div class="icon">
               <i class="fa fa-edit"></i>
             </div>
-            <a href="votersVoted.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="votersVoted_jpcs.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -152,12 +152,11 @@
             <div class="inner">
               <?php
                 $sql = "SELECT voters.id, voters.lastname
-                FROM voters
-                LEFT JOIN votes ON voters.id = votes.voters_id
-                WHERE votes.voters_id IS NULL
-                AND voters.organization = 'JPCS'";
-        $query = $conn->query($sql);
-        
+        FROM voters
+        LEFT JOIN votes ON voters.id = votes.voters_id
+        WHERE votes.voters_id IS NULL
+        AND voters.organization = 'JPCS'";
+                $query = $conn->query($sql);
 
                 echo "<h3>".$query->num_rows."</h3>";
               ?>
@@ -167,7 +166,7 @@
             <div class="icon">
               <i class="fa fa-black-tie"></i>
             </div>
-            <a href="remainingVoters.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="remainingVoters_jpcs.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -175,43 +174,44 @@
           <!-- small box -->
           <div class="small-box">
             <div class="inner">
-              <?php
-                <?php
-                // Get the total number of votes from voters of the 'JPCS' organization
-                $sql_jpcs_votes = "SELECT COUNT(*) AS jpcs_votes FROM votes
-                                   INNER JOIN voters ON votes.voters_id = voters.id
-                                   WHERE voters.organization = 'JPCS'";
-                $query_jpcs_votes = $conn->query($sql_jpcs_votes);
-                $row_jpcs_votes = $query_jpcs_votes->fetch_assoc();
-                $jpcs_votes = $row_jpcs_votes['jpcs_votes'];
-                
-                // Get the total number of votes
-                $sql_total_votes = "SELECT COUNT(*) AS total_votes FROM votes";
-                $query_total_votes = $conn->query($sql_total_votes);
-                $row_total_votes = $query_total_votes->fetch_assoc();
-                $total_votes = $row_total_votes['total_votes'];
-                
-                // Calculate the percentage
-                if ($total_votes > 0) {
-                    $percentage_jpcs_votes = ($jpcs_votes / $total_votes) * 100;
-                } else {
-                    $percentage_jpcs_votes = 0; // Handle division by zero error
-                }
-                
-                echo "Percentage of votes from JPCS voters: " . $percentage_jpcs_votes . "%";
-                ?>
-                
-                $query = $conn->query($sql);
+            <?php
+              $sql = "SELECT * 
+                      FROM votes 
+                      JOIN voters ON votes.voters_id = voters.id 
+                      WHERE voters.organization = 'JPCS' 
+                      GROUP BY votes.voters_id";
+              $query = $conn->query($sql);
 
-                echo "<h3>".$query->num_rows."</h3>";
+              $totalRows = $query->num_rows; // Total number of rows fetched
+              // Assuming you have a database connection, replace 'your_db_connection' with your actual database connection variable
+              $sql_count_voters = "SELECT COUNT(*) AS total_voters FROM voters WHERE organization = 'JPCS'";
+              $result_count_voters = $conn->query($sql_count_voters);
+              $row_count_voters = $result_count_voters->fetch_assoc();
+              $totalNumberOfVoters = $row_count_voters['total_voters'];
+              // Assuming this is the total number of voters in your database
+
+              // Display each row and calculate the percentage
+              /*while ($row = $query->fetch_assoc()) {
+                  // Display your data here
+                  // For example:
+                  echo "Voter ID: " . $row['voters_id'] . ", Last Name: " . $row['lastname'] . "<br>";
+              }*/
+
+              // Calculate and display the percentage
+              if ($totalNumberOfVoters > 0) {
+                  $percentage = ($totalRows / $totalNumberOfVoters) * 100;
+                  echo "<h3>" . $percentage . "%" ."</h3>";
+              } else {
+                  echo "Total number of voters is 0. Cannot calculate percentage.";
+              }
               ?>
-          
+
               <p>Voters Turnout</p>
             </div>
             <div class="icon">
               <i class="fa fa-black-tie"></i>
             </div>
-            <a href="turnout.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="turnout_jpcs.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -256,11 +256,11 @@
       </section>
       right col -->
     </div>
-  	<?php include 'includes/footer_jpcs.php'; ?>
+  	<?php include 'includes/footer.php'; ?>
 
 </div>
 <!-- ./wrapper -->
-  
+
 <?php include 'includes/scripts.php'; ?>
 <?php
   $sql = "SELECT * FROM positions ORDER BY priority ASC";

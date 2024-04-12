@@ -21,7 +21,7 @@
     <!-- Main content -->
     <section class="content">
       <!-- Organization Filter -->
-<div class="row">
+<!--<div class="row">
     <div class="col-md-12">
         <div class="box">
             <div class="box-body">
@@ -48,7 +48,7 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->
 
 
       <!-- President and Vice President Ranking Boxes -->
@@ -74,10 +74,7 @@
                 <tbody>
                   <?php
                     // Fetch and display president candidate ranking based on vote count and organization filter
-                    $organizationFilter = isset($_POST['organization']) ? " AND voters1.organization = '".$_POST['organization']."'" : "";
-                    if ($_POST['organization'] == "") {
-                      $organizationFilter = "";
-                    }
+                    $organizationFilter = isset($_POST['organization']) ? " AND voters1.organization = '".$_POST['organization']."'" : " AND voters1.organization = 'JPCS'";
                     $sql = "SELECT voters1.organization, CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
                             COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
                             FROM positions 
@@ -230,7 +227,13 @@
       },
       data: [{
         type: "column",
-        dataPoints: dataPoints
+        dataPoints: dataPoints.map(function(point) {
+          return {
+            y: point.y,
+            label: point.label,
+            color: point.color // Include color attribute
+          };
+        })
       }]
     });
     chart.render();
@@ -239,6 +242,7 @@
   // Fetch and process president data
   <?php
     $presidentData = array();
+    $presidentColor = "#4CAF50";
     $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
             COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
             FROM positions 
@@ -249,7 +253,7 @@
             GROUP BY candidates.id";
     $query = $conn->query($sql);
     while($row = $query->fetch_assoc()) {
-      $presidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+      $presidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name'], "color" => $presidentColor);
     }
   ?>
 
@@ -259,6 +263,7 @@
   // Fetch and process vice president data
   <?php
     $vicePresidentData = array();
+    $vicePresidentColor = "#4CAF50";
     $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
             COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
             FROM positions 
@@ -269,7 +274,7 @@
             GROUP BY candidates.id";
     $query = $conn->query($sql);
     while($row = $query->fetch_assoc()) {
-      $vicePresidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+      $vicePresidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name'], "color" => $vicePresidentColor);
     }
   ?>
 

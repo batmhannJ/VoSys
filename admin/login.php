@@ -19,8 +19,10 @@
                 // Redirect to respective landing pages
                 if ($username == 'OSAadmin') {
                     header('location: home.php');
+                    exit();
                 } elseif ($username == 'JPCSadmin') {
                     header('location: home_jpcs.php');
+                    exit();
                 } else {
                     // Redirect to a default landing page if no specific landing page is defined for the admin
                     header('location: index.php');

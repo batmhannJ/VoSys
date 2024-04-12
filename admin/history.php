@@ -249,7 +249,7 @@
             GROUP BY candidates.id";
     $query = $conn->query($sql);
     while($row = $query->fetch_assoc()) {
-      $presidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+      $presidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name'], "color" => $presidentColor);
     }
   ?>
 
