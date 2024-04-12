@@ -50,7 +50,7 @@ $result = $row->get_result();
         }
       ?>
 <section class="content">
-    <div class="box">
+    <div>
         <select class="form-select" name="election" id="election">
           <option value="" hidden>Select Election</option>
           <?php
