@@ -40,6 +40,15 @@ include 'includes/header.php';
       <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 
       <?php
+
+$colors = array(
+  "JPCS" => "#013220", // Example color for JPCS
+  "CODE-TG" => "#800000", // Example color for CODE-TG
+  "CSC" => "#000000", // Example color for CSC
+  "YMF" => "#00008B", // Example color for YMF
+  "HMSO" => "#CBA328",
+  "PASOA" => "#E6CC00"  // Example color for HMSO
+);
 // Query to get the number of voters voted for all organizations
 $sql_voters_voted = "SELECT voters.organization, COUNT(*) AS voters_voted_count
                      FROM votes 
@@ -71,8 +80,8 @@ while ($row = $query_remaining_voters->fetch_assoc()) {
 $dataPoints = array();
 foreach ($voters_voted_by_organization as $organization => $voters_voted_count) {
     $remaining_voters_count = $remaining_voters_by_organization[$organization];
-    $dataPoints[] = array("organization" => $organization, "label" => "Remaining Voters", "y" => $remaining_voters_count);
-    $dataPoints[] = array("organization" => $organization, "label" => "Voters Voted", "y" => $voters_voted_count);
+    $dataPoints[] = array("organization" => $organization, "label" => "Remaining Voters", "y" => $remaining_voters_count, "color" => $colors[$organization]);
+    $dataPoints[] = array("organization" => $organization, "label" => "Voters Voted", "y" => $voters_voted_count, "color" => $colors[$organization]);
 }
 
 // Close connection
