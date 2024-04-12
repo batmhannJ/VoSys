@@ -77,12 +77,14 @@ while ($row = $query_remaining_voters->fetch_assoc()) {
 }
 
 // Combine the data to construct the $dataPoints array
+// Combine the data to construct the $dataPoints array
 $dataPoints = array();
 foreach ($voters_voted_by_organization as $organization => $voters_voted_count) {
     $remaining_voters_count = $remaining_voters_by_organization[$organization];
-    $dataPointsWithColors[] = array("organization" => $organization, "label" => "Remaining Voters", "y" => $remaining_voters_count, "color" => $colors[$organization]["remaining"]);
-    $dataPointsWithColors[] = array("organization" => $organization, "label" => "Voters Voted", "y" => $voters_voted_count, "color" => $colors[$organization]["voted"]);
+    $dataPoints[] = array("organization" => $organization, "label" => "Remaining Voters", "y" => $remaining_voters_count, "color" => $colors[$organization]["remaining"]);
+    $dataPoints[] = array("organization" => $organization, "label" => "Voters Voted", "y" => $voters_voted_count, "color" => $colors[$organization]["voted"]);
 }
+
 
 // Close connection
 $conn->close();
