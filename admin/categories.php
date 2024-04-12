@@ -49,7 +49,6 @@ $result = $row->get_result();
           unset($_SESSION['success']);
         }
       ?>
-      <hr>
 <section class="content">
     <div>
         <select class="form-select" name="election" id="election">
@@ -61,6 +60,7 @@ $result = $row->get_result();
           ?>
       </select>
     </div>
+    <hr>
     <div class="row">
         <div class="col-xs-12">
           <div class="box">
