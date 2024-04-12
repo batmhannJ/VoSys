@@ -49,8 +49,6 @@ $result = $row->get_result();
           unset($_SESSION['success']);
         }
       ?>
-    <div class="row">
-        <div class="col-xs-12">
     <div class="box">
         <select class="form-select" name="election" id="election">
     <option value="" hidden>Select Election</option>
@@ -70,9 +68,9 @@ $result = $row->get_result();
               <a href="#addcat" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
       </div>
         </div>
-        <span class="small d-inline-block d-md-none" data-toggle="tooltip" data-placement="left" title="Scroll horizontally to view more content">
+        <!--<span class="small d-inline-block d-md-none" data-toggle="tooltip" data-placement="left" title="Scroll horizontally to view more content">
             <i class="bi bi-arrows-expand"></i> Scroll Horizontally
-        </span>
+        </span>-->
         <div class="box-body">
             <table id="categoriesTable" class="table table-bordered">
                 <thead>
