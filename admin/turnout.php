@@ -78,9 +78,6 @@ foreach ($voters_voted_by_organization as $organization => $voters_voted_count) 
 $conn->close();
 
 // Outputting the data points (optional)
-foreach ($dataPoints as $dataPoint) {
-    echo "Organization: " . $dataPoint['organization'] . ", Label: " . $dataPoint['label'] . ", Value: " . $dataPoint['y'] . "<br>";
-}
 ?>
 
     </section>   
