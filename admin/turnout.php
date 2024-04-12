@@ -113,7 +113,7 @@ function renderChart(dataPoints) {
   var chart = new CanvasJS.Chart("chartContainer", {
     animationEnabled: true,
     title: {
-      text: "Voter Turnout by Organization"
+      text: "Voters Turnout by Organization"
     },
     data: [{
       type: "pie",
