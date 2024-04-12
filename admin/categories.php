@@ -62,13 +62,10 @@ $result = $row->get_result();
     </div>
     <div class="row">
         <div class="col-xs-12">
-    <div class="box">
-        <div class="card-header d-flex align-items-center justify-content-between">
-
+          <div class="box">
             <div class="box-header with-border">
               <a href="#addcat" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
-      </div>
-        </div>
+            </div>
         <!--<span class="small d-inline-block d-md-none" data-toggle="tooltip" data-placement="left" title="Scroll horizontally to view more content">
             <i class="bi bi-arrows-expand"></i> Scroll Horizontally
         </span>-->
@@ -145,12 +142,12 @@ $result = $row->get_result();
                     </div>
                 </div>
             </div>
-             End Edit Category Modal Dialog -->
+            End Edit Category Modal Dialog -->
 
         </div>
     </div>
     </div>
-
+    </div>
 </section>
 </div>
 <?php include 'includes/footer.php'; ?>
