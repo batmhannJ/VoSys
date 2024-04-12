@@ -33,6 +33,7 @@ include 'includes/header.php';
           <option value="CSC">CSC</option>
           <option value="YMF">YMF</option>
           <option value="HMSO">HMSO</option>
+          <option value="PASOA">PASOA</option>
         </select>
       </div>
       <!-- Display the CanvasJS pie chart -->
