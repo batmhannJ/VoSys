@@ -44,10 +44,10 @@ include 'includes/header.php';
 $colors = array(
   "JPCS" => array("remaining" => "#FF5733", "voted" => "#33614C"), // Example color for JPCS
   "CODE-TG" => array("remaining" => "#800000", "voted" => "#450000"), // Example color for CODE-TG
-  "CSC" => "#000000", // Example color for CSC
-  "YMF" => "#00008B", // Example color for YMF
-  "HMSO" => "#CBA328",
-  "PASOA" => "#E6CC00"  // Example color for HMSO
+  "CSC" => array("remaining" => "#000000", "voted" => "#595959"), // Example color for CSC
+  "YMF" => array("remaining" => "#00008b", "voted" => "#4d4dff"), // Example color for YMF
+  "HMSO" => array("remaining" => "#cba328", "voted" => "#ead595"),
+  "PASOA" => array("remaining" => "#e6cc00", "voted" => "#fff080")  // Example color for HMSO
 );
 // Query to get the number of voters voted for all organizations
 $sql_voters_voted = "SELECT voters.organization, COUNT(*) AS voters_voted_count
