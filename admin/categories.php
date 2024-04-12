@@ -95,8 +95,8 @@ $result = $row->get_result();
                                   <th scope="row">' . $i++ . '</th>
                                   <td>' . $row['name'] . '</td>
                                   <td class="text-center">
-                        <a href="#" class="btn btn-primary btn-sm edit btn-flat" data-bs-toggle="modal" data-bs-target="#editElection" data-id="' . $row['id'] . '">Edit</a>
-                        <a href="#" class="btn btn-danger btn-sm delete btn-flat" data-bs-toggle="modal" data-bs-target="#deleteElection" data-id="' . $row['id'] . '" data-name="' . $row['title'] . '">Delete</a></td>
+                        <a href="#" style="margin-right: 20px;" class="btn btn-primary btn-sm edit btn-flat" data-bs-toggle="modal" data-bs-target="#editCat" data-id="' . $row['id'] . '">Edit</a>
+                        <a href="#" class="btn btn-danger btn-sm delete btn-flat" data-bs-toggle="modal" data-bs-target="#deleteCat" data-id="' . $row['id'] . '" data-name="' . $row['title'] . '">Delete</a></td>
                   </tr>';
                         }
                     } else {
