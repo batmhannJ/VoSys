@@ -97,7 +97,7 @@ $result = $row->get_result();
                                   <th scope="row">' . $i++ . '</th>
                                   <td>' . $row['name'] . '</td>
                                   <td class="text-center">
-                                      <a href="#" class="btn btn-primary btn-sm edit-category" data-id="' . $row['id'] . '" data-name="' . $row['name'] . '">
+                                      <a href="#" class="btn btn-success btn-sm edit-category" data-id="' . $row['id'] . '" data-name="' . $row['name'] . '">
                                           <i class="bi bi-pencil"></i> Edit
                                       </a>
                                       <a href="#" class="btn btn-danger btn-sm category-delete" data-id="' . $row['id'] . '" data-name="' . $row['name'] . '">
