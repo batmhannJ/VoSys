@@ -26,7 +26,7 @@ $result = $row->get_result();
         <li class="active">Categories</li>
       </ol>
     </section>
-<section class="content">
+
     <?php
         if(isset($_SESSION['error'])){
           echo "
@@ -49,15 +49,16 @@ $result = $row->get_result();
           unset($_SESSION['success']);
         }
       ?>
+<section class="content">
     <div class="box">
         <select class="form-select" name="election" id="election">
-    <option value="" hidden>Select Election</option>
-    <?php
-    foreach ($result as $key => $value) {
-        echo '<option value="' . $value['id'] . '">' . $value['title'] . '</option>';
-    }
-    ?>
-</select>
+          <option value="" hidden>Select Election</option>
+          <?php
+          foreach ($result as $key => $value) {
+              echo '<option value="' . $value['id'] . '">' . $value['title'] . '</option>';
+          }
+          ?>
+      </select>
     </div>
     <div class="row">
         <div class="col-xs-12">
