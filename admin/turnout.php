@@ -42,8 +42,8 @@ include 'includes/header.php';
       <?php
 
 $colors = array(
-  "JPCS" => "#013220", // Example color for JPCS
-  "CODE-TG" => "#800000", // Example color for CODE-TG
+  "JPCS" => ("remaining" => "#FF5733", "voted" => "#33614C"), // Example color for JPCS
+  "CODE-TG" => ("remaining" => "#800000", "voted" => "#450000"), // Example color for CODE-TG
   "CSC" => "#000000", // Example color for CSC
   "YMF" => "#00008B", // Example color for YMF
   "HMSO" => "#CBA328",
@@ -80,8 +80,8 @@ while ($row = $query_remaining_voters->fetch_assoc()) {
 $dataPoints = array();
 foreach ($voters_voted_by_organization as $organization => $voters_voted_count) {
     $remaining_voters_count = $remaining_voters_by_organization[$organization];
-    $dataPoints[] = array("organization" => $organization, "label" => "Remaining Voters", "y" => $remaining_voters_count, "color" => $colors[$organization]);
-    $dataPoints[] = array("organization" => $organization, "label" => "Voters Voted", "y" => $voters_voted_count, "color" => $colors[$organization]);
+    $dataPointsWithColors[] = array("organization" => $organization, "label" => "Remaining Voters", "y" => $remaining_voters_count, "color" => $colors[$organization]["remaining"]);
+    $dataPointsWithColors[] = array("organization" => $organization, "label" => "Voters Voted", "y" => $voters_voted_count, "color" => $colors[$organization]["voted"]);
 }
 
 // Close connection
