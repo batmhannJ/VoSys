@@ -123,6 +123,15 @@ function renderChart(dataPoints) {
       dataPoints: dataPoints
     }]
   });
+  var legend = chart.options.data[0].legendText;
+    for (var i = 0; i < dataPoints.length; i += 2) {
+        var organization = dataPoints[i].organization;
+        var remainingColor = dataPoints[i].color;
+        var votedColor = dataPoints[i + 1].color;
+        legend = legend.replace("Remaining Voters", "<span style='color:" + remainingColor + "'>" + organization + " - Remaining Voters</span>");
+        legend = legend.replace("Voters Voted", "<span style='color:" + votedColor + "'>" + organization + " - Voters Voted</span>");
+    }
+    chart.options.data[0].legendText = legend;
   chart.render();
 }
 
