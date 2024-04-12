@@ -42,12 +42,12 @@ include 'includes/header.php';
       <?php
 
 $colors = array(
-  "JPCS" => array("remaining" => "#4CAF50", "voted" => "#95d097"), // Example color for JPCS
-  "CODE-TG" => array("remaining" => "#800000", "voted" => "#450000"), // Example color for CODE-TG
-  "CSC" => array("remaining" => "#000000", "voted" => "#595959"), // Example color for CSC
-  "YMF" => array("remaining" => "#00008b", "voted" => "#4d4dff"), // Example color for YMF
-  "HMSO" => array("remaining" => "#cba328", "voted" => "#ead595"),
-  "PASOA" => array("remaining" => "#e6cc00", "voted" => "#fff080")  // Example color for HMSO
+  "JPCS" => array("remaining" => "#95d097", "voted" => "#4CAF50"), // Example color for JPCS
+  "CODE-TG" => array("remaining" => "#ff6666", "voted" => "#800000"), // Example color for CODE-TG
+  "CSC" => array("remaining" => "#595959", "voted" => "#000000"), // Example color for CSC
+  "YMF" => array("remaining" => "#4d4dff", "voted" => "#00008b"), // Example color for YMF
+  "HMSO" => array("remaining" => "#e6cc7f", "voted" => "#cba328"),
+  "PASOA" => array("remaining" => "#fff080", "voted" => "#e6cc00")  // Example color for HMSO
 );
 // Query to get the number of voters voted for all organizations
 $sql_voters_voted = "SELECT voters.organization, COUNT(*) AS voters_voted_count
