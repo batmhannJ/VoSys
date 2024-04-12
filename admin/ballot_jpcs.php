@@ -3,7 +3,7 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
-  <?php include 'includes/navbar.php'; ?>
+  <?php include 'includes/navbar_jpcs.php'; ?>
   <?php include 'includes/menubar_jpcs.php'; ?>
 
   <!-- Content Wrapper. Contains page content -->
