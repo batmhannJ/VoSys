@@ -153,6 +153,12 @@
         WHERE votes.voters_id IS NULL";
                 $query = $conn->query($sql);
 
+                $sql = "SELECT voters.id, voters.lastname
+        FROM voters
+        LEFT JOIN votes ON voters.id = votes.voters_id
+        WHERE votes.voters_id IS NULL";
+                $query = $conn->query($sql);
+
                 echo "<h3>".$query->num_rows."</h3>";
               ?>
           

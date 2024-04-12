@@ -39,20 +39,49 @@ include 'includes/header.php';
       <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 
       <?php
-      // Assuming you have the $dataPoints array from the previous chart
-      $dataPoints = array( 
-        array("organization" => "JPCS", "label"=>"Remaining Voters", "y"=>1000), // Assuming 1000 remaining voters for JPCS
-        array("organization" => "JPCS", "label"=>"Voters Voted", "y"=>500), // Assuming 500 voters voted for JPCS
-        array("organization" => "CODE-TG", "label"=>"Remaining Voters", "y"=>800), // Assuming 800 remaining voters for CODE-TG
-        array("organization" => "CODE-TG", "label"=>"Voters Voted", "y"=>300), // Assuming 300 voters voted for CODE-TG
-        array("organization" => "CSC", "label"=>"Remaining Voters", "y"=>1200), // Assuming 1200 remaining voters for CSC
-        array("organization" => "CSC", "label"=>"Voters Voted", "y"=>600), // Assuming 600 voters voted for CSC
-        array("organization" => "YMF", "label"=>"Remaining Voters", "y"=>900), // Assuming 900 remaining voters for YMF
-        array("organization" => "YMF", "label"=>"Voters Voted", "y"=>400), // Assuming 400 voters voted for YMF
-        array("organization" => "HMSO", "label"=>"Remaining Voters", "y"=>700), // Assuming 700 remaining voters for HMSO
-        array("organization" => "HMSO", "label"=>"Voters Voted", "y"=>300) // Assuming 300 voters voted for HMSO
-      );
-      ?>
+// Query to get the number of voters voted for all organizations
+$sql_voters_voted = "SELECT voters.organization, COUNT(*) AS voters_voted_count
+                     FROM votes 
+                     JOIN voters ON votes.voters_id = voters.id 
+                     GROUP BY voters.organization";
+$query_voters_voted = $conn->query($sql_voters_voted);
+
+// Constructing an associative array to store the number of voters voted for each organization
+$voters_voted_by_organization = array();
+while ($row = $query_voters_voted->fetch_assoc()) {
+    $voters_voted_by_organization[$row['organization']] = $row['voters_voted_count'];
+}
+
+// Query to get the number of remaining voters for all organizations
+$sql_remaining_voters = "SELECT voters.organization, COUNT(*) AS remaining_voters_count
+                         FROM voters
+                         LEFT JOIN votes ON voters.id = votes.voters_id
+                         WHERE votes.voters_id IS NULL
+                         GROUP BY voters.organization";
+$query_remaining_voters = $conn->query($sql_remaining_voters);
+
+// Constructing an associative array to store the number of remaining voters for each organization
+$remaining_voters_by_organization = array();
+while ($row = $query_remaining_voters->fetch_assoc()) {
+    $remaining_voters_by_organization[$row['organization']] = $row['remaining_voters_count'];
+}
+
+// Combine the data to construct the $dataPoints array
+$dataPoints = array();
+foreach ($voters_voted_by_organization as $organization => $voters_voted_count) {
+    $remaining_voters_count = $remaining_voters_by_organization[$organization];
+    $dataPoints[] = array("organization" => $organization, "label" => "Remaining Voters", "y" => $remaining_voters_count);
+    $dataPoints[] = array("organization" => $organization, "label" => "Voters Voted", "y" => $voters_voted_count);
+}
+
+// Close connection
+$conn->close();
+
+// Outputting the data points (optional)
+foreach ($dataPoints as $dataPoint) {
+    echo "Organization: " . $dataPoint['organization'] . ", Label: " . $dataPoint['label'] . ", Value: " . $dataPoint['y'] . "<br>";
+}
+?>
 
     </section>   
   </div>
