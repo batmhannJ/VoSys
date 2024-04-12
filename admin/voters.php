@@ -48,6 +48,9 @@
             <div class="box-header with-border">
               <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
             </div>
+            <span class="small d-inline-block d-md-none" data-toggle="tooltip" data-placement="left" title="Scroll horizontally to view more content">
+            <i class="bi bi-arrows-expand"></i> Scroll Horizontally
+        </span>
             <div class="box-body">
               <table id="example1" class="table table-bordered">
                 <thead>
