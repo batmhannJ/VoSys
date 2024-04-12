@@ -51,8 +51,8 @@ $result = $row->get_result();
       ?>
 
     <div>
-        <select class="form-select" name="election" id="election">
-          <option value="" hidden>Select Election</option>
+        <label for="title">Select Election</label>
+          <select class="form-select" name="election" id="election">
           <?php
           foreach ($result as $key => $value) {
               echo '<option value="' . $value['id'] . '">' . $value['title'] . '</option>';
