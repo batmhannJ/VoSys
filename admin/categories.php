@@ -60,7 +60,7 @@ $result = $row->get_result();
           ?>
       </select>
     </div>
-    <br>
+    <hr>
     <div class="row">
         <div class="col-xs-12">
           <div class="box">
