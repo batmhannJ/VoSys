@@ -49,7 +49,7 @@ $result = $row->get_result();
           unset($_SESSION['success']);
         }
       ?>
-<section class="content">
+
     <div>
         <select class="form-select" name="election" id="election">
           <option value="" hidden>Select Election</option>
@@ -60,6 +60,7 @@ $result = $row->get_result();
           ?>
       </select>
     </div>
+  <section class="content">
     <div class="row">
         <div class="col-xs-12">
           <div class="box">
