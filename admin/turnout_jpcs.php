@@ -6,8 +6,8 @@ include 'includes/header.php';
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
-  <?php include 'includes/navbar.php'; ?>
-  <?php include 'includes/menubar.php'; ?>
+  <?php include 'includes/navbar_jpcs.php'; ?>
+  <?php include 'includes/menubar_jpcs.php'; ?>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -31,10 +31,28 @@ include 'includes/header.php';
       <!-- Display the CanvasJS pie chart -->
       <div id="chartContainer" style="height: 370px; width: 100%;"></div>
       <?php
+
+        $sql_voters_voted = "SELECT * 
+        FROM votes 
+        JOIN voters ON votes.voters_id = voters.id 
+        WHERE voters.organization = 'JPCS' 
+        GROUP BY votes.voters_id";
+        $query_voters_voted = $conn->query($sql_voters_voted);
+        $num_voters_voted = $query_voters_voted->num_rows;
+
+        // Query to get the number of remaining voters
+        $sql_remaining_voters = "SELECT voters.id, voters.lastname
+            FROM voters
+            LEFT JOIN votes ON voters.id = votes.voters_id
+            WHERE votes.voters_id IS NULL
+            AND voters.organization = 'JPCS'";
+        $query_remaining_voters = $conn->query($sql_remaining_voters);
+        $num_remaining_voters = $query_remaining_voters->num_rows;
+        $conn->close();
       // Assuming you have the $dataPoints array from the previous chart
       $dataPoints = array( 
-        array("organization" => "JPCS", "label"=>"Remaining Voters", "y"=>1000), // Assuming 1000 remaining voters for JPCS
-        array("organization" => "JPCS", "label"=>"Voters Voted", "y"=>500)
+        array("organization" => "JPCS", "label" => "Remaining Voters", "y" => $num_remaining_voters),
+        array("organization" => "JPCS", "label" => "Voters Voted", "y" => $num_voters_voted)
       );
       ?>
 
