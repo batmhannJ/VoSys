@@ -175,36 +175,32 @@
           <div class="small-box">
             <div class="inner">
             <?php
-              $sql = "SELECT * 
-                      FROM votes 
-                      JOIN voters ON votes.voters_id = voters.id 
-                      WHERE voters.organization = 'JPCS' 
-                      GROUP BY votes.voters_id";
-              $query = $conn->query($sql);
+                // Query to count the total number of votes in the 'JPCS' organization
+                $sql_total_votes = "SELECT COUNT(*) AS total_votes
+                                    FROM votes 
+                                    JOIN voters ON votes.voters_id = voters.id 
+                                    WHERE voters.organization = 'JPCS'";
+                $result_total_votes = $conn->query($sql_total_votes);
+                $row_total_votes = $result_total_votes->fetch_assoc();
+                $totalVotes = $row_total_votes['total_votes'];
 
-              $totalRows = $query->num_rows; // Total number of rows fetched
-              // Assuming you have a database connection, replace 'your_db_connection' with your actual database connection variable
-              $sql_count_voters = "SELECT COUNT(*) AS total_voters FROM voters WHERE organization = 'JPCS'";
-              $result_count_voters = $conn->query($sql_count_voters);
-              $row_count_voters = $result_count_voters->fetch_assoc();
-              $totalNumberOfVoters = $row_count_voters['total_voters'];
-              // Assuming this is the total number of voters in your database
+                // Query to count the total number of voters in the 'JPCS' organization
+                $sql_total_voters = "SELECT COUNT(*) AS total_voters
+                                    FROM voters 
+                                    WHERE organization = 'JPCS'";
+                $result_total_voters = $conn->query($sql_total_voters);
+                $row_total_voters = $result_total_voters->fetch_assoc();
+                $totalNumberOfVoters = $row_total_voters['total_voters'];
 
-              // Display each row and calculate the percentage
-              /*while ($row = $query->fetch_assoc()) {
-                  // Display your data here
-                  // For example:
-                  echo "Voter ID: " . $row['voters_id'] . ", Last Name: " . $row['lastname'] . "<br>";
-              }*/
+                // Calculate and display the percentage
+                if ($totalNumberOfVoters > 0) {
+                    $percentage = ($totalVotes / $totalNumberOfVoters) * 100;
+                    echo "<h3>" . $percentage . "%" ."</h3>";
+                } else {
+                    echo "Total number of voters is 0. Cannot calculate percentage.";
+                }
+                ?>
 
-              // Calculate and display the percentage
-              if ($totalNumberOfVoters > 0) {
-                  $percentage = ($totalRows / $totalNumberOfVoters) * 100;
-                  echo "<h3>" . $percentage . "%" ."</h3>";
-              } else {
-                  echo "Total number of voters is 0. Cannot calculate percentage.";
-              }
-              ?>
 
               <p>Voters Turnout</p>
             </div>
