@@ -23,6 +23,9 @@
                 } elseif ($username == 'JPCSadmin') {
                     header('location: home_jpcs.php');
                     exit();
+                } elseif ($username == 'CSCadmin') {
+                    header('location: home_csc.php');
+                    exit();
                 } else {
                     // Redirect to a default landing page if no specific landing page is defined for the admin
                     header('location: index.php');
