@@ -176,13 +176,6 @@
           <div class="small-box">
             <div class="inner">
             <?php
-    // Query to count the total number of votes
-    $sql_total_votes = "SELECT COUNT(*) AS total_votes
-                        FROM votes";
-    $result_total_votes = $conn->query($sql_total_votes);
-    $row_total_votes = $result_total_votes->fetch_assoc();
-    $totalVotes = $row_total_votes['total_votes'];
-
     // Query to count the total number of voters who have voted
     $sql_voters_voted = "SELECT COUNT(DISTINCT voters_id) AS voters_voted
                          FROM votes";
@@ -190,14 +183,18 @@
     $row_voters_voted = $result_voters_voted->fetch_assoc();
     $votersVoted = $row_voters_voted['voters_voted'];
 
+    // Assuming you have a variable containing the total number of voters
+    $totalNumberOfVoters = 12;
+
     // Calculate and display the percentage
-    if ($votersVoted > 0) {
-        $percentage = ($votersVoted - $totalNumberOfVoters) * 100;
+    if ($totalNumberOfVoters > 0) {
+        $percentage = ($votersVoted / $totalNumberOfVoters) * 100;
         echo "<h3>" . $percentage . "%" ."</h3>";
     } else {
-        echo "No voters have voted yet.";
+        echo "Total number of voters is 0. Cannot calculate percentage.";
     }
 ?>
+
 
 
           
