@@ -40,6 +40,15 @@ include 'includes/header.php';
       <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 
       <?php
+
+$colors = array(
+  "JPCS" => array("remaining-JPCS " => "#95d097", "voted-JPCS" => "#4CAF50"), // Example color for JPCS
+  "CODE-TG" => array("remaining-CODE-TG" => "#ff6666", "voted-CODE-TG" => "#800000"), // Example color for CODE-TG
+  "CSC" => array("remaining-CSC" => "#595959", "voted-CSC" => "#000000"), // Example color for CSC
+  "YMF" => array("remaining-YMF" => "#4d4dff", "voted-YMF" => "#00008b"), // Example color for YMF
+  "HMSO" => array("remaining-HMSO" => "#e6cc7f", "voted-HMSO" => "#cba328"),
+  "PASOA" => array("remaining-PASOA" => "#fff080", "voted-PASOA" => "#e6cc00")  // Example color for HMSO
+);
 // Query to get the number of voters voted for all organizations
 $sql_voters_voted = "SELECT voters.organization, COUNT(*) AS voters_voted_count
                      FROM votes 
@@ -68,20 +77,19 @@ while ($row = $query_remaining_voters->fetch_assoc()) {
 }
 
 // Combine the data to construct the $dataPoints array
+// Combine the data to construct the $dataPoints array
 $dataPoints = array();
 foreach ($voters_voted_by_organization as $organization => $voters_voted_count) {
     $remaining_voters_count = $remaining_voters_by_organization[$organization];
-    $dataPoints[] = array("organization" => $organization, "label" => "Remaining Voters", "y" => $remaining_voters_count);
-    $dataPoints[] = array("organization" => $organization, "label" => "Voters Voted", "y" => $voters_voted_count);
+    $dataPoints[] = array("organization" => $organization, "label" => "Remaining Voters", "y" => $remaining_voters_count, "color" => $colors[$organization]["remaining"]);
+    $dataPoints[] = array("organization" => $organization, "label" => "Voters Voted", "y" => $voters_voted_count, "color" => $colors[$organization]["voted"]);
 }
+
 
 // Close connection
 $conn->close();
 
 // Outputting the data points (optional)
-foreach ($dataPoints as $dataPoint) {
-    echo "Organization: " . $dataPoint['organization'] . ", Label: " . $dataPoint['label'] . ", Value: " . $dataPoint['y'] . "<br>";
-}
 ?>
 
     </section>   
@@ -105,7 +113,7 @@ function renderChart(dataPoints) {
   var chart = new CanvasJS.Chart("chartContainer", {
     animationEnabled: true,
     title: {
-      text: "Voter Turnout by Organization"
+      text: "Voters Turnout by Organization"
     },
     data: [{
       type: "pie",
@@ -115,6 +123,15 @@ function renderChart(dataPoints) {
       dataPoints: dataPoints
     }]
   });
+  var legend = chart.options.data[0].legendText;
+    for (var i = 0; i < dataPoints.length; i += 2) {
+        var organization = dataPoints[i].organization;
+        var remainingColor = dataPoints[i].color;
+        var votedColor = dataPoints[i + 1].color;
+        legend = legend.replace("Remaining Voters", "<span style='color:" + remainingColor + "'>" + organization + " - Remaining Voters</span>");
+        legend = legend.replace("Voters Voted", "<span style='color:" + votedColor + "'>" + organization + " - Voters Voted</span>");
+    }
+    chart.options.data[0].legendText = legend;
   chart.render();
 }
 

@@ -26,7 +26,7 @@ $result = $row->get_result();
         <li class="active">Categories</li>
       </ol>
     </section>
-<section class="content">
+
     <?php
         if(isset($_SESSION['error'])){
           echo "
@@ -49,27 +49,24 @@ $result = $row->get_result();
           unset($_SESSION['success']);
         }
       ?>
-    <div class="row">
-        <div class="col-xs-12">
-    <div class="box">
+<section class="content">
+    <div>
         <select class="form-select" name="election" id="election">
-    <option value="" hidden>Select Election</option>
-    <?php
-    foreach ($result as $key => $value) {
-        echo '<option value="' . $value['id'] . '">' . $value['title'] . '</option>';
-    }
-    ?>
-</select>
+          <option value="" hidden>Select Election</option>
+          <?php
+          foreach ($result as $key => $value) {
+              echo '<option value="' . $value['id'] . '">' . $value['title'] . '</option>';
+          }
+          ?>
+      </select>
     </div>
+    <hr>
     <div class="row">
         <div class="col-xs-12">
-    <div class="box">
-        <div class="card-header d-flex align-items-center justify-content-between">
-
+          <div class="box">
             <div class="box-header with-border">
               <a href="#addcat" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
-      </div>
-        </div>
+            </div>
         <!--<span class="small d-inline-block d-md-none" data-toggle="tooltip" data-placement="left" title="Scroll horizontally to view more content">
             <i class="bi bi-arrows-expand"></i> Scroll Horizontally
         </span>-->
@@ -98,14 +95,9 @@ $result = $row->get_result();
                                   <th scope="row">' . $i++ . '</th>
                                   <td>' . $row['name'] . '</td>
                                   <td class="text-center">
-                                      <a href="#" class="btn btn-primary btn-sm edit-category" data-id="' . $row['id'] . '" data-name="' . $row['name'] . '">
-                                          <i class="bi bi-pencil"></i> Edit
-                                      </a>
-                                      <a href="#" class="btn btn-danger btn-sm category-delete" data-id="' . $row['id'] . '" data-name="' . $row['name'] . '">
-                                          <i class="bi bi-trash"></i> Delete
-                                      </a>
-                                  </td>
-                              </tr>';
+                        <a href="#" style="margin-right: 20px;" class="btn btn-primary btn-sm edit btn-flat" data-bs-toggle="modal" data-bs-target="#editCat" data-id="' . $row['id'] . '">Edit</a>
+                        <a href="#" class="btn btn-danger btn-sm delete btn-flat" data-bs-toggle="modal" data-bs-target="#deleteCat" data-id="' . $row['id'] . '" data-name="' . $row['title'] . '">Delete</a></td>
+                  </tr>';
                         }
                     } else {
                         echo '<tr>
@@ -146,12 +138,12 @@ $result = $row->get_result();
                     </div>
                 </div>
             </div>
-             End Edit Category Modal Dialog -->
+            End Edit Category Modal Dialog -->
 
         </div>
     </div>
     </div>
-
+    </div>
 </section>
 </div>
 <?php include 'includes/footer.php'; ?>
