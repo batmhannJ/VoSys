@@ -58,14 +58,14 @@ for($i = 0; $i < 10; $i++){
 <?php
  
 $dataPoints = array(
-  array("label"=> "Core 1", "y"=> 20),
-  array("label"=> "Core 2", "y"=> 65),
-  array("label"=> "Core 3", "y"=> 11),
-  array("label"=> "Core 4", "y"=> 5),
-  array("label"=> "Core 5", "y"=> 48),
-  array("label"=> "Core 6", "y"=> 8),
-  array("label"=> "Core 7", "y"=> 2),
-  array("label"=> "Core 8", "y"=> 18)
+  array("label"=> "President 1", "y"=> 20),
+  array("label"=> "President 2", "y"=> 65),
+  array("label"=> "VicePresident 1", "y"=> 11),
+  array("label"=> "VicePresident 2", "y"=> 5),
+  array("label"=> "Secretary 1", "y"=> 48),
+  array("label"=> "Secretary 2", "y"=> 8),
+  array("label"=> "Treasurer 1", "y"=> 2),
+  array("label"=> "Treasurer 2", "y"=> 18)
 );
  
 ?>
@@ -77,7 +77,7 @@ window.onload = function () {
  
 var chart = new CanvasJS.Chart("chartContainer", {
   title: {
-    text: "CPU Usage in 8-Core Processor"
+    text: "LIVE VOTES"
   },
   axisY: {
     minimum: 0,
