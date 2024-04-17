@@ -112,7 +112,6 @@
 
                 echo "<h3>".$query->num_rows."</h3>";
               ?>
-             
               <p>Total Voters</p>
             </div>
             <div class="icon">

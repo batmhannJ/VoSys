@@ -49,7 +49,7 @@ $colors = array(
   "HMSO" => array("remaining" => "#e6cc7f", "voted" => "#cba328"),
   "PASOA" => array("remaining" => "#fff080", "voted" => "#e6cc00")  // Example color for HMSO
 );
-// Query to get the number of voters voted for all organizations
+
 $sql_voters_voted = "SELECT voters.organization, COUNT(*) AS voters_voted_count
                      FROM votes 
                      JOIN voters ON votes.voters_id = voters.id 
