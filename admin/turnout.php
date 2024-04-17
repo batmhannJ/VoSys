@@ -50,7 +50,9 @@ $colors = array(
   "PASOA" => array("remaining" => "#fff080", "voted" => "#e6cc00")  // Example color for HMSO
 );
 // Query to get the number of voters voted for all organizations
-$sql_voters_voted = "SELECT voters.organization, COUNT(*) AS voters_voted_count
+
+// Query to count the total number of voters who have voted per organization
+$sql_voters_voted = "SELECT voters.organization, COUNT(DISTINCT votes.voters_id) AS voters_voted_count
                      FROM votes 
                      JOIN voters ON votes.voters_id = voters.id 
                      GROUP BY voters.organization";
@@ -77,7 +79,6 @@ while ($row = $query_remaining_voters->fetch_assoc()) {
 }
 
 // Combine the data to construct the $dataPoints array
-// Combine the data to construct the $dataPoints array
 $dataPoints = array();
 foreach ($voters_voted_by_organization as $organization => $voters_voted_count) {
     $remaining_voters_count = $remaining_voters_by_organization[$organization];
@@ -85,12 +86,12 @@ foreach ($voters_voted_by_organization as $organization => $voters_voted_count) 
     $dataPoints[] = array("organization" => $organization, "label" => "Voters Voted", "y" => $voters_voted_count, "color" => $colors[$organization]["voted"]);
 }
 
-
 // Close connection
 $conn->close();
 
 // Outputting the data points (optional)
 ?>
+
 
     </section>   
   </div>
