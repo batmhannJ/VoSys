@@ -53,7 +53,6 @@
       <table id="example1" class="table table-bordered">
         <thead>
             <th scope="col">#</th>
-            <th scope="col">Id</th>
             <th scope="col">Title</th>
             <th scope="col">Voters</th>
             <th scope="col">Status</th>
@@ -69,7 +68,6 @@
 
             echo '<tr>
                     <th scope="row">' . $i++ . '</th>
-                    <td>'.$row['id'].'</td>
                     <td>'.$row['title'].'</td>
                     <td>' . $row['voters'];
             '</td>';

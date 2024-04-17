@@ -1,9 +1,9 @@
 <?php
 include 'includes/session.php';
 
-	require 'C:\Xampp\htdocs\votesystem\admin\PHPMailer\src\PHPMailer.php';
-	require 'C:\Xampp\htdocs\votesystem\admin\PHPMailer\src\SMTP.php';
-	require 'C:\Xampp\htdocs\votesystem\admin\PHPMailer\src\Exception.php';
+require '/home/u247141684/domains/vosys.org/public_html/admin/PHPMailer/src/PHPMailer.php';
+require '/home/u247141684/domains/vosys.org/public_html/admin/PHPMailer/src/SMTP.php';
+require '/home/u247141684/domains/vosys.org/public_html/admin/PHPMailer/src/Exception.php';
 
 	use PHPMailer\PHPMailer\PHPMailer;
 	use PHPMailer\PHPMailer\SMTP;

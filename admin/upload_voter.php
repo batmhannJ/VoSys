@@ -1,12 +1,13 @@
 <?php
-
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 include 'includes/session.php';
 include 'includes/conn.php';
 
 require 'vendor/autoload.php';
-    require 'C:\Xampp\htdocs\votesystem\admin\PHPMailer\src\PHPMailer.php';
-    require 'C:\Xampp\htdocs\votesystem\admin\PHPMailer\src\SMTP.php';
-    require 'C:\Xampp\htdocs\votesystem\admin\PHPMailer\src\Exception.php';
+    require '/home/u247141684/domains/vosys.org/public_html/admin/PHPMailer/src/PHPMailer.php';
+    require '/home/u247141684/domains/vosys.org/public_html/admin/PHPMailer/src/SMTP.php';
+    require '/home/u247141684/domains/vosys.org/public_html/admin/PHPMailer/src/Exception.php';
 
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\SMTP;

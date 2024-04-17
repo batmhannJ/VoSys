@@ -4,8 +4,8 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
-  <?php include 'includes/navbar_jpcs.php'; ?>
-  <?php include 'includes/menubar_jpcs.php'; ?>
+  <?php include 'includes/navbar_csc.php'; ?>
+  <?php include 'includes/menubar_csc.php'; ?>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -15,7 +15,7 @@
         Dashboard
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
         <li class="active">Dashboard</li>
       </ol>
     </section>

@@ -38,19 +38,10 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="lastname" class="col-sm-3 control-label">Organization</label>
-
-                    <div class="col-sm-9">
-                      <select id="organization" name="organization" class="form-control" value="Choose below" required>
-                      <option value="" selected hidden>Choose...</option>
-                      <option>CSC</option>
-                      <option>JPCS</option>
-                      <option>YMF</option>
-                      <option>CODE-TG</option>
-                      <option>PASOA</option>
-                      <option>HMSO</option>
-                    </select>
-                    </div>
+                  <label for="organization" class="col-sm-3 control-label">Organization</label>
+                  <div class="col-sm-9">
+                      <input type="text" id="organization" name="organization" class="form-control" value="JPCS" readonly>
+                  </div>                  
                 </div>
                 <!--<div class="form-group">
                     <label for="password" class="col-sm-3 control-label">Password</label>
@@ -99,35 +90,39 @@
                     <label for="edit_lastname" class="col-sm-3 control-label">Lastname</label>
 
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="edit_lastname" name="lastname">
+                        <input type="text" class="form-control" id="edit_lastname" name="lastname">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="edit_email" class="col-sm-3 control-label">Email</label>
 
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="edit_email" name="email">
+                        <input type="text" class="form-control" id="edit_email" name="email">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="edit_yearlvl" class="col-sm-3 control-label">Year Level</label>
-
+                <label for="edit_yearlvl" class="col-sm-3 control-label">Year Level</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="edit_yearlvl" name="yearLvl">
+                        <select id="edit_yearlvl" name="yearLvl" class="form-control">
+                            <option value="1">1st Year</option>
+                            <option value="2">2nd Year</option>
+                            <option value="3">3rd Year</option>
+                            <option value="4">4th Year</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="edit_password" class="col-sm-3 control-label">Password</label>
 
                     <div class="col-sm-9">
-                      <input type="password" class="form-control" id="edit_password" name="password">
+                        <input type="password" class="form-control" id="edit_password" name="password">
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
-              <button type="submit" class="btn btn-success btn-flat" name="edit"><i class="fa fa-check-square-o"></i> Update</button>
-              </form>
+                <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+                <button type="submit" class="btn btn-success btn-flat" name="edit"><i class="fa fa-check-square-o"></i> Update</button>
+                </form>
             </div>
         </div>
     </div>
