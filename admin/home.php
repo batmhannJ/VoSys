@@ -193,7 +193,7 @@
 
               // Calculate and display the percentage
               if ($totalNumberOfVoters > 0) {
-                  $percentage = ($totalVotes / $totalNumberOfVoters) * 100;
+                  $percentage = ($totalNumberOfVoters / $totalVotes) * 100;
                   echo "<h3>" . $percentage . "%" ."</h3>";
               } else {
                   echo "Total number of voters is 0. Cannot calculate percentage.";
