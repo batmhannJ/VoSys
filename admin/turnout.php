@@ -56,7 +56,6 @@ $sql_voters_voted = "SELECT voters.organization, COUNT(*) AS voters_voted_count
                      GROUP BY voters.organization";
 $query_voters_voted = $conn->query($sql_voters_voted);
 
-// Constructing an associative array to store the number of voters voted for each organization
 $voters_voted_by_organization = array();
 while ($row = $query_voters_voted->fetch_assoc()) {
     $voters_voted_by_organization[$row['organization']] = $row['voters_voted_count'];
