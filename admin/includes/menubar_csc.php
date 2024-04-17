@@ -19,7 +19,7 @@
       <li class="header">MANAGE</li>
       <!--<li class=""><a href="sub_admin.php"><i class="fa fa-user-plus"></i> <span>Sub Admins</span></a></li>-->
       <li class=""><a href="voters_csc.php"><i class="fa fa-users"></i> <span>Voters</span></a></li>
-      <li class=""><a href=""><i class="fa fa-tasks"></i> <span>Positions</span></a></li>
+      <li class=""><a href="positions_csc.php"><i class="fa fa-tasks"></i> <span>Positions</span></a></li>
       <li class=""><a href="candidates_csc.php"><i class="fa fa-black-tie"></i> <span>Candidates</span></a></li>
       <li class=""><a href="elections_csc.php"><i class="fa fa-cog"></i> <span>Elections</span></a></li>
       <!--<li class=""><a href="categories.php"><i class="fa fa-cog"></i> <span>Categories</span></a></li>-->
