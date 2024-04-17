@@ -42,20 +42,21 @@ include 'includes/header.php';
       <?php
 
 $colors = array(
-  "JPCS" => array("remaining-JPCS " => "#95d097", "voted-JPCS" => "#4CAF50"), // Example color for JPCS
-  "CODE-TG" => array("remaining-CODE-TG" => "#ff6666", "voted-CODE-TG" => "#800000"), // Example color for CODE-TG
-  "CSC" => array("remaining-CSC" => "#595959", "voted-CSC" => "#000000"), // Example color for CSC
-  "YMF" => array("remaining-YMF" => "#4d4dff", "voted-YMF" => "#00008b"), // Example color for YMF
-  "HMSO" => array("remaining-HMSO" => "#e6cc7f", "voted-HMSO" => "#cba328"),
-  "PASOA" => array("remaining-PASOA" => "#fff080", "voted-PASOA" => "#e6cc00")  // Example color for HMSO
+  "JPCS" => array("remaining" => "#95d097", "voted" => "#4CAF50"), // Example color for JPCS
+  "CODE-TG" => array("remaining" => "#ff6666", "voted" => "#800000"), // Example color for CODE-TG
+  "CSC" => array("remaining" => "#595959", "voted" => "#000000"), // Example color for CSC
+  "YMF" => array("remaining" => "#4d4dff", "voted" => "#00008b"), // Example color for YMF
+  "HMSO" => array("remaining" => "#e6cc7f", "voted" => "#cba328"),
+  "PASOA" => array("remaining" => "#fff080", "voted" => "#e6cc00")  // Example color for HMSO
 );
-
+// Query to get the number of voters voted for all organizations
 $sql_voters_voted = "SELECT voters.organization, COUNT(*) AS voters_voted_count
                      FROM votes 
                      JOIN voters ON votes.voters_id = voters.id 
                      GROUP BY voters.organization";
 $query_voters_voted = $conn->query($sql_voters_voted);
 
+// Constructing an associative array to store the number of voters voted for each organization
 $voters_voted_by_organization = array();
 while ($row = $query_voters_voted->fetch_assoc()) {
     $voters_voted_by_organization[$row['organization']] = $row['voters_voted_count'];

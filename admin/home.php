@@ -112,6 +112,7 @@
 
                 echo "<h3>".$query->num_rows."</h3>";
               ?>
+             
               <p>Total Voters</p>
             </div>
             <div class="icon">
@@ -121,7 +122,6 @@
           </div>
         </div>
         <!-- ./col -->
-        
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
           <div class="small-box">
@@ -208,17 +208,6 @@
               <i class="fa fa-black-tie"></i>
             </div>
             <a href="turnout.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-      </div>
-
-      <p>Live Poll</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-black-tie"></i>
-            </div>
-            <a href="livepoll.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
