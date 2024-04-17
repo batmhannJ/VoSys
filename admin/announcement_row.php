@@ -3,7 +3,7 @@
 
 	if(isset($_POST['id'])){
 		$id = $_POST['id'];
-		$sql = "SELECT * FROM announcement WHERE id = '$id'";
+		$sql = "SELECT * FROM announcement WHERE id_announcement = '$id'";
 		$query = $conn->query($sql);
 		$row = $query->fetch_assoc();
 

@@ -87,7 +87,7 @@
                   </thead>
                   <tbody>
                     <?php
-                    $sql = "SELECT *, announcement.id AS id, 
+                    $sql = "SELECT *, announcement.id_announcement AS id, 
                             announcement.announcement AS announcement, 
                             announcement.startdate AS start, 
                             announcement.addedby AS added
