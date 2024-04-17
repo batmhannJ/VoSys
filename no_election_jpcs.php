@@ -24,7 +24,7 @@ include 'includes/header_jpcs.php';
 // Assuming you have already established a database connection
 
 // Perform a query to fetch the most recent announcement
-$query = "SELECT * FROM announcement ORDER BY id DESC LIMIT 1";
+$query = "SELECT * FROM announcement ORDER BY id_announcement DESC LIMIT 1";
 $result = $conn->query($query);
 
 // Check if the query was successful and if there is at least one row
