@@ -176,22 +176,12 @@
           <div class="small-box">
             <div class="inner">
             <?php
-// Query to count the total number of votes in the 'JPCS' organization
                 $sql_total_votes = "SELECT COUNT(*) AS total_votes
                                     FROM votes 
-                                    JOIN voters ON votes.voters_id = voters.id 
-                                    WHERE voters.organization = 'JPCS'";
+                                    JOIN voters ON votes.voters_id = voters.id";
                 $result_total_votes = $conn->query($sql_total_votes);
                 $row_total_votes = $result_total_votes->fetch_assoc();
                 $totalVotes = $row_total_votes['total_votes'];
-
-                // Query to count the total number of voters in the 'JPCS' organization
-                $sql_total_voters = "SELECT COUNT(*) AS total_voters
-                                    FROM voters 
-                                    WHERE organization = 'JPCS'";
-                $result_total_voters = $conn->query($sql_total_voters);
-                $row_total_voters = $result_total_voters->fetch_assoc();
-                $totalNumberOfVoters = $row_total_voters['total_voters'];
 
                 // Calculate and display the percentage
                 if ($totalNumberOfVoters > 0) {
