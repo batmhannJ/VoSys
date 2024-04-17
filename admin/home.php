@@ -176,10 +176,8 @@
           <div class="small-box">
             <div class="inner">
             <?php
-    // Query to count the total number of votes
               $sql_total_votes = "SELECT COUNT(*) AS total_votes
-                                  FROM votes 
-                                  JOIN voters ON votes.voters_id = voters.id";
+                                  FROM votes";
               $result_total_votes = $conn->query($sql_total_votes);
               $row_total_votes = $result_total_votes->fetch_assoc();
               $totalVotes = $row_total_votes['total_votes'];
@@ -193,12 +191,13 @@
 
               // Calculate and display the percentage
               if ($totalNumberOfVoters > 0) {
-                  $percentage = ($totalNumberOfVoters / $totalVotes) * 100;
+                  $percentage = ($totalVotes / $totalNumberOfVoters) * 100;
                   echo "<h3>" . $percentage . "%" ."</h3>";
               } else {
                   echo "Total number of voters is 0. Cannot calculate percentage.";
               }
           ?>
+
 
           
               <p>Voters Turnout</p>
