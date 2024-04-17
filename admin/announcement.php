@@ -95,6 +95,7 @@
                             GROUP BY announcement.id_announcement
                             ORDER BY announcement.startdate ASC";
                     $query = $conn->query($sql);
+                    $counter = 1;
                     while ($row = $query->fetch_assoc()) {
                       echo "
                         <tr>
@@ -103,7 +104,7 @@
                               <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
                               <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."'><i class='fa fa-trash'></i> Delete</button>
                             </td>
-                          <td>" . $row['id_announcement'] . "</td>
+                          <td>" . ($counter++) . "</td>
                           <td>" . $row['announcement'] . "</td>
                           <td>" . $row['startdate'] . "</td>
                           <td>" . $row['addedby'] . "</td>
