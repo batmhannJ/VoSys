@@ -4,7 +4,7 @@ include 'includes/session.php';
 include 'includes/header_jpcs.php'; 
 
 function is_active_election($conn){
-	$sql = "SELECT * FROM election WHERE title = 'Junior Philippine Computer Society Election' && status = 1";
+	$sql = "SELECT * FROM election WHERE title = 'JPCS - Junior Philippine Computer Society Election' && status = 1";
 	$result = $conn->query($sql);
 
 	if($result->num_rows > 0){
