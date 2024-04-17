@@ -177,28 +177,28 @@
             <div class="inner">
             <?php
     // Query to count the total number of votes
-              $sql_total_votes = "SELECT COUNT(*) AS total_votes
-                                  FROM votes 
-                                  JOIN voters ON votes.voters_id = voters.id";
-              $result_total_votes = $conn->query($sql_total_votes);
-              $row_total_votes = $result_total_votes->fetch_assoc();
-              $totalVotes = $row_total_votes['total_votes'];
+    $sql_total_votes = "SELECT COUNT(*) AS total_votes
+                        FROM votes";
+    $result_total_votes = $conn->query($sql_total_votes);
+    $row_total_votes = $result_total_votes->fetch_assoc();
+    $totalVotes = $row_total_votes['total_votes'];
 
-              // Query to count the total number of voters
-              $sql_total_voters = "SELECT COUNT(*) AS total_voters
-                                  FROM voters";
-              $result_total_voters = $conn->query($sql_total_voters);
-              $row_total_voters = $result_total_voters->fetch_assoc();
-              $totalNumberOfVoters = $row_total_voters['total_voters'];
+    // Query to count the total number of voters who have voted
+    $sql_voters_voted = "SELECT COUNT(DISTINCT voters_id) AS voters_voted
+                         FROM votes";
+    $result_voters_voted = $conn->query($sql_voters_voted);
+    $row_voters_voted = $result_voters_voted->fetch_assoc();
+    $votersVoted = $row_voters_voted['voters_voted'];
 
-              // Calculate and display the percentage
-              if ($totalNumberOfVoters > 0) {
-                  $percentage = ($totalVotes / $totalNumberOfVoters) * 100;
-                  echo "<h3>" . $percentage . "%" ."</h3>";
-              } else {
-                  echo "Total number of voters is 0. Cannot calculate percentage.";
-              }
-          ?>
+    // Calculate and display the percentage
+    if ($votersVoted > 0) {
+        $percentage = ($votersVoted / $totalNumberOfVoters) * 100;
+        echo "<h3>" . $percentage . "%" ."</h3>";
+    } else {
+        echo "No voters have voted yet.";
+    }
+?>
+
 
           
               <p>Voters Turnout</p>
