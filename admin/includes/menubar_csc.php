@@ -14,22 +14,21 @@
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">REPORTS</li>
-      <li class=""><a href="home.php"><i class="fa fa-dashboard"></i> <span>Dashboard </span></a></li>
-      <li class=""><a href="votes.php"><span class="glyphicon glyphicon-lock"></span> <span>Votes Result</span></a></li>
+      <li class=""><a href="home_csc.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+      <li class=""><a href="votes_csc.php"><span class="glyphicon glyphicon-lock"></span> <span>Votes Result</span></a></li>
       <li class="header">MANAGE</li>
-      <li class=""><a href="announcement.php"><i class="fa fa-user-plus"></i> <span>Announcement</span></a></li>
-      <li class=""><a href="sub_admin.php"><i class="fa fa-user-plus"></i> <span>Sub Admins</span></a></li>
-      <li class=""><a href="voters.php"><i class="fa fa-users"></i> <span>Voters</span></a></li>
-      <!--<li class=""><a href="positions.php"><i class="fa fa-tasks"></i> <span>Positions</span></a></li>
-      <li class=""><a href="candidates.php"><i class="fa fa-black-tie"></i> <span>Candidates</span></a></li>-->
-      <li class=""><a href="elections.php"><i class="fa fa-cog"></i> <span>Elections</span></a></li>
+      <!--<li class=""><a href="sub_admin.php"><i class="fa fa-user-plus"></i> <span>Sub Admins</span></a></li>-->
+      <li class=""><a href="voters_csc.php"><i class="fa fa-users"></i> <span>Voters</span></a></li>
+      <li class=""><a href="positions_csc.php"><i class="fa fa-tasks"></i> <span>Positions</span></a></li>
+      <li class=""><a href="candidates_csc.php"><i class="fa fa-black-tie"></i> <span>Candidates</span></a></li>
+      <li class=""><a href="elections_csc.php"><i class="fa fa-cog"></i> <span>Elections</span></a></li>
       <!--<li class=""><a href="categories.php"><i class="fa fa-cog"></i> <span>Categories</span></a></li>-->
       <li class="header">SETTINGS</li>
       
       <!--<li class=""><a href="#" data-toggle="modal"><i class="fa fa-book"></i> <span>Archives</span></a></li>-->
-      <li class=""><a href="history.php"><i class="fa fa-clock-o"></i> <span>History</span></a></li>
+      <li class=""><a href="history_csc.php"><i class="fa fa-clock-o"></i> <span>History</span></a></li>
       
-      <!--<li class=""><a href="ballot.php"><i class="fa fa-file-text"></i> <span>Ballot Position</span></a></li>-->
+      <li class=""><a href="ballot_csc.php"><i class="fa fa-file-text"></i> <span>Ballot Position</span></a></li>
     </ul>
   </section>
   <!-- /.sidebar -->
