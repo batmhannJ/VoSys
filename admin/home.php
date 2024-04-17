@@ -192,7 +192,7 @@
 
     // Calculate and display the percentage
     if ($votersVoted > 0) {
-        $percentage = ($votersVoted / $totalNumberOfVoters) * 100;
+        $percentage = ($votersVoted - $totalNumberOfVoters) * 100;
         echo "<h3>" . $percentage . "%" ."</h3>";
     } else {
         echo "No voters have voted yet.";
