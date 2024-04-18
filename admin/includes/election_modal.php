@@ -42,27 +42,9 @@
                     <div class="form-group">
                         <label for="starttime" class="col-sm-3 control-label">Start Time</label>
                         <div class="col-sm-9">
-                            <input type="datetime-local" class="form-control" id="starttime" name="starttime" required>
+                            <input type="datetime-local" class="form-control" id="starttime" name="starttime" required min="YYYY-MM-DDTHH:MM" required>
                         </div>
                     </div>
-                    
-<script>
-    // Get the current date and time in Asia/Tokyo time zone
-    var now = new Date();
-    var asiaTokyoOffset = +9 * 60; // Tokyo is UTC+9
-    var nowAsiaTokyo = new Date(now.getTime() + asiaTokyoOffset * 60000);
-
-    // Format the date and time string to match the datetime-local input format
-    var year = nowAsiaTokyo.getFullYear();
-    var month = ('0' + (nowAsiaTokyo.getMonth() + 1)).slice(-2);
-    var day = ('0' + nowAsiaTokyo.getDate()).slice(-2);
-    var hours = ('0' + nowAsiaTokyo.getHours()).slice(-2);
-    var minutes = ('0' + nowAsiaTokyo.getMinutes()).slice(-2);
-    var currentDateTime = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
-
-    // Set the min attribute of the input field to the current date and time
-    document.getElementById("starttime").min = currentDateTime;
-</script>
 
 <!-- Add end time input -->
                     <div class="form-group">
