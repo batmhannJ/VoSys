@@ -46,22 +46,11 @@
                         </div>
                     </div>
                     <script>
-    // Get the current date and time
-    var now = new Date();
-    var year = now.getFullYear();
-    var month = now.getMonth() + 1; // Month starts from 0
-    var day = now.getDate();
-    var hours = now.getHours();
-    var minutes = now.getMinutes();
+    // Get the current date and time in Asia/Tokyo time zone
+    var now = new Date().toLocaleString('en-US', { timeZone: 'Asia/Tokyo' });
 
-    // Add leading zero if needed
-    if (month < 10) month = "0" + month;
-    if (day < 10) day = "0" + day;
-    if (hours < 10) hours = "0" + hours;
-    if (minutes < 10) minutes = "0" + minutes;
-
-    // Format the date and time string
-    var currentDateTime = year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
+    // Format the date and time string to match the datetime-local input format
+    var currentDateTime = now.slice(0, 16); // Extract YYYY-MM-DDTHH:MM format
 
     // Set the min attribute of the input field to the current date and time
     document.getElementById("starttime").min = currentDateTime;
@@ -146,7 +135,6 @@
                             <input type="datetime-local" class="form-control" id="edit_starttime" name="starttime" required>
                         </div>
                     </div>
-
                 <!-- Add end time input -->
                     <div class="form-group">
                         <label for="edit_endtime" class="col-sm-3 control-label">End Time</label>
