@@ -45,6 +45,27 @@
                             <input type="datetime-local" class="form-control" id="starttime" name="starttime" required>
                         </div>
                     </div>
+                    <script>
+    // Get the current date and time
+    var now = new Date();
+    var year = now.getFullYear();
+    var month = now.getMonth() + 1; // Month starts from 0
+    var day = now.getDate();
+    var hours = now.getHours();
+    var minutes = now.getMinutes();
+
+    // Add leading zero if needed
+    if (month < 10) month = "0" + month;
+    if (day < 10) day = "0" + day;
+    if (hours < 10) hours = "0" + hours;
+    if (minutes < 10) minutes = "0" + minutes;
+
+    // Format the date and time string
+    var currentDateTime = year + "-" + month + "-" + day + "T" + hours + ":" + minutes;
+
+    // Set the min attribute of the input field to the current date and time
+    document.getElementById("starttime").min = currentDateTime;
+</script>
 
 <!-- Add end time input -->
                     <div class="form-group">
