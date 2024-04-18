@@ -39,14 +39,10 @@
                     </select>
                     </div>
                 </div>
-                <? php
-                date_default_timezone_set('Asia/Taipei');
-                $currentDateTime = date('Y-m-d\TH:i');
-                ?>
                     <div class="form-group">
                         <label for="starttime" class="col-sm-3 control-label">Start Time</label>
                         <div class="col-sm-9">
-                            <input type="datetime-local" class="form-control" id="starttime" name="starttime" required min="<?php echo $currentDateTime; ?>" required>
+                            <input type="datetime-local" class="form-control" id="starttime" name="starttime" required>
                         </div>
                     </div>
 
