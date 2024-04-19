@@ -130,17 +130,17 @@
 
   <script>
   $(function(){
-    $(document).on('click', '.edit', function(e){
+    $(document).on('click', '.editAnnouncement', function(e){
       e.preventDefault();
-      $('#edit').modal('show');
-      var id = $(this).data('id');
+      $('#editAnnouncement').modal('show');
+      var id = $(this).data('id_announcement');
       getRow(id);
     });
 
-    $(document).on('click', '.delete', function(e){
+    $(document).on('click', '.deleteAnnouncement', function(e){
       e.preventDefault();
-      $('#delete').modal('show');
-      var id = $(this).data('id');
+      $('#deleteAnnouncement').modal('show');
+      var id = $(this).data('id_announcement');
       getRow(id);
     });
 
