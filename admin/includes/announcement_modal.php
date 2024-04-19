@@ -16,12 +16,6 @@
                       <textarea style="width: 95%; margin-left: 20px;" name="announcement" class="form-control" rows="6" placeholder="Enter Message Here"></textarea>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="edit_starttime" class="col-sm-3 control-label">Start Time</label>
-                    <div class="col-sm-9">
-                        <input type="datetime-local" class="form-control" id="edit_starttime" name="starttime" required>
-                    </div>
-                </div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
