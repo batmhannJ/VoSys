@@ -134,14 +134,14 @@
     $(document).on('click', '.editAnnouncement', function(e){
       e.preventDefault();
       $('#editAnnouncement').modal('show');
-      var id = $(this).data('id');
+      var id = $(this).data('id_announcement');
       getRow(id);
     });
 
     $(document).on('click', '.deleteAnnouncement', function(e){
       e.preventDefault();
       $('#deleteAnnouncement').modal('show');
-      var id = $(this).data('id');
+      var id = $(this).data('id_announcement');
       getRow(id);
     });
 
