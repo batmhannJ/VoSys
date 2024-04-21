@@ -114,7 +114,7 @@
                     <label for="edit_position" class="col-sm-3 control-label">Position</label>
 
                     <div class="col-sm-9">
-                      <select class="form-control" id="edit_position" name="position" required>
+                      <select class="form-control" id="edit_name" name="name" required>
                         <option value="" selected id="posselect"></option>
                         <?php
                           $sql = "SELECT * FROM categories WHERE election_id = 1";

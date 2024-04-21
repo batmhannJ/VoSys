@@ -5,7 +5,7 @@
 		$id = $_POST['id'];
 		$firstname = $_POST['firstname'];
 		$lastname = $_POST['lastname'];
-		$position = $_POST['position'];
+		$position = $_POST['name'];
 		$platform = $_POST['platform'];
 
 		$sql = "UPDATE candidates SET firstname = '$firstname', lastname = '$lastname', category_id = '$position', platform = '$platform' WHERE id = '$id'";
