@@ -7,10 +7,12 @@ require_once 'includes/conn.php'; // Adjust the path as per your file structure
 
 
 // Query to calculate vote count for each candidate
-$sql = "SELECT candidates.firstname, candidates.lastname, COUNT(votes.candidate_id) AS vote_count
+$sql = "SELECT candidates.firstname, candidates.lastname, categories.name AS position_name, COUNT(votes.candidate_id) AS vote_count
         FROM candidates
         LEFT JOIN votes ON candidates.id = votes.candidate_id
+        LEFT JOIN categories ON candidates.category_id = categories.id
         GROUP BY candidates.id";
+
 
 $result = $conn->query($sql);
 
@@ -54,17 +56,19 @@ $pdfContent = "
 <center><h1>Election Results</h1></center>
 <h2>Candidates Vote Count</h2>
 <table>
-  <thead>
+    <thead>
     <tr>
-      <th>Candidates</th>
-      <th>Vote Count</th>
+        <th>Vote Count</th>
+        <th>Candidates</th>
+        <th>Vote Count</th>
     </tr>
-  </thead>
-  <tbody>";
+    </thead>
+<tbody>";
 
 // Populate data into table rows
 while ($row = $result->fetch_assoc()) {
     $pdfContent .= "<tr>
+                        <td>{row['_position_name']}</td>
                         <td>{$row['firstname']} {$row['lastname']}</td>
                         <td>{$row['vote_count']}</td>
                     </tr>";
