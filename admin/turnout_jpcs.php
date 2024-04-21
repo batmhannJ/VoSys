@@ -31,7 +31,9 @@ include 'includes/header.php';
       <!-- Display the CanvasJS pie chart -->
       <div id="chartContainer" style="height: 370px; width: 100%;"></div>
       <?php
-
+        $colors = array(
+          "JPCS" => array("remaining" => "#95d097", "voted" => "#4CAF50")  // Example color for HMSO
+        );
         $sql_voters_voted = "SELECT * 
         FROM votes 
         JOIN voters ON votes.voters_id = voters.id 
@@ -51,8 +53,8 @@ include 'includes/header.php';
         $conn->close();
       // Assuming you have the $dataPoints array from the previous chart
       $dataPoints = array( 
-        array("organization" => "JPCS", "label" => "Remaining Voters", "y" => $num_remaining_voters),
-        array("organization" => "JPCS", "label" => "Voters Voted", "y" => $num_voters_voted)
+        array("organization" => "JPCS", "label" => "Remaining Voters", "y" => $num_remaining_voters, "color" => $colors[$organization]["remaining"]),
+        array("organization" => "JPCS", "label" => "Voters Voted", "y" => $num_voters_voted, "color" => $colors[$organization]["voted"])
       );
       ?>
 
