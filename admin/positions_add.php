@@ -11,7 +11,7 @@
 
 		$priority = $row['priority'] + 1;
 		
-		$sql = "INSERT INTO categories (name, max_vote, priority) VALUES ('$name', '$max_vote', '$priority')";
+		$sql = "INSERT INTO categories (election_id, name, max_vote, priority) VALUES ('1', '$name', '$max_vote', '$priority')";
 		if($conn->query($sql)){
 			$_SESSION['success'] = 'Position added successfully';
 		}
