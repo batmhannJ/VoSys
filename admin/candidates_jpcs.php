@@ -63,9 +63,9 @@
                   <?php
                     $sql = "SELECT *, candidates.id AS canid 
                     FROM candidates 
-                    LEFT JOIN positions ON positions.id = candidates.position_id 
+                    LEFT JOIN categories ON categories.id = candidates.category_id 
                     WHERE candidates.election_id = 1 
-                    ORDER BY positions.priority ASC";
+                    ORDER BY categories.priority ASC";
 
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
@@ -73,7 +73,7 @@
                       echo "
                         <tr>
                           <td class='hidden'></td>
-                          <td>".$row['description']."</td>
+                          <td>".$row['name']."</td>
                           <td>
                             <img src='".$image."' width='30px' height='30px'>
                             <a href='#edit_photo' data-toggle='modal' class='pull-right photo' data-id='".$row['canid']."'><span class='fa fa-edit'></span></a>
