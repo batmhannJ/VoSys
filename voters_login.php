@@ -47,8 +47,8 @@ if (isset($_SESSION['voter'])) {
                         <button type="submit" class="btnlogin" name="login"><i class="fa fa-sign-in"></i> Sign In</button>
                     </div>
                 </div>
+                <p class="text-center"><a href="forgot_password.php">Forgot Password?</a></p>
             </form>
-            <!--<p class="text-center"><a href="forgot_password.php">Forgot Password?</a></p>-->
         </div>
         <?php
         if (isset($_SESSION['error'])) {
