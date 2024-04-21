@@ -68,7 +68,7 @@ $pdfContent = "
 // Populate data into table rows
 while ($row = $result->fetch_assoc()) {
     $pdfContent .= "<tr>
-                        <td>{row['name']}</td>
+                        <td>{row['_position_name']}</td>
                         <td>{$row['firstname']} {$row['lastname']}</td>
                         <td>{$row['vote_count']}</td>
                     </tr>";
