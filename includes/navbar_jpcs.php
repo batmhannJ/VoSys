@@ -1,5 +1,5 @@
 <header class="main-header">
-  <nav class="navbar navbar-static-top">
+  <nav class="navbar_jpcs navbar-static-top">
     <div class="container">
       <div class="navbar-header">
         <a href="#" class="navbar-brand"><b>OLSHCO</b> College Voting System</a>
