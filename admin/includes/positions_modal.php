@@ -49,7 +49,7 @@
                     <label for="edit_description" class="col-sm-3 control-label">Description</label>
 
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="edit_description" name="name">
+                      <input type="text" class="form-control" id="edit_name" name="name">
                     </div>
                 </div>
                 <div class="form-group">
