@@ -48,6 +48,19 @@ if (isset($_POST['resetPass'])) {
     // Redirect the user back to the login page after processing
     header("Location: voters_login.php");
     exit();
+
+    if (isset($_GET['token'])) {
+        // Get the token from the URL
+        $token = $_GET['token'];
+    
+        // Redirect to change_pass.php with the token as a parameter
+        header("Location: change_pass.php?token=$token");
+        exit;
+    } else {
+        // If the token parameter is not set, redirect to another page or display an error message
+        header("Location: voters_login.php"); // Redirect to index.php or another page
+        exit;
+    }
 }
 
 // HTML for your forgot password form
