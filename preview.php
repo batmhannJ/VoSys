@@ -5,11 +5,11 @@
 
 	$output = array('error'=>false,'list'=>'');
 
-	$sql = "SELECT * FROM positions";
+	$sql = "SELECT * FROM categories WHERE election_id = 1";
 	$query = $conn->query($sql);
 
 	while($row = $query->fetch_assoc()){
-		$position = slugify($row['description']);
+		$position = slugify($row['name']);
 		$pos_id = $row['id'];
 		if(isset($_POST[$position])){
 			if($row['max_vote'] > 1){
@@ -24,7 +24,7 @@
 						$cmrow = $cmquery->fetch_assoc();
 						$output['list'] .= "
 							<div class='row votelist'>
-		                      	<span class='col-sm-4'><span class='pull-right'><b>".$row['description']." :</b></span></span> 
+		                      	<span class='col-sm-4'><span class='pull-right'><b>".$row['name']." :</b></span></span> 
 		                      	<span class='col-sm-8'>".$cmrow['firstname']." ".$cmrow['lastname']."</span>
 		                    </div>
 						";
@@ -40,7 +40,7 @@
 				$csrow = $csquery->fetch_assoc();
 				$output['list'] .= "
 					<div class='row votelist'>
-                      	<span class='col-sm-4'><span class='pull-right'><b>".$row['description']." :</b></span></span> 
+                      	<span class='col-sm-4'><span class='pull-right'><b>".$row['name']." :</b></span></span> 
                       	<span class='col-sm-8'>".$csrow['firstname']." ".$csrow['lastname']."</span>
                     </div>
 				";
