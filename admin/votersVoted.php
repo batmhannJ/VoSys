@@ -69,8 +69,8 @@ include 'includes/header.php';
                     if (!$query) {
                       die("SQL Error: " . $conn->error); // Add error handling here
                     }
+                    $i = 1;
                     while($row = $query->fetch_assoc()){
-                      $i = 1;
                       $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
                       echo "
                         <tr>
