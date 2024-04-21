@@ -1,10 +1,5 @@
 <?php
 session_start();
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 include 'includes/conn.php';
 
 if (isset($_POST['login'])) {
@@ -72,22 +67,25 @@ if (isset($_POST['login'])) {
                     }
                 }
             } else {
-                // reCAPTCHA verification failed, show an error message
+                // reCAPTCHA verification failed, store error message and redirect to index.php
                 $_SESSION['error'] = 'reCAPTCHA verification failed. Please try again.';
+                header('location: index.php');
+                exit();
             }
         } else {
             // Unable to contact Google's reCAPTCHA verification endpoint
             $_SESSION['error'] = 'Unable to verify reCAPTCHA. Please try again later.';
+            header('location: index.php');
+            exit();
         }
     } else {
-        // reCAPTCHA response not found, show an error message
+        // reCAPTCHA response not found, store error message and redirect to index.php
         $_SESSION['error'] = 'reCAPTCHA response not found. Please complete the reCAPTCHA challenge.';
+        header('location: index.php');
+        exit();
     }
-} else{
-
-    $_SESSION['error'] = 'Input admin credentials first';
+}
 // Redirect to the login page in case of any errors
-    header('location: index.php');
-    exit();
-    }
+header('location: index.php');
+exit();
 ?>
