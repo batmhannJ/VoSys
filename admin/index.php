@@ -38,6 +38,7 @@ if (isset($_SESSION['voter'])) {
                 <div class="form-group has-feedback">
                     <img src="images/lock-solid.svg" class="loglogo">
                     <input type="password" class="form-control" name="password" placeholder="Password" required>
+                    <i class="bi bi-eye-slash" id="togglePassword"></i>
                     <span class="form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
@@ -65,5 +66,19 @@ if (isset($_SESSION['voter'])) {
 
     <?php include 'includes/scripts.php' ?>
 </body>
-
+<script>
+        const togglePassword = document
+            .querySelector('#togglePassword');
+        const password = document.querySelector('#password');
+        togglePassword.addEventListener('click', () => {
+            // Toggle the type attribute using
+            // getAttribure() method
+            const type = password
+                .getAttribute('type') === 'password' ?
+                'text' : 'password';
+            password.setAttribute('type', type);
+            // Toggle the eye and bi-eye icon
+            this.classList.toggle('bi-eye');
+        });
+    </script>
 </html>
