@@ -22,6 +22,9 @@
             <input type="password" class="form-control" name="password" placeholder="Password" required>
             <span class="form-control-feedback"></span>
           </div>
+          <div class="form-group has-feedback">
+            <div class="g-recaptcha" data-sitekey="6LddHcIpAAAAAJS6Wnenkllxyr3tWUSlSCu8o9eO"></div>
+        </div>
             <div class="row">
                 <div class="col-xs-4">
                     <button type="submit" class="btnlogin" name="login"><i class="fa fa-sign-in"></i> Sign In</button>
