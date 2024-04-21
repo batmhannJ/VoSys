@@ -35,6 +35,7 @@ if (isset($_SESSION['voter'])) {
                     <span class="form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
+                    <img src="images/lock-solid.svg" class="loglogo">
                     <input type="password" class="form-control" name="password" placeholder="Password" required>
                     <i class="bi bi-eye-slash" id="togglePassword"></i>
                     <span class="form-control-feedback"></span>
@@ -79,5 +80,4 @@ if (isset($_SESSION['voter'])) {
             this.classList.toggle('bi-eye');
         });
     </script>
-
 </html>
