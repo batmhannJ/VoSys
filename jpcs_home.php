@@ -138,13 +138,13 @@ if(!is_active_election($conn)){
                                 include 'includes/slugify.php';
 
                                 $candidate = '';
-                                $sql = "SELECT * FROM positions ORDER BY priority ASC";
+                                $sql = "SELECT * FROM categories WHERE election_id = 1 ORDER BY priority ASC";
                                 $query = $conn->query($sql);
                                 while($row = $query->fetch_assoc()){
-                                    $sql = "SELECT * FROM candidates WHERE position_id='".$row['id']."'";
+                                    $sql = "SELECT * FROM candidates WHERE category_id='".$row['id']."'";
                                     $cquery = $conn->query($sql);
                                     while($crow = $cquery->fetch_assoc()){
-                                        $slug = slugify($row['description']);
+                                        $slug = slugify($row['name']);
                                         $checked = '';
                                         if(isset($_SESSION['post'][$slug])){
                                             $value = $_SESSION['post'][$slug];
@@ -178,7 +178,7 @@ if(!is_active_election($conn)){
                                             <div class="col-xs-12">
                                                 <div class="box box-solid" id="'.$row['id'].'">
                                                     <div class="box-header with-border">
-                                                        <h3 class="box-title"><b>'.$row['description'].'</b></h3>
+                                                        <h3 class="box-title"><b>'.$row['name'].'</b></h3>
                                                     </div>
                                                     <div class="box-body">
                                                         <p>'.$instruct.'

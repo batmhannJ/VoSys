@@ -72,12 +72,12 @@
             <div class="modal-body">
               <?php
                 $id = $voter['id'];
-                $sql = "SELECT *, candidates.firstname AS canfirst, candidates.lastname AS canlast FROM votes LEFT JOIN candidates ON candidates.id=votes.candidate_id LEFT JOIN positions ON positions.id=votes.position_id WHERE voters_id = '$id'  ORDER BY positions.priority ASC";
+                $sql = "SELECT *, candidates.firstname AS canfirst, candidates.lastname AS canlast FROM votes LEFT JOIN candidates ON candidates.id=votes.candidate_id LEFT JOIN categories ON categories.id=votes.category_id WHERE voters_id = '$id'  ORDER BY categories.priority ASC";
                 $query = $conn->query($sql);
                 while($row = $query->fetch_assoc()){
                   echo "
                     <div class='row votelist'>
-                      <span class='col-sm-4'><span class='pull-right'><b>".$row['description']." :</b></span></span> 
+                      <span class='col-sm-4'><span class='pull-right'><b>".$row['name']." :</b></span></span> 
                       <span class='col-sm-8'>".$row['canfirst']." ".$row['canlast']."</span>
                     </div>
                   ";
