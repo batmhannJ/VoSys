@@ -31,7 +31,7 @@ if (isset($_SESSION['voter'])) {
                 </div>
                 <div class="form-group has-feedback">
                     <img src="images/user-solid.svg" class="loglogo">
-                    <input type="text" class="form-control" name="voter" placeholder="Username" required>
+                    <input type="text" class="form-control" name="username" placeholder="Username" required>
                     <span class="form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
