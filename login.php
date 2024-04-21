@@ -46,7 +46,14 @@ if (isset($_POST['login'])) {
                     $_SESSION['error'] = 'Cannot find voter with the ID';
                 } else {
                     $row = $query->fetch_assoc();
+                    // Debugging: Output fetched password from database
+                    echo "Fetched Password: " . $row['password'] . "<br>";
+                    // Debugging: Output hashed entered password
+                    echo "Hashed Password: " . password_hash($password, PASSWORD_DEFAULT) . "<br>";
+
                     if (password_verify($password, $row['password'])) {
+                        // Debugging: Output message if password verification is successful
+                        echo "Password verification successful!<br>";
                         $_SESSION['voter'] = $row['id'];
                         $organization = $row['organization'];
                         // Check the organization and redirect accordingly
