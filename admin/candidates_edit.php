@@ -20,6 +20,6 @@
 		$_SESSION['error'] = 'Fill up edit form first';
 	}
 
-	header('location: candidates.php');
+	header('location: candidates_jpcs.php');
 
 ?>
