@@ -7,7 +7,7 @@
     <span class="logo-lg"><b>OLSHCO</b> Election </span>
   </a>
   <!-- Header Navbar: style can be found in header.less -->
-  <nav class="navbar navbar-static-top">
+  <nav class="navbar_jpcs navbar-static-top">
     <!-- Sidebar toggle button-->
     <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
       <span class="sr-only">Toggle navigation</span>
