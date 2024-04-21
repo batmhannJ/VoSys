@@ -1,10 +1,6 @@
 <?php
 session_start();
 
-// Enable error reporting
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 // Include your header file
 include 'includes/header.php';
 
@@ -35,6 +31,9 @@ if (isset($_POST['resetPass'])) {
             $message = "Click the following link to reset your password: $reset_link";
             if (mail($email, $subject, $message)) {
                 $_SESSION['success'] = "Password reset link has been sent to your email.";
+                // Redirect to success page
+                header("Location: password_reset_success.php");
+                exit();
             } else {
                 $_SESSION['error'] = "Failed to send password reset email. Please try again.";
             }
@@ -44,54 +43,46 @@ if (isset($_POST['resetPass'])) {
     } else {
         $_SESSION['error'] = "Email not found. Please try again.";
     }
-
-    // Redirect the user back to the login page after processing
-    header("Location: voters_login.php");
-    exit();
 }
+
+// Check if token is provided in the URL
 if (isset($_GET['token'])) {
     // Get the token from the URL
     $token = $_GET['token'];
     // Display the form for changing the password
-    echo "Change Password Form with Token: $token";
-} else {
-    // If the token parameter is not set, display an error message or redirect to another page
-    echo "Token not found. Please try again.";
-}
-
-// HTML for your forgot password form
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forgot Password</title>
-    <!-- Include your CSS files -->
-</head>
-<body class="hold-transition login-page">
-    <div class="login-box">
-        <div class="login-box-body">
-            <div class="login-logo">
-                <img src="images/olshco.png" class="olshco-logo" alt="College Voting System Logo">
-                <b>College Voting System</b>
-            </div>
-            <p class="login-box-msg">Forgot Password? Enter your email address to reset your password.</p>
-
-            <!-- Forgot password form -->
-            <form action="forgot_password.php" method="POST">
-                <div class="form-group has-feedback">
-                    <input type="email" class="form-control" name="email" placeholder="Email" required>
-                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+    ?>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Change Password</title>
+        <!-- Include your CSS files -->
+    </head>
+    <body>
+        <div class="container">
+            <h2>Change Password</h2>
+            <!-- Password reset form -->
+            <form action="update_password.php" method="POST">
+                <input type="hidden" name="token" value="<?php echo $token; ?>">
+                <div class="form-group">
+                    <label for="new_password">New Password:</label>
+                    <input type="password" class="form-control" id="new_password" name="new_password" required>
                 </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat" name="resetPass">Reset Password</button>
-                    </div>
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password:</label>
+                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
                 </div>
+                <button type="submit" class="btn btn-primary">Reset Password</button>
             </form>
         </div>
-    </div>
-    <?php include 'includes/scripts.php' ?>
-</body>
-</html>
+    </body>
+    </html>
+    <?php
+} else {
+    // If the token parameter is not set, display an error message or redirect to another page
+    $_SESSION['error'] = "Token not found. Please try again.";
+    header("Location: forgot_password.php");
+    exit();
+}
+?>
