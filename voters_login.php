@@ -40,7 +40,7 @@ if (isset($_SESSION['voter'])) {
                     <span class="form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
-                    <div class="g-recaptcha" data-sitekey="6LdM0DgUAAAAAHtPjQfbqTX6viYFbOvkcFs_twDp"></div>
+                    <div class="g-recaptcha" data-sitekey="6LddHcIpAAAAAJS6Wnenkllxyr3tWUSlSCu8o9eO"></div>
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
