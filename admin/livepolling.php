@@ -3,7 +3,6 @@
 <?php include 'includes/header.php'; ?>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-
   <?php include 'includes/navbar.php'; ?>
   <?php include 'includes/menubar.php'; ?>
 
@@ -22,100 +21,37 @@
     <section class="content">
       <div class="row">
         <div class="col-xs-12">
-          <div class="form-group">
-            <label for="organization">Select Organization:</label>
-            <select class="form-control" id="organization">
-              <option value="JPCS">JPCS</option>
-              <option value="PASOA">PASOA</option>
-              <option value="CSC">CSC</option>
-              <option value="YMF">YMF</option>
-              <option value="CODE-TG">CODE-TG</option>
-              <option value="HMSO">HMSO</option>
-            </select>
+          <div class="box-header with-border">
+            
           </div>
-          <div class="form-group">
-            <label for="position">Select Position:</label>
-            <select class="form-control" id="position">
-              <option value="president">President</option>
-              <option value="vice_president">Vice President</option>
-              <option value="secretary">Secretary</option>
-            </select>
+          <div class="box-body">
+            <div class="row">
+              <div class="col-md-3"> <!-- Half width for organization dropdown -->
+                <div class="form-group">
+                  <label for="organization">Select Organization:</label>
+                  <select class="form-control smaller-dropdown" id="organization" onchange="updateCharts()">
+                    <option value="JPCS">JPCS</option>
+                    <option value="PASOA">PASOA</option>
+                    <option value="CSC">CSC</option>
+                    <option value="YMF">YMF</option>
+                    <option value="CODE-TG">CODE-TG</option>
+                    <option value="HMSO">HMSO</option>
+                  </select>
+                </div>
+              </div>
+            </div>
           </div>
-          <button onclick="applyFilter()" class="btn btn-primary">Filter</button>
         </div>
       </div>
       <div class="row">
-        <?php
- 
-$dataPoints = array();
-$y = 5;
-for($i = 0; $i < 10; $i++){
-  $y += rand(-1, 1) * 0.1; 
-  array_push($dataPoints, array("x" => $i, "y" => $y));
-}
- 
-?>
-<?php
- 
-$dataPoints = array(
-  array("label"=> "President 1", "y"=> 20),
-  array("label"=> "President 2", "y"=> 65),
-  array("label"=> "VicePresident 1", "y"=> 11),
-  array("label"=> "VicePresident 2", "y"=> 5),
-  array("label"=> "Secretary 1", "y"=> 48),
-  array("label"=> "Secretary 2", "y"=> 8),
-  array("label"=> "Treasurer 1", "y"=> 2),
-  array("label"=> "Treasurer 2", "y"=> 18)
-);
- 
-?>
-<!DOCTYPE HTML>
-<html>
-<head>
-<script>
-window.onload = function () {
- 
-var chart = new CanvasJS.Chart("chartContainer", {
-  title: {
-    text: "LIVE VOTES"
-  },
-  axisY: {
-    minimum: 0,
-    maximum: 100,
-    suffix: "%"
-  },
-  data: [{
-    type: "column",
-    yValueFormatString: "#,##0.00\"%\"",
-    indexLabel: "{y}",
-    dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
-  }]
-});
- 
-function updateChart() {
-  var color,deltaY, yVal;
-  var dps = chart.options.data[0].dataPoints;
-  for (var i = 0; i < dps.length; i++) {
-    deltaY = (2 + Math.random() * (-2 - 2));
-    yVal =  Math.min(Math.max(deltaY + dps[i].y, 0), 90);
-    color = yVal > 75 ? "#FF2500" : yVal >= 50 ? "#FF6000" : yVal < 50 ? "#41CF35" : null;
-    dps[i] = {label: "Core "+(i+1) , y: yVal, color: color};
-  }
-  chart.options.data[0].dataPoints = dps;
-  chart.render();
-};
-updateChart();
- 
-setInterval(function () { updateChart() }, 1000);
- 
-}
-</script>
-</head>
-<body>
-<div id="chartContainer" style="height: 370px; width: 90%; margin-left: 40px; margin-top: 20px"></div>
-<script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
-</body>
-</html>               
+        <div class="col-xs-12">
+          <div class="col-xs-6">
+            <div id="presidentChart" style="height: 370px; width: 100%; margin-left: 20px; margin-top: 20px; display: inline-block;"></div>
+          </div>
+          <div class="col-xs-6">
+            <div id="representativeChart" style="height: 370px; width: 100%; margin-left: 20px; margin-top: 20px; display: inline-block;"></div>
+          </div>
+        </div>
       </div>
     </section>
   </div>
@@ -123,5 +59,167 @@ setInterval(function () { updateChart() }, 1000);
 </div>
 <!-- ./wrapper -->
 <?php include 'includes/scripts.php'; ?>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
+<script>
+  var organizationColors = {
+    "JPCS": "#ffcc00",
+    "PASOA": "#339966",
+    "CSC": "#ff5050",
+    "YMF": "#6666ff",
+    "CODE-TG": "#cc99ff",
+    "HMSO": "#ff9933"
+  };
+
+  function updateCharts() {
+    var organization = document.getElementById("organization").value;
+
+    updatePresidentChart(organization);
+    updateRepresentativeChart(organization);
+  }
+
+  function updatePresidentChart(organization) {
+    var dataPoints = [];
+
+    // You can fetch data dynamically based on the selected organization here
+    // For demonstration, I'm using static data for each organization
+
+    if (organization === "JPCS") {
+      dataPoints = [
+        { y: 20, label: "President" },
+        { y: 30, label: "Vice President" },
+        { y: 40, label: "Secretary" }
+      ];
+    } else if (organization === "PASOA") {
+      dataPoints = [
+        { y: 25, label: "President" },
+        { y: 35, label: "Vice President" },
+        { y: 45, label: "Secretary" }
+      ];
+    } else if (organization === "CSC") {
+      dataPoints = [
+        { y: 35, label: "President" },
+        { y: 25, label: "Vice President" },
+        { y: 40, label: "Secretary" }
+      ];
+    } else if (organization === "YMF") {
+      dataPoints = [
+        { y: 30, label: "President" },
+        { y: 40, label: "Vice President" },
+        { y: 30, label: "Secretary" }
+      ];
+    } else if (organization === "CODE-TG") {
+      dataPoints = [
+        { y: 20, label: "President" },
+        { y: 30, label: "Vice President" },
+        { y: 50, label: "Secretary" }
+      ];
+    } else if (organization === "HMSO") {
+      dataPoints = [
+        { y: 15, label: "President" },
+        { y: 35, label: "Vice President" },
+        { y: 50, label: "Secretary" }
+      ];
+    }
+    // Add more else if conditions for other organizations
+
+    var chart = new CanvasJS.Chart("presidentChart", {
+      title: { text: "President, Vice President, Secretary" },
+      data: [{
+        type: "bar",
+        dataPoints: dataPoints,
+        color: organizationColors[organization] // Set organization-specific color
+      }]
+    });
+
+    chart.render();
+
+    // Update chart every second
+    setInterval(function () {
+      updatePresidentDataPoints(organization, chart);
+    }, 1000);
+  }
+
+  function updateRepresentativeChart(organization) {
+    var dataPoints = [];
+
+    // You can fetch data dynamically based on the selected organization here
+    // For demonstration, I'm using static data for each organization
+
+    if (organization === "JPCS") {
+      dataPoints = [
+        { y: 30, label: "Representative 1" },
+        { y: 40, label: "Representative 2" }
+      ];
+    } else if (organization === "PASOA") {
+      dataPoints = [
+        { y: 20, label: "Representative 1" },
+        { y: 30, label: "Representative 2" }
+      ];
+    } else if (organization === "CSC") {
+      dataPoints = [
+        { y: 25, label: "Representative 1" },
+        { y: 35, label: "Representative 2" }
+      ];
+    } else if (organization === "YMF") {
+      dataPoints = [
+        { y: 30, label: "Representative 1" },
+        { y: 40, label: "Representative 2" }
+      ];
+    } else if (organization === "CODE-TG") {
+      dataPoints = [
+        { y: 20, label: "Representative 1" },
+        { y: 30, label: "Representative 2" }
+      ];
+    } else if (organization === "HMSO") {
+      dataPoints = [
+        { y: 15, label: "Representative 1" },
+        { y: 25, label: "Representative 2" }
+      ];
+    }
+    // Add more else if conditions for other organizations
+
+    var chart = new CanvasJS.Chart("representativeChart", {
+      title: { text: "Representatives" },
+      data: [{
+        type: "bar",
+        dataPoints: dataPoints,
+        color: organizationColors[organization] // Set organization-specific color
+      }]
+    });
+
+    chart.render();
+
+    // Update chart every second
+    setInterval(function () {
+      updateRepresentativeDataPoints(organization, chart);
+    }, 1000);
+  }
+
+  function updatePresidentDataPoints(organization, chart) {
+    // Update dataPoints based on the selected organization
+    // For demonstration, I'm using random values for each data point
+    var newDataPoints = [];
+    for (var i = 0; i < chart.options.data[0].dataPoints.length; i++) {
+      newDataPoints.push({ label: chart.options.data[0].dataPoints[i].label, y: Math.random() * 100 });
+    }
+    chart.options.data[0].dataPoints = newDataPoints;
+    chart.render();
+  }
+
+  function updateRepresentativeDataPoints(organization, chart) {
+    // Update dataPoints based on the selected organization
+    // For demonstration, I'm using random values for each data point
+    var newDataPoints = [];
+    for (var i = 0; i < chart.options.data[0].dataPoints.length; i++) {
+      newDataPoints.push({ label: chart.options.data[0].dataPoints[i].label, y: Math.random() * 100 });
+    }
+    chart.options.data[0].dataPoints = newDataPoints;
+    chart.render();
+  }
+
+  window.onload = function () {
+    updateCharts();
+  };
+</script>
 </body>
 </html>
