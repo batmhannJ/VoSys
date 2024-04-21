@@ -1,9 +1,6 @@
 <?php
 session_start();
 
-// Include your header file
-include 'includes/header.php';
-
 // Include your database connection file
 include 'includes/conn.php';
 
@@ -31,7 +28,7 @@ if (isset($_POST['resetPass'])) {
             $message = "Click the following link to reset your password: $reset_link";
             if (mail($email, $subject, $message)) {
                 $_SESSION['success'] = "Password reset link has been sent to your email.";
-                // Redirect to success page
+                // Redirect to success page or display a message
                 header("Location: password_reset_success.php");
                 exit();
             } else {
@@ -44,7 +41,11 @@ if (isset($_POST['resetPass'])) {
         $_SESSION['error'] = "Email not found. Please try again.";
     }
 }
+
+// Include your header file
+include 'includes/header.php';
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
