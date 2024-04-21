@@ -2,7 +2,7 @@
 	include 'includes/session.php';
 	include 'includes/slugify.php';
 
-	$sql = "SELECT * FROM positions";
+	$sql = "SELECT * FROM categories WHERE election_id = 1";
 	$pquery = $conn->query($sql);
 
 	$output = '';
