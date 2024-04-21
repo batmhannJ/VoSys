@@ -74,7 +74,7 @@ include 'includes/header.php';
                       $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
                       echo "
                         <tr>
-                        <td>".$i++."</td>
+                        <td scope='row'>".$i++."</td>
                           <td>".$row['lastname']."</td>
                           <td>".$row['firstname']."</td>
                           <td>
