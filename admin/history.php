@@ -51,9 +51,9 @@
 </div>
 
 
-      <!-- President and Vice President Ranking Boxes -->
+      <!-- Ranking Box -->
       <div class="row">
-        <!-- President and Vice President Ranking List Box -->
+        <!-- Ranking List Box -->
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
@@ -61,7 +61,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <!-- President and Vice President Ranking Table -->
+              <!-- Ranking Table -->
               <table class="table table-bordered">
                 <thead>
                   <tr>
@@ -74,7 +74,7 @@
                 </thead>
                 <tbody>
                   <?php
-                    // Fetch and display president and vice president candidate ranking based on vote count and organization filter
+                    // Fetch and display candidate ranking based on vote count and organization filter
                     $organizationFilter = isset($_POST['organization']) ? " AND voters1.organization = '".$_POST['organization']."'" : "";
                     if ($_POST['organization'] == "") {
                       $organizationFilter = "";
@@ -114,9 +114,9 @@
       </div>
       <!-- /.row -->
 
-      <!-- Bar Graphs for President and Vice President -->
+      <!-- Bar Graph for Candidates -->
       <div class="row">
-        <!-- President and Vice President Bar Graph Box -->
+        <!-- Bar Graph Box -->
         <div class="col-md-12">
           <div class="box">
             <div class="box-header with-border">
@@ -124,8 +124,8 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <!-- President and Vice President Bar Graph Container -->
-              <div id="presidentVicePresidentGraph" style="height: 300px;"></div>
+              <!-- Bar Graph Container -->
+              <div id="candidatesGraph" style="height: 300px;"></div>
             </div>
             <!-- /.box-body -->
           </div>
@@ -146,7 +146,7 @@
 <!-- Bar Graph Script -->
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
-  // Function to generate combined bar graph for president and vice president
+  // Function to generate bar graph for candidates
   function generateBarGraph(dataPoints, containerId) {
     var chart = new CanvasJS.Chart(containerId, {
       animationEnabled: true,
@@ -160,39 +160,33 @@
         title: "Vote Count",
         includeZero: true
       },
-      data: dataPoints
+      data: [{
+        type: "column",
+        dataPoints: dataPoints
+      }]
     });
     chart.render();
   }
 
-  // Fetch and process president and vice president data
+  // Fetch and process candidate data
   <?php
-    $combinedData = array();
+    $candidateData = array();
     $sql = "SELECT positions.description AS position, CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
             COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
             FROM positions 
             LEFT JOIN candidates ON positions.id = candidates.position_id
             LEFT JOIN votes ON candidates.id = votes.candidate_id
             LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-            WHERE voters1.organization != '' AND positions.description IN ('President', 'Vice President')
+            WHERE voters1.organization != ''
             GROUP BY positions.description, candidates.id";
     $query = $conn->query($sql);
     while($row = $query->fetch_assoc()) {
-      $position = $row['position'];
-      if (!isset($combinedData[$position])) {
-        $combinedData[$position] = array(
-          "type" => "column",
-          "showInLegend" => true,
-          "name" => $position,
-          "dataPoints" => array()
-        );
-      }
-      $combinedData[$position]['dataPoints'][] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+      $candidateData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name'] . " (" . $row['position'] . ")");
     }
   ?>
 
-  // Generate combined bar graph for president and vice president
-  generateBarGraph(<?php echo json_encode(array_values($combinedData)); ?>, "presidentVicePresidentGraph");
+  // Generate bar graph for candidates
+  generateBarGraph(<?php echo json_encode($candidateData); ?>, "candidatesGraph");
 </script>
 </body>
 </html>
