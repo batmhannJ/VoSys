@@ -113,7 +113,7 @@ function getRow(id){
     dataType: 'json',
     success: function(response){
       $('.id').val(response.id);
-      $('#edit_name').val(response.description);
+      $('#edit_name').val(response.name);
       $('#edit_max_vote').val(response.max_vote);
       $('.name').html(response.name);
     }
