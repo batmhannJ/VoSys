@@ -190,6 +190,13 @@
             </div>
             <!-- /.box-body -->
           </div>
+          <div class="row">
+            <div class="col-xs-12">
+                <span class="pull-right">
+                  <a href="export_results.php" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Export PDF</a>
+                </span>
+            </div>
+          </div>
           <!-- /.box -->
         </div>
         <!-- /.col -->
