@@ -1,226 +1,235 @@
+
 <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-        <link rel="shortcut icon" href="assets/img/olshco.png" type="image/png">
-
-        <!--=============== REMIXICONS ===============-->
-        <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
-        
-        <!--=============== SWIPER CSS ===============-->
-        <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
-
-        <!--=============== CSS ===============-->
-        <link rel="stylesheet" href="assets/css/styles.css">
-
-        <title>OLSHCO College Online Voting System</title>
-    </head>
-    <body>
-        <header class="header" id="header">
-            <nav class="nav container">
-                 <a href="#" class="nav__logo">
-                    <img src="assets/img/logo.png" alt="" class="nav__logo-img"> 
-                    OLSHCO <br>College Online Voting System
-                </a>
-                
-
-                <div class="nav__menu" id="nav-menu">
-                    <ul class="nav__list">
-                        <li class="nav__item">
-                            <a href="#home" class="nav__link active-link">Home</a>
-                        </li>
-                        <li class="nav__item">
-                            <a href="#about" class="nav__link">About</a>
-                        </li>
-                        <li class="nav__item">
-                            <a href="#service" class="nav__link">Services</a>
-                        </li>
-                        <li class="nav__item">
-                            <a href="#place" class="nav__link">Organizations</a>
-                        </li>
-                        <li class="nav__item">
-                            <a href="#location" class="nav__link">Location</a>
-                        </li>
-                        <li class="nav__item">
-                            <a href="#discover" class="nav__link">Countdown</a>
-                        </li>
-                        <li class="nav__item">
-                            <a href="voters_login.php" class="nav__link">Login</a>
-                        </li>
-                    </ul>
-
-                    <div class="nav__dark">
-    <!-- Theme change button -->
-    <span class="change-theme-name">Dark mode</span>
-    <i class="ri-moon-line change-theme" id="theme-button"></i>
-  </div>
-
-  <i class="ri-close-line nav__close" id="nav-close"></i>
-
-  <div class="nav__toggle" id="nav-toggle">
-    <i class="ri-function-line"></i>
-  </div>
-            </nav>
-        </header>
-
-        <main class="main">
-            <!--==================== HOME ====================-->
-            <section class="home" id="home">
-                <img src="assets/img/home.jpg" alt="" class="home__img">
-
-                <div class="home__container container grid">
-                    <div class="home__data">
-                        <h1 class="home__data-title">OLSHCO <br> College <b>Online Voting <br> System</b></h1>
-                        <a href="#about" class="button">Explore</a>
-
-                    </div>
-
-                    <!--<div class="home__social">
-                        <a href="https://www.facebook.com/" target="_blank" class="home__social-link">
-                            <i class="ri-facebook-box-fill"></i>
-                        </a>
-                        <a href="https://www.instagram.com/" target="_blank" class="home__social-link">
-                            <i class="ri-instagram-fill"></i>
-                        </a>
-                        <a href="https://twitter.com/" target="_blank" class="home__social-link">
-                            <i class="ri-twitter-fill"></i>
-                        </a>
-                    </div>-->
-
-                
-                </div>
-            </section>
-
-            <!--==================== ABOUT ====================-->
-            <section class="about section" id="about">
-                <div class="about__container container grid">
-                    <div class="about__data">
-                        <h2 class="section__title about__title">VISION <br></h2>
-                        <p class="about__description">At the College Online Voting System, our vision is to be a trailblazer in the evolution of democratic processes within academic organizations. We envision a future where every college and university operates with complete transparency, inclusivity, and security, fostering an environment of active participation, trust, and progress. 
-                        </p>
-                        <h2 class="section__title about__title">MISSION <br></h2>
-                        <p class="about__description">
-                            Our mission is to empower academic organizations to redefine the way they conduct elections and surveys, providing a cutting-edge, user-friendly, and secure online voting platform that not only meets their unique needs but also exceeds their expectations. 
-                        </p>
-                    </div>
-
-                    <div class="about__img">
-                        <div class="about__img-overlay">
-                            <img src="assets/img/logo.png" alt="" >
-                        </div>
-                    </div>
-                </div>
-            </section>
-
- <section class="service" id="service">
-      <div class="row" id="service">
-        <h2 class="section-heading"><br><br><br>OUR SERVICES<br><br></h2>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <title>OLSHCO College Online Voting System</title>
+  </head>
+  <body>
+    <header class="header">
+      <nav>
+        <div class="nav__header">
+          <div class="nav__logo">
+            <img src="assets/logo.png" alt="" class="nav__logo-img"> 
+            <h2>VOSYS</h2>
+          </div>
+          <div class="nav__menu__btn" id="menu-btn">
+            <span><i class="ri-menu-line"></i></span>
+          </div>
+        </div>
+        <ul class="nav__links" id="nav-links">
+          <li><a href="#">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#organizations">Organizations</a></li>
+          <li><a href="#">Location</a></li>
+          <li><a href="#">Countdown</a></li>
+          <li><button class="btn">Login</button></li>
+        </ul>
+      </nav>
+      <div class="section__container header__container">
+        <h1>OLSCHO College<br/>Online Voting System</h1>
+        <p>Online Voting System for Students of OLSCHCO College Departments</p>
       </div>
-      <div class="row">
-        <div class="column">
-          <div class="card">
-            <div class="icon-wrapper">
-              <i class="fas fa-hammer"></i>
-            </div>
-            <br><h3>Secure and Reliable Elections</h3>
-            <p>
-              <br>Ensuring the security and integrity of the voting process is of utmost importance. This service includes robust security measures, such as secure authentication, data encryption, and safeguards against hacking and fraud, to protect the voting process from unauthorized access and manipulation.
-            </p>
-          </div>
+    </header><br><br><br>
+
+    <section id="about" class="section__container register__container">
+      <h2 class="section__header">ABOUT US</h2><br><br>
+      <div class="register__grid">
+        <div class="register__content">
+          <h4>VISION</h4>
+          <h5 style="color: white;">At the College Online Voting System, our vision is to be a trailblazer in the evolution of democratic processes within academic organizations. We envision a future where every college and university operates with complete transparency, inclusivity, and security, fostering an environment of active participation, trust, and progress.</h5>
+          <br>
+          <h4>MISSION</h4>
+          <h5 style="color: white;">Our mission is to empower academic organizations to redefine the way they conduct elections and surveys, providing a cutting-edge, user-friendly, and secure online voting platform that not only meets their unique needs but also exceeds their expectations.</h5>
         </div>
-        <div class="column">
-          <div class="card">
-            <div class="icon-wrapper">
-              <i class="fas fa-brush"></i>
-            </div>
-            <br><h3>Accessible Voting</h3>
-            <p>
-              <br>Making the democratic process accessible to all members of the college community is crucial. This service ensures a user-friendly platform that works on a variety of devices and operating systems, allowing all eligible voters, including those with disabilities, to easily and inclusively participate in elections and surveys.
-            </p>
-          </div>
-        </div>
-        <div class="column">
-          <div class="card">
-            <div class="icon-wrapper">
-              <i class="fas fa-wrench"></i>
-            </div>
-            <br><h3>Transparency and Accountability</h3>
-            <p>
-              <br>Providing transparency in the election process is essential. This service offers real-time monitoring and reporting tools, allowing administrators and voters to track the progress of elections, view results, and promote accountability and trust in the system. Transparency enhances the credibility of the voting system.
-            </p>
-          </div>
+        <div class="register__image">
+          <img src="assets/logo.png" alt="register" />
         </div>
       </div>
     </section>
 
 
-            <!--==================== PLACES ====================-->
-            <section class="place section" id="place">
-        <h2 class="section__title">COLLEGE ORGANIZATIONS</h2>
-        <div class="place__container container grid">
-            <!-- Organization Card 1 -->
-            <div class="place__card" onclick="showDescription('CSC')">
-                <img src="assets/img/csc.jpg" alt="" class="place__img">
-                <div class="place__content">
-                    <div class="place__data">
-                        <h3 class="place__title">CSC</h3>
-                    </div>
+<br><br><section class="discover section" id="discover">        
+    <div class="wrapper">
+        <h2 class="section__header">COUNTDOWN FOR UPCOMING ELECTION</h2>
+
+        <div class="timer">
+            <div class="sub_timer">
+                <h1 id="day" class="digit">00</h1>
+                <p class="digit_name">Days</p>
+            </div>
+            <div class="sub_timer">
+                <h1 id="hour" class="digit">00</h1>
+                <p class="digit_name">Hours</p>
+            </div>
+            <div class="sub_timer">
+                <h1 id="min" class="digit">00</h1>
+                <p class="digit_name">Minutes</p>
+            </div>
+            <div class="sub_timer">
+                <h1 id="sec" class="digit">00</h1>
+                <p class="digit_name">Seconds</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <section id="services" class="section__container client__container">
+      <br><br><br><h2 class="section__header">OUR SERVICES</h2>
+      <!-- Slider main container -->
+      <div class="swiper">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper">
+          <!-- Slides -->
+          <div class="swiper-slide">
+            <div class="client__card">
+              <p>
+                Ensuring the security and integrity of the voting process is of utmost importance. This service includes robust security measures, such as secure authentication, data encryption, and safeguards against hacking and fraud, to protect the voting process from unauthorized access and manipulation.
+              </p>
+              <div class="client__footer">
+                <div>
+                  <h4>Secure and Reliable Elections</h4>
+                </div>
+                <span><i class="ri-double-quotes-r"></i></span>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="client__card">
+              <p>
+                Making the democratic process accessible to all members of the college community is crucial. This service ensures a user-friendly platform that works on a variety of devices and operating systems, allowing all eligible voters, including those with disabilities, to easily and inclusively participate in elections and surveys.
+              </p>
+              <div class="client__footer">
+                <div>
+                  <h4>Accessible Voting</h4>
+                </div>
+                <span><i class="ri-double-quotes-r"></i></span>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="client__card">
+              <p>
+                Providing transparency in the election process is essential. This service offers real-time monitoring and reporting tools, allowing administrators and voters to track the progress of elections, view results, and promote accountability and trust in the system. Transparency enhances the credibility of the voting system.
+              </p>
+              <div class="client__footer">
+                <div>
+                  <h4>Transparency and Accountability</h4>
+                </div>
+                <span><i class="ri-double-quotes-r"></i></span>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="client__card">
+              <p>
+                Our system offers real-time updates on voting outcomes, allowing stakeholders to track the election's progress instantly. Users can monitor shifts in candidate standings and voter participation as votes are cast and counted, promoting transparency and engagement throughout the electoral process.
+              </p>
+              <div class="client__footer">
+                <div>
+                  <h4>Real-time Results</h4>
+                </div>
+                <span><i class="ri-double-quotes-r"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>  
+
+
+    <section id="organizations" class="place section">
+    <br><br><br><br><h2 class="section__header">ORGANIZATIONS</h2><br><br>
+    <div class="place__container container grid">
+        <!-- Organization Card 1 -->
+        <div class="place__card" onclick="showDescription('CSC')">
+            <img src="assets/csc.jpg" alt="" class="place__img">
+            <div class="place__content">
+                <div class="place__data">
+                    <h3 class="place__title">CSC</h3>
                 </div>
             </div>
-
-
-
-                    <!--==================== PLACES CARD 2 ====================-->
-                     <div class="place__card" onclick="showDescription('JPCS')">
-        <img src="assets/img/jpcs.jpg" alt="" class="place__img">
-        <div class="place__content">
-          <div class="place__data">
-            <h3 class="place__title">JPCS</h3>
-          </div>
         </div>
-      </div>
+        
+        <!-- Organization Card 2 -->
+        <div class="place__card" onclick="showDescription('JPCS')">
+            <img src="assets/jpcs.jpg" alt="" class="place__img">
+            <div class="place__content">
+                <div class="place__data">
+                    <h3 class="place__title">JPCS</h3>
+                </div>
+            </div>
+        </div>
 
-                    <!--==================== PLACES CARD 3 ====================-->
-                    <div class="place__card" onclick="showDescription('CODE-TG')">
-        <img src="assets/img/codg.jpg" alt="" class="place__img">
-        <div class="place__content">
-          <div class="place__data">
-            <h3 class="place__title">CODE-TG</h3>
-          </div>
+        <!-- Organization Card 3 -->
+        <div class="place__card" onclick="showDescription('CODE-TG')">
+            <img src="assets/codg.jpg" alt="" class="place__img">
+            <div class="place__content">
+                <div class="place__data">
+                    <h3 class="place__title">CODE-TG</h3>
+                </div>
+            </div>
         </div>
-      </div>
-                    <!--==================== PLACES CARD 4 ====================-->
-                    <div class="place__card" onclick="showDescription('YMF')">
-        <img src="assets/img/ymf.jpg" alt="" class="place__img">
-        <div class="place__content">
-          <div class="place__data">
-            <h3 class="place__title">YMF</h3>
-          </div>
-        </div>
-      </div>
-                    <!--==================== PLACES CARD 5 ====================-->
-                    <div class="place__card" onclick="showDescription('PASOA')">
-        <img src="assets/img/posoa.jpg" alt="" class="place__img">
-        <div class="place__content">
-          <div class="place__data">
-            <h3 class="place__title">PASOA</h3>
-          </div>
-        </div>
-      </div>
+    </div>
 
-                     <!--==================== PLACES CARD 5 ====================-->
-                     <div class="place__card" onclick="showDescription('HMSO')">
-        <img src="assets/img/hmso.jpg" alt="" class="place__img">
-        <div class="place__content">
-          <div class="place__data">
-            <h3 class="place__title">HMSO</h3>
-          </div>
+    <div class="place__container container grid">
+        <!-- Organization Card 4 -->
+        <div class="place__card" onclick="showDescription('YMF')">
+            <img src="assets/ymf.jpg" alt="" class="place__img">
+            <div class="place__content">
+                <div class="place__data">
+                    <h3 class="place__title">YMF</h3>
+                </div>
+            </div>
         </div>
-      </div>
-            </section>
+
+        <!-- Organization Card 5 -->
+        <div class="place__card" onclick="showDescription('PASOA')">
+            <img src="assets/posoa.jpg" alt="" class="place__img">
+            <div class="place__content">
+                <div class="place__data">
+                    <h3 class="place__title">PASOA</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Organization Card 6 -->
+        <div class="place__card" onclick="showDescription('HMSO')">
+            <img src="assets/hmso.jpg" alt="" class="place__img">
+            <div class="place__content">
+                <div class="place__data">
+                    <h3 class="place__title">HMSO</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="descriptionPopup" style="display: none;" onclick="hideDescription()">
+        <div class="description-container">
+            <span class="close" onclick="hideDescription()">&times;</span>
+            <h2><span id="organizationName">Your Organization Name</span> Organization</h2>
+            <div class="scrollable-container">
+                <p class="organization-description">CSC (Example Organization) is dedicated to fostering collaboration and innovation in the field of computer science. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac velit eu ex suscipit hendrerit. Nullam eget justo a tortor tincidunt laoreet nec id mi.</p>
+            </div>
+            <div class="image-container">
+                <img id="organizationImage" src="" alt="">🕮
+            </div>
+        </div>
+    </div>
+</section><br><br>
+
 
     <div id="descriptionPopup" style="display: none;" onclick="hideDescription()">
     <div class="description-container">
@@ -235,158 +244,130 @@
 
     </div>
 </div>
-<section class="discover section" id="discover">        
-        <div class="wrapper">
-            <h1 id="electionTitle" class="heading">COUNTDOWN for UPCOMING ELECTION</h1>
+</div>
+</section>
+          
+    <section id="location" class="section__container location__container">
+      <h2 class="section__header">LOCATION</h2>
+      <center><h4 style="font-weight: 200;">Afan Salvador St, Guimba, Nueva Ecija</h4></center><br>
+  <div class="location__map">
+   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15366.804210177917!2d120.74856218715821!3d15.660899800000006!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33912cdb2318296d%3A0xe4e2117e97dfc92e!2sOur%20Lady%20of%20The%20Sacred%20Heart%20College!5e0!3m2!1sfil!2sph!4v1713714954845!5m2!1sfil!2sph" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+</section>
 
-            <div class="timer">
-                <div class="sub_timer">
-                    <h1 id="day" class="digit">00</h1>
-                    <p class="digit_name">Days</p>
-                </div>
-                <div class="sub_timer">
-                    <h1 id="hour" class="digit">00</h1>
-                    <p class="digit_name">Hours</p>
-                </div>
-                <div class="sub_timer">
-                    <h1 id="min" class="digit">00</h1>
-                    <p class="digit_name">Minutes</p>
-                </div>
-                <div class="sub_timer">
-                    <h1 id="sec" class="digit">00</h1>
-                    <p class="digit_name">Seconds</p>
-                </div>
-            </div>
+
+
+
+
+    <footer class="footer">
+      <div class="section__container footer__container">
+        <div class="footer__col">
+          <h4>VOTE</h4>
+          <hr><br>
+          <ul class="footer__links">
+            <li style="color: white;">Take a decision today,
+              to ensure a better
+              tomorrow.</li>
+            
+          </ul>
         </div>
-    </section>
+       
+        <div class="footer__col">
+          <h4>LINKS</h4>
+          <hr><br>
+          <ul class="footer__links">
+            <li ><a href="#home" style="color: white;">Home</a></li>
+            <li><a href="#about" style="color: white;">About</a></li>
+            <li><a href="#services" style="color: white;">Services</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <br><br><br>
+          <ul class="footer__links">
+            <li><a href="#organizations" style="color: white;">Organizations</a></li>
+            <li><a href="#location" style="color: white;">Location</a></li>
+            <li><a href="#countdown" style="color: white;">Countdown</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4>SOCIALS</h4>
+          <hr><br>
+          <ul class="footer__links">
+            <li><a href="#" style="color: white;">Facebook</a></li>
+            <li><a href="#" style="color: white;">Instagram</a></li>
+            <li><a href="#" style="color: white;">Twitter</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4>SUPPORT</h4>
+          <hr><br>
+          <ul class="footer__links">
+            <li><a href="#" style="color: white;">Contact US</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bar" style="color: white;">
+        Copyright © 2024 VOSYS OLSHCO. All rights reserved.
+      </div>
+    </footer>
 
-
-
-          
-
-            <!--==================== LOCATION ====================-->
-            <section class="video section" id="location">
-            <h2 class="section__title">LOCATION</h2>
-            <h4>MQ69+936, Afan Salvador St., St. John, Guimba, Nueva Ecija</h4>
-
-                <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d15366.953433820021!2d120.77046958482435!3d15.658915070847891!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sour%20lady%20of%20the%20sacred%20heart%20college%20of%20guimba!5e0!3m2!1sen!2sph!4v1702138763919!5m2!1sen!2sph" width="900" height="430" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-
-            </section>
-          
+    <script>
+        const organizationsData = {
+            'CSC': {
+                name: 'CSC',
+                description: '𝗖𝗦𝗖 (𝘾𝙤𝙡𝙡𝙚𝙜𝙚 𝙎𝙩𝙪𝙙𝙚𝙣𝙩𝙨 𝘾𝙤𝙪𝙣𝙘𝙞𝙡) serve as the voice and advocate for the student body. We are committed to creating a vibrant and inclusive campus community by addressing the needs and concerns of students. Through effective representation, transparent communication, and collaborative initiatives, we aim to enhance the overall student experience.',
              
+            },
+            'JPCS': {
+                name: 'JPCS',
+                description: '𝗝𝗣𝗖𝗦 (𝙅𝙪𝙣𝙞𝙤𝙧 𝙋𝙝𝙞𝙡𝙞𝙥𝙥𝙞𝙣𝙚 𝘾𝙤𝙢𝙥𝙪𝙩𝙚𝙧 𝙎𝙤𝙘𝙞𝙚𝙩𝙮) inspire and cultivate the next generation of technology enthusiasts with a strong sense of social responsibility. We aim to harness the power of technology for positive change by providing educational opportunities, fostering innovation, and instilling a commitment to philanthropy among young minds.',
+               
+            },
+            'CODE-TG': {
+                name: 'CODE-TG',
+                description: '𝗖𝗢𝗗𝗘-𝗧𝗚 (𝘾𝙤𝙖𝙡𝙞𝙩𝙞𝙤𝙣 𝙤𝙛 𝘿𝙞𝙨𝙘𝙞𝙥𝙡𝙞𝙣𝙚𝙙 𝙁𝙪𝙩𝙪𝙧𝙚 𝙀𝙣𝙛𝙤𝙧𝙘𝙚𝙧𝙨 𝙤𝙛 𝙏𝙤𝙙𝙖𝙮𝙨 𝙂𝙚𝙣𝙚𝙧𝙖𝙩𝙞𝙤𝙣)  cultivate a generation of responsible, disciplined, and empowered individuals who are committed to ensuring the safety and well-being of our communities. We are dedicated to instilling the values of discipline, integrity, and service among future generations, empowering them to become effective leaders and contributors to a secure society.',
+             
+            },
+            'YMF': {
+                name: 'YMF',
+                description: '𝗬𝗠𝗙 (𝙔𝙤𝙪𝙣𝙜 𝙈𝙚𝙣𝙩𝙤𝙧 𝙤𝙛 𝙩𝙝𝙚 𝙁𝙪𝙩𝙪𝙧𝙚)  empower and guide the next generation of leaders, innovators, and change-makers. We are dedicated to providing comprehensive mentorship, fostering personal development, and instilling a passion for lifelong learning among young individuals.',
+             
+            },
+            'PASOA': {
+                name: 'PASOA',
+                description: '𝗣𝗔𝗦𝗢𝗔 (𝙋𝙝𝙞𝙡𝙞𝙥𝙥𝙞𝙣𝙚 𝘼𝙨𝙨𝙤𝙘𝙞𝙖𝙩𝙞𝙤𝙣 𝙤𝙛 𝙎𝙩𝙪𝙙𝙚𝙣𝙩𝙨 𝙞𝙣 𝙊𝙛𝙛𝙞𝙘𝙚 𝘼𝙙𝙢𝙞𝙣𝙞𝙨𝙩𝙧𝙖𝙩𝙞𝙤𝙣)  empower students pursuing office administration by providing a platform for holistic development. We strive to enhance academic learning, cultivate leadership qualities, and create opportunities for networking within the industry.',
+                
+            },
+            'HMSO': {
+                name: 'HMSO',
+                description: '𝗛𝗠𝗦𝗢 (𝙃𝙤𝙨𝙥𝙞𝙩𝙖𝙡𝙞𝙩𝙮 𝙈𝙖𝙣𝙖𝙜𝙚𝙢𝙚𝙣𝙩 𝙎𝙩𝙪𝙙𝙚𝙣𝙩𝙨 𝙊𝙧𝙜𝙖𝙣𝙞𝙯𝙖𝙩𝙞𝙤𝙣) create an environment where aspiring hospitality professionals can thrive. We aim to enhance academic experiences, promote industry connections, and develop essential skills that go beyond the classroom. HMSO is committed to supporting its members in their journey towards becoming successful leaders in the dynamic and diverse world of hospitality.',
+              
+            },
+        };
 
-           
-           <!-- Add this to your HTML where you want the form to appear -->
-           <div class="form" id="contact">
-            <h2>CONTACT US</h2><br>
-            <form action="https://formsubmit.co/olshco.electionupdates@gmail.com" method="POST">
-                <input type="text" name="name" placeholder="Name">
-                <input type="email" name="email" placeholder="Email">
-                <input type="text" name="subject" placeholder="Subject">
-                <textarea name="msg" placeholder="Message"></textarea>
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_template" value="table">
-                <button type="submit">Submit</button>
-            </form>
-        </div>
-        <!--==================== FOOTER ====================-->
-        <footer class="footer section">
-            <div class="footer__container container grid">
-                <div class="footer__content grid">
-                    <div class="footer__data">
-                        <h3 class="footer__title">VOTE</h3>
-                        <p class="footer__description">Take a decision today, <br> to ensure a better <br> tomorrow.
-                        </p>
-                        <div>
-                            <a href="https://www.facebook.com/" target="_blank" class="footer__social">
-                                <i class="ri-facebook-box-fill"></i>
-                            </a>
-                            <a href="https://twitter.com/" target="_blank" class="footer__social">
-                                <i class="ri-twitter-fill"></i>
-                            </a>
-                            <a href="https://www.instagram.com/" target="_blank" class="footer__social">
-                                <i class="ri-instagram-fill"></i>
-                            </a>
-                            <a href="https://www.youtube.com/" target="_blank" class="footer__social">
-                                <i class="ri-youtube-fill"></i>
-                            </a>
-                        </div>
-                    </div>
-    
-                    <div class="footer__data">
-                        <h3 class="footer__subtitle">About</h3>
-                        <ul>
-                            <li class="footer__item">
-                                <a href="about" class="footer__link">About</a>
-                            </li>
-                            <li class="footer__item">
-                                <a href="#service" class="footer__link">Services</a>
-                            </li>
-                            <li class="footer__item">
-                                <a href="#place" class="footer__link">Organizations</a>
-                            </li>
-                        </ul>
-                    </div>
-    
-                    <div class="footer__data">
-                        <h3 class="footer__subtitle">Socials</h3>
-                        <ul>
-                            <li class="footer__item">
-                                <a href="" class="footer__link">Facebook</a>
-                            </li>
-                            <li class="footer__item">
-                                <a href="" class="footer__link">Instagram</a>
-                            </li>
-                            <li class="footer__item">
-                                <a href="" class="footer__link">Twitter</a>
-                            </li>
-                        </ul>
-                    </div>
-    
-                    <div class="footer__data">
-                        <h3 class="footer__subtitle">Support</h3>
-                        <ul>
-                            <li class="footer__item">
-                                <a href="" class="footer__link">FAQs</a>
-                            </li>
-                            <li class="footer__item">
-                                <a href="" class="footer__link">Support Center</a>
-                            </li>
-                            <li class="footer__item">
-                                <a href="" class="footer__link">Contact Us</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+        function showDescription(organization) {
+            const organizationData = organizationsData[organization];
 
-                <div class="footer__rights">
-                    <p class="footer__copy">&#169; 2023 BSIT3 - OLSHCO Voting System. All rigths reserved.</p>
-                    <div class="footer__terms">
-                        <a href="#" class="footer__terms-link">Terms & Agreements</a>
-                        <a href="#" class="footer__terms-link">Privacy Policy</a>
-                    </div>
-                </div>
-            </div>
-        </footer>
+            if (organizationData) {
+                document.getElementById('organizationName').innerText = organizationData.name;
+                document.querySelector('.organization-description').innerText = organizationData.description;
+                document.getElementById('organizationImage').src = organizationData.imageUrl;
 
-         <!--========== SCROLL UP ==========-->
-        <a href="#" class="scrollup" id="scroll-up">
-            <i class="ri-arrow-up-line scrollup__icon"></i>
-        </a>
+                document.getElementById('descriptionPopup').style.display = 'flex';
+            } else {
+                console.error(`Organization data not found for: ${organization}`);
+            }
+        }
 
-        <!--=============== SCROLL REVEAL===============-->
-        <script src="assets/js/scrollreveal.min.js"></script>
-        
-        <!--=============== SWIPER JS ===============-->
-        <script src="assets/js/swiper-bundle.min.js"></script>
+        function hideDescription() {
+            document.getElementById('descriptionPopup').style.display = 'none';
+        }
 
-        <!--=============== MAIN JS ===============-->
-        <script src="assets/js/main.js"></script>
-<!-- Include the countdown timer library (if applicable) -->
-<script src="path/to/countdown-library.js"></script>
+        // Close the description popup when clicking the close button
+        document.querySelector('.close').addEventListener('click', hideDescription);
+    </script>
 
-<!-- Include your countdown.js file -->
-<script>
+    <script>
     // Function to update the countdown timer
     function updateCountdown(endTime) {
         var now = new Date();
@@ -469,87 +450,8 @@
     fetchElectionData();
 </script>
 
-     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const themeButton = document.getElementById('theme-button');
-      const body = document.body;
 
-      themeButton.addEventListener('click', () => {
-        // Toggle dark mode
-        body.classList.toggle('dark-mode');
-
-        // Change moon/sun icon
-        const isDarkMode = body.classList.contains('dark-mode');
-        themeButton.className = isDarkMode ? 'ri-sun-line change-theme' : 'ri-moon-line change-theme';
-
-        // Save the user's preference to localStorage
-        localStorage.setItem('dark-mode', isDarkMode);
-      });
-
-      // Check user's preference from localStorage on page load
-      const savedDarkMode = localStorage.getItem('dark-mode');
-      if (savedDarkMode) {
-        body.classList.toggle('dark-mode', savedDarkMode === 'true');
-        themeButton.className = savedDarkMode === 'true' ? 'ri-sun-line change-theme' : 'ri-moon-line change-theme';
-      }
-    });
-  </script>
-    <script>
-        const organizationsData = {
-            'CSC': {
-                name: 'CSC',
-                description: '𝗖𝗦𝗖 (𝘾𝙤𝙡𝙡𝙚𝙜𝙚 𝙎𝙩𝙪𝙙𝙚𝙣𝙩𝙨 𝘾𝙤𝙪𝙣𝙘𝙞𝙡) serve as the voice and advocate for the student body. We are committed to creating a vibrant and inclusive campus community by addressing the needs and concerns of students. Through effective representation, transparent communication, and collaborative initiatives, we aim to enhance the overall student experience.',
-             
-            },
-            'JPCS': {
-                name: 'JPCS',
-                description: '𝗝𝗣𝗖𝗦 (𝙅𝙪𝙣𝙞𝙤𝙧 𝙋𝙝𝙞𝙡𝙞𝙥𝙥𝙞𝙣𝙚 𝘾𝙤𝙢𝙥𝙪𝙩𝙚𝙧 𝙎𝙤𝙘𝙞𝙚𝙩𝙮) inspire and cultivate the next generation of technology enthusiasts with a strong sense of social responsibility. We aim to harness the power of technology for positive change by providing educational opportunities, fostering innovation, and instilling a commitment to philanthropy among young minds.',
-               
-            },
-            'CODE-TG': {
-                name: 'CODE-TG',
-                description: '𝗖𝗢𝗗𝗘-𝗧𝗚 (𝘾𝙤𝙖𝙡𝙞𝙩𝙞𝙤𝙣 𝙤𝙛 𝘿𝙞𝙨𝙘𝙞𝙥𝙡𝙞𝙣𝙚𝙙 𝙁𝙪𝙩𝙪𝙧𝙚 𝙀𝙣𝙛𝙤𝙧𝙘𝙚𝙧𝙨 𝙤𝙛 𝙏𝙤𝙙𝙖𝙮𝙨 𝙂𝙚𝙣𝙚𝙧𝙖𝙩𝙞𝙤𝙣)  cultivate a generation of responsible, disciplined, and empowered individuals who are committed to ensuring the safety and well-being of our communities. We are dedicated to instilling the values of discipline, integrity, and service among future generations, empowering them to become effective leaders and contributors to a secure society.',
-             
-            },
-            'YMF': {
-                name: 'YMF',
-                description: '𝗬𝗠𝗙 (𝙔𝙤𝙪𝙣𝙜 𝙈𝙚𝙣𝙩𝙤𝙧 𝙤𝙛 𝙩𝙝𝙚 𝙁𝙪𝙩𝙪𝙧𝙚)  empower and guide the next generation of leaders, innovators, and change-makers. We are dedicated to providing comprehensive mentorship, fostering personal development, and instilling a passion for lifelong learning among young individuals.',
-             
-            },
-            'PASOA': {
-                name: 'PASOA',
-                description: '𝗣𝗔𝗦𝗢𝗔 (𝙋𝙝𝙞𝙡𝙞𝙥𝙥𝙞𝙣𝙚 𝘼𝙨𝙨𝙤𝙘𝙞𝙖𝙩𝙞𝙤𝙣 𝙤𝙛 𝙎𝙩𝙪𝙙𝙚𝙣𝙩𝙨 𝙞𝙣 𝙊𝙛𝙛𝙞𝙘𝙚 𝘼𝙙𝙢𝙞𝙣𝙞𝙨𝙩𝙧𝙖𝙩𝙞𝙤𝙣)  empower students pursuing office administration by providing a platform for holistic development. We strive to enhance academic learning, cultivate leadership qualities, and create opportunities for networking within the industry.',
-                
-            },
-            'HMSO': {
-                name: 'HMSO',
-                description: '𝗛𝗠𝗦𝗢 (𝙃𝙤𝙨𝙥𝙞𝙩𝙖𝙡𝙞𝙩𝙮 𝙈𝙖𝙣𝙖𝙜𝙚𝙢𝙚𝙣𝙩 𝙎𝙩𝙪𝙙𝙚𝙣𝙩𝙨 𝙊𝙧𝙜𝙖𝙣𝙞𝙯𝙖𝙩𝙞𝙤𝙣) create an environment where aspiring hospitality professionals can thrive. We aim to enhance academic experiences, promote industry connections, and develop essential skills that go beyond the classroom. HMSO is committed to supporting its members in their journey towards becoming successful leaders in the dynamic and diverse world of hospitality.',
-              
-            },
-        };
-
-        function showDescription(organization) {
-            const organizationData = organizationsData[organization];
-
-            if (organizationData) {
-                document.getElementById('organizationName').innerText = organizationData.name;
-                document.querySelector('.organization-description').innerText = organizationData.description;
-                document.getElementById('organizationImage').src = organizationData.imageUrl;
-
-                document.getElementById('descriptionPopup').style.display = 'flex';
-            } else {
-                console.error(`Organization data not found for: ${organization}`);
-            }
-        }
-
-        function hideDescription() {
-            document.getElementById('descriptionPopup').style.display = 'none';
-        }
-
-        // Close the description popup when clicking the close button
-        document.querySelector('.close').addEventListener('click', hideDescription);
-    </script>
-    <script>
+ <script>
   // Fetch countdown date from the server
   fetch('getCountdownDate.php')
     .then(response => response.json())
@@ -575,400 +477,8 @@
       document.getElementById("countdown").innerHTML = "Error: Failed to fetch countdown date";
     });
 </script>
-<script>
-        $(document).ready(function () {
-            // Select all nav links
-            var navLinks = $('.nav__link');
-
-            // Add click event listener to each nav link
-            navLinks.on('click', function () {
-                // Remove active-link class from all links
-                navLinks.removeClass('active-link');
-
-                // Add active-link class to the clicked link
-                $(this).addClass('active-link');
-            });
-        });
-    </script>
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Get elements
-        var contactForm = document.getElementById('contactForm');
-        var contactLink = document.querySelector('.footer__link');
-
-        // Toggle form visibility on link click
-        contactLink.addEventListener('click', function (event) {
-            event.preventDefault();
-            contactForm.style.display = (contactForm.style.display === 'none' || contactForm.style.display === '') ? 'block' : 'none';
-        });
-
-        // Close form if clicked outside of it
-        document.addEventListener('click', function (event) {
-            if (event.target !== contactLink && !contactForm.contains(event.target)) {
-                contactForm.style.display = 'none';
-            }
-        });
-    });
-</script>
-
-    </body>
-    
-   <style>
-  /* Dark Mode Styles */
-  body.dark-mode {
-    background-color: maroon;
-  }
-
-  .nav__dark {
-    color: #fff;
-  }
-</style>
-<style>
-    .form {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.form h2 {
-    text-align: center;
-    color: #333;
-}
-
-.form form {
-    display: flex;
-    flex-direction: column;
-}
-
-.form label {
-    margin-bottom: 8px;
-    color: #555;
-}
-
-.form input,
-.form textarea {
-    margin-bottom: 15px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-    transition: border-color 0.3s ease-in-out;
-}
-
-.form input:focus,
-.form textarea:focus {
-    border-color: #007bff;
-}
-
-.form textarea {
-    resize: vertical;
-}
-
-.form button {
-    background-color: maroon    ;
-    color: #fff;
-    padding: 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    text-transform: uppercase;
-    transition: background-color 0.3s ease-in-out;
-    margin-left: auto; /* Move button to the right */
-}
-
-.form button:hover {
-    background-color: darkred;
-}
-
-
-  /* Reset some default styles */
-
-
-  /* Global styles */
-
-  /* College Organizations Section */
-  .place {
-    text-align: center;
-  }
-
-  .section__title {
-    font-size: 1.5em;
-    color: black;
-    margin-bottom: 20px;
-  }
-
-  .place__container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 50px;
-    grid-row-gap: 10px;
-    flex-wrap: wrap;
-  }
-
-  .place__card {
-    position: relative;
-    overflow: hidden;
-    width: 200px;
-    height: 200px;
-    margin: 10px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-  }
-
-  .place__card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  }
-
-  .place__img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    cursor: pointer;
-  }
-
-  .place__content {
-    position: relative;
-    padding: 15px;
-  }
-
-  .place__data h3 {
-    font-size: 1.2em;
-    color: #333;
-  }
-
-  /* Description Popup Styles */
-  #descriptionPopup {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-  }
-
-  .description-container {
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 600px;
-    text-align: center;
-    position: relative;
-  }
-
-  .close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    font-size: 1.5em;
-    color: #333;
-  }
-
-  .organization-description {
-    color: #333;
-    margin-top: 20px;
-  }
-
-  .home__container {
-    grid-template-rows: 2fr .5fr;
-    margin-left: -70px;
-  }
-
-  .heading {
-    margin-top: 10px;
-    color: black;
-    font-size: 30px;
-    font-weight: bolder;
-    text-align: center;
-    letter-spacing: 1px;
-    word-spacing: 6px;
-    margin-bottom: 25px;
-  }
-
-  .description {
-    color: black;
-    text-align: center;
-    font-size: 15px;
-    letter-spacing: 1px;
-    font-family: Lucida Sans;
-  }
-
-  .timer {
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-    margin-top: 30px;
-  }
-
-  .sub_timer {
-    width: 200px;
-    background: rgba(255, 255, 255, 0.19);
-    backdrop-filter: blur(20px);
-    border-radius: 20px;
-    overflow: hidden;
-  }
-
-  .digit {
-    color: black;
-    font-weight: lighter;
-    font-size: 70px;
-    text-align: center;
-    padding: 3.5rem 0;
-  }
-
-  .digit_name {
-    color: #000;
-    background: lightgrey;
-    text-align: center;
-    padding: 0.6rem 0;
-    font-size: 20px;
-  }
-
-  section {
-    height: 100vh;
-    width: 100%;
-    display: grid;
-    place-items: center;
-  }
-
-  .row {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .column {
-    width: 100%;
-    padding: 0 1em 1em 1em;
-    text-align: center;
-  }
-
-  .card {
-    width: 100%;
-    height: 100%;
-    padding: 2em 1.5em;
-    background: linear-gradient(#ffffff 50%, maroon 50%);
-    background-size: 100% 200%;
-    background-position: 0 2.5%;
-    border-radius: 5px;
-    box-shadow: 0 0 35px rgba(0, 0, 0, 0.12);
-    cursor: pointer;
-    transition: 0.5s;
-  }
-
-  h3 {
-    font-size: 20px;
-    font-weight: 600;
-    color: black;
-    margin: 0em 0;
-  }
-
-  .column p {
-    color: grey;
-    font-size: 15px;
-    line-height: 1.6;
-    letter-spacing: 0.03em;
-  }
-
-  .icon-wrapper {
-    background-color: maroon;
-    position: relative;
-    margin: auto;
-    font-size: 30px;
-    height: 2.5em;
-    width: 2.5em;
-    color: #ffffff;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    transition: 0.5s;
-  }
-
-  .card:hover {
-    background-position: 0 100%;
-  }
-
-  .card:hover .icon-wrapper {
-    background-color: #ffffff;
-    color: #2c7bfe;
-  }
-
-  .card:hover h3 {
-    color: #ffffff;
-  }
-
-  .card:hover p {
-    color: #f0f0f0;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: #800000;
-  }
-
-  @media screen and (min-width: 768px) {
-    section {
-      padding: 0 2em;
-    }
-
-    .column {
-      flex: 0 50%;
-      max-width: 50%;
-    }
-  }
-
-  @media screen and (min-width: 992px) {
-    section {
-      padding: 1em 3em;
-    }
-
-    .column {
-      flex: 0 0 33.33%;
-      max-width: 33.33%;
-    }
-    #descriptionPopup {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-}
-
-.description-container {
-    max-height: 400px; /* Set the maximum height for the container */
-    overflow-y: auto; /* Add a vertical scrollbar when content exceeds the container height */
-    text-align: center;
-}
-
-.image-container {
-    margin-top: 10px; /* Adjust the margin as needed */
-    text-align: center;
-}
-
-/* Optional: Style the scrollbar */
-.scrollable-container::-webkit-scrollbar {
-    width: 10px;
-}
-
-.scrollable-container::-webkit-scrollbar-thumb {
-    background-color: #888;
-}
-
-.scrollable-container::-webkit-scrollbar-track {
-    background-color: #eee;
-}
-  }
-</style>
-
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="main.js"></script>
+  </body>
 </html>
