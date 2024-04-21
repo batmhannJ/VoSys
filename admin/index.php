@@ -19,6 +19,7 @@ if (isset($_SESSION['voter'])) {
     <div class="login-box">
         <div class="login-box-body">
             <div class="login-logo">
+            <img src="images/olshco.png" class="olshco-logo" alt="College Voting System Logo">
                 <b>ADMIN LOGIN </b><br>
                 <b>College Voting System</b>
             </div>
