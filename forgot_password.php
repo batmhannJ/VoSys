@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forgot Password</title>
-    <!-- Include your CSS files -->
-</head>
+<?php include 'includes/header.php'; ?>
+
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-box-body">
@@ -29,5 +23,6 @@
             </form>
         </div>
     </div>
+    <?php include 'includes/scripts.php' ?>
 </body>
 </html>
