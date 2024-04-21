@@ -13,12 +13,12 @@
 
         <form action="login.php" method="POST">
             <div class="form-group has-feedback">
-            <img src="images/user-solid.svg" class="loglogo">
+            <img src="admin/images/user-solid.svg" class="loglogo">
                 <input type="text" class="form-control" name="username" placeholder="Username" required>
                 <span class="form-control-feedback"></span>
             </div>
           <div class="form-group has-feedback">
-            <img src="images/lock-solid.svg" class="loglogo">
+            <img src="admin/images/lock-solid.svg" class="loglogo">
             <input type="password" class="form-control" name="password" placeholder="Password" required>
             <span class="form-control-feedback"></span>
           </div>
