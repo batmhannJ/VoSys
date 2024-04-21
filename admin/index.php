@@ -19,7 +19,6 @@ if (isset($_SESSION['voter'])) {
     <div class="login-box">
         <div class="login-box-body">
             <div class="login-logo">
-                <img src="images/olshco.png" class="olshco-logo" alt="College Voting System Logo">
                 <b>ADMIN LOGIN </b><br>
                 <b>College Voting System</b>
             </div>
@@ -32,7 +31,7 @@ if (isset($_SESSION['voter'])) {
                 </div>
                 <div class="form-group has-feedback">
                     <img src="images/user-solid.svg" class="loglogo">
-                    <input type="text" class="form-control" name="voter" placeholder="Voter's ID" required>
+                    <input type="text" class="form-control" name="voter" placeholder="Username" required>
                     <span class="form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
