@@ -187,15 +187,25 @@
         $candidateData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name'] . " (" . $row['position'] . ")");
       }
     } else {
-      // If no organization selected, clear the graph data
+      // Fetch all candidate data if no organization is selected
       $candidateData = array();
+      $sql = "SELECT positions.description AS position, CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
+              COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
+              FROM positions 
+              LEFT JOIN candidates ON positions.id = candidates.position_id
+              LEFT JOIN votes ON candidates.id = votes.candidate_id
+              LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
+              WHERE voters1.organization != ''
+              GROUP BY positions.description, candidates.id";
+      $query = $conn->query($sql);
+      while($row = $query->fetch_assoc()) {
+        $candidateData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name'] . " (" . $row['position'] . ")");
+      }
     }
   ?>
 
   // Generate bar graph for candidates per organization
-  <?php if(isset($candidateData)): ?>
-    generateBarGraph(<?php echo json_encode($candidateData); ?>, "candidatesGraph");
-  <?php endif; ?>
+  generateBarGraph(<?php echo json_encode($candidateData); ?>, "candidatesGraph");
 </script>
 </body>
 </html>
