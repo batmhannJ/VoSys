@@ -30,7 +30,7 @@ if (isset($_POST['resetPass'])) {
         $stmt->bind_param("ss", $email, $token); // Bind parameters
         if ($stmt->execute()) {
             // Send password reset email
-            $reset_link = "http://vosys.org/forgot_password.php?token=$token";
+            $reset_link = "http://vosys.org/change_pass.php?token=$token";
             $subject = "Password Reset";
             $message = "Click the following link to reset your password: $reset_link";
             if (mail($email, $subject, $message)) {
@@ -52,10 +52,11 @@ if (isset($_POST['resetPass'])) {
 if (isset($_GET['token'])) {
     // Get the token from the URL
     $token = $_GET['token'];
-
-    // Redirect to change_pass.php with the token as a parameter
-    header("Location: change_pass.php?token=$token");
-    exit;
+    // Display the form for changing the password
+    echo "Change Password Form with Token: $token";
+} else {
+    // If the token parameter is not set, display an error message or redirect to another page
+    echo "Token not found. Please try again.";
 }
 
 // HTML for your forgot password form
