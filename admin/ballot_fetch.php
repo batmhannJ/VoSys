@@ -35,7 +35,7 @@
 				<div class="col-xs-12">
 					<div class="box box-solid" id="'.$row['id'].'">
 						<div class="box-header with-border">
-							<h3 class="box-title"><b>'.$row['description'].'</b></h3>
+							<h3 class="box-title"><b>'.$row['name'].'</b></h3>
 							<div class="pull-right box-tools">
 				                <button type="button" class="btn btn-default btn-sm moveup" data-id="'.$row['id'].'" '.$updisable.'><i class="fa fa-arrow-up"></i> </button>
 				                <button type="button" class="btn btn-default btn-sm movedown" data-id="'.$row['id'].'" '.$downdisable.'><i class="fa fa-arrow-down"></i></button>
