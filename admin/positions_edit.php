@@ -3,10 +3,10 @@
 
 	if(isset($_POST['edit'])){
 		$id = $_POST['id'];
-		$description = $_POST['description'];
+		$name = $_POST['name'];
 		$max_vote = $_POST['max_vote'];
 
-		$sql = "UPDATE positions SET description = '$description', max_vote = '$max_vote' WHERE id = '$id'";
+		$sql = "UPDATE categories SET name = '$name', max_vote = '$max_vote' WHERE id = '$id' and election_id = 1";
 		if($conn->query($sql)){
 			$_SESSION['success'] = 'Position updated successfully';
 		}
@@ -18,6 +18,6 @@
 		$_SESSION['error'] = 'Fill up edit form first';
 	}
 
-	header('location: positions.php');
+	header('location: positions_jpcs.php');
 
 ?>
