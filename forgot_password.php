@@ -1,13 +1,6 @@
 <?php
 session_start();
 
-// Enable error reporting
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-// Include your header file
-include 'includes/header.php';
-
 // Include your database connection file
 include 'includes/conn.php';
 
@@ -35,6 +28,9 @@ if (isset($_POST['resetPass'])) {
             $message = "Click the following link to reset your password: $reset_link";
             if (mail($email, $subject, $message)) {
                 $_SESSION['success'] = "Password reset link has been sent to your email.";
+                // Redirect to success page or display a message
+                header("Location: password_reset_success.php");
+                exit();
             } else {
                 $_SESSION['error'] = "Failed to send password reset email. Please try again.";
             }
@@ -44,23 +40,12 @@ if (isset($_POST['resetPass'])) {
     } else {
         $_SESSION['error'] = "Email not found. Please try again.";
     }
-
-    // Redirect the user back to the login page after processing
-    header("Location: voters_login.php");
-    exit();
-}
-if (isset($_GET['token'])) {
-    // Get the token from the URL
-    $token = $_GET['token'];
-    // Display the form for changing the password
-    echo "Change Password Form with Token: $token";
-} else {
-    // If the token parameter is not set, display an error message or redirect to another page
-    echo "Token not found. Please try again.";
 }
 
-// HTML for your forgot password form
+// Include your header file
+include 'includes/header.php';
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -79,7 +64,7 @@ if (isset($_GET['token'])) {
             <p class="login-box-msg">Forgot Password? Enter your email address to reset your password.</p>
 
             <!-- Forgot password form -->
-            <form action="forgot_password.php" method="POST">
+            <form action="" method="POST">
                 <div class="form-group has-feedback">
                     <input type="email" class="form-control" name="email" placeholder="Email" required>
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
