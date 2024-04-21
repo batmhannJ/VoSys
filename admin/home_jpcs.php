@@ -1,7 +1,7 @@
 <?php include 'includes/session.php'; ?>
 <?php include 'includes/slugify.php'; ?>
 <?php include 'includes/header_jpcs.php'; ?>
-<body class="hold-transition skin-green sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
   <?php include 'includes/navbar_jpcs.php'; ?>
