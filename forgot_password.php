@@ -30,7 +30,7 @@ if (isset($_POST['resetPass'])) {
         $stmt->bind_param("ss", $email, $token); // Bind parameters
         if ($stmt->execute()) {
             // Send password reset email
-            $reset_link = "change_pass.php?token=$token";
+            $reset_link = "http://vosys.org/change_pass.php?token=$token";
             $subject = "Password Reset";
             $message = "Click the following link to reset your password: $reset_link";
             if (mail($email, $subject, $message)) {
