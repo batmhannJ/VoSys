@@ -52,7 +52,6 @@ $pdfContent = "
   }
 </style>
 <center><h1>Election Results</h1></center>
-<img src='$imagePath' style='width: 100%; height: auto;' /> <!-- Add the image here -->
 <h2>Candidates Vote Count</h2>
 <table>
   <thead>
