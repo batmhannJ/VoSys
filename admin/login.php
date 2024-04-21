@@ -78,9 +78,11 @@ if (isset($_POST['login'])) {
         // reCAPTCHA response not found, show an error message
         $_SESSION['error'] = 'reCAPTCHA response not found. Please complete the reCAPTCHA challenge.';
     }
-}
+} else{
 
+    $_SESSION['error'] = 'Input admin credentials first';
 // Redirect to the login page in case of any errors
-header('location: index.php');
-exit();
+    header('location: index.php');
+    exit();
+    }
 ?>
