@@ -117,11 +117,11 @@
                       <select class="form-control" id="edit_position" name="position" required>
                         <option value="" selected id="posselect"></option>
                         <?php
-                          $sql = "SELECT * FROM categories WHERE election_id = 1";
+                          $sql = "SELECT * FROM positions";
                           $query = $conn->query($sql);
                           while($row = $query->fetch_assoc()){
                             echo "
-                              <option value='".$row['id']."'>".$row['name']."</option>
+                              <option value='".$row['id']."'>".$row['description']."</option>
                             ";
                           }
                         ?>
