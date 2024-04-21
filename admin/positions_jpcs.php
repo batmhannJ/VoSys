@@ -58,13 +58,13 @@
                 </thead>
                 <tbody>
                   <?php
-                    $sql = "SELECT * FROM positions ORDER BY priority ASC";
+                    $sql = "SELECT * FROM categories WHERE election_id = 1";
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
                       echo "
                         <tr>
                           <td class='hidden'></td>
-                          <td>".$row['description']."</td>
+                          <td>".$row['name']."</td>
                           <td>".$row['max_vote']."</td>
                           <td>
                             <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
@@ -113,9 +113,9 @@ function getRow(id){
     dataType: 'json',
     success: function(response){
       $('.id').val(response.id);
-      $('#edit_description').val(response.description);
+      $('#edit_name').val(response.name);
       $('#edit_max_vote').val(response.max_vote);
-      $('.description').html(response.description);
+      $('.name').html(response.name);
     }
   });
 }

@@ -13,7 +13,7 @@
                     <label for="description" class="col-sm-3 control-label">Description</label>
 
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="description" name="description" required>
+                      <input type="text" class="form-control" id="description" name="name" required>
                     </div>
                 </div>
                 <div class="form-group">
@@ -49,7 +49,7 @@
                     <label for="edit_description" class="col-sm-3 control-label">Description</label>
 
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="edit_description" name="description">
+                      <input type="text" class="form-control" id="edit_name" name="name">
                     </div>
                 </div>
                 <div class="form-group">

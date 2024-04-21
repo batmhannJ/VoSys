@@ -14,7 +14,7 @@
         Ballot Position
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="home_jpcs.php"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Ballot Preview</li>
       </ol>
     </section>
