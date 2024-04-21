@@ -75,7 +75,7 @@
                   <?php
                     // Fetch and display president candidate ranking based on vote count and organization filter
                     $organizationFilter = isset($_POST['organization']) ? " AND voters1.organization = '".$_POST['organization']."'" : "";
-                    if ($_POST['organization'] == "") {
+                    if ('organization' == "") {
                       $organizationFilter = "";
                     }
                     $sql = "SELECT voters1.organization, CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
@@ -197,6 +197,13 @@
             </div>
             <!-- /.box-body -->
           </div>
+          <div class="row">
+        <div class="col-xs-12">
+            <span class="pull-right">
+              <a href="print.php" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Export PDF</a>
+            </span>
+        </div>
+      </div>
           <!-- /.box -->
         </div>
         <!-- /.col -->
@@ -205,6 +212,7 @@
     </section>
     <!-- /.content -->
   </div>
+
   <!-- /.content-wrapper -->
   <?php include 'includes/footer.php'; ?>
   <?php include 'includes/votes_modal.php'; ?>
@@ -249,7 +257,7 @@
             GROUP BY candidates.id";
     $query = $conn->query($sql);
     while($row = $query->fetch_assoc()) {
-      $presidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name'], "color" => $presidentColor);
+      $presidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
     }
   ?>
 
