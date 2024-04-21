@@ -48,6 +48,7 @@ if (isset($_SESSION['voter'])) {
                     </div>
                 </div>
             </form>
+            <p class="text-center"><a href="forgot_password.php">Forgot Password?</a></p>
         </div>
         <?php
         if (isset($_SESSION['error'])) {
