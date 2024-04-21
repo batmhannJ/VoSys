@@ -51,6 +51,7 @@ include 'includes/header.php';
             <div class="box-body">
               <table id="example1" class="table table-bordered">
                 <thead>
+                  <th>No.</th>
                   <th>Lastname</th>
                   <th>Firstname</th>
                   <th>Photo</th>
@@ -69,9 +70,11 @@ include 'includes/header.php';
                       die("SQL Error: " . $conn->error); // Add error handling here
                     }
                     while($row = $query->fetch_assoc()){
+                      $i = 1;
                       $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
                       echo "
                         <tr>
+                        <td>".$i++."</td>
                           <td>".$row['lastname']."</td>
                           <td>".$row['firstname']."</td>
                           <td>
