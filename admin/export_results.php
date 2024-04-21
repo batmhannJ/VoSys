@@ -5,8 +5,6 @@ require_once __DIR__ . '/vendor/autoload.php';
 // Include database connection
 require_once 'includes/conn.php'; // Adjust the path as per your file structure
 
-// Absolute path to your image
-$imagePath = 'C:\Xampp\htdocs\votesystem\images\olshco.png';
 
 // Query to calculate vote count for each candidate
 $sql = "SELECT candidates.firstname, candidates.lastname, COUNT(votes.candidate_id) AS vote_count
