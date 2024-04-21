@@ -8,7 +8,7 @@
 		$position = $_POST['position'];
 		$platform = $_POST['platform'];
 
-		$sql = "UPDATE candidates SET firstname = '$firstname', lastname = '$lastname', position_id = '$position', platform = '$platform' WHERE id = '$id'";
+		$sql = "UPDATE candidates SET firstname = '$firstname', lastname = '$lastname', category_id = '$position', platform = '$platform' WHERE id = '$id'";
 		if($conn->query($sql)){
 			$_SESSION['success'] = 'Candidate updated successfully';
 		}
