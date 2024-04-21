@@ -63,7 +63,7 @@ body {
 }
 
 .header {
-  background-image: url("assets/home.png");
+  background-image: url("assets/img/home.png");
   background-size: cover;
   height: 700px;
   background-position: center center;
