@@ -12,7 +12,7 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
     />
-    <link rel="stylesheet" href="styless.css" />
+    <link rel="stylesheet" href="styles.css" />
     <title>OLSHCO College Online Voting System</title>
   </head>
   <body>
@@ -20,7 +20,7 @@
       <nav>
         <div class="nav__header">
           <div class="nav__logo">
-            <img src="assets/img/logo.png" alt="" class="nav__logo-img"> 
+            <img src="assets/logo.png" alt="" class="nav__logo-img"> 
             <h2>VOSYS</h2>
           </div>
           <div class="nav__menu__btn" id="menu-btn">
@@ -34,7 +34,7 @@
           <li><a href="#organizations">Organizations</a></li>
           <li><a href="#">Location</a></li>
           <li><a href="#">Countdown</a></li>
-          <li><a href="voters_login.php"><button class="btn">Login</button></a></li>
+          <li><button class="btn">Login</button></li>
         </ul>
       </nav>
       <div class="section__container header__container">
@@ -54,7 +54,7 @@
           <h5 style="color: white;">Our mission is to empower academic organizations to redefine the way they conduct elections and surveys, providing a cutting-edge, user-friendly, and secure online voting platform that not only meets their unique needs but also exceeds their expectations.</h5>
         </div>
         <div class="register__image">
-          <img src="assets/img/logo.png" alt="register" />
+          <img src="assets/logo.png" alt="register" />
         </div>
       </div>
     </section>
@@ -155,7 +155,7 @@
     <div class="place__container container grid">
         <!-- Organization Card 1 -->
         <div class="place__card" onclick="showDescription('CSC')">
-            <img src="assets/img/csc.jpg" alt="" class="place__img">
+            <img src="assets/csc.jpg" alt="" class="place__img">
             <div class="place__content">
                 <div class="place__data">
                     <h3 class="place__title">CSC</h3>
@@ -165,7 +165,7 @@
         
         <!-- Organization Card 2 -->
         <div class="place__card" onclick="showDescription('JPCS')">
-            <img src="assets/img/jpcs.jpg" alt="" class="place__img">
+            <img src="assets/jpcs.jpg" alt="" class="place__img">
             <div class="place__content">
                 <div class="place__data">
                     <h3 class="place__title">JPCS</h3>
@@ -175,7 +175,7 @@
 
         <!-- Organization Card 3 -->
         <div class="place__card" onclick="showDescription('CODE-TG')">
-            <img src="assets/img/codg.jpg" alt="" class="place__img">
+            <img src="assets/codg.jpg" alt="" class="place__img">
             <div class="place__content">
                 <div class="place__data">
                     <h3 class="place__title">CODE-TG</h3>
@@ -187,7 +187,7 @@
     <div class="place__container container grid">
         <!-- Organization Card 4 -->
         <div class="place__card" onclick="showDescription('YMF')">
-            <img src="assets/img/ymf.jpg" alt="" class="place__img">
+            <img src="assets/ymf.jpg" alt="" class="place__img">
             <div class="place__content">
                 <div class="place__data">
                     <h3 class="place__title">YMF</h3>
@@ -197,7 +197,7 @@
 
         <!-- Organization Card 5 -->
         <div class="place__card" onclick="showDescription('PASOA')">
-            <img src="assets/img/posoa.jpg" alt="" class="place__img">
+            <img src="assets/posoa.jpg" alt="" class="place__img">
             <div class="place__content">
                 <div class="place__data">
                     <h3 class="place__title">PASOA</h3>
@@ -207,7 +207,7 @@
 
         <!-- Organization Card 6 -->
         <div class="place__card" onclick="showDescription('HMSO')">
-            <img src="assets/img/hmso.jpg" alt="" class="place__img">
+            <img src="assets/hmso.jpg" alt="" class="place__img">
             <div class="place__content">
                 <div class="place__data">
                     <h3 class="place__title">HMSO</h3>
@@ -450,7 +450,6 @@
     fetchElectionData();
 </script>
 
-
  <script>
   // Fetch countdown date from the server
   fetch('getCountdownDate.php')
@@ -477,8 +476,22 @@
       document.getElementById("countdown").innerHTML = "Error: Failed to fetch countdown date";
     });
 </script>
-    <script src="https://unpkg.com/scrollreveal"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="main.js"></script>
-  </body>
+
+ <!--========== SCROLL UP ==========-->
+        <a href="#" class="scrollup" id="scroll-up">
+            <i class="ri-arrow-up-line scrollup__icon"></i>
+        </a>
+
+        <!--=============== SCROLL REVEAL===============-->
+        <script src="assets/js/scrollreveal.min.js"></script>
+        
+        <!--=============== SWIPER JS ===============-->
+        <script src="assets/js/swiper-bundle.min.js"></script>
+
+        <!--=============== MAIN JS ===============-->
+        <script src="assets/js/main.js"></script>
+<!-- Include the countdown timer library (if applicable) -->
+<script src="path/to/countdown-library.js"></script>
+
+</body>
 </html>
