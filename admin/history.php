@@ -21,35 +21,31 @@
     <!-- Main content -->
     <section class="content">
       <!-- Organization Filter -->
-<div class="row">
-    <div class="col-md-12">
-        <div class="box">
-            <div class="box-body">
-                <form method="post" action="">
-                    <div class="form-group">
-                        <label for="organization">Select Organization:</label>
-                        <select class="form-control" name="organization" id="organization">
-                            <option value="">All Organizations</option>
-                            <?php
-                            // Fetch and display organizations
-                            $organizationQuery = $conn->query("SELECT DISTINCT organization FROM voters");
-                            while($organizationRow = $organizationQuery->fetch_assoc()){
-                                $selected = '';
-                                if(isset($_POST['organization']) && $_POST['organization'] == $organizationRow['organization']) {
-                                    $selected = 'selected';
-                                }
-                                echo "<option value='".$organizationRow['organization']."' $selected>".$organizationRow['organization']."</option>";
-                            }
-                            ?>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Filter</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
+      <div class="row">
+          <div class="col-md-12">
+              <div class="box">
+                  <div class="box-body">
+                      <form method="get" action="">
+                          <div class="form-group">
+                              <label for="organization">Select Organization:</label>
+                              <select class="form-control" name="organization" id="organization">
+                                  <option value="">All Organizations</option>
+                                  <?php
+                                  // Fetch and display organizations
+                                  $organizationQuery = $conn->query("SELECT DISTINCT organization FROM voters");
+                                  while($organizationRow = $organizationQuery->fetch_assoc()){
+                                      $selected = ($_GET['organization'] ?? '') == $organizationRow['organization'] ? 'selected' : '';
+                                      echo "<option value='".$organizationRow['organization']."' $selected>".$organizationRow['organization']."</option>";
+                                  }
+                                  ?>
+                              </select>
+                          </div>
+                          <button type="submit" class="btn btn-primary">Filter</button>
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
 
       <!-- President and Vice President Ranking Boxes -->
       <div class="row">
@@ -74,10 +70,7 @@
                 <tbody>
                   <?php
                     // Fetch and display president candidate ranking based on vote count and organization filter
-                    $organizationFilter = isset($_POST['organization']) ? " AND voters1.organization = '".$_POST['organization']."'" : "";
-                    if ('organization' == "") {
-                      $organizationFilter = "";
-                    }
+                    $organizationFilter = !empty($_GET['organization']) ? " AND voters1.organization = '".$_GET['organization']."'" : "";
                     $sql = "SELECT voters1.organization, CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
                             COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
                             FROM positions 
@@ -198,12 +191,12 @@
             <!-- /.box-body -->
           </div>
           <div class="row">
-        <div class="col-xs-12">
-            <span class="pull-right">
-              <a href="print.php" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Export PDF</a>
-            </span>
-        </div>
-      </div>
+            <div class="col-xs-12">
+                <span class="pull-right">
+                  <a href="export_results.php" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Export PDF</a>
+                </span>
+            </div>
+          </div>
           <!-- /.box -->
         </div>
         <!-- /.col -->
@@ -254,6 +247,7 @@
             LEFT JOIN votes ON candidates.id = votes.candidate_id
             LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
             WHERE voters1.organization != ''
+            ".$organizationFilter."
             GROUP BY candidates.id";
     $query = $conn->query($sql);
     while($row = $query->fetch_assoc()) {
@@ -274,6 +268,7 @@
             LEFT JOIN votes ON candidates.id = votes.candidate_id
             LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
             WHERE voters1.organization != ''
+            ".$organizationFilter."
             GROUP BY candidates.id";
     $query = $conn->query($sql);
     while($row = $query->fetch_assoc()) {
