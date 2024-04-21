@@ -1,6 +1,6 @@
 <?php include 'includes/session.php'; ?>
 <?php include 'includes/slugify.php'; ?>
-<?php include 'includes/header.php'; ?>
+<?php include 'includes/header_jpcs.php'; ?>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
