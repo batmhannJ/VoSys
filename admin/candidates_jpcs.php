@@ -63,9 +63,9 @@
                   <?php
                     $sql = "SELECT *, candidates.id AS canid 
                     FROM candidates 
-                    LEFT JOIN positions ON positions.id = candidates.position_id 
-                    WHERE candidates.election_id = 1 
-                    ORDER BY positions.priority ASC";
+                    LEFT JOIN categories ON categories.id = candidates.position_id 
+                    WHERE categories.election_id = 1 
+                    ORDER BY categories.priority ASC";
 
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
