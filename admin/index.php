@@ -13,14 +13,14 @@
 
         <form action="login.php" method="POST">
             <div class="form-group has-feedback">
-            <img src="admin/images/user-solid.svg" class="loglogo">
+            <!--<img src="images/user-solid.svg" class="loglogo">-->
                 <input type="text" class="form-control" name="username" placeholder="Username" required>
                 <span class="form-control-feedback"></span>
             </div>
           <div class="form-group has-feedback">
-            <img src="admin/images/lock-solid.svg" class="loglogo">
-            <input type="password" class="form-control" name="password" placeholder="Password" required>
+            <!--<img src="images/lock-solid.svg" class="loglogo">-->
             <span class="form-control-feedback"></span>
+            <input type="password" class="form-control" name="password" placeholder="Password" required>
           </div>
           <div class="form-group has-feedback">
             <div class="g-recaptcha" data-sitekey="6LddHcIpAAAAAJS6Wnenkllxyr3tWUSlSCu8o9eO"></div>
