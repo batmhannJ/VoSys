@@ -125,7 +125,6 @@
                             <input type="datetime-local" class="form-control" id="edit_starttime" name="starttime" required>
                         </div>
                     </div>
-
                 <!-- Add end time input -->
                     <div class="form-group">
                         <label for="edit_endtime" class="col-sm-3 control-label">End Time</label>

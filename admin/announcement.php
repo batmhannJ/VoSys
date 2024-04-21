@@ -101,8 +101,8 @@
                         <tr>
                           <td class='hidden'></td>
                           <td>
-                              <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
-                              <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."'><i class='fa fa-trash'></i> Delete</button>
+                              <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['id_announcement']."'><i class='fa fa-edit'></i> Edit</button>
+                              <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id_announcement']."'><i class='fa fa-trash'></i> Delete</button>
                             </td>
                           <td>" . ($counter++) . "</td>
                           <td>" . $row['announcement'] . "</td>
@@ -131,17 +131,17 @@
 
   <script>
   $(function(){
-    $(document).on('click', '.edit', function(e){
+    $(document).on('click', '.editAnnouncement', function(e){
       e.preventDefault();
-      $('#edit').modal('show');
-      var id = $(this).data('id');
+      $('#editAnnouncement').modal('show');
+      var id = $(this).data('id_announcement');
       getRow(id);
     });
 
-    $(document).on('click', '.delete', function(e){
+    $(document).on('click', '.deleteAnnouncement', function(e){
       e.preventDefault();
-      $('#delete').modal('show');
-      var id = $(this).data('id');
+      $('#deleteAnnouncement').modal('show');
+      var id = $(this).data('id_announcement');
       getRow(id);
     });
 
