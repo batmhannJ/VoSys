@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 // Include your header file
 include 'includes/header.php';
 
@@ -11,7 +13,7 @@ if (isset($_GET['token'])) {
     $token = $_GET['token'];
     
     // Display the form for changing the password
-    ?>
+?>
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -39,7 +41,7 @@ if (isset($_GET['token'])) {
         </div>
     </body>
     </html>
-    <?php
+<?php
 } else {
     // If the token parameter is not set, display an error message or redirect to another page
     echo "Token not found. Please try again.";
