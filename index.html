@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -12,7 +11,7 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
     />
-    <link rel="stylesheet" href="styless.css" />
+    <link rel="stylesheet" href="styles.css" />
     <title>OLSHCO College Online Voting System</title>
   </head>
   <body>
@@ -20,7 +19,7 @@
       <nav>
         <div class="nav__header">
           <div class="nav__logo">
-            <img src="assets/img/logo.png" alt="" class="nav__logo-img"> 
+            <img src="assets/logo.png" alt="" class="nav__logo-img"> 
             <h2>VOSYS</h2>
           </div>
           <div class="nav__menu__btn" id="menu-btn">
@@ -32,8 +31,8 @@
           <li><a href="#about">About</a></li>
           <li><a href="#services">Services</a></li>
           <li><a href="#organizations">Organizations</a></li>
-          <li><a href="#location">Location</a></li>
-          <li><a href="#discover">Countdown</a></li>
+          <li><a href="#">Location</a></li>
+          <li><a href="#">Countdown</a></li>
           <li><button class="btn">Login</button></li>
         </ul>
       </nav>
@@ -54,7 +53,7 @@
           <h5 style="color: white;">Our mission is to empower academic organizations to redefine the way they conduct elections and surveys, providing a cutting-edge, user-friendly, and secure online voting platform that not only meets their unique needs but also exceeds their expectations.</h5>
         </div>
         <div class="register__image">
-          <img src="assets/img/logo.png" alt="register" />
+          <img src="assets/logo.png" alt="register" />
         </div>
       </div>
     </section>
@@ -151,11 +150,11 @@
 
 
     <section id="organizations" class="place section">
-    <br><br><br><br><h2 class="section__header">ORGANIZATIONS</h2><br><br>
+    <br><br><br><h2 class="section__header">ORGANIZATIONS</h2><br><br>
     <div class="place__container container grid">
         <!-- Organization Card 1 -->
         <div class="place__card" onclick="showDescription('CSC')">
-            <img src="assets/img/csc.jpg" alt="" class="place__img">
+            <img src="assets/csc.jpg" alt="" class="place__img">
             <div class="place__content">
                 <div class="place__data">
                     <h3 class="place__title">CSC</h3>
@@ -165,7 +164,7 @@
         
         <!-- Organization Card 2 -->
         <div class="place__card" onclick="showDescription('JPCS')">
-            <img src="assets/img/jpcs.jpg" alt="" class="place__img">
+            <img src="assets/jpcs.jpg" alt="" class="place__img">
             <div class="place__content">
                 <div class="place__data">
                     <h3 class="place__title">JPCS</h3>
@@ -175,7 +174,7 @@
 
         <!-- Organization Card 3 -->
         <div class="place__card" onclick="showDescription('CODE-TG')">
-            <img src="assets/img/codg.jpg" alt="" class="place__img">
+            <img src="assets/codg.jpg" alt="" class="place__img">
             <div class="place__content">
                 <div class="place__data">
                     <h3 class="place__title">CODE-TG</h3>
@@ -187,7 +186,7 @@
     <div class="place__container container grid">
         <!-- Organization Card 4 -->
         <div class="place__card" onclick="showDescription('YMF')">
-            <img src="assets/img/ymf.jpg" alt="" class="place__img">
+            <img src="assets/ymf.jpg" alt="" class="place__img">
             <div class="place__content">
                 <div class="place__data">
                     <h3 class="place__title">YMF</h3>
@@ -197,7 +196,7 @@
 
         <!-- Organization Card 5 -->
         <div class="place__card" onclick="showDescription('PASOA')">
-            <img src="assets/img/posoa.jpg" alt="" class="place__img">
+            <img src="assets/posoa.jpg" alt="" class="place__img">
             <div class="place__content">
                 <div class="place__data">
                     <h3 class="place__title">PASOA</h3>
@@ -207,7 +206,7 @@
 
         <!-- Organization Card 6 -->
         <div class="place__card" onclick="showDescription('HMSO')">
-            <img src="assets/img/hmso.jpg" alt="" class="place__img">
+            <img src="assets/hmso.jpg" alt="" class="place__img">
             <div class="place__content">
                 <div class="place__data">
                     <h3 class="place__title">HMSO</h3>
@@ -450,6 +449,7 @@
     fetchElectionData();
 </script>
 
+
  <script>
   // Fetch countdown date from the server
   fetch('getCountdownDate.php')
@@ -476,23 +476,69 @@
       document.getElementById("countdown").innerHTML = "Error: Failed to fetch countdown date";
     });
 </script>
+<script>
+  const menuBtn = document.getElementById("menu-btn");
+const navLinks = document.getElementById("nav-links");
+const menuBtnIcon = menuBtn.querySelector("i");
 
- <!--========== SCROLL UP ==========-->
-        <a href="#" class="scrollup" id="scroll-up">
-            <i class="ri-arrow-up-line scrollup__icon"></i>
-        </a>
+menuBtn.addEventListener("click", (e) => {
+  navLinks.classList.toggle("open");
 
-        <!--=============== SCROLL REVEAL===============-->
-        <script src="scrollreveal.min.js"></script>
-        
-        <!--=============== SWIPER JS ===============-->
-        <script src="swiper-bundle.min.js"></script>
+  const isOpen = navLinks.classList.contains("open");
+  menuBtnIcon.setAttribute("class", isOpen ? "ri-close-line" : "ri-menu-line");
+});
 
-        <!--=============== MAIN JS ===============-->
-        <script src="main.js"></script>
-<!-- Include the countdown timer library (if applicable) -->
+navLinks.addEventListener("click", (e) => {
+  navLinks.classList.remove("open");
+  menuBtnIcon.setAttribute("class", "ri-menu-line");
+});
+
+const scrollRevealOption = {
+  distance: "50px",
+  origin: "bottom",
+  duration: 1000,
+};
+
+ScrollReveal().reveal(".header__container h1", {
+  ...scrollRevealOption,
+});
+ScrollReveal().reveal(".header__container form", {
+  ...scrollRevealOption,
+  delay: 500,
+});
+ScrollReveal().reveal(".header__container p", {
+  ...scrollRevealOption,
+  delay: 1000,
+});
+
+ScrollReveal().reveal(".popular__card", {
+  ...scrollRevealOption,
+  interval: 500,
+});
+
+ScrollReveal().reveal(".register__image img", {
+  ...scrollRevealOption,
+  origin: "right",
+});
+ScrollReveal().reveal(".register__content h4", {
+  ...scrollRevealOption,
+  delay: 500,
+});
+ScrollReveal().reveal(".register__btn", {
+  ...scrollRevealOption,
+  delay: 1000,
+});
+
+const swiper = new Swiper(".swiper", {
+  slidesPerView: "auto",
+  spaceBetween: 0,
+});
+
+  </script>
+    <!-- Include the countdown timer library (if applicable) -->
 <script src="path/to/countdown-library.js"></script>
-
-<script src="https://unpkg.com/scrollreveal"></script>
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script src="main.js"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
