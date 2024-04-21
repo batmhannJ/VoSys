@@ -39,7 +39,7 @@ if (isset($_SESSION['voter'])) {
                     <input type="password" class="form-control" name="password" placeholder="Password" required>
                     <span class="form-control-feedback"></span>
                 </div>
-                <div>
+                <div class="form-group has-feedback">
                     <div class="g-recaptcha" data-sitekey="6LdM0DgUAAAAAHtPjQfbqTX6viYFbOvkcFs_twDp"></div>
                 </div>
                 <div class="row">
