@@ -80,7 +80,7 @@ tr:nth-child(odd) {
 
 <div class='header'>
     <img src='images/logo.png' style='height: 50px; width: 50px;'>
-    <p style='font-family: Lucida, Cursive; font-size: 15px; margin: 0;'>Our Lady of the Sacred Heart College of Guimba, Inc.</p>
+    <p style='font-family: Lucida, Cursive; font-size: 15px;'>Our Lady of the Sacred Heart College of Guimba, Inc.</p>
 </div>
 
 <center><h1>Election Results</h1></center>
