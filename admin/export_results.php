@@ -36,6 +36,8 @@ $pdfContent = "
   body {
     font-family: Arial, sans-serif;
     color: #333;
+    background-image: url('images/olshco.png');
+    background-size: cover;
   }
 
   h1, h2 {
