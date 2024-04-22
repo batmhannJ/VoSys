@@ -99,14 +99,11 @@ include 'includes/header.php';
             success: function(response) {
                 // Clear existing graph containers
                 $('#graphContainer').empty();
-                // Iterate through each organization and generate a graph
-                $.each(response, function(org, data) {
-                    // Create a unique container for each organization
-                    var containerId = org + "Graph";
-                    $('#graphContainer').append('<div class="col-md-6"><div class="box"><div class="box-header with-border"><h3 class="box-title">' + org + ' Candidates Vote Count</h3></div><div class="box-body"><div id="' + containerId + '" style="height: 300px;"></div></div></div></div>');
-                    // Generate graph for the organization
-                    generateBarGraph(data, containerId, org + " Candidates Vote Count");
-                });
+                // Create a container for the selected organization
+                var containerId = organization + "Graph";
+                $('#graphContainer').append('<div class="col-md-12"><div class="box"><div class="box-header with-border"><h3 class="box-title">' + organization + ' Candidates Vote Count</h3></div><div class="box-body"><div id="' + containerId + '" style="height: 300px;"></div></div></div></div>');
+                // Generate graph for the selected organization
+                generateBarGraph(response, containerId, organization + " Candidates Vote Count");
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data: ' + error);
