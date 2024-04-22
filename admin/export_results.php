@@ -44,7 +44,7 @@ body {
   }
 
   p {
-    font-family: Brush Script MT, Cursive;
+    font-family: Brush Script MT, cursive;
     text-align: center;
     color: #000;
   }
@@ -63,6 +63,7 @@ body {
   }
 
   th {
+    color: #fff;
     background-color: maroon; /* Light gray background for table headers */
     font-weight: bold;
   }
