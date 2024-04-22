@@ -61,7 +61,7 @@
   var organizationColors = {
     "JPCS": "#ffcc00",
     "PASOA": "#339966",
-    "CSC": "#ff5050",
+    "CSC": "#000000",
     "YMF": "#6666ff",
     "CODE-TG": "#cc99ff",
     "HMSO": "#ff9933"
