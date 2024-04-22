@@ -463,8 +463,10 @@ nav {
     background-color: transparent;
   }
 
-  .nav__menu__btn {
-    display: none;
+  @media (min-width: 768px) {
+    .nav__menu__btn {
+      display: none; /* Itago ang button kapag mas malaki sa 768px */
+    }
   }
 
   .nav__links {

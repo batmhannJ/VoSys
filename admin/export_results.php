@@ -5,13 +5,20 @@ require_once __DIR__ . '/vendor/autoload.php';
 // Include database connection
 require_once 'includes/conn.php'; // Adjust the path as per your file structure
 
-// Absolute path to your image
-$imagePath = 'C:\Xampp\htdocs\votesystem\images\olshco.png';
+// Check if organization filter is set
+$organizationFilter = '';
+if(isset($_GET['organization']) && !empty($_GET['organization'])) {
+    $organizationFilter = " AND voters1.organization = '".$_GET['organization']."'";
+}
 
-// Query to calculate vote count for each candidate
-$sql = "SELECT candidates.firstname, candidates.lastname, COUNT(votes.candidate_id) AS vote_count
+// Query to calculate vote count for each candidate with organization filter
+$sql = "SELECT candidates.firstname, candidates.lastname, categories.name AS position_name, COUNT(votes.candidate_id) AS vote_count
         FROM candidates
         LEFT JOIN votes ON candidates.id = votes.candidate_id
+        LEFT JOIN categories ON candidates.category_id = categories.id
+        LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
+        WHERE voters1.organization != ''
+        ".$organizationFilter."
         GROUP BY candidates.id";
 
 $result = $conn->query($sql);
@@ -54,20 +61,21 @@ $pdfContent = "
   }
 </style>
 <center><h1>Election Results</h1></center>
-<img src='$imagePath' style='width: 100%; height: auto;' /> <!-- Add the image here -->
 <h2>Candidates Vote Count</h2>
 <table>
-  <thead>
+    <thead>
     <tr>
-      <th>Candidates</th>
-      <th>Vote Count</th>
+        <th>Vote Count</th>
+        <th>Candidates</th>
+        <th>Vote Count</th>
     </tr>
-  </thead>
-  <tbody>";
+    </thead>
+<tbody>";
 
 // Populate data into table rows
 while ($row = $result->fetch_assoc()) {
     $pdfContent .= "<tr>
+                        <td>{$row['position_name']}</td>
                         <td>{$row['firstname']} {$row['lastname']}</td>
                         <td>{$row['vote_count']}</td>
                     </tr>";
