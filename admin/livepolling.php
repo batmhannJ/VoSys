@@ -30,7 +30,6 @@ include 'includes/header.php';
                                 <div class="form-group">
                                     <label for="organization">Select Organization:</label>
                                     <select class="form-control" name="organization" id="organization">
-                                        <option value="">All Organizations</option>
                                         <?php
                                         // Fetch and display organizations
                                         $organizationQuery = $conn->query("SELECT DISTINCT organization FROM voters");
