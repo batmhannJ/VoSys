@@ -46,9 +46,41 @@ include 'includes/header.php';
                 </div>
             </div>
 
-            <!-- Bar Graphs for Candidates -->
-            <div id="graphContainer" class="row">
-                <!-- Graph Containers will be added dynamically here -->
+            <!-- Bar Graphs for President and Vice President -->
+            <div class="row">
+                <!-- President Bar Graph Box -->
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">President Candidates Vote Count</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!-- President Bar Graph Container -->
+                            <div id="presidentGraph" style="height: 300px;"></div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+
+                <!-- Vice President Bar Graph Box -->
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Vice President Candidates Vote Count</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!-- Vice President Bar Graph Container -->
+                            <div id="vicePresidentGraph" style="height: 300px;"></div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
             </div>
             <!-- /.row -->
         </section>
@@ -97,13 +129,11 @@ include 'includes/header.php';
             dataType: 'json',
             data: {organization: organization}, // Pass the selected organization to the server
             success: function(response) {
-                // Clear existing graph containers
-                $('#graphContainer').empty();
-                // Create a container for the selected organization
-                var containerId = organization + "Graph";
-                $('#graphContainer').append('<div class="col-md-12"><div class="box"><div class="box-header with-border"><h3 class="box-title">' + organization + ' Candidates Vote Count</h3></div><div class="box-body"><div id="' + containerId + '" style="height: 300px;"></div></div></div></div>');
-                // Generate graph for the selected organization
-                generateBarGraph(response, containerId, organization + " Candidates Vote Count");
+                // Update president bar graph
+                generateBarGraph(response.presidentData, "presidentGraph", "President Candidates Vote Count");
+
+                // Update vice president bar graph
+                generateBarGraph(response.vicePresidentData, "vicePresidentGraph", "Vice President Candidates Vote Count");
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data: ' + error);
