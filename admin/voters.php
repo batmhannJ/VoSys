@@ -62,7 +62,7 @@
                 </thead>
                 <tbody>
                   <?php
-                    $sql = "SELECT * FROM voters";
+                    $sql = "SELECT * FROM voters WHERE archived = FALSE";
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
                       $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
@@ -80,7 +80,7 @@
                           <td>".$row['organization']."</td>
                           <td>
                             <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
-                            <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."'><i class='fa fa-trash'></i> Delete</button>
+                            <button class='btn btn-warning btn-sm archive btn-flat' data-id='".$row['id']."' onclick='archiveVoter(".$row['id'].")'><i class='fa fa-archive'></i> Archive</button>
                           </td>
                         </tr>
                       ";
@@ -120,7 +120,7 @@
             <div class="box-header with-border">
               <h4>Upload Voters</h4>
             <form action="upload_voter.php" method="POST" enctype="multipart/form-data">
-              <input type="file" accept=".xls,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="import_file" class="form-control" />
+              <input type="file" name="import_file" class="form-control" />
             <button type="submit" name="save_excel_data" class="btn btn-primary mt-3">Import</button>
           </form>
           </div>
@@ -136,17 +136,26 @@
 </div>
 <?php include 'includes/scripts.php'; ?>
 <script>
+function archiveVoter(id) {
+  if (confirm("Are you sure you want to archive this voter?")) {
+    $.ajax({
+      type: "POST",
+      url: "archive_voter.php",
+      data: { id: id },
+      success: function(response) {
+        // Refresh the page or update the table as needed
+        location.reload();
+      },
+      error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+      }
+    });
+  }
+}
 $(function(){
   $(document).on('click', '.edit', function(e){
     e.preventDefault();
     $('#edit').modal('show');
-    var id = $(this).data('id');
-    getRow(id);
-  });
-
-  $(document).on('click', '.delete', function(e){
-    e.preventDefault();
-    $('#delete').modal('show');
     var id = $(this).data('id');
     getRow(id);
   });
