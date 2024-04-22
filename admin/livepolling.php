@@ -48,6 +48,9 @@
           <div class="col-xs-6">
             <div id="presidentChart" style="height: 370px; width: 100%; margin-left: 20px; margin-top: 20px; display: inline-block;"></div>
           </div>
+          <div class="col-xs-6">
+            <div id="representativeChart" style="height: 370px; width: 100%; margin-left: 20px; margin-top: 20px; display: inline-block;"></div>
+          </div>
         </div>
       </div>
     </section>
@@ -71,6 +74,7 @@
     var organization = document.getElementById("organization").value;
 
     updatePresidentChart(organization);
+    updateRepresentativeChart(organization);
   }
 
   function updatePresidentChart(organization) {
@@ -135,7 +139,74 @@
     }, 1000);
   }
 
+  function updateRepresentativeChart(organization) {
+    var dataPoints = [];
+
+    // You can fetch data dynamically based on the selected organization here
+    // For demonstration, I'm using static data for each organization
+
+    if (organization === "JPCS") {
+      dataPoints = [
+        { y: 30, label: "Representative 1" },
+        { y: 40, label: "Representative 2" }
+      ];
+    } else if (organization === "PASOA") {
+      dataPoints = [
+        { y: 20, label: "Representative 1" },
+        { y: 30, label: "Representative 2" }
+      ];
+    } else if (organization === "CSC") {
+      dataPoints = [
+        { y: 25, label: "Representative 1" },
+        { y: 35, label: "Representative 2" }
+      ];
+    } else if (organization === "YMF") {
+      dataPoints = [
+        { y: 30, label: "Representative 1" },
+        { y: 40, label: "Representative 2" }
+      ];
+    } else if (organization === "CODE-TG") {
+      dataPoints = [
+        { y: 20, label: "Representative 1" },
+        { y: 30, label: "Representative 2" }
+      ];
+    } else if (organization === "HMSO") {
+      dataPoints = [
+        { y: 15, label: "Representative 1" },
+        { y: 25, label: "Representative 2" }
+      ];
+    }
+    // Add more else if conditions for other organizations
+
+    var chart = new CanvasJS.Chart("representativeChart", {
+      title: { text: "Representatives" },
+      data: [{
+        type: "bar",
+        dataPoints: dataPoints,
+        color: organizationColors[organization] // Set organization-specific color
+      }]
+    });
+
+    chart.render();
+
+    // Update chart every second
+    setInterval(function () {
+      updateRepresentativeDataPoints(organization, chart);
+    }, 1000);
+  }
+
   function updatePresidentDataPoints(organization, chart) {
+    // Update dataPoints based on the selected organization
+    // For demonstration, I'm using random values for each data point
+    var newDataPoints = [];
+    for (var i = 0; i < chart.options.data[0].dataPoints.length; i++) {
+      newDataPoints.push({ label: chart.options.data[0].dataPoints[i].label, y: Math.random() * 100 });
+    }
+    chart.options.data[0].dataPoints = newDataPoints;
+    chart.render();
+  }
+
+  function updateRepresentativeDataPoints(organization, chart) {
     // Update dataPoints based on the selected organization
     // For demonstration, I'm using random values for each data point
     var newDataPoints = [];
