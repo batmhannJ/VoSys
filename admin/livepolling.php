@@ -75,10 +75,11 @@
 
   function updatePresidentChart(organization) {
     // Fetch data from votes.php
-    fetch('votes.php?organization=' + organization)
+    fetch('votes.php')
       .then(response => response.json())
       .then(data => {
-        var dataPoints = data.map(candidate => ({ y: candidate.votes, label: candidate.name + ' - ' + candidate.position }));
+        var filteredData = data.filter(item => item.organization === organization);
+        var dataPoints = filteredData.map(candidate => ({ y: candidate.votes, label: candidate.candidate + ' - ' + candidate.position }));
 
         var chart = new CanvasJS.Chart("presidentChart", {
           title: { text: "Candidates and Positions" },
