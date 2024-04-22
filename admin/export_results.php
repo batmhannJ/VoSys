@@ -39,9 +39,6 @@ $pdfContent = "
     background-image: url('images/olshco.png');
     background-size: cover;
     background-repeat: no-repeat; 
-    background-position: center; 
-    width: 100%; 
-    height: 85%; 
   }
 
   h1, h2 {
