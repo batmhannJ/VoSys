@@ -20,7 +20,7 @@
                     <label for="max_vote" class="col-sm-3 control-label">Maximum Vote</label>
 
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" id="max_vote" name="max_vote" required>
+                      <input type="number" class="form-control" id="max_vote" name="max_vote" min="1" required>
                     </div>
                 </div>
             </div>
@@ -56,7 +56,7 @@
                     <label for="edit_max_vote" class="col-sm-3 control-label">Maximum Vote</label>
 
                     <div class="col-sm-9">
-                      <input type="number" class="form-control" id="edit_max_vote" name="max_vote">
+                      <input type="number" class="form-control" id="edit_max_vote" name="max_vote" min="1">
                     </div>
                 </div>
             </div>
