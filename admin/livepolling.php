@@ -78,10 +78,10 @@
     fetch('votes.php?organization=' + organization)
       .then(response => response.json())
       .then(data => {
-        var dataPoints = data.map(candidate => ({ y: candidate.votes, label: candidate.name + ' - ' + candidate.position }));
+        var dataPoints = data.map(candidate => ({ y: candidate.votes, label: candidate.name }));
 
         var chart = new CanvasJS.Chart("presidentChart", {
-          title: { text: "Candidates and Positions" },
+          title: { text: "President, Vice President, Secretary" },
           data: [{
             type: "bar",
             dataPoints: dataPoints,
