@@ -5,14 +5,21 @@ require_once __DIR__ . '/vendor/autoload.php';
 // Include database connection
 require_once 'includes/conn.php'; // Adjust the path as per your file structure
 
+// Check if organization filter is set
+$organizationFilter = '';
+if(isset($_GET['organization']) && !empty($_GET['organization'])) {
+    $organizationFilter = " AND voters1.organization = '".$_GET['organization']."'";
+}
 
-// Query to calculate vote count for each candidate
+// Query to calculate vote count for each candidate with organization filter
 $sql = "SELECT candidates.firstname, candidates.lastname, categories.name AS position_name, COUNT(votes.candidate_id) AS vote_count
         FROM candidates
         LEFT JOIN votes ON candidates.id = votes.candidate_id
         LEFT JOIN categories ON candidates.category_id = categories.id
+        LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
+        WHERE voters1.organization != ''
+        ".$organizationFilter."
         GROUP BY candidates.id";
-
 
 $result = $conn->query($sql);
 
