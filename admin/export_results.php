@@ -40,6 +40,17 @@ body {
   background-size: 30%; /* Adjust the percentage to resize the background image */
   background-repeat: no-repeat;
   background-position: center center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Set z-index to place the background behind other content */
+  background-image: url('images/logo.png');
+  background-size: 30%; /* Adjust the percentage to resize the background image */
+  background-repeat: no-repeat;
+  background-position: center center;
+  opacity: 0.4;
 }
 
   h1, h2 {
@@ -51,7 +62,8 @@ body {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    opacity: 0.4; /* Adjust the opacity value to make the table more transparent */
+    position: relative; /* Set position to relative to allow z-index to work */
+    z-index: 1; /* Adjust the opacity value to make the table more transparent */
 }
 
 
