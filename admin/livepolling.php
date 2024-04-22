@@ -40,7 +40,6 @@ include 'includes/header.php';
                                         ?>
                                     </select>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Filter</button>
                             </form>
                         </div>
                     </div>
@@ -143,6 +142,11 @@ include 'includes/header.php';
 
     // Call the updateData function initially
     updateData();
+
+    // Call the updateData function when organization selection changes
+    $('#organization').change(function() {
+        updateData();
+    });
 
     // Call the updateData function every 60 seconds (adjust as needed)
     setInterval(updateData, 3000); // 60000 milliseconds = 60 seconds
