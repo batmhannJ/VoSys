@@ -38,6 +38,17 @@ $pdfContent = "
     color: #333;
     background-image: url('images/olshco.png');
     background-size: cover;
+    padding-top: 40%;
+    position: fixed;
+    opacity: 0.1;
+    z-index: -1; 
+    top: 0; 
+    left: 0; 
+    display: none; 
+    background-repeat: no-repeat; 
+    background-position: center; 
+    width: 100%; height: 85%; 
+    background-blend-mode: overlay;
   }
 
   h1, h2 {
