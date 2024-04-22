@@ -69,9 +69,13 @@ tr:nth-child(even) {
 tr:nth-child(odd) {
     background-color: #f9f9f9; /* Light gray background for odd rows */
 }
+.header{
+  display: flex; 
+  align-items: center;
+}
 </style>
 
-<div style='display: flex; align-items: center;'>
+<div class='header'>
     <img src='images/logo.png' style='height: 50px; width: 50px;'>
     <p style='font-family: Lucida, Cursive; font-size: 15px; margin: 0;'>Our Lady of the Sacred Heart College of Guimba, Inc.</p>
 </div>
