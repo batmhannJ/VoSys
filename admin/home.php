@@ -87,18 +87,18 @@
           <div class="small-box">
             <div class="inner">
               <?php
-                $sql = "SELECT * FROM categories";
+                $sql = "SELECT * FROM sub_admin";
                 $query = $conn->query($sql);
 
                 echo "<h3>".$query->num_rows."</h3>";
               ?>
           
-              <p>Categories</p>
+              <p>Sub Admins</p>
             </div>
             <div class="icon">
-              <i class="fa fa-black-tie"></i>
+              <i class="fa fa-user-plus"></i>
             </div>
-            <a href="categories.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="sub_admin.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
