@@ -44,7 +44,7 @@ body {
   }
 
   p {
-    font-family: Lucida Calligraphy, Cursive;
+    font-family: Lucida Handwriting, Cursive;
     text-align: center;
     color: #000;
   }
