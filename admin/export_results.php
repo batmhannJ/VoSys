@@ -37,7 +37,6 @@ body {
   font-family: Arial, sans-serif;
   color: #333;
   background-image: url('images/logo.png');
-  background-size: 10%; /* Adjust the percentage to resize the background image */
   background-repeat: no-repeat;
   background-position: center center;
 }
