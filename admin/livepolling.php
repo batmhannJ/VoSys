@@ -74,65 +74,28 @@
   }
 
   function updatePresidentChart(organization) {
-    var dataPoints = [];
+    // Fetch data from votes.php
+    fetch('votes.php?organization=' + organization)
+      .then(response => response.json())
+      .then(data => {
+        var dataPoints = data.map(candidate => ({ y: candidate.votes, label: candidate.name }));
 
-    // You can fetch data dynamically based on the selected organization here
-    // For demonstration, I'm using static data for each organization
+        var chart = new CanvasJS.Chart("presidentChart", {
+          title: { text: "President, Vice President, Secretary" },
+          data: [{
+            type: "bar",
+            dataPoints: dataPoints,
+            color: organizationColors[organization] // Set organization-specific color
+          }]
+        });
 
-    if (organization === "JPCS") {
-      dataPoints = [
-        { y: 20, label: "President" },
-        { y: 30, label: "Vice President" },
-        { y: 40, label: "Secretary" }
-      ];
-    } else if (organization === "PASOA") {
-      dataPoints = [
-        { y: 25, label: "President" },
-        { y: 35, label: "Vice President" },
-        { y: 45, label: "Secretary" }
-      ];
-    } else if (organization === "CSC") {
-      dataPoints = [
-        { y: 35, label: "President" },
-        { y: 25, label: "Vice President" },
-        { y: 40, label: "Secretary" }
-      ];
-    } else if (organization === "YMF") {
-      dataPoints = [
-        { y: 30, label: "President" },
-        { y: 40, label: "Vice President" },
-        { y: 30, label: "Secretary" }
-      ];
-    } else if (organization === "CODE-TG") {
-      dataPoints = [
-        { y: 20, label: "President" },
-        { y: 30, label: "Vice President" },
-        { y: 50, label: "Secretary" }
-      ];
-    } else if (organization === "HMSO") {
-      dataPoints = [
-        { y: 15, label: "President" },
-        { y: 35, label: "Vice President" },
-        { y: 50, label: "Secretary" }
-      ];
-    }
-    // Add more else if conditions for other organizations
+        chart.render();
 
-    var chart = new CanvasJS.Chart("presidentChart", {
-      title: { text: "President, Vice President, Secretary" },
-      data: [{
-        type: "bar",
-        dataPoints: dataPoints,
-        color: organizationColors[organization] // Set organization-specific color
-      }]
-    });
-
-    chart.render();
-
-    // Update chart every second
-    setInterval(function () {
-      updatePresidentDataPoints(organization, chart);
-    }, 1000);
+        // Update chart every second
+        setInterval(function () {
+          updatePresidentDataPoints(organization, chart);
+        }, 1000);
+      });
   }
 
   function updatePresidentDataPoints(organization, chart) {
