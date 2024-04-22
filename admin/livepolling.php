@@ -65,7 +65,7 @@
     "JPCS": "#4CAF50",
     "PASOA": "#fff080",
     "CSC": "#595959",
-    "YMF": "#4d4dff",
+    "YMF": "#00008b",
     "CODE-TG": "#800000",
     "HMSO": "#fff080"
   };
