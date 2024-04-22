@@ -15,32 +15,32 @@
   </head>
   <body>
     <header class="header">
-      <nav>
-  <div class="nav__header">
-    <div class="nav__logo">
-      <img src="images/logo.png" alt="" class="nav__logo-img"> 
-      <h2>VOSYS</h2>
-    </div>
-    <div class="nav__menu__btn" id="menu-btn">
-      <span><i class="ri-menu-line"></i></span>
-    </div>
-  </div>
-  <ul class="nav__links" id="nav-links">
-    <li><a href="#">Home</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#organizations">Organizations</a></li>
-    <li><a href="#location">Location</a></li>
-    <li><a href="#discover">Countdown</a></li>
-    <li><button class="btn">Login</button></li>
-  </ul>
-</nav>
-    <br><br><br><br><br>
-      <div class="section__container header__container">
-        <h1>OLSCHO College<br/>Online Voting System</h1>
-        <p>Online Voting System for Students of OLSCHCO College Departments</p>
+        <nav>
+    <div class="nav__header">
+      <div class="nav__logo">
+        <img src="assets/logo.png" alt="" class="nav__logo-img"> 
+        <h2>VOSYS</h2>
       </div>
-    </header><br><br><br>
+      <div class="nav__menu__btn" id="menu-btn">
+        <span><i class="ri-menu-line"></i></span>
+      </div>
+    </div>
+    <ul class="nav__links" id="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#organizations">Organizations</a></li>
+      <li><a href="#location">Location</a></li>
+      <li><a href="#discover">Countdown</a></li>
+      <li><button class="btn">Login</button></li>
+    </ul>
+  </nav>
+      <br><br><br><br><br><br><br>
+        <div class="section__container header__container">
+          <h1>OLSCHO College<br/>Online Voting System</h1><br>
+          <p style="font-size: 20px;">Online Voting System for Students of OLSHCO College Departments</p>
+        </div>
+      </header><br><br><br>
 
     <section id="about" class="section__container register__container">
       <center><h2 class="section__header">ABOUT US</h2></center><br>
@@ -563,12 +563,28 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
+/* CSS Animation for Slideshow */
+@keyframes slideshow {
+  0% {
+    background-image: url("assets/one.png");
+  }
+  50% {
+    background-image: url("assets/two.png");
+  }
+  75% {
+    background-image: url("assets/three.png");
+  }
+  100% {
+    background-image: url("assets/four.png");
+  }
+}
+
 .header {
-  background-image: url("images/home.png");
   background-size: cover;
   height: calc(700px + 100px); /* Adjust the value (100px) for the margin-top height */
   background-position: center top; /* Adjust the vertical position here */
   background-repeat: no-repeat;
+  animation: slideshow 10s infinite; /* Set the duration and timing of the slideshow */
 }
 
 
@@ -665,10 +681,50 @@ nav {
 }
 
 .header__container h1 {
-  margin-bottom: 1rem;
-  font-size: 3rem;
-  line-height: 3.5rem;
-  color: var(--white);
+   font-size: 39px;
+    font-weight: bold;
+    /* Set the text color */
+    color: white;
+    /* Set the text shadow */
+    text-shadow: 9px 9px 9px rgba(0, 0, 0, 0.9);
+  }
+
+  /* Set the outline */
+  .outline-text {
+    /* For modern browsers */
+    -webkit-text-stroke-width: 10px;
+    -webkit-text-stroke-color: white;
+    /* For older browsers */
+    text-stroke-width: 2px;
+    text-stroke-color: black;
+  }
+  /* Set the outline */
+.outline-text {
+  /* For modern browsers */
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: white;
+  /* For older browsers */
+  text-stroke-width: 2px;
+  text-stroke-color: black;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .outline-text {
+    /* Adjust the text stroke width for smaller screens */
+    -webkit-text-stroke-width: 1px;
+    text-stroke-width: 1px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .outline-text {
+    /* Adjust the text stroke width and color for even smaller screens */
+    -webkit-text-stroke-width: 0.5px;
+    text-stroke-width: 0.5px;
+    -webkit-text-stroke-color: rgba(255, 255, 255, 0.5);
+    text-stroke-color: rgba(0, 0, 0, 0.5);
+  }
 }
 
 .header__container form {
