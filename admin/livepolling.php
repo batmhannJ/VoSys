@@ -64,7 +64,7 @@
     "CSC": "#595959",
     "YMF": "#4d4dff",
     "CODE-TG": "#ff6666",
-    "HMSO": "#ff9933"
+    "HMSO": "#fff080"
   };
 
   function updateCharts() {
