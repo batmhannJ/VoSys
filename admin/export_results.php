@@ -37,19 +37,13 @@ body {
   font-family: Arial, sans-serif;
   color: #333;
   background-image: url('images/logo.png');
-  background-size: 30%; /* Adjust the percentage to resize the background image */
   background-repeat: no-repeat;
   background-position: center center;
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1; /* Set z-index to place the background behind other content */
-  background-image: url('images/logo.png');
-  background-size: 30%; /* Adjust the percentage to resize the background image */
-  background-repeat: no-repeat;
-  background-position: center center;
+  width: 80%;
+  height: 80%;
   opacity: 0.4;
 }
 
