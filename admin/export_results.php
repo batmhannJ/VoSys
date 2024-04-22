@@ -65,7 +65,7 @@ $pdfContent = "
 <table>
     <thead>
     <tr>
-        <th>Vote Count</th>
+        <th>Position</th>
         <th>Candidates</th>
         <th>Vote Count</th>
     </tr>
