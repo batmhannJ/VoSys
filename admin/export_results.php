@@ -36,10 +36,6 @@ $pdfContent = "
 body {
   font-family: Arial, sans-serif;
   color: #333;
-  background-image: url('images/logo.png');
-  background-size: 30%; /* Adjust the percentage to resize the background image */
-  background-repeat: no-repeat;
-  background-position: center center;
 }
 
   h1, h2 {
@@ -51,7 +47,9 @@ body {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    opacity: 0.8; /* Adjust the opacity value to make the table more transparent */
+    position: relative; /* Set position to relative to allow z-index to work */
+    z-index: 1; /* Set z-index higher than the background to place the table on top */
+    opacity: 0.7;
 }
 
 
@@ -73,6 +71,10 @@ body {
     background-color: #f9f9f9; /* Light gray background for odd rows */
   }
 </style>
+<div style='display: flex;'>
+<img src='images/logo.png' style='height: 30px; width: 30px;'>
+<center><p style='font-family: Lucida, Sans-serif; font-size: 18px;'>Our Lady of the Sacred Heart College of Guimba, Inc.</p></center>
+</div>
 <center><h1>Election Results</h1></center>
 <h2>Candidates Vote Count</h2>
 <table>
