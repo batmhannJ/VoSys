@@ -37,7 +37,7 @@ body {
   font-family: Arial, sans-serif;
   color: #333;
   background-image: url('images/logo.png');
-  background-size: 50%; /* Adjust the percentage to resize the background image */
+  background-size: 30%; /* Adjust the percentage to resize the background image */
   background-repeat: no-repeat;
   background-position: center center;
 }
@@ -51,8 +51,9 @@ body {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    opacity: 10%;
-  }
+    opacity: 0.8; /* Adjust the opacity value to make the table more transparent */
+}
+
 
   th, td {
     padding: 10px;
