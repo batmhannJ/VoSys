@@ -73,7 +73,7 @@ body {
 </style>
 <div style='display: flex; align-items: center;'>
 <img src='images/logo.png' style='height: 30px; width: 30px;'>
-<center><p style='font-family: Lucida, Sans-serif; font-size: 18px; margin: 0;'>Our Lady of the Sacred Heart College of Guimba, Inc.</p></center>
+<p style='font-family: Lucida, cursive; font-size: 15px; margin: 0;'>Our Lady of the Sacred Heart College of Guimba, Inc.</p>
 </div>
 <center><h1>Election Results</h1></center>
 <h2>Candidates Vote Count</h2>
