@@ -33,13 +33,14 @@ $result = $conn->query($sql);
 // Create PDF content
 $pdfContent = "
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    color: #333;
-    background-image: url('images/logo.png');
-    background-size: cover;
-    background-repeat: no-repeat; 
-  }
+body {
+  font-family: Arial, sans-serif;
+  color: #333;
+  background-image: url('images/logo.png');
+  background-size: 50%; /* Adjust the percentage to resize the background image */
+  background-repeat: no-repeat;
+  background-position: center center;
+}
 
   h1, h2 {
     text-align: center;
@@ -50,6 +51,7 @@ $pdfContent = "
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    opacity: 5%;
   }
 
   th, td {
