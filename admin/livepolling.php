@@ -63,7 +63,7 @@
     "PASOA": "#fff080",
     "CSC": "#595959",
     "YMF": "#4d4dff",
-    "CODE-TG": "#cc99ff",
+    "CODE-TG": "#ff6666",
     "HMSO": "#ff9933"
   };
 
