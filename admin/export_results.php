@@ -51,7 +51,7 @@ body {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    opacity: 5%;
+    opacity: 10%;
   }
 
   th, td {
