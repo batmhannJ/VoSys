@@ -1,13 +1,11 @@
+<?php include 'includes/session.php'; ?>
+<?php include 'includes/header.php'; ?>
 <?php
-include 'includes/conn.php';
-include 'includes/session.php';
-include 'includes/header.php';
-
 $row = $conn->prepare("SELECT * FROM election ORDER BY id DESC");
 $row->execute();
 $result = $row->get_result();
 ?>
-
+?>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
@@ -19,15 +17,16 @@ $result = $row->get_result();
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Categories Configuration
+        Voters List
       </h1>
       <ol class="breadcrumb">
-        <li><a href="home.php"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Categories</li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Voters</li>
       </ol>
     </section>
-
-    <?php
+    <!-- Main content -->
+    <section class="content">
+      <?php
         if(isset($_SESSION['error'])){
           echo "
             <div class='alert alert-danger alert-dismissible'>
@@ -49,29 +48,24 @@ $result = $row->get_result();
           unset($_SESSION['success']);
         }
       ?>
-<section class="content">
-    <div>
-        <select class="form-select" name="election" id="election">
-          <option value="" hidden>Select Election</option>
-          <?php
-          foreach ($result as $key => $value) {
-              echo '<option value="' . $value['id'] . '">' . $value['title'] . '</option>';
-          }
-          ?>
-      </select>
-    </div>
-    <hr>
-    <div class="row">
+      <div class="row">
         <div class="col-xs-12">
+            <div class="box">
+                <select class="form-select" name="election" id="election">
+                <option value="" hidden>Select Election</option>
+                <?php
+                foreach ($result as $key => $value) {
+                    echo '<option value="' . $value['id'] . '">' . $value['title'] . '</option>';
+                }
+                ?>
+                </select>
+            </div>
           <div class="box">
             <div class="box-header with-border">
-              <a href="#addcat" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
+              <a href="#addCategoryModal" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
             </div>
-        <!--<span class="small d-inline-block d-md-none" data-toggle="tooltip" data-placement="left" title="Scroll horizontally to view more content">
-            <i class="bi bi-arrows-expand"></i> Scroll Horizontally
-        </span>-->
-        <div class="box-body">
-            <table id="categoriesTable" class="table table-bordered">
+            <div class="box-body">
+              <table id="categoriesTable" class="table table-bordered">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -95,9 +89,14 @@ $result = $row->get_result();
                                   <th scope="row">' . $i++ . '</th>
                                   <td>' . $row['name'] . '</td>
                                   <td class="text-center">
-                        <a href="#" style="margin-right: 20px;" class="btn btn-primary btn-sm edit btn-flat" data-bs-toggle="modal" data-bs-target="#editCat" data-id="' . $row['id'] . '">Edit</a>
-                        <a href="#" class="btn btn-danger btn-sm delete btn-flat" data-bs-toggle="modal" data-bs-target="#deleteCat" data-id="' . $row['id'] . '" data-name="' . $row['title'] . '">Delete</a></td>
-                  </tr>';
+                                      <a href="#" class="btn btn-primary btn-sm edit-category" data-id="' . $row['id'] . '" data-name="' . $row['name'] . '">
+                                          <i class="bi bi-pencil"></i> Edit
+                                      </a>
+                                      <a href="#" class="btn btn-danger btn-sm category-delete" data-id="' . $row['id'] . '" data-name="' . $row['name'] . '">
+                                          <i class="bi bi-trash"></i> Delete
+                                      </a>
+                                  </td>
+                              </tr>';
                         }
                     } else {
                         echo '<tr>
@@ -106,62 +105,77 @@ $result = $row->get_result();
                     }
                     ?>
                 </tbody>
-            </table><!-- End Categories lists Table -->
+            </table>
 
-            <!-- Add Category Modal 
-            <div class="modal fade" id="addCategory" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title"></h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-
-                        </div>
-                    </div>
-                </div>
-            </div>-->
-            <!-- End Add Category Modal Dialog -->
-
-            <!-- The Modal -->
-            <!--<div class="modal fade" id="editCategory" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title"></h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-
-                        </div>
-                    </div>
-                </div>
             </div>
-            End Edit Category Modal Dialog -->
-
+          </div>
         </div>
-    </div>
-    </div>
-    </div>
-</section>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <?php
+                if(isset($_SESSION['message']))
+                {
+                  echo "<div class='alert alert-danger alert-dismissible'>
+                    <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                    <h4><i class='icon fa fa-warning'></i> Error!</h4>
+                    ".$_SESSION['message']."
+                  </div>
+                ";
+                    unset($_SESSION['message']);
+                }
+                if(isset($_SESSION['success'])){
+                  echo "
+                    <div class='alert alert-success alert-dismissible'>
+                      <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                      <h4><i class='icon fa fa-check'></i> Success!</h4>
+                      ".$_SESSION['success']."
+                    </div>
+                  ";
+                  unset($_SESSION['success']);
+                }
+                ?>
+        </div>
+      </div>
+
+    </section>   
+  </div>
+    
+  <?php include 'includes/footer.php'; ?>
+  <?php include 'includes/cat_modal.php'; ?>
 </div>
-<?php include 'includes/footer.php'; ?>
-<?php include 'includes/cat_modal.php'; ?>
-</div>
-
-
-<!-- yourpage.php -->
-<!-- ... (previous code) ... -->
-
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<?php include 'includes/scripts.php'; ?>
 <script>
-  function showLoadingOverlay() {
+$(function(){
+  $(document).on('click', '.edit', function(e){
+    e.preventDefault();
+    $('#edit').modal('show');
+    var id = $(this).data('id');
+    getRow(id);
+  });
+
+  $(document).on('click', '.delete', function(e){
+    e.preventDefault();
+    $('#delete').modal('show');
+    var id = $(this).data('id');
+    getRow(id);
+  });
+
+  $(document).on('click', '.photo', function(e){
+    e.preventDefault();
+    var id = $(this).data('id');
+    getRow(id);
+  });
+
+});
+
+function showLoadingOverlay() {
     var loadingOverlay = $("<div id='loadingOverlay' class='d-flex justify-content-center align-items-center' style='position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #ffffff82; z-index: 9999;'>" +
       "<div class='spinner-border' role='status' style='width: 4rem; height: 4rem; color: #012970;'>" +
       "<span class='sr-only'>Loading...</span>" +
       "</div>" +
       "</div>");
+      
 
     $(document.body).append(loadingOverlay);
   }
@@ -240,11 +254,7 @@ $result = $row->get_result();
         $('#categoriesTableBody').empty();
     });
 
+
 </script>
 </body>
-
-
-
-<!-- ... (remaining code) ... -->
-
-
+</html>

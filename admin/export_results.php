@@ -78,7 +78,7 @@ body {
   }
 </style>
 <center>
-<p><img src='images/logo.png'>Our Lady of the Sacred Heart College of Guimba, Inc.</p>
+<p><img src='images/logo.png' style='height: 50px; width: 50px;'>Our Lady of the Sacred Heart College of Guimba, Inc.</p>
 <h1>2024 Election Results </h1>
 </center>
 <table>
