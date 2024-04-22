@@ -46,41 +46,9 @@ include 'includes/header.php';
                 </div>
             </div>
 
-            <!-- Bar Graphs for President and Vice President -->
-            <div class="row">
-                <!-- President Bar Graph Box -->
-                <div class="col-md-6">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">President Candidates Vote Count</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <!-- President Bar Graph Container -->
-                            <div id="presidentGraph" style="height: 300px;"></div>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                    <!-- /.box -->
-                </div>
-                <!-- /.col -->
-
-                <!-- Vice President Bar Graph Box -->
-                <div class="col-md-6">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Vice President Candidates Vote Count</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <!-- Vice President Bar Graph Container -->
-                            <div id="vicePresidentGraph" style="height: 300px;"></div>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                    <!-- /.box -->
-                </div>
-                <!-- /.col -->
+            <!-- Bar Graphs for Candidates -->
+            <div id="graphContainer" class="row">
+                <!-- Graph Containers will be added dynamically here -->
             </div>
             <!-- /.row -->
         </section>
@@ -99,11 +67,11 @@ include 'includes/header.php';
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     // Function to generate bar graph
-    function generateBarGraph(dataPoints, containerId) {
+    function generateBarGraph(dataPoints, containerId, title) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
             title:{
-                text: "Vote Counts"
+                text: title
             },
             axisY: {
                 title: "Candidates"
@@ -120,19 +88,25 @@ include 'includes/header.php';
         chart.render();
     }
 
-    // Function to fetch updated data from the server
+    // Function to fetch updated data from the server and update graphs
     function updateData() {
+        var organization = $('#organization').val();
         $.ajax({
             url: 'update_data.php', // Change this to the URL of your update data script
             type: 'GET',
             dataType: 'json',
-            data: {organization: $('#organization').val()}, // Pass the selected organization to the server
+            data: {organization: organization}, // Pass the selected organization to the server
             success: function(response) {
-                // Update president bar graph
-                generateBarGraph(response.presidentData, "presidentGraph");
-
-                // Update vice president bar graph
-                generateBarGraph(response.vicePresidentData, "vicePresidentGraph");
+                // Clear existing graph containers
+                $('#graphContainer').empty();
+                // Iterate through each organization and generate a graph
+                $.each(response, function(org, data) {
+                    // Create a unique container for each organization
+                    var containerId = org + "Graph";
+                    $('#graphContainer').append('<div class="col-md-6"><div class="box"><div class="box-header with-border"><h3 class="box-title">' + org + ' Candidates Vote Count</h3></div><div class="box-body"><div id="' + containerId + '" style="height: 300px;"></div></div></div></div>');
+                    // Generate graph for the organization
+                    generateBarGraph(data, containerId, org + " Candidates Vote Count");
+                });
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data: ' + error);
