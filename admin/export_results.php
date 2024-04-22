@@ -11,15 +11,19 @@ if(isset($_GET['organization']) && !empty($_GET['organization'])) {
     $organizationFilter = " AND voters1.organization = '".$_GET['organization']."'";
 }
 
+// Determine whether to include the organization field in the query
+$includeOrganization = ($_GET['organization'] === '') ? ', voters1.organization' : '';
+
 // Query to calculate vote count for each candidate with organization filter
-$sql = "SELECT candidates.firstname, candidates.lastname, categories.name AS position_name, COUNT(votes.candidate_id) AS vote_count
+$sql = "SELECT candidates.firstname, candidates.lastname, categories.name AS position_name, COUNT(votes.candidate_id) AS vote_count{$includeOrganization}
         FROM candidates
         LEFT JOIN votes ON candidates.id = votes.candidate_id
         LEFT JOIN categories ON candidates.category_id = categories.id
         LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
         WHERE voters1.organization != ''
-        ".$organizationFilter."
-        GROUP BY candidates.id";
+        {$organizationFilter}
+        GROUP BY candidates.id, voters1.organization
+        ORDER BY voters1.organization ASC";
 
 $result = $conn->query($sql);
 
@@ -65,6 +69,7 @@ $pdfContent = "
 <table>
     <thead>
     <tr>
+        <th>Organization</th>
         <th>Position</th>
         <th>Candidates</th>
         <th>Vote Count</th>
@@ -74,7 +79,10 @@ $pdfContent = "
 
 // Populate data into table rows
 while ($row = $result->fetch_assoc()) {
-    $pdfContent .= "<tr>
+    // If the organization is not specified, skip adding the organization column
+    $organizationColumn = ($_GET['organization'] === '') ? "<td>{$row['organization']}</td>" : '';
+    
+    $pdfContent .= "<tr>{$organizationColumn}
                         <td>{$row['position_name']}</td>
                         <td>{$row['firstname']} {$row['lastname']}</td>
                         <td>{$row['vote_count']}</td>
