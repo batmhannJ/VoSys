@@ -71,8 +71,10 @@ body {
     background-color: #f9f9f9; /* Light gray background for odd rows */
   }
 </style>
-<img src='images/logo.png'>
+<div style='display: flex;'>
+<img src='images/logo.png' style='height: 30px; width: 30px;'>
 <center><p style='font-family: Lucida, Sans-serif; font-size: 18px;'>Our Lady of the Sacred Heart College of Guimba, Inc.</p></center>
+</div>
 <center><h1>Election Results</h1></center>
 <h2>Candidates Vote Count</h2>
 <table>
