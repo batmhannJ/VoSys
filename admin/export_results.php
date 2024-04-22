@@ -51,7 +51,7 @@ body {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    opacity: 0.8; /* Adjust the opacity value to make the table more transparent */
+    opacity: 0.4; /* Adjust the opacity value to make the table more transparent */
 }
 
 
