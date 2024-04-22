@@ -26,22 +26,19 @@ include 'includes/header.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-body">
-                            <form method="get" action="">
-                                <div class="form-group">
-                                    <label for="organization">Select Organization:</label>
-                                    <select class="form-control" name="organization" id="organization">
-                                        <?php
-                                        // Fetch and display organizations
-                                        $organizationQuery = $conn->query("SELECT DISTINCT organization FROM voters");
-                                        while($organizationRow = $organizationQuery->fetch_assoc()){
-                                            $selected = ($_GET['organization'] ?? '') == $organizationRow['organization'] ? 'selected' : '';
-                                            echo "<option value='".$organizationRow['organization']."' $selected>".$organizationRow['organization']."</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Filter</button>
-                            </form>
+                            <div class="form-group">
+                                <label for="organization">Select Organization:</label>
+                                <select class="form-control" name="organization" id="organization">
+                                    <?php
+                                    // Fetch and display organizations
+                                    $organizationQuery = $conn->query("SELECT DISTINCT organization FROM voters");
+                                    while($organizationRow = $organizationQuery->fetch_assoc()){
+                                        $selected = ($_GET['organization'] ?? '') == $organizationRow['organization'] ? 'selected' : '';
+                                        echo "<option value='".$organizationRow['organization']."' $selected>".$organizationRow['organization']."</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -121,10 +118,10 @@ include 'includes/header.php';
         chart.render();
     }
 
-    // Function to fetch updated data from the server
+    // Function to fetch updated data from the server and update graphs
     function updateData() {
         $.ajax({
-            url: 'update_data.php', // Change this to the URL of your update data script
+            url: 'fetch_results.php', // Change this to the URL of your fetch results script
             type: 'GET',
             dataType: 'json',
             data: {organization: $('#organization').val()}, // Pass the selected organization to the server
@@ -145,7 +142,7 @@ include 'includes/header.php';
     updateData();
 
     // Call the updateData function every 60 seconds (adjust as needed)
-    setInterval(updateData, 3000); // 60000 milliseconds = 60 seconds
+    setInterval(updateData, 60000); // 60000 milliseconds = 60 seconds
 </script>
 
 </body>
