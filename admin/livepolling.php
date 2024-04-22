@@ -101,80 +101,25 @@ include 'includes/header.php';
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     // Function to generate bar graph
-    function generateBarGraph(presidentData, vicePresidentData) {
-        var presidentBars = [];
-        var vicePresidentBars = [];
-        var organizations = <?php echo json_encode($organizations); ?>; // Assuming you have fetched organizations data
-
-        // Generate president bars
-        for (var i = 0; i < presidentData.length; i++) {
-            var dataPoints = [];
-            for (var j = 0; j < presidentData[i].candidates.length; j++) {
-                var candidate = presidentData[i].candidates[j];
-                dataPoints.push({
-                    y: candidate.vote_count,
-                    label: candidate.firstname + ' ' + candidate.lastname,
-                    indexLabel: candidate.organization,
-                    color: organizations.indexOf(candidate.organization) !== -1 ? getColor(organizations.indexOf(candidate.organization)) : null
-                });
-            }
-            presidentBars.push({
-                type: "bar",
-                showInLegend: true,
-                name: presidentData[i].position,
-                dataPoints: dataPoints
-            });
-        }
-
-        // Generate vice president bars
-        for (var i = 0; i < vicePresidentData.length; i++) {
-            var dataPoints = [];
-            for (var j = 0; j < vicePresidentData[i].candidates.length; j++) {
-                var candidate = vicePresidentData[i].candidates[j];
-                dataPoints.push({
-                    y: candidate.vote_count,
-                    label: candidate.firstname + ' ' + candidate.lastname,
-                    indexLabel: candidate.organization,
-                    color: organizations.indexOf(candidate.organization) !== -1 ? getColor(organizations.indexOf(candidate.organization)) : null
-                });
-            }
-            vicePresidentBars.push({
-                type: "bar",
-                showInLegend: true,
-                name: vicePresidentData[i].position,
-                dataPoints: dataPoints
-            });
-        }
-
-        var chart = new CanvasJS.Chart("presidentGraph", {
+    function generateBarGraph(dataPoints, containerId) {
+        var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
             title:{
-                text: "President Candidates Vote Count"
+                text: "Vote Counts"
             },
             axisY: {
-                title: "Vote Count"
-            },
-            axisX: {
                 title: "Candidates"
             },
-            data: presidentBars
+            axisX: {
+                title: "Vote Count",
+                includeZero: true
+            },
+            data: [{
+                type: "bar", // Change type to "bar"
+                dataPoints: dataPoints
+            }]
         });
         chart.render();
-
-        var chart2 = new CanvasJS.Chart("vicePresidentGraph", {
-            animationEnabled: true,
-            title:{
-                text: "Vice President Candidates Vote Count"
-            },
-            axisY: {
-                title: "Vote Count"
-            },
-            axisX: {
-                title: "Candidates"
-            },
-            data: vicePresidentBars
-        });
-        chart2.render();
     }
 
     // Function to fetch updated data from the server
@@ -185,7 +130,11 @@ include 'includes/header.php';
             dataType: 'json',
             data: {organization: $('#organization').val()}, // Pass the selected organization to the server
             success: function(response) {
-                generateBarGraph(response.presidentData, response.vicePresidentData);
+                // Update president bar graph
+                generateBarGraph(response.presidentData, "presidentGraph");
+
+                // Update vice president bar graph
+                generateBarGraph(response.vicePresidentData, "vicePresidentGraph");
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data: ' + error);
@@ -198,12 +147,6 @@ include 'includes/header.php';
 
     // Call the updateData function every 60 seconds (adjust as needed)
     setInterval(updateData, 3000); // 60000 milliseconds = 60 seconds
-
-    // Function to get color based on index
-    function getColor(index) {
-        var colors = ["#FF5733", "#33FF57", "#5733FF", "#33A8FF", "#FF33A8", "#A8FF33", "#33FFA8", "#A833FF", "#FFA833", "#8FFFA8"];
-        return colors[index % colors.length];
-    }
 </script>
 
 </body>
