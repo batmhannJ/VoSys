@@ -62,12 +62,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
 <script>
   var organizationColors = {
-    "JPCS": "#ffcc00",
-    "PASOA": "#339966",
-    "CSC": "#ff5050",
-    "YMF": "#6666ff",
-    "CODE-TG": "#cc99ff",
-    "HMSO": "#ff9933"
+    "JPCS": "#4CAF50",
+    "PASOA": "#fff080",
+    "CSC": "#595959",
+    "YMF": "#4d4dff",
+    "CODE-TG": "#ff6666",
+    "HMSO": "#fff080"
   };
 
   function updateCharts() {
