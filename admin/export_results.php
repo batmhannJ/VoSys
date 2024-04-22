@@ -14,6 +14,9 @@ if(isset($_GET['organization']) && !empty($_GET['organization'])) {
 // Determine whether to include the organization field in the query
 $includeOrganization = ($_GET['organization'] === '') ? ', voters1.organization' : '';
 
+// Determine the sorting order for the organization column
+$organizationSort = ($_GET['organization'] === '') ? 'voters1.organization ASC,' : '';
+
 // Query to calculate vote count for each candidate with organization filter
 $sql = "SELECT candidates.firstname, candidates.lastname, categories.name AS position_name, COUNT(votes.candidate_id) AS vote_count{$includeOrganization}
         FROM candidates
@@ -22,7 +25,8 @@ $sql = "SELECT candidates.firstname, candidates.lastname, categories.name AS pos
         LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
         WHERE voters1.organization != ''
         {$organizationFilter}
-        GROUP BY candidates.id";
+        GROUP BY candidates.id{$includeOrganization}
+        ORDER BY {$organizationSort} position_name ASC";
 
 $result = $conn->query($sql);
 
