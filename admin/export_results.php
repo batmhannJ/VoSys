@@ -22,8 +22,7 @@ $sql = "SELECT candidates.firstname, candidates.lastname, categories.name AS pos
         LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
         WHERE voters1.organization != ''
         {$organizationFilter}
-        GROUP BY candidates.id, voters1.organization
-        ORDER BY voters1.organization ASC";
+        GROUP BY candidates.id";
 
 $result = $conn->query($sql);
 
@@ -68,9 +67,14 @@ $pdfContent = "
 <h2>Candidates Vote Count</h2>
 <table>
     <thead>
-    <tr>
-        <th>Organization</th>
-        <th>Position</th>
+    <tr>";
+    
+// Include organization column header only if filtering by all organizations
+if ($_GET['organization'] === '') {
+    $pdfContent .= "<th>Organization</th>";
+}
+
+$pdfContent .= "<th>Position</th>
         <th>Candidates</th>
         <th>Vote Count</th>
     </tr>
