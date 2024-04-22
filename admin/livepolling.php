@@ -59,7 +59,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
 <script>
   var organizationColors = {
-    "JPCS": "#ffcc00",
+    "JPCS": "#05902D",
     "PASOA": "#339966",
     "CSC": "#000000",
     "YMF": "#6666ff",
