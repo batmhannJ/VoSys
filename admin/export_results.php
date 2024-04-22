@@ -36,10 +36,6 @@ $pdfContent = "
 body {
   font-family: Arial, sans-serif;
   color: #333;
-  background-image: url('images/logo.png');
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 50%;
 }
 
   h1, h2 {
