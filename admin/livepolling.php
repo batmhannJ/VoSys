@@ -213,6 +213,8 @@ include 'includes/header.php';
 <?php include 'includes/scripts.php'; ?>
 <!-- Bar Graph Script -->
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     // Function to generate bar graph
     function generateBarGraph(dataPoints, containerId) {
@@ -221,15 +223,15 @@ include 'includes/header.php';
             title:{
                 text: "Vote Counts"
             },
-            axisX: {
+            axisY: {
                 title: "Candidates"
             },
-            axisY: {
+            axisX: {
                 title: "Vote Count",
                 includeZero: true
             },
             data: [{
-                type: "column",
+                type: "bar", // Change type to "bar"
                 dataPoints: dataPoints
             }]
         });
@@ -277,10 +279,7 @@ include 'includes/header.php';
 
     // Generate vice president bar graph
     generateBarGraph(<?php echo json_encode($vicePresidentData); ?>, "vicePresidentGraph");
-</script>
-<!-- Add this script at the end of your HTML body -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
+
     // Function to fetch updated data from the server
     function updateData() {
         $.ajax({
@@ -308,6 +307,4 @@ include 'includes/header.php';
 </script>
 
 </body>
-
 </html>
-
