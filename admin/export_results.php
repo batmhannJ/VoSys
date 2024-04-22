@@ -44,7 +44,7 @@ body {
   }
 
   p {
-    font-family: Lucida Handwriting, Cursive;
+    font-family: Brush Script MT, Cursive;
     text-align: center;
     color: #000;
   }
@@ -63,7 +63,7 @@ body {
   }
 
   th {
-    background-color: #f5f5f5; /* Light gray background for table headers */
+    background-color: maroon; /* Light gray background for table headers */
     font-weight: bold;
   }
 
