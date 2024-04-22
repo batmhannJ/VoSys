@@ -40,6 +40,7 @@ include 'includes/header.php';
                                         ?>
                                     </select>
                                 </div>
+                                <button type="submit" class="btn btn-primary">Filter</button>
                             </form>
                         </div>
                     </div>
@@ -99,7 +100,7 @@ include 'includes/header.php';
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     // Function to generate bar graph
-    function generateBarGraph(dataPoints, containerId, color) {
+    function generateBarGraph(dataPoints, containerId) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
             title:{
@@ -114,8 +115,7 @@ include 'includes/header.php';
             },
             data: [{
                 type: "bar", // Change type to "bar"
-                dataPoints: dataPoints,
-                color: color // Set the bar color
+                dataPoints: dataPoints
             }]
         });
         chart.render();
@@ -129,25 +129,11 @@ include 'includes/header.php';
             dataType: 'json',
             data: {organization: $('#organization').val()}, // Pass the selected organization to the server
             success: function(response) {
-                // Define colors for each organization
-                var organizationColors = {
-                    'Organization1': '#ff0000', // Red
-                    'Organization2': '#00ff00', // Green
-                    'Organization3': '#0000ff'  // Blue
-                    // Add more organizations and colors as needed
-                };
+                // Update president bar graph
+                generateBarGraph(response.presidentData, "presidentGraph");
 
-                // Get the selected organization
-                var selectedOrganization = $('#organization').val();
-
-                // Get the color for the selected organization
-                var color = organizationColors[selectedOrganization];
-
-                // Update president bar graph with organization-specific color
-                generateBarGraph(response.presidentData, "presidentGraph", color);
-
-                // Update vice president bar graph with organization-specific color
-                generateBarGraph(response.vicePresidentData, "vicePresidentGraph", color);
+                // Update vice president bar graph
+                generateBarGraph(response.vicePresidentData, "vicePresidentGraph");
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data: ' + error);
@@ -159,7 +145,7 @@ include 'includes/header.php';
     updateData();
 
     // Call the updateData function every 60 seconds (adjust as needed)
-    setInterval(updateData, 60000); // 60000 milliseconds = 60 seconds
+    setInterval(updateData, 3000); // 60000 milliseconds = 60 seconds
 </script>
 
 </body>
