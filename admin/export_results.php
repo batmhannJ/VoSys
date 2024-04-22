@@ -46,7 +46,6 @@ body {
 
   p {
     font-family: Brush Script MT, cursive;
-    text-align: center;
     color: #000;
   }
 
@@ -78,7 +77,7 @@ body {
   }
 </style>
 <center>
-<p><img src='images/logo.png' style='height: 50px; width: 50px;'>Our Lady of the Sacred Heart College of Guimba, Inc.</p>
+<p><img src='images/logo.png' style='height: 50px; width: 50px;'><center>Our Lady of the Sacred Heart College of Guimba, Inc.</center></p>
 <h1>2024 Election Results </h1>
 </center>
 <table>
