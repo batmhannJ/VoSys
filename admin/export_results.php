@@ -36,12 +36,15 @@ $pdfContent = "
 body {
   font-family: Arial, sans-serif;
   color: #333;
-  background-image: url('images/logo.png');
-  background-repeat: no-repeat;
-  background-position: center center;
 }
 
   h1, h2 {
+    text-align: center;
+    color: #000;
+  }
+
+  p {
+    font-family: Lucida Calligraphy, Cursive;
     text-align: center;
     color: #000;
   }
@@ -72,8 +75,10 @@ body {
     background-color: #f9f9f9; /* Light gray background for odd rows */
   }
 </style>
-<center><h1>Election Results</h1></center>
-<h2>Candidates Vote Count</h2>
+<center>
+<p>Our Lady of the Sacred Heart College of Guimba, Inc.</p>
+<h1>Election Results</h1>
+</center>
 <table>
     <thead>
     <tr>";
