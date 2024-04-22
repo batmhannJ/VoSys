@@ -63,7 +63,7 @@
 <script>
   var organizationColors = {
     "JPCS": "#4CAF50",
-    "PASOA": "#fff080",
+    "PASOA": "#e6cc00",
     "CSC": "#595959",
     "YMF": "#00008b",
     "CODE-TG": "#800000",
