@@ -39,12 +39,7 @@ body {
   background-image: url('images/logo.png');
   background-repeat: no-repeat;
   background-position: center center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 80%;
-  height: 80%;
-  opacity: 0.4;
+  background-size: 50%;
 }
 
   h1, h2 {
@@ -57,7 +52,8 @@ body {
     border-collapse: collapse;
     margin-top: 20px;
     position: relative; /* Set position to relative to allow z-index to work */
-    z-index: 1; /* Adjust the opacity value to make the table more transparent */
+    z-index: 1; /* Set z-index higher than the background to place the table on top */
+    opacity: 0.7;
 }
 
 
