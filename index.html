@@ -1,15 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+swiper@11/swiper-bundle.min.css"
     />
     
     <title>OLSHCO College Online Voting System</title>
@@ -269,6 +258,7 @@ frameborder="0"
 
 
 
+<button onclick="scrollToTop()" id="scrollToTopBtn" title="Go to top" style="display: none;">&#8679;</button>
 
 
 
@@ -340,6 +330,26 @@ frameborder="0"
 <script src="https://unpkg.com/scrollreveal"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="main.js"></script>
+<script>
+  // Function to scroll back to the top of the page
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
+
+  // Show the scroll-to-top button when user scrolls down
+  window.onscroll = function() {scrollFunction()};
+
+  function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      document.getElementById("scrollToTopBtn").style.display = "block";
+    } else {
+      document.getElementById("scrollToTopBtn").style.display = "none";
+    }
+  }
+</script>
     <script>
         const organizationsData = {
             'CSC': {
@@ -408,7 +418,7 @@ frameborder="0"
             document.getElementById("hour").innerText = "00";
             document.getElementById("min").innerText = "00";
             document.getElementById("sec").innerText = "00";
-            document.getElementById("electionTitle").innerText = "NO ONGOING ELECTION. Stay Tuned, Madlang Pipol!";
+            document.getElementById("title").innerText = "NO ONGOING ELECTION. Stay Tuned, Madlang Pipol!";
             return;
         }
 
