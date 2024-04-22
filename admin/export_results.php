@@ -75,6 +75,7 @@ tr:nth-child(odd) {
 }
 .header p{
   font-family: Lucida, Cursive;
+}
 </style>
 
 <div class='header'>
