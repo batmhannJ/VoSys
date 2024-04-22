@@ -214,90 +214,157 @@ include 'includes/header.php';
 <!-- Bar Graph Script -->
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
-    // Function to generate bar graph
-    function generateBarGraph(dataPoints, containerId) {
-        var chart = new CanvasJS.Chart(containerId, {
-            animationEnabled: true,
-            title:{
-                text: "Vote Counts"
-            },
-            axisX: {
-                title: "Candidates"
-            },
-            axisY: {
-                title: "Vote Count",
-                includeZero: true
-            },
-            data: [{
-                type: "column",
-                dataPoints: dataPoints
-            }]
-        });
-        chart.render();
+  var organizationColors = {
+    "JPCS": "#ffcc00",
+    "PASOA": "#339966",
+    "CSC": "#ff5050",
+    "YMF": "#6666ff",
+    "CODE-TG": "#cc99ff",
+    "HMSO": "#ff9933"
+  };
+
+  function updateCharts() {
+    var organization = document.getElementById("organization").value;
+
+    updatePresidentChart(organization);
+    updateRepresentativeChart(organization);
+  }
+
+  function updatePresidentChart(organization) {
+    var dataPoints = [];
+
+    // You can fetch data dynamically based on the selected organization here
+    // For demonstration, I'm using static data for each organization
+
+    if (organization === "JPCS") {
+      dataPoints = [
+        { y: 20, label: "President" },
+        { y: 30, label: "Vice President" },
+        { y: 40, label: "Secretary" }
+      ];
+    } else if (organization === "PASOA") {
+      dataPoints = [
+        { y: 25, label: "President" },
+        { y: 35, label: "Vice President" },
+        { y: 45, label: "Secretary" }
+      ];
+    } else if (organization === "CSC") {
+      dataPoints = [
+        { y: 35, label: "President" },
+        { y: 25, label: "Vice President" },
+        { y: 40, label: "Secretary" }
+      ];
+    } else if (organization === "YMF") {
+      dataPoints = [
+        { y: 30, label: "President" },
+        { y: 40, label: "Vice President" },
+        { y: 30, label: "Secretary" }
+      ];
+    } else if (organization === "CODE-TG") {
+      dataPoints = [
+        { y: 20, label: "President" },
+        { y: 30, label: "Vice President" },
+        { y: 50, label: "Secretary" }
+      ];
+    } else if (organization === "HMSO") {
+      dataPoints = [
+        { y: 15, label: "President" },
+        { y: 35, label: "Vice President" },
+        { y: 50, label: "Secretary" }
+      ];
     }
+    // Add more else if conditions for other organizations
 
-    // Fetch and process president data
-    <?php
-    $presidentData = array();
-    $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-            COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-            FROM positions 
-            LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'President'
-            LEFT JOIN votes ON candidates.id = votes.candidate_id
-            LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-            WHERE voters1.organization != ''
-            ".$organizationFilter."
-            GROUP BY candidates.id";
-    $query = $conn->query($sql);
-    while($row = $query->fetch_assoc()) {
-        $presidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+    var chart = new CanvasJS.Chart("presidentChart", {
+      title: { text: "President, Vice President, Secretary" },
+      data: [{
+        type: "bar",
+        dataPoints: dataPoints,
+        color: organizationColors[organization] // Set organization-specific color
+      }]
+    });
+
+    chart.render();
+
+    // Update chart every second
+    setInterval(function () {
+      updatePresidentDataPoints(organization, chart);
+    }, 1000);
+  }
+
+  function updateRepresentativeChart(organization) {
+    var dataPoints = [];
+
+    // You can fetch data dynamically based on the selected organization here
+    // For demonstration, I'm using static data for each organization
+
+    if (organization === "JPCS") {
+      dataPoints = [
+        { y: 30, label: "Representative 1" },
+        { y: 40, label: "Representative 2" }
+      ];
+    } else if (organization === "PASOA") {
+      dataPoints = [
+        { y: 20, label: "Representative 1" },
+        { y: 30, label: "Representative 2" }
+      ];
+    } else if (organization === "CSC") {
+      dataPoints = [
+        { y: 25, label: "Representative 1" },
+        { y: 35, label: "Representative 2" }
+      ];
+    } else if (organization === "YMF") {
+      dataPoints = [
+        { y: 30, label: "Representative 1" },
+        { y: 40, label: "Representative 2" }
+      ];
+    } else if (organization === "CODE-TG") {
+      dataPoints = [
+        { y: 20, label: "Representative 1" },
+        { y: 30, label: "Representative 2" }
+      ];
+    } else if (organization === "HMSO") {
+      dataPoints = [
+        { y: 15, label: "Representative 1" },
+        { y: 25, label: "Representative 2" }
+      ];
     }
-    ?>
+    // Add more else if conditions for other organizations
 
-    // Generate president bar graph
-    generateBarGraph(<?php echo json_encode($presidentData); ?>, "presidentGraph");
+    var chart = new CanvasJS.Chart("representativeChart", {
+      title: { text: "Representatives" },
+      data: [{
+        type: "bar",
+        dataPoints: dataPoints,
+        color: organizationColors[organization] // Set organization-specific color
+      }]
+    });
 
-    // Fetch and process vice president data
-    <?php
-    $vicePresidentData = array();
-    $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-            COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-            FROM positions 
-            LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'Vice President'
-            LEFT JOIN votes ON candidates.id = votes.candidate_id
-            LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-            WHERE voters1.organization != ''
-            ".$organizationFilter."
-            GROUP BY candidates.id";
-    $query = $conn->query($sql);
-    while($row = $query->fetch_assoc()) {
-        $vicePresidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+    chart.render();
+
+    // Update chart every second
+    setInterval(function () {
+      updateRepresentativeDataPoints(organization, chart);
+    }, 1000);
+  }
+
+  function updatePresidentDataPoints(organization, chart) {
+    // Update dataPoints based on the selected organization
+    // For demonstration, I'm using random values for each data point
+    var newDataPoints = [];
+    for (var i = 0; i < chart.options.data[0].dataPoints.length; i++) {
+      newDataPoints.push({ label: chart.options.data[0].dataPoints[i].label, y: Math.random() * 100 });
     }
-    ?>
+    chart.options.data[0].dataPoints = newDataPoints;
+    chart.render();
+  }
 
-    // Generate vice president bar graph
-    generateBarGraph(<?php echo json_encode($vicePresidentData); ?>, "vicePresidentGraph");
-</script>
-<!-- Add this script at the end of your HTML body -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-    // Function to fetch updated data from the server
-    function updateData() {
-        $.ajax({
-            url: 'update_data.php', // Change this to the URL of your update data script
-            type: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                // Update president bar graph
-                generateBarGraph(response.presidentData, "presidentGraph");
-
-                // Update vice president bar graph
-                generateBarGraph(response.vicePresidentData, "vicePresidentGraph");
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching data: ' + error);
-            }
-        });
+  function updateRepresentativeDataPoints(organization, chart) {
+    // Update dataPoints based on the selected organization
+    // For demonstration, I'm using random values for each data point
+    var newDataPoints = [];
+    for (var i = 0; i < chart.options.data[0].dataPoints.length; i++) {
+      newDataPoints.push({ label: chart.options.data[0].dataPoints[i].label, y: Math.random() * 100 });
     }
 
     // Call the updateData function initially

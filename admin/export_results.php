@@ -38,49 +38,51 @@ body {
   color: #333;
 }
 
-h1, h2 {
+  h1, h2 {
     text-align: center;
     color: #000;
-}
+  }
 
-table {
+  p {
+    font-family: Lucida Handwriting, Cursive;
+    text-align: center;
+    color: #000;
+  }
+
+  table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    position: relative; /* Set position to relative to allow z-index to work */
-    z-index: 1; /* Set z-index higher than the background to place the table on top */
-    opacity: 0.7;
+    opacity: 0.8; /* Adjust the opacity value to make the table more transparent */
 }
 
-th, td {
+
+  th, td {
     padding: 10px;
     border: 1px solid #ddd;
-}
+  }
 
-th {
+  th {
     background-color: #f5f5f5; /* Light gray background for table headers */
     font-weight: bold;
-}
+  }
 
-tr:nth-child(even) {
+  tr:nth-child(even) {
     background-color: #fff; /* White background for even rows */
-}
+  }
 
-tr:nth-child(odd) {
+  tr:nth-child(odd) {
     background-color: #f9f9f9; /* Light gray background for odd rows */
-}
+  }
 </style>
-
-<div style='display: flex; align-items: center;'>
-    <img src='images/logo.png' style='height: 50px; width: 50px;'>
-    <p style='font-family: Lucida, Cursive; font-size: 15px; margin: 0;'>Our Lady of the Sacred Heart College of Guimba, Inc.</p>
-</div>
-
-<center><h1>Election Results</h1></center>
-<h2>Candidates Vote Count</h2>
+<center>
+<p>Our Lady of the Sacred Heart College of Guimba, Inc.</p>
+<h1>Election Results</h1>
+</center>
 <table>
-    <thead>";
-
+    <thead>
+    <tr>";
+    
 // Include organization column header only if filtering by all organizations
 if ($_GET['organization'] === '') {
     $pdfContent .= "<th>Organization</th>";
