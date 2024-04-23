@@ -15,7 +15,7 @@
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">REPORTS</li>
       <li class=""><a href="home.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-      <li class=""><a href="livepolling.php"><i class="fas fa-poll-h"> </i><span>Live Polling</span></a></li>
+      <li class=""><a href="livepolling.php"><i class="fa fa-poll-h"> </i><span>Live Polling</span></a></li>
       <li class=""><a href="votes.php"><span class="glyphicon glyphicon-lock"></span> <span>Votes Result</span></a></li>
       <li class="header">MANAGE</li>
       <li class=""><a href="announcement.php"><i class="fa fa-bullhorn"></i> <span>Announcement</span></a></li>
