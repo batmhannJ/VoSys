@@ -41,6 +41,11 @@
       .skin-green .main-header .navbar {
         background-color: darkgreen;
       }
+      .skin-green .main-header .logo {
+          background-color: darkgreen;
+          color: #fff;
+          border-bottom: 0 solid transparent;
+      }
       .skin-green .main-sidebar {
         background-color: #fff;
       }
