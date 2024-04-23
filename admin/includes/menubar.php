@@ -29,6 +29,7 @@
       
       <!--<li class=""><a href="#" data-toggle="modal"><i class="fa fa-book"></i> <span>Archives</span></a></li>-->
       <li class=""><a href="history.php"><i class="fa fa-clock-o"></i> <span>History</span></a></li>
+      <li class=""><a href="archive.php"><i class="fa fa-clock-o"></i> <span>Archive</span></a></li>
       
       <!--<li class=""><a href="ballot.php"><i class="fa fa-file-text"></i> <span>Ballot Position</span></a></li>-->
     </ul>
