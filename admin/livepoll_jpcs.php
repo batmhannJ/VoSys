@@ -1,16 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Election Results</title>
-    <!-- Bar Graph Script -->
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-</head>
-<body>
-    <?php
+<?php
     // Include necessary PHP files
     include 'includes/session.php';
     include 'includes/header.php';
