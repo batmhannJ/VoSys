@@ -61,6 +61,9 @@
         color: #fff;
         background-color: darkgreen;
       }
+      .skin-green .sidebar-mune>li:hover{
+        background-color: darkgreen;
+      }
       .skin-green .sidebar a {
           color: #000;
       }
