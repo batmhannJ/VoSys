@@ -211,7 +211,7 @@
             <div class="icon">
               <i class="fa fa-black-tie"></i>
             </div>
-            <a href="turnout_jpcs.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="turnout_jpcs.php" class="small-box-footer_jpcs">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -338,7 +338,19 @@
 ?>
 </body>
 <style>
-  .small-box-footer:hover{
+  .small-box-footer_jpcs{
+    border-bottom-right-radius:20px;
+    border-bottom-left-radius:20px;
+    position:relative;
+    text-align:center;
+    padding:3px 0;
+    color:#0000ff;
+    display:block;
+    z-index:10;
+    background:rgba(0,0,0,0.1);
+    text-decoration:none
+  }
+  .small-box-footer_jpcs:hover{
     background-color: darkgreen;
   }
 </style>
