@@ -469,7 +469,7 @@ main.sign-up-mode .carousel {
               </div>
 
               <div class="heading">
-                <h2>Voters Login Page</h2>
+                <center><h2>Voters Login Page</h2></center>
                 <hr>
               </div>
 
