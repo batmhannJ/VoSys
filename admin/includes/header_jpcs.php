@@ -44,6 +44,10 @@
       .skin-green .main-sidebar {
         background-color: #fff;
       }
+      .skin-green .sidebar-menu>li.header {
+          color: #000;
+          background: #fff;
+      }
       .bold{
         font-weight:bold;
       }
