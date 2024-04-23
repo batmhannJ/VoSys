@@ -45,6 +45,9 @@
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
+            <div class="box-header with-border">
+              <a href="#restoreAllModal" data-toggle="modal" class="btn btn-primary btn-sm btn-flat restore-all"><i class="fa fa-reply"></i> Restore All</a>
+            </div>
             <div class="box-body">
               <table id="example1" class="table table-bordered">
                 <thead>
@@ -76,7 +79,7 @@
                           <td>".$row['yearLvl']."</td>
                           <td>".$row['organization']."</td>
                           <td>
-                            <button class='btn btn-success btn-sm restore btn-flat' data-id='".$row['id']."'><i class='fa fa-reply'></i> Restore</button>
+                            <button class='btn btn-success btn-sm restore btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#confirmationModal'><i class='fa fa-reply'></i> Restore</button>
                           </td>
                         </tr>
                       ";
@@ -95,31 +98,99 @@
   <?php include 'includes/voters_modal.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
-</body>
+<!-- Restore All Modal -->
+<div class="modal fade" id="restoreAllModal" tabindex="-1" role="dialog" aria-labelledby="restoreAllModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="restoreAllModalLabel">Restore All Voters</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to restore all voters?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="confirmRestoreAll">Yes, Restore All</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Restore Confirmation Modal -->
+<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmationModalLabel">Restore Voter</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to restore this voter?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="submitBtn">Yes, Restore</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
 $(function(){
   $(document).on('click', '.restore', function(e){
+    e.preventDefault();
+    var id = $(this).data('id');
+    $('#submitBtn').attr('data-id', id); // Set the data-id attribute for the "Restore" button
+  });
+
+  $(document).on('click', '.restore-all', function(e){
+    e.preventDefault();
+    $('#restoreAllModal').modal('show'); // Show the "Restore All" modal
+  });
+
+  $(document).on('click', '#confirmRestoreAll', function(e){
+    e.preventDefault();
+    restoreAllVoters();
+  });
+
+  $(document).on('click', '#submitBtn', function(e){
     e.preventDefault();
     var id = $(this).data('id');
     restoreVoter(id);
   });
 
   function restoreVoter(id) {
-    if (confirm("Are you sure you want to restore this voter?")) {
-      $.ajax({
-        type: "POST",
-        url: "restore_voter.php",
-        data: { id: id },
-        success: function(response) {
-          // Refresh the page or update the table as needed
-          location.reload();
-        },
-        error: function(xhr, status, error) {
-          console.error(xhr.responseText);
-        }
-      });
-    }
+    $.ajax({
+      type: "POST",
+      url: "restore_voter.php",
+      data: { id: id },
+      success: function(response) {
+        // Refresh the page or update the table as needed
+        location.reload();
+      },
+      error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+      }
+    });
+  }
+
+  function restoreAllVoters() {
+    $.ajax({
+      type: "POST",
+      url: "restore_all_voters.php",
+      success: function(response) {
+        // Refresh the page or update the table as needed
+        location.reload();
+      },
+      error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+      }
+    });
   }
 });
 </script>
+</body>
 </html>

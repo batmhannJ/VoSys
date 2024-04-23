@@ -1,7 +1,7 @@
 <?php include 'includes/session.php'; ?>
 <?php include 'includes/slugify.php'; ?>
-<?php include 'includes/header.php'; ?>
-<body class="hold-transition skin-blue sidebar-mini">
+<?php include 'includes/header_csc.php'; ?>
+<body class="hold-transition skin-black sidebar-mini">
 <div class="wrapper">
 
   <?php include 'includes/navbar_csc.php'; ?>
@@ -61,7 +61,7 @@
             <div class="icon">
               <i class="fa fa-tasks"></i>
             </div>
-            <a href="positions_jpcs.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="positions_jpcs.php" class="small-box-footer_csc">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
           <!-- small box -->
           <!--<div class="small-box">
@@ -98,7 +98,7 @@
             <div class="icon">
               <i class="fa fa-black-tie"></i>
             </div>
-            <a href="candidates_jpcs.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="candidates_jpcs.php" class="small-box-footer_csc">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -118,7 +118,7 @@
             <div class="icon">
               <i class="fa fa-users"></i>
             </div>
-            <a href="voters_jpcs.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="voters_jpcs.php" class="small-box-footer_csc">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -142,7 +142,7 @@
             <div class="icon">
               <i class="fa fa-edit"></i>
             </div>
-            <a href="votersVoted_jpcs.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="votersVoted_jpcs.php" class="small-box-footer_csc">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -166,7 +166,7 @@
             <div class="icon">
               <i class="fa fa-black-tie"></i>
             </div>
-            <a href="remainingVoters_jpcs.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="remainingVoters_jpcs.php" class="small-box-footer_csc">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -211,7 +211,7 @@
             <div class="icon">
               <i class="fa fa-black-tie"></i>
             </div>
-            <a href="turnout_jpcs.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="turnout_jpcs.php" class="small-box-footer_csc">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -337,4 +337,22 @@
   }
 ?>
 </body>
+<style>
+  .small-box-footer_csc{
+    border-bottom-right-radius:20px;
+    border-bottom-left-radius:20px;
+    position:relative;
+    text-align:center;
+    padding:3px 0;
+    color:#0000ff;
+    display:block;
+    z-index:10;
+    background:rgba(0,0,0,0.1);
+    text-decoration:none
+  }
+  .small-box-footer_csc:hover{
+    color: #fff;
+    background-color: black;
+  }
+</style>
 </html>

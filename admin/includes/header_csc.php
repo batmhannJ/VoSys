@@ -38,43 +38,58 @@
   	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
   	<style>
-      .skin-green .wrapper{
+      .skin-black .wrapper{
         background-color: #fff;
       }
-      .skin-green .main-header .navbar {
-        background-color: darkgreen;
+      .skin-black .main-header .navbar {
+        background-color: black;
       }
-      .skin-green .main-header .logo {
-          background-color: darkgreen;
+      .skin-black .main-header .navbar .nav > li > a{
+        color: #fff;
+      }
+      .skin-black .main-header .navbar .nav .open > a{
+        background: #000;
+        color: #fff;
+      }
+      .skin-black .main-header .navbar-custom-menu:hover{
+        color: #fff;
+        background-color: #000;
+      }
+      .skin-black .main-header .logo {
+          background-color: black;
           color: #fff;
           border-bottom: 0 solid transparent;
       }
-      .skin-green .main-sidebar {
+      .skin-black .main-sidebar {
         background-color: #fff;
       }
-      .skin-green .sidebar-menu>li.header {
+      .skin-black .sidebar-menu>li.header {
           color: #000;
           background: #fff;
       }
-      .skin-green .user-panel>.info,
-      .skin-green .user-panel>.info>a{
+      .skin-black .user-panel>.info,
+      .skin-black .user-panel>.info>a{
         color: #000;
       }
-      .skin-green .sidebar-menu>li.active>a{
+      .skin-black .sidebar-menu>li.active>a{
         color: #fff;
-        background-color: darkgreen;
+        background-color: black;
       }
-      .skin-green .sidebar-menu>li:hover>a,
-      .skin-green .sidebar-menu>li.active>a,
-      .skin-green .sidebar-menu>li.menu-open>a {
+      .skin-black .sidebar-menu>li:hover>a,
+      .skin-black .sidebar-menu>li.active>a,
+      .skin-black .sidebar-menu>li.menu-open>a {
         margin: 1px;
         color:#fff;
-        background:darkgreen;
+        background:black;
         border-radius: 5px;
       }
-      .skin-green .sidebar a {
+      .skin-black .sidebar a {
           color: #000;
       }
+      .skin-black .main-header .navbar > .sidebar-toggle {
+        color: #fff;
+        border-right: 1px solid #eee;
+        }
       .bold{
         font-weight:bold;
       }

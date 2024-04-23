@@ -1,11 +1,11 @@
 <?php
 include 'includes/session.php';
-include 'includes/header.php';
+include 'includes/header_jpcs.php';
 ?>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-green sidebar-mini">
 <div class="wrapper">
-    <?php include 'includes/navbar.php'; ?>
-    <?php include 'includes/menubar.php'; ?>
+    <?php include 'includes/navbar_jpcs.php'; ?>
+    <?php include 'includes/menubar_jpcs.php'; ?>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -21,39 +21,13 @@ include 'includes/header.php';
         </section>
         <!-- Main content -->
         <section class="content">
-            <!-- Organization Filter -->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-body">
-                            <form method="get" action="">
-                                <div class="form-group">
-                                    <label for="organization">Select Organization:</label>
-                                    <select class="form-control" name="organization" id="organization">
-                                        <?php
-                                        // Fetch and display organizations
-                                        $organizationQuery = $conn->query("SELECT DISTINCT organization FROM voters");
-                                        while($organizationRow = $organizationQuery->fetch_assoc()){
-                                            $selected = ($_GET['organization'] ?? '') == $organizationRow['organization'] ? 'selected' : '';
-                                            echo "<option value='".$organizationRow['organization']."' $selected>".$organizationRow['organization']."</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                                <!-- Remove the filter button -->
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Bar Graphs for President, Vice President, and Secretary -->
             <div class="row">
                 <!-- President Bar Graph Box -->
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><b>President Candidates</b></h3>
+                            <h3 class="box-title">President Candidates Vote Count</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -67,10 +41,10 @@ include 'includes/header.php';
                 <!-- /.col -->
 
                 <!-- Vice President Bar Graph Box -->
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><b>Vice President Candidates</b></h3>
+                            <h3 class="box-title">Vice President Candidates Vote Count</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -82,15 +56,12 @@ include 'includes/header.php';
                     <!-- /.box -->
                 </div>
                 <!-- /.col -->
-            </div>
-            <!-- /.row -->
 
-            <!-- Secretary Bar Graph Box -->
-            <div class="row">
-                <div class="col-md-6">
+                <!-- Secretary Bar Graph Box -->
+                <div class="col-md-4">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><b>Secretary Candidates</b></h3>
+                            <h3 class="box-title">Secretary Candidates Vote Count</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -120,44 +91,14 @@ include 'includes/header.php';
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     // Function to generate bar graph
-    function generateBarGraph(dataPoints, containerId, organization) {
-        var color;
-
-        // Set color based on organization
-        switch (organization) {
-            case 'JPCS':
-                color = "#4CAF50"; // Green
-                break;
-            case 'CSC':
-                color = "#000000"; // Black
-                break;
-            case 'CODE-TG':
-                color = "#800000"; // Maroon
-                break;
-            case 'YMF':
-                color = "#00008b"; // Dark Blue
-                break;
-            case 'HMSO':
-                color = "#cba328"; // Gold
-                break;
-            case 'PASOA':
-                color = "#e6cc00"; // Yellow
-                break;
-            default:
-                color = "#000000"; // Default to Black
-        }
-
+    function generateBarGraph(dataPoints, containerId) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
             title:{
                 text: "Vote Counts"
             },
             axisY: {
-                title: "Candidates",
-                includeZero: true,
-                labelFormatter: function (e) {
-                    return Math.round(e.value);
-                }
+                title: "Candidates"
             },
             axisX: {
                 title: "Vote Count",
@@ -165,8 +106,7 @@ include 'includes/header.php';
             },
             data: [{
                 type: "bar", // Change type to "bar"
-                dataPoints: dataPoints,
-                color: color // Set the color based on organization
+                dataPoints: dataPoints
             }]
         });
         chart.render();
@@ -175,19 +115,19 @@ include 'includes/header.php';
     // Function to fetch updated data from the server
     function updateData() {
         $.ajax({
-            url: 'update_data.php', // Change this to the URL of your update data script
+            url: 'jpcs_update_data.php', // Change this to the URL of your update data script
             type: 'GET',
             dataType: 'json',
-            data: {organization: $('#organization').val()}, // Pass the selected organization to the server
+            data: {organization: 'JPCS'}, // Fixed organization
             success: function(response) {
-                // Update president bar graph with color based on organization
-                generateBarGraph(response.presidentData, "presidentGraph", $('#organization').val());
+                // Update president bar graph
+                generateBarGraph(response.presidentData, "presidentGraph");
 
-                // Update vice president bar graph with color based on organization
-                generateBarGraph(response.vicePresidentData, "vicePresidentGraph", $('#organization').val());
+                // Update vice president bar graph
+                generateBarGraph(response.vicePresidentData, "vicePresidentGraph");
 
-                // Update secretary bar graph with color based on organization
-                generateBarGraph(response.secretaryData, "secretaryGraph", $('#organization').val());
+                // Update secretary bar graph
+                generateBarGraph(response.secretaryData, "secretaryGraph");
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data: ' + error);
