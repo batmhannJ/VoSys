@@ -466,11 +466,10 @@ main.sign-up-mode .carousel {
               <div class="logo">
                 <img src="./images/olshco.png" alt="easyclass" />
                 <h4 style="font-size:30px; color: maroon;"><b>VOSYS</b></h4>
-                <h6>VOTERS PAGE</h6>
               </div>
 
               <div class="heading">
-                <h2>OLSHCO Online Voting System</h2>
+                <h2>Voters Login Page</h2>
                 <hr>
               </div>
 
