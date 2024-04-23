@@ -53,7 +53,7 @@ if (isset($_SESSION['voter'])) {
                 <p class="text-center"><a href="forgot_password.php">Forgot Password?</a></p>
             </form>
         </div>
-        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        
         <?php
         if (isset($_SESSION['error'])) {
             echo "
@@ -68,6 +68,7 @@ if (isset($_SESSION['voter'])) {
 
     <?php include 'includes/scripts.php' ?>
 </body>
+<div class="g-signin2" data-onsuccess="onSignIn"></div>
 <script>
         const togglePassword = document
             .querySelector('#togglePassword');
@@ -83,4 +84,5 @@ if (isset($_SESSION['voter'])) {
             this.classList.toggle('bi-eye');
         });
     </script>
+
 </html>
