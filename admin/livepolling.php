@@ -21,11 +21,11 @@ include 'includes/header.php';
         </section>
         <!-- Main content -->
         <section class="content">
-            <!-- Organization Filter 
+            <!-- Organization Filter -->
             <div class="row">
                 <div class="col-md-3">
                     <div class="box">
-                        <div class="box-body"> -->
+                        <div class="box-body">
                             <form method="get" action="">
                                 <div class="form-group">
                                     <label for="organization">Select Organization:</label>
@@ -40,7 +40,7 @@ include 'includes/header.php';
                                         ?>
                                     </select>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Filter</button>
+                                <!-- No filter button here -->
                             </form>
                         </div>
                     </div>
