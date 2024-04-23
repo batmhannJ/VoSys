@@ -61,8 +61,11 @@
         color: #fff;
         background-color: darkgreen;
       }
-      .skin-green .sidebar-mune>li:hover{
-        background-color: darkgreen;
+      .skin-green .sidebar-menu>li:hover>a,
+      .skin-green .sidebar-menu>li.active>a,
+      .skin-green .sidebar-menu>li.menu-open>a {
+        color:#fff;
+        background:darkgreen
       }
       .skin-green .sidebar a {
           color: #000;
