@@ -47,7 +47,7 @@ include 'includes/header.php';
                 </div>
             </div>
 
-            <!-- Bar Graphs for President and Vice President -->
+            <!-- Bar Graphs for President, Vice President, and Secretary -->
             <div class="row">
                 <!-- President Bar Graph Box -->
                 <div class="col-md-6">
@@ -76,6 +76,26 @@ include 'includes/header.php';
                         <div class="box-body">
                             <!-- Vice President Bar Graph Container -->
                             <div id="vicePresidentGraph" style="height: 300px;"></div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+
+            <!-- Secretary Bar Graph Box -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>Secretary Candidates</b></h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!-- Secretary Bar Graph Container -->
+                            <div id="secretaryGraph" style="height: 300px;"></div>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -134,6 +154,9 @@ include 'includes/header.php';
 
                 // Update vice president bar graph
                 generateBarGraph(response.vicePresidentData, "vicePresidentGraph");
+
+                // Update secretary bar graph
+                generateBarGraph(response.secretaryData, "secretaryGraph");
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data: ' + error);
