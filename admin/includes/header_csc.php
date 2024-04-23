@@ -44,35 +44,35 @@
       .skin-black .main-header .navbar {
         background-color: black;
       }
-      .skin-green .main-header .logo {
+      .skin-black .main-header .logo {
           background-color: black;
           color: #fff;
           border-bottom: 0 solid transparent;
       }
-      .skin-green .main-sidebar {
+      .skin-black .main-sidebar {
         background-color: #fff;
       }
-      .skin-green .sidebar-menu>li.header {
+      .skin-black .sidebar-menu>li.header {
           color: #000;
           background: #fff;
       }
-      .skin-green .user-panel>.info,
-      .skin-green .user-panel>.info>a{
+      .skin-black .user-panel>.info,
+      .skin-black .user-panel>.info>a{
         color: #000;
       }
-      .skin-green .sidebar-menu>li.active>a{
+      .skin-black .sidebar-menu>li.active>a{
         color: #fff;
         background-color: black;
       }
-      .skin-green .sidebar-menu>li:hover>a,
-      .skin-green .sidebar-menu>li.active>a,
-      .skin-green .sidebar-menu>li.menu-open>a {
+      .skin-black .sidebar-menu>li:hover>a,
+      .skin-black .sidebar-menu>li.active>a,
+      .skin-black .sidebar-menu>li.menu-open>a {
         margin: 1px;
         color:#fff;
         background:black;
         border-radius: 5px;
       }
-      .skin-green .sidebar a {
+      .skin-black .sidebar a {
           color: #fff;
       }
       .bold{
