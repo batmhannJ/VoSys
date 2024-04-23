@@ -23,7 +23,7 @@ include 'includes/header.php';
         <section class="content">
             <!-- Organization Filter -->
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-3">
                     <div class="box">
                         <div class="box-body">
                             <form method="get" action="">
@@ -40,7 +40,7 @@ include 'includes/header.php';
                                         ?>
                                     </select>
                                 </div>
-                                <!-- No filter button here -->
+                                <!-- Remove the filter button -->
                             </form>
                         </div>
                     </div>
@@ -127,7 +127,11 @@ include 'includes/header.php';
                 text: "Vote Counts"
             },
             axisY: {
-                title: "Candidates"
+                title: "Candidates",
+                includeZero: true,
+                labelFormatter: function (e) {
+                    return Math.round(e.value);
+                }
             },
             axisX: {
                 title: "Vote Count",
