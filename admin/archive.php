@@ -95,31 +95,53 @@
   <?php include 'includes/voters_modal.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
-</body>
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <p>Are you sure you want to restore this voter?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="submitBtn">Yes, Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
 $(function(){
   $(document).on('click', '.restore', function(e){
     e.preventDefault();
     var id = $(this).data('id');
-    restoreVoter(id);
+    $('#confirmationModal').modal('show'); // Show the confirmation modal
+    $('#submitBtn').on('click', function() {
+        restoreVoter(id);
+    });
   });
 
   function restoreVoter(id) {
-    if (confirm("Are you sure you want to restore this voter?")) {
-      $.ajax({
-        type: "POST",
-        url: "restore_voter.php",
-        data: { id: id },
-        success: function(response) {
-          // Refresh the page or update the table as needed
-          location.reload();
-        },
-        error: function(xhr, status, error) {
-          console.error(xhr.responseText);
-        }
-      });
-    }
+    $.ajax({
+      type: "POST",
+      url: "restore_voter.php",
+      data: { id: id },
+      success: function(response) {
+        // Refresh the page or update the table as needed
+        location.reload();
+      },
+      error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+      }
+    });
   }
 });
 </script>
+</body>
 </html>
