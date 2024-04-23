@@ -73,8 +73,12 @@
         border-radius: 5px;
       }
       .skin-black .sidebar a {
-          color: #fff;
+          color: #000;
       }
+      .skin-black .main-header .navbar > .sidebar-toggle {
+        color: #fff;
+        border-right: 1px solid #eee;
+        }
       .bold{
         font-weight:bold;
       }
