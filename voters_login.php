@@ -48,11 +48,12 @@ if (isset($_SESSION['voter'])) {
                     <div class="col-xs-4">
                         <button type="submit" class="btnlogin" name="login"><i class="fa fa-sign-in"></i> Sign In</button>
                     </div>
-                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                    
                 </div>
                 <p class="text-center"><a href="forgot_password.php">Forgot Password?</a></p>
             </form>
         </div>
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
         <?php
         if (isset($_SESSION['error'])) {
             echo "
