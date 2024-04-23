@@ -44,6 +44,13 @@
       .skin-black .main-header .navbar {
         background-color: black;
       }
+      .skin-black .main-header .navbar .nav > li > a{
+        color: #fff;
+      }
+      .skin-black .main-header .navbar .nav .open > a{
+        background: #000;
+        color: #fff;
+      }
       .skin-black .main-header .logo {
           background-color: black;
           color: #fff;
