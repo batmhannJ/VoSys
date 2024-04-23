@@ -511,9 +511,10 @@ main.sign-up-mode .carousel {
                         <?php
                 if (isset($_SESSION['error'])) {
                     echo "
-                        <div class='callout callout-danger text-center mt20' style='width: 300px;'>
-                            <p>" . $_SESSION['error'] . "</p> 
-                        </div>
+                    <div class='callout callout-danger text-center mt20' style='width: 100%; max-width: 300px; margin: 0 auto;'>
+                    <p><?php echo $_SESSION['error']; ?></p> 
+                </div>
+                
                     ";
                     unset($_SESSION['error']);
                 }
