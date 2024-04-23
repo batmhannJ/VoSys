@@ -388,9 +388,6 @@ main.sign-up-mode .carousel {
     transition: transform 0.8s ease-in-out, opacity 0.45s linear;
   }
 
-  .heading {
-    margin: 2rem 0;
-  }
 
   form.sign-up-form {
     transform: translateX(100%);
