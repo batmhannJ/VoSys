@@ -2,10 +2,10 @@
 include 'includes/session.php';
 include 'includes/header.php';
 ?>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-green sidebar-mini">
 <div class="wrapper">
-    <?php include 'includes/navbar.php'; ?>
-    <?php include 'includes/menubar.php'; ?>
+    <?php include 'includes/navbar_jpcs.php'; ?>
+    <?php include 'includes/menubar_jpcs.php'; ?>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
