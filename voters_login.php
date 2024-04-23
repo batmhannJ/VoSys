@@ -384,7 +384,6 @@ main.sign-up-mode .carousel {
 
   form {
     max-width: revert;
-    padding: 1.5rem 2.5rem 2rem;
     transition: transform 0.8s ease-in-out, opacity 0.45s linear;
   }
 
