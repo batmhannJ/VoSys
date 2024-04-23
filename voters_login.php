@@ -14,7 +14,8 @@ if (isset($_SESSION['voter'])) {
 ?>
 
 <?php include 'includes/header.php'; ?>
-
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<meta name="google-signin-client_id" content="521331514441-7th1b1gp40k3ueueosk160thurbugqfn.apps.googleusercontent.com">
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-box-body">
@@ -47,6 +48,7 @@ if (isset($_SESSION['voter'])) {
                     <div class="col-xs-4">
                         <button type="submit" class="btnlogin" name="login"><i class="fa fa-sign-in"></i> Sign In</button>
                     </div>
+                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
                 </div>
                 <p class="text-center"><a href="forgot_password.php">Forgot Password?</a></p>
             </form>
