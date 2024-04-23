@@ -1,18 +1,18 @@
 <?php
 // jpcs_update_data.php
 
-// Assuming you have the logic to fetch data from your database or any other source
-
-// Filter the data based on the organization parameter
+// Fetch and filter data based on the organization parameter
 $organization = $_GET['organization'];
-// Fetch data for JPCS organization
+
+// Example: Fetch data for president, vice president, and secretary positions for JPCS organization
 // Example: $presidentData = fetchDataForJPCS('president');
 // Example: $vicePresidentData = fetchDataForJPCS('vice_president');
+// Example: $secretaryData = fetchDataForJPCS('secretary');
 
 // Return the data as JSON
 echo json_encode([
     'presidentData' => $presidentData,
-    'vicePresidentData' => $vicePresidentData
+    'vicePresidentData' => $vicePresidentData,
     'secretaryData' => $secretaryData
 ]);
 ?>
