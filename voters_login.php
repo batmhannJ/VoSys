@@ -510,8 +510,7 @@ main.sign-up-mode .carousel {
                 <input type="submit" name="login" value="Sign In" class="sign-btn" / style="font-size:15px;">
                 
               </div>
-            </form>
-            <?php
+              <?php
         if (isset($_SESSION['error'])) {
             echo "
                 <div class='callout callout-danger text-center mt20'>
@@ -521,6 +520,7 @@ main.sign-up-mode .carousel {
             unset($_SESSION['error']);
         }
         ?>
+            </form>
           </div>
 
           <div class="carousel">
