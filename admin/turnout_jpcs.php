@@ -1,6 +1,6 @@
 <?php
 include 'includes/session.php';
-include 'includes/header.php';
+include 'includes/header_jpcs.php';
 ?>
 
 <body class="hold-transition skin-blue sidebar-mini">
