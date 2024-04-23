@@ -25,7 +25,7 @@
 
         if (password_verify($admin_pass, $admin_password_hash)) {
             // If admin password is correct proceed to insert sub-admin data
-            $sql = "INSERT INTO sub_admin (username, password, firstname, lastname, email, photo) VALUES ('$username', '$cpassword', '$firstname', '$lastname', '$email', '$filename')";
+            $sql = "INSERT INTO admin (username, password, firstname, lastname, email, photo) VALUES ('$username', '$cpassword', '$firstname', '$lastname', '$email', '$filename')";
             if ($conn->query($sql)) {
                 $_SESSION['success'] = 'Sub-Admin added successfully';
             } else {
