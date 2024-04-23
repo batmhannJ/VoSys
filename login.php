@@ -80,21 +80,21 @@ if (isset($_POST['login'])) {
                         $_SESSION['error'] = 'Incorrect password';
                     }
                 } else {
-                    $_SESSION['error'] = 'Cannot find voter with the ID or voter is archived';
+                    $_SESSION['error'] = 'Cannot find voter with <br> the ID or voter is archived';
                 }
                 // Close the prepared statement
                 $stmt->close();
             } else {
                 // reCAPTCHA verification failed, show an error message
-                $_SESSION['error'] = 'reCAPTCHA verification failed. Please try again.';
+                $_SESSION['error'] = 'reCAPTCHA verification failed. <br> Please try again.';
             }
         } else {
             // Unable to contact Google's reCAPTCHA verification endpoint
-            $_SESSION['error'] = 'Unable to verify reCAPTCHA. Please try again later.';
+            $_SESSION['error'] = 'Unable to verify reCAPTCHA. <br> Please try again later.';
         }
     } else {
         // reCAPTCHA response not found, show an error message
-        $_SESSION['error'] = 'reCAPTCHA response not found. Please complete the reCAPTCHA challenge.';
+        $_SESSION['error'] = 'reCAPTCHA response not found. <br> Please complete the reCAPTCHA challenge.';
     }
 }
 
