@@ -76,7 +76,7 @@ main {
 }
 
 form {
-  max-width: 260px;
+  max-width: 300px;
   width: 100%;
   margin: 0 auto;
   height: 100%;
