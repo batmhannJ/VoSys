@@ -51,6 +51,10 @@
         background: #000;
         color: #fff;
       }
+      .skin-black .main-header .navbar-custom-menu:hover{
+        color: #fff;
+        background-color: #000;
+      }
       .skin-black .main-header .logo {
           background-color: black;
           color: #fff;
