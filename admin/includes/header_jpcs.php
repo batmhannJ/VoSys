@@ -64,7 +64,7 @@
       .skin-green .sidebar-menu>li:hover>a,
       .skin-green .sidebar-menu>li.active>a,
       .skin-green .sidebar-menu>li.menu-open>a {
-        margin: 3px;
+        margin: 2px;
         color:#fff;
         background:darkgreen;
         border-radius: 5px;
