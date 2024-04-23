@@ -45,6 +45,9 @@
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
+            <div class="box-header with-border">
+              <a href="#restoreAllModal" data-toggle="modal" class="btn btn-primary btn-sm btn-flat restore-all"><i class="fa fa-reply"></i> Restore All</a>
+            </div>
             <div class="box-body">
               <table id="example1" class="table table-bordered">
                 <thead>
@@ -95,23 +98,22 @@
   <?php include 'includes/voters_modal.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
-<!-- Confirmation Modal -->
-<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+<!-- Restore All Modal -->
+<div class="modal fade" id="restoreAllModal" tabindex="-1" role="dialog" aria-labelledby="restoreAllModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                <h5 class="modal-title" id="restoreAllModalLabel">Restore All Voters</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-
             <div class="modal-body">
-                <p>Are you sure you want to restore this voter?</p>
+                <p>Are you sure you want to restore all voters?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="submitBtn">Yes, Submit</button>
+                <button type="button" class="btn btn-primary" id="confirmRestoreAll">Yes, Restore All</button>
             </div>
         </div>
     </div>
@@ -127,11 +129,35 @@ $(function(){
     });
   });
 
+  $(document).on('click', '.restore-all', function(e){
+    e.preventDefault();
+    $('#restoreAllModal').modal('show'); // Show the "Restore All" modal
+  });
+
+  $(document).on('click', '#confirmRestoreAll', function(e){
+    e.preventDefault();
+    restoreAllVoters();
+  });
+
   function restoreVoter(id) {
     $.ajax({
       type: "POST",
       url: "restore_voter.php",
       data: { id: id },
+      success: function(response) {
+        // Refresh the page or update the table as needed
+        location.reload();
+      },
+      error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+      }
+    });
+  }
+
+  function restoreAllVoters() {
+    $.ajax({
+      type: "POST",
+      url: "restore_all_voters.php",
       success: function(response) {
         // Refresh the page or update the table as needed
         location.reload();
