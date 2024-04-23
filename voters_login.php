@@ -405,11 +405,11 @@ main.sign-up-mode .carousel {
   }
 
   .carousel {
-    position: revert;
+    position: fixed;
     height: auto;
     width: 200%;
     padding: 3rem 2rem;
-    display: flex;
+    display: none;
   }
 
   .images-wrapper {
