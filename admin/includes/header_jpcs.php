@@ -64,6 +64,7 @@
       .skin-green .sidebar-menu>li:hover>a,
       .skin-green .sidebar-menu>li.active>a,
       .skin-green .sidebar-menu>li.menu-open>a {
+        padding-top: 5px;
         color:#fff;
         background:darkgreen
       }
