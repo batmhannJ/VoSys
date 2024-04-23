@@ -48,6 +48,14 @@
           color: #000;
           background: #fff;
       }
+      .skin-green .user-panel>.info,
+      .skin-green .user-panel>.info>a{
+        color: #000;
+      }
+      .skin-green .sidebar-menu>li.active>a{
+        color: #fff;
+        background-color: darkgreen;
+      }
       .bold{
         font-weight:bold;
       }
