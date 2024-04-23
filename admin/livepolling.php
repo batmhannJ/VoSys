@@ -23,7 +23,7 @@ include 'includes/header.php';
         <section class="content">
             <!-- Organization Filter -->
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-body">
                             <form method="get" action="">
@@ -120,30 +120,32 @@ include 'includes/header.php';
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     // Function to generate bar graph
-    function generateBarGraph(dataPoints, containerId) {
-        var chart = new CanvasJS.Chart(containerId, {
-            animationEnabled: true,
-            title:{
-                text: "Vote Counts"
-            },
-            axisY: {
-                title: "Candidates",
-                includeZero: true,
-                labelFormatter: function (e) {
-                    return Math.round(e.value);
-                }
-            },
-            axisX: {
-                title: "Vote Count",
-                includeZero: true
-            },
-            data: [{
-                type: "bar", // Change type to "bar"
-                dataPoints: dataPoints
-            }]
-        });
-        chart.render();
-    }
+function generateBarGraph(dataPoints, containerId) {
+    var chart = new CanvasJS.Chart(containerId, {
+        animationEnabled: true,
+        title:{
+            text: "Vote Counts"
+        },
+        axisY: {
+            title: "Candidates",
+            includeZero: true,
+            labelFormatter: function (e) {
+                return Math.round(e.value);
+            }
+        },
+        axisX: {
+            title: "Vote Count",
+            includeZero: true
+        },
+        data: [{
+            type: "bar", // Change type to "bar"
+            dataPoints: dataPoints,
+            color: "#4CAF50" // Set the color to #4CAF50 for JPCS
+        }]
+    });
+    chart.render();
+}
+
 
     // Function to fetch updated data from the server
     function updateData() {
