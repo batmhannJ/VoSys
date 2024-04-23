@@ -41,6 +41,9 @@
       .skin-green .main-header .navbar_jpcs {
         background-color: darkgreen;
       }
+      .skin-green .main-sidebar {
+        background-color: #fff;
+      }
       .bold{
         font-weight:bold;
       }
