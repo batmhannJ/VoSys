@@ -120,59 +120,57 @@ include 'includes/header.php';
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     // Function to generate bar graph
-function generateBarGraph(dataPoints, containerId, organization) {
-    var color;
+    function generateBarGraph(dataPoints, containerId, organization) {
+        var color;
 
-    // Set color based on organization
-    switch (organization) {
-        case 'JPCS':
-            color = "#4CAF50"; // Green
-            break;
-        case 'CSC':
-            color = "#000000"; // Black
-            break;
-        case 'CODE-TG':
-            color = "#800000"; // Maroon
-            break;
-        case 'YMF':
-            color = "#00008b"; // Dark Blue
-            break;
-        case 'HMSO':
-            color = "#cba328"; // Gold
-            break;
-        case 'PASOA':
-            color = "#e6cc00"; // Yellow
-            break;
-        default:
-            color = "#000000"; // Default to Black
+        // Set color based on organization
+        switch (organization) {
+            case 'JPCS':
+                color = "#4CAF50"; // Green
+                break;
+            case 'CSC':
+                color = "#000000"; // Black
+                break;
+            case 'CODE-TG':
+                color = "#800000"; // Maroon
+                break;
+            case 'YMF':
+                color = "#00008b"; // Dark Blue
+                break;
+            case 'HMSO':
+                color = "#cba328"; // Gold
+                break;
+            case 'PASOA':
+                color = "#e6cc00"; // Yellow
+                break;
+            default:
+                color = "#000000"; // Default to Black
+        }
+
+        var chart = new CanvasJS.Chart(containerId, {
+            animationEnabled: true,
+            title:{
+                text: "Vote Counts"
+            },
+            axisY: {
+                title: "Candidates",
+                includeZero: true,
+                labelFormatter: function (e) {
+                    return Math.round(e.value);
+                }
+            },
+            axisX: {
+                title: "Vote Count",
+                includeZero: true
+            },
+            data: [{
+                type: "bar", // Change type to "bar"
+                dataPoints: dataPoints,
+                color: color // Set the color based on organization
+            }]
+        });
+        chart.render();
     }
-
-    var chart = new CanvasJS.Chart(containerId, {
-        animationEnabled: true,
-        title:{
-            text: "Vote Counts"
-        },
-        axisY: {
-            title: "Candidates",
-            includeZero: true,
-            labelFormatter: function (e) {
-                return Math.round(e.value);
-            }
-        },
-        axisX: {
-            title: "Vote Count",
-            includeZero: true
-        },
-        data: [{
-            type: "bar", // Change type to "bar"
-            dataPoints: dataPoints,
-            color: color // Set the color based on organization
-        }]
-    });
-    chart.render();
-}
-
-
 
     // Function to fetch updated data from the server
     function updateData() {
@@ -182,14 +180,14 @@ function generateBarGraph(dataPoints, containerId, organization) {
             dataType: 'json',
             data: {organization: $('#organization').val()}, // Pass the selected organization to the server
             success: function(response) {
-                // Update president bar graph
-                generateBarGraph(response.presidentData, "presidentGraph");
+                // Update president bar graph with color based on organization
+                generateBarGraph(response.presidentData, "presidentGraph", $('#organization').val());
 
-                // Update vice president bar graph
-                generateBarGraph(response.vicePresidentData, "vicePresidentGraph");
+                // Update vice president bar graph with color based on organization
+                generateBarGraph(response.vicePresidentData, "vicePresidentGraph", $('#organization').val());
 
-                // Update secretary bar graph
-                generateBarGraph(response.secretaryData, "secretaryGraph");
+                // Update secretary bar graph with color based on organization
+                generateBarGraph(response.secretaryData, "secretaryGraph", $('#organization').val());
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data: ' + error);
