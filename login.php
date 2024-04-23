@@ -2,7 +2,9 @@
 session_start();
 
 include 'includes/conn.php';
-
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<meta name="google-signin-client_id" content="521331514441-7th1b1gp40k3ueueosk160thurbugqfn.apps.googleusercontent.com">
+<div class="g-signin2" data-onsuccess="onSignIn"></div>
 if (isset($_POST['login'])) {
     $voter = $_POST['voter'];
     $password = $_POST['password'];
