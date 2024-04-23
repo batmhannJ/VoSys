@@ -1,5 +1,5 @@
 <?php include 'includes/session.php'; ?>
-<?php include 'includes/header.php'; ?>
+<?php include 'includes/header_csc.php'; ?>
 <body class="hold-transition skin-black sidebar-mini">
 <div class="wrapper">
 
