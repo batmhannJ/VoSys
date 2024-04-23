@@ -56,6 +56,9 @@
         color: #fff;
         background-color: darkgreen;
       }
+      .skin-green .sidebar a {
+          color: #000;
+      }
       .bold{
         font-weight:bold;
       }
