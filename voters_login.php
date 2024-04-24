@@ -76,7 +76,7 @@ main {
 }
 
 form {
-  max-width: 260px;
+  max-width: 300px;
   width: 100%;
   margin: 0 auto;
   height: 100%;
@@ -106,7 +106,7 @@ form.sign-up-form {
 
 .logo h4 {
   font-size: 1.1rem;
-  margin-top: -9px;
+  margin-top: -1px;
   letter-spacing: -0.5px;
   color: #151111;
 }
@@ -388,9 +388,6 @@ main.sign-up-mode .carousel {
     transition: transform 0.8s ease-in-out, opacity 0.45s linear;
   }
 
-  .heading {
-    margin: 2rem 0;
-  }
 
   form.sign-up-form {
     transform: translateX(100%);
@@ -405,11 +402,11 @@ main.sign-up-mode .carousel {
   }
 
   .carousel {
-    position: revert;
+    position: fixed;
     height: auto;
     width: 200%;
     padding: 3rem 2rem;
-    display: flex;
+    display: none;
   }
 
   .images-wrapper {
@@ -448,7 +445,7 @@ main.sign-up-mode .carousel {
   }
 
   form {
-    padding: 1rem 2rem 1.5rem;
+    padding: 1rem 1rem 1.5rem;
   }
 }
 </style>
@@ -461,11 +458,11 @@ main.sign-up-mode .carousel {
             <form action="login.php" method="post" autocomplete="off" class="sign-in-form">
               <div class="logo">
                 <img src="./images/olshco.png" alt="easyclass" />
-                <h4 style="font-size:30px; color: maroon;"><b>VOSYS</b></h4>
+                <h4 style="font-size:28px; color: maroon;"><b>VOSYS - OLSHCO</b></h4>
               </div>
 
               <div class="heading">
-                <h2>OLSHCO Online Voting System</h2>
+                <center><h2>Voters Login Page</h2></center>
                 <hr>
               </div>
 
@@ -504,19 +501,18 @@ main.sign-up-mode .carousel {
             </div>
 
                 <input type="submit" name="login" value="Sign In" class="sign-btn" / style="font-size:15px;">
-                
+                        <?php
+                if (isset($_SESSION['error'])) {
+                    echo "
+                        <div class='callout callout-danger text-center mt20' style='width: 300px; margin: 0 auto;'>
+                            <p>" . $_SESSION['error'] . "</p> 
+                        </div>
+                    ";
+                    unset($_SESSION['error']);
+                }
+                ?>
               </div>
             </form>
-            <?php
-        if (isset($_SESSION['error'])) {
-            echo "
-                <div class='callout callout-danger text-center mt20'>
-                    <p>" . $_SESSION['error'] . "</p> 
-                </div>
-            ";
-            unset($_SESSION['error']);
-        }
-        ?>
           </div>
 
           <div class="carousel">
