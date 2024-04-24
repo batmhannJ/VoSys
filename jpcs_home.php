@@ -318,7 +318,7 @@ $(function(){
 
 
 
-        $('#preview').click(function(e){
+        $('#preview_jpcs').click(function(e){
             e.preventDefault();
             var form = $('#ballotForm').serialize();
             if(form == ''){
