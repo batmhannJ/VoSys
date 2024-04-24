@@ -63,9 +63,9 @@
                   <?php
                     $sql = "SELECT *, candidates.id AS canid 
                     FROM candidates 
-                    LEFT JOIN positions ON positions.id = candidates.position_id 
-                    WHERE candidates.election_id = 1 
-                    ORDER BY positions.priority ASC";
+                    LEFT JOIN categories ON categories.id = candidates.category_id 
+                    WHERE candidates.election_id = 20 
+                    ORDER BY categories.priority ASC";
 
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
@@ -73,7 +73,7 @@
                       echo "
                         <tr>
                           <td class='hidden'></td>
-                          <td>".$row['description']."</td>
+                          <td>".$row['name']."</td>
                           <td>
                             <img src='".$image."' width='30px' height='30px'>
                             <a href='#edit_photo' data-toggle='modal' class='pull-right photo' data-id='".$row['canid']."'><span class='fa fa-edit'></span></a>
@@ -135,14 +135,14 @@ $(function(){
 function getRow(id){
   $.ajax({
     type: 'POST',
-    url: 'candidates_row.php',
+    url: 'candidates_csc_row.php',
     data: {id:id},
     dataType: 'json',
     success: function(response){
       $('.id').val(response.canid);
       $('#edit_firstname').val(response.firstname);
       $('#edit_lastname').val(response.lastname);
-      $('#posselect').val(response.position_id).html(response.description);      
+      $('#posselect').html(response.name);
       $('#edit_platform').val(response.platform);
       $('.fullname').html(response.firstname+' '+response.lastname);
       $('#desc').html(response.platform);
