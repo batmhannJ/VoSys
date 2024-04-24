@@ -5,7 +5,7 @@
 
 	$output = array('error'=>false,'list'=>'');
 
-	$sql = "SELECT * FROM categories WHERE election_id = 1";
+	$sql = "SELECT * FROM categories WHERE election_id = 20";
 	$query = $conn->query($sql);
 
 	while($row = $query->fetch_assoc()){
