@@ -117,7 +117,7 @@
           <div class="box">
             <div class="box-header with-border">
               <h4>Upload Voters</h4>
-            <form action="upload_jpcs.php" method="POST" enctype="multipart/form-data">
+            <form action="upload_csc.php" method="POST" enctype="multipart/form-data">
             <input type="file" accept=".xls,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="import_file" class="form-control" />
             <button type="submit" name="save_excel_data" class="btn btn-primary mt-3">Import</button>
           </form>
