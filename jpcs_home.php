@@ -32,7 +32,7 @@ if(!is_active_election($conn)){
 	      <!-- Main content -->
 	      <section class="content">
 	      	<h1 class="page-header text-center title">
-	      		<img src="images/csc.jpg" alt="CSC Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
+	      		<img src="images/jpcs.jpg" alt="CSC Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
 	      		<b>JUNIOR PHILIPPINE COMPUTER SOCIETY ELECTION</b></h1>
 	        <div class="row">
 	        	<div class="col-sm-10 col-sm-offset-1">
@@ -167,7 +167,7 @@ if(!is_active_election($conn)){
                                         <div class="row">
                                             <div class="col-xs-12">
                                                 <div class="box box-solid" id="'.$row['id'].'">
-                                                    <div class="box-header with-border"style="background-color: black; color: #fff;"> 
+                                                    <div class="box-header with-border"style="background-color: darkgreen; color: #fff;"> 
                                                         <h3 class="box-title"><b>'.$row['name'].'</b></h3>
                                                     </div>
                                                     <div class="box-body">
