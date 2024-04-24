@@ -167,7 +167,7 @@ if(!is_active_election($conn)){
                                         <div class="row">
                                             <div class="col-xs-12">
                                                 <div class="box box-solid" id="'.$row['id'].'">
-                                                    <div class="box-header with-border"style"background-color: black; color: #fff>
+                                                    <div class="box-header with-border"style="background-color: black; color: #fff>
                                                         <h3 class="box-title"><b>'.$row['name'].'</b></h3>
                                                     </div>
                                                     <div class="box-body">
