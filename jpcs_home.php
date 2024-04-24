@@ -15,16 +15,16 @@ function is_active_election($conn){
 }
 
 if(!is_active_election($conn)){
-	header("location: no_active_election_home.php");
+	header("location: no_election_jpcs.php");
 	exit();
 }
 
 ?>
 
-<body class="hold-transition skin-black layout-top-nav">
+<body class="hold-transition skin-green layout-top-nav">
 <div class="wrapper">
 
-	<?php include 'includes/navbar_code.php'; ?>
+	<?php include 'includes/navbar_jpcs.php'; ?>
 	 
 	  <div class="content-wrapper">
 	    <div class="container">
@@ -33,7 +33,7 @@ if(!is_active_election($conn)){
 	      <section class="content">
 	      	<h1 class="page-header text-center title">
 	      		<img src="images/csc.jpg" alt="CSC Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
-	      		<b>CSC - COLLEGE STUDENT COUNCIL ELECTIONS</b></h1>
+	      		<b>JUNIOR PHILIPPINE COMPUTER SOCIETY ELECTION</b></h1>
 	        <div class="row">
 	        	<div class="col-sm-10 col-sm-offset-1">
 	        		<?php
