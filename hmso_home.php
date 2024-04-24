@@ -122,7 +122,7 @@
                                         <div class="row">
                                             <div class="col-xs-12">
                                                 <div class="box box-solid" id="'.$row['id'].'">
-                                                <div class="box-header with-border"style="background-color: yellow; color: #cba328;"> 
+                                                <div class="box-header with-border"style="background-color: #cba328; color: #fff;"> 
                                                         <h3 class="box-title"><b>'.$row['description'].'</b></h3>
                                                     </div>
                                                     <div class="box-body">
