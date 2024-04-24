@@ -504,7 +504,7 @@ main.sign-up-mode .carousel {
                 </div>
             </div>
 
-                <input type="submit" name="login" value="Sign In" class="sign-btn" / style="font-size:15px;">
+                <input type="submit" name="login" value="Sign In" class="sign-btn" style="font-size:15px;">
                         <?php
                 if (isset($_SESSION['error'])) {
                     echo "
