@@ -32,6 +32,20 @@
 		$_SESSION['error'] = 'Fill up edit form first';
 	}
 
-	header('location: voters.php');
+	$current_url = $_SERVER['REQUEST_URI'];
+
+	if (strpos($current_url, '/admin/voters_csc.php') !== false) {
+		// Redirect to voters_csc.php
+		header('Location: https://vosys.org/admin/voters_csc.php');
+		exit();
+	} elseif (strpos($current_url, '/admin/voters_jpcs.php') !== false) {
+		// Redirect to voters_jpcs.php
+		header('Location: https://vosys.org/admin/voters_jpcs.php');
+		exit();
+	} else {
+		// Default redirection
+		header('Location: https://vosys.org/admin/voters.php');
+		exit();
+	}
 
 ?>
