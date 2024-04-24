@@ -37,54 +37,55 @@ if (isset($_POST['login'])) {
             // Check if reCAPTCHA verification was successful
             if ($responseData && $responseData['success']) {
                 // reCAPTCHA verification passed, continue with login logic
-                
-                $sql = "SELECT * FROM admin WHERE username = '$username'";
-                $query = $conn->query($sql);
 
-                if ($query->num_rows < 1) {
+                // Prepare and execute a parameterized query to fetch admin information
+                $sql = "SELECT * FROM admin WHERE username = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("s", $username);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
+                if ($result->num_rows < 1) {
                     $_SESSION['error'] = 'Cannot find account with the username';
                 } else {
-                    $row = $query->fetch_assoc();
+                    $row = $result->fetch_assoc();
                     if (password_verify($password, $row['password'])) {
                         $_SESSION['admin'] = $row['id'];
                         // Redirect to respective landing pages
-                        if ($username == 'OSAadmin') {
-                            header('location: home.php');
-                            exit();
-                        } elseif ($username == 'JPCSadmin') {
-                            header('location: home_jpcs.php');
-                            exit();
-                        } elseif ($username == 'CSCadmin') {
-                            header('location: home_csc.php');
-                            exit();
-                        } else {
-                            // Redirect to a default landing page if no specific page is defined for the admin
-                            header('location: index.php');
+                        switch ($username) {
+                            case 'OSAadmin':
+                                header('location: home.php');
+                                exit();
+                            case 'JPCSadmin':
+                                header('location: home_jpcs.php');
+                                exit();
+                            case 'CSCadmin':
+                                header('location: home_csc.php');
+                                exit();
+                            default:
+                                // Redirect to a default landing page if no specific page is defined for the admin
+                                header('location: index.php');
+                                exit();
                         }
-                        exit(); // Stop further execution after redirection
                     } else {
                         $_SESSION['error'] = 'Incorrect password';
                     }
                 }
+                $stmt->close();
             } else {
                 // reCAPTCHA verification failed, store error message and redirect to index.php
                 $_SESSION['error'] = 'reCAPTCHA verification failed. Please try again.';
-                header('location: index.php');
-                exit();
             }
         } else {
             // Unable to contact Google's reCAPTCHA verification endpoint
             $_SESSION['error'] = 'Unable to verify reCAPTCHA. Please try again later.';
-            header('location: index.php');
-            exit();
         }
     } else {
         // reCAPTCHA response not found, store error message and redirect to index.php
         $_SESSION['error'] = 'reCAPTCHA response not found. Please complete the reCAPTCHA challenge.';
-        header('location: index.php');
-        exit();
     }
 }
+
 // Redirect to the login page in case of any errors
 header('location: index.php');
 exit();

@@ -448,10 +448,6 @@ main.sign-up-mode .carousel {
     padding: 1rem 1rem 1.5rem;
   }
 }
-
-
-
-
 </style>
 
 <body>
