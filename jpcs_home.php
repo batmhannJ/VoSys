@@ -343,7 +343,7 @@ if(!is_active_election($conn)){
             else{
                 $.ajax({
                     type: 'POST',
-                    url: 'preview.php',
+                    url: 'preview_jpcs.php',
                     data: form,
                     dataType: 'json',
                     success: function(response){
