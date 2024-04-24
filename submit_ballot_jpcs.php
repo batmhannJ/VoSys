@@ -8,18 +8,18 @@
 		}
 		else{
 			$_SESSION['post'] = $_POST;
-			$sql = "SELECT * FROM positions";
+			$sql = "SELECT * FROM categories WHERE election_id = 1";
 			$query = $conn->query($sql);
 			$error = false;
 			$sql_array = array();
 			while($row = $query->fetch_assoc()){
-				$position = slugify($row['description']);
+				$position = slugify($row['name']);
 				$pos_id = $row['id'];
 				if(isset($_POST[$position])){
 					if($row['max_vote'] > 1){
 						if(count($_POST[$position]) > $row['max_vote']){
 							$error = true;
-							$_SESSION['error'][] = 'You can only choose '.$row['max_vote'].' candidates for '.$row['description'];
+							$_SESSION['error'][] = 'You can only choose '.$row['max_vote'].' candidates for '.$row['name'];
 						}
 						else{
 							foreach($_POST[$position] as $key => $values){
