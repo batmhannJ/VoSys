@@ -109,7 +109,7 @@ $(function(){
 function fetch(){
   $.ajax({
     type: 'POST',
-    url: 'ballot_fetch.php',
+    url: 'ballot_fetch_csc.php',
     dataType: 'json',
     success: function(response){
       $('#content').html(response).iCheck({checkboxClass: 'icheckbox_flat-green',radioClass: 'iradio_flat-green'});
