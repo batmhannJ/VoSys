@@ -1,10 +1,10 @@
 <?php
 
-include 'includes/session.php'; 
-include 'includes/header_jpcs.php'; 
+include 'includes/session.php';
+include 'includes/header_jpcs.php';
 
 function is_active_election($conn){
-	$sql = "SELECT * FROM election WHERE title = 'JPCS - Junior Philippine Computer Society Election' && status = 1";
+	$sql = "SELECT * FROM election WHERE title = 'Junior Philippine Computer Society' && status = 1";
 	$result = $conn->query($sql);
 
 	if($result->num_rows > 0){
@@ -15,125 +15,115 @@ function is_active_election($conn){
 }
 
 if(!is_active_election($conn)){
-	header("location: no_election_jpcs.php");
+	header("location: no_active_election_home.php");
 	exit();
 }
 
 ?>
 
-<body class="hold-transition skin-green layout-top-nav">
+<body class="hold-transition skin-black layout-top-nav">
 <div class="wrapper">
 
-	<?php include 'includes/navbar_jpcs.php'; ?>
+	<?php include 'includes/navbar_code.php'; ?>
 	 
 	  <div class="content-wrapper">
 	    <div class="container">
-	    	<?php
-				$sql = "SELECT title FROM election";
-				$result = $conn->query($sql);
 
-				if ($result->num_rows > 0) {
-    				$row = $result->fetch_assoc();
-    				$pageTitle = $row["title"];
-				} else {
-    				$pageTitle = "Default Title";
-				}
-				?>
 	      <!-- Main content -->
 	      <section class="content">
 	      	<h1 class="page-header text-center title">
-<img src="images/jpcs.jpg" alt="CSC Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
-	      		<b><?php echo $pageTitle; ?></b>
-	      	</h1>
+	      		<img src="images/csc.jpg" alt="CSC Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
+	      		<b>CSC - COLLEGE STUDENT COUNCIL ELECTIONS</b></h1>
 	        <div class="row">
 	        	<div class="col-sm-10 col-sm-offset-1">
 	        		<?php
-                        if(isset($_SESSION['error'])){
-                            ?>
-                            <div class="alert alert-danger alert-dismissible" id="error-alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                <ul>
-                                    <?php
-                                        foreach($_SESSION['error'] as $error){
-                                            echo "<li>".$error."</li>";
-                                        }
-                                    ?>
-                                </ul>
-                            </div>
-                            <?php
-                            unset($_SESSION['error']);
-                        }
-                        if(isset($_SESSION['success'])){
-                            echo "
-                                <div class='alert alert-success alert-dismissible' id='success-alert'>
-                                    <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-                                    <h4><i class='icon fa fa-check'></i> Success!</h4>
-                                    ".$_SESSION['success']."
-                                </div>
-                            ";
-                            unset($_SESSION['success']);
-                        }
-                    ?>
+					    if(isset($_SESSION['error'])){
+					        ?>
+					        <div class="alert alert-danger alert-dismissible" id="error-alert">
+					            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					            <ul>
+					                <?php
+					                    foreach($_SESSION['error'] as $error){
+					                        echo "<li>".$error."</li>";
+					                    }
+					                ?>
+					            </ul>
+					        </div>
+					        <?php
+					        unset($_SESSION['error']);
+					    }
+					    if(isset($_SESSION['success'])){
+					        echo "
+					            <div class='alert alert-success alert-dismissible' id='success-alert'>
+					                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+					                <h4><i class='icon fa fa-check'></i> Success!</h4>
+					                ".$_SESSION['success']."
+					            </div>
+					        ";
+					        unset($_SESSION['success']);
+					    }
+					?>
 
-                    <div class="alert alert-danger alert-dismissible" id="alert" style="display:none;">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        <span class="message"></span>
-                    </div>
+					<div class="alert alert-danger alert-dismissible" id="alert" style="display:none;">
+					    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					    <span class="message"></span>
+					</div>
 
-                    <script>
-                        // Function to hide alerts after 3 seconds
-                        function hideAlerts() {
-                            setTimeout(function() {
-                                document.getElementById('error-alert').style.display = 'none';
-                                document.getElementById('success-alert').style.display = 'none';
-                                document.getElementById('alert').style.display = 'none';
-                            }, 3000); // 3 seconds
-                        }
+			        <script>
+					    // Function to hide alerts after 3 seconds
+					    function hideAlerts() {
+					        setTimeout(function() {
+					            document.getElementById('error-alert').style.display = 'none';
+					            document.getElementById('success-alert').style.display = 'none';
+					            document.getElementById('alert').style.display = 'none';
+					        }, 3000); // 3 seconds
+					    }
 
-                        // Call the function when the page is loaded
-                        window.onload = function() {
-                            hideAlerts();
-                        };
-                    </script>
+					    // Call the function when the page is loaded
+					    window.onload = function() {
+					        hideAlerts();
+					    };
+					</script>
 
-                    <?php
-                        $sql = "SELECT * FROM votes WHERE voters_id = '".$voter['id']."'";
-                        $vquery = $conn->query($sql);
-                        if($vquery->num_rows > 0){
-                            ?>
-                            <div class="text-center">
-                                <h3>You have already voted for this election.</h3>
-                                <a href="#view" data-toggle="modal" class="btn btn-flat btn-primary btn-lg">View Ballot</a>
-                            </div>
-                            <?php
-                        }
-                        else{
-                            ?>
-                            <!--countdown-->
-                            <section class="discover section" id="discover">      
-                                <!--<center><h4 id="electionTitle" class="heading">Remaining time to vote</h4></center>-->
-                                <div class="timer">
-                                    <!--<div class="sub_timer">
-                                        <h1 id="day" class="digit">00</h1>
-                                        <p class="digit_name">Days</p>
-                                    </div>-->
-                                    <div class="sub_timer">
-                                        <h1 id="hour" class="digit">00</h1>
-                                        <p class="digit_name">Hours</p>
-                                    </div>
-                                    <div class="sub_timer">
-                                        <h1 id="min" class="digit">00</h1>
-                                        <p class="digit_name">Minutes</p>
-                                    </div>
-                                    <div class="sub_timer">
-                                        <h1 id="sec" class="digit">00</h1>
-                                        <p class="digit_name">Seconds</p>
-                                    </div>
-                                </div>
-                            </section>
- 					        <!--end-->
-                            <!-- Voting Ballot -->
-                            <form method="POST" id="ballotForm" action="submit_ballot_jpcs.php">
+				    <?php
+				    	$sql = "SELECT * FROM votes WHERE voters_id = '".$voter['id']."'";
+				    	$vquery = $conn->query($sql);
+				    	if($vquery->num_rows > 0){
+				    		?>
+				    		<div class="text-center">
+					    		<h3>You have already voted for this election.</h3>
+					    		<a href="#view" data-toggle="modal" class="btn btn-flat btn-primary btn-lg">View Ballot</a>
+					    	</div>
+				    		<?php
+				    	}
+				    	else{
+				    		?>
+ 					<!--countdown-->
+ 						<section class="discover section" id="discover">      
+ 							<!--<center><h4 id="electionTitle" class="heading">Remaining time to vote</h4></center>-->
+					        <div class="timer">
+					            <!--<div class="sub_timer">
+					                <h1 id="day" class="digit">00</h1>
+					                <p class="digit_name">Days</p>
+					            </div>-->
+					            <div class="sub_timer">
+					                <h1 id="hour" class="digit">00</h1>
+					                <p class="digit_name">Hours</p>
+					            </div>
+					            <div class="sub_timer">
+					                <h1 id="min" class="digit">00</h1>
+					                <p class="digit_name">Minutes</p>
+					            </div>
+					            <div class="sub_timer">
+					                <h1 id="sec" class="digit">00</h1>
+					                <p class="digit_name">Seconds</p>
+					             </div>
+					        </div>
+					    </section>
+ 					<!--end-->
+				    
+			    			<!-- Voting Ballot -->
+						    <form method="POST" id="ballotForm" action="submit_ballot_jpcs.php">
                                 <?php
                                 include 'includes/slugify.php';
 
@@ -162,7 +152,7 @@ if(!is_active_election($conn)){
                                                 }
                                             }
                                         }
-                                        $input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : '<input type="radio" class="flat-red '.$slug.'" name="'.slugify($row['description']).'" value="'.$crow['id'].'" '.$checked.'>';
+                                        $input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : '<input type="radio" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
                                         $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
                                         $candidate .= '
                                             <li>
@@ -177,13 +167,13 @@ if(!is_active_election($conn)){
                                         <div class="row">
                                             <div class="col-xs-12">
                                                 <div class="box box-solid" id="'.$row['id'].'">
-                                                <div class="box-header with-border"style="background-color: darkgreen; color: #fff;"> 
+                                                    <div class="box-header with-border"style="background-color: black; color: #fff;"> 
                                                         <h3 class="box-title"><b>'.$row['name'].'</b></h3>
                                                     </div>
                                                     <div class="box-body">
                                                         <p>'.$instruct.'
                                                             <span class="pull-right">
-                                                                <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="'.slugify($row['description']).'"><i class="fa fa-refresh"></i> Reset</button>
+                                                                <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="'.slugify($row['name']).'"><i class="fa fa-refresh"></i> Reset</button>
                                                             </span>
                                                         </p>
                                                         <div id="candidate_list">
@@ -219,7 +209,7 @@ if(!is_active_election($conn)){
                                             <p>Are you sure you want to submit your vote?</p>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-success btn-flat" id="preview"><i class="fa fa-file-text"></i> Preview</button> 
+                                            <button type="button" class="btn btn-success btn-flat" id="preview_jpcs"><i class="fa fa-file-text"></i> Preview</button> 
                                             <button type="submit" class="btn btn-primary" id="submitBtn" name="vote_jpcs">Yes, Submit</button>
                                         </div>
                                     </div>
@@ -296,7 +286,7 @@ if(!is_active_election($conn)){
         xhr.send();
     }
     fetchEndTime();
-    $(function(){
+$(function(){
         $('.content').iCheck({
             checkboxClass: 'icheckbox_flat-green',
             radioClass: 'iradio_flat-green'
@@ -375,7 +365,7 @@ if(!is_active_election($conn)){
     });
 </script>
 <style>
-.timer {
+ .timer {
     position: fixed;
     top: 0;
     right: 0;
@@ -385,10 +375,12 @@ if(!is_active_election($conn)){
     justify-content: center;
     margin-top: 570px;
     margin-right: 12px; /* Adjust margin as needed */
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     
 }
-.sub_timer {
+
+
+  .sub_timer {
     width: 90px;
     background: rgba(255, 255, 255, 0.19);
     backdrop-filter: blur(20px);
@@ -396,22 +388,25 @@ if(!is_active_election($conn)){
     overflow: hidden;
     height: 100px;
     margin-left: 10px;
-    margin-bottom: 50px;
-}
-.digit {
+  }
+
+  .digit {
     color: black;
     font-weight: lighter;
     font-size: 30px;
     text-align: center;
     /*padding: 3.5rem 0;*/
-}
-.digit_name {
+  }
+
+  .digit_name {
     color: #000;
     background: lightgrey;
     text-align: center;
     /*padding: 0.6rem 0;*/
     font-size: 15px;
-}
+  }
+
+
 </style>
 </body>
 </html>
