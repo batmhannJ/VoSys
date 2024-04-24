@@ -71,6 +71,7 @@
                     LEFT JOIN candidates ON candidates.id=votes.candidate_id 
                     LEFT JOIN voters AS voters1 ON voters1.id=votes.voters_id 
                     LEFT JOIN voters AS voters2 ON voters2.organization=votes.organization 
+                    WHERE voters1.organization = 'JPCS'
                     GROUP BY votes.id
                     ORDER BY positions.priority ASC";
                     $query = $conn->query($sql);
