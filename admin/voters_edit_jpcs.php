@@ -32,6 +32,6 @@
 		$_SESSION['error'] = 'Fill up edit form first';
 	}
 
-	header('location: voters.php');
+	header('location: voters_jpcs.php');
 
 ?>
