@@ -99,6 +99,7 @@
                   <th>Email</th>
                   <?php endif; ?>
                   <th>Tools</th>
+
                 </thead>
                 <tbody>
                   <?php
@@ -126,6 +127,7 @@
                             <td>".$row['organization']."</td>
                             <td>
                               <button class='btn btn-success btn-sm restore btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#confirmationModal'><i class='fa fa-reply'></i> Restore</button>
+                              <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."' data-user='voters'><i class='fa fa-trash'></i> Delete</button>
                             </td>
                           </tr>
                         ";
@@ -145,6 +147,7 @@
                                   <td>".$row['email']."</td>
                                   <td>
                                       <button class='btn btn-success btn-sm restore-admin btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#adminConfirmationModal'><i class='fa fa-reply'></i> Restore</button>
+                                    <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."' data-user='admin'><i class='fa fa-trash'></i> Delete</button>
                                   </td>
                               </tr>
                           ";
@@ -165,6 +168,26 @@
   <?php include 'includes/voters_modal.php'; ?>
   <?php include 'includes/restore_modal.php'; ?>
   <?php include 'includes/restore_admin_modal.php'; ?>
+
+<!-- Confirmation Modal for Delete -->
+<div id="deleteConfirmationModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Confirmation</h4>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this item?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </div>
 <?php include 'includes/scripts.php'; ?>
 <script>
@@ -202,6 +225,32 @@ $(function(){
     var id = $(this).data('id');
     restoreAdmin(id);
   });
+
+  $(document).on('click', '.delete', function(e) {
+    e.preventDefault();
+    var id = $(this).data('id');
+    var user = $(this).data('user');
+    deleteItem(id, user);
+});
+
+function deleteItem(id, user) {
+    $('#deleteConfirmationModal').modal('show'); // Show confirmation modal
+
+    // When the "Delete" button inside the modal is clicked, perform deletion
+    $('#confirmDelete').on('click', function() {
+        $.ajax({
+            type: "POST",
+            url: "delete_item.php",
+            data: { id: id, user: user },
+            success: function(response) {
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+}
 
   function restoreVoter(id) {
     $.ajax({
