@@ -121,14 +121,14 @@
                 <div class="form-group">
                         <label for="edit_starttime" class="col-sm-3 control-label">Start Time</label>
                         <div class="col-sm-9">
-                            <input type="datetime-local" class="form-control" id="edit_starttime" name="starttime" required>
+                            <input type="datetime-local" class="form-control" id="edit_starttime" name="starttime" required min="<?php echo date('Y-m-d\TH:i'); ?>">
                         </div>
                     </div>
                 <!-- Add end time input -->
                     <div class="form-group">
                         <label for="edit_endtime" class="col-sm-3 control-label">End Time</label>
                         <div class="col-sm-9">
-                            <input type="datetime-local" class="form-control" id="edit_endtime" name="endtime" required>
+                            <input type="datetime-local" class="form-control" id="edit_endtime" name="endtime" required min="<?php echo date('Y-m-d\TH:i'); ?>">
                         </div>
                     </div>
                 <div class="form-group">
