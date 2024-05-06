@@ -519,7 +519,8 @@ main.sign-up-mode .carousel {
             </div>
 
                 <input type="submit" name="login" value="Sign In" class="sign-btn" style="font-size:15px;">
-                <input type="submit" name="login" value="Back to Homepage" class="back-btn" style="font-size:15px;">
+                <input type="button" value="Back to Homepage" class="back-btn" style="font-size:15px;" onclick="window.location.href = 'index.html';">
+
                         <?php
                 if (isset($_SESSION['error'])) {
                     echo "
