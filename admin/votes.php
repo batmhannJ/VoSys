@@ -96,7 +96,7 @@
           <div class="box">
             <div class="box-header with-border">
               <h4>Votes from CSC</h4>
-              <a href="#reset" data-toggle="modal" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-refresh"></i> Reset</a>
+              <a href="#reset_csc" data-toggle="modal" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-refresh"></i> Reset</a>
             </div>
             <div class="box-body">
               <table id="example1" class="table table-bordered">
