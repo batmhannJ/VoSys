@@ -219,8 +219,8 @@
 
 /* Style for the candidate image container */
 .image-container {
-    width: 100px;
-    height: 100px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     overflow: hidden;
     background-color: #800000; /* Maroon background color */
