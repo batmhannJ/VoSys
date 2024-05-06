@@ -203,17 +203,18 @@
     overflow: hidden; /* Iwasang maglapat ang teksto sa mga imahe */
 }
 
+/* Bagong istilo para sa container ng platform button */
+.platform-container {
+    margin-top: 5px; /* Itaas ang button mula sa pangalan ng kandidato */
+}
+
 /* Bagong istilo para sa pangalan ng kandidato */
 .cname {
     margin: 0;
     font-weight: bold;
     font-size: 18px;
     margin-bottom: 5px; /* Dagdag na puwang sa ibaba ng pangalan */
-}
-
-/* Bagong istilo para sa container ng platform button */
-.platform-container {
-    margin-top: 5px; /* Itaas ang button mula sa pangalan ng kandidato */
+    margin-left: 10px;
 }
 
 /* Bagong istilo para sa platform button */
@@ -230,6 +231,7 @@
 .platform:hover {
     background-color: #0056b3;
 }
+
 
 
 
