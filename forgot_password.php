@@ -15,32 +15,37 @@ if (isset($_POST['resetPass'])) {
     $result = $stmt->get_result(); // Get result
 
     if ($result->num_rows > 0) {
-        // Generate a unique token
-        $token = bin2hex(random_bytes(32));
+        // Generate a unique OTP
+        $otp = rand(100000, 999999);
 
-        // Store the token in the database along with the user's email and timestamp
-        $stmt = $conn->prepare("INSERT INTO password_reset (email, token, created_at) VALUES (?, ?, NOW())");
-        $stmt->bind_param("ss", $email, $token); // Bind parameters
+        // Store the OTP in the database along with the user's email and timestamp
+        $stmt = $conn->prepare("INSERT INTO otp_verification (email, otp, created_at) VALUES (?, ?, NOW())");
+        $stmt->bind_param("si", $email, $otp); // Bind parameters
         if ($stmt->execute()) {
-            // Send password reset email
-            $reset_link = "http://vosys.org/change_pass.php?token=$token";
-            $subject = "Password Reset";
-            $message = "Click the following link to reset your password: $reset_link";
+            // Send OTP via email or SMS
+            $subject = "Password Reset OTP";
+            $message = "Your OTP for password reset is: $otp";
             if (mail($email, $subject, $message)) {
-                $_SESSION['success'] = "Password reset link has been sent to your email.";
-                // Redirect to success page or display a message
-                header("Location: password_reset_success.php");
+                $_SESSION['success'] = "An OTP has been sent to your email. Please check your inbox.";
+                // Redirect to OTP verification page or display a message
+                header("Location: otp_verification.php?email=$email");
                 exit();
             } else {
-                $_SESSION['error'] = "Failed to send password reset email. Please try again.";
+                $_SESSION['error'] = "Failed to send OTP. Please try again.";
             }
         } else {
-            $_SESSION['error'] = "Failed to store password reset information. Please try again.";
+            $_SESSION['error'] = "Failed to generate OTP. Please try again.";
         }
     } else {
         $_SESSION['error'] = "Email not found. Please try again.";
     }
 }
+
+// Redirect to the password reset form if accessed directly
+header("Location: password_reset_form.php");
+exit();
+?>
+
 
 // Include your header file
 include 'includes/header.php';
@@ -68,6 +73,15 @@ include 'includes/header.php';
                 <div class="form-group has-feedback">
                     <input type="email" class="form-control" name="email" placeholder="Email" required>
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                </div>
+                <div class="form-group has feedback">
+                    <label for="otp" class="col-sm-3 control-label">OTP</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter OTP" required>
+                    </div>
+                    <div class="col-sm-3">
+                        <button type="button" class="btn btn-primary" id="sendOTP">Send OTP</button>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
