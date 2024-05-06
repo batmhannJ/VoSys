@@ -62,7 +62,7 @@
                 </thead>
                 <tbody>
                   <?php
-                    $sql = "SELECT * FROM admin WHERE archived = FALSE";
+                    $sql = "SELECT * FROM admin WHERE archived = FALSE AND organization != 'OSA'";
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
                       $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
