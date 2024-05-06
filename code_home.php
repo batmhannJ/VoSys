@@ -189,32 +189,34 @@
 /* Style for candidate information */
 .candidate-info {
     display: flex;
-    align-items: center;
-    width: calc(100% - 130px); /* Adjust width to accommodate image and button */
+    align-items: flex-start; /* Adjust alignment */
 }
 
-/* Style for candidate image */
-.clist {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-right: 10px;
+/* Bagong istilo para sa mga imahe */
+.cimage {
+    float: left; /* Ilipat ang imahe sa kaliwa */
+    margin-right: 20px; /* Dagdag na puwang sa kanan ng imahe */
 }
 
-/* Style for candidate name */
+/* Bagong istilo para sa teksto */
+.ctext {
+    overflow: hidden; /* Iwasang maglapat ang teksto sa mga imahe */
+}
+
+/* Bagong istilo para sa pangalan ng kandidato */
 .cname {
     margin: 0;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 18px;
+    margin-bottom: 5px; /* Dagdag na puwang sa ibaba ng pangalan */
 }
 
-/* Style for platform button container */
+/* Bagong istilo para sa container ng platform button */
 .platform-container {
-    margin-top: 5px; /* Adjust margin from candidate name */
+    margin-top: 5px; /* Itaas ang button mula sa pangalan ng kandidato */
 }
 
-/* Style for platform button */
+/* Bagong istilo para sa platform button */
 .platform {
     background-color: #007bff;
     color: #fff;
@@ -228,6 +230,7 @@
 .platform:hover {
     background-color: #0056b3;
 }
+
 
 
 /* Style for candidate image */
