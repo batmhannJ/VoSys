@@ -170,7 +170,7 @@
                                 </div>
                             </div>
                         <style>
-                      /* Style for the primary button */
+              /* Style for the primary button */
 .btn-primary {
     background-color: #007bff;
     color: #fff;
@@ -190,16 +190,27 @@
     border-color: #6c757d;
 }
 
-/* Style for the close button in the modal header */
-.modal-header .close {
-    margin-left: auto;
+/* Style for the modal header */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #007bff;
     color: #fff;
 }
 
-/* Style for the modal header */
-.modal-header {
-    background-color: #007bff;
+/* Style for the modal title */
+.modal-title {
+    margin: 0;
+    font-weight: bold;
+}
+
+/* Style for the close button in the modal header */
+.modal-header .close {
+    margin: 0;
+    padding: 1rem;
     color: #fff;
+    opacity: 0.5;
 }
 
 /* Style for the modal body */
@@ -211,11 +222,6 @@
 .modal-footer {
     justify-content: space-between;
     padding: 20px;
-}
-
-/* Style for the modal title */
-.modal-title {
-    font-weight: bold;
 }
 
 /* Center the text in the text-center div */
