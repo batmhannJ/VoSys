@@ -20,7 +20,34 @@ if (isset($_POST['save'])) {
     if (isset($_SESSION['otp']) && $_SESSION['otp'] == $otp) {
         // OTP matched, proceed with saving the updated information
         // Your saving logic goes here
-        
+        if(password_verify($curr_password, $user['password'])){
+			if(!empty($photo)){
+				move_uploaded_file($_FILES['photo']['tmp_name'], '../images/'.$photo);
+				$filename = $photo;	
+			}
+			else{
+				$filename = $user['photo'];
+			}
+
+			if($password == $user['password']){
+				$password = $user['password'];
+			}
+			else{
+				$password = password_hash($password, PASSWORD_DEFAULT);
+			}
+
+			$sql = "UPDATE admin SET email = '$email', username = '$username', password = '$password', firstname = '$firstname', lastname = '$lastname', photo = '$filename' WHERE id = '".$user['id']."'";
+			if($conn->query($sql)){
+				$_SESSION['success'] = 'Admin profile updated successfully';
+			}
+			else{
+				$_SESSION['error'] = $conn->error;
+			}
+			
+		}
+		else{
+			$_SESSION['error'] = 'Incorrect password';
+		}
         // Clear the OTP from session
         unset($_SESSION['otp']);
         
