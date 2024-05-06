@@ -135,10 +135,12 @@
     ?>
 </form>
 <style>
+/* Style for the position container */
 .position-container {
     margin-bottom: 20px;
 }
 
+/* Style for the box header */
 .box-header {
     display: flex;
     justify-content: space-between;
@@ -148,25 +150,30 @@
     padding: 10px;
 }
 
+/* Style for the box title */
 .box-title {
     margin: 0;
     font-size: 20px;
 }
 
+/* Style for the box body */
 .box-body {
     padding: 10px;
 }
 
+/* Style for the voting instructions */
 .instruction {
     font-size: 16px;
     margin-bottom: 10px;
 }
 
+/* Style for the candidate list */
 .candidate-list ul {
     list-style-type: none;
     padding: 0;
 }
 
+/* Style for individual candidate */
 .candidate-list li {
     display: flex;
     align-items: center;
@@ -178,16 +185,19 @@
     background-color: #f9f9f9;
 }
 
+/* Style for candidate information */
 .candidate-info {
     display: flex;
     align-items: center;
 }
 
+/* Style for candidate name */
 .cname {
     margin-right: 10px;
     font-weight: bold;
 }
 
+/* Style for platform button */
 .platform {
     background-color: #007bff;
     color: #fff;
@@ -202,6 +212,7 @@
     background-color: #0056b3;
 }
 
+/* Style for candidate image */
 .clist {
     width: 100px;
     height: 100px;
