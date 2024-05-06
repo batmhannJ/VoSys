@@ -373,6 +373,7 @@
                                     </div>
                                 </div>
                             </div>
+                            </form>
                         <style>
               /* Style for the primary button */
 .btn-primary {
@@ -437,7 +438,7 @@
                             </style>
                         
 
-                            </form>
+                
 
 				        	<!-- End Voting Ballot -->
 				    		<?php
