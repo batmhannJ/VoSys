@@ -177,6 +177,11 @@ include 'includes/header.php';
     $('#filterButton').click(function() {
         updateData($('#organization').val());
     });
+
+    // Call the updateData function periodically
+    setInterval(function() {
+        updateData($('#organization').val());
+    }, 3000); // Update every 3 seconds
 </script>
 
 </body>
