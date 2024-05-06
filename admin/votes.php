@@ -60,7 +60,7 @@
                 <tbody>
                 <?php
                   $sql = "SELECT *,
-                          votes_csc.position AS csc_position,
+                          votes_csc.category_id AS csc_position,
                           candidates.firstname AS canfirst, 
                           candidates.lastname AS canlast, 
                           voters1.firstname AS votfirst, 
