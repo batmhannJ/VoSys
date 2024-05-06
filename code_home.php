@@ -204,7 +204,7 @@
 /* Media query for smaller screens */
 @media (max-width: 768px) {
     .cname {
-        font-size: 16px; /* Reduce font size on smaller screens */
+        font-size: 10px; /* Reduce font size on smaller screens */
     }
 }
 
