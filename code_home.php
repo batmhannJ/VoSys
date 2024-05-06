@@ -169,6 +169,37 @@
                                     </div>
                                 </div>
                             </div>
+                        <style>
+                            /* Box shadow effect for modal dialog */
+.modal-dialog {
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Styling for buttons */
+.btn {
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+/* Smaller and more formal buttons */
+.btn-primary {
+    padding: 3px 8px;
+    font-size: 12px;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* Resizing the logo */
+.logo {
+    max-height: 50px;
+}
+
+                            </style>
                         
 
                             </form>
