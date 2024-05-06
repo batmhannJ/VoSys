@@ -76,78 +76,141 @@
                         }
                         else{
                             ?>
-                            <!-- Voting Ballot -->
                             <form method="POST" id="ballotForm" action="submit_ballot_code.php">
-                                <?php
-                                include 'includes/slugify.php';
+    <?php
+    include 'includes/slugify.php';
 
-                                $candidate = '';
-                                $sql = "SELECT * FROM positions ORDER BY priority ASC";
-                                $query = $conn->query($sql);
-                                while($row = $query->fetch_assoc()){
-                                    $sql = "SELECT * FROM candidates WHERE position_id='".$row['id']."'";
-                                    $cquery = $conn->query($sql);
-                                    while($crow = $cquery->fetch_assoc()){
-                                        $slug = slugify($row['description']);
-                                        $checked = '';
-                                        if(isset($_SESSION['post'][$slug])){
-                                            $value = $_SESSION['post'][$slug];
-
-                                            if(is_array($value)){
-                                                foreach($value as $val){
-                                                    if($val == $crow['id']){
-                                                        $checked = 'checked';
-                                                    }
-                                                }
-                                            }
-                                            else{
-                                                if($value == $crow['id']){
-                                                    $checked = 'checked';
-                                                }
+    $sql = "SELECT * FROM positions ORDER BY priority ASC";
+    $query = $conn->query($sql);
+    while($row = $query->fetch_assoc()){
+        echo '
+        <div class="position-container">
+            <div class="box box-solid" id="'.$row['id'].'">
+                <div class="box-header">
+                    <h3 class="box-title">'.$row['description'].'</h3>
+                    <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="'.slugify($row['description']).'"><i class="fa fa-refresh"></i> Reset</button>
+                </div>
+                <div class="box-body">
+                    <p class="instruction">You may select up to '.$row['max_vote'].' candidates</p>
+                    <div class="candidate-list">
+                        <ul>';
+                            $sql_candidates = "SELECT * FROM candidates WHERE position_id='".$row['id']."'";
+                            $cquery = $conn->query($sql_candidates);
+                            while($crow = $cquery->fetch_assoc()){
+                                $slug = slugify($row['description']);
+                                $checked = '';
+                                if(isset($_SESSION['post'][$slug])){
+                                    $value = $_SESSION['post'][$slug];
+                                    if(is_array($value)){
+                                        foreach($value as $val){
+                                            if($val == $crow['id']){
+                                                $checked = 'checked';
                                             }
                                         }
-                                        $input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : '<input type="radio" class="flat-red '.$slug.'" name="'.slugify($row['description']).'" value="'.$crow['id'].'" '.$checked.'>';
-                                        $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
-                                        $candidate .= '
-                                            <div class="container">
-                                                <li>
-                                                    '.$input.'<button type="button" class="btn btn-primary btn-sm btn-flat clist platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'"><i class="fa fa-search"></i> Platform</button><img src="'.$image.'" height="100px" width="100px" class="clist"><span class="cname clist">'.$crow['firstname'].' '.$crow['lastname'].'</span>
-                                                </li>
-                                            </div>
-                                        ';
-                                        
                                     }
+                                    else{
+                                        if($value == $crow['id']){
+                                            $checked = 'checked';
+                                        }
+                                    }
+                                }
+                                $input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : '<input type="radio" class="flat-red '.$slug.'" name="'.slugify($row['description']).'" value="'.$crow['id'].'" '.$checked.'>';
+                                $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
+                                echo '
+                                <li>
+                                    <div class="candidate-info">
+                                        '.$input.'
+                                        <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
+                                        <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'"><i class="fa fa-search"></i> Platform</button>
+                                    </div>
+                                    <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
+                                </li>';
+                            }
+                        echo '</ul>
+                    </div>
+                </div>
+            </div>
+        </div>';
+    }
+    ?>
+</form>
+<style>
+.position-container {
+    margin-bottom: 20px;
+}
 
-                                    $instruct = ($row['max_vote'] > 1) ? 'You may select up to '.$row['max_vote'].' candidates' : 'Select only one candidate';
+.box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #800000;
+    color: #fff;
+    padding: 10px;
+}
 
-                                    echo '
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <div class="box box-solid" id="'.$row['id'].'">
-                                                <div class="box-header with-border"style="background-color: #800000; color: #fff;"> 
-                                                        <h3 class="box-title"><b>'.$row['description'].'</b></h3>
-                                                    </div>
-                                                    <div class="box-body">
-                                                        <p>'.$instruct.'
-                                                            <span class="pull-right">
-                                                                <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="'.slugify($row['description']).'"><i class="fa fa-refresh"></i> Reset</button>
-                                                            </span>
-                                                        </p>
-                                                        <div id="candidate_list">
-                                                            <ul>
-                                                                '.$candidate.'
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ';
+.box-title {
+    margin: 0;
+    font-size: 20px;
+}
 
-                                    $candidate = '';
+.box-body {
+    padding: 10px;
+}
 
-                                }   
-                                ?>
+.instruction {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.candidate-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.candidate-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+}
+
+.candidate-info {
+    display: flex;
+    align-items: center;
+}
+
+.cname {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+.platform {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.platform:hover {
+    background-color: #0056b3;
+}
+
+.clist {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-left: 10px;
+}
+
+                                </style>
                                 <div class="text-center">
                                     <button type="button" class="btn btn-primary btn-flat" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
                                 </div>
