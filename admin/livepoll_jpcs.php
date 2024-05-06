@@ -32,7 +32,7 @@ include 'includes/header.php';
                         <!-- /.box-header -->
                         <div class="box-body">
                             <!-- Bar Graph Container for President, Vice President, and Secretary -->
-                            <div id="electionGraph" style="height: 300px; width: 400px;"></div>
+                            <div id="electionGraph" style="height: 300px;"></div>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -71,19 +71,43 @@ include 'includes/header.php';
             name: "President Votes",
             showInLegend: true,
             yValueFormatString: "#,##0",
-            dataPoints: []
+            dataPoints: [],
+            indexLabel: "{y}", // Displays y value on top of the bar
+            indexLabelFontColor: "black", // Color of the y value text
+            indexLabelPlacement: "inside", // Position of the y value text
+            indexLabelFontSize: 14, // Font size of the y value text
+            indexLabelFontWeight: "bold", // Font weight of the y value text
+            indexLabelMaxWidth: 40, // Max width of the y value text
+            indexLabelWrap: true, // Wrap text if exceeds max width
+            width: 40 // Width of the bars
         }, {
             type: "column",
             name: "Vice President Votes",
             showInLegend: true,
             yValueFormatString: "#,##0",
-            dataPoints: []
+            dataPoints: [],
+            indexLabel: "{y}", // Displays y value on top of the bar
+            indexLabelFontColor: "black", // Color of the y value text
+            indexLabelPlacement: "inside", // Position of the y value text
+            indexLabelFontSize: 14, // Font size of the y value text
+            indexLabelFontWeight: "bold", // Font weight of the y value text
+            indexLabelMaxWidth: 40, // Max width of the y value text
+            indexLabelWrap: true, // Wrap text if exceeds max width
+            width: 40 // Width of the bars
         }, {
             type: "column",
             name: "Secretary Votes",
             showInLegend: true,
             yValueFormatString: "#,##0",
-            dataPoints: []
+            dataPoints: [],
+            indexLabel: "{y}", // Displays y value on top of the bar
+            indexLabelFontColor: "black", // Color of the y value text
+            indexLabelPlacement: "inside", // Position of the y value text
+            indexLabelFontSize: 14, // Font size of the y value text
+            indexLabelFontWeight: "bold", // Font weight of the y value text
+            indexLabelMaxWidth: 40, // Max width of the y value text
+            indexLabelWrap: true, // Wrap text if exceeds max width
+            width: 40 // Width of the bars
         }]
     });
     chart.render();
