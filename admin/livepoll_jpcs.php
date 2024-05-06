@@ -94,7 +94,7 @@ include 'includes/header.php';
                     console.error("Empty or invalid data received.");
                 }
             },
-            error: function(xhr, status, error) {
+            error: function(xhr, status, eror) {
                 console.error('Error fetching data:', error); // Log any errors
             }
         });
