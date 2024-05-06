@@ -118,10 +118,12 @@
                                 $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
                                 echo '
                                 <li>
-                                <div class="candidate-info">
-                                <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
-                                <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'"><i class="fa fa-search"></i> Platform</button>
-                            </div>                            
+                                    <div class="candidate-info">
+                                        '.$input.'
+                                        <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
+                                        
+                                    </div>
+                                    <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'"><i class="fa fa-search"></i> Platform</button>
                                     <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
                                 </li>';
                             }
@@ -174,10 +176,12 @@
 }
 
 /* Style for individual candidate */
+/* Update the display property for candidate list items */
 .candidate-list li {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* Divide into three equal columns */
+    grid-gap: 10px; /* Add gap between columns */
     align-items: center;
-    justify-content: space-between;
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
@@ -185,68 +189,56 @@
     background-color: #f9f9f9;
 }
 
-/* Style for candidate information */
-.candidate-info {
-    display: flex;
-    align-items: flex-start; /* Adjust alignment */
-}
-
-/* Bagong istilo para sa mga imahe */
-/* Remove float property from candidate image */
-.cimage {
-    /* float: left; */
-    /* Remove this line */
-    margin-right: 20px;
-}
-
-/* Update styles for candidate information */
-.candidate-info {
-    /* display: flex; */
-    /* Remove this line */
-    /* align-items: flex-start; */
-    /* Remove this line */
-    /* Adjust alignment as needed */
-    margin-bottom: 10px;
-}
-
-/* Style for candidate name */
-.cname {
-    margin: 0;
-    font-weight: bold;
+.cname{
+    margin-left: 5px;
     font-size: 18px;
-    margin-bottom: 5px;
-    /* margin-left: 10px; */
-    /* Remove this line */
+    font-weight: bold;
 }
 
-/* Update styles for platform button */
+/* Adjust platform button alignment */
 .platform {
     background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 3px;
-    padding: 5px 50px;
+    padding: 5px 10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    /* margin-left: 10px; */
-    /* Remove this line */
-    margin-top: 5px;
-    /* Add margin-top to separate from candidate name */
+    justify-self: center; /* Center the button within its column */
 }
 
 .platform:hover {
     background-color: #0056b3;
 }
 
-    
-
-/* Style for candidate image */
+/* Update styles for candidate image */
 .clist {
     width: 100px;
     height: 100px;
     object-fit: cover;
     border-radius: 50%;
     margin-right: 10px;
+    grid-column: span 1; /* Make the image span one column */
+}
+@media (min-width: 768px) {
+    /* Apply flex-end alignment to candidate image */
+    .candidate-list li {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr; /* Divide into three equal columns */
+        grid-gap: 10px; /* Add gap between columns */
+        align-items: center;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: #f9f9f9;
+        justify-content: space-between; /* Align items to the end of the container */
+    }
+
+    /* Adjust candidate image alignment */
+    .clist {
+        margin-right: 0; /* Remove margin-right */
+    }
 }
 
 </style>
