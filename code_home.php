@@ -319,6 +319,13 @@
     background-color: #0056b3;
 }
 
+.platform i {
+    font-style: normal; /* Ibalik ang font style sa normal */
+    font-weight: bold; /* I-set ang font weight sa bold */
+    font-size: 14px; /* I-adjust ang font size */
+}
+
+
 /* Media query for smaller screens */
 @media (max-width: 768px) {
   
