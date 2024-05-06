@@ -252,7 +252,7 @@
     padding: 0;
 }
 
-//* Bagong istilo para sa mga item sa listahan ng mga kandidato */
+/* Bagong istilo para sa mga item sa listahan ng mga kandidato */
 .candidate-list li {
     display: flex; /* Baguhin ang display sa flex */
     flex-wrap: wrap; /* Pahintulutan ang pag-wrap ng mga item sa loob ng flex container */
@@ -272,7 +272,13 @@
         align-items: flex-start; /* I-align ang mga item sa kaliwa */
         padding: 15px; /* I-adjust ang padding para sa mas maliit na screen */
     }
+
+    .candidate-list li img {
+        width: 100px; /* I-adjust ang lapad ng mga larawan para sa mas maliit na screen */
+        height: 100px; /* I-adjust ang taas ng mga larawan para sa mas maliit na screen */
+    }
 }
+
 
 
 /* Adjusted style for candidate name */
