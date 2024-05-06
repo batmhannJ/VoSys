@@ -267,6 +267,11 @@
 
 /* Media query para sa mas maliit na mga screen */
 @media (max-width: 768px) {
+    .platform {
+        padding: 6px 16px; /* I-adjust ang padding para sa mas maliit na screen */
+        font-size: 14px; /* I-adjust ang font size */
+        width: auto; /* I-adjust ang lapad */
+    }
     .candidate-list li {
         flex-direction: column; /* Baguhin ang direksyon ng flex container sa column */
         align-items: center; /* I-align ang mga item sa gitna */
