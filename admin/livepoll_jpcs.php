@@ -1,11 +1,11 @@
 <?php
 include 'includes/session.php';
-include 'includes/header_jpcs.php';
+include 'includes/header.php';
 ?>
-<body class="hold-transition skin-green sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-    <?php include 'includes/navbar_jpcs.php'; ?>
-    <?php include 'includes/menubar_jpcs.php'; ?>
+    <?php include 'includes/navbar.php'; ?>
+    <?php include 'includes/menubar.php'; ?>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -21,52 +21,18 @@ include 'includes/header_jpcs.php';
         </section>
         <!-- Main content -->
         <section class="content">
-            <!-- Bar Graphs for President, Vice President, and Secretary -->
+            <!-- Bar Graph for President, Vice President, and Secretary - JPCS Organization -->
             <div class="row">
-                <!-- President Bar Graph Box -->
-                <div class="col-md-4">
+                <!-- President, Vice President, and Secretary Bar Graph Box -->
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">President Candidates Vote Count</h3>
+                            <h3 class="box-title"><b>Election Results - JPCS Organization</b></h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <!-- President Bar Graph Container -->
-                            <div id="presidentGraph" style="height: 300px;"></div>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                    <!-- /.box -->
-                </div>
-                <!-- /.col -->
-
-                <!-- Vice President Bar Graph Box -->
-                <div class="col-md-4">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Vice President Candidates Vote Count</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <!-- Vice President Bar Graph Container -->
-                            <div id="vicePresidentGraph" style="height: 300px;"></div>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                    <!-- /.box -->
-                </div>
-                <!-- /.col -->
-
-                <!-- Secretary Bar Graph Box -->
-                <div class="col-md-4">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Secretary Candidates Vote Count</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <!-- Secretary Bar Graph Container -->
-                            <div id="secretaryGraph" style="height: 300px;"></div>
+                            <!-- Bar Graph Container for President, Vice President, and Secretary -->
+                            <div id="electionGraph" style="height: 300px;"></div>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -90,44 +56,78 @@ include 'includes/header_jpcs.php';
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    // Function to generate bar graph
-    function generateBarGraph(dataPoints, containerId) {
-        var chart = new CanvasJS.Chart(containerId, {
-            animationEnabled: true,
-            title:{
-                text: "Vote Counts"
-            },
-            axisY: {
-                title: "Candidates"
-            },
-            axisX: {
-                title: "Vote Count",
-                includeZero: true
-            },
-            data: [{
-                type: "bar", // Change type to "bar"
-                dataPoints: dataPoints
-            }]
-        });
-        chart.render();
-    }
+    // Initialize the chart with empty data points
+    var chart = new CanvasJS.Chart("electionGraph", {
+        animationEnabled: true,
+        title: {
+            text: "Election Results - JPCS Organization"
+        },
+        axisY: {
+            title: "Vote Counts",
+            includeZero: true
+        },
+        data: [{
+            type: "column",
+            name: "President Votes",
+            showInLegend: true,
+            yValueFormatString: "#,##0",
+            dataPoints: [],
+            indexLabel: "{y}", // Displays y value on top of the bar
+            indexLabelFontColor: "black", // Color of the y value text
+            indexLabelPlacement: "inside", // Position of the y value text
+            indexLabelFontSize: 14, // Font size of the y value text
+            indexLabelFontWeight: "bold", // Font weight of the y value text
+            indexLabelMaxWidth: 40, // Max width of the y value text
+            indexLabelWrap: true, // Wrap text if exceeds max width
+            width: 40 // Width of the bars
+        }, {
+            type: "column",
+            name: "Vice President Votes",
+            showInLegend: true,
+            yValueFormatString: "#,##0",
+            dataPoints: [],
+            indexLabel: "{y}", // Displays y value on top of the bar
+            indexLabelFontColor: "black", // Color of the y value text
+            indexLabelPlacement: "inside", // Position of the y value text
+            indexLabelFontSize: 14, // Font size of the y value text
+            indexLabelFontWeight: "bold", // Font weight of the y value text
+            indexLabelMaxWidth: 40, // Max width of the y value text
+            indexLabelWrap: true, // Wrap text if exceeds max width
+            width: 40 // Width of the bars
+        }, {
+            type: "column",
+            name: "Secretary Votes",
+            showInLegend: true,
+            yValueFormatString: "#,##0",
+            dataPoints: [],
+            indexLabel: "{y}", // Displays y value on top of the bar
+            indexLabelFontColor: "black", // Color of the y value text
+            indexLabelPlacement: "inside", // Position of the y value text
+            indexLabelFontSize: 14, // Font size of the y value text
+            indexLabelFontWeight: "bold", // Font weight of the y value text
+            indexLabelMaxWidth: 40, // Max width of the y value text
+            indexLabelWrap: true, // Wrap text if exceeds max width
+            width: 40 // Width of the bars
+        }]
+    });
+    chart.render();
 
-    // Function to fetch updated data from the server
+    // Function to fetch updated data from the server for JPCS organization and update the chart
     function updateData() {
         $.ajax({
-            url: 'jpcs_update_data.php', // Change this to the URL of your update data script
+            url: 'update_data.php', // Change this to the URL of your update data script
             type: 'GET',
             dataType: 'json',
-            data: {organization: 'JPCS'}, // Fixed organization
+            data: { organization: 'JPCS' }, // Hardcoded organization to JPCS
             success: function(response) {
-                // Update president bar graph
-                generateBarGraph(response.presidentData, "presidentGraph");
-
-                // Update vice president bar graph
-                generateBarGraph(response.vicePresidentData, "vicePresidentGraph");
-
-                // Update secretary bar graph
-                generateBarGraph(response.secretaryData, "secretaryGraph");
+                // Update data points for President Votes
+                chart.options.data[0].dataPoints = response.presidentData;
+                // Update data points for Vice President Votes
+                chart.options.data[1].dataPoints = response.vicePresidentData;
+                // Update data points for Secretary Votes
+                chart.options.data[2].dataPoints = response.secretaryData;
+                // Re-render the chart with updated data
+                chart.render();
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data: ' + error);
@@ -139,7 +139,7 @@ include 'includes/header_jpcs.php';
     updateData();
 
     // Call the updateData function every 60 seconds (adjust as needed)
-    setInterval(updateData, 3000); // 60000 milliseconds = 60 seconds
+    setInterval(updateData, 60000); // 60000 milliseconds = 60 seconds
 </script>
 
 </body>
