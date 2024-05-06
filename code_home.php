@@ -194,9 +194,17 @@
 
 /* Bagong istilo para sa mga imahe */
 .cimage {
-    float: right; /* Ilipat ang imahe sa kaliwa */
-    margin-left: 20px; /* Dagdag na puwang sa kanan ng imahe */
+    float: left; /* Ilipat ang imahe sa kaliwa */
+    margin-right: 20px; /* Dagdag na puwang sa kanan ng imahe */
 }
+
+/* Bagong istilo para sa box container ng mga imahe */
+.image-container {
+    background-color: maroon; /* Kulay na maroon */
+    padding: 10px; /* Dagdag na padding */
+    border-radius: 5px; /* Radius ng border */
+}
+
 
 /* Bagong istilo para sa teksto */
 .ctext {
