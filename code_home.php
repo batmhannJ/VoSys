@@ -201,17 +201,17 @@
 
 /* Style for the modal title */
 .modal-title {
-    margin: 0;
+    margin-right: auto; /* Pushes the modal title to the left */
     font-weight: bold;
 }
 
 /* Style for the close button in the modal header */
 .modal-header .close {
-    margin: 0;
-    padding: 1rem;
+    padding-left: 20px; /* Adds space to the left of the close button */
     color: #fff;
     opacity: 0.5;
 }
+
 
 /* Style for the modal body */
 .modal-body {
