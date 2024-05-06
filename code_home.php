@@ -136,10 +136,14 @@
     ?>
 </form>
 <style>
-    /* Style for the position container */
-   /* Style for the position container */
+ /* Style for the position container */
 .position-container {
     margin-bottom: 20px;
+    border: 1px solid #ccc; /* Add border for visual separation */
+    border-radius: 10px; /* Add border radius for rounded corners */
+    background-color: #fff; /* Change background color */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+    padding: 20px; /* Add padding for spacing */
 }
 
 /* Style for the box header */
@@ -175,27 +179,27 @@
     padding: 0;
 }
 
-/* Style for individual candidate */
-/* Update the display property for candidate list items */
+/* Adjusted style for candidate list items */
 .candidate-list li {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr; /* Divide into three equal columns */
     grid-gap: 10px; /* Add gap between columns */
     align-items: center;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 5px; /* Adjust border radius */
     padding: 10px;
     margin-bottom: 10px;
     background-color: #f9f9f9;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
 }
 
-.cname{
-    margin-left: 5px;
+/* Adjusted style for candidate name */
+.cname {
+    margin-left: auto; /* Push candidate name to the end */
     font-size: 18px;
     font-weight: bold;
 }
 
-/* Adjust platform button alignment */
+/* Adjusted style for platform button */
 .platform {
     background-color: #007bff;
     color: #fff;
@@ -204,22 +208,23 @@
     padding: 5px 10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    justify-self: center; /* Center the button within its column */
+    margin-left: auto; /* Push platform button to the end */
 }
 
 .platform:hover {
     background-color: #0056b3;
 }
 
-/* Update styles for candidate image */
+/* Updated styles for candidate image */
 .clist {
     width: 100px;
     height: 100px;
     object-fit: cover;
     border-radius: 50%;
     margin-right: 10px;
-    grid-column: span 1; /* Make the image span one column */
+    grid-column: span 1;
 }
+
 @media (min-width: 768px) {
     /* Apply flex-end alignment to candidate image */
     .candidate-list li {
