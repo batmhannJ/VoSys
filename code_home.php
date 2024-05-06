@@ -187,23 +187,36 @@
         background-color: #0056b3; /* Darker shade of blue */
     }
 
-      /* Modal title style */
-      .modal-title {
+      /* Modal content style */
+    .modal-content {
+        background-color: #fff;
+        border-radius: 10px;
+    }
+
+    /* Modal header style */
+    .modal-header {
+        border-bottom: 1px solid #dee2e6; /* Light border at the bottom */
+        padding: 15px;
+        text-align: center;
+    }
+
+    /* Modal title style */
+    .modal-title {
         font-size: 24px;
-        color: #333;
+        color: #007bff; /* Blue color for title */
     }
 
     /* Modal body style */
     .modal-body {
+        padding: 20px;
         font-size: 18px;
-        color: #555;
+        color: #333;
     }
 
     /* Modal footer style */
     .modal-footer {
-        padding-top: 15px;
-        padding-bottom: 15px;
-        background-color: #f8f9fa; /* Light gray background color */
+        padding: 15px;
+        text-align: center;
         border-top: 1px solid #dee2e6; /* Light border at the top */
     }
 
@@ -246,7 +259,6 @@
     #submitBtnModal:hover {
         background-color: #0056b3; /* Darker shade of blue */
     }
-
     /* Preview button style */
     #preview {
         padding: 10px 20px;
