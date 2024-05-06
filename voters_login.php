@@ -204,6 +204,24 @@ label {
   background-color: gray;
 }
 
+.back-btn {
+  display: inline-block;
+  width: 100%;
+  height: 43px;
+  background-color: darkgreen;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.8rem;
+  font-size: 0.8rem;
+  margin-bottom: 2rem;
+  transition: 0.3s;
+}
+
+.back-btn:hover {
+  background-color: gray;
+}
+
 .text {
   color: #bbb;
   font-size: 0.7rem;
@@ -511,6 +529,7 @@ main.sign-up-mode .carousel {
                     unset($_SESSION['error']);
                 }
                 ?>
+                <input type="submit" name="login" value="Back to Homepage" class="back-btn" style="font-size:15px;">
               </div>
             </form>
           </div>
