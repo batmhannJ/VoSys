@@ -225,7 +225,7 @@
     color: #fff;
     border: none;
     border-radius: 3px;
-    padding: 5px 10px;
+    padding: 5px 50px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     /* margin-left: 10px; */
