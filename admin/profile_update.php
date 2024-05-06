@@ -1,54 +1,59 @@
 <?php
-	include 'includes/session.php';
+include 'includes/session.php';
 
-	if(isset($_GET['return'])){
-		$return = $_GET['return'];
-		
-	}
-	else{
-		$return = 'home.php';
-	}
+if (isset($_GET['return'])) {
+    $return = $_GET['return'];
+} else {
+    $return = 'home.php';
+}
 
-	if(isset($_POST['save'])){
-		$curr_password = $_POST['curr_password'];
-		$username = $_POST['username'];
-		$password = $_POST['password'];
-		$firstname = $_POST['firstname'];
-		$lastname = $_POST['lastname'];
-		$photo = $_FILES['photo']['name'];
-		if(password_verify($curr_password, $user['password'])){
-			if(!empty($photo)){
-				move_uploaded_file($_FILES['photo']['tmp_name'], '../images/'.$photo);
-				$filename = $photo;	
-			}
-			else{
-				$filename = $user['photo'];
-			}
+if (isset($_POST['save'])) {
+    $curr_password = $_POST['curr_password'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $firstname = $_POST['firstname'];
+    $lastname = $_POST['lastname'];
+    $photo = $_FILES['photo']['name'];
 
-			if($password == $user['password']){
-				$password = $user['password'];
-			}
-			else{
-				$password = password_hash($password, PASSWORD_DEFAULT);
-			}
+    // Check if the current password is correct
+    if (password_verify($curr_password, $user['password'])) {
+        // Generate OTP
+        $otp = rand(100000, 999999);
+        $_SESSION['otp'] = $otp;
 
-			$sql = "UPDATE admin SET username = '$username', password = '$password', firstname = '$firstname', lastname = '$lastname', photo = '$filename' WHERE id = '".$user['id']."'";
-			if($conn->query($sql)){
-				$_SESSION['success'] = 'Admin profile updated successfully';
-			}
-			else{
-				$_SESSION['error'] = $conn->error;
-			}
-			
-		}
-		else{
-			$_SESSION['error'] = 'Incorrect password';
-		}
-	}
-	else{
-		$_SESSION['error'] = 'Fill up required details first';
-	}
+        // Send OTP via email
+        $mail = new PHPMailer();
+        try {
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'olshco.electionupdates@gmail.com'; // Your Gmail email
+            $mail->Password = 'ljzujblsyyprijmx'; // Your Gmail app password
+            $mail->SMTPSecure = 'tls';
+            $mail->Port = 587;
 
-	header('location:'.$return);
+            $mail->setFrom('olshco.electionupdates@gmail.com', 'EL-UPS OLSHCO');
+            $mail->addAddress($user['email']); // Assuming you have user's email stored in $user['email']
+            $mail->Subject = 'OTP Verification';
+            $mail->Body = "Your OTP is: $otp";
 
+            $mail->send();
+            $_SESSION['success'] = 'OTP sent successfully. Check your email.';
+        } catch (Exception $e) {
+            $_SESSION['error'] = 'Error sending OTP: ' . $mail->ErrorInfo;
+            header('Location: '.$return);
+            exit;
+        }
+
+        // Redirect to OTP verification page
+        header('Location: otp_verification.php');
+        exit;
+    } else {
+        $_SESSION['error'] = 'Incorrect password';
+    }
+} else {
+    $_SESSION['error'] = 'Fill up required details first';
+}
+
+header('Location: '.$return);
 ?>
