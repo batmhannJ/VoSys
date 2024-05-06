@@ -113,8 +113,7 @@ include 'includes/header.php';
             dataType: 'json',
             data: { organization: 'JPCS' }, // Hardcoded organization to JPCS
             success: function(response) {
-                if (response && response.length > 0) {
-                    console.log("Data received:", response); // Log the received data
+                if (response && response.presidentAndVicePresidentData && response.secretaryData) {
                     // Update data points for President and Vice President Votes
                     chart.options.data[0].dataPoints = response.presidentAndVicePresidentData;
                     // Update data points for Secretary Votes
@@ -122,7 +121,7 @@ include 'includes/header.php';
                     // Re-render the chart with updated data
                     chart.render();
                 } else {
-                    console.error("Empty or invalid data received.");
+                    console.error("Invalid data received.");
                 }
             },
             error: function(xhr, status, error) {
