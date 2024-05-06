@@ -135,20 +135,20 @@
     ?>
 </form>
 <style>
-    /* Style for the position container */
-   /* Style for the position container */
+ /* Style for the position container */
 .position-container {
     margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 /* Style for the box header */
 .box-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     background-color: #800000;
     color: #fff;
     padding: 10px;
+    border-radius: 5px;
 }
 
 /* Style for the box title */
@@ -176,21 +176,17 @@
 
 /* Style for individual candidate */
 .candidate-list li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     border: 1px solid #ccc;
     border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
     background-color: #f9f9f9;
+    overflow: hidden;
 }
 
 /* Style for candidate information */
 .candidate-info {
     display: flex;
     align-items: center;
-    width: calc(100% - 130px); /* Adjust width to accommodate image and button */
+    padding: 10px;
 }
 
 /* Style for candidate image */
@@ -211,7 +207,7 @@
 
 /* Style for platform button container */
 .platform-container {
-    margin-top: 5px; /* Adjust margin from candidate name */
+    margin-top: auto;
 }
 
 /* Style for platform button */
