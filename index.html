@@ -385,87 +385,95 @@
     </script>
 
 <script>
-    // Function to update the countdown timer
-    function updateCountdown(endTime) {
-        var now = new Date();
-        var timeRemaining = endTime - now;
-        
-        // If time remaining is negative or zero, display message
-        if (timeRemaining <= 0) {
-            document.getElementById("day").innerText = "00";
-            document.getElementById("hour").innerText = "00";
-            document.getElementById("min").innerText = "00";
-            document.getElementById("sec").innerText = "00";
-            document.getElementById("electionTitle").innerText = "NO ONGOING ELECTION. Stay Tuned, Madlang Pipol!";
-            return;
-        }
+  // Function to update the countdown timer
+  function updateCountdown(endTime) {
+      var now = new Date();
+      var timeRemaining = endTime - now;
+      
+      // If time remaining is negative or zero, display message
+      if (timeRemaining <= 0) {
+          document.getElementById("day").innerText = "00";
+          document.getElementById("hour").innerText = "00";
+          document.getElementById("min").innerText = "00";
+          document.getElementById("sec").innerText = "00";
+          document.getElementById("electionTitle").innerText = "NO ONGOING ELECTION. Stay Tuned, Madlang Pipol!";
+          return;
+      }
 
-        // Calculate days, hours, minutes, and seconds remaining
-        var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-        var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-        
-        // Update the HTML elements with the new countdown values
-        document.getElementById("day").innerText = formatTime(days);
-        document.getElementById("hour").innerText = formatTime(hours);
-        document.getElementById("min").innerText = formatTime(minutes);
-        document.getElementById("sec").innerText = formatTime(seconds);
-    }
+      // Calculate days, hours, minutes, and seconds remaining
+      var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+      
+      // Update the HTML elements with the new countdown values
+      document.getElementById("day").innerText = formatTime(days);
+      document.getElementById("hour").innerText = formatTime(hours);
+      document.getElementById("min").innerText = formatTime(minutes);
+      document.getElementById("sec").innerText = formatTime(seconds);
+  }
 
-    // Function to format time (prepend 0 if single digit)
-    function formatTime(time) {
-        return time < 10 ? "0" + time : time;
-    }
+  // Function to format time (prepend 0 if single digit)
+  function formatTime(time) {
+      return time < 10 ? "0" + time : time;
+  }
 
-    // Function to fetch end time from the server
-    function fetchEndTime() {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'getEndTime.php', true); // Adjust the path to getEndTime.php if needed
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == XMLHttpRequest.DONE) {
-                if (xhr.status == 200) {
-                    var endTime = new Date(xhr.responseText);
-                    updateCountdown(endTime);
-                    setInterval(function() {
-                        updateCountdown(endTime);
-                    }, 1000);
-                }
-            }
-        };
-        xhr.send();
-    }
-    fetchEndTime();
+  // Function to fetch end time from the server
+  function fetchEndTime() {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', 'getEndTime.php', true); // Adjust the path to getEndTime.php if needed
+      xhr.onreadystatechange = function () {
+          if (xhr.readyState == XMLHttpRequest.DONE) {
+              if (xhr.status == 200) {
+                  var endTimeString = xhr.responseText;
+                  console.log('Response from getEndTime.php:', endTimeString); // Debug statement
+                  var endTime = new Date(endTimeString);
+                  updateCountdown(endTime);
+                  setInterval(function() {
+                      updateCountdown(endTime);
+                  }, 1000);
+              } else {
+                  console.error('Failed to fetch end time:', xhr.statusText);
+              }
+          }
+      };
+      xhr.onerror = function () {
+          console.error('Error fetching end time.');
+      };
+      xhr.send();
+  }
+  fetchEndTime();
 
-    // Function to fetch end time and organization name from the server
-    function fetchElectionData() {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'getElectionData.php', true); // Adjust the path to getElectionData.php if needed
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == XMLHttpRequest.DONE) {
-                if (xhr.status == 200) {
-                    var response = JSON.parse(xhr.responseText);
-                    if (response && response.organization) {
-                        var organizationName = response.organization;
-                        document.getElementById("electionTitle").innerText = "Remaining Time to vote for " + organizationName;
-                        updateCountdown(new Date(response.endtime));
-                    } else {
-                        // Display message when there's no active election
-                        document.getElementById("day").innerText = "00";
-                        document.getElementById("hour").innerText = "00";
-                        document.getElementById("min").innerText = "00";
-                        document.getElementById("sec").innerText = "00";
-                        document.getElementById("electionTitle").innerText = "NO ONGOING ELECTION. Stay Tuned, Madlang Pipol!";
-                    }
-                }
-            }
-        };
-        xhr.send();
-    }
+  // Function to fetch end time and organization name from the server
+  function fetchElectionData() {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', 'getElectionData.php', true); // Adjust the path to getElectionData.php if needed
+      xhr.onreadystatechange = function () {
+          if (xhr.readyState == XMLHttpRequest.DONE) {
+              if (xhr.status == 200) {
+                  var response = JSON.parse(xhr.responseText);
+                  if (response && response.organization) {
+                      var organizationName = response.organization;
+                      document.getElementById("electionTitle").innerText = "Remaining Time to vote for " + organizationName;
+                      updateCountdown(new Date(response.endtime));
+                  } else {
+                      // Display message when there's no active election
+                      document.getElementById("day").innerText = "00";
+                      document.getElementById("hour").innerText = "00";
+                      document.getElementById("min").innerText = "00";
+                      document.getElementById("sec").innerText = "00";
+                      document.getElementById("electionTitle").innerText = "NO ONGOING ELECTION. Stay Tuned, Madlang Pipol!";
+                  }
+              }
+          }
+      };
+      xhr.send();
+  }
 
-    // Call the functions to fetch end time and election data
-    fetchElectionData();
+  // Call the functions to fetch end time and election data
+  fetchElectionData();
 </script>
+
 
  <script>
   // Fetch countdown date from the server
