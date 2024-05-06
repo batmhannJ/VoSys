@@ -268,10 +268,16 @@
 
 /* Media query for smaller screens */
 @media (max-width: 768px) {
+    .candidate-list li {
+        display: flex;
+        align-items: center; /* Center items vertically */
+        margin-bottom: 10px;
+    }
+
     .clist {
         width: 80px; /* Reduce image width on smaller screens */
         height: 80px; /* Reduce image height on smaller screens */
-        margin-right: 5px; /* Adjust margin for smaller screens */
+        margin-right: 10px; /* Adjust margin for smaller screens */
     }
 }
 
