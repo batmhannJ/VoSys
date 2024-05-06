@@ -175,6 +175,7 @@
 .box-title {
     margin: 0;
     font-size: 20px;
+    font-weight: 300;
 }
 
 /* Style for the box body */
