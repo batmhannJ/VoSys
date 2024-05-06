@@ -194,20 +194,27 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
 }
 
-/* Adjusted style for candidate name */
+/* Style for the candidate name */
 .cname {
     font-size: 18px; /* Default font size */
-    margin-left: auto; /* Push candidate name to the end */
     font-weight: bold;
 }
 
 /* Media query for smaller screens */
 @media (max-width: 768px) {
+    .candidate-list li {
+        flex-direction: column; /* Change flex direction to column for smaller screens */
+    }
+
     .cname {
-        font-size: 10px; /* Reduce font size on smaller screens */
+        font-size: 24px; /* Increase font size of the name on smaller screens */
+    }
+
+    .platform {
+        margin-top: 10px; /* Add margin on top of the platform button */
+        align-self: flex-start; /* Align the platform button to the start */
     }
 }
-
 
 /* Style for the platform button */
 .platform {
