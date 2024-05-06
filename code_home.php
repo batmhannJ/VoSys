@@ -194,8 +194,8 @@
 
 /* Bagong istilo para sa mga imahe */
 .cimage {
-    float: left; /* Ilipat ang imahe sa kaliwa */
-    margin-right: 20px; /* Dagdag na puwang sa kanan ng imahe */
+    float: right; /* Ilipat ang imahe sa kaliwa */
+    margin-left: 20px; /* Dagdag na puwang sa kanan ng imahe */
 }
 
 /* Bagong istilo para sa teksto */
