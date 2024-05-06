@@ -231,7 +231,12 @@
         padding: 6px 16px; /* Adjust padding for smaller screens */
         font-size: 14px; /* Decrease font size for smaller screens */
     }
+
+    .platform::after {
+        content: none; /* Hide the content (word "Platform") on smaller screens */
+    }
 }
+
 
 
 
