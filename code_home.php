@@ -4,17 +4,13 @@
 <div class="wrapper">
 
 	<?php include 'includes/navbar.php'; ?>
-	  <div class="content-wrapper">
+    <div class="content-wrapper">
 	    <div class="container">
 	      <!-- Main content -->
 	      <section class="content">
-          <h1 class="page-header text-center title">
-    <img src="images/codg.jpg" alt="CSC Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
-    <div class="title-text">
-        <h2>Coalition of Disciplined Future Enforcers of Todays Generation Election</h2>
-    </div>
-</h1>
-
+	      	<h1 class="page-header text-center title">
+	      		<img src="images/codg.jpg" alt="CSC Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
+	      		<b>CODE-TG - Coalition of Disciplined<br>Future Enforcers of Todays <br>Generation Election</b></h1>
 	        <div class="row">
 	        	<div class="col-sm-10 col-sm-offset-1">
 	        		<?php
@@ -267,7 +263,6 @@
 }
 
 .platform i {
-    
     font-style: normal; /* Ibalik ang font style sa normal */
     font-weight: bold; /* I-set ang font weight sa bold */
     font-size: 14px; /* I-adjust ang font size */
@@ -378,6 +373,7 @@
                                     </div>
                                 </div>
                             </div>
+                            </form>
                         <style>
               /* Style for the primary button */
 .btn-primary {
@@ -442,7 +438,7 @@
                             </style>
                         
 
-                            </form>
+                
 
 				        	<!-- End Voting Ballot -->
 				    		<?php
