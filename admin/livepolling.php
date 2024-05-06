@@ -129,14 +129,14 @@ include 'includes/header.php';
                 type: 'GET',
                 dataType: 'json',
                 success: function (response) {
-                    // Sort data based on vote counts
-                    response.sort(function(a, b) {
-                        return b.y - a.y;
-                    });
-
                     // Update chart with new data
-                    chart.options.data[0].dataPoints = response;
-                    chart.render();
+                    if(containerId === "presidentGraph") {
+                        generateBarChartRace(response.president, containerId);
+                    } else if(containerId === "vicePresidentGraph") {
+                        generateBarChartRace(response.vice_president, containerId);
+                    } else if(containerId === "secretaryGraph") {
+                        generateBarChartRace(response.secretary, containerId);
+                    }
                 },
                 error: function (xhr, status, error) {
                     console.error('Error fetching data: ' + error);
