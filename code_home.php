@@ -121,8 +121,9 @@
                                     <div class="candidate-info">
                                         '.$input.'
                                         <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
+                                        <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'"><i class="fa fa-search"></i> Platform</button>
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'"><i class="fa fa-search"></i> Platform</button>
+                            
                                     <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
                                 </li>';
                             }
@@ -188,13 +189,13 @@
 
 /* Style for candidate information */
 .candidate-info {
-    display: flex;
+    /*display: flex;
     align-items: flex-start; /* Adjust alignment */
 }
 
 /* Bagong istilo para sa mga imahe */
 .cimage {
-    float: left; /* Ilipat ang imahe sa kaliwa */
+    /*float: left; /* Ilipat ang imahe sa kaliwa */
     margin-right: 20px; /* Dagdag na puwang sa kanan ng imahe */
 }
 
