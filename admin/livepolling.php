@@ -165,41 +165,13 @@ include 'includes/header.php';
             },
             data: [{
                 type: "bar", // Change type to "bar"
-                dataPoints: [], // Initialize with empty data points
+                dataPoints: dataPoints, // Pass data points directly
                 color: color // Set the color based on organization
             }]
         });
 
-        // Render empty chart initially
+        // Render the chart
         chart.render();
-
-        // Function to animate the bar graph
-        function animateBarGraph(dataPoints) {
-            var newDataPoints = dataPoints.map(function(point) {
-                return {
-                    label: point.label,
-                    y: 0 // Start with zero height for all bars
-                };
-            });
-
-            var interval = setInterval(function () {
-                var done = true;
-                newDataPoints.forEach(function (point, i) {
-                    if (point.y < dataPoints[i].y) {
-                        point.y += Math.ceil((dataPoints[i].y - point.y) / 10);
-                        done = false;
-                    }
-                });
-                if (done) {
-                    clearInterval(interval);
-                }
-                chart.options.data[0].dataPoints = newDataPoints;
-                chart.render();
-            }, 50); // Adjust the interval to control animation speed
-        }
-
-        // Call animation function with data points
-        animateBarGraph(dataPoints);
     }
 
     // Function to fetch updated data from the server
