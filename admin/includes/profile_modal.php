@@ -9,6 +9,13 @@
           	</div>
           	<div class="modal-body">
             	<form class="form-horizontal" method="POST" action="profile_update.php?return=<?php echo basename($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data">
+              <div class="form-group">
+                  	<label for="email" class="col-sm-3 control-label">Email</label>
+
+                  	<div class="col-sm-9">
+                    	<input type="text" class="form-control" id="email" name="email" value="<?php echo $user['email']; ?>">
+                  	</div>
+                </div>
           		  <div class="form-group">
                   	<label for="username" class="col-sm-3 control-label">Username</label>
 
@@ -20,9 +27,16 @@
                     <label for="password" class="col-sm-3 control-label">Password</label>
 
                     <div class="col-sm-9"> 
-                      <input type="password" class="form-control" id="password" name="password" value="<?php echo $user['password']; ?>">
+                      <input type="password" class="form-control" id="password" name="password">
                     </div>
                 </div>
+                <div class="form-group">
+                    <label for="confirm_password" class="col-sm-3 control-label">Confirm Password</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
+                    </div>
+                </div>
+
                 <div class="form-group">
                   	<label for="firstname" class="col-sm-3 control-label">Firstname</label>
 
@@ -45,13 +59,24 @@
                     </div>
                 </div>
                 <hr>
-                <div class="form-group">
+                <!--<div class="form-group">
                     <label for="curr_password" class="col-sm-3 control-label">Current Password:</label>
 
                     <div class="col-sm-9">
                       <input type="password" class="form-control" id="curr_password" name="curr_password" placeholder="input current password to save changes" required>
                     </div>
+                </div>-->
+                <div class="form-group">
+                    <label for="otp" class="col-sm-3 control-label">OTP</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter OTP" required>
+                    </div>
+                    <div class="col-sm-3">
+                        <button type="button" class="btn btn-primary" id="sendOTP">Send OTP</button>
+                    </div>
                 </div>
+
+
           	</div>
           	<div class="modal-footer">
             	<button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
@@ -61,3 +86,25 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('sendOTP').addEventListener('click', function() {
+        var email = '<?php echo $user['email']; ?>';
+        sendOTP(email);
+    });
+});
+
+function sendOTP(email) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'send_otp.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var response = xhr.responseText;
+            alert(response); // Show response message (e.g., "OTP sent successfully")
+        }
+    };
+    xhr.send('email=' + encodeURIComponent(email));
+}
+</script>

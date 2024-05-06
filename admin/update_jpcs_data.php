@@ -1,40 +1,146 @@
 <?php
-// Include necessary files and initialize database connection
 include 'includes/session.php';
-include 'includes/db.php';
-
-// Initialize arrays to store updated data
-$candidatesData = array();
-
-// Fetch organization from GET parameter
-$organization = isset($_GET['organization']) ? $_GET['organization'] : '';
-
-// Prepare SQL query with organization filter for President and Vice President
-$sqlCandidates = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-                  positions.description AS position,
-                  COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-                  FROM positions 
-                  LEFT JOIN candidates ON positions.id = candidates.position_id
-                  LEFT JOIN votes ON candidates.id = votes.candidate_id
-                  LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-                  WHERE positions.description IN ('President', 'Vice President')
-                  AND voters1.organization != ''";
-
-// Add organization filter if organization is specified
-if (!empty($organization)) {
-    $sqlCandidates .= " AND voters1.organization = '$organization'";
-}
-
-// Group by candidate ID and position and fetch data for President and Vice President candidates
-$sqlCandidates .= " GROUP BY candidates.id, positions.description";
-$queryCandidates = $conn->query($sqlCandidates);
-while ($row = $queryCandidates->fetch_assoc()) {
-    $candidatesData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name'] . ' (' . $row['position'] . ')');
-}
-
-// Close database connection
-$conn->close();
-
-// Return the updated data as JSON
-echo json_encode($candidatesData);
+include 'includes/header.php';
 ?>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <?php include 'includes/navbar.php'; ?>
+    <?php include 'includes/menubar.php'; ?>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Election Results
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">Results</li>
+            </ol>
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <!-- Bar Graph for President, Vice President, and Secretary - JPCS Organization -->
+            <div class="row">
+                <!-- President, Vice President, and Secretary Bar Graph Box -->
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>Election Results - JPCS Organization</b></h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!-- Bar Graph Container for President, Vice President, and Secretary -->
+                            <div id="electionGraph" style="height: 300px;"></div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+    <!-- /.content-wrapper -->
+    <?php include 'includes/footer.php'; ?>
+    <?php include 'includes/votes_modal.php'; ?>
+</div>
+<!-- ./wrapper -->
+<?php include 'includes/scripts.php'; ?>
+<!-- Bar Graph Script -->
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    // Initialize the chart with empty data points
+    var chart = new CanvasJS.Chart("electionGraph", {
+        animationEnabled: true,
+        title: {
+            text: "Election Results - JPCS Organization"
+        },
+        axisY: {
+            title: "Vote Counts",
+            includeZero: true
+        },
+        data: [{
+            type: "column",
+            name: "President Votes",
+            showInLegend: true,
+            yValueFormatString: "#,##0",
+            dataPoints: [],
+            indexLabel: "{y}", // Displays y value on top of the bar
+            indexLabelFontColor: "black", // Color of the y value text
+            indexLabelPlacement: "inside", // Position of the y value text
+            indexLabelFontSize: 14, // Font size of the y value text
+            indexLabelFontWeight: "bold", // Font weight of the y value text
+            indexLabelMaxWidth: 40, // Max width of the y value text
+            indexLabelWrap: true, // Wrap text if exceeds max width
+            width: 40 // Width of the bars
+        }, {
+            type: "column",
+            name: "Vice President Votes",
+            showInLegend: true,
+            yValueFormatString: "#,##0",
+            dataPoints: [],
+            indexLabel: "{y}", // Displays y value on top of the bar
+            indexLabelFontColor: "black", // Color of the y value text
+            indexLabelPlacement: "inside", // Position of the y value text
+            indexLabelFontSize: 14, // Font size of the y value text
+            indexLabelFontWeight: "bold", // Font weight of the y value text
+            indexLabelMaxWidth: 40, // Max width of the y value text
+            indexLabelWrap: true, // Wrap text if exceeds max width
+            width: 40 // Width of the bars
+        }, {
+            type: "column",
+            name: "Secretary Votes",
+            showInLegend: true,
+            yValueFormatString: "#,##0",
+            dataPoints: [],
+            indexLabel: "{y}", // Displays y value on top of the bar
+            indexLabelFontColor: "black", // Color of the y value text
+            indexLabelPlacement: "inside", // Position of the y value text
+            indexLabelFontSize: 14, // Font size of the y value text
+            indexLabelFontWeight: "bold", // Font weight of the y value text
+            indexLabelMaxWidth: 40, // Max width of the y value text
+            indexLabelWrap: true, // Wrap text if exceeds max width
+            width: 40 // Width of the bars
+        }]
+    });
+    chart.render();
+
+    // Function to fetch updated data from the server for JPCS organization and update the chart
+    function updateData() {
+        $.ajax({
+            url: 'update_jpcs_data.php', // Change this to the URL of your update data script
+            type: 'GET',
+            dataType: 'json',
+            data: { organization: 'JPCS' }, // Hardcoded organization to JPCS
+            success: function(response) {
+                // Update data points for President Votes
+                chart.options.data[0].dataPoints = response.presidentData;
+                // Update data points for Vice President Votes
+                chart.options.data[1].dataPoints = response.vicePresidentData;
+                // Update data points for Secretary Votes
+                chart.options.data[2].dataPoints = response.secretaryData;
+                // Re-render the chart with updated data
+                chart.render();
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching data: ' + error);
+            }
+        });
+    }
+
+    // Call the updateData function initially
+    updateData();
+
+    // Call the updateData function every 60 seconds (adjust as needed)
+    setInterval(updateData, 60000); // 60000 milliseconds = 60 seconds
+</script>
+
+</body>
+</html>

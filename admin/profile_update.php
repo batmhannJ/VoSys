@@ -1,54 +1,60 @@
 <?php
-	include 'includes/session.php';
+include 'includes/session.php';
 
-	if(isset($_GET['return'])){
-		$return = $_GET['return'];
-		
-	}
-	else{
-		$return = 'home.php';
-	}
+if (isset($_GET['return'])) {
+    $return = $_GET['return'];
+} else {
+    $return = 'home.php';
+}
 
-	if(isset($_POST['save'])){
-		$curr_password = $_POST['curr_password'];
-		$username = $_POST['username'];
-		$password = $_POST['password'];
-		$firstname = $_POST['firstname'];
-		$lastname = $_POST['lastname'];
-		$photo = $_FILES['photo']['name'];
-		if(password_verify($curr_password, $user['password'])){
-			if(!empty($photo)){
-				move_uploaded_file($_FILES['photo']['tmp_name'], '../images/'.$photo);
-				$filename = $photo;	
-			}
-			else{
-				$filename = $user['photo'];
-			}
+if (isset($_POST['save'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $firstname = $_POST['firstname'];
+    $lastname = $_POST['lastname'];
+    $photo = $_FILES['photo']['name'];
+    $email = $_POST['email'];
+    $otp = $_POST['otp'];
 
-			if($password == $user['password']){
-				$password = $user['password'];
-			}
-			else{
-				$password = password_hash($password, PASSWORD_DEFAULT);
-			}
+    // Check if the entered OTP matches the stored OTP
+    if (isset($_SESSION['otp']) && $_SESSION['otp'] == $otp) {
+        // OTP matched, proceed with saving the updated information
+        if (password_verify($curr_password, $user['password'])) {
+            // Hash the new password
+            $new_password = password_hash($password, PASSWORD_DEFAULT);
 
-			$sql = "UPDATE admin SET username = '$username', password = '$password', firstname = '$firstname', lastname = '$lastname', photo = '$filename' WHERE id = '".$user['id']."'";
-			if($conn->query($sql)){
-				$_SESSION['success'] = 'Admin profile updated successfully';
-			}
-			else{
-				$_SESSION['error'] = $conn->error;
-			}
-			
-		}
-		else{
-			$_SESSION['error'] = 'Incorrect password';
-		}
-	}
-	else{
-		$_SESSION['error'] = 'Fill up required details first';
-	}
+            // Your saving logic goes here
+            if (!empty($photo)) {
+                move_uploaded_file($_FILES['photo']['tmp_name'], '../images/'.$photo);
+                $filename = $photo;	
+            } else {
+                $filename = $user['photo'];
+            }
 
-	header('location:'.$return);
+            $sql = "UPDATE admin SET email = '$email', username = '$username', password = '$new_password', firstname = '$firstname', lastname = '$lastname', photo = '$filename' WHERE id = '".$user['id']."'";
+            if ($conn->query($sql)) {
+                $_SESSION['success'] = 'Admin profile updated successfully';
+            } else {
+                $_SESSION['error'] = $conn->error;
+            }
+        } else {
+            $_SESSION['error'] = 'Incorrect password';
+        }
 
+        // Clear the OTP from session
+        unset($_SESSION['otp']);
+
+        header('Location: '.$return);
+        exit;
+    } else {
+        // OTP verification failed
+        $_SESSION['error'] = 'OTP verification failed';
+        header('Location: '.$return);
+        exit;
+    }
+} else {
+    $_SESSION['error'] = 'Fill up required details first';
+    header('Location: '.$return);
+    exit;
+}
 ?>
