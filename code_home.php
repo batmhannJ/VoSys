@@ -208,7 +208,6 @@
     }
 }
 
-
 /* Adjusted style for platform button */
 .platform {
     background-color: #007bff;
@@ -219,6 +218,8 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     margin-left: auto; /* Push platform button to the end */
+    display: flex; /* Use flexbox to align icon and text */
+    align-items: center; /* Center items vertically */
 }
 
 .platform:hover {
@@ -230,12 +231,18 @@
     .platform {
         padding: 6px 16px; /* Adjust padding for smaller screens */
         font-size: 14px; /* Decrease font size for smaller screens */
+        justify-content: center; /* Center content horizontally */
     }
 
-    .platform::after {
-        content: none; /* Hide the content (word "Platform") on smaller screens */
+    .platform i.fa {
+        margin-right: 0; /* Remove right margin for icon */
+    }
+
+    .platform span.text {
+        display: none; /* Hide text on smaller screens */
     }
 }
+
 
 
 
