@@ -42,14 +42,15 @@
                 <div class="form-group">
                     <label for="starttime" class="col-sm-3 control-label">Start Time</label>
                     <div class="col-sm-9">
-                        <input type="datetime-local" class="form-control" id="starttime" name="starttime" required min="<?php echo date('Y-m-d'); ?>" required>
+                        <input type="datetime-local" class="form-control" id="starttime" name="starttime" required min="<?php echo date('Y-m-d\TH:i'); ?>">
                     </div>
+
                 </div>
                 <!-- Add end time input -->
                     <div class="form-group">
                         <label for="endtime" class="col-sm-3 control-label">End Time</label>
                         <div class="col-sm-9">
-                            <input type="datetime-local" class="form-control" id="endtime" name="endtime" required min="<?php echo date('Y-m-d'); ?>" required>
+                            <input type="datetime-local" class="form-control" id="starttime" name="starttime" required min="<?php echo date('Y-m-d\TH:i'); ?>">
                         </div>
                     </div>
 
