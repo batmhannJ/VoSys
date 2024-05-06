@@ -95,7 +95,7 @@ include 'includes/header.php';
     // Function to fetch updated data from the server for JPCS organization
     function updateData() {
         $.ajax({
-            url: 'update_data.php', // Change this to the URL of your update data script
+            url: 'update_jpcs_data.php', // Change this to the URL of your update data script
             type: 'GET',
             dataType: 'json',
             data: {organization: 'JPCS'}, // Hardcoded organization to JPCS
