@@ -270,10 +270,4 @@
     });
 </script>
 </body>
-
-<style>
-    content-wrapper {
-        background-color: maroon;
-    }
-</style>
 </html>
