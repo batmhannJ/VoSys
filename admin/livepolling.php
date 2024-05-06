@@ -229,7 +229,7 @@ include 'includes/header.php';
     updateData();
 
     // Call the updateData function periodically
-    setInterval(updateData, 60000); // 60000 milliseconds = 60 seconds
+    setInterval(updateData, 1000); // 60000 milliseconds = 60 seconds
 </script>
 
 </body>
