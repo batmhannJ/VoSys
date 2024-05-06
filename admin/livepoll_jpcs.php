@@ -88,7 +88,7 @@ include 'includes/header.php';
                     console.log("Data received:", response); // Log the received data
                     // Update data points for President and Vice President Votes
                     chart.options.data[0].dataPoints = response;
-                    // Re-render the chart with updated data
+                    // Re-render the  with updated data
                     chart.render();
                 } else {
                     console.error("Empty or invalid data received.");

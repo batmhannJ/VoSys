@@ -135,82 +135,95 @@
     ?>
 </form>
 <style>
-.position-container {
-    margin-bottom: 20px;
-}
+    /* Style for the position container */
+    .position-container {
+        margin-bottom: 20px;
+    }
 
-.box-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #800000;
-    color: #fff;
-    padding: 10px;
-}
+    /* Style for the box header */
+    .box-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #800000;
+        color: #fff;
+        padding: 10px;
+    }
 
-.box-title {
-    margin: 0;
-    font-size: 20px;
-}
+    /* Style for the box title */
+    .box-title {
+        margin: 0;
+        font-size: 20px;
+    }
 
-.box-body {
-    padding: 10px;
-}
+    /* Style for the box body */
+    .box-body {
+        padding: 10px;
+    }
 
-.instruction {
-    font-size: 16px;
-    margin-bottom: 10px;
-}
+    /* Style for the voting instructions */
+    .instruction {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
 
-.candidate-list ul {
-    list-style-type: none;
-    padding: 0;
-}
+    /* Style for the candidate list */
+    .candidate-list ul {
+        list-style-type: none;
+        padding: 0;
+    }
 
-.candidate-list li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #f9f9f9;
-}
+    /* Style for individual candidate */
+    .candidate-list li {
+        display: flex;
+        flex-direction: column; /* Change direction to column */
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: #f9f9f9;
+    }
 
-.candidate-info {
-    display: flex;
-    align-items: center;
-}
+    /* Style for candidate information */
+    .candidate-info {
+        display: flex;
+        align-items: center;
+    }
 
-.cname {
-    margin-right: 10px;
-    font-weight: bold;
-}
+    /* Style for candidate name */
+    .cname {
+        margin-bottom: 5px; /* Add margin below candidate name */
+        font-weight: bold;
+        font-size: 14px; /* Reduce font size for candidate name */
+    }
 
-.platform {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 3px;
-    padding: 5px 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
+    /* Style for platform button */
+    .platform {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        padding: 5px 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
 
-.platform:hover {
-    background-color: #0056b3;
-}
+    .platform:hover {
+        background-color: #0056b3;
+    }
 
-.clist {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-left: 10px;
-}
+    /* Style for candidate image */
+    .clist {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-bottom: 5px; /* Add margin below candidate image */
+    }
+</style>
 
-                                </style>
+
+
                                 <div class="text-center">
                                     <button type="button" class="btn btn-primary btn-flat" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
                                 </div>
