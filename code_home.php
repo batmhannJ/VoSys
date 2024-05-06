@@ -31,24 +31,16 @@
 .page-header.title img {
     margin-right: 20px;
     border: 3px solid #fff; /* Buhayin ang border ng larawan */
+    border-radius: 50%; /* Rounded corners para sa larawan */
+    width: 80px; /* Laki ng larawan */
+    height: 80px; /* Laki ng larawan */
+    object-fit: cover; /* Para sa tamang pag-adjust ng larawan */
 }
 
 .title-text h2 {
     margin: 0;
     font-size: 28px; /* Dagdag na laki ng font */
     line-height: 1.6; /* I-adjust ang line height para sa mas mahusay na pagbabasa */
-}
-
-/* Iba pang mga estilo para sa image */
-.page-header.title img {
-    border-radius: 50%;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-/* Iba pang mga estilo para sa teksto */
-.title-text h2 {
-    font-family: 'Arial', sans-serif;
-    font-weight: bold;
 }
 
 /* Media query para sa mas maliit na mga screen */
@@ -60,6 +52,10 @@
 
     .page-header.title img {
         margin: 0 0 10px 0;
+    }
+
+    .title-text h2 {
+        font-size: 24px; /* I-adjust ang laki ng font para sa mas maliit na mga screen */
     }
 }
 
