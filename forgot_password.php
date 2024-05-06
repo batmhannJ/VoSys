@@ -42,7 +42,7 @@ if (isset($_POST['resetPass'])) {
 }
 
 // Redirect to the password reset form if accessed directly
-header("Location: password_reset_form.php");
+header("Location: forgot_password.php");
 exit();
 ?>
 
