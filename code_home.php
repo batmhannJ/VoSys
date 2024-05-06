@@ -135,8 +135,7 @@
     ?>
 </form>
 <style>
-    /* Style for the position container */
-   /* Style for the position container */
+/* Style for the position container */
 .position-container {
     margin-bottom: 20px;
 }
@@ -190,15 +189,12 @@
 .candidate-info {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 100%;
 }
 
 /* Style for candidate name */
 .cname {
-    margin: 0;
+    margin-right: 10px;
     font-weight: bold;
-    font-size: 14px;
 }
 
 /* Style for platform button */
@@ -210,34 +206,22 @@
     padding: 5px 10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-top: 5px;
 }
 
 .platform:hover {
     background-color: #0056b3;
 }
 
-/* Style for the candidate image container */
-.image-container {
+/* Style for candidate image */
+.clist {
     width: 100px;
     height: 100px;
-    border-radius: 50%;
-    overflow: hidden;
-    background-color: #800000; /* Maroon background color */
-}
-
-/* Style for the candidate image */
-.clist {
-    width: 100%;
-    height: auto; /* Ensure aspect ratio is maintained */
-    max-width: 100%; /* Prevent image from exceeding container width */
-    max-height: 100%; /* Prevent image from exceeding container height */
     object-fit: cover;
+    border-radius: 50%;
+    margin-left: 10px;
 }
 
-
-</style>
-
+                                </style>
                                 <div class="text-center">
                                     <button type="button" class="btn btn-primary btn-flat" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
                                 </div>
