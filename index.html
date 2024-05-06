@@ -386,9 +386,9 @@
 
 <script>
   // Function to update the countdown timer
-  function updateCountdown(endTime) {
+  function updateCountdown(endtime) {
       var now = new Date();
-      var timeRemaining = endTime - now;
+      var timeRemaining = endtime - now;
       
       // If time remaining is negative or zero, display message
       if (timeRemaining <= 0) {
@@ -396,7 +396,7 @@
           document.getElementById("hour").innerText = "00";
           document.getElementById("min").innerText = "00";
           document.getElementById("sec").innerText = "00";
-          document.getElementById("electionTitle").innerText = "NO ONGOING ELECTION. Stay Tuned, Madlang Pipol!";
+          document.getElementById("title").innerText = "NO ONGOING ELECTION. Stay Tuned, Madlang Pipol!";
           return;
       }
 
@@ -425,10 +425,10 @@
       xhr.onreadystatechange = function () {
           if (xhr.readyState == XMLHttpRequest.DONE) {
               if (xhr.status == 200) {
-                  var endTime = new Date(xhr.responseText);
-                  updateCountdown(endTime);
+                  var endtime = new Date(xhr.responseText);
+                  updateCountdown(endtime);
                   setInterval(function() {
-                      updateCountdown(endTime);
+                      updateCountdown(endtime);
                   }, 1000);
               }
           }
@@ -447,7 +447,7 @@
                   var response = JSON.parse(xhr.responseText);
                   if (response && response.organization) {
                       var organizationName = response.organization;
-                      document.getElementById("electionTitle").innerText = "Remaining Time to vote for " + organizationName;
+                      document.getElementById("title").innerText = "Remaining Time to vote for " + organizationName;
                       updateCountdown(new Date(response.endtime));
                   } else {
                       // Display message when there's no active election
@@ -455,7 +455,7 @@
                       document.getElementById("hour").innerText = "00";
                       document.getElementById("min").innerText = "00";
                       document.getElementById("sec").innerText = "00";
-                      document.getElementById("electionTitle").innerText = "NO ONGOING ELECTION. Stay Tuned, Madlang Pipol!";
+                      document.getElementById("title").innerText = "NO ONGOING ELECTION. Stay Tuned, Madlang Pipol!";
                   }
               }
           }
