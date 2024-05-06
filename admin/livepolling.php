@@ -120,33 +120,7 @@ include 'includes/header.php';
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     // Function to generate bar graph with animation
-    function generateAnimatedBarGraph(dataPoints, containerId, organization) {
-        var color;
-
-        // Set color based on organization
-        switch (organization) {
-            case 'JPCS':
-                color = "#4CAF50"; // Green
-                break;
-            case 'CSC':
-                color = "#000000"; // Black
-                break;
-            case 'CODE-TG':
-                color = "#800000"; // Maroon
-                break;
-            case 'YMF':
-                color = "#00008b"; // Dark Blue
-                break;
-            case 'HMSO':
-                color = "#cba328"; // Gold
-                break;
-            case 'PASOA':
-                color = "#e6cc00"; // Yellow
-                break;
-            default:
-                color = "#000000"; // Default to Black
-        }
-
+    function generateAnimatedBarGraph(dataPoints, containerId) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
             title:{
@@ -165,8 +139,7 @@ include 'includes/header.php';
             },
             data: [{
                 type: "bar", // Change type to "bar"
-                dataPoints: dataPoints, // Pass data points directly
-                color: color // Set the color based on organization
+                dataPoints: dataPoints // Pass data points directly
             }]
         });
 
@@ -175,21 +148,21 @@ include 'includes/header.php';
     }
 
     // Function to fetch updated data from the server
-    function updateData() {
+    function updateData(organization) {
         $.ajax({
             url: 'update_data.php', // Change this to the URL of your update data script
             type: 'GET',
             dataType: 'json',
-            data: {organization: $('#organization').val()}, // Pass the selected organization to the server
+            data: {organization: organization}, // Pass the selected organization to the server
             success: function(response) {
                 // Update president bar graph with animation
-                generateAnimatedBarGraph(response.presidentData, "presidentGraph", $('#organization').val());
+                generateAnimatedBarGraph(response.presidentData, "presidentGraph");
 
                 // Update vice president bar graph with animation
-                generateAnimatedBarGraph(response.vicePresidentData, "vicePresidentGraph", $('#organization').val());
+                generateAnimatedBarGraph(response.vicePresidentData, "vicePresidentGraph");
 
                 // Update secretary bar graph with animation
-                generateAnimatedBarGraph(response.secretaryData, "secretaryGraph", $('#organization').val());
+                generateAnimatedBarGraph(response.secretaryData, "secretaryGraph");
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data: ' + error);
@@ -198,7 +171,12 @@ include 'includes/header.php';
     }
 
     // Call the updateData function initially
-    updateData();
+    updateData($('#organization').val());
+
+    // Bind change event to organization select element
+    $('#organization').change(function() {
+        updateData($(this).val());
+    });
 </script>
 
 </body>
