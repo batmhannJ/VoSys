@@ -118,12 +118,11 @@
                                 $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
                                 echo '
                                 <li>
-                                <div class="candidate-info">
-                                <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
-                                <div class="platform-container">
-                                    <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'"><i class="fa fa-search"></i> Platform</button>
-                                </div>
-                            </div>
+                                    <div class="candidate-info">
+                                        '.$input.'
+                                        <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
+                                        <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'"><i class="fa fa-search"></i> Platform</button>
+                                    </div>
                                     <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
                                 </li>';
                             }
@@ -187,7 +186,7 @@
     background-color: #f9f9f9;
 }
 
-/* Style for the candidate information */
+/* Style for candidate information */
 .candidate-info {
     display: flex;
     align-items: center;
@@ -202,12 +201,6 @@
     font-size: 14px;
 }
 
-/* Style for platform button container */
-.platform-container {
-    margin-left: auto; /* Push platform button to the right */
-    margin-top: 5px; /* Adjust margin from candidate name */
-}
-
 /* Style for platform button */
 .platform {
     background-color: #007bff;
@@ -217,12 +210,12 @@
     padding: 5px 10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-top: 5px;
 }
 
 .platform:hover {
     background-color: #0056b3;
 }
-
 
 /* Style for candidate image */
 .clist {
