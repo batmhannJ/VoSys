@@ -72,9 +72,7 @@ include 'includes/header.php';
                 </div>
                 <div class="form-group has-feedback">
                         <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter OTP" required>
-                    <div class="col-sm-3">
                         <button type="button" class="btn btn-primary" id="sendOTP">Send OTP</button>
-                    </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
