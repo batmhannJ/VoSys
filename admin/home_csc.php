@@ -129,9 +129,9 @@
               <?php
                 $sql = "SELECT * 
                         FROM votes 
-                        JOIN voters ON votes.voters_id = voters.id 
+                        JOIN voters ON votes_csc.voters_id = voters.id 
                         WHERE voters.organization = 'CSC' 
-                        GROUP BY votes.voters_id";
+                        GROUP BY votes_csc.voters_id";
                 $query = $conn->query($sql);
 
                 echo "<h3>".$query->num_rows."</h3>";
