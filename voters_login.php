@@ -190,7 +190,7 @@ label {
   display: inline-block;
   width: 100%;
   height: 43px;
-  background-color: maroon;
+  background-color: #1357a6;
   color: #fff;
   border: none;
   cursor: pointer;
@@ -201,6 +201,24 @@ label {
 }
 
 .sign-btn:hover {
+  background-color: gray;
+}
+
+.back-btn {
+  display: inline-block;
+  width: 100%;
+  height: 43px;
+  background-color: maroon;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.8rem;
+  font-size: 0.8rem;
+  margin-bottom: 2rem;
+  transition: 0.3s;
+}
+
+.back-btn:hover {
   background-color: gray;
 }
 
@@ -501,6 +519,7 @@ main.sign-up-mode .carousel {
             </div>
 
                 <input type="submit" name="login" value="Sign In" class="sign-btn" style="font-size:15px;">
+                <input type="submit" name="login" value="Back to Homepage" class="back-btn" style="font-size:15px;">
                         <?php
                 if (isset($_SESSION['error'])) {
                     echo "
@@ -511,6 +530,7 @@ main.sign-up-mode .carousel {
                     unset($_SESSION['error']);
                 }
                 ?>
+                
               </div>
             </form>
           </div>
