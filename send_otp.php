@@ -12,7 +12,23 @@ $email = $_POST['email'];
 $subject = 'OTP Verification';
 $message = 'Your OTP is: ' . $otp;
 
-if (mail($email, $subject, $message)) {
+// Create PHPMailer instance
+$mail = new PHPMailer();
+$mail->isSMTP();
+$mail->Host = 'smtp.gmail.com';  // Specify SMTP host
+$mail->SMTPAuth = true;
+$mail->Username = 'olshco.electionupdates@gmail.com'; // SMTP username
+$mail->Password = 'ljzujblsyyprijmx'; // SMTP password
+$mail->SMTPSecure = 'tls';
+$mail->Port = 587;  // SMTP port
+
+$mail->setFrom('olshco.electionupdates@gmail.com', 'EL-UPS OLSHCO');
+$mail->addAddress($email);     // Add recipient
+$mail->isHTML(true);                                  // Set email format to HTML
+$mail->Subject = $subject;
+$mail->Body    = $message;
+
+if ($mail->send()) {
     // Store OTP in the database
     $stmt = $conn->prepare("INSERT INTO otp_verification (email, otp) VALUES (?, ?)");
     $stmt->bind_param("si", $email, $otp); // Bind parameters
