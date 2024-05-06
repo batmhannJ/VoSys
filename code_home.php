@@ -11,21 +11,23 @@
           <h1 class="page-header text-center title">
     <img src="images/codg.jpg" alt="CSC Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
     <div class="title-text">
-        <h2>Coalition of Disciplined</h2>
-        <h2>Future Enforcers of Todays</h2>
-        <h2>Generation Election</h2>
+        <h2>Coalition of Disciplined Future Enforcers of Todays Generation Election</h2>
     </div>
 </h1>
 <style>
-    .page-header.title {
+/* Iba pang mga estilo para sa text header */
+.page-header.title {
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
+    background-color: #800000;
+    color: #fff;
+    padding: 20px;
 }
 
 .page-header.title img {
-    margin-right: 10px;
+    margin-right: 20px;
 }
 
 .title-text h2 {
@@ -33,6 +35,31 @@
     font-size: 24px;
     line-height: 1.5;
 }
+
+/* Iba pang mga estilo para sa image */
+.page-header.title img {
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Iba pang mga estilo para sa teksto */
+.title-text h2 {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+}
+
+/* Media query para sa mas maliit na mga screen */
+@media (max-width: 768px) {
+    .page-header.title {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .page-header.title img {
+        margin: 0 0 10px 0;
+    }
+}
+
 
 </style>
 	        <div class="row">
