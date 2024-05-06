@@ -214,8 +214,7 @@
 
 /* Bagong istilo para sa container ng platform button */
 .platform-container {
-    margin-top: auto; /* Ilagay ang platform button sa ibaba */
-    margin-left: 10px; /* Mag-adjust ng puwang mula sa kaliwang gilid */
+    margin-top: 5px; /* Itaas ang button mula sa pangalan ng kandidato */
 }
 
 /* Bagong istilo para sa platform button */
@@ -232,6 +231,7 @@
 .platform:hover {
     background-color: #0056b3;
 }
+
 
 
 /* Style for candidate image */
