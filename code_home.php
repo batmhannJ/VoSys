@@ -248,10 +248,25 @@
         background-color: #f9f9f9;
     }
 
-    /* Adjust candidate image alignment */
+   /* Updated styles for candidate image */
+.clist {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 10px;
+    grid-column: span 1;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
     .clist {
-        margin-right: 0; /* Remove margin-right */
+        width: 80px; /* Reduce image width on smaller screens */
+        height: 80px; /* Reduce image height on smaller screens */
+        margin-right: 5px; /* Adjust margin for smaller screens */
     }
+}
+
 }
 
 </style>
