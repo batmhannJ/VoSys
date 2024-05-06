@@ -52,7 +52,6 @@
               <table id="example1" class="table table-bordered">
                 <thead>
                   <th>No.</th>
-                  <th>ID number</th>
                   <th>Organization</th>
                   <th>Lastname</th>
                   <th>Firstname</th>
@@ -71,7 +70,6 @@
                       echo "
                         <tr>
                         <td>".$i++."</td>
-                        <td>".$row['id']."</td>
                         <td>".$row['organization']."</td>
                           <td>".$row['lastname']."</td>
                           <td>".$row['firstname']."</td>
