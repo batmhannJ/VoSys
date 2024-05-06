@@ -152,8 +152,8 @@
               <?php
                 $sql = "SELECT voters.id, voters.lastname
         FROM voters
-        LEFT JOIN votes ON voters.id = votes.voters_id
-        WHERE votes.voters_id IS NULL
+        LEFT JOIN votes_csc ON voters.id = votes_csc.voters_id
+        WHERE votes_csc.voters_id IS NULL
         AND voters.organization = 'CSC'";
                 $query = $conn->query($sql);
 
