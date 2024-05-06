@@ -11,7 +11,7 @@
 	      <section class="content">
 	      	<h1 class="page-header text-center title">
 	      		<img src="images/codg.jpg" alt="CSC Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
-	      		<b>CODE-TG - Coalition of Disciplined<br>Future Enforcers of Todays <br>Generation Election</b></h1>
+	      		<b>Coalition of Disciplined<br>Future Enforcers of Todays <br>Generation Election</b></h1>
 	        <div class="row">
 	        	<div class="col-sm-10 col-sm-offset-1">
 	        		<?php
@@ -146,29 +146,82 @@
                                 }   
                                 ?>
                                 <div class="text-center">
-                                    <button type="button" class="btn btn-primary btn-flat" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
-                                </div>
+    <button type="button" class="btn btn-primary btn-flat" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
+</div>
 
-                                <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
+<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
 
-                                        <div class="modal-body">
-                                            <p>Are you sure you want to submit your vote?</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-success btn-flat" id="preview"><i class="fa fa-file-text"></i> Preview</button> 
-                                            <button type="submit" class="btn btn-primary" id="submitBtn" name="vote_code">Yes, Submit</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to submit your vote?</p>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-flat" id="preview"><i class="fa fa-file-text"></i> Preview</button> 
+                <button type="submit" class="btn btn-primary" id="submitBtnModal" name="vote_code">Yes, Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+                            <style>
+    /* Button style */
+    #submitBtn {
+        padding: 100px 200px;
+        border-radius: 5px;
+        font-size: 16px;
+        background-color: #007bff; /* Blue background color */
+        color: #fff; /* White text color */
+        border: none; /* No border */
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    /* Button hover effect */
+    #submitBtn:hover {
+        background-color: #0056b3; /* Darker shade of blue */
+    }
+
+    /* Modal title style */
+    .modal-title {
+        font-size: 20px;
+    }
+
+    /* Modal body style */
+    .modal-body {
+        font-size: 16px;
+        color: #333;
+    }
+
+    /* Modal footer style */
+    .modal-footer {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+
+    /* Preview button style */
+    #preview {
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        background-color: #28a745; /* Green background color */
+        color: #fff; /* White text color */
+        border: none; /* No border */
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    /* Preview button hover effect */
+    #preview:hover {
+        background-color: #218838; /* Darker shade of green */
+    }
+</style>
 
                             </form>
 

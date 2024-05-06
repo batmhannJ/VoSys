@@ -71,15 +71,7 @@ include 'includes/header.php';
             name: "President and Vice President Votes",
             showInLegend: true,
             yValueFormatString: "#,##0",
-            dataPoints: [],
-            indexLabel: "{y}", // Displays y value on top of the bar
-            indexLabelFontColor: "black", // Color of the y value text
-            indexLabelPlacement: "inside", // Position of the y value text
-            indexLabelFontSize: 14, // Font size of the y value text
-            indexLabelFontWeight: "bold", // Font weight of the y value text
-            indexLabelMaxWidth: 40, // Max width of the y value text
-            indexLabelWrap: true, // Wrap text if exceeds max width
-            width: 40 // Width of the bars
+            dataPoints: []
         }]
     });
     chart.render();
@@ -87,18 +79,23 @@ include 'includes/header.php';
     // Function to fetch updated data from the server for JPCS organization and update the chart
     function updateData() {
         $.ajax({
-            url: 'update_jpcs_data.php', // Change this to the URL of your update data script
+            url: 'update_jpcs_data.php', // URL of your update data script
             type: 'GET',
             dataType: 'json',
             data: { organization: 'JPCS' }, // Hardcoded organization to JPCS
             success: function(response) {
-                // Update data points for President and Vice President Votes
-                chart.options.data[0].dataPoints = response.presidentAndVicePresidentData;
-                // Re-render the chart with updated data
-                chart.render();
+                if (response && response.length > 0) {
+                    console.log("Data received:", response); // Log the received data
+                    // Update data points for President and Vice President Votes
+                    chart.options.data[0].dataPoints = response;
+                    // Re-render the chart with updated data
+                    chart.render();
+                } else {
+                    console.error("Empty or invalid data received.");
+                }
             },
-            error: function(xhr, status, error) {
-                console.error('Error fetching data: ' + error);
+            error: function(xhr, status, eror) {
+                console.error('Error fetching data:', error); // Log any errors
             }
         });
     }

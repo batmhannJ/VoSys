@@ -126,16 +126,16 @@
           <!-- small box -->
           <div class="small-box">
             <div class="inner">
-              <?php
-                $sql = "SELECT * 
-                        FROM votes 
-                        JOIN voters ON votes.voters_id = voters.id 
-                        WHERE voters.organization = 'CSC' 
-                        GROUP BY votes.voters_id";
-                $query = $conn->query($sql);
+            <?php
+              $sql = "SELECT COUNT(*) AS total_votes
+                      FROM votes_csc 
+                      JOIN voters ON votes_csc.voters_id = voters.id";
+              $query = $conn->query($sql);
+              $row = $query->fetch_assoc();
+              $totalVotes = $row['total_votes'];
 
-                echo "<h3>".$query->num_rows."</h3>";
-              ?>
+              echo "<h3>".$totalVotes."</h3>";
+            ?>
 
               <p>Voters Voted</p>
             </div>
@@ -153,8 +153,8 @@
               <?php
                 $sql = "SELECT voters.id, voters.lastname
         FROM voters
-        LEFT JOIN votes ON voters.id = votes.voters_id
-        WHERE votes.voters_id IS NULL
+        LEFT JOIN votes_csc ON voters.id = votes_csc.voters_id
+        WHERE votes_csc.voters_id IS NULL
         AND voters.organization = 'CSC'";
                 $query = $conn->query($sql);
 
