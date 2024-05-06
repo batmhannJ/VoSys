@@ -123,7 +123,11 @@
                                         <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
                                         
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'"><i class="fa fa-search"></i> Platform</button>
+                                    <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">
+                                    <i class="fa fa-search"></i>
+                                    <span class="text">Platform</span>
+                                </button>
+                                
                                     <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
                                 </li>';
                             }
@@ -137,7 +141,6 @@
 </form>
 <style>
  /* Style for the position container */
-/* Style for the position container */
 .position-container {
     margin: 20px auto; /* Center the container horizontally and add margin on top and bottom */
     max-width: 800px; /* Set a maximum width to make it responsive */
@@ -208,7 +211,7 @@
     }
 }
 
-//* Adjusted style for platform button */
+/* Adjusted style for platform button */
 .platform {
     background-color: #007bff;
     color: #fff;
@@ -243,11 +246,6 @@
     }
 }
 
-
-
-
-
-
 /* Updated styles for candidate image */
 .clist {
     width: 100px;
@@ -279,32 +277,32 @@
         background-color: #f9f9f9;
     }
 
-   /* Updated styles for candidate image */
-.clist {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-right: 10px;
-    grid-column: span 1;
-}
-
-/* Media query for smaller screens */
-@media (max-width: 768px) {
-    .candidate-list li {
-        display: flex;
-        align-items: center; /* Center items vertically */
-        margin-bottom: 10px;
-    }
-
+    /* Updated styles for candidate image */
     .clist {
-        width: 80px; /* Reduce image width on smaller screens */
-        height: 80px; /* Reduce image height on smaller screens */
-        margin-right: 10px; /* Adjust margin for smaller screens */
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-right: 10px;
+        grid-column: span 1;
+    }
+
+    /* Media query for smaller screens */
+    @media (max-width: 768px) {
+        .candidate-list li {
+            display: flex;
+            align-items: center; /* Center items vertically */
+            margin-bottom: 10px;
+        }
+
+        .clist {
+            width: 80px; /* Reduce image width on smaller screens */
+            height: 80px; /* Reduce image height on smaller screens */
+            margin-right: 10px; /* Adjust margin for smaller screens */
+        }
     }
 }
 
-}
 
 </style>
 
