@@ -219,8 +219,8 @@
 
 /* Style for the candidate image container */
 .image-container {
-    width: 50px;
-    height: 50px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     overflow: hidden;
     background-color: #800000; /* Maroon background color */
@@ -229,7 +229,9 @@
 /* Style for the candidate image */
 .clist {
     width: 100%;
-    height: 100%;
+    height: auto; /* Ensure aspect ratio is maintained */
+    max-width: 100%; /* Prevent image from exceeding container width */
+    max-height: 100%; /* Prevent image from exceeding container height */
     object-fit: cover;
 }
 
