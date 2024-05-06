@@ -71,7 +71,6 @@ include 'includes/header.php';
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 </div>
                 <div class="form-group">
-                    <label for="otp" class="col-sm-3 control-label">OTP</label>
                     <div class="col-sm-6">
                         <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter OTP" required>
                     </div>
