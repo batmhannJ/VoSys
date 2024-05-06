@@ -209,7 +209,7 @@
 }
 
 
-/* Adjusted style for platform button */
+/* Style for the platform button */
 .platform {
     background-color: #007bff;
     color: #fff;
@@ -218,11 +218,20 @@
     padding: 5px 10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-left: auto; /* Push platform button to the end */
+    margin-left: auto; /* Push platform button to the end by default */
 }
 
 .platform:hover {
     background-color: #0056b3;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .platform {
+        margin: 10px auto; /* Center the platform button horizontally and add margin on top */
+        display: block; /* Change display to block to make it full width */
+        width: fit-content; /* Adjust width to fit its content */
+    }
 }
 
 /* Updated styles for candidate image */
