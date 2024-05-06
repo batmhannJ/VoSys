@@ -21,9 +21,9 @@ include 'includes/header.php';
         </section>
         <!-- Main content -->
         <section class="content">
-            <!-- Bar Graph for President, Vice President, and Secretary - JPCS Organization -->
+            <!-- Bar Graph for President and Vice President - JPCS Organization -->
             <div class="row">
-                <!-- President, Vice President, and Secretary Bar Graph Box -->
+                <!-- President and Vice President Bar Graph Box -->
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
@@ -31,7 +31,7 @@ include 'includes/header.php';
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <!-- Bar Graph Container for President, Vice President, and Secretary -->
+                            <!-- Bar Graph Container for President and Vice President -->
                             <div id="electionGraph" style="height: 300px;"></div>
                         </div>
                         <!-- /.box-body -->
@@ -63,44 +63,15 @@ include 'includes/header.php';
             text: "Election Results - JPCS Organization"
         },
         axisY: {
-            title: "President and Vice President Votes",
+            title: "Vote Counts",
             includeZero: true
-        },
-        axisY2: {
-            title: "Secretary Votes",
-            includeZero: true,
-            suffix: ""
         },
         data: [{
             type: "column",
             name: "President and Vice President Votes",
             showInLegend: true,
             yValueFormatString: "#,##0",
-            dataPoints: [],
-            indexLabel: "{y}", // Displays y value on top of the bar
-            indexLabelFontColor: "black", // Color of the y value text
-            indexLabelPlacement: "inside", // Position of the y value text
-            indexLabelFontSize: 14, // Font size of the y value text
-            indexLabelFontWeight: "bold", // Font weight of the y value text
-            indexLabelMaxWidth: 40, // Max width of the y value text
-            indexLabelWrap: true, // Wrap text if exceeds max width
-            width: 40, // Width of the bars
-            yAxisType: "primary" // Associate with primary y-axis
-        }, {
-            type: "column",
-            name: "Secretary Votes",
-            showInLegend: true,
-            yValueFormatString: "#,##0",
-            dataPoints: [],
-            indexLabel: "{y}", // Displays y value on top of the bar
-            indexLabelFontColor: "black", // Color of the y value text
-            indexLabelPlacement: "inside", // Position of the y value text
-            indexLabelFontSize: 14, // Font size of the y value text
-            indexLabelFontWeight: "bold", // Font weight of the y value text
-            indexLabelMaxWidth: 40, // Max width of the y value text
-            indexLabelWrap: true, // Wrap text if exceeds max width
-            width: 40, // Width of the bars
-            yAxisType: "secondary" // Associate with secondary y-axis
+            dataPoints: []
         }]
     });
     chart.render();
@@ -108,23 +79,22 @@ include 'includes/header.php';
     // Function to fetch updated data from the server for JPCS organization and update the chart
     function updateData() {
         $.ajax({
-            url: 'update_jpcs_data.php', // Change this to the URL of your update data script
+            url: 'update_jpcs_data.php', // URL of your update data script
             type: 'GET',
             dataType: 'json',
             data: { organization: 'JPCS' }, // Hardcoded organization to JPCS
             success: function(response) {
-                if (response && response.presidentAndVicePresidentData && response.secretaryData) {
+                if (response && response.length > 0) {
+                    console.log("Data received:", response); // Log the received data
                     // Update data points for President and Vice President Votes
-                    chart.options.data[0].dataPoints = response.presidentAndVicePresidentData;
-                    // Update data points for Secretary Votes
-                    chart.options.data[1].dataPoints = response.secretaryData;
+                    chart.options.data[0].dataPoints = response;
                     // Re-render the chart with updated data
                     chart.render();
                 } else {
-                    console.error("Invalid data received.");
+                    console.error("Empty or invalid data received.");
                 }
             },
-            error: function(xhr, status, error) {
+            error: function(xhr, status, eror) {
                 console.error('Error fetching data:', error); // Log any errors
             }
         });
