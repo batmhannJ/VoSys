@@ -190,7 +190,7 @@ label {
   display: inline-block;
   width: 100%;
   height: 43px;
-  background-color: maroon;
+  background-color: #1357a6;
   color: #fff;
   border: none;
   cursor: pointer;
@@ -208,7 +208,7 @@ label {
   display: inline-block;
   width: 100%;
   height: 43px;
-  background-color: darkgreen;
+  background-color: maroon;
   color: #fff;
   border: none;
   cursor: pointer;
