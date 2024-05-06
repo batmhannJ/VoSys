@@ -169,6 +169,99 @@
                                     </div>
                                 </div>
                             </div>
+                        <style>
+    /* Button style */
+    #submitBtn {
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        background-color: #007bff; /* Blue background color */
+        color: #fff; /* White text color */
+        border: none; /* No border */
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    /* Button hover effect */
+    #submitBtn:hover {
+        background-color: #0056b3; /* Darker shade of blue */
+    }
+
+      /* Modal content style */
+    .modal-content {
+        background-color: #fff;
+        border-radius: 10px;
+    }
+
+    /* Modal header style */
+    .modal-header {
+        border-bottom: 1px solid #dee2e6; /* Light border at the bottom */
+        padding: 15px;
+        text-align: center;
+    }
+
+    /* Modal title style */
+    .modal-title {
+        font-size: 24px;
+        color: #007bff; /* Blue color for title */
+    }
+
+     /* Modal content style */
+     .modal-content {
+        background-color: #fff;
+        border-radius: 10px;
+    }
+
+    /* Modal header style */
+    .modal-header {
+        border-bottom: 1px solid #dee2e6; /* Light border at the bottom */
+        padding: 15px;
+        text-align: center;
+    }
+
+    /* Modal title style */
+    .modal-title {
+        font-size: 24px;
+        color: #333; /* Dark gray color */
+    }
+
+    /* Modal body style */
+    .modal-body {
+        padding: 20px;
+        font-size: 18px;
+        color: #333; /* Dark gray color */
+    }
+
+    /* Modal footer style */
+    .modal-footer {
+        padding: 15px;
+        text-align: center;
+        border-top: 1px solid #dee2e6; /* Light border at the top */
+    }
+
+    /* Close button style */
+    .close {
+        color: #333; /* Dark gray color */
+        font-size: 30px;
+    }
+
+    /* Preview button style */
+    #preview, #submitBtnModal {
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 18px;
+        background-color: #fff; /* White background color */
+        color: #333; /* Dark gray color */
+        border: 1px solid #333; /* Dark gray border */
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+
+    /* Preview button hover effect */
+    #preview:hover, #submitBtnModal:hover {
+        background-color: #f8f9fa; /* Light gray background on hover */
+    }
+</style>
 
                             </form>
 
