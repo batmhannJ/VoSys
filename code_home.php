@@ -188,7 +188,7 @@
 
     /* Button styles */
     .btn {
-        padding: 10px 20px;
+        padding: 5px 10px;
         border-radius: 5px;
         cursor: pointer;
         font-size: 16px;
@@ -197,7 +197,6 @@
 
     /* Preview button style */
     #preview {
-        background-color: #007bff; /* Blue background color */
         color: #fff; /* White text color */
         border: 2px solid #007bff; /* Blue border */
         margin-right: 10px;
@@ -205,7 +204,6 @@
 
     /* Submit button style */
     #submitBtn {
-        background-color: #28a745; /* Green background color */
         color: #fff; /* White text color */
         border: none; /* No border */
     }
