@@ -15,6 +15,14 @@
     </div>
 </h1>
 <style>
+    /* Iba pang mga estilo para sa buong section */
+.content {
+    margin-top: 20px; /* Espasyo sa itaas */
+    padding: 20px; /* Padding para sa loob ng section */
+    background-color: #f9f9f9; /* Kulay ng background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow para sa depth */
+}
 /* Iba pang mga estilo para sa text header */
 .page-header.title {
     display: flex;
