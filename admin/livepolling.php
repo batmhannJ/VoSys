@@ -21,32 +21,6 @@ include 'includes/header.php';
         </section>
         <!-- Main content -->
         <section class="content">
-            <!-- Organization Filter -->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-body">
-                            <form method="get" action="" id="filterForm">
-                                <div class="form-group">
-                                    <label for="organization">Select Organization:</label>
-                                    <select class="form-control" name="organization" id="organization">
-                                        <?php
-                                        // Fetch and display organizations
-                                        $organizationQuery = $conn->query("SELECT DISTINCT organization FROM voters");
-                                        while($organizationRow = $organizationQuery->fetch_assoc()){
-                                            $selected = ($_GET['organization'] ?? '') == $organizationRow['organization'] ? 'selected' : '';
-                                            echo "<option value='".$organizationRow['organization']."' $selected>".$organizationRow['organization']."</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                                <button type="button" class="btn btn-primary" id="filterButton">Filter</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Bar Graphs for President, Vice President, and Secretary -->
             <div class="row">
                 <!-- President Bar Graph Box -->
@@ -120,7 +94,7 @@ include 'includes/header.php';
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     // Function to generate bar graph with racing animation
-    function generateRacingBarGraph(dataPoints, containerId) {
+    function generateBarChartRace(dataPoints, containerId) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
             title: {
@@ -136,81 +110,47 @@ include 'includes/header.php';
             },
             data: [{
                 type: "bar",
-                dataPoints: []
+                dataPoints: dataPoints
             }]
         });
 
-        // Render empty chart initially
+        // Render chart
         chart.render();
+        
+        // Update data periodically
+        setInterval(function () {
+            updateData();
+        }, 3000);
 
-        // Function to animate the racing effect
-        function animateRacingBarGraph(dataPoints) {
-            var newDataPoints = dataPoints.map(function (point) {
-                return {
-                    label: point.label,
-                    y: Math.floor(Math.random() * 100) // Random starting value
-                };
-            });
+        // Function to update data
+        function updateData() {
+            $.ajax({
+                url: 'update_data.php', // Change this to the URL of your update data script
+                type: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    // Sort data based on vote counts
+                    response.sort(function(a, b) {
+                        return b.y - a.y;
+                    });
 
-            newDataPoints.sort(function (a, b) {
-                return b.y - a.y; // Sort by descending order of values
-            });
-
-            var interval = setInterval(function () {
-                newDataPoints.forEach(function (point, i) {
-                    if (point.y < dataPoints[i].y) {
-                        point.y++; // Increment value until it reaches the actual value
-                    }
-                });
-                chart.options.data[0].dataPoints = newDataPoints;
-                chart.render();
-                if (newDataPoints.every(function (point, i) {
-                    return point.y >= dataPoints[i].y;
-                })) {
-                    clearInterval(interval);
+                    // Update chart with new data
+                    chart.options.data[0].dataPoints = response;
+                    chart.render();
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching data: ' + error);
                 }
-            }, 100); // Interval between each update in milliseconds
+            });
         }
-
-        // Call animation function with data points
-        animateRacingBarGraph(dataPoints);
     }
 
-    // Function to fetch updated data from the server
-    function updateData(organization) {
-        $.ajax({
-            url: 'update_data.php', // Change this to the URL of your update data script
-            type: 'GET',
-            dataType: 'json',
-            data: {organization: organization}, // Pass the selected organization to the server
-            success: function (response) {
-                // Update president bar graph with racing animation
-                generateRacingBarGraph(response.presidentData, "presidentGraph");
-
-                // Update vice president bar graph with racing animation
-                generateRacingBarGraph(response.vicePresidentData, "vicePresidentGraph");
-
-                // Update secretary bar graph with racing animation
-                generateRacingBarGraph(response.secretaryData, "secretaryGraph");
-            },
-            error: function (xhr, status, error) {
-                console.error('Error fetching data: ' + error);
-            }
-        });
-    }
-
-    // Call the updateData function initially
-    updateData($('#organization').val());
-
-    // Bind click event to filter button
-    $('#filterButton').click(function () {
-        updateData($('#organization').val());
+    // Call the generateBarChartRace function for each graph
+    $(document).ready(function () {
+        generateBarChartRace([], "presidentGraph");
+        generateBarChartRace([], "vicePresidentGraph");
+        generateBarChartRace([], "secretaryGraph");
     });
-
-    // Call the updateData function periodically
-    setInterval(function () {
-        updateData($('#organization').val());
-    }, 3000); // Update every 3 seconds
 </script>
 
 </body>
