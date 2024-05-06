@@ -8,9 +8,66 @@
 	    <div class="container">
 	      <!-- Main content -->
 	      <section class="content">
-	      	<h1 class="page-header text-center title">
-	      		<img src="images/codg.jpg" alt="CSC Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
-	      		<b>Coalition of Disciplined<br>Future Enforcers of Todays <br>Generation Election</b></h1>
+          <h1 class="page-header text-center title">
+    <img src="images/codg.jpg" alt="CSC Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
+    <div class="title-text">
+        <h2>Coalition of Disciplined Future Enforcers of Todays Generation Election</h2>
+    </div>
+</h1>
+<style>
+    /* Iba pang mga estilo para sa buong section */
+.content {
+    margin-top: 20px; /* Espasyo sa itaas */
+    padding: 20px; /* Padding para sa loob ng section */
+    background-color: #f9f9f9; /* Kulay ng background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow para sa depth */
+}
+/* Iba pang mga estilo para sa text header */
+.page-header.title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #800000;
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px; /* Dagdag na rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Dagdag na shadow */
+}
+
+.page-header.title img {
+    margin-right: 20px;
+    border: 3px solid #fff; /* Buhayin ang border ng larawan */
+    border-radius: 50%; /* Rounded corners para sa larawan */
+    width: 80px; /* Laki ng larawan */
+    height: 80px; /* Laki ng larawan */
+    object-fit: cover; /* Para sa tamang pag-adjust ng larawan */
+}
+
+.title-text h2 {
+    margin: 0;
+    font-size: 28px; /* Dagdag na laki ng font */
+    line-height: 1.6; /* I-adjust ang line height para sa mas mahusay na pagbabasa */
+}
+
+/* Media query para sa mas maliit na mga screen */
+@media (max-width: 768px) {
+    .page-header.title {
+        flex-direction: column;
+        padding: 15px; /* I-adjust ang padding para sa mas maliit na mga screen */
+    }
+
+    .page-header.title img {
+        margin: 0 0 10px 0;
+    }
+
+    .title-text h2 {
+        font-size: 24px; /* I-adjust ang laki ng font para sa mas maliit na mga screen */
+    }
+}
+
+</style>
 	        <div class="row">
 	        	<div class="col-sm-10 col-sm-offset-1">
 	        		<?php
@@ -195,18 +252,36 @@
     padding: 0;
 }
 
-/* Adjusted style for candidate list items */
+/* Bagong istilo para sa mga item sa listahan ng mga kandidato */
 .candidate-list li {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr; /* Divide into three equal columns */
-    grid-gap: 10px; /* Add gap between columns */
-    align-items: center;
-    border-radius: 5px; /* Adjust border radius */
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #f9f9f9;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+    display: flex; /* Baguhin ang display sa flex */
+    flex-wrap: wrap; /* Pahintulutan ang pag-wrap ng mga item sa loob ng flex container */
+    justify-content: space-between; /* I-set ang mga item na sa layong pare-pareho */
+    align-items: center; /* I-align ang mga item sa gitna */
+    border-radius: 5px; /* Radius ng border */
+    padding: 10px; /* Padding para sa mga item */
+    margin-bottom: 10px; /* Espasyo sa pagitan ng mga item */
+    background-color: #f9f9f9; /* Kulay ng background */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Shadow para sa depth */
 }
+
+/* Media query para sa mas maliit na mga screen */
+@media (max-width: 768px) {
+    .candidate-list li {
+        flex-direction: column; /* Baguhin ang direksyon ng flex container sa column */
+        align-items: center; /* I-align ang mga item sa gitna */
+        padding: 15px; /* I-adjust ang padding para sa mas maliit na screen */
+    }
+
+    .candidate-list li img {
+        width: 100px; /* I-adjust ang lapad ng mga larawan para sa mas maliit na screen */
+        height: 100px; /* I-adjust ang taas ng mga larawan para sa mas maliit na screen */
+        margin: 0 auto; /* Ilipat ang mga larawan sa gitna */
+    }
+}
+
+
+
 
 /* Adjusted style for candidate name */
 .cname {
