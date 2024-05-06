@@ -225,12 +225,12 @@
     color: #fff;
     border: none;
     border-radius: 3px;
-    padding: 5px 50px;
+    padding: 5px 10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     /* margin-left: 10px; */
     /* Remove this line */
-    margin-top: 5px;
+    margin-top: 50px;
     /* Add margin-top to separate from candidate name */
 }
 
