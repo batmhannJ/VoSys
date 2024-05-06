@@ -189,6 +189,11 @@
     background-color: #f9f9f9;
 }
 
+.cname{
+    margin-left: 5px;
+    font-size: 15px;;
+}
+
 /* Adjust platform button alignment */
 .platform {
     background-color: #007bff;
