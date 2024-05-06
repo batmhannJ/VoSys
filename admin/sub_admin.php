@@ -51,7 +51,7 @@
             <div class="box-body">
               <table id="example1" class="table table-bordered">
                 <thead>
-                  <th>ID number</th>
+                  <th>No.</th>
                   <th>Organization</th>
                   <th>Lastname</th>
                   <th>Firstname</th>
@@ -62,13 +62,14 @@
                 </thead>
                 <tbody>
                   <?php
-                    $sql = "SELECT * FROM admin WHERE archived = FALSE";
+                    $sql = "SELECT * FROM admin WHERE archived = FALSE AND organization != 'OSA'";
                     $query = $conn->query($sql);
+                    $i = 1;
                     while($row = $query->fetch_assoc()){
                       $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
                       echo "
                         <tr>
-                        <td>".$row['id']."</td>
+                        <td>".$i++."</td>
                         <td>".$row['organization']."</td>
                           <td>".$row['lastname']."</td>
                           <td>".$row['firstname']."</td>

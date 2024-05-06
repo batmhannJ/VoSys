@@ -146,82 +146,92 @@
                                 }   
                                 ?>
                                 <div class="text-center">
-    <button type="button" class="btn btn-primary btn-flat" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
-</div>
+                                    <button type="button" class="btn btn-primary btn-flat" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
+                                </div>
 
-<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+                                <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
 
-            <div class="modal-body">
-                <p>Are you sure you want to submit your vote?</p>
-            </div>
-            
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success btn-flat" id="preview"><i class="fa fa-file-text"></i> Preview</button> 
-                <button type="submit" class="btn btn-primary" id="submitBtnModal" name="vote_code">Yes, Submit</button>
-            </div>
-        </div>
-    </div>
-</div>
-                            <style>
-    /* Button style */
-    #submitBtn {
-        padding: 100px 200px;
-        border-radius: 5px;
-        font-size: 16px;
-        background-color: #007bff; /* Blue background color */
-        color: #fff; /* White text color */
-        border: none; /* No border */
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
+                                        <div class="modal-body">
+                                            <p>Are you sure you want to submit your vote?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-success btn-flat" id="preview"><i class="fa fa-file-text"></i> Preview</button> 
+                                            <button type="submit" class="btn btn-primary" id="submitBtn" name="vote_code">Yes, Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <style>
+              /* Style for the primary button */
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
 
-    /* Button hover effect */
-    #submitBtn:hover {
-        background-color: #0056b3; /* Darker shade of blue */
-    }
+/* Style for the success button */
+.btn-success {
+    background-color: #28a745;
+    color: #fff;
+    border-color: #28a745;
+}
 
-    /* Modal title style */
-    .modal-title {
-        font-size: 20px;
-    }
+/* Style for the secondary button */
+.btn-secondary {
+    color: #6c757d;
+    border-color: #6c757d;
+}
 
-    /* Modal body style */
-    .modal-body {
-        font-size: 16px;
-        color: #333;
-    }
+/* Style for the modal header */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #007bff;
+    color: #fff;
+}
 
-    /* Modal footer style */
-    .modal-footer {
-        padding-top: 15px;
-        padding-bottom: 15px;
-    }
+/* Style for the modal title */
+.modal-title {
+    margin-right: auto; /* Pushes the modal title to the left */
+    font-weight: bold;
+}
 
-    /* Preview button style */
-    #preview {
-        padding: 10px 20px;
-        border-radius: 5px;
-        font-size: 16px;
-        background-color: #28a745; /* Green background color */
-        color: #fff; /* White text color */
-        border: none; /* No border */
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
+/* Style for the close button in the modal header */
+.modal-header .close {
+    padding-left: 20px; /* Adds space to the left of the close button */
+    color: #fff;
+    opacity: 0.5;
+}
 
-    /* Preview button hover effect */
-    #preview:hover {
-        background-color: #218838; /* Darker shade of green */
-    }
-</style>
+
+/* Style for the modal body */
+.modal-body {
+    padding: 20px;
+}
+
+/* Style for the modal footer */
+.modal-footer {
+    justify-content: space-between;
+    padding: 20px;
+}
+
+/* Center the text in the text-center div */
+.text-center {
+    text-align: center;
+}
+
+
+                            </style>
+                        
 
                             </form>
 
