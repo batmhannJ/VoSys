@@ -71,7 +71,3 @@ $response = array(
     'vicePresidentData' => $vicePresidentData,
     'secretaryData' => $secretaryData
 );
-
-// Return the updated data as JSON
-echo json_encode($response);
-?>
