@@ -24,16 +24,19 @@
     background-color: #800000;
     color: #fff;
     padding: 20px;
+    border-radius: 10px; /* Dagdag na rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Dagdag na shadow */
 }
 
 .page-header.title img {
     margin-right: 20px;
+    border: 3px solid #fff; /* Buhayin ang border ng larawan */
 }
 
 .title-text h2 {
     margin: 0;
-    font-size: 24px;
-    line-height: 1.5;
+    font-size: 28px; /* Dagdag na laki ng font */
+    line-height: 1.6; /* I-adjust ang line height para sa mas mahusay na pagbabasa */
 }
 
 /* Iba pang mga estilo para sa image */
@@ -52,14 +55,13 @@
 @media (max-width: 768px) {
     .page-header.title {
         flex-direction: column;
-        padding: 10px;
+        padding: 15px; /* I-adjust ang padding para sa mas maliit na mga screen */
     }
 
     .page-header.title img {
         margin: 0 0 10px 0;
     }
 }
-
 
 </style>
 	        <div class="row">
