@@ -21,93 +21,78 @@ include 'includes/header.php';
         </section>
         <!-- Main content -->
         <section class="content">
-            <!-- Organization Filter -->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-body">
-                            <form method="get" action="">
-                                <div class="form-group">
-                                    <label for="organization">Select Organization:</label>
-                                    <select class="form-control" name="organization" id="organization">
-                                        <?php
-                                        // Fetch and display organizations
-                                        $organizationQuery = $conn->query("SELECT DISTINCT organization FROM voters");
-                                        while($organizationRow = $organizationQuery->fetch_assoc()){
-                                            $selected = ($_GET['organization'] ?? '') == $organizationRow['organization'] ? 'selected' : '';
-                                            echo "<option value='".$organizationRow['organization']."' $selected>".$organizationRow['organization']."</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                                <!-- Remove the filter button -->
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- Chart -->
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+            <button id="change-chart">Change to Classic</button>
+            <br><br>
+            <div id="chart_div" style="width: 800px; height: 500px;"></div>
 
-            <!-- Bar Graphs for President, Vice President, and Secretary -->
-            <div class="row">
-                <!-- President Bar Graph Box -->
-                <div class="col-md-6">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>President Candidates</b></h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <!-- President Bar Graph Container -->
-                            <div id="presidentGraph" style="height: 300px;"></div>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                    <!-- /.box -->
-                </div>
-                <!-- /.col -->
+            <script>
+                google.charts.load('current', {'packages':['corechart', 'bar']});
+                google.charts.setOnLoadCallback(drawStuff);
 
-                <!-- Vice President Bar Graph Box -->
-                <div class="col-md-6">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>Vice President Candidates</b></h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <!-- Vice President Bar Graph Container -->
-                            <div id="vicePresidentGraph" style="height: 300px;"></div>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                    <!-- /.box -->
-                </div>
-                <!-- /.col -->
-            </div>
-            <!-- /.row -->
+                function drawStuff() {
+                    var button = document.getElementById('change-chart');
+                    var chartDiv = document.getElementById('chart_div');
 
-            <!-- Secretary Bar Graph Box -->
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>Secretary Candidates</b></h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <!-- Secretary Bar Graph Container -->
-                            <div id="secretaryGraph" style="height: 300px;"></div>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                    <!-- /.box -->
-                </div>
-                <!-- /.col -->
-            </div>
-            <!-- /.row -->
+                    var data = google.visualization.arrayToDataTable([
+                        ['Candidate', 'Votes'],
+                        <?php
+                        // Fetch and display vote counts
+                        $result = $conn->query("SELECT candidate_name, vote_count FROM candidates");
+                        while($row = $result->fetch_assoc()){
+                            echo "['" . $row['candidate_name'] . "', " . $row['vote_count'] . "],";
+                        }
+                        ?>
+                    ]);
+
+                    var materialOptions = {
+                        width: 900,
+                        chart: {
+                            title: 'Election Results',
+                            subtitle: 'Vote Counts'
+                        },
+                        bars: 'vertical' // vertical bars
+                    };
+
+                    var classicOptions = {
+                        width: 900,
+                        chart: {
+                            title: 'Election Results',
+                            subtitle: 'Vote Counts'
+                        },
+                        bars: 'horizontal' // horizontal bars
+                    };
+
+                    var currentOptions = materialOptions; // Start with Material Design options
+
+                    var currentChart; // To hold the reference to the currently drawn chart
+
+                    function drawChart() {
+                        currentChart = new google.charts.Bar(chartDiv);
+                        currentChart.draw(data, google.charts.Bar.convertOptions(currentOptions));
+                    }
+
+                    function toggleChart() {
+                        if (currentOptions === materialOptions) {
+                            currentOptions = classicOptions;
+                            button.innerText = 'Change to Material';
+                        } else {
+                            currentOptions = materialOptions;
+                            button.innerText = 'Change to Classic';
+                        }
+                        drawChart();
+                    }
+
+                    button.onclick = toggleChart;
+
+                    drawChart(); // Draw initial chart
+                }
+            </script>
+
         </section>
         <!-- /.content -->
     </div>
-
     <!-- /.content-wrapper -->
     <?php include 'includes/footer.php'; ?>
     <?php include 'includes/votes_modal.php'; ?>
@@ -147,31 +132,31 @@ include 'includes/header.php';
                 color = "#000000"; // Default to Black
         }
 
-        var chart = new CanvasJS.Chart(containerId, {
-            animationEnabled: true,
-            title: {
-                text: "Vote Counts"
-            },
-            axisY: {
-                title: "Candidates",
-                includeZero: true,
-                labelFormatter: function (e) {
-                    // Include candidate name and round vote count to whole number
-                    return dataPoints[e.value].label + " - " + Math.round(e.value);
-                }
-            },
-            axisX: {
-                title: "Vote Count",
-                includeZero: true
-            },
-            data: [{
-                type: "bar",
-                dataPoints: dataPoints.map(point => ({ label: point.label, y: point.y })),
-                color: color
-            }]
-        });
-        chart.render();
-    }
+    var chart = new CanvasJS.Chart(containerId, {
+        animationEnabled: true,
+        title: {
+            text: "Vote Counts"
+        },
+        axisY: {
+            title: "Candidates",
+            includeZero: true,
+            labelFormatter: function (e) {
+                // Include candidate name and round vote count to whole number
+                return dataPoints[e.value].label + " - " + Math.round(e.value);
+            }
+        },
+        axisX: {
+            title: "Vote Count",
+            includeZero: true
+        },
+        data: [{
+            type: "bar", // Change type to "bar"
+            dataPoints: dataPoints,
+            color: color // Set the color based on organization
+        }]
+    });
+    chart.render();
+}
 
 
     // Function to fetch updated data from the server
