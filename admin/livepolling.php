@@ -119,8 +119,8 @@ include 'includes/header.php';
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    // Function to generate bar graph
-    function generateBarGraph(dataPoints, containerId, organization) {
+    // Function to generate bar graph with animation
+    function generateAnimatedBarGraph(dataPoints, containerId, organization) {
         var color;
 
         // Set color based on organization
@@ -165,11 +165,41 @@ include 'includes/header.php';
             },
             data: [{
                 type: "bar", // Change type to "bar"
-                dataPoints: dataPoints,
+                dataPoints: [], // Initialize with empty data points
                 color: color // Set the color based on organization
             }]
         });
+
+        // Render empty chart initially
         chart.render();
+
+        // Function to animate the bar graph
+        function animateBarGraph(dataPoints) {
+            var newDataPoints = dataPoints.map(function(point) {
+                return {
+                    label: point.label,
+                    y: 0 // Start with zero height for all bars
+                };
+            });
+
+            var interval = setInterval(function () {
+                var done = true;
+                newDataPoints.forEach(function (point, i) {
+                    if (point.y < dataPoints[i].y) {
+                        point.y += Math.ceil((dataPoints[i].y - point.y) / 10);
+                        done = false;
+                    }
+                });
+                if (done) {
+                    clearInterval(interval);
+                }
+                chart.options.data[0].dataPoints = newDataPoints;
+                chart.render();
+            }, 50); // Adjust the interval to control animation speed
+        }
+
+        // Call animation function with data points
+        animateBarGraph(dataPoints);
     }
 
     // Function to fetch updated data from the server
@@ -180,14 +210,14 @@ include 'includes/header.php';
             dataType: 'json',
             data: {organization: $('#organization').val()}, // Pass the selected organization to the server
             success: function(response) {
-                // Update president bar graph with color based on organization
-                generateBarGraph(response.presidentData, "presidentGraph", $('#organization').val());
+                // Update president bar graph with animation
+                generateAnimatedBarGraph(response.presidentData, "presidentGraph", $('#organization').val());
 
-                // Update vice president bar graph with color based on organization
-                generateBarGraph(response.vicePresidentData, "vicePresidentGraph", $('#organization').val());
+                // Update vice president bar graph with animation
+                generateAnimatedBarGraph(response.vicePresidentData, "vicePresidentGraph", $('#organization').val());
 
-                // Update secretary bar graph with color based on organization
-                generateBarGraph(response.secretaryData, "secretaryGraph", $('#organization').val());
+                // Update secretary bar graph with animation
+                generateAnimatedBarGraph(response.secretaryData, "secretaryGraph", $('#organization').val());
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data: ' + error);
@@ -198,8 +228,8 @@ include 'includes/header.php';
     // Call the updateData function initially
     updateData();
 
-    // Call the updateData function every 60 seconds (adjust as needed)
-    setInterval(updateData, 3000); // 60000 milliseconds = 60 seconds
+    // Call the updateData function periodically
+    setInterval(updateData, 60000); // 60000 milliseconds = 60 seconds
 </script>
 
 </body>
