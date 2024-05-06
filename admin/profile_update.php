@@ -10,15 +10,24 @@ if (isset($_GET['return'])) {
 if (isset($_POST['save'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password']; // Add confirm password field
     $firstname = $_POST['firstname'];
     $lastname = $_POST['lastname'];
     $photo = $_FILES['photo']['name'];
     $email = $_POST['email'];
     $otp = $_POST['otp'];
 
+    // Check if the entered password matches the confirm password
+    if ($password != $confirm_password) {
+        $_SESSION['error'] = 'Password and confirm password do not match';
+        header('Location: '.$return);
+        exit;
+    }
+
     // Check if the entered OTP matches the stored OTP
     if (isset($_SESSION['otp']) && $_SESSION['otp'] == $otp) {
         // OTP matched, proceed with saving the updated information
+        // Your saving logic goes here
         if (password_verify($curr_password, $user['password'])) {
             // Hash the new password
             $new_password = password_hash($password, PASSWORD_DEFAULT);
