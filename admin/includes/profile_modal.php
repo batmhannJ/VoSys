@@ -24,6 +24,13 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label for="confirm_password" class="col-sm-3 control-label">Confirm Password</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
                   	<label for="firstname" class="col-sm-3 control-label">Firstname</label>
 
                   	<div class="col-sm-9">
@@ -52,6 +59,13 @@
                       <input type="password" class="form-control" id="curr_password" name="curr_password" placeholder="input current password to save changes" required>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label for="otp" class="col-sm-3 control-label">OTP</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter OTP" required>
+                    </div>
+                </div>
+
           	</div>
           	<div class="modal-footer">
             	<button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
