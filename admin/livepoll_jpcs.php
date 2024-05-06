@@ -32,7 +32,7 @@ include 'includes/header.php';
                         <!-- /.box-header -->
                         <div class="box-body">
                             <!-- Bar Graph Container for President, Vice President, and Secretary -->
-                            <div id="electionGraph" style="height: 300px; width: 1000px;"></div>
+                            <div id="electionGraph" style="height: 300px; width: 400px;"></div>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -115,7 +115,7 @@ include 'includes/header.php';
     updateData();
 
     // Call the updateData function every 60 seconds (adjust as needed)
-    setInterval(updateData, 5000); // 60000 milliseconds = 60 seconds
+    setInterval(updateData, 60000); // 60000 milliseconds = 60 seconds
 </script>
 
 </body>
