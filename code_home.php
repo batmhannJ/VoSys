@@ -189,16 +189,11 @@
 /* Style for candidate information */
 .candidate-info {
     display: flex;
-    align-items: center;
-    width: calc(100% - 130px); /* Adjust width to accommodate image and button */
+    align-items: flex-start; /* Adjust alignment */
 }
 
 /* Style for candidate image */
-.clist {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 50%;
+.cimage {
     margin-right: 10px;
 }
 
@@ -207,11 +202,12 @@
     margin: 0;
     font-weight: bold;
     font-size: 14px;
+    margin-bottom: 5px; /* Add margin bottom */
 }
 
 /* Style for platform button container */
 .platform-container {
-    margin-top: 5px; /* Adjust margin from candidate name */
+    margin-top: auto; /* Adjust margin from candidate name */
 }
 
 /* Style for platform button */
