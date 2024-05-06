@@ -18,7 +18,7 @@
                         if(isset($_SESSION['error'])){
                             ?>
                             <div class="alert alert-danger alert-dismissible" id="error-alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
                                 <ul>
                                     <?php
                                         foreach($_SESSION['error'] as $error){
