@@ -119,8 +119,8 @@ include 'includes/header.php';
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    // Function to generate bar graph with animation
-    function generateAnimatedBarGraph(dataPoints, containerId) {
+    // Function to generate bar graph with climbing animation
+    function generateClimbingBarGraph(dataPoints, containerId) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
             title:{
@@ -139,12 +139,44 @@ include 'includes/header.php';
             },
             data: [{
                 type: "bar", // Change type to "bar"
-                dataPoints: dataPoints // Pass data points directly
+                dataPoints: [] // Initialize with empty data points
             }]
         });
 
-        // Render the chart
+        // Render empty chart initially
         chart.render();
+
+        // Function to animate the climbing effect
+        function animateClimbingBarGraph(dataPoints) {
+            var newDataPoints = dataPoints.map(function(point) {
+                return {
+                    label: point.label,
+                    y: 0 // Start with zero height for all bars
+                };
+            });
+
+            var updateInterval = 100; // Interval between each update in milliseconds
+            var updates = 30; // Number of updates to reach final value
+            var updateCount = 0;
+
+            var interval = setInterval(function () {
+                newDataPoints.forEach(function (point, i) {
+                    var deltaY = dataPoints[i].y / updates; // Increment value for each update
+                    if (point.y < dataPoints[i].y) {
+                        point.y += deltaY;
+                    }
+                });
+                updateCount++;
+                chart.options.data[0].dataPoints = newDataPoints;
+                chart.render();
+                if (updateCount >= updates) {
+                    clearInterval(interval);
+                }
+            }, updateInterval);
+        }
+
+        // Call animation function with data points
+        animateClimbingBarGraph(dataPoints);
     }
 
     // Function to fetch updated data from the server
@@ -155,14 +187,14 @@ include 'includes/header.php';
             dataType: 'json',
             data: {organization: organization}, // Pass the selected organization to the server
             success: function(response) {
-                // Update president bar graph with animation
-                generateAnimatedBarGraph(response.presidentData, "presidentGraph");
+                // Update president bar graph with climbing animation
+                generateClimbingBarGraph(response.presidentData, "presidentGraph");
 
-                // Update vice president bar graph with animation
-                generateAnimatedBarGraph(response.vicePresidentData, "vicePresidentGraph");
+                // Update vice president bar graph with climbing animation
+                generateClimbingBarGraph(response.vicePresidentData, "vicePresidentGraph");
 
-                // Update secretary bar graph with animation
-                generateAnimatedBarGraph(response.secretaryData, "secretaryGraph");
+                // Update secretary bar graph with climbing animation
+                generateClimbingBarGraph(response.secretaryData, "secretaryGraph");
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data: ' + error);
