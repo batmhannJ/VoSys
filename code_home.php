@@ -320,7 +320,7 @@
 }
 
 .platform i {
-    font-family: "Arial", sans-serif; /* I-set ang font family sa Arial o anumang ibang font na nais mo */
+    
     font-style: normal; /* Ibalik ang font style sa normal */
     font-weight: bold; /* I-set ang font weight sa bold */
     font-size: 14px; /* I-adjust ang font size */
