@@ -138,12 +138,13 @@
 <style>
  /* Style for the position container */
 .position-container {
-    margin-bottom: 20px;
+    margin: 20px auto; /* Center the container horizontally and add margin on top and bottom */
+    max-width: 800px; /* Set a maximum width to make it responsive */
+    padding: 20px; /* Add padding inside the container */
     border: 1px solid #ccc; /* Add border for visual separation */
     border-radius: 10px; /* Add border radius for rounded corners */
     background-color: #fff; /* Change background color */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
-    padding: 20px; /* Add padding for spacing */
 }
 
 /* Style for the box header */
@@ -224,6 +225,13 @@
     margin-right: 10px;
     grid-column: span 1;
 }
+
+@media (max-width: 768px) {
+    .position-container {
+        padding: 10px; /* Adjust padding for smaller screens */
+    }
+}
+
 
 @media (min-width: 768px) {
     /* Apply flex-end alignment to candidate image */
