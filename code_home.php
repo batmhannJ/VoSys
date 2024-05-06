@@ -76,7 +76,7 @@
                         }
                         else{
                             ?>
-                            <form method="POST" id="ballotForm" action="submit_ballot_code.php">
+                           <form method="POST" id="ballotForm" action="submit_ballot_code.php">
     <?php
     include 'includes/slugify.php';
 
@@ -119,11 +119,13 @@
                                 echo '
                                 <li>
                                     <div class="candidate-info">
-                                        '.$input.'
-                                        <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
-                                        <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'"><i class="fa fa-search"></i> Platform</button>
+                                        <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
+                                        <div>
+                                            <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
+                                            <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'"><i class="fa fa-search"></i> Platform</button>
+                                        </div>
                                     </div>
-                                    <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
+                                    '.$input.'
                                 </li>';
                             }
                         echo '</ul>
@@ -134,6 +136,7 @@
     }
     ?>
 </form>
+
 <style>
     /* Style for the position container */
     .position-container {
@@ -176,7 +179,8 @@
     /* Style for individual candidate */
     .candidate-list li {
         display: flex;
-        flex-direction: column; /* Change direction to column */
+        align-items: center;
+        justify-content: space-between;
         border: 1px solid #ccc;
         border-radius: 5px;
         padding: 10px;
@@ -192,9 +196,9 @@
 
     /* Style for candidate name */
     .cname {
-        margin-bottom: 5px; /* Add margin below candidate name */
+        margin-left: 10px;
         font-weight: bold;
-        font-size: 14px; /* Reduce font size for candidate name */
+        font-size: 14px;
     }
 
     /* Style for platform button */
@@ -206,6 +210,7 @@
         padding: 5px 10px;
         cursor: pointer;
         transition: background-color 0.3s ease;
+        margin-top: 5px;
     }
 
     .platform:hover {
@@ -218,7 +223,7 @@
         height: 100px;
         object-fit: cover;
         border-radius: 50%;
-        margin-bottom: 5px; /* Add margin below candidate image */
+        margin-right: 10px;
     }
 </style>
 
