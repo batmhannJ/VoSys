@@ -187,78 +187,23 @@
         background-color: #0056b3; /* Darker shade of blue */
     }
 
-      /* Modal content style */
-    .modal-content {
-        background-color: #fff;
-        border-radius: 10px;
-    }
-
-    /* Modal header style */
-    .modal-header {
-        border-bottom: 1px solid #dee2e6; /* Light border at the bottom */
-        padding: 15px;
-        text-align: center;
-    }
-
     /* Modal title style */
     .modal-title {
-        font-size: 24px;
-        color: #007bff; /* Blue color for title */
+        font-size: 20px;
     }
 
     /* Modal body style */
     .modal-body {
-        padding: 20px;
-        font-size: 18px;
+        font-size: 16px;
         color: #333;
     }
 
     /* Modal footer style */
     .modal-footer {
-        padding: 15px;
-        text-align: center;
-        border-top: 1px solid #dee2e6; /* Light border at the top */
+        padding-top: 15px;
+        padding-bottom: 15px;
     }
 
-    /* Close button style */
-    .close {
-        color: #007bff; /* Blue color for close button */
-        font-size: 30px;
-    }
-
-    /* Preview button style */
-    #preview {
-        padding: 10px 20px;
-        border-radius: 5px;
-        font-size: 18px;
-        background-color: #28a745; /* Green background color */
-        color: #fff; /* White text color */
-        border: none; /* No border */
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    /* Preview button hover effect */
-    #preview:hover {
-        background-color: #218838; /* Darker shade of green */
-    }
-
-    /* Submit button style */
-    #submitBtnModal {
-        padding: 10px 20px;
-        border-radius: 5px;
-        font-size: 18px;
-        background-color: #007bff; /* Blue background color */
-        color: #fff; /* White text color */
-        border: none; /* No border */
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    /* Submit button hover effect */
-    #submitBtnModal:hover {
-        background-color: #0056b3; /* Darker shade of blue */
-    }
     /* Preview button style */
     #preview {
         padding: 10px 20px;
