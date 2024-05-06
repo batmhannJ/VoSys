@@ -9,6 +9,13 @@
           	</div>
           	<div class="modal-body">
             	<form class="form-horizontal" method="POST" action="profile_update.php?return=<?php echo basename($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data">
+              <div class="form-group">
+                  	<label for="email" class="col-sm-3 control-label">Email</label>
+
+                  	<div class="col-sm-9">
+                    	<input type="text" class="form-control" id="email" name="email" value="<?php echo $user['email']; ?>">
+                  	</div>
+                </div>
           		  <div class="form-group">
                   	<label for="username" class="col-sm-3 control-label">Username</label>
 
@@ -79,3 +86,25 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('sendOTP').addEventListener('click', function() {
+        var email = '<?php echo $user['email']; ?>';
+        sendOTP(email);
+    });
+});
+
+function sendOTP(email) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'send_otp.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var response = xhr.responseText;
+            alert(response); // Show response message (e.g., "OTP sent successfully")
+        }
+    };
+    xhr.send('email=' + encodeURIComponent(email));
+}
+</script>
