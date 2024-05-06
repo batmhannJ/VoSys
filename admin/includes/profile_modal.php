@@ -52,19 +52,23 @@
                     </div>
                 </div>
                 <hr>
-                <div class="form-group">
+                <!--<div class="form-group">
                     <label for="curr_password" class="col-sm-3 control-label">Current Password:</label>
 
                     <div class="col-sm-9">
                       <input type="password" class="form-control" id="curr_password" name="curr_password" placeholder="input current password to save changes" required>
                     </div>
-                </div>
+                </div>-->
                 <div class="form-group">
                     <label for="otp" class="col-sm-3 control-label">OTP</label>
-                    <div class="col-sm-9">
+                    <div class="col-sm-6">
                         <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter OTP" required>
                     </div>
+                    <div class="col-sm-3">
+                        <button type="button" class="btn btn-primary" id="sendOTP">Send OTP</button>
+                    </div>
                 </div>
+
 
           	</div>
           	<div class="modal-footer">
