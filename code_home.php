@@ -176,8 +176,7 @@
     /* Style for individual candidate */
     .candidate-list li {
         display: flex;
-        align-items: center;
-        justify-content: space-between;
+        flex-direction: column; /* Change direction to column */
         border: 1px solid #ccc;
         border-radius: 5px;
         padding: 10px;
@@ -189,12 +188,11 @@
     .candidate-info {
         display: flex;
         align-items: center;
-        flex-direction: row-reverse; /* Reverse the order of items */
     }
 
     /* Style for candidate name */
     .cname {
-        margin-left: 10px; /* Adjust margin */
+        margin-bottom: 5px; /* Add margin below candidate name */
         font-weight: bold;
         font-size: 14px; /* Reduce font size for candidate name */
     }
@@ -208,7 +206,6 @@
         padding: 5px 10px;
         cursor: pointer;
         transition: background-color 0.3s ease;
-        margin-top: 5px; /* Adjust margin from candidate name */
     }
 
     .platform:hover {
@@ -221,9 +218,10 @@
         height: 100px;
         object-fit: cover;
         border-radius: 50%;
-        margin-right: 10px; /* Adjust margin */
+        margin-bottom: 5px; /* Add margin below candidate image */
     }
 </style>
+
 
 
                                 <div class="text-center">
