@@ -46,7 +46,7 @@ header("Location: password_reset_form.php");
 exit();
 ?>
 
-
+<?php
 // Include your header file
 include 'includes/header.php';
 ?>
