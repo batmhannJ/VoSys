@@ -198,14 +198,6 @@
     margin-right: 20px; /* Dagdag na puwang sa kanan ng imahe */
 }
 
-/* Bagong istilo para sa box container ng mga imahe */
-.image-container {
-    background-color: maroon; /* Kulay na maroon */
-    padding: 10px; /* Dagdag na padding */
-    border-radius: 5px; /* Radius ng border */
-}
-
-
 /* Bagong istilo para sa teksto */
 .ctext {
     overflow: hidden; /* Iwasang maglapat ang teksto sa mga imahe */
@@ -222,7 +214,8 @@
 
 /* Bagong istilo para sa container ng platform button */
 .platform-container {
-    margin-top: 5px; /* Itaas ang button mula sa pangalan ng kandidato */
+    margin-top: auto; /* Ilagay ang platform button sa ibaba */
+    margin-left: 10px; /* Mag-adjust ng puwang mula sa kaliwang gilid */
 }
 
 /* Bagong istilo para sa platform button */
@@ -239,7 +232,6 @@
 .platform:hover {
     background-color: #0056b3;
 }
-
 
 
 /* Style for candidate image */
