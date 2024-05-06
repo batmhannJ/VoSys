@@ -238,6 +238,25 @@
     background-color: #218838;
 }
 
+/* Responsive Styles */
+@media only screen and (max-width: 768px) {
+    /* Adjust styles for smaller screens */
+    .box-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .box-title {
+        margin-bottom: 10px;
+    }
+
+    .reset {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+}
+
+
                                 </style>
                                 <div class="text-center">
                                     <button type="button" class="btn btn-primary btn-flat" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
