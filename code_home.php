@@ -118,11 +118,10 @@
                                 $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
                                 echo '
                                 <li>
-                                    <div class="candidate-info">
-                                        '.$input.'
-                                        <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
-                                    </div>
-                                    <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'"><i class="fa fa-search"></i> Platform</button>
+                                <div class="candidate-info">
+                                <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
+                                <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'"><i class="fa fa-search"></i> Platform</button>
+                            </div>                            
                                     <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
                                 </li>';
                             }
@@ -193,33 +192,34 @@
 }
 
 /* Bagong istilo para sa mga imahe */
+/* Remove float property from candidate image */
 .cimage {
-    float: left; /* Ilipat ang imahe sa kaliwa */
-    margin-right: 20px; /* Dagdag na puwang sa kanan ng imahe */
+    /* float: left; */
+    /* Remove this line */
+    margin-right: 20px;
 }
 
-/* Bagong istilo para sa teksto */
-.ctext {
-    overflow: hidden; /* Iwasang maglapat ang teksto sa mga imahe */
+/* Update styles for candidate information */
+.candidate-info {
+    /* display: flex; */
+    /* Remove this line */
+    /* align-items: flex-start; */
+    /* Remove this line */
+    /* Adjust alignment as needed */
+    margin-bottom: 10px;
 }
 
-/* Bagong istilo para sa container ng platform button */
-.platform-container {
-    display: flex; /* Baguhin ang display property */
-    align-items: center; /* I-adjust ang alignment */
-    margin-top: 5px; /* Itaas ang button mula sa pangalan ng kandidato */
-}
-
-/* Bagong istilo para sa pangalan ng kandidato */
+/* Style for candidate name */
 .cname {
     margin: 0;
     font-weight: bold;
     font-size: 18px;
-    margin-bottom: 5px; /* Dagdag na puwang sa ibaba ng pangalan */
-    margin-left: 10px;
+    margin-bottom: 5px;
+    /* margin-left: 10px; */
+    /* Remove this line */
 }
 
-/* Bagong istilo para sa platform button */
+/* Update styles for platform button */
 .platform {
     background-color: #007bff;
     color: #fff;
@@ -228,13 +228,17 @@
     padding: 5px 10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-left: 10px; /* Dagdag na puwang sa kaliwa */
+    /* margin-left: 10px; */
+    /* Remove this line */
+    margin-top: 5px;
+    /* Add margin-top to separate from candidate name */
 }
 
 .platform:hover {
     background-color: #0056b3;
 }
 
+    
 
 /* Style for candidate image */
 .clist {
