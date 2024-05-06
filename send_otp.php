@@ -18,7 +18,7 @@ if (mail($email, $subject, $message)) {
     $stmt = $conn->prepare("INSERT INTO otp_verification (email, otp) VALUES (?, ?)");
     $stmt->bind_param("si", $email, $otp); // Bind parameters
     if ($stmt->execute()) {
-        $_SESSION['success'] = 'OTP sent successfully';
+        $_SESSION['otp'] = $otp;
         echo 'OTP sent successfully';
     } else {
         $_SESSION['error'] = 'Failed to store OTP in the database';
