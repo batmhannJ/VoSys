@@ -39,12 +39,26 @@
                     </select>
                     </div>
                 </div>
-                    <div class="form-group">
-                        <label for="starttime" class="col-sm-3 control-label">Start Time</label>
-                        <div class="col-sm-9">
-                            <input type="datetime-local" class="form-control" id="starttime" name="starttime" required>
-                        </div>
+                <div class="form-group">
+                    <label for="starttime" class="col-sm-3 control-label">Start Time</label>
+                    <div class="col-sm-9">
+                        <input type="datetime-local" class="form-control" id="starttime" name="starttime" required>
                     </div>
+                </div>
+
+                <script>
+                    // Get the current date and time
+                    var now = new Date();
+                    var year = now.getFullYear();
+                    var month = (now.getMonth() + 1).toString().padStart(2, '0'); // Add leading zero if needed
+                    var day = now.getDate().toString().padStart(2, '0'); // Add leading zero if needed
+                    var hour = now.getHours().toString().padStart(2, '0'); // Add leading zero if needed
+                    var minute = now.getMinutes().toString().padStart(2, '0'); // Add leading zero if needed
+
+                    // Set the minimum value of the input field to the current date and time
+                    document.getElementById("starttime").min = year + '-' + month + '-' + day + 'T' + hour + ':' + minute;
+                </script>
+
 
 <!-- Add end time input -->
                     <div class="form-group">
