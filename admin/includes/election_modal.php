@@ -44,7 +44,6 @@
                     <div class="col-sm-9">
                         <input type="datetime-local" class="form-control" id="starttime" name="starttime" required min="<?php echo date('Y-m-d\TH:i'); ?>">
                     </div>
-
                 </div>
                 <!-- Add end time input -->
                     <div class="form-group">
