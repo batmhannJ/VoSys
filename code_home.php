@@ -8,9 +8,33 @@
 	    <div class="container">
 	      <!-- Main content -->
 	      <section class="content">
-	      	<h1 class="page-header text-center title">
-	      		<img src="images/codg.jpg" alt="CSC Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
-	      		<b>Coalition of Disciplined<br>Future Enforcers of Todays <br>Generation Election</b></h1>
+          <h1 class="page-header text-center title">
+    <img src="images/codg.jpg" alt="CSC Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
+    <div class="title-text">
+        <h2>Coalition of Disciplined</h2>
+        <h2>Future Enforcers of Todays</h2>
+        <h2>Generation Election</h2>
+    </div>
+</h1>
+<style>
+    .page-header.title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.page-header.title img {
+    margin-right: 10px;
+}
+
+.title-text h2 {
+    margin: 0;
+    font-size: 24px;
+    line-height: 1.5;
+}
+
+</style>
 	        <div class="row">
 	        	<div class="col-sm-10 col-sm-offset-1">
 	        		<?php
