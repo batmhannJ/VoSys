@@ -64,14 +64,13 @@ $sql = "SELECT *,
         candidates.lastname AS canlast, 
         voters1.firstname AS votfirst, 
         voters1.lastname AS votlast, 
-        voters1.organization AS org,
-        votes_csc.position_name AS csc_position
+        voters1.organization AS org
         FROM votes 
         LEFT JOIN categories ON categories.id=votes.category_id 
         LEFT JOIN candidates ON candidates.id=votes.candidate_id 
         LEFT JOIN voters AS voters1 ON voters1.id=votes.voters_id 
         LEFT JOIN voters AS voters2 ON voters2.organization=votes.organization 
-        LEFT JOIN votes_csc ON votes_csc.voters_id=votes.voters_id
+        LEFT JOIN categories ON votes_csc.voters_id=votes_csc.voters_id
         GROUP BY votes.id
         ORDER BY categories.priority ASC";
 $query = $conn->query($sql);
@@ -84,18 +83,6 @@ while($row = $query->fetch_assoc()){
       <td>".$row['votfirst'].' '.$row['votlast']."</td>
       <td>".$row['org']."</td>
       <td>";
-      
-  // Check if the vote is from CSC
-  if (!empty($row['csc_position'])) {
-    echo $row['csc_position'];
-  } else {
-    echo "Position from other organization";
-  }
-      
-  echo "</td>
-    </tr>
-  ";
-}
 ?>
 
                 </tbody>
