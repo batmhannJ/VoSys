@@ -70,8 +70,8 @@ include 'includes/header.php';
                     <input type="email" class="form-control" name="email" placeholder="Email" required>
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 </div>
-                <div class="form-group has-feedback">
-                    <div class="col-sm-12">
+                <div class="form-group">
+                    <div class="col-sm-6">
                         <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter OTP" required>
                     </div>
                     <div class="col-sm-3">
