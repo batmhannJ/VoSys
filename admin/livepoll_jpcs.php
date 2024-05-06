@@ -56,52 +56,78 @@ include 'includes/header.php';
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    // Function to generate bar graph for President, Vice President, and Secretary
-    function generateBarGraph(presidentData, vicePresidentData, secretaryData, containerId) {
-        var chart = new CanvasJS.Chart(containerId, {
-            animationEnabled: true,
-            title:{
-                text: "Election Results - JPCS Organization"
-            },
-            axisY: {
-                title: "Vote Counts",
-                includeZero: true
-            },
-            data: [{
-                type: "column",
-                name: "President Votes",
-                showInLegend: true,
-                yValueFormatString: "#,##0",
-                dataPoints: presidentData
-            },
-            {
-                type: "column",
-                name: "Vice President Votes",
-                showInLegend: true,
-                yValueFormatString: "#,##0",
-                dataPoints: vicePresidentData
-            },
-            {
-                type: "column",
-                name: "Secretary Votes",
-                showInLegend: true,
-                yValueFormatString: "#,##0",
-                dataPoints: secretaryData
-            }]
-        });
-        chart.render();
-    }
+    // Initialize the chart with empty data points
+    var chart = new CanvasJS.Chart("electionGraph", {
+        animationEnabled: true,
+        title: {
+            text: "Election Results - JPCS Organization"
+        },
+        axisY: {
+            title: "Vote Counts",
+            includeZero: true
+        },
+        data: [{
+            type: "column",
+            name: "President Votes",
+            showInLegend: true,
+            yValueFormatString: "#,##0",
+            dataPoints: [],
+            indexLabel: "{y}", // Displays y value on top of the bar
+            indexLabelFontColor: "black", // Color of the y value text
+            indexLabelPlacement: "inside", // Position of the y value text
+            indexLabelFontSize: 14, // Font size of the y value text
+            indexLabelFontWeight: "bold", // Font weight of the y value text
+            indexLabelMaxWidth: 40, // Max width of the y value text
+            indexLabelWrap: true, // Wrap text if exceeds max width
+            width: 40 // Width of the bars
+        }, {
+            type: "column",
+            name: "Vice President Votes",
+            showInLegend: true,
+            yValueFormatString: "#,##0",
+            dataPoints: [],
+            indexLabel: "{y}", // Displays y value on top of the bar
+            indexLabelFontColor: "black", // Color of the y value text
+            indexLabelPlacement: "inside", // Position of the y value text
+            indexLabelFontSize: 14, // Font size of the y value text
+            indexLabelFontWeight: "bold", // Font weight of the y value text
+            indexLabelMaxWidth: 40, // Max width of the y value text
+            indexLabelWrap: true, // Wrap text if exceeds max width
+            width: 40 // Width of the bars
+        }, {
+            type: "column",
+            name: "Secretary Votes",
+            showInLegend: true,
+            yValueFormatString: "#,##0",
+            dataPoints: [],
+            indexLabel: "{y}", // Displays y value on top of the bar
+            indexLabelFontColor: "black", // Color of the y value text
+            indexLabelPlacement: "inside", // Position of the y value text
+            indexLabelFontSize: 14, // Font size of the y value text
+            indexLabelFontWeight: "bold", // Font weight of the y value text
+            indexLabelMaxWidth: 40, // Max width of the y value text
+            indexLabelWrap: true, // Wrap text if exceeds max width
+            width: 40 // Width of the bars
+        }]
+    });
+    chart.render();
 
-    // Function to fetch updated data from the server for JPCS organization
+    // Function to fetch updated data from the server for JPCS organization and update the chart
     function updateData() {
         $.ajax({
             url: 'update_jpcs_data.php', // Change this to the URL of your update data script
             type: 'GET',
             dataType: 'json',
-            data: {organization: 'JPCS'}, // Hardcoded organization to JPCS
+            data: { organization: 'JPCS' }, // Hardcoded organization to JPCS
             success: function(response) {
-                // Update bar graph for President, Vice President, and Secretary
-                generateBarGraph(response.presidentData, response.vicePresidentData, response.secretaryData, "electionGraph");
+                // Update data points for President Votes
+                chart.options.data[0].dataPoints = response.presidentData;
+                // Update data points for Vice President Votes
+                chart.options.data[1].dataPoints = response.vicePresidentData;
+                // Update data points for Secretary Votes
+                chart.options.data[2].dataPoints = response.secretaryData;
+                // Re-render the chart with updated data
+                chart.render();
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data: ' + error);
