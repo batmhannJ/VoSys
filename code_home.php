@@ -130,7 +130,7 @@
         ?>
     </div>
 </form>
-
+<style>
 /* Style for the position container */
 .position-container {
     display: flex;
@@ -206,7 +206,7 @@
     border-radius: 50%;
     margin-right: 10px;
 }
-
+</style>
 
                                 <div class="text-center">
                                     <button type="button" class="btn btn-primary btn-flat" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
