@@ -109,13 +109,10 @@
                                         $input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : '<input type="radio" class="flat-red '.$slug.'" name="'.slugify($row['description']).'" value="'.$crow['id'].'" '.$checked.'>';
                                         $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
                                         $candidate .= '
-                                            <div class="container">
-                                                <li>
-                                                    '.$input.'<button type="button" class="btn btn-primary btn-sm btn-flat clist platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'"><i class="fa fa-search"></i> Platform</button><img src="'.$image.'" height="100px" width="100px" class="clist"><span class="cname clist">'.$crow['firstname'].' '.$crow['lastname'].'</span>
-                                                </li>
-                                            </div>
+                                            <li>
+                                                '.$input.'<button type="button" class="btn btn-primary btn-sm btn-flat clist platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'"><i class="fa fa-search"></i> Platform</button><img src="'.$image.'" height="100px" width="100px" class="clist"><span class="cname clist">'.$crow['firstname'].' '.$crow['lastname'].'</span>
+                                            </li>
                                         ';
-                                        
                                     }
 
                                     $instruct = ($row['max_vote'] > 1) ? 'You may select up to '.$row['max_vote'].' candidates' : 'Select only one candidate';
@@ -148,6 +145,48 @@
 
                                 }   
                                 ?>
+
+                                <style>
+                                    /* Style for the voting ballot */
+#ballotForm {
+    padding: 20px;
+}
+
+/* Style for the voting instructions */
+.box-body p {
+    margin-bottom: 10px;
+}
+
+/* Style for the reset button */
+.reset {
+    margin-left: 10px;
+}
+
+/* Style for candidate list */
+#candidate_list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Style for individual candidate */
+#candidate_list li {
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+/* Style for candidate image */
+.clist {
+    margin-right: 10px;
+}
+
+/* Style for candidate name */
+.cname {
+    font-weight: bold;
+}
+
+                                    </style>
+                                </style>
                                 <div class="text-center">
                                     <button type="button" class="btn btn-primary btn-flat" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
                                 </div>
