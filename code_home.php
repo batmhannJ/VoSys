@@ -137,6 +137,7 @@
 </form>
 <style>
  /* Style for the position container */
+/* Style for the position container */
 .position-container {
     margin: 20px auto; /* Center the container horizontally and add margin on top and bottom */
     max-width: 800px; /* Set a maximum width to make it responsive */
@@ -226,26 +227,25 @@
     grid-column: span 1;
 }
 
+/* Media query for smaller screens */
 @media (max-width: 768px) {
     .position-container {
         padding: 10px; /* Adjust padding for smaller screens */
     }
 }
 
-
+/* Media query for larger screens */
 @media (min-width: 768px) {
     /* Apply flex-end alignment to candidate image */
     .candidate-list li {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr; /* Divide into three equal columns */
-        grid-gap: 10px; /* Add gap between columns */
+        display: flex;
+        justify-content: space-between; /* Align items to the end of the container */
         align-items: center;
         border: 1px solid #ccc;
         border-radius: 5px;
         padding: 10px;
         margin-bottom: 10px;
         background-color: #f9f9f9;
-        justify-content: space-between; /* Align items to the end of the container */
     }
 
     /* Adjust candidate image alignment */
