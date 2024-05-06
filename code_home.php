@@ -196,10 +196,18 @@
 
 /* Adjusted style for candidate name */
 .cname {
+    font-size: 18px; /* Default font size */
     margin-left: auto; /* Push candidate name to the end */
-    font-size: 18px;
     font-weight: bold;
 }
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .cname {
+        font-size: 16px; /* Reduce font size on smaller screens */
+    }
+}
+
 
 /* Adjusted style for platform button */
 .platform {
