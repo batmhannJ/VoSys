@@ -121,8 +121,8 @@
                                     <div class="candidate-info">
                                         '.$input.'
                                         <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
-                                        <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'"><i class="fa fa-search"></i> Platform</button>
                                     </div>
+                                    <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'"><i class="fa fa-search"></i> Platform</button>
                                     <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
                                 </li>';
                             }
@@ -203,6 +203,13 @@
     overflow: hidden; /* Iwasang maglapat ang teksto sa mga imahe */
 }
 
+/* Bagong istilo para sa container ng platform button */
+.platform-container {
+    display: flex; /* Baguhin ang display property */
+    align-items: center; /* I-adjust ang alignment */
+    margin-top: 5px; /* Itaas ang button mula sa pangalan ng kandidato */
+}
+
 /* Bagong istilo para sa pangalan ng kandidato */
 .cname {
     margin: 0;
@@ -210,11 +217,6 @@
     font-size: 18px;
     margin-bottom: 5px; /* Dagdag na puwang sa ibaba ng pangalan */
     margin-left: 10px;
-}
-
-/* Bagong istilo para sa container ng platform button */
-.platform-container {
-    margin-top: 5px; /* Itaas ang button mula sa pangalan ng kandidato */
 }
 
 /* Bagong istilo para sa platform button */
@@ -226,12 +228,12 @@
     padding: 5px 10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-left: 10px; /* Dagdag na puwang sa kaliwa */
 }
 
 .platform:hover {
     background-color: #0056b3;
 }
-
 
 
 /* Style for candidate image */
