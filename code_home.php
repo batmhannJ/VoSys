@@ -303,18 +303,17 @@
 }
 
 /* Adjusted style for platform button */
-/* Bagong istilo para sa platform button */
 .platform {
-    background-color: #007bff; /* Kulay ng background */
-    color: #fff; /* Kulay ng text */
-    border: none; /* Walang border */
-    border-radius: 20px; /* Radius ng border */
-    padding: 8px 20px; /* Padding */
-    cursor: pointer; /* I-set ang cursor sa pointer */
-    transition: background-color 0.3s ease; /* Transition para sa background color */
-    margin: 0 auto; /* Igitna ang platform button */
-    display: flex; /* Gamitin ang flexbox */
-    align-items: center; /* I-align ang content sa gitna */
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 20px; /* Make it pill-shaped */
+    padding: 8px 20px; /* Add padding */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: auto; /* Push platform button to the end */
+    display: flex; /* Use flexbox to align icon and text */
+    align-items: center; /* Center items vertically */
 }
 
 .platform:hover {
@@ -323,11 +322,14 @@
 
 /* Media query for smaller screens */
 @media (max-width: 768px) {
+  
     .platform {
-        padding: 6px 16px; /* Adjust padding for smaller screens */
-        font-size: 14px; /* Decrease font size for smaller screens */
-        justify-content: center; /* Center content horizontally */
+        padding: 6px 16px; /* I-adjust ang padding para sa mas maliit na screen */
+        font-size: 14px; /* I-adjust ang font size */
+        width: auto; /* I-adjust ang lapad */
+        margin: 10px auto; /* Igitna ang platform button */
     }
+}
 
     .platform i.fa {
         margin-right: 0; /* Remove right margin for icon */
