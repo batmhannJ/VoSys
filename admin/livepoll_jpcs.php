@@ -32,7 +32,7 @@ include 'includes/header.php';
                         <!-- /.box-header -->
                         <div class="box-body">
                             <!-- Bar Graph Container for President, Vice President, and Secretary -->
-                            <div id="electionGraph" style="height: 300px;"></div>
+                            <div id="electionGraph" style="height: 300px; width: 100px;"></div>
                         </div>
                         <!-- /.box-body -->
                     </div>
