@@ -176,10 +176,12 @@
 }
 
 /* Style for individual candidate */
+/* Update the display property for candidate list items */
 .candidate-list li {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* Divide into three equal columns */
+    grid-gap: 10px; /* Add gap between columns */
     align-items: center;
-    justify-content: space-between;
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 10px;
@@ -187,40 +189,7 @@
     background-color: #f9f9f9;
 }
 
-/* Style for candidate information */
-.candidate-info {
-    /*display: flex;
-    align-items: flex-start; /* Adjust alignment */
-}
-
-/* Bagong istilo para sa mga imahe */
-.cimage {
-    /*float: left; /* Ilipat ang imahe sa kaliwa */
-    margin-right: 20px; /* Dagdag na puwang sa kanan ng imahe */
-}
-
-/* Bagong istilo para sa teksto */
-.ctext {
-    overflow: hidden; /* Iwasang maglapat ang teksto sa mga imahe */
-}
-
-/* Bagong istilo para sa container ng platform button */
-.platform-container {
-    display: flex; /* Baguhin ang display property */
-    align-items: center; /* I-adjust ang alignment */
-    margin-top: 5px; /* Itaas ang button mula sa pangalan ng kandidato */
-}
-
-/* Bagong istilo para sa pangalan ng kandidato */
-.cname {
-    margin: 0;
-    font-weight: bold;
-    font-size: 18px;
-    margin-bottom: 5px; /* Dagdag na puwang sa ibaba ng pangalan */
-    margin-left: 10px;
-}
-
-/* Bagong istilo para sa platform button */
+/* Adjust platform button alignment */
 .platform {
     background-color: #007bff;
     color: #fff;
@@ -229,22 +198,23 @@
     padding: 5px 10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-left: 10px; /* Dagdag na puwang sa kaliwa */
+    justify-self: center; /* Center the button within its column */
 }
 
 .platform:hover {
     background-color: #0056b3;
 }
 
-
-/* Style for candidate image */
+/* Update styles for candidate image */
 .clist {
     width: 100px;
     height: 100px;
     object-fit: cover;
     border-radius: 50%;
     margin-right: 10px;
+    grid-column: span 1; /* Make the image span one column */
 }
+
 
 </style>
 
