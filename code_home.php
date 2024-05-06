@@ -276,6 +276,7 @@
     .candidate-list li img {
         width: 100px; /* I-adjust ang lapad ng mga larawan para sa mas maliit na screen */
         height: 100px; /* I-adjust ang taas ng mga larawan para sa mas maliit na screen */
+        margin-left: 20px;
     }
 }
 
