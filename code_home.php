@@ -134,79 +134,81 @@
     }
     ?>
 </form>
-
 <style>
-    /* Style for the voting ballot */
-    #ballotForm {
-        padding: 20px;
-    }
+.position-container {
+    margin-bottom: 20px;
+}
 
-    /* Style for the voting instructions */
-    .box-body p {
-        margin-bottom: 10px;
-        font-size: 16px;
-    }
+.box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #800000;
+    color: #fff;
+    padding: 10px;
+}
 
-    /* Style for the reset button */
-    .reset {
-        margin-left: 10px;
-    }
+.box-title {
+    margin: 0;
+    font-size: 20px;
+}
 
-    /* Style for candidate list */
-    #candidate_list ul {
-        list-style-type: none;
-        padding: 0;
-    }
+.box-body {
+    padding: 10px;
+}
 
-    /* Style for individual candidate */
-    #candidate_list li {
-        margin-bottom: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        padding: 15px;
-        background-color: #f9f9f9;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
+.instruction {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
 
-    /* Style for candidate image */
-    .clist {
-        margin-right: 15px;
-        border-radius: 50%;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
+.candidate-list ul {
+    list-style-type: none;
+    padding: 0;
+}
 
-    /* Style for candidate name */
-    .cname {
-        font-weight: bold;
-    }
+.candidate-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+}
 
-    /* Style for position title */
-    .box-title {
-        margin: 0;
-        font-size: 20px;
-        color: #fff;
-    }
+.candidate-info {
+    display: flex;
+    align-items: center;
+}
 
-    /* Style for position header */
-    .box-header {
-        border-bottom: 2px solid #800000;
-    }
+.cname {
+    margin-right: 10px;
+    font-weight: bold;
+}
 
-    /* Style for reset button */
-    .reset {
-        background-color: #28a745;
-        color: #fff;
-        border: none;
-        border-radius: 3px;
-        padding: 8px 15px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
+.platform {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
 
-    .reset:hover {
-        background-color: #218838;
-    }
-</style>
+.platform:hover {
+    background-color: #0056b3;
+}
+
+.clist {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-left: 10px;
+}
 
                                 </style>
                                 <div class="text-center">
