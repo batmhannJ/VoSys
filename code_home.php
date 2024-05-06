@@ -194,35 +194,28 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
 }
 
-/* Style for the candidate name */
+/* Adjusted style for candidate name */
 .cname {
     font-size: 18px; /* Default font size */
+    margin-left: auto; /* Push candidate name to the end */
     font-weight: bold;
 }
 
 /* Media query for smaller screens */
 @media (max-width: 768px) {
-    .candidate-list li {
-        flex-direction: column; /* Change flex direction to column for smaller screens */
-    }
-
     .cname {
-        font-size: 24px; /* Increase font size of the name on smaller screens */
-    }
-
-    .platform {
-        margin-top: 10px; /* Add margin on top of the platform button */
-        align-self: flex-start; /* Align the platform button to the start */
+        font-size: 10px; /* Reduce font size on smaller screens */
     }
 }
 
-/* Style for the platform button */
+
+/* Adjusted style for platform button */
 .platform {
     background-color: #007bff;
     color: #fff;
     border: none;
-    border-radius: 3px;
-    padding: 5px 10px;
+    border-radius: 20px; /* Make it pill-shaped */
+    padding: 8px 20px; /* Add padding */
     cursor: pointer;
     transition: background-color 0.3s ease;
     margin-left: auto; /* Push platform button to the end */
@@ -234,15 +227,12 @@
 
 /* Media query for smaller screens */
 @media (max-width: 768px) {
-    .candidate-list li {
-        flex-direction: column; /* Change flex direction to column for smaller screens */
-    }
-
     .platform {
-        margin-top: 10px; /* Add margin on top of the platform button */
-        align-self: flex-end; /* Align the platform button to the end */
+        padding: 6px 16px; /* Adjust padding for smaller screens */
+        font-size: 14px; /* Decrease font size for smaller screens */
     }
 }
+
 
 
 /* Updated styles for candidate image */
