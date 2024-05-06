@@ -99,11 +99,16 @@ include 'includes/header.php';
             data: { organization: 'JPCS' }, // Hardcoded organization to JPCS
             success: function(response) {
                 if (response && response.length > 0) {
-                    console.log("Data received:", response); // Log the received data
+                    // Extracting data for President and Vice President Votes
+                    var presidentVicePresidentData = response.presidentVicePresidentVotes;
+                    // Extracting data for Other Candidates Votes
+                    var otherCandidatesData = response.otherCandidatesVotes;
+
                     // Update data points for President and Vice President Votes
-                    chart.options.data[0].dataPoints = response.presidentVicePresidentVotes;
+                    chart.options.data[0].dataPoints = presidentVicePresidentData;
                     // Update data points for Other Candidates Votes
-                    chart.options.data[1].dataPoints = response.otherCandidatesVotes;
+                    chart.options.data[1].dataPoints = otherCandidatesData;
+
                     // Re-render the chart with updated data
                     chart.render();
                 } else {
@@ -122,5 +127,6 @@ include 'includes/header.php';
     // Call the updateData function every 10 seconds (adjust as needed)
     setInterval(updateData, 10000); // 10000 milliseconds = 10 seconds
 </script>
+
 </body>
 </html>
