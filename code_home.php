@@ -169,6 +169,40 @@
                                     </div>
                                 </div>
                             </div>
+                            <style>
+    /* Modal body style */
+    .modal-body {
+        padding: 20px;
+    }
+
+    /* Modal footer style */
+    .modal-footer {
+        padding: 15px;
+        text-align: right; /* Align buttons to the right */
+    }
+
+    /* Button styles */
+    .btn {
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    /* Preview button style */
+    #preview {
+        background-color: #28a745; /* Green background */
+        color: #fff; /* White text */
+        border: none; /* No border */
+        margin-right: 10px; /* Add some space between buttons */
+    }
+
+    /* Submit button style */
+    #submitBtn {
+        background-color: #007bff; /* Blue background */
+        color: #fff; /* White text */
+        border: none; /* No border */
+    }
+</style>
 
                             </form>
 
