@@ -1,11 +1,11 @@
 <?php
 include 'includes/session.php';
-include 'includes/header_jpcs.php';
+include 'includes/header.php';
 ?>
-<body class="hold-transition skin-green sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-    <?php include 'includes/navbar_jpcs.php'; ?>
-    <?php include 'includes/menubar_jpcs.php'; ?>
+    <?php include 'includes/navbar.php'; ?>
+    <?php include 'includes/menubar.php'; ?>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -21,52 +21,18 @@ include 'includes/header_jpcs.php';
         </section>
         <!-- Main content -->
         <section class="content">
-            <!-- Bar Graphs for President, Vice President, and Secretary -->
+            <!-- Bar Graph for JPCS Organization -->
             <div class="row">
-                <!-- President Bar Graph Box -->
-                <div class="col-md-4">
+                <!-- JPCS President Bar Graph Box -->
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">President Candidates Vote Count</h3>
+                            <h3 class="box-title"><b>President Candidates - JPCS Organization</b></h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <!-- President Bar Graph Container -->
+                            <!-- President Bar Graph Container for JPCS -->
                             <div id="presidentGraph" style="height: 300px;"></div>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                    <!-- /.box -->
-                </div>
-                <!-- /.col -->
-
-                <!-- Vice President Bar Graph Box -->
-                <div class="col-md-4">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Vice President Candidates Vote Count</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <!-- Vice President Bar Graph Container -->
-                            <div id="vicePresidentGraph" style="height: 300px;"></div>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                    <!-- /.box -->
-                </div>
-                <!-- /.col -->
-
-                <!-- Secretary Bar Graph Box -->
-                <div class="col-md-4">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Secretary Candidates Vote Count</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <!-- Secretary Bar Graph Container -->
-                            <div id="secretaryGraph" style="height: 300px;"></div>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -90,15 +56,21 @@ include 'includes/header_jpcs.php';
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    // Function to generate bar graph
+    // Function to generate bar graph for JPCS organization
     function generateBarGraph(dataPoints, containerId) {
+        var color = "#4CAF50"; // Green for JPCS
+
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
             title:{
-                text: "Vote Counts"
+                text: "Vote Counts - JPCS Organization"
             },
             axisY: {
-                title: "Candidates"
+                title: "Candidates",
+                includeZero: true,
+                labelFormatter: function (e) {
+                    return Math.round(e.value);
+                }
             },
             axisX: {
                 title: "Vote Count",
@@ -106,28 +78,23 @@ include 'includes/header_jpcs.php';
             },
             data: [{
                 type: "bar", // Change type to "bar"
-                dataPoints: dataPoints
+                dataPoints: dataPoints,
+                color: color // Set the color to Green
             }]
         });
         chart.render();
     }
 
-    // Function to fetch updated data from the server
+    // Function to fetch updated data from the server for JPCS organization
     function updateData() {
         $.ajax({
-            url: 'jpcs_update_data.php', // Change this to the URL of your update data script
+            url: 'update_data.php', // Change this to the URL of your update data script
             type: 'GET',
             dataType: 'json',
-            data: {organization: 'JPCS'}, // Fixed organization
+            data: {organization: 'JPCS'}, // Hardcoded organization to JPCS
             success: function(response) {
-                // Update president bar graph
+                // Update president bar graph for JPCS
                 generateBarGraph(response.presidentData, "presidentGraph");
-
-                // Update vice president bar graph
-                generateBarGraph(response.vicePresidentData, "vicePresidentGraph");
-
-                // Update secretary bar graph
-                generateBarGraph(response.secretaryData, "secretaryGraph");
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data: ' + error);
@@ -139,7 +106,7 @@ include 'includes/header_jpcs.php';
     updateData();
 
     // Call the updateData function every 60 seconds (adjust as needed)
-    setInterval(updateData, 3000); // 60000 milliseconds = 60 seconds
+    setInterval(updateData, 60000); // 60000 milliseconds = 60 seconds
 </script>
 
 </body>
