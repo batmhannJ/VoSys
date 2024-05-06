@@ -119,64 +119,61 @@ include 'includes/header.php';
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    // Function to generate bar graph with climbing animation
-    function generateClimbingBarGraph(dataPoints, containerId) {
+    // Function to generate bar graph with racing animation
+    function generateRacingBarGraph(dataPoints, containerId) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
-            title:{
+            title: {
                 text: "Vote Counts"
             },
             axisY: {
                 title: "Candidates",
-                includeZero: true,
-                labelFormatter: function (e) {
-                    return Math.round(e.value);
-                }
+                includeZero: true
             },
             axisX: {
                 title: "Vote Count",
                 includeZero: true
             },
             data: [{
-                type: "bar", // Change type to "bar"
-                dataPoints: [] // Initialize with empty data points
+                type: "bar",
+                dataPoints: []
             }]
         });
 
         // Render empty chart initially
         chart.render();
 
-        // Function to animate the climbing effect
-        function animateClimbingBarGraph(dataPoints) {
-            var newDataPoints = dataPoints.map(function(point) {
+        // Function to animate the racing effect
+        function animateRacingBarGraph(dataPoints) {
+            var newDataPoints = dataPoints.map(function (point) {
                 return {
                     label: point.label,
-                    y: 0 // Start with zero height for all bars
+                    y: Math.floor(Math.random() * 100) // Random starting value
                 };
             });
 
-            var updateInterval = 100; // Interval between each update in milliseconds
-            var updates = 30; // Number of updates to reach final value
-            var updateCount = 0;
+            newDataPoints.sort(function (a, b) {
+                return b.y - a.y; // Sort by descending order of values
+            });
 
             var interval = setInterval(function () {
                 newDataPoints.forEach(function (point, i) {
-                    var deltaY = dataPoints[i].y / updates; // Increment value for each update
                     if (point.y < dataPoints[i].y) {
-                        point.y += deltaY;
+                        point.y++; // Increment value until it reaches the actual value
                     }
                 });
-                updateCount++;
                 chart.options.data[0].dataPoints = newDataPoints;
                 chart.render();
-                if (updateCount >= updates) {
+                if (newDataPoints.every(function (point, i) {
+                    return point.y >= dataPoints[i].y;
+                })) {
                     clearInterval(interval);
                 }
-            }, updateInterval);
+            }, 100); // Interval between each update in milliseconds
         }
 
         // Call animation function with data points
-        animateClimbingBarGraph(dataPoints);
+        animateRacingBarGraph(dataPoints);
     }
 
     // Function to fetch updated data from the server
@@ -186,17 +183,17 @@ include 'includes/header.php';
             type: 'GET',
             dataType: 'json',
             data: {organization: organization}, // Pass the selected organization to the server
-            success: function(response) {
-                // Update president bar graph with climbing animation
-                generateClimbingBarGraph(response.presidentData, "presidentGraph");
+            success: function (response) {
+                // Update president bar graph with racing animation
+                generateRacingBarGraph(response.presidentData, "presidentGraph");
 
-                // Update vice president bar graph with climbing animation
-                generateClimbingBarGraph(response.vicePresidentData, "vicePresidentGraph");
+                // Update vice president bar graph with racing animation
+                generateRacingBarGraph(response.vicePresidentData, "vicePresidentGraph");
 
-                // Update secretary bar graph with climbing animation
-                generateClimbingBarGraph(response.secretaryData, "secretaryGraph");
+                // Update secretary bar graph with racing animation
+                generateRacingBarGraph(response.secretaryData, "secretaryGraph");
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error('Error fetching data: ' + error);
             }
         });
@@ -206,12 +203,12 @@ include 'includes/header.php';
     updateData($('#organization').val());
 
     // Bind click event to filter button
-    $('#filterButton').click(function() {
+    $('#filterButton').click(function () {
         updateData($('#organization').val());
     });
 
     // Call the updateData function periodically
-    setInterval(function() {
+    setInterval(function () {
         updateData($('#organization').val());
     }, 3000); // Update every 3 seconds
 </script>
