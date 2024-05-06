@@ -191,7 +191,8 @@
 
 .cname{
     margin-left: 5px;
-    font-size: 15px;;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 /* Adjust platform button alignment */
@@ -219,7 +220,26 @@
     margin-right: 10px;
     grid-column: span 1; /* Make the image span one column */
 }
+@media (min-width: 768px) {
+    /* Apply flex-end alignment to candidate image */
+    .candidate-list li {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr; /* Divide into three equal columns */
+        grid-gap: 10px; /* Add gap between columns */
+        align-items: center;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: #f9f9f9;
+        justify-content: space-between; /* Align items to the end of the container */
+    }
 
+    /* Adjust candidate image alignment */
+    .clist {
+        margin-right: 0; /* Remove margin-right */
+    }
+}
 
 </style>
 
