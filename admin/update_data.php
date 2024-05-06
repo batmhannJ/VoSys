@@ -71,28 +71,3 @@ $response = array(
     'vicePresidentData' => $vicePresidentData,
     'secretaryData' => $secretaryData
 );
-
-<?php
-// Include ang session at connection
-include 'includes/session.php';
-
-// Kumuha ng mga pangalan ng lahat ng mga kandidato mula sa bawat organisasyon
-$query = "SELECT candidate_name, position, organization FROM candidates WHERE elected = 1";
-$result = $conn->query($query);
-
-// I-prepara ang array para sa JSON response
-$data = array();
-while($row = $result->fetch_assoc()) {
-    $organization = $row['organization'];
-    if (!isset($data[$organization])) {
-        $data[$organization] = array();
-    }
-    $data[$organization][] = array(
-        "position" => $row['position'], // Posisyon ng kandidato
-        "candidate_name" => $row['candidate_name'] // Pangalan ng kandidato
-    );
-}
-
-// Ibalik ang JSON response
-echo json_encode($data);
-?>
