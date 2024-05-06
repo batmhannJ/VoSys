@@ -40,10 +40,6 @@ if (isset($_POST['resetPass'])) {
         $_SESSION['error'] = "Email not found. Please try again.";
     }
 }
-
-// Redirect to the password reset form if accessed directly
-header("Location: forgot_password.php");
-exit();
 ?>
 
 <?php
