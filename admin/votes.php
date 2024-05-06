@@ -72,6 +72,7 @@ $sql = "SELECT *,
         voters1.firstname AS votfirst, 
         voters1.lastname AS votlast, 
         voters1.organization AS org
+        votes_csc.category_id AS catid
         FROM votes 
         LEFT JOIN categories ON categories.id=votes.category_id 
         LEFT JOIN candidates ON candidates.id=votes.candidate_id 
