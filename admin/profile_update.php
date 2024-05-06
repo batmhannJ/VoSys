@@ -28,7 +28,7 @@ if (isset($_POST['save'])) {
     if (isset($_SESSION['otp']) && $_SESSION['otp'] == $otp) {
         // OTP matched, proceed with saving the updated information
         // Your saving logic goes here
-        if (password_verify($curr_password, $user['password'])) {
+        if (password_verify($confirm_password, $user['password'])) {
             // Hash the new password
             $new_password = password_hash($password, PASSWORD_DEFAULT);
 
