@@ -130,8 +130,9 @@
         ?>
     </div>
 </form>
+
 <style>
-/* Style for the position container */
+   /* Style for the position container */
 .position-container {
     display: flex;
     flex-direction: column;
@@ -206,6 +207,8 @@
     border-radius: 50%;
     margin-right: 10px;
 }
+
+
 </style>
 
                                 <div class="text-center">
