@@ -205,6 +205,8 @@
 
 /* Bagong istilo para sa container ng platform button */
 .platform-container {
+    display: flex; /* Baguhin ang display property */
+    align-items: center; /* I-adjust ang alignment */
     margin-top: 5px; /* Itaas ang button mula sa pangalan ng kandidato */
 }
 
@@ -226,13 +228,12 @@
     padding: 5px 10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-left: 10px; /* Dagdag na puwang sa kaliwa */
 }
 
 .platform:hover {
     background-color: #0056b3;
 }
-
-
 
 
 /* Style for candidate image */
