@@ -187,69 +187,51 @@
         background-color: #0056b3; /* Darker shade of blue */
     }
 
-      /* Modal content style */
-    .modal-content {
-        background-color: #fff;
-        border-radius: 10px;
-    }
-
-    /* Modal header style */
-    .modal-header {
-        border-bottom: 1px solid #dee2e6; /* Light border at the bottom */
-        padding: 15px;
-        text-align: center;
-    }
-
-    /* Modal content style */
-    .modal-content {
-        background-color: #f8f9fa;
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
-    }
-
-    /* Modal header style */
-    .modal-header {
-        border-bottom: 1px solid #dee2e6; /* Light border at the bottom */
-        padding: 15px;
-        text-align: center;
-    }
-
-    /* Modal title style */
+      /* Modal title style */
     .modal-title {
         font-size: 24px;
-        color: #333; /* Dark gray color */
-        margin-bottom: 0;
+        color: #333;
     }
 
     /* Modal body style */
     .modal-body {
-        padding: 20px;
         font-size: 18px;
-        color: #333; /* Dark gray color */
+        color: #555;
     }
 
     /* Modal footer style */
     .modal-footer {
-        padding: 15px;
-        text-align: center;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        background-color: #f8f9fa; /* Light gray background color */
         border-top: 1px solid #dee2e6; /* Light border at the top */
     }
 
     /* Close button style */
     .close {
-        color: #333; /* Dark gray color */
+        color: #007bff; /* Blue color for close button */
         font-size: 30px;
-        opacity: 0.7; /* Slightly transparent */
-        transition: opacity 0.3s ease;
-    }
-
-    /* Close button hover effect */
-    .close:hover {
-        opacity: 1; /* Fully visible on hover */
     }
 
     /* Preview button style */
-    #preview, #submitBtnModal {
+    #preview {
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 18px;
+        background-color: #28a745; /* Green background color */
+        color: #fff; /* White text color */
+        border: none; /* No border */
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    /* Preview button hover effect */
+    #preview:hover {
+        background-color: #218838; /* Darker shade of green */
+    }
+
+    /* Submit button style */
+    #submitBtnModal {
         padding: 10px 20px;
         border-radius: 5px;
         font-size: 18px;
@@ -260,9 +242,26 @@
         transition: background-color 0.3s ease;
     }
 
+    /* Submit button hover effect */
+    #submitBtnModal:hover {
+        background-color: #0056b3; /* Darker shade of blue */
+    }
+
+    /* Preview button style */
+    #preview {
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        background-color: #28a745; /* Green background color */
+        color: #fff; /* White text color */
+        border: none; /* No border */
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
     /* Preview button hover effect */
-    #preview:hover, #submitBtnModal:hover {
-        background-color: #0056b3; /* Darker shade of blue on hover */
+    #preview:hover {
+        background-color: #218838; /* Darker shade of green */
     }
 </style>
 
