@@ -200,16 +200,11 @@
         text-align: center;
     }
 
-    /* Modal title style */
-    .modal-title {
-        font-size: 24px;
-        color: #007bff; /* Blue color for title */
-    }
-
-     /* Modal content style */
-     .modal-content {
-        background-color: #fff;
+    /* Modal content style */
+    .modal-content {
+        background-color: #f8f9fa;
         border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
     }
 
     /* Modal header style */
@@ -223,6 +218,7 @@
     .modal-title {
         font-size: 24px;
         color: #333; /* Dark gray color */
+        margin-bottom: 0;
     }
 
     /* Modal body style */
@@ -243,6 +239,13 @@
     .close {
         color: #333; /* Dark gray color */
         font-size: 30px;
+        opacity: 0.7; /* Slightly transparent */
+        transition: opacity 0.3s ease;
+    }
+
+    /* Close button hover effect */
+    .close:hover {
+        opacity: 1; /* Fully visible on hover */
     }
 
     /* Preview button style */
@@ -250,16 +253,16 @@
         padding: 10px 20px;
         border-radius: 5px;
         font-size: 18px;
-        background-color: #fff; /* White background color */
-        color: #333; /* Dark gray color */
-        border: 1px solid #333; /* Dark gray border */
+        background-color: #007bff; /* Blue background color */
+        color: #fff; /* White text color */
+        border: none; /* No border */
         cursor: pointer;
-        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        transition: background-color 0.3s ease;
     }
 
     /* Preview button hover effect */
     #preview:hover, #submitBtnModal:hover {
-        background-color: #f8f9fa; /* Light gray background on hover */
+        background-color: #0056b3; /* Darker shade of blue on hover */
     }
 </style>
 
