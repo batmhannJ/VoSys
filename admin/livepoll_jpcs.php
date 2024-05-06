@@ -66,13 +66,27 @@ include 'includes/header.php';
             title: "Vote Counts",
             includeZero: true
         },
-        data: [{
-            type: "column",
-            name: "President and Vice President Votes",
-            showInLegend: true,
-            yValueFormatString: "#,##0",
-            dataPoints: []
-        }]
+        axisY2: {
+            title: "Percentage (%)",
+            includeZero: true
+        },
+        data: [
+            {
+                type: "column",
+                name: "President and Vice President Votes",
+                showInLegend: true,
+                yValueFormatString: "#,##0",
+                dataPoints: []
+            },
+            {
+                type: "column",
+                name: "Other Candidates Votes",
+                axisYType: "secondary",
+                showInLegend: true,
+                yValueFormatString: "#,##0",
+                dataPoints: []
+            }
+        ]
     });
     chart.render();
 
@@ -87,14 +101,16 @@ include 'includes/header.php';
                 if (response && response.length > 0) {
                     console.log("Data received:", response); // Log the received data
                     // Update data points for President and Vice President Votes
-                    chart.options.data[0].dataPoints = response;
+                    chart.options.data[0].dataPoints = response.presidentVicePresidentVotes;
+                    // Update data points for Other Candidates Votes
+                    chart.options.data[1].dataPoints = response.otherCandidatesVotes;
                     // Re-render the chart with updated data
                     chart.render();
                 } else {
                     console.error("Empty or invalid data received.");
                 }
             },
-            error: function(xhr, status, eror) {
+            error: function(xhr, status, error) {
                 console.error('Error fetching data:', error); // Log any errors
             }
         });
@@ -107,5 +123,4 @@ include 'includes/header.php';
     setInterval(updateData, 10000); // 10000 milliseconds = 10 seconds
 </script>
 
-</body>
-</html>
+</body></html>
