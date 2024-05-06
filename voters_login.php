@@ -512,6 +512,7 @@ main.sign-up-mode .carousel {
                 }
                 ?>
               </div>
+              <input type="submit" name="login" value="Sign In" class="sign-btn" style="font-size:15px;">
             </form>
           </div>
 
