@@ -4,7 +4,15 @@
 <div class="wrapper">
 
 	<?php include 'includes/navbar.php'; ?>
-	 
+    <style>
+        /* Add background image */
+        body {
+            background-image: url('images/4.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+    </style>
 	  <div class="content-wrapper">
 	    <div class="container">
 	      <!-- Main content -->
