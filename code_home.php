@@ -217,14 +217,22 @@
     background-color: #0056b3;
 }
 
-/* Style for candidate image */
-.clist {
+/* Style for the candidate image container */
+.image-container {
     width: 100px;
     height: 100px;
-    object-fit: cover;
     border-radius: 50%;
-    margin-right: 10px;
+    overflow: hidden;
+    background-color: #800000; /* Maroon background color */
 }
+
+/* Style for the candidate image */
+.clist {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 
 </style>
 
