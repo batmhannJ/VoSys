@@ -7,6 +7,7 @@ include 'includes/conn.php';
 // Check if the form is submitted
 if (isset($_POST['resetPass'])) {
     $email = $_POST['email'];
+    $entered_otp = $_POST['otp']; // Get OTP entered by the user
 
     // Check if the email exists in the database
     $stmt = $conn->prepare("SELECT * FROM voters WHERE email = ?");
@@ -15,32 +16,39 @@ if (isset($_POST['resetPass'])) {
     $result = $stmt->get_result(); // Get result
 
     if ($result->num_rows > 0) {
-        // Generate a unique OTP
-        $otp = rand(100000, 999999);
+        // Retrieve the OTP sent via email
+        $stmt = $conn->prepare("SELECT otp FROM otp_verification WHERE email = ?");
+        $stmt->bind_param("s", $email); // Bind parameter
+        $stmt->execute();
+        $otp_result = $stmt->get_result();
 
-        // Store the OTP in the database along with the user's email and timestamp
-        $stmt = $conn->prepare("INSERT INTO otp_verification (email, otp, created_at) VALUES (?, ?, NOW())");
-        $stmt->bind_param("si", $email, $otp); // Bind parameters
-        if ($stmt->execute()) {
-            // Send OTP via email or SMS
-            $subject = "Password Reset OTP";
-            $message = "Your OTP for password reset is: $otp";
-            if (mail($email, $subject, $message)) {
-                $_SESSION['success'] = "An OTP has been sent to your email. Please check your inbox.";
-                // Redirect to OTP verification page or display a message
-                header("Location: otp_verification.php?email=$email");
+        if ($otp_result->num_rows > 0) {
+            $row = $otp_result->fetch_assoc();
+            $stored_otp = $row['otp'];
+
+            // Verify if the entered OTP matches the one sent via email
+            if ($entered_otp == $stored_otp) {
+                // Redirect to change_pass.php if OTP is correct
+                header("Location: change_pass.php?email=$email");
                 exit();
             } else {
-                $_SESSION['error'] = "Failed to send OTP. Please try again.";
+                $_SESSION['error'] = "Incorrect OTP. Please try again.";
+                header("Location: forgot_password.php");
+                exit();
             }
         } else {
-            $_SESSION['error'] = "Failed to generate OTP. Please try again.";
+            $_SESSION['error'] = "No OTP found for this email. Please try again.";
+            header("Location: forgot_password.php");
+            exit();
         }
     } else {
         $_SESSION['error'] = "Email not found. Please try again.";
+        header("Location: forgot_password.php");
+        exit();
     }
 }
 ?>
+
 
 <?php
 // Include your header file
