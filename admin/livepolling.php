@@ -138,7 +138,7 @@ include 'includes/header.php';
                 console.error('Error fetching data: ' + error);
             }
         });
-    }
+    } 
 
     // Function to render bar graphs using CanvasJS
     function renderGraph(dataPoints, containerId) {
