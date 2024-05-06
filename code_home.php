@@ -208,7 +208,7 @@
     }
 }
 
-/* Adjusted style for platform button */
+//* Adjusted style for platform button */
 .platform {
     background-color: #007bff;
     color: #fff;
@@ -242,6 +242,7 @@
         display: none; /* Hide text on smaller screens */
     }
 }
+
 
 
 
