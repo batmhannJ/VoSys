@@ -170,7 +170,7 @@
                                 </div>
                             </div>
                         <style>
-                            /* Style for the primary button */
+                      /* Style for the primary button */
 .btn-primary {
     background-color: #007bff;
     color: #fff;
@@ -190,10 +190,10 @@
     border-color: #6c757d;
 }
 
-/* Style for the close button in the modal */
-.close {
-    color: #000;
-    opacity: 0.5;
+/* Style for the close button in the modal header */
+.modal-header .close {
+    margin-left: auto;
+    color: #fff;
 }
 
 /* Style for the modal header */
@@ -222,6 +222,7 @@
 .text-center {
     text-align: center;
 }
+
 
                             </style>
                         
