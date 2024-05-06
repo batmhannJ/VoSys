@@ -53,10 +53,15 @@ if (isset($_POST['login'])) {
                         $_SESSION['voter'] = $row['id'];
                         $organization = $row['organization'];
                         // Check the organization and redirect accordingly
+                        $sql_csc = "SELECT * FROM elections WHERE organization = 'CSC' AND status = 1";
+                        $result_csc = $conn->query($sql_csc);
+                        if ($result_csc && $result_csc->num_rows > 0) {
+                            // CSC is the active election, redirect to CSC home
+                            header('location: home.php');
+                            exit();
+                        }
+                        // CSC is not active, redirect based on organization
                         switch ($organization) {
-                            case 'CSC':
-                                header('location: home.php');
-                                exit();
                             case 'JPCS':
                                 header('location: jpcs_home.php');
                                 exit();
