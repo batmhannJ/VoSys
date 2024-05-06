@@ -252,18 +252,28 @@
     padding: 0;
 }
 
-/* Adjusted style for candidate list items */
+//* Bagong istilo para sa mga item sa listahan ng mga kandidato */
 .candidate-list li {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr; /* Divide into three equal columns */
-    grid-gap: 10px; /* Add gap between columns */
-    align-items: center;
-    border-radius: 5px; /* Adjust border radius */
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #f9f9f9;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+    display: flex; /* Baguhin ang display sa flex */
+    flex-wrap: wrap; /* Pahintulutan ang pag-wrap ng mga item sa loob ng flex container */
+    justify-content: space-between; /* I-set ang mga item na sa layong pare-pareho */
+    align-items: center; /* I-align ang mga item sa gitna */
+    border-radius: 5px; /* Radius ng border */
+    padding: 10px; /* Padding para sa mga item */
+    margin-bottom: 10px; /* Espasyo sa pagitan ng mga item */
+    background-color: #f9f9f9; /* Kulay ng background */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Shadow para sa depth */
 }
+
+/* Media query para sa mas maliit na mga screen */
+@media (max-width: 768px) {
+    .candidate-list li {
+        flex-direction: column; /* Baguhin ang direksyon ng flex container sa column */
+        align-items: flex-start; /* I-align ang mga item sa kaliwa */
+        padding: 15px; /* I-adjust ang padding para sa mas maliit na screen */
+    }
+}
+
 
 /* Adjusted style for candidate name */
 .cname {
