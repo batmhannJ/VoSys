@@ -46,7 +46,7 @@ if (isset($_POST['save'])) {
         }
 
         // Redirect to OTP verification page
-        header('Location: otp_verification.php');
+        header('Location: home.php');
         exit;
     } else {
         $_SESSION['error'] = 'Incorrect password';
