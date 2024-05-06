@@ -175,19 +175,24 @@ include 'includes/header.php';
     // Function to fetch updated data from the server
     function updateData() {
         $.ajax({
-    url: 'submit_vote.php',
-    type: 'POST',
-    data: formData,
-    dataType: 'json',
-    success: function(response) {
-        // Update data after successful vote submission
-        updateData();
-    },
-    error: function(xhr, status, error) {
-        console.error('Error submitting vote: ' + error);
-    }
-});
+            url: 'update_data.php', // Change this to the URL of your update data script
+            type: 'GET',
+            dataType: 'json',
+            data: {organization: $('#organization').val()}, // Pass the selected organization to the server
+            success: function(response) {
+                // Update president bar graph with color based on organization
+                generateBarGraph(response.presidentData, "presidentGraph", $('#organization').val());
 
+                // Update vice president bar graph with color based on organization
+                generateBarGraph(response.vicePresidentData, "vicePresidentGraph", $('#organization').val());
+
+                // Update secretary bar graph with color based on organization
+                generateBarGraph(response.secretaryData, "secretaryGraph", $('#organization').val());
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching data: ' + error);
+            }
+        });
     }
 
     // Call the updateData function initially
