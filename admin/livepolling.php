@@ -227,9 +227,6 @@ include 'includes/header.php';
 
     // Call the updateData function initially
     updateData();
-
-    // Call the updateData function periodically
-    setInterval(updateData, 1000); // 60000 milliseconds = 60 seconds
 </script>
 
 </body>
