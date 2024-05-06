@@ -187,7 +187,7 @@
 
 /* Style for candidate information */
 .candidate-info {
-    display: flex;
+    /*display: flex;*/
     align-items: flex-start; /* Adjust alignment */
 }
 
