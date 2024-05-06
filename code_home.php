@@ -170,37 +170,55 @@
                                 </div>
                             </div>
                             <style>
+    /* Button style */
+    #submitBtn {
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        background-color: #007bff; /* Blue background color */
+        color: #fff; /* White text color */
+        border: none; /* No border */
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    /* Button hover effect */
+    #submitBtn:hover {
+        background-color: #0056b3; /* Darker shade of blue */
+    }
+
+    /* Modal title style */
+    .modal-title {
+        font-size: 20px;
+    }
+
     /* Modal body style */
     .modal-body {
-        padding: 20px;
+        font-size: 16px;
+        color: #333;
     }
 
     /* Modal footer style */
     .modal-footer {
-        padding: 15px;
-        text-align: right; /* Align buttons to the right */
-    }
-
-    /* Button styles */
-    .btn {
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
+        padding-top: 15px;
+        padding-bottom: 15px;
     }
 
     /* Preview button style */
     #preview {
-        background-color: #28a745; /* Green background */
-        color: #fff; /* White text */
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        background-color: #28a745; /* Green background color */
+        color: #fff; /* White text color */
         border: none; /* No border */
-        margin-right: 10px; /* Add some space between buttons */
+        cursor: pointer;
+        transition: background-color 0.3s ease;
     }
 
-    /* Submit button style */
-    #submitBtn {
-        background-color: #007bff; /* Blue background */
-        color: #fff; /* White text */
-        border: none; /* No border */
+    /* Preview button hover effect */
+    #preview:hover {
+        background-color: #218838; /* Darker shade of green */
     }
 </style>
 
