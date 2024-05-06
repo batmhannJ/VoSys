@@ -56,30 +56,35 @@ include 'includes/header.php';
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    // Function to generate bar graph for JPCS organization
-    function generateBarGraph(dataPoints, containerId) {
-        var color = "#4CAF50"; // Green for JPCS
-
+    // Function to generate dual-Y bar chart for JPCS organization
+    function generateDualYBarChart(presidentData, vicePresidentData, containerId) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
             title:{
                 text: "Vote Counts - JPCS Organization"
             },
             axisY: {
-                title: "Candidates",
-                includeZero: true,
-                labelFormatter: function (e) {
-                    return Math.round(e.value);
-                }
+                title: "President Votes",
+                includeZero: true
             },
-            axisX: {
-                title: "Vote Count",
+            axisY2: {
+                title: "Vice President Votes",
                 includeZero: true
             },
             data: [{
-                type: "bar", // Change type to "bar"
-                dataPoints: dataPoints,
-                color: color // Set the color to Green
+                type: "column", // Change type to "column"
+                name: "President Votes",
+                showInLegend: true,
+                yValueFormatString: "#,##0",
+                dataPoints: presidentData
+            },
+            {
+                type: "column",
+                name: "Vice President Votes",
+                showInLegend: true,
+                yValueFormatString: "#,##0",
+                axisYType: "secondary",
+                dataPoints: vicePresidentData
             }]
         });
         chart.render();
@@ -93,8 +98,8 @@ include 'includes/header.php';
             dataType: 'json',
             data: {organization: 'JPCS'}, // Hardcoded organization to JPCS
             success: function(response) {
-                // Update president bar graph for JPCS
-                generateBarGraph(response.presidentData, "presidentGraph");
+                // Update dual-Y bar chart for JPCS
+                generateDualYBarChart(response.presidentData, response.vicePresidentData, "presidentGraph");
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data: ' + error);
