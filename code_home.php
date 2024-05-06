@@ -218,7 +218,7 @@
     padding: 5px 10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-left: auto; /* Push platform button to the end by default */
+    margin-left: auto; /* Push platform button to the end */
 }
 
 .platform:hover {
@@ -227,12 +227,16 @@
 
 /* Media query for smaller screens */
 @media (max-width: 768px) {
+    .candidate-list li {
+        flex-direction: column; /* Change flex direction to column for smaller screens */
+    }
+
     .platform {
-        margin: 10px auto; /* Center the platform button horizontally and add margin on top */
-        display: block; /* Change display to block to make it full width */
-        width: fit-content; /* Adjust width to fit its content */
+        margin-top: 10px; /* Add margin on top of the platform button */
+        align-self: flex-end; /* Align the platform button to the end */
     }
 }
+
 
 /* Updated styles for candidate image */
 .clist {
