@@ -129,8 +129,7 @@
               <?php
                 $sql = "SELECT * 
                         FROM votes 
-                        JOIN voters ON votes_csc.voters_id = voters.id 
-                        WHERE voters.organization = 'CSC' 
+                        JOIN voters ON votes_csc.voters_id = voters.id
                         GROUP BY votes_csc.voters_id";
                 $query = $conn->query($sql);
 
