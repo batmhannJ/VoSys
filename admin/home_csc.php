@@ -126,15 +126,16 @@
           <!-- small box -->
           <div class="small-box">
             <div class="inner">
-              <?php
-                $sql = "SELECT * 
-                        FROM votes_csc 
-                        JOIN voters ON votes_csc.voters_id = voters.id
-                        GROUP BY votes_csc.voters_id";
-                $query = $conn->query($sql);
+            <?php
+              $sql = "SELECT COUNT(*) AS total_votes
+                      FROM votes_csc 
+                      JOIN voters ON votes_csc.voters_id = voters.id";
+              $query = $conn->query($sql);
+              $row = $query->fetch_assoc();
+              $totalVotes = $row['total_votes'];
 
-                echo "<h3>".$query->num_rows."</h3>";
-              ?>
+              echo "<h3>".$totalVotes."</h3>";
+            ?>
 
               <p>Voters Voted</p>
             </div>
