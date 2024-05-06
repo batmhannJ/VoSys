@@ -21,18 +21,18 @@ include 'includes/header.php';
         </section>
         <!-- Main content -->
         <section class="content">
-            <!-- Bar Graph for JPCS Organization -->
+            <!-- Bar Graph for President and Vice President - JPCS Organization -->
             <div class="row">
-                <!-- JPCS President Bar Graph Box -->
+                <!-- President and Vice President Bar Graph Box -->
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><b>President Candidates - JPCS Organization</b></h3>
+                            <h3 class="box-title"><b>Election Results - JPCS Organization</b></h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <!-- President Bar Graph Container for JPCS -->
-                            <div id="presidentGraph" style="height: 300px;"></div>
+                            <!-- Bar Graph Container for President and Vice President -->
+                            <div id="electionGraph" style="height: 300px;"></div>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -56,53 +56,46 @@ include 'includes/header.php';
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    // Function to generate dual-Y bar chart for JPCS organization
-    function generateDualYBarChart(presidentData, vicePresidentData, containerId) {
-        var chart = new CanvasJS.Chart(containerId, {
-            animationEnabled: true,
-            title:{
-                text: "Vote Counts - JPCS Organization"
-            },
-            axisY: {
-                title: "President Votes",
-                includeZero: true
-            },
-            axisY2: {
-                title: "Vice President Votes",
-                includeZero: true
-            },
-            data: [{
-                type: "column", // Change type to "column"
-                name: "President Votes",
-                showInLegend: true,
-                yValueFormatString: "#,##0",
-                dataPoints: presidentData
-            },
-            {
-                type: "column",
-                name: "Vice President Votes",
-                showInLegend: true,
-                yValueFormatString: "#,##0",
-                axisYType: "secondary",
-                dataPoints: vicePresidentData
-            }]
-        });
-        chart.render();
-    }
+    // Initialize the chart with empty data points
+    var chart = new CanvasJS.Chart("electionGraph", {
+        animationEnabled: true,
+        title: {
+            text: "Election Results - JPCS Organization"
+        },
+        axisY: {
+            title: "Vote Counts",
+            includeZero: true
+        },
+        data: [{
+            type: "column",
+            name: "President and Vice President Votes",
+            showInLegend: true,
+            yValueFormatString: "#,##0",
+            dataPoints: []
+        }]
+    });
+    chart.render();
 
-    // Function to fetch updated data from the server for JPCS organization
+    // Function to fetch updated data from the server for JPCS organization and update the chart
     function updateData() {
         $.ajax({
-            url: 'update_data.php', // Change this to the URL of your update data script
+            url: 'update_jpcs_data.php', // URL of your update data script
             type: 'GET',
             dataType: 'json',
-            data: {organization: 'JPCS'}, // Hardcoded organization to JPCS
+            data: { organization: 'JPCS' }, // Hardcoded organization to JPCS
             success: function(response) {
-                // Update dual-Y bar chart for JPCS
-                generateDualYBarChart(response.presidentData, response.vicePresidentData, "presidentGraph");
+                if (response && response.length > 0) {
+                    console.log("Data received:", response); // Log the received data
+                    // Update data points for President and Vice President Votes
+                    chart.options.data[0].dataPoints = response;
+                    // Re-render the chart with updated data
+                    chart.render();
+                } else {
+                    console.error("Empty or invalid data received.");
+                }
             },
             error: function(xhr, status, error) {
-                console.error('Error fetching data: ' + error);
+                console.error('Error fetching data:', error); // Log any errors
             }
         });
     }
@@ -110,8 +103,8 @@ include 'includes/header.php';
     // Call the updateData function initially
     updateData();
 
-    // Call the updateData function every 60 seconds (adjust as needed)
-    setInterval(updateData, 60000); // 60000 milliseconds = 60 seconds
+    // Call the updateData function every 10 seconds (adjust as needed)
+    setInterval(updateData, 10000); // 10000 milliseconds = 10 seconds
 </script>
 
 </body>
