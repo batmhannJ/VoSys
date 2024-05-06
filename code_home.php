@@ -18,7 +18,7 @@
                         if(isset($_SESSION['error'])){
                             ?>
                             <div class="alert alert-danger alert-dismissible" id="error-alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
                                 <ul>
                                     <?php
                                         foreach($_SESSION['error'] as $error){
@@ -155,7 +155,7 @@
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true"></span>
+                                                <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
 
