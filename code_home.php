@@ -173,7 +173,7 @@
                             <style>
     /* Button style */
     #submitBtn {
-        padding: 10px 20px;
+        padding: 100px 200px;
         border-radius: 5px;
         font-size: 16px;
         background-color: #007bff; /* Blue background color */
