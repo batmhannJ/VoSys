@@ -71,8 +71,12 @@ include 'includes/header.php';
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 </div>
                 <div class="form-group has-feedback">
+                    <div class="col-sm-12">
                         <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter OTP" required>
+                    </div>
+                    <div class="col-sm-3">
                         <button type="button" class="btn btn-primary" id="sendOTP">Send OTP</button>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
