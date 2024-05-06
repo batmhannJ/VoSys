@@ -26,7 +26,7 @@ include 'includes/header.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-body">
-                            <form method="get" action="">
+                            <form method="get" action="" id="filterForm">
                                 <div class="form-group">
                                     <label for="organization">Select Organization:</label>
                                     <select class="form-control" name="organization" id="organization">
@@ -40,7 +40,7 @@ include 'includes/header.php';
                                         ?>
                                     </select>
                                 </div>
-                                <!-- Remove the filter button -->
+                                <button type="button" class="btn btn-primary" id="filterButton">Filter</button>
                             </form>
                         </div>
                     </div>
@@ -173,9 +173,9 @@ include 'includes/header.php';
     // Call the updateData function initially
     updateData($('#organization').val());
 
-    // Bind change event to organization select element
-    $('#organization').change(function() {
-        updateData($(this).val());
+    // Bind click event to filter button
+    $('#filterButton').click(function() {
+        updateData($('#organization').val());
     });
 </script>
 
