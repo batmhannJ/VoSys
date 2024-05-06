@@ -153,14 +153,12 @@ include 'includes/header.php';
                 text: "Vote Counts"
             },
             axisY: {
-                 title: "Candidates",
+                title: "Candidates",
                 includeZero: true,
-                 labelFormatter: function (e) {
-        // Include candidate name and round vote count to whole number
-        return dataPoints[e.value].label + " - " + Math.round(e.value);
-    }
-},
-
+                labelFormatter: function (e) {
+                    return Math.round(e.value);
+                }
+            },
             axisX: {
                 title: "Vote Count",
                 includeZero: true
