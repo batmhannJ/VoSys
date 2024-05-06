@@ -513,6 +513,10 @@ main.sign-up-mode .carousel {
                   <span class="form-control-feedback"></span>
                 </div>
 
+                <div>
+                    <a href="forgot_password.php" style="font-size: 15px;">Forgot Password?</a>
+                </div>
+
                 <div class="form-group has-feedback">
                     <div class="g-recaptcha" data-sitekey="6LddHcIpAAAAAJS6Wnenkllxyr3tWUSlSCu8o9eO">
                 </div>
