@@ -163,54 +163,44 @@
                                             <p>Are you sure you want to submit your vote?</p>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-outline-primary" id="preview"><i class="fa fa-file-text"></i> Preview</button> 
-                                            <button type="submit" class="btn btn-success" id="submitBtn" name="vote_code">Yes, Submit</button>
+                                            <button type="button" class="btn btn-success btn-flat" id="preview"><i class="fa fa-file-text"></i> Preview</button> 
+                                            <button type="submit" class="btn btn-primary" id="submitBtn" name="vote_code">Yes, Submit</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-            
-    <style>
+                            <style>
     /* Modal body style */
     .modal-body {
         padding: 20px;
-        font-size: 16px;
-        color: #333;
-        background-color: #f8f9fa; /* Light gray background color */
     }
 
     /* Modal footer style */
     .modal-footer {
         padding: 15px;
-        text-align: right;
-        background-color: #f8f9fa; /* Match modal body background color */
+        text-align: right; /* Align buttons to the right */
     }
 
     /* Button styles */
     .btn {
-        padding: 5px 10px;
+        padding: 10px 20px;
         border-radius: 5px;
         cursor: pointer;
-        font-size: 16px;
-        transition: background-color 0.3s ease;
     }
 
     /* Preview button style */
     #preview {
-        color: #fff; /* White text color */
-        border: 2px solid #007bff; /* Blue border */
-        margin-right: 10px;
+        background-color: #28a745; /* Green background */
+        color: #fff; /* White text */
+        border: none; /* No border */
+        margin-right: 10px; /* Add some space between buttons */
     }
 
     /* Submit button style */
     #submitBtn {
-        color: #fff; /* White text color */
+        background-color: #007bff; /* Blue background */
+        color: #fff; /* White text */
         border: none; /* No border */
-    }
-
-    /* Button hover effect */
-    .btn:hover {
-        background-color: #0056b3; /* Darker shade of button color */
     }
 </style>
 
