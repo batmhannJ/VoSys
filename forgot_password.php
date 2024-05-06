@@ -72,7 +72,7 @@ include 'includes/header.php';
                 </div>
                 <div class="form-group">
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter OTP" required>
+                    <input type="number" class="form-control" id="otp" name="otp" placeholder="Enter OTP" required>
                     </div>
                     <div class="col-sm-3">
                         <button type="button" class="btn btn-primary" id="sendOTP">Send OTP</button>
@@ -90,7 +90,7 @@ include 'includes/header.php';
     <script>
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('sendOTP').addEventListener('click', function() {
-        var email = '<?php echo $user['email']; ?>';
+        var email = document.querySelector('input[name="email"]').value; // Get email from input field
         sendOTP(email);
     });
 });
