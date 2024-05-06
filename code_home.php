@@ -138,8 +138,8 @@
  /* Style for the position container */
 .position-container {
     margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* adjust minmax values as needed */
     gap: 20px;
 }
 
@@ -224,7 +224,6 @@
 .platform:hover {
     background-color: #0056b3;
 }
-
 
 /* Style for candidate image */
 .clist {
