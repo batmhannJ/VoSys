@@ -169,16 +169,19 @@
                                     </div>
                                 </div>
                             </div>
-                            <style>
+              
+    <style>
     /* Modal body style */
     .modal-body {
         padding: 20px;
+        font-size: 16px;
+        color: #333;
     }
 
     /* Modal footer style */
     .modal-footer {
         padding: 15px;
-        text-align: right; /* Align buttons to the right */
+        text-align: right;
     }
 
     /* Button styles */
@@ -186,21 +189,28 @@
         padding: 10px 20px;
         border-radius: 5px;
         cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
     }
 
     /* Preview button style */
     #preview {
-        background-color: #28a745; /* Green background */
-        color: #fff; /* White text */
-        border: none; /* No border */
-        margin-right: 10px; /* Add some space between buttons */
+        background-color: #007bff;
+        color: #fff;
+        border: 2px solid #007bff;
+        margin-right: 10px;
     }
 
     /* Submit button style */
     #submitBtn {
-        background-color: #007bff; /* Blue background */
-        color: #fff; /* White text */
-        border: none; /* No border */
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+    }
+
+    /* Button hover effect */
+    .btn:hover {
+        background-color: #0056b3; /* Darker shade of button color */
     }
 </style>
 
