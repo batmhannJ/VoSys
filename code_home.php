@@ -76,7 +76,7 @@
                         }
                         else{
                             ?>
-                           <form method="POST" id="ballotForm" action="submit_ballot_code.php">
+                            <form method="POST" id="ballotForm" action="submit_ballot_code.php">
     <?php
     include 'includes/slugify.php';
 
@@ -119,13 +119,11 @@
                                 echo '
                                 <li>
                                     <div class="candidate-info">
-                                        <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
-                                        <div>
-                                            <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
-                                            <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'"><i class="fa fa-search"></i> Platform</button>
-                                        </div>
+                                        '.$input.'
+                                        <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
+                                        <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'"><i class="fa fa-search"></i> Platform</button>
                                     </div>
-                                    '.$input.'
+                                    <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
                                 </li>';
                             }
                         echo '</ul>
@@ -136,7 +134,6 @@
     }
     ?>
 </form>
-
 <style>
     /* Style for the position container */
     .position-container {
@@ -196,9 +193,9 @@
 
     /* Style for candidate name */
     .cname {
-        margin-left: 10px;
+        margin-right: 10px;
         font-weight: bold;
-        font-size: 14px;
+        font-size: 14px; /* Reduce font size for candidate name */
     }
 
     /* Style for platform button */
@@ -210,7 +207,7 @@
         padding: 5px 10px;
         cursor: pointer;
         transition: background-color 0.3s ease;
-        margin-top: 5px;
+        margin-top: 5px; /* Adjust margin from candidate name */
     }
 
     .platform:hover {
@@ -223,11 +220,9 @@
         height: 100px;
         object-fit: cover;
         border-radius: 50%;
-        margin-right: 10px;
+        margin-left: 10px;
     }
 </style>
-
-
 
                                 <div class="text-center">
                                     <button type="button" class="btn btn-primary btn-flat" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
