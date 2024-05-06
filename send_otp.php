@@ -11,15 +11,15 @@ function sendOTP($email, $otp) {
 
     // SMTP Configuration
     $mail->isSMTP();
-    $mail->Host = 'smtp.example.com'; // Your SMTP server
+    $mail->Host = 'smtp.gmail.com'; // Your SMTP server
     $mail->SMTPAuth = true;
-    $mail->Username = 'your@example.com'; // Your SMTP username
-    $mail->Password = 'your_password'; // Your SMTP password
+    $mail->Username = 'olshco.electionupdates@gmail.com'; // Your SMTP username
+    $mail->Password = 'ljzujblsyyprijmx'; // Your SMTP password
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587; // Port for TLS
 
     // Email content
-    $mail->setFrom('your@example.com', 'Your Name');
+    $mail->setFrom('olshco.electionupdates@gmail.com', 'EL-UPS OLSHCO');
     $mail->addAddress($email);
     $mail->Subject = 'OTP Verification';
     $mail->Body = 'Your OTP is: ' . $otp;
