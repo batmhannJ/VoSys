@@ -57,11 +57,12 @@
                   <th>Voters ID</th>
                   <th>Email</th>
                   <th>Year Level</th>
+                  <th>Organization</th>
                   <th>Tools</th>
                 </thead>
                 <tbody>
                   <?php
-                    $sql = "SELECT * FROM voters WHERE organization = 'CSC'";
+                    $sql = "SELECT * FROM voters";
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
                       $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
@@ -76,6 +77,7 @@
                           <td>".$row['voters_id']."</td>
                           <td>".$row['email']."</td>
                           <td>".$row['yearLvl']."</td>
+                          <td>".$row['organization']."</td>
                           <td>
                             <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
                             <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."'><i class='fa fa-trash'></i> Delete</button>
