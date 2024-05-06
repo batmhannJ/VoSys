@@ -154,7 +154,6 @@
 .box-title {
     margin: 0;
     font-size: 20px;
-    margin-right: 20px; /* Increase the gap between title and reset button */
 }
 
 /* Style for the box body */
@@ -221,41 +220,6 @@
     border-radius: 50%;
     margin-left: 10px;
 }
-
-/* Style for reset button */
-.reset {
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    border-radius: 3px;
-    padding: 8px 15px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-left: 20px; /* Increase the gap between title and reset button */
-}
-
-.reset:hover {
-    background-color: #218838;
-}
-
-/* Responsive Styles */
-@media only screen and (max-width: 768px) {
-    /* Adjust styles for smaller screens */
-    .box-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .box-title {
-        margin-bottom: 10px;
-    }
-
-    .reset {
-        margin-left: 0;
-        margin-top: 10px;
-    }
-}
-
 
                                 </style>
                                 <div class="text-center">
