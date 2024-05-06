@@ -209,6 +209,7 @@
     font-weight: bold;
     font-size: 18px;
     margin-bottom: 5px; /* Dagdag na puwang sa ibaba ng pangalan */
+    margin-left: 10px;
 }
 
 /* Bagong istilo para sa container ng platform button */
