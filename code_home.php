@@ -170,33 +170,57 @@
                                 </div>
                             </div>
                         <style>
-                            /* Box shadow effect for modal dialog */
-.modal-dialog {
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
-}
-
-/* Styling for buttons */
-.btn {
-    padding: 5px 10px;
-    font-size: 14px;
-}
-
-/* Smaller and more formal buttons */
+                            /* Style for the primary button */
 .btn-primary {
-    padding: 3px 8px;
-    font-size: 12px;
     background-color: #007bff;
+    color: #fff;
     border-color: #007bff;
 }
 
-.btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
+/* Style for the success button */
+.btn-success {
+    background-color: #28a745;
+    color: #fff;
+    border-color: #28a745;
 }
 
-/* Resizing the logo */
-.logo {
-    max-height: 50px;
+/* Style for the secondary button */
+.btn-secondary {
+    color: #6c757d;
+    border-color: #6c757d;
+}
+
+/* Style for the close button in the modal */
+.close {
+    color: #000;
+    opacity: 0.5;
+}
+
+/* Style for the modal header */
+.modal-header {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Style for the modal body */
+.modal-body {
+    padding: 20px;
+}
+
+/* Style for the modal footer */
+.modal-footer {
+    justify-content: space-between;
+    padding: 20px;
+}
+
+/* Style for the modal title */
+.modal-title {
+    font-weight: bold;
+}
+
+/* Center the text in the text-center div */
+.text-center {
+    text-align: center;
 }
 
                             </style>
