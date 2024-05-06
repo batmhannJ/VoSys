@@ -144,7 +144,7 @@
     border: 1px solid #ccc; /* Add border for visual separation */
     border-radius: 10px; /* Add border radius for rounded corners */
     background-color: #fff; /* Change background color */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.9); /* Add shadow for depth */
 }
 
 /* Style for the box header */
