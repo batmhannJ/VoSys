@@ -76,150 +76,138 @@
                         }
                         else{
                             ?>
-                            <!-- Voting Ballot -->
                             <form method="POST" id="ballotForm" action="submit_ballot_code.php">
-                                <?php
-                                include 'includes/slugify.php';
+    <?php
+    include 'includes/slugify.php';
 
-                                $candidate = '';
-                                $sql = "SELECT * FROM positions ORDER BY priority ASC";
-                                $query = $conn->query($sql);
-                                while($row = $query->fetch_assoc()){
-                                    $sql = "SELECT * FROM candidates WHERE position_id='".$row['id']."'";
-                                    $cquery = $conn->query($sql);
-                                    while($crow = $cquery->fetch_assoc()){
-                                        $slug = slugify($row['description']);
-                                        $checked = '';
-                                        if(isset($_SESSION['post'][$slug])){
-                                            $value = $_SESSION['post'][$slug];
-
-                                            if(is_array($value)){
-                                                foreach($value as $val){
-                                                    if($val == $crow['id']){
-                                                        $checked = 'checked';
-                                                    }
-                                                }
-                                            }
-                                            else{
-                                                if($value == $crow['id']){
-                                                    $checked = 'checked';
-                                                }
+    $sql = "SELECT * FROM positions ORDER BY priority ASC";
+    $query = $conn->query($sql);
+    while($row = $query->fetch_assoc()){
+        echo '
+        <div class="position-container">
+            <div class="box box-solid" id="'.$row['id'].'">
+                <div class="box-header">
+                    <h3 class="box-title">'.$row['description'].'</h3>
+                    <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="'.slugify($row['description']).'"><i class="fa fa-refresh"></i> Reset</button>
+                </div>
+                <div class="box-body">
+                    <p class="instruction">You may select up to '.$row['max_vote'].' candidates</p>
+                    <div class="candidate-list">
+                        <ul>';
+                            $sql_candidates = "SELECT * FROM candidates WHERE position_id='".$row['id']."'";
+                            $cquery = $conn->query($sql_candidates);
+                            while($crow = $cquery->fetch_assoc()){
+                                $slug = slugify($row['description']);
+                                $checked = '';
+                                if(isset($_SESSION['post'][$slug])){
+                                    $value = $_SESSION['post'][$slug];
+                                    if(is_array($value)){
+                                        foreach($value as $val){
+                                            if($val == $crow['id']){
+                                                $checked = 'checked';
                                             }
                                         }
-                                        $input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : '<input type="radio" class="flat-red '.$slug.'" name="'.slugify($row['description']).'" value="'.$crow['id'].'" '.$checked.'>';
-                                        $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
-                                        $candidate .= '
-                                            <li>
-                                                '.$input.'<button type="button" class="btn btn-primary btn-sm btn-flat clist platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'"><i class="fa fa-search"></i> Platform</button><img src="'.$image.'" height="100px" width="100px" class="clist"><span class="cname clist">'.$crow['firstname'].' '.$crow['lastname'].'</span>
-                                            </li>
-                                        ';
                                     }
+                                    else{
+                                        if($value == $crow['id']){
+                                            $checked = 'checked';
+                                        }
+                                    }
+                                }
+                                $input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : '<input type="radio" class="flat-red '.$slug.'" name="'.slugify($row['description']).'" value="'.$crow['id'].'" '.$checked.'>';
+                                $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
+                                echo '
+                                <li>
+                                    <div class="candidate-info">
+                                        '.$input.'
+                                        <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
+                                        <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'"><i class="fa fa-search"></i> Platform</button>
+                                    </div>
+                                    <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
+                                </li>';
+                            }
+                        echo '</ul>
+                    </div>
+                </div>
+            </div>
+        </div>';
+    }
+    ?>
+</form>
 
-                                    $instruct = ($row['max_vote'] > 1) ? 'You may select up to '.$row['max_vote'].' candidates' : 'Select only one candidate';
+<style>
+    /* Style for the voting ballot */
+    #ballotForm {
+        padding: 20px;
+    }
 
-                                    echo '
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <div class="box box-solid" id="'.$row['id'].'">
-                                                <div class="box-header with-border"style="background-color: #800000; color: #fff;"> 
-                                                        <h3 class="box-title"><b>'.$row['description'].'</b></h3>
-                                                    </div>
-                                                    <div class="box-body">
-                                                        <p>'.$instruct.'
-                                                            <span class="pull-right">
-                                                                <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="'.slugify($row['description']).'"><i class="fa fa-refresh"></i> Reset</button>
-                                                            </span>
-                                                        </p>
-                                                        <div id="candidate_list">
-                                                            <ul>
-                                                                '.$candidate.'
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ';
+    /* Style for the voting instructions */
+    .box-body p {
+        margin-bottom: 10px;
+        font-size: 16px;
+    }
 
-                                    $candidate = '';
+    /* Style for the reset button */
+    .reset {
+        margin-left: 10px;
+    }
 
-                                }   
-                                ?>
+    /* Style for candidate list */
+    #candidate_list ul {
+        list-style-type: none;
+        padding: 0;
+    }
 
-                                <style>
-   /* Style for the voting ballot */
-#ballotForm {
-    padding: 20px;
-}
+    /* Style for individual candidate */
+    #candidate_list li {
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 15px;
+        background-color: #f9f9f9;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 
-/* Style for the voting instructions */
-.box-body p {
-    margin-bottom: 10px;
-    font-size: 16px;
-}
+    /* Style for candidate image */
+    .clist {
+        margin-right: 15px;
+        border-radius: 50%;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 
-/* Style for the reset button */
-.reset {
-    margin-left: 10px;
-}
+    /* Style for candidate name */
+    .cname {
+        font-weight: bold;
+    }
 
-/* Style for candidate list */
-#candidate_list ul {
-    list-style-type: none;
-    padding: 0;
-}
+    /* Style for position title */
+    .box-title {
+        margin: 0;
+        font-size: 20px;
+        color: #fff;
+    }
 
-/* Style for individual candidate */
-#candidate_list li {
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 15px;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+    /* Style for position header */
+    .box-header {
+        border-bottom: 2px solid #800000;
+    }
 
-/* Style for candidate image */
-.clist {
-    margin-right: 15px;
-    border-radius: 50%;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+    /* Style for reset button */
+    .reset {
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        padding: 8px 15px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
 
-/* Style for candidate name */
-.cname {
-    font-weight: bold;
-}
+    .reset:hover {
+        background-color: #218838;
+    }
+</style>
 
-/* Style for position title */
-.box-title {
-    margin: 0;
-    font-size: 20px;
-    color: #fff;
-}
-
-/* Style for position header */
-.box-header {
-    border-bottom: 2px solid #800000;
-}
-
-/* Style for reset button */
-.reset {
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    border-radius: 3px;
-    padding: 8px 15px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.reset:hover {
-    background-color: #218838;
-}
-
-
-                                    </style>
                                 </style>
                                 <div class="text-center">
                                     <button type="button" class="btn btn-primary btn-flat" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
