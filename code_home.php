@@ -160,11 +160,21 @@
     padding: 10px;
 }
 
+/* Adjust space between position and reset button */
+.box-header .box-title {
+    margin-right: auto; /* Push position title to the left */
+}
+
+/* Style for the reset button */
+.reset {
+    margin-left: auto; /* Push reset button to the right */
+}
+
+
 /* Style for the box title */
 .box-title {
     margin: 0;
     font-size: 20px;
-    gap: 20px;
 }
 
 /* Style for the box body */
