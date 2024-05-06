@@ -43,7 +43,7 @@
                     ?>
 
                     <div class="alert alert-danger alert-dismissible" id="alert" style="display:none;">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                         <span class="message"></span>
                     </div>
 
@@ -195,7 +195,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #007bff;
+    background-color: maroon;
     color: #fff;
 }
 
