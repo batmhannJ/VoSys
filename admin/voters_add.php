@@ -26,6 +26,16 @@ if (isset($_POST['add'])) {
         exit;
     }
 
+    // Check if the full name already exists in the database
+    $checkNameQuery = "SELECT * FROM voters WHERE firstname = '$firstname' AND lastname = '$lastname'";
+    $resultName = $conn->query($checkNameQuery);
+
+    if ($resultName->num_rows > 0) {
+        $_SESSION['error'] = 'Voter with the same name already exists';
+        header('location: voters.php');
+        exit;
+    }
+
     // Check if the voter ID already exists in the database
     do {
         $voter = substr(str_shuffle('1234567890'), 0, 7);
