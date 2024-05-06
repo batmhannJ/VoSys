@@ -42,9 +42,16 @@
                 <div class="form-group">
                     <label for="starttime" class="col-sm-3 control-label">Start Time</label>
                     <div class="col-sm-9">
-                        <input type="datetime-local" class="form-control" id="starttime" name="starttime" required min="<?php echo date('Y-m-d\TH:i'); ?>">
+                        <input type="datetime-local" class="form-control" id="starttime" name="starttime" required>
                     </div>
 
+                    <script>
+                        // Get the current date and time in the format required for the datetime-local input
+                        var currentDate = new Date().toISOString().slice(0, 16);
+
+                        // Set the min attribute of the input field to the current date and time
+                        document.getElementById('starttime').min = currentDate;
+                    </script>
                 </div>
                 <!-- Add end time input -->
                     <div class="form-group">
