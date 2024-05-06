@@ -163,25 +163,27 @@
                                             <p>Are you sure you want to submit your vote?</p>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-success btn-flat" id="preview"><i class="fa fa-file-text"></i> Preview</button> 
-                                            <button type="submit" class="btn btn-primary" id="submitBtn" name="vote_code">Yes, Submit</button>
+                                            <button type="button" class="btn btn-outline-primary" id="preview"><i class="fa fa-file-text"></i> Preview</button> 
+                                            <button type="submit" class="btn btn-success" id="submitBtn" name="vote_code">Yes, Submit</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-              
+            
     <style>
     /* Modal body style */
     .modal-body {
         padding: 20px;
         font-size: 16px;
         color: #333;
+        background-color: #f8f9fa; /* Light gray background color */
     }
 
     /* Modal footer style */
     .modal-footer {
         padding: 15px;
         text-align: right;
+        background-color: #f8f9fa; /* Match modal body background color */
     }
 
     /* Button styles */
@@ -195,17 +197,17 @@
 
     /* Preview button style */
     #preview {
-        background-color: #007bff;
-        color: #fff;
-        border: 2px solid #007bff;
+        background-color: #007bff; /* Blue background color */
+        color: #fff; /* White text color */
+        border: 2px solid #007bff; /* Blue border */
         margin-right: 10px;
     }
 
     /* Submit button style */
     #submitBtn {
-        background-color: #28a745;
-        color: #fff;
-        border: none;
+        background-color: #28a745; /* Green background color */
+        color: #fff; /* White text color */
+        border: none; /* No border */
     }
 
     /* Button hover effect */
