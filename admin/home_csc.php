@@ -184,7 +184,7 @@
 
               $totalRows = $query->num_rows; // Total number of rows fetched
               // Assuming you have a database connection, replace 'your_db_connection' with your actual database connection variable
-              $sql_count_voters = "SELECT COUNT(*) AS total_voters FROM voters WHERE organization = 'CSC'";
+              $sql_count_voters = "SELECT COUNT(*) AS total_voters FROM voters";
               $result_count_voters = $conn->query($sql_count_voters);
               $row_count_voters = $result_count_voters->fetch_assoc();
               $totalNumberOfVoters = $row_count_voters['total_voters'];
