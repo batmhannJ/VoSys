@@ -1,36 +1,77 @@
 <?php
-// Include your database connection file or establish a database connection here
-include 'includes/db_connection.php'; // Change this to your actual database connection file
+// Include necessary files and initialize database connection
+include 'includes/session.php';
+include 'includes/db.php';
 
-// Assuming you have a function to fetch vote counts for JPCS from your database
-// Fetch vote counts for President, Vice President, and Secretary
-$query = "SELECT candidate_name, vote_count FROM election_results WHERE organization = 'JPCS' AND position IN ('President', 'Vice President', 'Secretary')";
-$result = $conn->query($query);
+// Initialize arrays to store updated data
+$presidentData = array();
+$vicePresidentData = array();
+$secretaryData = array();
 
-$data = array(
-    'presidentData' => array(),
-    'vicePresidentData' => array(),
-    'secretaryData' => array()
-);
+// Fetch organization from GET parameter
+$organization = isset($_GET['organization']) ? $_GET['organization'] : '';
 
-// Process the query result
-if ($result) {
-    while ($row = $result->fetch_assoc()) {
-        switch ($row['position']) {
-            case 'President':
-                $data['presidentData'][] = array('y' => intval($row['vote_count']), 'label' => 'President');
-                break;
-            case 'Vice President':
-                $data['vicePresidentData'][] = array('y' => intval($row['vote_count']), 'label' => 'Vice President');
-                break;
-            case 'Secretary':
-                $data['secretaryData'][] = array('y' => intval($row['vote_count']), 'label' => 'Secretary');
-                break;
-        }
-    }
+// Prepare SQL queries with organization filter
+$sqlPresident = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
+                COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
+                FROM positions 
+                LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'President'
+                LEFT JOIN votes ON candidates.id = votes.candidate_id
+                LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
+                WHERE voters1.organization != ''";
+$sqlVicePresident = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
+                    COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
+                    FROM positions 
+                    LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'Vice President'
+                    LEFT JOIN votes ON candidates.id = votes.candidate_id
+                    LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
+                    WHERE voters1.organization != ''";
+$sqlSecretary = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
+                    COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
+                    FROM positions 
+                    LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'Secretary'
+                    LEFT JOIN votes ON candidates.id = votes.candidate_id
+                    LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
+                    WHERE voters1.organization != ''";
+
+// Add organization filter if organization is specified
+if (!empty($organization)) {
+    $sqlPresident .= " AND voters1.organization = '$organization'";
+    $sqlVicePresident .= " AND voters1.organization = '$organization'";
+    $sqlSecretary .= " AND voters1.organization = '$organization'";
 }
 
-// Output the JSON-encoded data
-header('Content-Type: application/json');
-echo json_encode($data);
+// Group by candidate ID and fetch data for president candidates
+$sqlPresident .= " GROUP BY candidates.id";
+$queryPresident = $conn->query($sqlPresident);
+while ($row = $queryPresident->fetch_assoc()) {
+    $presidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+}
+
+// Group by candidate ID and fetch data for vice president candidates
+$sqlVicePresident .= " GROUP BY candidates.id";
+$queryVicePresident = $conn->query($sqlVicePresident);
+while ($row = $queryVicePresident->fetch_assoc()) {
+    $vicePresidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+}
+
+// Group by candidate ID and fetch data for secretary candidates
+$sqlSecretary .= " GROUP BY candidates.id";
+$querySecretary = $conn->query($sqlSecretary);
+while ($row = $querySecretary->fetch_assoc()) {
+    $secretaryData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+}
+
+// Close database connection
+$conn->close();
+
+// Combine the updated data into a single array
+$response = array(
+    'presidentData' => $presidentData,
+    'vicePresidentData' => $vicePresidentData,
+    'secretaryData' => $secretaryData
+);
+
+// Return the updated data as JSON
+echo json_encode($response);
 ?>
