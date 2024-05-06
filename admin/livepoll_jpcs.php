@@ -66,27 +66,13 @@ include 'includes/header.php';
             title: "Vote Counts",
             includeZero: true
         },
-        axisY2: {
-            title: "Percentage (%)",
-            includeZero: true
-        },
-        data: [
-            {
-                type: "column",
-                name: "President and Vice President Votes",
-                showInLegend: true,
-                yValueFormatString: "#,##0",
-                dataPoints: []
-            },
-            {
-                type: "column",
-                name: "Percentage of Total Votes",
-                axisYType: "secondary",
-                showInLegend: true,
-                yValueFormatString: "#,##0.00'%'",
-                dataPoints: []
-            }
-        ]
+        data: [{
+            type: "column",
+            name: "President and Vice President Votes",
+            showInLegend: true,
+            yValueFormatString: "#,##0",
+            dataPoints: []
+        }]
     });
     chart.render();
 
@@ -101,27 +87,14 @@ include 'includes/header.php';
                 if (response && response.length > 0) {
                     console.log("Data received:", response); // Log the received data
                     // Update data points for President and Vice President Votes
-                    chart.options.data[0].dataPoints = response.map(function(item) {
-                        return { label: item.label, y: item.y };
-                    });
-
-                    // Calculate percentage of total votes
-                    var totalVotes = response.reduce(function(acc, curr) {
-                        return acc + curr.y;
-                    }, 0);
-                    var percentageDataPoints = response.map(function(item) {
-                        return { label: item.label, y: (item.y / totalVotes) * 100 };
-                    });
-                    // Update data points for Percentage of Total Votes
-                    chart.options.data[1].dataPoints = percentageDataPoints;
-
+                    chart.options.data[0].dataPoints = response;
                     // Re-render the chart with updated data
                     chart.render();
                 } else {
                     console.error("Empty or invalid data received.");
                 }
             },
-            error: function(xhr, status, error) {
+            error: function(xhr, status, eror) {
                 console.error('Error fetching data:', error); // Log any errors
             }
         });
@@ -133,5 +106,6 @@ include 'includes/header.php';
     // Call the updateData function every 10 seconds (adjust as needed)
     setInterval(updateData, 10000); // 10000 milliseconds = 10 seconds
 </script>
+
 </body>
 </html>
