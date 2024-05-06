@@ -1,59 +1,3 @@
-<?php
-session_start();
-
-// Include your database connection file
-include 'includes/conn.php';
-
-// Check if the form is submitted
-if (isset($_POST['resetPass'])) {
-    $email = $_POST['email'];
-    $entered_otp = $_POST['otp']; // Get OTP entered by the user
-
-    // Check if the email exists in the database
-    $stmt = $conn->prepare("SELECT * FROM voters WHERE email = ?");
-    $stmt->bind_param("s", $email); // Bind parameter
-    $stmt->execute();
-    $result = $stmt->get_result(); // Get result
-
-    if ($result->num_rows > 0) {
-        // Retrieve the OTP sent via email
-        $stmt = $conn->prepare("SELECT otp FROM otp_verification WHERE email = ?");
-        $stmt->bind_param("s", $email); // Bind parameter
-        $stmt->execute();
-        $otp_result = $stmt->get_result();
-
-        if ($otp_result->num_rows > 0) {
-            $row = $otp_result->fetch_assoc();
-            $stored_otp = $row['otp'];
-
-            // Verify if the entered OTP matches the one sent via email
-            if ($entered_otp == $stored_otp) {
-                // Redirect to change_pass.php if OTP is correct
-                header("Location: change_pass.php?email=$email");
-                exit();
-            } else {
-                $_SESSION['error'] = "Incorrect OTP. Please try again.";
-                header("Location: forgot_password.php");
-                exit();
-            }
-        } else {
-            $_SESSION['error'] = "No OTP found for this email. Please try again.";
-            header("Location: forgot_password.php");
-            exit();
-        }
-    } else {
-        $_SESSION['error'] = "Email not found. Please try again.";
-        header("Location: forgot_password.php");
-        exit();
-    }
-}
-?>
-
-<?php
-// Include your header file
-include 'includes/header.php';
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -97,7 +41,7 @@ include 'includes/header.php';
     <script>
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('sendOTP').addEventListener('click', function() {
-        var email = '<?php echo $user['email']; ?>';
+        var email = document.getElementsByName('email')[0].value;
         sendOTP(email);
     });
 });
