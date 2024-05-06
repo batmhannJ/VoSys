@@ -147,7 +147,7 @@
                                 ?>
 
                                 <style>
-                                    /* Style for the voting ballot */
+   /* Style for the voting ballot */
 #ballotForm {
     padding: 20px;
 }
@@ -155,6 +155,7 @@
 /* Style for the voting instructions */
 .box-body p {
     margin-bottom: 10px;
+    font-size: 16px;
 }
 
 /* Style for the reset button */
@@ -170,20 +171,53 @@
 
 /* Style for individual candidate */
 #candidate_list li {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     border: 1px solid #ccc;
-    padding: 10px;
+    border-radius: 5px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Style for candidate image */
 .clist {
-    margin-right: 10px;
+    margin-right: 15px;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Style for candidate name */
 .cname {
     font-weight: bold;
 }
+
+/* Style for position title */
+.box-title {
+    margin: 0;
+    font-size: 20px;
+    color: #fff;
+}
+
+/* Style for position header */
+.box-header {
+    border-bottom: 2px solid #800000;
+}
+
+/* Style for reset button */
+.reset {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.reset:hover {
+    background-color: #218838;
+}
+
 
                                     </style>
                                 </style>
