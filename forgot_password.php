@@ -1,3 +1,10 @@
+
+
+<?php
+// Include your header file
+include 'includes/header.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,7 +48,7 @@
     <script>
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('sendOTP').addEventListener('click', function() {
-        var email = document.getElementsByName('email')[0].value;
+        var email = '<?php echo $user['email']; ?>';
         sendOTP(email);
     });
 });
