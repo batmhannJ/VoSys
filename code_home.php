@@ -76,75 +76,154 @@
                         }
                         else{
                             ?>
-                            <!-- Voting Ballot -->
                             <form method="POST" id="ballotForm" action="submit_ballot_code.php">
-                                <?php
-                                include 'includes/slugify.php';
+    <?php
+    include 'includes/slugify.php';
 
-                                $candidate = '';
-                                $sql = "SELECT * FROM positions ORDER BY priority ASC";
-                                $query = $conn->query($sql);
-                                while($row = $query->fetch_assoc()){
-                                    $sql = "SELECT * FROM candidates WHERE position_id='".$row['id']."'";
-                                    $cquery = $conn->query($sql);
-                                    while($crow = $cquery->fetch_assoc()){
-                                        $slug = slugify($row['description']);
-                                        $checked = '';
-                                        if(isset($_SESSION['post'][$slug])){
-                                            $value = $_SESSION['post'][$slug];
-
-                                            if(is_array($value)){
-                                                foreach($value as $val){
-                                                    if($val == $crow['id']){
-                                                        $checked = 'checked';
-                                                    }
-                                                }
-                                            }
-                                            else{
-                                                if($value == $crow['id']){
-                                                    $checked = 'checked';
-                                                }
+    $sql = "SELECT * FROM positions ORDER BY priority ASC";
+    $query = $conn->query($sql);
+    while($row = $query->fetch_assoc()){
+        echo '
+        <div class="position-container">
+            <div class="box box-solid" id="'.$row['id'].'">
+                <div class="box-header">
+                    <h3 class="box-title">'.$row['description'].'</h3>
+                    <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="'.slugify($row['description']).'"><i class="fa fa-refresh"></i> Reset</button>
+                </div>
+                <div class="box-body">
+                    <p class="instruction">You may select up to '.$row['max_vote'].' candidates</p>
+                    <div class="candidate-list">
+                        <ul>';
+                            $sql_candidates = "SELECT * FROM candidates WHERE position_id='".$row['id']."'";
+                            $cquery = $conn->query($sql_candidates);
+                            while($crow = $cquery->fetch_assoc()){
+                                $slug = slugify($row['description']);
+                                $checked = '';
+                                if(isset($_SESSION['post'][$slug])){
+                                    $value = $_SESSION['post'][$slug];
+                                    if(is_array($value)){
+                                        foreach($value as $val){
+                                            if($val == $crow['id']){
+                                                $checked = 'checked';
                                             }
                                         }
-                                        $input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : '<input type="radio" class="flat-red '.$slug.'" name="'.slugify($row['description']).'" value="'.$crow['id'].'" '.$checked.'>';
-                                        $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
-                                        $candidate .= '
-                                            <li>
-                                                '.$input.'<button type="button" class="btn btn-primary btn-sm btn-flat clist platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'"><i class="fa fa-search"></i> Platform</button><img src="'.$image.'" height="100px" width="100px" class="clist"><span class="cname clist">'.$crow['firstname'].' '.$crow['lastname'].'</span>
-                                            </li>
-                                        ';
                                     }
+                                    else{
+                                        if($value == $crow['id']){
+                                            $checked = 'checked';
+                                        }
+                                    }
+                                }
+                                $input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : '<input type="radio" class="flat-red '.$slug.'" name="'.slugify($row['description']).'" value="'.$crow['id'].'" '.$checked.'>';
+                                $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
+                                echo '
+                                <li>
+                                    <div class="candidate-info">
+                                        '.$input.'
+                                        <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
+                                        <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'"><i class="fa fa-search"></i> Platform</button>
+                                    </div>
+                                    <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
+                                </li>';
+                            }
+                        echo '</ul>
+                    </div>
+                </div>
+            </div>
+        </div>';
+    }
+    ?>
+</form>
+<style>
+    /* Style for the position container */
+    .position-container {
+        margin-bottom: 20px;
+    }
 
-                                    $instruct = ($row['max_vote'] > 1) ? 'You may select up to '.$row['max_vote'].' candidates' : 'Select only one candidate';
+    /* Style for the box header */
+    .box-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #800000;
+        color: #fff;
+        padding: 10px;
+    }
 
-                                    echo '
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <div class="box box-solid" id="'.$row['id'].'">
-                                                <div class="box-header with-border"style="background-color: #800000; color: #fff;"> 
-                                                        <h3 class="box-title"><b>'.$row['description'].'</b></h3>
-                                                    </div>
-                                                    <div class="box-body">
-                                                        <p>'.$instruct.'
-                                                            <span class="pull-right">
-                                                                <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="'.slugify($row['description']).'"><i class="fa fa-refresh"></i> Reset</button>
-                                                            </span>
-                                                        </p>
-                                                        <div id="candidate_list">
-                                                            <ul>
-                                                                '.$candidate.'
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ';
+    /* Style for the box title */
+    .box-title {
+        margin: 0;
+        font-size: 20px;
+    }
 
-                                    $candidate = '';
+    /* Style for the box body */
+    .box-body {
+        padding: 10px;
+    }
 
-                                }   
-                                ?>
+    /* Style for the voting instructions */
+    .instruction {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    /* Style for the candidate list */
+    .candidate-list ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    /* Style for individual candidate */
+    .candidate-list li {
+        display: flex;
+        flex-direction: column; /* Change direction to column */
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: #f9f9f9;
+    }
+
+    /* Style for candidate information */
+    .candidate-info {
+        display: flex;
+        align-items: center;
+    }
+
+    /* Style for candidate name */
+    .cname {
+        margin-bottom: 5px; /* Add margin below candidate name */
+        font-weight: bold;
+        font-size: 14px; /* Reduce font size for candidate name */
+    }
+
+    /* Style for platform button */
+    .platform {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        padding: 5px 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .platform:hover {
+        background-color: #0056b3;
+    }
+
+    /* Style for candidate image */
+    .clist {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-bottom: 5px; /* Add margin below candidate image */
+    }
+</style>
+
+
+
                                 <div class="text-center">
                                     <button type="button" class="btn btn-primary btn-flat" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
                                 </div>
@@ -170,98 +249,68 @@
                                 </div>
                             </div>
                         <style>
-    /* Button style */
-    #submitBtn {
-        padding: 10px 20px;
-        border-radius: 5px;
-        font-size: 16px;
-        background-color: #007bff; /* Blue background color */
-        color: #fff; /* White text color */
-        border: none; /* No border */
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
+              /* Style for the primary button */
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
 
-    /* Button hover effect */
-    #submitBtn:hover {
-        background-color: #0056b3; /* Darker shade of blue */
-    }
+/* Style for the success button */
+.btn-success {
+    background-color: #28a745;
+    color: #fff;
+    border-color: #28a745;
+}
 
-      /* Modal content style */
-    .modal-content {
-        background-color: #fff;
-        border-radius: 10px;
-    }
+/* Style for the secondary button */
+.btn-secondary {
+    color: #6c757d;
+    border-color: #6c757d;
+}
 
-    /* Modal header style */
-    .modal-header {
-        border-bottom: 1px solid #dee2e6; /* Light border at the bottom */
-        padding: 15px;
-        text-align: center;
-    }
+/* Style for the modal header */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: maroon;
+    color: #fff;
+}
 
-    /* Modal title style */
-    .modal-title {
-        font-size: 24px;
-        color: #007bff; /* Blue color for title */
-    }
+/* Style for the modal title */
+.modal-title {
+    margin-right: auto; /* Pushes the modal title to the left */
+    font-weight: bold;
+}
 
-     /* Modal content style */
-     .modal-content {
-        background-color: #fff;
-        border-radius: 10px;
-    }
+/* Style for the close button in the modal header */
+.modal-header .close {
+    padding-left: 20px; /* Adds space to the left of the close button */
+    color: #fff;
+    opacity: 0.5;
+}
 
-    /* Modal header style */
-    .modal-header {
-        border-bottom: 1px solid #dee2e6; /* Light border at the bottom */
-        padding: 15px;
-        text-align: center;
-    }
 
-    /* Modal title style */
-    .modal-title {
-        font-size: 24px;
-        color: #333; /* Dark gray color */
-    }
+/* Style for the modal body */
+.modal-body {
+    padding: 20px;
+}
 
-    /* Modal body style */
-    .modal-body {
-        padding: 20px;
-        font-size: 18px;
-        color: #333; /* Dark gray color */
-    }
+/* Style for the modal footer */
+.modal-footer {
+    justify-content: space-between;
+    padding: 20px;
+}
 
-    /* Modal footer style */
-    .modal-footer {
-        padding: 15px;
-        text-align: center;
-        border-top: 1px solid #dee2e6; /* Light border at the top */
-    }
+/* Center the text in the text-center div */
+.text-center {
+    text-align: center;
+}
 
-    /* Close button style */
-    .close {
-        color: #333; /* Dark gray color */
-        font-size: 30px;
-    }
 
-    /* Preview button style */
-    #preview, #submitBtnModal {
-        padding: 10px 20px;
-        border-radius: 5px;
-        font-size: 18px;
-        background-color: #fff; /* White background color */
-        color: #333; /* Dark gray color */
-        border: 1px solid #333; /* Dark gray border */
-        cursor: pointer;
-        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-    }
-
-    /* Preview button hover effect */
-    #preview:hover, #submitBtnModal:hover {
-        background-color: #f8f9fa; /* Light gray background on hover */
-    }
-</style>
+                            </style>
+                        
 
                             </form>
 
