@@ -96,7 +96,7 @@ if(isset($_POST['save_excel_data'])) {
         if(isset($result)) {
             $_SESSION['success'] = "Successfully Imported";
         } else {
-            $_SESSION['message'] = "Not Imported";
+            $_SESSION['message'] = "Not Imported. Make sure there is no existing name in the voters list to avoid duplication.";
         }
         header('Location: voters.php');
         exit(0);
