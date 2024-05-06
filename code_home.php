@@ -189,11 +189,12 @@
     .candidate-info {
         display: flex;
         align-items: center;
+        flex-direction: row-reverse; /* Reverse the order of items */
     }
 
     /* Style for candidate name */
     .cname {
-        margin-right: 10px;
+        margin-left: 10px; /* Adjust margin */
         font-weight: bold;
         font-size: 14px; /* Reduce font size for candidate name */
     }
@@ -220,9 +221,10 @@
         height: 100px;
         object-fit: cover;
         border-radius: 50%;
-        margin-left: 10px;
+        margin-right: 10px; /* Adjust margin */
     }
 </style>
+
 
                                 <div class="text-center">
                                     <button type="button" class="btn btn-primary btn-flat" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
