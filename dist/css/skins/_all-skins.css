@@ -640,7 +640,7 @@
  * -----------
  */
 .skin-green .main-header .navbar {
-  background-color: #00a65a;
+  background-color: darkgreen;
 }
 .skin-green .main-header .navbar .nav > li > a {
   color: #ffffff;
@@ -676,19 +676,19 @@
     color: #fff;
   }
   .skin-green .main-header .navbar .dropdown-menu li a:hover {
-    background: #008d4c;
+    background: darkgreen;
   }
 }
 .skin-green .main-header .logo {
-  background-color: #008d4c;
+  background-color: darkgreen;
   color: #ffffff;
   border-bottom: 0 solid transparent;
 }
 .skin-green .main-header .logo:hover {
-  background-color: #008749;
+  background-color: darkgreen;
 }
 .skin-green .main-header li.user-header {
-  background-color: #00a65a;
+  background-color: darkgreen;
 }
 .skin-green .content-header {
   background: transparent;
@@ -696,7 +696,7 @@
 .skin-green .wrapper,
 .skin-green .main-sidebar,
 .skin-green .left-side {
-  background-color: #222d32;
+  background-color: #fff;
 }
 .skin-green .user-panel > .info,
 .skin-green .user-panel > .info > a {
@@ -713,10 +713,10 @@
 .skin-green .sidebar-menu > li.active > a,
 .skin-green .sidebar-menu > li.menu-open > a {
   color: #ffffff;
-  background: #1e282c;
+  background: darkgreen;
 }
 .skin-green .sidebar-menu > li.active > a {
-  border-left-color: #00a65a;
+  border-left-color: darkgreen;
 }
 .skin-green .sidebar-menu > li > .treeview-menu {
   margin: 0 1px;

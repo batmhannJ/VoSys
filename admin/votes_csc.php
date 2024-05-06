@@ -1,6 +1,6 @@
 <?php include 'includes/session.php'; ?>
-<?php include 'includes/header.php'; ?>
-<body class="hold-transition skin-blue sidebar-mini">
+<?php include 'includes/header_csc.php'; ?>
+<body class="hold-transition skin-black sidebar-mini">
 <div class="wrapper">
 
   <?php include 'includes/navbar_csc.php'; ?>
@@ -71,6 +71,7 @@
                     LEFT JOIN candidates ON candidates.id=votes.candidate_id 
                     LEFT JOIN voters AS voters1 ON voters1.id=votes.voters_id 
                     LEFT JOIN voters AS voters2 ON voters2.organization=votes.organization 
+                    WHERE voters1.organization = 'CSC'
                     GROUP BY votes.id
                     ORDER BY positions.priority ASC";
                     $query = $conn->query($sql);

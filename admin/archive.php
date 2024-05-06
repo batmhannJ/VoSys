@@ -11,11 +11,29 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Voter Archive List
+        <?php
+          if(isset($_GET['type']) && $_GET['type'] === 'voters'){
+            echo "Voter Archived";
+          } elseif(isset($_GET['type']) && $_GET['type'] === 'admin'){
+            echo "Admin Archived";
+          } else {
+            echo "Archived";
+          }
+        ?>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Archived</li>
+        <li class="active">
+          <?php
+            if(isset($_GET['type']) && $_GET['type'] === 'voters'){
+              echo "Voter Archived";
+            } elseif(isset($_GET['type']) && $_GET['type'] === 'admin'){
+              echo "Admin Archived";
+            } else {
+              echo "Archived";
+            }
+          ?>
+        </li>
       </ol>
     </section>
     <!-- Main content -->
@@ -45,9 +63,25 @@
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="archiveDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Select Archive Type
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="archiveDropdown">
+                    <li><a href="?type=voters" class="archive-type">Voters Archived</a></li>
+                    <li><a href="?type=admin" class="archive-type">Admin Archived</a></li>
+                </ul>
+            </div>
+          </div>
+          <div class="box">
+            <div class="box-header with-border">
+              <a href="#restoreAllModal" data-toggle="modal" class="btn btn-primary btn-sm btn-flat restore-all"><i class="fa fa-reply"></i> Restore All</a>
+            </div>
             <div class="box-body">
               <table id="example1" class="table table-bordered">
                 <thead>
+                  <?php if(isset($_GET['type']) && $_GET['type'] === 'voters'): ?>
                   <th>Last Name</th>
                   <th>First Name</th>
                   <th>Photo</th>
@@ -55,31 +89,70 @@
                   <th>Email</th>
                   <th>Year Level</th>
                   <th>Organization</th>
+                  <?php elseif(isset($_GET['type']) && $_GET['type'] === 'admin'): ?>
+                  <th>ID Number</th>
+                  <th>Organization</th>
+                  <th>Last Name</th>
+                  <th>First Name</th>
+                  <th>Photo</th>
+                  <th>Username</th>
+                  <th>Email</th>
+                  <?php endif; ?>
                   <th>Tools</th>
+
                 </thead>
                 <tbody>
                   <?php
-                    $sql = "SELECT * FROM voters WHERE archived = TRUE";
+                    if(isset($_GET['type']) && $_GET['type'] === 'voters') {
+                      $sql = "SELECT * FROM voters WHERE archived = TRUE";
+                    } elseif(isset($_GET['type']) && $_GET['type'] === 'admin') {
+                      $sql = "SELECT * FROM admin WHERE archived = TRUE";
+                    }
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
-                      $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
-                      echo "
-                        <tr>
-                          <td>".$row['lastname']."</td>
-                          <td>".$row['firstname']."</td>
-                          <td>
+                      if(isset($_GET['type']) && $_GET['type'] === 'voters') {
+                        // For voters table
+                        $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
+                        echo "
+                          <tr>
+                            <td>".$row['lastname']."</td>
+                            <td>".$row['firstname']."</td>
+                            <td>
                             <img src='".$image."' width='30px' height='30px'>
-                            <a href='#edit_photo' data-toggle='modal' class='pull-right photo' data-id='".$row['id']."'></a>
+                            <a href='#edit_photo' data-toggle='modal' class='pull-right photo' data-id='".$row['id']."'><span class='fa fa-edit'></span></a>
                           </td>
-                          <td>".$row['voters_id']."</td>
-                          <td>".$row['email']."</td>
-                          <td>".$row['yearLvl']."</td>
-                          <td>".$row['organization']."</td>
-                          <td>
-                            <button class='btn btn-success btn-sm restore btn-flat' data-id='".$row['id']."'><i class='fa fa-reply'></i> Restore</button>
-                          </td>
-                        </tr>
-                      ";
+                            <td>".$row['voters_id']."</td>
+                            <td>".$row['email']."</td>
+                            <td>".$row['yearLvl']."</td>
+                            <td>".$row['organization']."</td>
+                            <td>
+                              <button class='btn btn-success btn-sm restore btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#confirmationModal'><i class='fa fa-reply'></i> Restore</button>
+                              <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."' data-user='voters'><i class='fa fa-trash'></i> Delete</button>
+                            </td>
+                          </tr>
+                        ";
+                      } elseif(isset($_GET['type']) && $_GET['type'] === 'admin') {
+                          // For admin table
+                          $adminImage = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
+                          echo "
+                              <tr>
+                                  <td>".$row['id']."</td>
+                                  <td>".$row['organization']."</td>
+                                  <td>".$row['lastname']."</td>
+                                  <td>".$row['firstname']."</td>
+                                  <td>
+                                      <img src='".$adminImage."' width='30px' height='30px'>
+                                  </td>
+                                  <td>".$row['username']."</td>
+                                  <td>".$row['email']."</td>
+                                  <td>
+                                      <button class='btn btn-success btn-sm restore-admin btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#adminConfirmationModal'><i class='fa fa-reply'></i> Restore</button>
+                                    <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."' data-user='admin'><i class='fa fa-trash'></i> Delete</button>
+                                  </td>
+                              </tr>
+                          ";
+                      }
+
                     }
                   ?>
                 </tbody>
@@ -93,45 +166,126 @@
     
   <?php include 'includes/footer.php'; ?>
   <?php include 'includes/voters_modal.php'; ?>
+  <?php include 'includes/restore_modal.php'; ?>
+  <?php include 'includes/restore_admin_modal.php'; ?>
+
+<!-- Confirmation Modal for Delete -->
+<div id="deleteConfirmationModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Confirmation</h4>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this item?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </div>
 <?php include 'includes/scripts.php'; ?>
-<!-- Confirmation Modal -->
-<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-
-            <div class="modal-body">
-                <p>Are you sure you want to restore this voter?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="submitBtn">Yes, Submit</button>
-            </div>
-        </div>
-    </div>
-</div>
 <script>
 $(function(){
   $(document).on('click', '.restore', function(e){
     e.preventDefault();
     var id = $(this).data('id');
-    $('#confirmationModal').modal('show'); // Show the confirmation modal
-    $('#submitBtn').on('click', function() {
-        restoreVoter(id);
-    });
+    $('#submitBtn').attr('data-id', id); // Set the data-id attribute for the "Restore" button
   });
+
+  $(document).on('click', '.restore-admin', function(e){
+    e.preventDefault();
+    var id = $(this).data('id');
+    $('#adminSubmitBtn').attr('data-id', id); // Set the data-id attribute for the "Restore Admin" button
+  });
+
+  $(document).on('click', '.restore-all', function(e){
+    e.preventDefault();
+    $('#restoreAllModal').modal('show'); // Show the "Restore All" modal
+  });
+
+  $(document).on('click', '#confirmRestoreAll', function(e){
+    e.preventDefault();
+    restoreAllVoters();
+  });
+
+  $(document).on('click', '#submitBtn', function(e){
+    e.preventDefault();
+    var id = $(this).data('id');
+    restoreVoter(id);
+  });
+
+  $(document).on('click', '#adminSubmitBtn', function(e){
+    e.preventDefault();
+    var id = $(this).data('id');
+    restoreAdmin(id);
+  });
+
+  $(document).on('click', '.delete', function(e) {
+    e.preventDefault();
+    var id = $(this).data('id');
+    var user = $(this).data('user');
+    deleteItem(id, user);
+});
+
+function deleteItem(id, user) {
+    $('#deleteConfirmationModal').modal('show'); // Show confirmation modal
+
+    // When the "Delete" button inside the modal is clicked, perform deletion
+    $('#confirmDelete').on('click', function() {
+        $.ajax({
+            type: "POST",
+            url: "delete_item.php",
+            data: { id: id, user: user },
+            success: function(response) {
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+}
 
   function restoreVoter(id) {
     $.ajax({
       type: "POST",
       url: "restore_voter.php",
       data: { id: id },
+      success: function(response) {
+        // Refresh the page or update the table as needed
+        location.reload();
+      },
+      error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+      }
+    });
+  }
+
+  function restoreAdmin(id) {
+    $.ajax({
+      type: "POST",
+      url: "restore_admin.php",
+      data: { id: id },
+      success: function(response) {
+        // Refresh the page or update the table as needed
+        location.reload();
+      },
+      error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+      }
+    });
+  }
+
+  function restoreAllVoters() {
+    $.ajax({
+      type: "POST",
+      url: "restore_all_voters.php",
       success: function(response) {
         // Refresh the page or update the table as needed
         location.reload();

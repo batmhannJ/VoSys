@@ -38,68 +38,68 @@ if (isset($_POST['login'])) {
             // Check if reCAPTCHA verification was successful
             if ($responseData && $responseData['success']) {
                 // reCAPTCHA verification passed, continue with login logic
-                
-                // Query database to fetch user information
-                $sql = "SELECT * FROM voters WHERE voters_id = '$voter'";
-                $query = $conn->query($sql);
 
-                if ($query->num_rows < 1) {
-                    $_SESSION['error'] = 'Cannot find voter with the ID';
-                } else {
-                    $row = $query->fetch_assoc();
-                    // Debugging: Output fetched password from database
-                    echo "Fetched Password: " . $row['password'] . "<br>";
-                    // Debugging: Output hashed entered password
-                    echo "Hashed Password: " . password_hash($password, PASSWORD_DEFAULT) . "<br>";
+                // Prepare and execute a parameterized query to fetch user information
+                $sql = "SELECT * FROM voters WHERE voters_id = ? AND archived = FALSE";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("s", $voter);
+                $stmt->execute();
+                $result = $stmt->get_result();
 
+                // Check if a row is returned
+                if ($result->num_rows == 1) {
+                    $row = $result->fetch_assoc();
                     if (password_verify($password, $row['password'])) {
-                        // Debugging: Output message if password verification is successful
-                        echo "Password verification successful!<br>";
                         $_SESSION['voter'] = $row['id'];
                         $organization = $row['organization'];
                         // Check the organization and redirect accordingly
-                        if ($organization == 'CSC') {
-                            header('location: home.php');
-                            exit();
-                        } elseif ($organization == 'JPCS') {
-                            header('location: jpcs_home.php');
-                            exit();
-                        } elseif ($organization == 'YMF') {
-                            header('location: educ_home.php');
-                            exit();
-                        } elseif ($organization == 'CODE-TG') {
-                            header('location: code_home.php');
-                            exit();
-                        } elseif ($organization == 'PASOA') {
-                            header('location: pasoa_home.php');
-                            exit();
-                        } elseif ($organization == 'HMSO') {
-                            header('location: hmso_home.php');
-                            exit();
-                        } else {
-                            // Redirect to a generic home page if the organization is not recognized
-                            header('location: voters_login.php');
-                            exit();
+                        switch ($organization) {
+                            case 'CSC':
+                                header('location: home.php');
+                                exit();
+                            case 'JPCS':
+                                header('location: jpcs_home.php');
+                                exit();
+                            case 'YMF':
+                                header('location: educ_home.php');
+                                exit();
+                            case 'CODE-TG':
+                                header('location: code_home.php');
+                                exit();
+                            case 'PASOA':
+                                header('location: pasoa_home.php');
+                                exit();
+                            case 'HMSO':
+                                header('location: hmso_home.php');
+                                exit();
+                            default:
+                                // Redirect to a generic home page if the organization is not recognized
+                                header('location: voters_login.php');
+                                exit();
                         }
                     } else {
                         $_SESSION['error'] = 'Incorrect password';
                     }
+                } else {
+                    $_SESSION['error'] = 'Cannot find voter with <br> the ID or voter is archived';
                 }
+                // Close the prepared statement
+                $stmt->close();
             } else {
                 // reCAPTCHA verification failed, show an error message
-                $_SESSION['error'] = 'reCAPTCHA verification failed. Please try again.';
+                $_SESSION['error'] = 'reCAPTCHA verification failed. <br> Please try again.';
             }
         } else {
             // Unable to contact Google's reCAPTCHA verification endpoint
-            $_SESSION['error'] = 'Unable to verify reCAPTCHA. Please try again later.';
+            $_SESSION['error'] = 'Unable to verify reCAPTCHA. <br> Please try again later.';
         }
     } else {
         // reCAPTCHA response not found, show an error message
-        $_SESSION['error'] = 'reCAPTCHA response not found. Please complete the reCAPTCHA challenge.';
+        $_SESSION['error'] = 'reCAPTCHA response not found. <br> Please complete the reCAPTCHA challenge.';
     }
 }
 
-// Redirect to the main page in case of any other conditions
+// Redirect to the login page in case of any other conditions
 header('location: voters_login.php');
 exit();
 ?>

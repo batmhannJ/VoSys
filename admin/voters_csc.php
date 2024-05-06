@@ -1,6 +1,6 @@
 <?php include 'includes/session.php'; ?>
-<?php include 'includes/header.php'; ?>
-<body class="hold-transition skin-blue sidebar-mini">
+<?php include 'includes/header_csc.php'; ?>
+<body class="hold-transition skin-black sidebar-mini">
 <div class="wrapper">
 
   <?php include 'includes/navbar_csc.php'; ?>
@@ -61,7 +61,7 @@
                 </thead>
                 <tbody>
                   <?php
-                    $sql = "SELECT * FROM voters WHERE organization = 'JPCS'";
+                    $sql = "SELECT * FROM voters WHERE organization = 'CSC'";
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
                       $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
@@ -117,7 +117,7 @@
           <div class="box">
             <div class="box-header with-border">
               <h4>Upload Voters</h4>
-            <form action="upload_jpcs.php" method="POST" enctype="multipart/form-data">
+            <form action="upload_csc.php" method="POST" enctype="multipart/form-data">
             <input type="file" accept=".xls,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="import_file" class="form-control" />
             <button type="submit" name="save_excel_data" class="btn btn-primary mt-3">Import</button>
           </form>
@@ -130,7 +130,7 @@
   </div>
     
   <?php include 'includes/footer.php'; ?>
-  <?php include 'includes/voters_jpcs_modal.php'; ?>
+  <?php include 'includes/voters_csc_modal.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
 <script>
