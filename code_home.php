@@ -269,14 +269,14 @@
 @media (max-width: 768px) {
     .candidate-list li {
         flex-direction: column; /* Baguhin ang direksyon ng flex container sa column */
-        align-items: flex-start; /* I-align ang mga item sa kaliwa */
+        align-items: center; /* I-align ang mga item sa gitna */
         padding: 15px; /* I-adjust ang padding para sa mas maliit na screen */
     }
 
     .candidate-list li img {
         width: 100px; /* I-adjust ang lapad ng mga larawan para sa mas maliit na screen */
         height: 100px; /* I-adjust ang taas ng mga larawan para sa mas maliit na screen */
-        margin-left: auto; /* Ilipat ang mga larawan sa kanan */
+        margin: 0 auto; /* Ilipat ang mga larawan sa gitna */
     }
 }
 
