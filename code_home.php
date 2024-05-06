@@ -94,22 +94,39 @@
                     <p class="instruction">You may select up to '.$row['max_vote'].' candidates</p>
                     <div class="candidate-list">
                         <ul>';
-
-        // Add the provided HTML structure here
-        echo '
-                            <li>
-                                <div class="candidate-info">
+                            $sql_candidates = "SELECT * FROM candidates WHERE position_id='".$row['id']."'";
+                            $cquery = $conn->query($sql_candidates);
+                            while($crow = $cquery->fetch_assoc()){
+                                $slug = slugify($row['description']);
+                                $checked = '';
+                                if(isset($_SESSION['post'][$slug])){
+                                    $value = $_SESSION['post'][$slug];
+                                    if(is_array($value)){
+                                        foreach($value as $val){
+                                            if($val == $crow['id']){
+                                                $checked = 'checked';
+                                            }
+                                        }
+                                    }
+                                    else{
+                                        if($value == $crow['id']){
+                                            $checked = 'checked';
+                                        }
+                                    }
+                                }
+                                $input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : '<input type="radio" class="flat-red '.$slug.'" name="'.slugify($row['description']).'" value="'.$crow['id'].'" '.$checked.'>';
+                                $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
+                                echo '
+                                <li>
+                                    <div class="candidate-info">
+                                        '.$input.'
+                                        <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
+                                        <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'"><i class="fa fa-search"></i> Platform</button>
+                                    </div>
                                     <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
-                                    <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
-                                </div>
-                                <div class="platform-container">
-                                    <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'"><i class="fa fa-search"></i> Platform</button>
-                                </div>
-                            </li>';
-
-        // Close the ul and div tags
-        echo '
-                        </ul>
+                                </li>';
+                            }
+                        echo '</ul>
                     </div>
                 </div>
             </div>
@@ -117,7 +134,6 @@
     }
     ?>
 </form>
-
 <style>
     /* Style for the position container */
    /* Style for the position container */
