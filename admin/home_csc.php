@@ -128,7 +128,7 @@
             <div class="inner">
               <?php
                 $sql = "SELECT * 
-                        FROM votes 
+                        FROM votes_csc 
                         JOIN voters ON votes_csc.voters_id = voters.id
                         GROUP BY votes_csc.voters_id";
                 $query = $conn->query($sql);
