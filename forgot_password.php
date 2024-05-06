@@ -40,10 +40,6 @@ if (isset($_POST['resetPass'])) {
         $_SESSION['error'] = "Email not found. Please try again.";
     }
 }
-
-// Redirect to the password reset form if accessed directly
-header("Location: forgot_password.php");
-exit();
 ?>
 
 <?php
@@ -74,14 +70,14 @@ include 'includes/header.php';
                     <input type="email" class="form-control" name="email" placeholder="Email" required>
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 </div>
-                <div class="form-group has feedback">
-                    <label for="otp" class="col-sm-3 control-label">OTP</label>
+                <div class="form-group has-feedback">
                     <div class="col-sm-6">
                         <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter OTP" required>
                     </div>
                     <div class="col-sm-3">
                         <button type="button" class="btn btn-primary" id="sendOTP">Send OTP</button>
                     </div>
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
