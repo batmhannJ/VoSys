@@ -190,16 +190,8 @@
 .candidate-info {
     display: flex;
     align-items: center;
-    width: calc(100% - 130px); /* Adjust width to accommodate image and button */
-}
-
-/* Style for candidate image */
-.clist {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-right: 10px;
+    justify-content: space-between;
+    width: 100%;
 }
 
 /* Style for candidate name */
@@ -207,11 +199,6 @@
     margin: 0;
     font-weight: bold;
     font-size: 14px;
-}
-
-/* Style for platform button container */
-.platform-container {
-    margin-top: 5px; /* Adjust margin from candidate name */
 }
 
 /* Style for platform button */
@@ -223,12 +210,12 @@
     padding: 5px 10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-top: 5px;
 }
 
 .platform:hover {
     background-color: #0056b3;
 }
-
 
 /* Style for candidate image */
 .clist {
