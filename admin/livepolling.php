@@ -116,58 +116,91 @@ include 'includes/header.php';
 <?php include 'includes/scripts.php'; ?>
 <!-- Bar Graph Script -->
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-<!-- Include jQuery -->
+<!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<!-- Include CanvasJS -->
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
-    // Function to fetch updated data from the server
-    function updateData() {
-        $.ajax({
-            url: 'update_data.php',
-            type: 'GET',
-            dataType: 'json',
-            data: {organization: $('#organization').val()},
-            success: function(response) {
-                // Render bar graphs using CanvasJS
-                renderGraph(response.presidentData, "presidentGraph");
-                renderGraph(response.vicePresidentData, "vicePresidentGraph");
-                renderGraph(response.secretaryData, "secretaryGraph");
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching data: ' + error);
-            }
-        });
-    } 
+    // Function to generate bar graph
+    function generateBarGraph(dataPoints, containerId, organization) {
+        var color;
 
-    // Function to render bar graphs using CanvasJS
-    function renderGraph(dataPoints, containerId) {
+        // Set color based on organization
+        switch (organization) {
+            case 'JPCS':
+                color = "#4CAF50"; // Green
+                break;
+            case 'CSC':
+                color = "#000000"; // Black
+                break;
+            case 'CODE-TG':
+                color = "#800000"; // Maroon
+                break;
+            case 'YMF':
+                color = "#00008b"; // Dark Blue
+                break;
+            case 'HMSO':
+                color = "#cba328"; // Gold
+                break;
+            case 'PASOA':
+                color = "#e6cc00"; // Yellow
+                break;
+            default:
+                color = "#000000"; // Default to Black
+        }
+
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
             title:{
                 text: "Vote Counts"
             },
             axisY: {
+                title: "Candidates",
+                includeZero: true,
+                labelFormatter: function (e) {
+                    return Math.round(e.value);
+                }
+            },
+            axisX: {
                 title: "Vote Count",
                 includeZero: true
             },
-            axisX: {
-                title: "Candidates",
-                includeZero: true
-            },
             data: [{
-                type: "column",
-                dataPoints: dataPoints
+                type: "bar", // Change type to "bar"
+                dataPoints: dataPoints,
+                color: color // Set the color based on organization
             }]
         });
         chart.render();
     }
 
-    // Call updateData initially and every 3 seconds
-    updateData();
-    setInterval(updateData, 3000);
-</script>
+    // Function to fetch updated data from the server
+    function updateData() {
+        $.ajax({
+            url: 'update_data.php', // Change this to the URL of your update data script
+            type: 'GET',
+            dataType: 'json',
+            data: {organization: $('#organization').val()}, // Pass the selected organization to the server
+            success: function(response) {
+                // Update president bar graph with color based on organization
+                generateBarGraph(response.presidentData, "presidentGraph", $('#organization').val());
 
+                // Update vice president bar graph with color based on organization
+                generateBarGraph(response.vicePresidentData, "vicePresidentGraph", $('#organization').val());
+
+                // Update secretary bar graph with color based on organization
+                generateBarGraph(response.secretaryData, "secretaryGraph", $('#organization').val());
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching data: ' + error);
+            }
+        });
+    }
+
+    // Call the updateData function initially
+    updateData();
+
+    // Call the updateData function every 60 seconds (adjust as needed)
+    setInterval(updateData, 3000); // 60000 milliseconds = 60 seconds
+</script>
 
 </body>
 </html>

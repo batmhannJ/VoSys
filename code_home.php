@@ -4,7 +4,6 @@
 <div class="wrapper">
 
 	<?php include 'includes/navbar.php'; ?>
-	 
 	  <div class="content-wrapper">
 	    <div class="container">
 	      <!-- Main content -->
@@ -124,7 +123,7 @@
                                         
                                     </div>
                                     <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">
-                                    <i class="fa fa-search"></i>
+                                    <i class="fa fa-search"> </i>
                                     <span class="text">Platform</span>
                                 </button>
                                 
@@ -161,10 +160,22 @@
     padding: 10px;
 }
 
+/* Adjust space between position and reset button */
+.box-header .box-title {
+    margin-right: auto; /* Push position title to the left */
+}
+
+/* Style for the reset button */
+.reset {
+    margin-left: auto; /* Push reset button to the right */
+}
+
+
 /* Style for the box title */
 .box-title {
     margin: 0;
     font-size: 20px;
+    font-weight: 300;
 }
 
 /* Style for the box body */
@@ -207,7 +218,7 @@
 /* Media query for smaller screens */
 @media (max-width: 768px) {
     .cname {
-        font-size: 10px; /* Reduce font size on smaller screens */
+        font-size: 15px; /* Reduce font size on smaller screens */
     }
 }
 
