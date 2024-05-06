@@ -1,4 +1,3 @@
-<?php
 include 'includes/session.php';
 include 'includes/header.php';
 ?>
@@ -21,9 +20,9 @@ include 'includes/header.php';
         </section>
         <!-- Main content -->
         <section class="content">
-            <!-- Bar Graph for President and Vice President - JPCS Organization -->
+            <!-- Bar Graph for President, Vice President, and Secretary - JPCS Organization -->
             <div class="row">
-                <!-- President and Vice President Bar Graph Box -->
+                <!-- President, Vice President, and Secretary Bar Graph Box -->
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
@@ -31,7 +30,7 @@ include 'includes/header.php';
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <!-- Bar Graph Container for President and Vice President -->
+                            <!-- Bar Graph Container for President, Vice President, and Secretary -->
                             <div id="electionGraph" style="height: 300px;"></div>
                         </div>
                         <!-- /.box-body -->
@@ -68,10 +67,46 @@ include 'includes/header.php';
         },
         data: [{
             type: "column",
-            name: "President and Vice President Votes",
+            name: "President Votes",
             showInLegend: true,
             yValueFormatString: "#,##0",
-            dataPoints: []
+            dataPoints: [],
+            indexLabel: "{y}", // Displays y value on top of the bar
+            indexLabelFontColor: "black", // Color of the y value text
+            indexLabelPlacement: "inside", // Position of the y value text
+            indexLabelFontSize: 14, // Font size of the y value text
+            indexLabelFontWeight: "bold", // Font weight of the y value text
+            indexLabelMaxWidth: 40, // Max width of the y value text
+            indexLabelWrap: true, // Wrap text if exceeds max width
+            width: 40 // Width of the bars
+        }, {
+            type: "column",
+            name: "Vice President Votes",
+            showInLegend: true,
+            yValueFormatString: "#,##0",
+            dataPoints: [],
+            indexLabel: "{y}", // Displays y value on top of the bar
+            indexLabelFontColor: "black", // Color of the y value text
+            indexLabelPlacement: "inside", // Position of the y value text
+            indexLabelFontSize: 14, // Font size of the y value text
+            indexLabelFontWeight: "bold", // Font weight of the y value text
+            indexLabelMaxWidth: 40, // Max width of the y value text
+            indexLabelWrap: true, // Wrap text if exceeds max width
+            width: 40 // Width of the bars
+        }, {
+            type: "column",
+            name: "Secretary Votes",
+            showInLegend: true,
+            yValueFormatString: "#,##0",
+            dataPoints: [],
+            indexLabel: "{y}", // Displays y value on top of the bar
+            indexLabelFontColor: "black", // Color of the y value text
+            indexLabelPlacement: "inside", // Position of the y value text
+            indexLabelFontSize: 14, // Font size of the y value text
+            indexLabelFontWeight: "bold", // Font weight of the y value text
+            indexLabelMaxWidth: 40, // Max width of the y value text
+            indexLabelWrap: true, // Wrap text if exceeds max width
+            width: 40 // Width of the bars
         }]
     });
     chart.render();
@@ -79,23 +114,22 @@ include 'includes/header.php';
     // Function to fetch updated data from the server for JPCS organization and update the chart
     function updateData() {
         $.ajax({
-            url: 'update_jpcs_data.php', // URL of your update data script
+            url: 'update_jpcs_data.php', // Change this to the URL of your update data script
             type: 'GET',
             dataType: 'json',
             data: { organization: 'JPCS' }, // Hardcoded organization to JPCS
             success: function(response) {
-                if (response && response.length > 0) {
-                    console.log("Data received:", response); // Log the received data
-                    // Update data points for President and Vice President Votes
-                    chart.options.data[0].dataPoints = response;
-                    // Re-render the  with updated data
-                    chart.render();
-                } else {
-                    console.error("Empty or invalid data received.");
-                }
+                // Update data points for President Votes
+                chart.options.data[0].dataPoints = response.presidentData;
+                // Update data points for Vice President Votes
+                chart.options.data[1].dataPoints = response.vicePresidentData;
+                // Update data points for Secretary Votes
+                chart.options.data[2].dataPoints = response.secretaryData;
+                // Re-render the chart with updated data
+                chart.render();
             },
-            error: function(xhr, status, eror) {
-                console.error('Error fetching data:', error); // Log any errors
+            error: function(xhr, status, error) {
+                console.error('Error fetching data: ' + error);
             }
         });
     }
@@ -103,8 +137,8 @@ include 'includes/header.php';
     // Call the updateData function initially
     updateData();
 
-    // Call the updateData function every 10 seconds (adjust as needed)
-    setInterval(updateData, 10000); // 10000 milliseconds = 10 seconds
+    // Call the updateData function every 60 seconds (adjust as needed)
+    setInterval(updateData, 60000); // 60000 milliseconds = 60 seconds
 </script>
 
 </body>

@@ -4,7 +4,6 @@
 <div class="wrapper">
 
 	<?php include 'includes/navbar.php'; ?>
-	 
 	  <div class="content-wrapper">
 	    <div class="container">
 	      <!-- Main content -->
@@ -121,8 +120,13 @@
                                     <div class="candidate-info">
                                         '.$input.'
                                         <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
-                                        <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'"><i class="fa fa-search"></i> Platform</button>
+                                        
                                     </div>
+                                    <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">
+                                    <i class="fa fa-search"> </i>
+                                    <span class="text">Platform</span>
+                                </button>
+                                
                                     <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
                                 </li>';
                             }
@@ -135,10 +139,15 @@
     ?>
 </form>
 <style>
-    /* Style for the position container */
-   /* Style for the position container */
+ /* Style for the position container */
 .position-container {
-    margin-bottom: 20px;
+    margin: 20px auto; /* Center the container horizontally and add margin on top and bottom */
+    max-width: 800px; /* Set a maximum width to make it responsive */
+    padding: 20px; /* Add padding inside the container */
+    border: 1px solid #ccc; /* Add border for visual separation */
+    border-radius: 10px; /* Add border radius for rounded corners */
+    background-color: #fff; /* Change background color */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.9); /* Add shadow for depth */
 }
 
 /* Style for the box header */
@@ -151,10 +160,22 @@
     padding: 10px;
 }
 
+/* Adjust space between position and reset button */
+.box-header .box-title {
+    margin-right: auto; /* Push position title to the left */
+}
+
+/* Style for the reset button */
+.reset {
+    margin-left: auto; /* Push reset button to the right */
+}
+
+
 /* Style for the box title */
 .box-title {
     margin: 0;
     font-size: 20px;
+    font-weight: 300;
 }
 
 /* Style for the box body */
@@ -174,74 +195,125 @@
     padding: 0;
 }
 
-/* Style for individual candidate */
+/* Adjusted style for candidate list items */
 .candidate-list li {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* Divide into three equal columns */
+    grid-gap: 10px; /* Add gap between columns */
     align-items: center;
-    justify-content: space-between;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 5px; /* Adjust border radius */
     padding: 10px;
     margin-bottom: 10px;
     background-color: #f9f9f9;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
 }
 
-/* Style for candidate information */
-.candidate-info {
-    display: flex;
-    align-items: flex-start; /* Adjust alignment */
-}
-
-/* Bagong istilo para sa mga imahe */
-.cimage {
-    float: right; /* Ilipat ang imahe sa kaliwa */
-    margin-left: 20px; /* Dagdag na puwang sa kanan ng imahe */
-}
-
-/* Bagong istilo para sa teksto */
-.ctext {
-    overflow: hidden; /* Iwasang maglapat ang teksto sa mga imahe */
-}
-
-/* Bagong istilo para sa pangalan ng kandidato */
+/* Adjusted style for candidate name */
 .cname {
-    margin: 0;
+    font-size: 18px; /* Default font size */
+    margin-left: auto; /* Push candidate name to the end */
     font-weight: bold;
-    font-size: 18px;
-    margin-bottom: 5px; /* Dagdag na puwang sa ibaba ng pangalan */
-    margin-left: 10px;
 }
 
-/* Bagong istilo para sa container ng platform button */
-.platform-container {
-    margin-top: 5px; /* Itaas ang button mula sa pangalan ng kandidato */
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .cname {
+        font-size: 15px; /* Reduce font size on smaller screens */
+    }
 }
 
-/* Bagong istilo para sa platform button */
+/* Adjusted style for platform button */
 .platform {
     background-color: #007bff;
     color: #fff;
     border: none;
-    border-radius: 3px;
-    padding: 5px 10px;
+    border-radius: 20px; /* Make it pill-shaped */
+    padding: 8px 20px; /* Add padding */
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-left: auto; /* Push platform button to the end */
+    display: flex; /* Use flexbox to align icon and text */
+    align-items: center; /* Center items vertically */
 }
 
 .platform:hover {
     background-color: #0056b3;
 }
 
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .platform {
+        padding: 6px 16px; /* Adjust padding for smaller screens */
+        font-size: 14px; /* Decrease font size for smaller screens */
+        justify-content: center; /* Center content horizontally */
+    }
 
+    .platform i.fa {
+        margin-right: 0; /* Remove right margin for icon */
+    }
 
-/* Style for candidate image */
+    .platform span.text {
+        display: none; /* Hide text on smaller screens */
+    }
+}
+
+/* Updated styles for candidate image */
 .clist {
     width: 100px;
     height: 100px;
     object-fit: cover;
     border-radius: 50%;
     margin-right: 10px;
+    grid-column: span 1;
 }
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .position-container {
+        padding: 10px; /* Adjust padding for smaller screens */
+    }
+}
+
+/* Media query for larger screens */
+@media (min-width: 768px) {
+    /* Apply flex-end alignment to candidate image */
+    .candidate-list li {
+        display: flex;
+        justify-content: space-between; /* Align items to the end of the container */
+        align-items: center;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: #f9f9f9;
+    }
+
+    /* Updated styles for candidate image */
+    .clist {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-right: 10px;
+        grid-column: span 1;
+    }
+
+    /* Media query for smaller screens */
+    @media (max-width: 768px) {
+        .candidate-list li {
+            display: flex;
+            align-items: center; /* Center items vertically */
+            margin-bottom: 10px;
+        }
+
+        .clist {
+            width: 80px; /* Reduce image width on smaller screens */
+            height: 80px; /* Reduce image height on smaller screens */
+            margin-right: 10px; /* Adjust margin for smaller screens */
+        }
+    }
+}
+
 
 </style>
 
