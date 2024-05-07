@@ -33,7 +33,7 @@ if (isset($_POST['email']) && isset($_POST['new_password'])) {
     $response = array("status" => "success", "message" => "Password updated successfully");
 
     // Step 6: Return JSON response
-    header('Location: voters_login.php');
+    header('Content-Type: application/json');
     echo json_encode($response);
     exit(); // Make sure to exit after sending the JSON response
 } else {
