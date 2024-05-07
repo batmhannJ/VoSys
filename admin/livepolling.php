@@ -48,7 +48,7 @@
           <div class="col-xs-6">
             <div id="presidentChart" style="height: 370px; width: 100%; margin-left: 20px; margin-top: 20px; display: inline-block;"></div>
           </div>
-          <div class="col-xs-6">
+          <div class="col-xs-12">
             <div id="representativeChart" style="height: 370px; width: 100%; margin-left: 20px; margin-top: 20px; display: inline-block;"></div>
           </div>
         </div>
