@@ -95,25 +95,31 @@ include 'includes/header.php';
     </div>
     <?php include 'includes/scripts.php' ?>
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('sendOTP').addEventListener('click', function() {
-            var email = '<?php echo $user['email']; ?>';
-            sendOTP(email);
-        });
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('sendOTP').addEventListener('click', function() {
+        var email = '<?php echo $user['email']; ?>';
+        sendOTP(email);
     });
+});
 
-    function sendOTP(email) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'send_otp.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
+function sendOTP(email) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'send_otp.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            console.log(xhr.responseText); // Log the response received
+            if (xhr.status == 200) {
                 var response = xhr.responseText;
                 alert(response); // Show response message (e.g., "OTP sent successfully")
+            } else {
+                alert('Error occurred. Please try again.'); // Show error message
             }
-        };
-        xhr.send('email=' + encodeURIComponent(email));
-    }
-    </script>
+        }
+    };
+    xhr.send('email=' + encodeURIComponent(email));
+}
+</script>
+
 </body>
 </html>
