@@ -1,73 +1,106 @@
 <?php
-// Include necessary files and initialize database connection
 include 'includes/session.php';
-include 'includes/db.php';
+include 'includes/header.php';
+?>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <?php include 'includes/navbar.php'; ?>
+    <?php include 'includes/menubar.php'; ?>
 
-// Initialize arrays to store updated data
-$presidentData = array();
-$vicePresidentData = array();
-$secretaryData = array();
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Election Results
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">Results</li>
+            </ol>
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <!-- Bar Graph for JPCS Organization -->
+            <div class="row">
+                <!-- JPCS President Bar Graph Box -->
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>President Candidates - JPCS Organization</b></h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!-- President Bar Graph Container for JPCS -->
+                            <div id="presidentGraph" style="height: 300px;"></div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
+    </div>
 
-// Fetch organization from GET parameter
-$organization = isset($_GET['organization']) ? $_GET['organization'] : '';
+    <!-- /.content-wrapper -->
+    <?php include 'includes/footer.php'; ?>
+    <?php include 'includes/votes_modal.php'; ?>
+</div>
+<!-- ./wrapper -->
+<?php include 'includes/scripts.php'; ?>
+<!-- Bar Graph Script -->
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    // Function to generate dual-Y bar chart for JPCS organization
+    function generateDualYBarChart(presidentData, containerId) {
+        var chart = new CanvasJS.Chart(containerId, {
+            animationEnabled: true,
+            title:{
+                text: "Vote Counts - JPCS Organization"
+            },
+            axisY: {
+                title: "President Votes",
+                includeZero: true
+            },
+            data: [{
+                type: "column", // Change type to "column"
+                name: "President Votes",
+                showInLegend: true,
+                yValueFormatString: "#,##0",
+                dataPoints: presidentData
+            }]
+        });
+        chart.render();
+    }
 
-// Prepare SQL queries with organization filter
-$sqlPresident = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-                COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-                FROM positions 
-                LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'President'
-                LEFT JOIN votes ON candidates.id = votes.candidate_id
-                LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-                WHERE voters1.organization != ''";
-$sqlVicePresident = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-                    COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-                    FROM positions 
-                    LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'Vice President'
-                    LEFT JOIN votes ON candidates.id = votes.candidate_id
-                    LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-                    WHERE voters1.organization != ''";
-$sqlSecretary = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-                    COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-                    FROM positions 
-                    LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'Secretary'
-                    LEFT JOIN votes ON candidates.id = votes.candidate_id
-                    LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-                    WHERE voters1.organization != ''";
+    // Function to fetch updated data from the server for JPCS organization
+    function updateData() {
+        $.ajax({
+            url: 'update_jpcs_data.php', // Change this to the URL of your update data script
+            type: 'GET',
+            dataType: 'json',
+            data: {organization: 'JPCS'}, // Hardcoded organization to JPCS
+            success: function(response) {
+                // Update dual-Y bar chart for JPCS
+                generateDualYBarChart(response.presidentData, "presidentGraph");
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching data: ' + error);
+            }
+        });
+    }
 
-// Add organization filter if organization is specified
-if (!empty($organization)) {
-    $sqlPresident .= " AND voters1.organization = '$organization'";
-    $sqlVicePresident .= " AND voters1.organization = '$organization'";
-    $sqlSecretary .= " AND voters1.organization = '$organization'";
-}
+    // Call the updateData function initially
+    updateData();
 
-// Group by candidate ID and fetch data for president candidates
-$sqlPresident .= " GROUP BY candidates.id";
-$queryPresident = $conn->query($sqlPresident);
-while ($row = $queryPresident->fetch_assoc()) {
-    $presidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
-}
+    // Call the updateData function every 60 seconds (adjust as needed)
+    setInterval(updateData, 60000); // 60000 milliseconds = 60 seconds
+</script>
 
-// Group by candidate ID and fetch data for vice president candidates
-$sqlVicePresident .= " GROUP BY candidates.id";
-$queryVicePresident = $conn->query($sqlVicePresident);
-while ($row = $queryVicePresident->fetch_assoc()) {
-    $vicePresidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
-}
-
-// Group by candidate ID and fetch data for secretary candidates
-$sqlSecretary .= " GROUP BY candidates.id";
-$querySecretary = $conn->query($sqlSecretary);
-while ($row = $querySecretary->fetch_assoc()) {
-    $secretaryData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
-}
-
-// Close database connection
-$conn->close();
-
-// Combine the updated data into a single array
-$response = array(
-    'presidentData' => $presidentData,
-    'vicePresidentData' => $vicePresidentData,
-    'secretaryData' => $secretaryData
-);
+</body>
+</html>
