@@ -22,22 +22,22 @@ include 'includes/header.php';
             <p class="login-box-msg">Forgot Password? Enter your email address to reset your password.</p>
 
             <!-- Forgot password form -->
-            <form action="" method="POST">
+            <form action="change_pass.php" method="POST">
                 <div class="form-group has-feedback">
                     <input type="email" class="form-control" name="email" placeholder="Email" required>
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 </div>
-                <!--<div class="form-group">
+                 <!--<div class="form-group">
                     <div class="col-sm-6">
                         <input type="number" class="form-control" id="otp" name="otp" placeholder="Enter OTP" required>
                     </div>
-                    <div class="col-sm-3">
+                   <div class="col-sm-3">
                         <button type="button" class="btn btn-primary" id="sendOTP">Send OTP</button>
                     </div>
                 </div>-->
                 <div class="row">
                     <div class="col-xs-12">
-                        <a><button type="submit" class="btn btn-primary btn-block btn-flat">Reset Password</button></a>
+                        <a href="change_pass.php"></a><button type="submit" class="btn btn-primary btn-block btn-flat" name="resetPass">Reset Password</button></a>
                     </div>
                 </div>
             </form>

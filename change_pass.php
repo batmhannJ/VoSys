@@ -4,13 +4,6 @@ include 'includes/header.php';
 
 // Include your database connection file
 include 'includes/conn.php';
-
-// Check if token is provided in the URL
-if (isset($_GET['token'])) {
-    // Get the token from the URL
-    $token = $_GET['token'];
-    
-    // Display the form for changing the password
 ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -25,7 +18,6 @@ if (isset($_GET['token'])) {
             <h2>Change Password</h2>
             <!-- Password reset form -->
             <form action="update_password.php" method="POST">
-                <input type="hidden" name="token" value="<?php echo $token; ?>">
                 <div class="form-group">
                     <label for="new_password">New Password:</label>
                     <input type="password" class="form-control" id="new_password" name="new_password" required>
@@ -34,14 +26,16 @@ if (isset($_GET['token'])) {
                     <label for="confirm_password">Confirm Password:</label>
                     <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
                 </div>
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <input type="number" class="form-control" id="otp" name="otp" placeholder="Enter OTP" required>
+                    </div>
+                   <div class="col-sm-3">
+                        <button type="button" class="btn btn-primary" id="sendOTP">Send OTP</button>
+                    </div>
+                </div>
                 <button type="submit" class="btn btn-primary">Reset Password</button>
             </form>
         </div>
     </body>
     </html>
-<?php
-} else {
-    // If the token parameter is not set, display an error message or redirect to another page
-    echo "Token not found. Please try again.";
-}
-?>
