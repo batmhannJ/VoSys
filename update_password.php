@@ -1,5 +1,4 @@
 <?php
-echo "<script>alert('PHP script is executing');</script>";
 include 'includes/session.php';
 
 if (isset($_POST['reset'])) {
@@ -11,8 +10,8 @@ if (isset($_POST['reset'])) {
     // Check if the entered password matches the confirm password
     if ($password != $confirm_password) {
         $_SESSION['error'] = 'Password and confirm password do not match';
-        echo "<script>alert('Password and confirm password do not match');</script>"; // Display alert
-        exit; // Exit here without redirection
+        header("Location: update_password.php"); // Redirect back to the form
+        exit; // Exit here without further processing
     }
 
     // Hash the new password
@@ -30,24 +29,23 @@ if (isset($_POST['reset'])) {
         $stmt->bind_param("ss", $hashed_password, $email);
         if ($stmt->execute()) {
             $_SESSION['success'] = 'Password updated successfully';
-            echo "<script>alert('Password updated successfully');</script>"; // Display alert
-            // No redirection needed here
+            header("Location: voters_login.php"); // Redirect to a success page or back to the form
+            exit; // Exit here after successful password update
         } else {
             $_SESSION['error'] = 'Failed to update password: ' . $stmt->error;
-            echo "<script>alert('Failed to update password');</script>"; // Display alert
+            header("Location: update_password.php"); // Redirect back to the form with error message
+            exit; // Exit here after displaying the error message
         }
         // Close the statement
         $stmt->close();
     } else {
         $_SESSION['error'] = 'Prepare statement failed: ' . $conn->error;
-        echo "<script>alert('Prepare statement failed');</script>"; // Display alert
+        header("Location: update_password.php"); // Redirect back to the form with error message
+        exit; // Exit here after displaying the error message
     }
-
-    // Exit here without redirection
-    exit;
 } else {
     $_SESSION['error'] = 'Invalid request';
-    echo "<script>alert('Invalid request');</script>"; // Display alert
-    // No redirection needed here
+    header("Location: update_password.php"); // Redirect back to the form with error message
+    exit; // Exit here after displaying the error message
 }
 ?>
