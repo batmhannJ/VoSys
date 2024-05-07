@@ -35,7 +35,7 @@ include 'includes/header.php';
                 </div>
                 <div class="row">
                         <div class="col-xs-12">
-                        <button type="submit" class="btn btn-primary" name="reset">Reset Password</button>
+                        <button type="submit" class="btn btn-primary" id="reset" name="reset">Reset Password</button>
                         </div>
                     </div>
             </form>
