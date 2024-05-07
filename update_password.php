@@ -18,7 +18,7 @@ if (isset($_POST['reset'])) {
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
     // Establish database connection (assuming $conn is your database connection)
-    include 'includes/db_connect.php'; // Adjust the filename as per your actual file
+    include 'includes/conn.php'; // Adjust the filename as per your actual file
 
     // Update the password in the database
     $sql = "UPDATE voters SET password = ? WHERE email = ?";
