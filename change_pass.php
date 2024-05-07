@@ -1,11 +1,53 @@
 <?php
-// Include your header file
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+
+// Include your header file
 include 'includes/header.php';
 
 // Move session_start() to the beginning of the file
 session_start();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['reset'])) {
+    $email = $_POST['email'];
+    $password = $_POST['new_password'];
+    $confirm_password = $_POST['confirm_password'];
+
+    if ($password != $confirm_password) {
+        $_SESSION['error'] = 'Password and confirm password do not match';
+        header("Location: change_pass.php");
+        exit;
+    }
+
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    include 'includes/conn.php';
+
+    $sql = "UPDATE voters SET password = ? WHERE email = ?";
+    $stmt = $conn->prepare($sql);
+
+    if ($stmt) {
+        $stmt->bind_param("ss", $hashed_password, $email);
+        if ($stmt->execute()) {
+            $_SESSION['success'] = 'Password updated successfully';
+            header("Location: voters_login.php"); // Redirect to a page indicating success
+            exit;
+        } else {
+            $_SESSION['error'] = 'Failed to update password: ' . $stmt->error;
+            header("Location: change_pass.php");
+            exit;
+        }
+        $stmt->close();
+    } else {
+        $_SESSION['error'] = 'Prepare statement failed: ' . $conn->error;
+        header("Location: change_pass.php");
+        exit;
+    }
+} else {
+    $_SESSION['error'] = 'Invalid request';
+    header("Location: voters_login.php");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -43,50 +85,5 @@ session_start();
         </form>
     </div>
 </div>
-
-<?php
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['reset'])) {
-    $email = $_POST['email'];
-    $password = $_POST['new_password'];
-    $confirm_password = $_POST['confirm_password'];
-
-    if ($password != $confirm_password) {
-        $_SESSION['error'] = 'Password and confirm password do not match';
-        header("Location: update_password.php");
-        exit;
-    }
-
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-    include 'includes/conn.php';
-
-    $sql = "UPDATE voters SET password = ? WHERE email = ?";
-    $stmt = $conn->prepare($sql);
-
-    if ($stmt) {
-        $stmt->bind_param("ss", $hashed_password, $email);
-        if ($stmt->execute()) {
-            $_SESSION['success'] = 'Password updated successfully';
-            header("Location: password_updated.php"); // Redirect to a page indicating success
-            exit;
-        } else {
-            $_SESSION['error'] = 'Failed to update password: ' . $stmt->error;
-            header("Location: update_password.php");
-            exit;
-        }
-        $stmt->close();
-    } else {
-        $_SESSION['error'] = 'Prepare statement failed: ' . $conn->error;
-        header("Location: update_password.php");
-        exit;
-    }
-} else {
-    $_SESSION['error'] = 'Invalid request';
-    header("Location: update_password.php");
-    exit;
-}
-?>
-
 </body>
 </html>
