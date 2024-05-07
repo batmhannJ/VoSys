@@ -103,10 +103,10 @@
                   <th>Username</th>
                   <th>Email</th>
                   <?php elseif(isset($_GET['type']) && $_GET['type'] === 'election'): ?>
-                  <!-- Add Election Columns Here -->
+                  <th>Title</th>
+                  <th>Voters</th>
                   <?php endif; ?>
                   <th>Tools</th>
-
                 </thead>
                 <tbody>
                   <?php
@@ -116,6 +116,7 @@
                       $sql = "SELECT * FROM admin WHERE archived = TRUE";
                     } elseif(isset($_GET['type']) && $_GET['type'] === 'election') {
                       // SQL Query for Election Archived
+                      $sql = "SELECT * FROM election WHERE archived = TRUE";
                     }
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
@@ -163,6 +164,15 @@
                       } elseif(isset($_GET['type']) && $_GET['type'] === 'election') {
                           // For election table
                           // Add code to display election archive here
+                          echo "
+                              <tr>
+                                  <td>".$row['title']."</td>
+                                  <td>".$row['voters']."</td>
+                                  <td>
+                                      <!-- Add buttons for election restoration and deletion here -->
+                                  </td>
+                              </tr>
+                          ";
                       }
 
                     }
