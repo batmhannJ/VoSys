@@ -107,7 +107,7 @@ include 'includes/header.php';
 
     function changePassword(email, newPassword) {
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'updatePassword.php', true);
+        xhr.open('POST', 'update_password.php', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
