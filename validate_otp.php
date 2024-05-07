@@ -1,7 +1,5 @@
 <?php
 session_start();
-// Include your header file
-include 'includes/header.php';
 
 if (isset($_POST['email']) && isset($_POST['otp'])) {
     $email = $_POST['email'];
@@ -42,6 +40,7 @@ if (isset($_POST['email']) && isset($_POST['otp'])) {
     // Return JSON response
     header('Content-Type: application/json');
     echo json_encode($response);
+    exit(); // Make sure to exit after sending the JSON response
 } else {
     // If email or OTP parameter is missing
     die('Missing email or OTP parameter');
