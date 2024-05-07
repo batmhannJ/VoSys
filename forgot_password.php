@@ -22,7 +22,7 @@ include 'includes/header.php';
             <p class="login-box-msg">Forgot Password? Enter your email address to reset your password.</p>
 
             <!-- Forgot password form -->
-            <form action="validate_otp.php" method="POST">
+            <form action="change_pass.php" method="POST">
                 <div class="form-group has-feedback">
                     <input type="email" class="form-control" name="email" placeholder="Email" required>
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>

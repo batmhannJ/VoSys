@@ -26,7 +26,7 @@ $message = 'Your OTP is: ' . $otp;
 // Send email
 if (mail($email, $subject, $message)) {
     // Store OTP in database
-    $sql = "INSERT INTO otp_verification (email, otp) VALUES ('$email', '$otp')";
+    $sql = "INSERT INTO otp_verifcation (email, otp) VALUES ('$email', '$otp')";
 
     if ($conn->query($sql) === TRUE) {
         $_SESSION['otp'] = $otp;
