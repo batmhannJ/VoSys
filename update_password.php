@@ -30,11 +30,12 @@ if (isset($_POST['email']) && isset($_POST['new_password'])) {
     mysqli_close($connection);
 
     // Step 5: Return success response
-    $_SESSION['success_message'] = "Password updated successfully";
+    $response = array("Password updated successfully");
 
-    // Step 6: Redirect to voters_login.php
+    // Step 6: Return JSON response
     header('Location: voters_login.php');
-    exit(); // Make sure to exit after redirecting
+    echo json_encode($response);
+    exit(); // Make sure to exit after sending the JSON response
 } else {
     // If email or new password parameter is missing
     die('Missing email or new password parameter');
