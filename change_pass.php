@@ -12,9 +12,14 @@ include 'includes/header.php';
         <title>Change Password</title>
         <!-- Include your CSS files -->
     </head>
-    <body>
-        <div class="container">
-            <h2>Change Password</h2>
+    <body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-box-body">
+            <div class="login-logo">
+                <img src="images/olshco.png" class="olshco-logo" alt="College Voting System Logo">
+                <b>College Voting System</b>
+            </div>
+            <p class="login-box-msg">Change Password</p>
             <!-- Password reset form -->
             <form action="update_password.php" method="POST">
                 <div class="form-group">
