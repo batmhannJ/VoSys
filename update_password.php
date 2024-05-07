@@ -32,14 +32,14 @@ if (isset($_POST['reset'])) {
             header("Location: voters_login.php"); // Redirect to a success page or back to the form
             exit; // Exit here after successful password update
         } else {
-            $_SESSION['error'] = 'Failed to update password: ' . $stmt->error;
+            $_SESSION['error'] = 'Failed to update password';
             header("Location: update_password.php"); // Redirect back to the form with error message
             exit; // Exit here after displaying the error message
         }
         // Close the statement
         $stmt->close();
     } else {
-        $_SESSION['error'] = 'Prepare statement failed: ' . $conn->error;
+        $_SESSION['error'] = 'Failed to prepare statement';
         header("Location: update_password.php"); // Redirect back to the form with error message
         exit; // Exit here after displaying the error message
     }
