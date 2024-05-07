@@ -2,11 +2,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Include your header file
-include 'includes/header.php';
-
-// Move session_start() to the beginning of the file
-session_start();
+// Include your header fil
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['reset'])) {
     $email = $_POST['email'];
@@ -49,15 +45,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['reset'])) {
     exit;
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Change Password</title>
-    <!-- Include your CSS files -->
-</head>
+<?php 
+include 'includes/header.php';
+?>
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-box-body">
@@ -67,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['reset'])) {
         </div>
         <p class="login-box-msg">Change Password</p>
         <!-- Password reset form -->
-        <form action="" method="POST" onsubmit="return validateForm()">
+        <form action="update_password.php" method="POST" onsubmit="return validateForm()">
             <input type="hidden" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
             <div class="form-group has-feedback">
                 <label for="new_password">New Password:</label>
