@@ -69,6 +69,10 @@ ini_set('display_errors', 1);
                     } else {
                         // Request failed
                         alert("Failed to update password");
+
+                        // Log the error
+                        console.error("Failed to update password. Status code: " + xhr.status);
+                        console.error("Response: " + xhr.responseText);
                     }
                 }
             };
