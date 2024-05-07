@@ -104,7 +104,6 @@ if (isset($_POST['reset'])) {
     }
 } else {
     $_SESSION['error'] = 'Invalid request';
-    header("Location: update_password.php"); // Redirect back to the form with error message
     exit; // Exit here after displaying the error message
 }
 ?>
