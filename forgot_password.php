@@ -102,10 +102,11 @@ include 'includes/header.php';
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('sendOTP').addEventListener('click', function() {
-        var email = '<?php echo $user['email']; ?>';
+        var email = document.querySelector('input[name="email"]').value; // Get email value from input field
         sendOTP(email);
     });
 });
+
 
 function sendOTP(email) {
     var xhr = new XMLHttpRequest();
