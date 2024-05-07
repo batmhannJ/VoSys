@@ -1,10 +1,9 @@
+
 <?php
 // Include your header file
 include 'includes/header.php';
-
-// Include your database connection file
-include 'includes/conn.php';
 ?>
+
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -37,5 +36,7 @@ include 'includes/conn.php';
                 <button type="submit" class="btn btn-primary">Reset Password</button>
             </form>
         </div>
+        
+    <?php include 'includes/scripts.php' ?>
     </body>
     </html>
