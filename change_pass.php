@@ -30,7 +30,7 @@ session_start();
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
-                        <button type="button" class="btn btn-primary" onclick="resetPassword()" name="reset">Reset Password</button>
+                        <button type="button" class="btn btn-primary" onclick="resetPassword()" id="reset" name="reset">Reset Password</button>
                     </div>
                 </div>
             </form>
@@ -52,7 +52,6 @@ session_start();
         }
 
         function resetPassword() {
-            console.log("Reset button clicked");
             if (validateForm()) {
                 var form = document.getElementById("password_reset_form");
                 var formData = new FormData(form);
@@ -63,7 +62,7 @@ session_start();
                     if (xhr.readyState === XMLHttpRequest.DONE) {
                         if (xhr.status === 200) {
                             // Request was successful, handle response
-                            alert(xhr.responseText); // You can customize this part to display a success message or redirect to another page
+                            alert(xhr.responseText); // Display the response message
                         } else {
                             // Request failed
                             alert("Failed to update password");
