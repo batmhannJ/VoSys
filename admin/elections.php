@@ -77,9 +77,9 @@
               echo '<td><a href="#" name="status" class="btn badge rounded-pill btn-success election-status" data-id="' . $row['id'] . '" data-status="0" data-name="Deactivate">Active</a></td>';
             }
             echo '<td class="text-center">
-            <a href="#" class="btn btn-primary btn-sm edit btn-flat" data-bs-toggle="modal" data-bs-target="#editElection" data-id="' . $row['id'] . '">Edit</a>
-            <a href="#" class="btn btn-success btn-sm archive btn-flat" data-bs-toggle="modal" data-bs-target="#confirmationModal" data-id="' . $row['id'] . '" data-name="' . $row['title'] . '">Archive</a></td>
-          </tr>';    
+                        <a href="#" class="btn btn-primary btn-sm edit btn-flat" data-bs-toggle="modal" data-bs-target="#editElection" data-id="' . $row['id'] . '">Edit</a>
+                        <a href="#" class="btn btn-danger btn-sm delete btn-flat" data-bs-toggle="modal" data-bs-target="#deleteElection" data-id="' . $row['id'] . '" data-name="' . $row['title'] . '">Delete</a></td>
+                  </tr>';
           } ?>
         </tbody>
       </table><!-- End Election lists Table -->
@@ -89,28 +89,6 @@
 </div>
 </section>
 </div>
-
-<!-- Confirmation Modal for Archive -->
-<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmationModalLabel">Archive Election</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to archive this election?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="confirmArchive">Archive</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 
   <?php include 'includes/footer.php'; ?>
   <?php include 'includes/election_modal.php'; ?>
@@ -127,6 +105,14 @@ $(function(){
     var id = $(this).data('id');
     getRow(id);
   });
+
+  $(document).on('click', '.delete', function(e){
+    e.preventDefault();
+    $('#delete').modal('show');
+    var id = $(this).data('id');
+    getRow(id);
+  });
+
 
 });
 function getRow(id){
@@ -165,6 +151,7 @@ function getRow(id){
     if (confirmed) {
         $.ajax({
             type: 'POST',
+            url: 'http://localhost/votesystem/admin/controllers/app.php?action=election_status',
             data: {
                 election_id: electionId,
                 status: status
@@ -197,33 +184,5 @@ function getRow(id){
     }
 });
 
-// AJAX request to archive election
-$(document).on('click', '#confirmArchive', function() {
-    var electionId = $(this).data('id');
-
-    $.ajax({
-        type: 'POST',
-        url: 'archive_election.php', // Change to your PHP file handling archive process
-        data: {
-            election_id: electionId
-        },
-        dataType: 'json',
-        success: function(response) {
-            console.log(response);
-            if (response.status === 'success') {
-                toastr.success(response.message);
-                setTimeout(function() {
-                    location.reload();
-                }, 1000);
-            } else {
-                toastr.error(response.message);
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error(error);
-            console.error('An error occurred during the request.', status, error);
-        }
-    });
-});
 </script>
 </body>
