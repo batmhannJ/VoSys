@@ -41,6 +41,7 @@ include 'includes/header.php';
                 <button type="submit" class="btn btn-primary">Reset Password</button>
             </form>
         </div>
+    </div>
         
     <?php include 'includes/scripts.php' ?>
     </body>
