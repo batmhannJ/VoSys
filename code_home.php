@@ -277,7 +277,6 @@
         width: auto; /* I-adjust ang lapad */
         margin: 10px auto; /* Igitna ang platform button */
     }
-}
 
     .platform i.fa {
         margin-right: 0; /* Remove right margin for icon */
