@@ -70,7 +70,7 @@ $result = $conn->query($query);
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
             <li class="breadcrumb-item active">Dashboard</li>
-            <li class="breadcrumb-item"><a href="livepoll_jpcs.php">Home</a></li>
+            
             
         </ol>
     </nav>
