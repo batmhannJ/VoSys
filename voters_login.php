@@ -11,6 +11,14 @@ if (isset($_SESSION['voter'])) {
     header('location: home.php'); // Default redirect if organization is not found
     exit();
 }
+
+if (isset($_SESSION['success'])) {
+  echo '<script>alert("' . $_SESSION['success'] . '");</script>';
+  unset($_SESSION['success']);
+} elseif (isset($_SESSION['error'])) {
+  echo '<script>alert("' . $_SESSION['error'] . '");</script>';
+  unset($_SESSION['error']);
+}
 ?>
 
 <?php include 'includes/header.php'; ?>
