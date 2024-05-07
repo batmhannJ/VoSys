@@ -48,5 +48,26 @@ include 'includes/header.php';
     </div>
         
     <?php include 'includes/scripts.php' ?>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('sendOTP').addEventListener('click', function() {
+                var email = '<?php echo $user['email']; ?>';
+                sendOTP(email);
+            });
+        });
+
+        function sendOTP(email) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'send_otp.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var response = xhr.responseText;
+                    alert(response); // Show response message (e.g., "OTP sent successfully")
+                }
+            };
+            xhr.send('email=' + encodeURIComponent(email));
+        }
+        </script>
     </body>
     </html>
