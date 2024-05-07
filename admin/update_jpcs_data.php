@@ -1,106 +1,38 @@
 <?php
+// Include necessary files and initialize database connection
 include 'includes/session.php';
-include 'includes/header.php';
+include 'includes/db.php';
+
+// Initialize array to store updated data
+$presidentData = array();
+
+// Fetch organization from GET parameter
+$organization = isset($_GET['organization']) ? $_GET['organization'] : '';
+
+// Prepare SQL query with organization filter
+$sql = "SELECT candidates.firstname, candidates.lastname, COUNT(votes.id) AS vote_count
+        FROM candidates
+        LEFT JOIN votes ON candidates.id = votes.candidate_id
+        LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
+        WHERE candidates.position = 'President' AND voters1.organization = '$organization'
+        GROUP BY candidates.id";
+
+// Execute SQL query
+$result = $conn->query($sql);
+
+// Process query results
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        // Construct candidate name
+        $candidateName = $row['firstname'] . ' ' . $row['lastname'];
+        // Store data in the array
+        $presidentData[] = array("y" => intval($row['vote_count']), "label" => $candidateName);
+    }
+}
+
+// Close database connection
+$conn->close();
+
+// Return JSON response
+echo json_encode($presidentData);
 ?>
-<body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
-    <?php include 'includes/navbar.php'; ?>
-    <?php include 'includes/menubar.php'; ?>
-
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <h1>
-                Election Results
-            </h1>
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li class="active">Results</li>
-            </ol>
-        </section>
-        <!-- Main content -->
-        <section class="content">
-            <!-- Bar Graph for JPCS Organization -->
-            <div class="row">
-                <!-- JPCS President Bar Graph Box -->
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>President Candidates - JPCS Organization</b></h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <!-- President Bar Graph Container for JPCS -->
-                            <div id="presidentGraph" style="height: 300px;"></div>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                    <!-- /.box -->
-                </div>
-                <!-- /.col -->
-            </div>
-            <!-- /.row -->
-        </section>
-        <!-- /.content -->
-    </div>
-
-    <!-- /.content-wrapper -->
-    <?php include 'includes/footer.php'; ?>
-    <?php include 'includes/votes_modal.php'; ?>
-</div>
-<!-- ./wrapper -->
-<?php include 'includes/scripts.php'; ?>
-<!-- Bar Graph Script -->
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-<!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-    // Function to generate dual-Y bar chart for JPCS organization
-    function generateDualYBarChart(presidentData, containerId) {
-        var chart = new CanvasJS.Chart(containerId, {
-            animationEnabled: true,
-            title:{
-                text: "Vote Counts - JPCS Organization"
-            },
-            axisY: {
-                title: "President Votes",
-                includeZero: true
-            },
-            data: [{
-                type: "column", // Change type to "column"
-                name: "President Votes",
-                showInLegend: true,
-                yValueFormatString: "#,##0",
-                dataPoints: presidentData
-            }]
-        });
-        chart.render();
-    }
-
-    // Function to fetch updated data from the server for JPCS organization
-    function updateData() {
-        $.ajax({
-            url: 'update_jpcs_data.php', // Change this to the URL of your update data script
-            type: 'GET',
-            dataType: 'json',
-            data: {organization: 'JPCS'}, // Hardcoded organization to JPCS
-            success: function(response) {
-                // Update dual-Y bar chart for JPCS
-                generateDualYBarChart(response.presidentData, "presidentGraph");
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching data: ' + error);
-            }
-        });
-    }
-
-    // Call the updateData function initially
-    updateData();
-
-    // Call the updateData function every 60 seconds (adjust as needed)
-    setInterval(updateData, 60000); // 60000 milliseconds = 60 seconds
-</script>
-
-</body>
-</html>
