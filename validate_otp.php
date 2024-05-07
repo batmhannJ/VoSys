@@ -37,8 +37,9 @@ if (isset($_POST['email']) && isset($_POST['otp'])) {
 
     if ($row) {
         // Redirect to change password page if OTP is correct
-        header("Location: change_pass.php");
-        exit();
+        echo 'OTP correct';
+        // header("Location: change_pass.php");
+        // exit();
     } else {
         // Show generic error message
         die('Incorrect email or OTP');
