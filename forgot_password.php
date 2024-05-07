@@ -67,19 +67,9 @@ include 'includes/header.php';
                 var new_password = document.querySelector('input[name="new_password"]').value;
 
                 // Validate OTP
-                validateOTP(email, otp);
-
-            });
-            document.getElementById('forgotPasswordForm').addEventListener('submit', function(event) {
-                event.preventDefault(); // Prevent the default form submission behavior
-
-                var email = document.querySelector('input[name="email"]').value;
-                var otp = document.querySelector('input[name="otp"]').value;
-                var new_password = document.querySelector('input[name="new_password"]').value;
-
-                // Validate OTP
+                validateOTP(email, otp, new_password);
+                // Change password
                 changePassword(email, new_password);
-
             });
         });
 
