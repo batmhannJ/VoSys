@@ -1,5 +1,6 @@
 <?php
 include 'includes/session.php';
+include 'includes/conn.php';
 
 if (isset($_POST['reset'])) {
     // Get the form data
@@ -10,7 +11,7 @@ if (isset($_POST['reset'])) {
     // Check if the entered password matches the confirm password
     if ($password != $confirm_password) {
         $_SESSION['error'] = 'Password and confirm password do not match';
-        header('Location: '.$_SERVER['HTTP_REFERER']); // Redirect back to the previous page
+        echo "Passwords do not match"; // Debugging statement
         exit;
     }
 
@@ -28,11 +29,13 @@ if (isset($_POST['reset'])) {
             $_SESSION['success'] = 'Password updated successfully';
         } else {
             $_SESSION['error'] = 'Failed to update password: ' . $stmt->error;
+            echo "Failed to update password"; // Debugging statement
         }
         // Close the statement
         $stmt->close();
     } else {
         $_SESSION['error'] = 'Prepare statement failed: ' . $conn->error;
+        echo "Prepare statement failed"; // Debugging statement
     }
 
     // Redirect back to the previous page
@@ -40,6 +43,7 @@ if (isset($_POST['reset'])) {
     exit;
 } else {
     $_SESSION['error'] = 'Invalid request';
+    echo "Invalid request"; // Debugging statement
     header('Location: '.$_SERVER['HTTP_REFERER']);
     exit;
 }
