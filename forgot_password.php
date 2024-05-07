@@ -36,7 +36,7 @@ include 'includes/header.php';
                     </div>
                 <div class="row">
                     <div class="col-xs-12">
-                        <a href="change_pass.php"><button type="submit" class="btn btn-primary btn-block btn-flat" id="validateOTP" name="validateOTP">Reset Password</button></a>
+                        <button type="submit" class="btn btn-primary btn-block btn-flat" id="validateOTP" name="validateOTP">Reset Password</button>
                     </div>
                 </div>
             </form>
