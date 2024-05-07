@@ -3,6 +3,9 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include 'includes/header.php';
+
+// Move session_start() to the beginning of the file
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +37,7 @@ include 'includes/header.php';
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <button type="submit" class="btn btn-primary" id="reset" name="reset">Reset Password</button>
+                    <button type="submit" class="btn btn-primary" name="reset">Reset Password</button>
                 </div>
             </div>
         </form>
@@ -57,9 +60,7 @@ include 'includes/header.php';
 </script>
 
 <?php
-include 'includes/session.php';
-
-if (isset($_POST['reset'])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['reset'])) {
     // Get the form data
     $email = $_POST['email'];
     $password = $_POST['new_password'];
@@ -87,7 +88,6 @@ if (isset($_POST['reset'])) {
         $stmt->bind_param("ss", $hashed_password, $email);
         if ($stmt->execute()) {
             $_SESSION['success'] = 'Password updated successfully';
-            header("Location: update_password.php"); // Redirect to a success page or back to the form
             exit; // Exit here after successful password update
         } else {
             $_SESSION['error'] = 'Failed to update password: ' . $stmt->error;
