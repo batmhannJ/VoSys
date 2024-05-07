@@ -71,14 +71,14 @@
                     <td>'.$row['title'].'</td>
                     <td>' . $row['voters'];
             '</td>';
-            if ($row['status'] === 0) {
-              echo '<td><a href="#" name="status" class="btn badge rounded-pill btn-secondary election-status" data-id="' . $row['id'] . '" data-status="1" data-name="Activate">Not active</a></td>';
+            if ($row['status'] === 'active') {
+              echo '<td><a href="#" name="status" class="btn badge rounded-pill btn-success election-status" data-id="' . $row['id'] . '" data-status="archived" data-name="Archive">Active</a></td>';
             } else {
-              echo '<td><a href="#" name="status" class="btn badge rounded-pill btn-success election-status" data-id="' . $row['id'] . '" data-status="0" data-name="Deactivate">Active</a></td>';
+              echo '<td><span class="badge rounded-pill bg-warning text-dark">' . ucfirst($row['status']) . '</span></td>';
             }
             echo '<td class="text-center">
             <a href="#" class="btn btn-primary btn-sm edit btn-flat" data-bs-toggle="modal" data-bs-target="#editElection" data-id="' . $row['id'] . '">Edit</a>
-            <a href="#" class="btn btn-success btn-sm archive btn-flat" data-bs-toggle="modal" data-bs-target="#confirmationModal" data-id="' . $row['id'] . '" data-name="' . $row['title'] . '">Archive</a></td>
+            <button class="btn btn-success btn-sm archive btn-flat" data-id="' . $row['id'] . '" data-name="' . $row['title'] . '">Archive</button></td>
           </tr>';    
           } ?>
         </tbody>
@@ -89,6 +89,9 @@
 </div>
 </section>
 </div>
+
+  <?php include 'includes/footer.php'; ?>
+  <?php include 'includes/election_modal.php'; ?>
 
 <!-- Confirmation Modal for Archive -->
 <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
@@ -111,10 +114,6 @@
     </div>
 </div>
 
-
-  <?php include 'includes/footer.php'; ?>
-  <?php include 'includes/election_modal.php'; ?>
-</div>
 <?php include 'includes/scripts.php'; ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
@@ -129,6 +128,7 @@ $(function(){
   });
 
 });
+
 function getRow(id){
   $.ajax({
     type: 'POST',
@@ -146,13 +146,14 @@ function getRow(id){
     }
   });
 }
-    $(function () {
-        $('#starttime').datetimepicker();
-        $('#endtime').datetimepicker();
-    });
+
+$(function () {
+    $('#starttime').datetimepicker();
+    $('#endtime').datetimepicker();
+});
 
 
-  $(document).on('click', '.election-status', function(e) {
+$(document).on('click', '.election-status', function(e) {
     e.preventDefault();
 
     var electionId = $(this).data('id');
@@ -197,33 +198,39 @@ function getRow(id){
     }
 });
 
-// AJAX request to archive election
-$(document).on('click', '#confirmArchive', function() {
+// Archive button click event
+$(document).on('click', '.archive', function(e) {
+    e.preventDefault();
     var electionId = $(this).data('id');
+    var electionName = $(this).data('name');
+    $('#confirmationModal').modal('show');
 
-    $.ajax({
-        type: 'POST',
-        url: 'archive_election.php', // Change to your PHP file handling archive process
-        data: {
-            election_id: electionId
-        },
-        dataType: 'json',
-        success: function(response) {
-            console.log(response);
-            if (response.status === 'success') {
-                toastr.success(response.message);
-                setTimeout(function() {
-                    location.reload();
-                }, 1000);
-            } else {
-                toastr.error(response.message);
+    // Confirm archive action
+    $('#confirmArchive').click(function() {
+        $.ajax({
+            type: 'POST',
+            url: 'archive_election.php',
+            data: {election_id: electionId},
+            dataType: 'json',
+            success: function(response) {
+                console.log(response);
+                if (response.status === 'success') {
+                    toastr.success(response.message);
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                // Handle AJAX errors, if any
+                console.error(error);
+                console.error('An error occurred during the request.', status, error);
             }
-        },
-        error: function(xhr, status, error) {
-            console.error(error);
-            console.error('An error occurred during the request.', status, error);
-        }
+        });
     });
 });
+
 </script>
 </body>
