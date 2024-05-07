@@ -26,7 +26,7 @@
           </div>
           <div class="box-body">
             <div class="row">
-              <div class="col-md-3"> <!-- Half width for organization dropdown -->
+              <div class="col-md-12"> <!-- Half width for organization dropdown -->
                 <div class="form-group">
                   <label for="organization">Select Organization:</label>
                   <select class="form-control smaller-dropdown" id="organization" onchange="updateCharts()">
@@ -48,7 +48,7 @@
           <div class="col-xs-6">
             <div id="presidentChart" style="height: 370px; width: 100%; margin-left: 20px; margin-top: 20px; display: inline-block;"></div>
           </div>
-          <div class="col-xs-12">
+          <div class="col-xs-6">
             <div id="representativeChart" style="height: 370px; width: 100%; margin-left: 20px; margin-top: 20px; display: inline-block;"></div>
           </div>
         </div>
