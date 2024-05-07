@@ -9,10 +9,10 @@
 	    <div class="container">
 	      <!-- Main content -->
 	      <section class="content">
-	      	<h1 class="page-header text-center title">
-	      		<img src="images/codg.jpg" alt="CSC Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
-	      		<b>CODE-TG - Coalition of Disciplined<br>Future Enforcers of Todays <br>Generation Election</b></h1>
-	        <div class="row">
+          <h1 class="page-header text-center title">
+            <img src="images/codg.jpg" alt="CSC Logo">
+            <b>CODE-TG - Coalition of Disciplined Future Enforcers of Todays Generation Election</b>
+        </h1>
 	        	<div class="col-sm-10 col-sm-offset-1">
 	        		<?php
                         if(isset($_SESSION['error'])){
@@ -527,51 +527,26 @@
 .text-center {
     text-align: center;
 }
-/* Iba pang mga estilo para sa buong section */
 .content {
-    margin-top: 20px; /* Espasyo sa itaas */
-    padding: 20px; /* Padding para sa loob ng section */
-    background-color: #f9f9f9; /* Kulay ng background */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow para sa depth */
-}
-
-/* Iba pang mga estilo para sa mga header ng section */
-.content-header {
-    margin-bottom: 20px; /* Espasyo sa ibaba ng header */
-    padding-bottom: 10px; /* Padding sa ibaba ng header */
-    border-bottom: 1px solid #ccc; /* Border sa ibaba ng header */
-}
-
-/* Iba pang mga estilo para sa mga header ng section */
-.content-header h1 {
-    margin: 0; /* I-adjust ang margin */
-    font-size: 24px; /* Laki ng font */
-    color: #333; /* Kulay ng font */
-}
-
-/* Iba pang mga estilo para sa mga subheader ng section */
-.content-header p {
-    margin-top: 10px; /* Espasyo sa itaas ng p */
-    font-size: 16px; /* Laki ng font */
-    color: #666; /* Kulay ng font */
-}
-
-/* Media query para sa mas maliit na mga screen */
-@media (max-width: 768px) {
-    .content {
-        padding: 15px; /* I-adjust ang padding para sa mas maliit na screen */
-    }
-
-    .content-header h1 {
-        font-size: 20px; /* I-adjust ang laki ng font para sa mas maliit na screen */
-    }
-
-    .content-header p {
-        font-size: 14px; /* I-adjust ang laki ng font para sa mas maliit na screen */
-    }
-}
-
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .title {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            color: #333;
+        }
+        .title img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
 
     </style>
 </style>
