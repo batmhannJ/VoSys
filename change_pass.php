@@ -24,6 +24,7 @@ include 'includes/header.php';
             <p class="login-box-msg">Change Password</p>
             <!-- Password reset form -->
             <form action="update_password.php" method="POST">
+                <input type="hidden" class="form-control" id="email" name="email" value="<?php echo $user['email']; ?>" required>
                 <div class="form-group">
                     <label for="new_password">New Password:</label>
                     <input type="password" class="form-control" id="new_password" name="new_password" required>
