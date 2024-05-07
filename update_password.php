@@ -20,7 +20,7 @@ if (isset($_POST['email']) && isset($_POST['new_password'])) {
     if (!$stmt) {
         die("Prepare statement failed: " . mysqli_error($connection));
     }
-    mysqli_stmt_bind_param($stmt, "sss", $hashedPassword, $email);
+    mysqli_stmt_bind_param($stmt, "ss", $hashedPassword, $email);
     if (!mysqli_stmt_execute($stmt)) {
         die("Execute statement failed: " . mysqli_error($connection));
     }
