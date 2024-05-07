@@ -7,7 +7,7 @@ if (isset($_GET['return'])) {
     $return = 'home.php';
 }
 
-if (isset($_POST['resetPass'])) {
+if (isset($_POST['reset'])) {
     $password = $_POST['new_password'];
     $confirm_password = $_POST['confirm_password']; 
     $otp = $_POST['otp'];

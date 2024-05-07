@@ -40,7 +40,7 @@ include 'includes/header.php';
                 </div>
                 <div class="row">
                         <div class="col-xs-12">
-                        <button type="submit" class="btn btn-primary" name="resetPass">Reset Password</button>
+                        <button type="submit" class="btn btn-primary" name="reset">Reset Password</button>
                         </div>
                     </div>
             </form>
@@ -49,25 +49,26 @@ include 'includes/header.php';
         
     <?php include 'includes/scripts.php' ?>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('sendOTP').addEventListener('click', function() {
-                var email = '<?php echo $user['email']; ?>';
-                sendOTP(email);
-            });
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('sendOTP').addEventListener('click', function() {
+            var email = document.querySelector('input[name="email"]').value; // Get email value from input field
+            sendOTP(email);
         });
+    });
 
-        function sendOTP(email) {
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'send_otp.php', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    var response = xhr.responseText;
-                    alert(response); // Show response message (e.g., "OTP sent successfully")
-                }
-            };
-            xhr.send('email=' + encodeURIComponent(email));
-        }
-        </script>
+    function sendOTP(email) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'send_otp.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var response = xhr.responseText;
+                alert(response); // Show response message (e.g., "OTP sent successfully")
+            }
+        };
+        xhr.send('email=' + encodeURIComponent(email));
+    }
+</script>
+
     </body>
     </html>
