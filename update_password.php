@@ -1,5 +1,6 @@
 <?php
 include 'includes/session.php';
+include 'includes/conn.php';
 
 if (isset($_POST['reset'])) {
     // Get the form data
