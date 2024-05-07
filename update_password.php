@@ -1,5 +1,5 @@
 <?php
-// Include your header file
+
 include 'includes/session.php';
 
 if (isset($_POST['reset'])) {
@@ -37,8 +37,7 @@ if (isset($_POST['reset'])) {
             header("Location: update_password.php"); // Redirect back to the form with error message
             exit; // Exit here after displaying the error message
         }
-        // Close the statement
-        $stmt->close();
+        // Close the sta
     } else {
         $_SESSION['error'] = 'Failed to prepare statement';
         header("Location: update_password.php"); // Redirect back to the form with error message
