@@ -402,7 +402,7 @@
         width: auto; /* I-adjust ang lapad */
         margin: 10px auto; /* Igitna ang platform button */
     }
-}
+
 
     .platform i.fa {
         margin-right: 0; /* Remove right margin for icon */
@@ -526,6 +526,50 @@
 /* Center the text in the text-center div */
 .text-center {
     text-align: center;
+}
+/* Iba pang mga estilo para sa buong section */
+.content {
+    margin-top: 20px; /* Espasyo sa itaas */
+    padding: 20px; /* Padding para sa loob ng section */
+    background-color: #f9f9f9; /* Kulay ng background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow para sa depth */
+}
+
+/* Iba pang mga estilo para sa mga header ng section */
+.content-header {
+    margin-bottom: 20px; /* Espasyo sa ibaba ng header */
+    padding-bottom: 10px; /* Padding sa ibaba ng header */
+    border-bottom: 1px solid #ccc; /* Border sa ibaba ng header */
+}
+
+/* Iba pang mga estilo para sa mga header ng section */
+.content-header h1 {
+    margin: 0; /* I-adjust ang margin */
+    font-size: 24px; /* Laki ng font */
+    color: #333; /* Kulay ng font */
+}
+
+/* Iba pang mga estilo para sa mga subheader ng section */
+.content-header p {
+    margin-top: 10px; /* Espasyo sa itaas ng p */
+    font-size: 16px; /* Laki ng font */
+    color: #666; /* Kulay ng font */
+}
+
+/* Media query para sa mas maliit na mga screen */
+@media (max-width: 768px) {
+    .content {
+        padding: 15px; /* I-adjust ang padding para sa mas maliit na screen */
+    }
+
+    .content-header h1 {
+        font-size: 20px; /* I-adjust ang laki ng font para sa mas maliit na screen */
+    }
+
+    .content-header p {
+        font-size: 14px; /* I-adjust ang laki ng font para sa mas maliit na screen */
+    }
 }
 
 
