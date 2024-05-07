@@ -30,14 +30,6 @@ include 'includes/header.php';
                     <label for="confirm_password">Confirm Password:</label>
                     <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
                 </div>
-                <div class="form-group">
-                    <div class="col-sm-6">
-                        <input type="number" class="form-control" id="otp" name="otp" placeholder="Enter OTP" required>
-                    </div>
-                   <div class="col-sm-3">
-                        <button type="button" class="btn btn-primary" id="sendOTP">Send OTP</button>
-                    </div>
-                </div>
                 <div class="row">
                         <div class="col-xs-12">
                         <button type="submit" class="btn btn-primary" name="reset">Reset Password</button>
@@ -48,27 +40,6 @@ include 'includes/header.php';
     </div>
         
     <?php include 'includes/scripts.php' ?>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('sendOTP').addEventListener('click', function() {
-            var email = document.querySelector('input[name="email"]').value; // Get email value from input field
-            sendOTP(email);
-        });
-    });
-
-    function sendOTP(email) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'send_otp.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                var response = xhr.responseText;
-                alert(response); // Show response message (e.g., "OTP sent successfully")
-            }
-        };
-        xhr.send('email=' + encodeURIComponent(email));
-    }
-</script>
 
     </body>
     </html>
