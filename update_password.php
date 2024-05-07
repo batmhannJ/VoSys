@@ -31,6 +31,7 @@ if (isset($_POST['reset'])) {
         if ($stmt->execute()) {
             $_SESSION['success'] = 'Password updated successfully';
             echo "<script>alert('Password updated successfully');</script>"; // Display alert
+            // No redirection needed here
         } else {
             $_SESSION['error'] = 'Failed to update password: ' . $stmt->error;
             echo "<script>alert('Failed to update password');</script>"; // Display alert
@@ -42,13 +43,11 @@ if (isset($_POST['reset'])) {
         echo "<script>alert('Prepare statement failed');</script>"; // Display alert
     }
 
-    // Redirect back to the previous page
-    header('Location: '.$_SERVER['HTTP_REFERER']);
+    // Exit here without redirection
     exit;
 } else {
     $_SESSION['error'] = 'Invalid request';
     echo "<script>alert('Invalid request');</script>"; // Display alert
-    header('Location: '.$_SERVER['HTTP_REFERER']);
-    exit;
+    // No redirection needed here
 }
 ?>
