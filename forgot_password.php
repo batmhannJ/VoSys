@@ -64,9 +64,11 @@ include 'includes/header.php';
 
                 var email = document.querySelector('input[name="email"]').value;
                 var otp = document.querySelector('input[name="otp"]').value;
+                var new_password = document.querySelector('input[name="new_password"]').value;
 
                 // Validate OTP
                 validateOTP(email, otp);
+
             });
         });
 
@@ -93,7 +95,7 @@ include 'includes/header.php';
                     var response = JSON.parse(xhr.responseText);
                     if (response.status === 'success') {
                         // Send the new password to change_pass.php
-                        changePassword(email, newPassword);
+                        changePassword(email, new_password);
                     } else {
                         alert(response.message);
                     }
@@ -105,7 +107,7 @@ include 'includes/header.php';
         xhr.send('email=' + encodeURIComponent(email) + '&otp=' + encodeURIComponent(otp));
     }
 
-    function changePassword(email, newPassword) {
+    function changePassword(email, new_password) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', 'update_password.php', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -115,7 +117,7 @@ include 'includes/header.php';
                 alert(response); // You can handle success or error messages here
             }
         };
-        xhr.send('email=' + encodeURIComponent(email) + '&new_password=' + encodeURIComponent(newPassword));
+        xhr.send('email=' + encodeURIComponent(email) + '&new_password=' + encodeURIComponent(new_password));
     }
 </script>
 </body>
