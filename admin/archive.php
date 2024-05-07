@@ -103,6 +103,7 @@
                   <th>Username</th>
                   <th>Email</th>
                   <?php elseif(isset($_GET['type']) && $_GET['type'] === 'election'): ?>
+                  <th>ID</th>
                   <th>Title</th>
                   <th>Voters</th>
                   <?php endif; ?>
@@ -166,6 +167,7 @@
                           // Add code to display election archive here
                           echo "
                               <tr>
+                                  <td>".$row['id']."</td>
                                   <td>".$row['title']."</td>
                                   <td>".$row['voters']."</td>
                                   <td>
