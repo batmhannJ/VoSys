@@ -36,12 +36,7 @@ if (isset($_POST['reset'])) {
 
         header('Location: '.$return);
         exit;
-    } else {
-        // OTP verification failed
-        $_SESSION['error'] = 'OTP verification failed';
-        header('Location: '.$return);
-        exit;
-    }
+    } 
 } else {
     $_SESSION['error'] = 'Fill up required details first';
     header('Location: '.$return);
