@@ -1,5 +1,5 @@
 <?php
-echo "<script>alert('PHP script is executing');</script>"; /
+echo "<script>alert('PHP script is executing');</script>";
 include 'includes/session.php';
 
 if (isset($_POST['reset'])) {
