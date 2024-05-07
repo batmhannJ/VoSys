@@ -1,6 +1,9 @@
 <?php
 include 'includes/session.php';
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 if (isset($_GET['return'])) {
     $return = $_GET['return'];
 } else {
