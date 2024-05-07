@@ -371,71 +371,8 @@
                                 </div>
                             </div>
                             </form>
-                        <style>
-              /* Style for the primary button */
-.btn-primary {
-    background-color: #007bff;
-    color: #fff;
-    border-color: #007bff;
-}
+                      
 
-/* Style for the success button */
-.btn-success {
-    background-color: #28a745;
-    color: #fff;
-    border-color: #28a745;
-}
-
-/* Style for the secondary button */
-.btn-secondary {
-    color: #6c757d;
-    border-color: #6c757d;
-}
-
-/* Style for the modal header */
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: maroon;
-    color: #fff;
-}
-
-/* Style for the modal title */
-.modal-title {
-    margin-right: auto; /* Pushes the modal title to the left */
-    font-weight: bold;
-}
-
-/* Style for the close button in the modal header */
-.modal-header .close {
-    padding-left: 20px; /* Adds space to the left of the close button */
-    color: #fff;
-    opacity: 0.5;
-}
-
-/* Style for the modal body */
-.modal-body {
-    padding: 20px;
-}
-
-/* Style for the modal footer */
-.modal-footer {
-    justify-content: space-between;
-    padding: 20px;
-}
-
-/* Center the text in the text-center div */
-.text-center {
-    text-align: center;
-}
-
-                            </style>
-                        
-
-                
-
-   
 
 				        	<!-- End Voting Ballot -->
 				    		<?php
