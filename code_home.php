@@ -4,13 +4,13 @@
 <div class="wrapper">
 
 	<?php include 'includes/navbar.php'; ?>
-	  <div class="content-wrapper">
+    <div class="content-wrapper">
 	    <div class="container">
 	      <!-- Main content -->
 	      <section class="content">
 	      	<h1 class="page-header text-center title">
 	      		<img src="images/codg.jpg" alt="CSC Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
-	      		<b>Coalition of Disciplined<br>Future Enforcers of Todays <br>Generation Election</b></h1>
+	      		<b>CODE-TG - Coalition of Disciplined<br>Future Enforcers of Todays <br>Generation Election</b></h1>
 	        <div class="row">
 	        	<div class="col-sm-10 col-sm-offset-1">
 	        		<?php
@@ -123,8 +123,7 @@
                                         
                                     </div>
                                     <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">
-                                    <i class="fa fa-search"> </i>
-                                    <span class="text">Platform</span>
+                                    <i class="fa fa-search"> Platform</i>
                                 </button>
                                 
                                     <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
@@ -195,18 +194,41 @@
     padding: 0;
 }
 
-/* Adjusted style for candidate list items */
+/* Bagong istilo para sa mga item sa listahan ng mga kandidato */
 .candidate-list li {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr; /* Divide into three equal columns */
-    grid-gap: 10px; /* Add gap between columns */
-    align-items: center;
-    border-radius: 5px; /* Adjust border radius */
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #f9f9f9;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+    display: flex; /* Baguhin ang display sa flex */
+    flex-wrap: wrap; /* Pahintulutan ang pag-wrap ng mga item sa loob ng flex container */
+    justify-content: space-between; /* I-set ang mga item na sa layong pare-pareho */
+    align-items: center; /* I-align ang mga item sa gitna */
+    border-radius: 5px; /* Radius ng border */
+    padding: 10px; /* Padding para sa mga item */
+    margin-bottom: 10px; /* Espasyo sa pagitan ng mga item */
+    background-color: #f9f9f9; /* Kulay ng background */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Shadow para sa depth */
 }
+
+/* Media query para sa mas maliit na mga screen */
+@media (max-width: 768px) {
+    .platform {
+        padding: 6px 16px; /* I-adjust ang padding para sa mas maliit na screen */
+        font-size: 14px; /* I-adjust ang font size */
+        width: auto; /* I-adjust ang lapad */
+    }
+    .candidate-list li {
+        flex-direction: column; /* Baguhin ang direksyon ng flex container sa column */
+        align-items: center; /* I-align ang mga item sa gitna */
+        padding: 15px; /* I-adjust ang padding para sa mas maliit na screen */
+    }
+
+    .candidate-list li img {
+        width: 100px; /* I-adjust ang lapad ng mga larawan para sa mas maliit na screen */
+        height: 100px; /* I-adjust ang taas ng mga larawan para sa mas maliit na screen */
+        margin: 0 auto; /* Ilipat ang mga larawan sa gitna */
+    }
+}
+
+
+
 
 /* Adjusted style for candidate name */
 .cname {
@@ -240,13 +262,23 @@
     background-color: #0056b3;
 }
 
+.platform i {
+    font-style: normal; /* Ibalik ang font style sa normal */
+    font-weight: bold; /* I-set ang font weight sa bold */
+    font-size: 14px; /* I-adjust ang font size */
+}
+
+
 /* Media query for smaller screens */
 @media (max-width: 768px) {
+  
     .platform {
-        padding: 6px 16px; /* Adjust padding for smaller screens */
-        font-size: 14px; /* Decrease font size for smaller screens */
-        justify-content: center; /* Center content horizontally */
+        padding: 6px 16px; /* I-adjust ang padding para sa mas maliit na screen */
+        font-size: 14px; /* I-adjust ang font size */
+        width: auto; /* I-adjust ang lapad */
+        margin: 10px auto; /* Igitna ang platform button */
     }
+}
 
     .platform i.fa {
         margin-right: 0; /* Remove right margin for icon */
@@ -341,6 +373,7 @@
                                     </div>
                                 </div>
                             </div>
+                            </form>
                         <style>
               /* Style for the primary button */
 .btn-primary {
@@ -405,7 +438,7 @@
                             </style>
                         
 
-                            </form>
+                
 
 				        	<!-- End Voting Ballot -->
 				    		<?php

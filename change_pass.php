@@ -1,17 +1,9 @@
+
 <?php
 // Include your header file
 include 'includes/header.php';
-
-// Include your database connection file
-include 'includes/conn.php';
-
-// Check if token is provided in the URL
-if (isset($_GET['token'])) {
-    // Get the token from the URL
-    $token = $_GET['token'];
-    
-    // Display the form for changing the password
 ?>
+
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -20,12 +12,16 @@ if (isset($_GET['token'])) {
         <title>Change Password</title>
         <!-- Include your CSS files -->
     </head>
-    <body>
-        <div class="container">
-            <h2>Change Password</h2>
+    <body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-box-body">
+            <div class="login-logo">
+                <img src="images/olshco.png" class="olshco-logo" alt="College Voting System Logo">
+                <b>College Voting System</b>
+            </div>
+            <p class="login-box-msg">Change Password</p>
             <!-- Password reset form -->
             <form action="update_password.php" method="POST">
-                <input type="hidden" name="token" value="<?php echo $token; ?>">
                 <div class="form-group">
                     <label for="new_password">New Password:</label>
                     <input type="password" class="form-control" id="new_password" name="new_password" required>
@@ -34,14 +30,16 @@ if (isset($_GET['token'])) {
                     <label for="confirm_password">Confirm Password:</label>
                     <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Reset Password</button>
+                <div class="row">
+                        <div class="col-xs-12">
+                        <button type="submit" class="btn btn-primary" name="reset">Reset Password</button>
+                        </div>
+                    </div>
             </form>
         </div>
+    </div>
+        
+    <?php include 'includes/scripts.php' ?>
+
     </body>
     </html>
-<?php
-} else {
-    // If the token parameter is not set, display an error message or redirect to another page
-    echo "Token not found. Please try again.";
-}
-?>
