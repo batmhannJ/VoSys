@@ -37,7 +37,7 @@ session_start();
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <button type="submit" class="btn btn-primary" id="reset" name="reset">Reset Password</button>
+                    <button type="submit" class="btn btn-primary" name="reset">Reset Password</button>
                 </div>
             </div>
         </form>
@@ -60,7 +60,7 @@ session_start();
 </script>
 
 <?php
-if (isset($_POST['reset'])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['reset'])) {
     // Get the form data
     $email = $_POST['email'];
     $password = $_POST['new_password'];
@@ -103,6 +103,7 @@ if (isset($_POST['reset'])) {
     }
 } else {
     $_SESSION['error'] = 'Invalid request';
+    header("Location: update_password.php"); // Redirect back to the form with error message
     exit; // Exit here after displaying the error message
 }
 ?>
