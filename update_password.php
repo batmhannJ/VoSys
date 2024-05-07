@@ -29,9 +29,10 @@ if (isset($_POST['reset'])) {
         // Bind parameters and execute the statement
         $stmt->bind_param("ss", $hashed_password, $email);
         if ($stmt->execute()) {
-            $_SESSION['success'] = 'Password updated successfully';
-            header("Location: voters_login.php"); // Redirect to a success page or back to the form
-            exit; // Exit here after successful password update
+            $response = [
+                'success' => true,
+                'message' => 'Password updated successfully'
+            ]; // Exit here after successful password update
         } else {
             $_SESSION['error'] = 'Failed to update password';
             header("Location: update_password.php"); // Redirect back to the form with error message
@@ -44,8 +45,11 @@ if (isset($_POST['reset'])) {
         exit; // Exit here after displaying the error message
     }
 } else {
-    $_SESSION['error'] = 'Invalid request';
-    header("Location: update_password.php"); // Redirect back to the form with error message
-    exit; // Exit here after displaying the error message
+    $response = [
+        'success' => false,
+        'message' => 'Invalid request'
+    ];
 }
+header('Content-Type: application/json');
+echo json_encode($response);
 ?>

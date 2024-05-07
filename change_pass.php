@@ -37,38 +37,45 @@ ini_set('display_errors', 1);
     <?php include 'includes/scripts.php' ?>
 
     <script>
-        function validateForm() {
-            var newPassword = document.getElementById("new_password").value;
-            var confirmPassword = document.getElementById("confirm_password").value;
+    function validateForm() {
+        var newPassword = document.getElementById("new_password").value;
+        var confirmPassword = document.getElementById("confirm_password").value;
 
-            if (newPassword !== confirmPassword) {
-                alert("Password and confirm password do not match");
-                return false;
-            }
-            return true;
+        if (newPassword !== confirmPassword) {
+            alert("Password and confirm password do not match");
+            return false;
         }
+        return true;
+    }
 
-        function resetPassword() {
-            if (validateForm()) {
-                var form = document.getElementById("password_reset_form");
-                var formData = new FormData(form);
+    function resetPassword() {
+        if (validateForm()) {
+            var form = document.getElementById("password_reset_form");
+            var formData = new FormData(form);
 
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", "update_password.php", true);
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === XMLHttpRequest.DONE) {
-                        if (xhr.status === 200) {
-                            // Request was successful, handle response
-                            alert(xhr.responseText); // Display the response message
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "update_password.php", true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        // Request was successful
+                        var response = JSON.parse(xhr.responseText);
+                        if (response.success) {
+                            alert(response.message); // Display success message
+                            window.location.href = "voters_login.php"; // Redirect to login page
                         } else {
-                            // Request failed
-                            alert("Failed to update password");
+                            alert(response.message); // Display error message
                         }
+                    } else {
+                        // Request failed
+                        alert("Failed to update password");
                     }
-                };
-                xhr.send(formData);
-            }
+                }
+            };
+            xhr.send(formData);
         }
-    </script>
+    }
+</script>
+
 </body>
 </html>
