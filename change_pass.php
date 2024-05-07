@@ -2,9 +2,6 @@
 // Include your header file
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-
-// Move session_start() to the beginning of the file
-session_start();
 ?>
 
 <?php include 'includes/header.php'; ?>
