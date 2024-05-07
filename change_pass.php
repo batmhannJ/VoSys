@@ -88,7 +88,6 @@ if (isset($_POST['reset'])) {
         $stmt->bind_param("ss", $hashed_password, $email);
         if ($stmt->execute()) {
             $_SESSION['success'] = 'Password updated successfully';
-            header("Location: voters_login.php"); // Redirect to a success page or back to the form
             exit; // Exit here after successful password update
         } else {
             $_SESSION['error'] = 'Failed to update password: ' . $stmt->error;
