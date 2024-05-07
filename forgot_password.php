@@ -97,7 +97,7 @@ include 'includes/header.php';
     <script>
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('sendOTP').addEventListener('click', function() {
-        var email = '<?php echo $user['email']; ?>';
+        var email = document.querySelector('input[name="email"]').value; // Get the email input value
         sendOTP(email);
     });
 });
@@ -120,6 +120,7 @@ function sendOTP(email) {
     xhr.send('email=' + encodeURIComponent(email));
 }
 </script>
+
 
 </body>
 </html>
