@@ -52,6 +52,7 @@ session_start();
         }
 
         function resetPassword() {
+            console.log("Reset button clicked");
             if (validateForm()) {
                 var form = document.getElementById("password_reset_form");
                 var formData = new FormData(form);
