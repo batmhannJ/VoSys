@@ -72,9 +72,9 @@
                     <td>' . $row['voters'];
             '</td>';
             if ($row['status'] === 'active') {
-              echo '<td><a href="#" name="status" class="btn badge rounded-pill btn-success election-status" data-id="' . $row['id'] . '" data-status="archived" data-name="Archive">Active</a></td>';
+              echo '<td><span class="badge rounded-pill bg-success">Active</span></td>';
             } else {
-              echo '<td><span class="badge rounded-pill bg-warning text-dark">' . ucfirst($row['status']) . '</span></td>';
+              echo '<td><span class="badge rounded-pill bg-secondary">Not Active</span></td>';
             }
             echo '<td class="text-center">
             <a href="#" class="btn btn-primary btn-sm edit btn-flat" data-bs-toggle="modal" data-bs-target="#editElection" data-id="' . $row['id'] . '">Edit</a>
@@ -174,16 +174,8 @@ $(document).on('click', '.election-status', function(e) {
             beforeSend: function() {
                 showLoadingOverlay();
             },
-            success: function(response) {
-                console.log(response);
-                if (response.status === 'success') {
-                    toastr.success(response.message);
-                    setTimeout(function() {
-                        location.reload();
-                    }, 1000);
-                } else {
-                    toastr.error(response.message);
-                }
+            success: function() {
+                location.reload(); // Reload page after successful archive
             },
             error: function(xhr, status, error) {
                 // Handle AJAX errors, if any
@@ -212,16 +204,8 @@ $(document).on('click', '.archive', function(e) {
             url: 'archive_election.php',
             data: {election_id: electionId},
             dataType: 'json',
-            success: function(response) {
-                console.log(response);
-                if (response.status === 'success') {
-                    toastr.success(response.message);
-                    setTimeout(function() {
-                        location.reload();
-                    }, 1000);
-                } else {
-                    toastr.error(response.message);
-                }
+            success: function() {
+                location.reload(); // Reload page after successful archive
             },
             error: function(xhr, status, error) {
                 // Handle AJAX errors, if any
