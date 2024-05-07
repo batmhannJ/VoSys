@@ -17,7 +17,7 @@ if (isset($_POST['email']) && isset($_POST['otp'])) {
     }
 
     // Assuming you have a table named "otp_verification"
-    $query = "SELECT * FROM otp_verification WHERE email = ? AND otp = ?";
+    $query = "SELECT * FROM otp_verifcation WHERE email = ? AND otp = ?";
     $stmt = mysqli_prepare($connection, $query);
     if (!$stmt) {
         die("Prepare statement failed: " . mysqli_error($connection));
