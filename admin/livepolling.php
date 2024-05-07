@@ -116,11 +116,6 @@ include 'includes/header.php';
 
         // Render chart
         chart.render();
-        
-        // Update data periodically
-        setInterval(function () {
-            updateData();
-        }, 3000);
 
         // Function to update data
         function updateData() {
@@ -143,15 +138,22 @@ include 'includes/header.php';
                 }
             });
         }
+
+        // Update data periodically
+        setInterval(function () {
+            updateData();
+        }, 3000);
     }
 
     // Call the generateBarChartRace function for each graph
     $(document).ready(function () {
+        // Generate bar chart race for each graph
         generateBarChartRace([], "presidentGraph");
         generateBarChartRace([], "vicePresidentGraph");
         generateBarChartRace([], "secretaryGraph");
     });
 </script>
+
 
 </body>
 </html>
