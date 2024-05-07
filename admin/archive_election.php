@@ -1,27 +1,31 @@
 <?php
-// Include database connection
-include 'includes/conn.php';
+include 'includes/session.php';
 
-// Check if election_id is set and not empty
-if (isset($_POST['election_id']) && !empty($_POST['election_id'])) {
-    // Sanitize input
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['election_id'])) {
+    // Get the election ID from the POST data
     $election_id = $_POST['election_id'];
 
-    // Update the status of the election to archived (you may need to adjust this query based on your database schema)
-    $query = "UPDATE election SET status = 'archived' WHERE id = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param('i', $election_id);
+    // Update the database to mark the election as archived
+    $sql = "UPDATE election SET archived = TRUE WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $election_id);
 
-    // Execute the query
     if ($stmt->execute()) {
-        // Success response
-        echo json_encode(array('status' => 'success', 'message' => 'Election archived successfully.'));
+        // If the query was successful, do nothing or handle any necessary tasks
+        // No alert message is set here
     } else {
-        // Error response
-        echo json_encode(array('status' => 'error', 'message' => 'Failed to archive election.'));
+        // If the query failed, set an error message
+        $_SESSION['error'] = "Error archiving election: " . $conn->error;
     }
+
+    // Close the prepared statement
+    $stmt->close();
 } else {
-    // Invalid request
-    echo json_encode(array('status' => 'error', 'message' => 'Invalid request.'));
+    // If the request method is not POST or election ID is not set, set an error message
+    $_SESSION['error'] = "Invalid request.";
 }
+
+// Redirect back to the elections page
+header("Location: elections.php");
+exit();
 ?>

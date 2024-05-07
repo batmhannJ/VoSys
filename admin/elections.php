@@ -61,7 +61,7 @@
         <tbody class="election">
           <?php
           $i = 1;
-          $election = $conn->prepare("SELECT * FROM election ORDER BY id DESC");
+          $election = $conn->prepare("SELECT * FROM election WHERE archived = FALSE ORDER BY id DESC");
           $election->execute();
           $result = $election->get_result();
           while ($row = $result->fetch_assoc()) {
@@ -174,16 +174,8 @@ $(document).on('click', '.election-status', function(e) {
             beforeSend: function() {
                 showLoadingOverlay();
             },
-            success: function(response) {
-                console.log(response);
-                if (response.status === 'success') {
-                    toastr.success(response.message);
-                    setTimeout(function() {
-                        location.reload();
-                    }, 1000);
-                } else {
-                    toastr.error(response.message);
-                }
+            success: function() {
+                location.reload(); // Reload page after successful archive
             },
             error: function(xhr, status, error) {
                 // Handle AJAX errors, if any
@@ -212,16 +204,8 @@ $(document).on('click', '.archive', function(e) {
             url: 'archive_election.php',
             data: {election_id: electionId},
             dataType: 'json',
-            success: function(response) {
-                console.log(response);
-                if (response.status === 'success') {
-                    toastr.success(response.message);
-                    setTimeout(function() {
-                        location.reload();
-                    }, 1000);
-                } else {
-                    toastr.error(response.message);
-                }
+            success: function() {
+                location.reload(); // Reload page after successful archive
             },
             error: function(xhr, status, error) {
                 // Handle AJAX errors, if any
