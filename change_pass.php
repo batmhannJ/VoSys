@@ -22,7 +22,7 @@ include 'includes/header.php';
         </div>
         <p class="login-box-msg">Change Password</p>
         <!-- Password reset form -->
-        <form action="update_password.php" method="POST" onsubmit="return validateForm()">
+        <form action="" method="POST" onsubmit="return validateForm()">
             <input type="hidden" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
             <div class="form-group has-feedback">
                 <label for="new_password">New Password:</label>
