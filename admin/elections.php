@@ -78,7 +78,7 @@
             }
             echo '<td class="text-center">
             <a href="#" class="btn btn-primary btn-sm edit btn-flat" data-bs-toggle="modal" data-bs-target="#editElection" data-id="' . $row['id'] . '">Edit</a>
-            <a href="#" class="btn btn-success btn-sm archive btn-flat" data-bs-toggle="modal" data-bs-target="#archiveElection" data-id="' . $row['id'] . '" data-name="' . $row['title'] . '">Archive</a></td>
+            <a href="#" class="btn btn-success btn-sm archive btn-flat" data-bs-toggle="modal" data-bs-target="#confirmationModal" data-id="' . $row['id'] . '" data-name="' . $row['title'] . '">Archive</a></td>
           </tr>';    
           } ?>
         </tbody>
@@ -175,5 +175,33 @@ function getRow(id){
     }
 });
 
+// AJAX request to archive election
+$(document).on('click', '#confirmArchive', function() {
+    var electionId = $(this).data('id');
+
+    $.ajax({
+        type: 'POST',
+        url: 'archive_election.php', // Change to your PHP file handling archive process
+        data: {
+            election_id: electionId
+        },
+        dataType: 'json',
+        success: function(response) {
+            console.log(response);
+            if (response.status === 'success') {
+                toastr.success(response.message);
+                setTimeout(function() {
+                    location.reload();
+                }, 1000);
+            } else {
+                toastr.error(response.message);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+            console.error('An error occurred during the request.', status, error);
+        }
+    });
+});
 </script>
 </body>
