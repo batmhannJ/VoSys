@@ -532,14 +532,17 @@
     max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-image: url('your-background-image.jpg');
+    background-size: cover;
+    background-position: center;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .page-header {
     margin-top: 0;
-    color: #333;
+    color: #fff;
+    text-align: center;
 }
 
 .page-header img {
@@ -550,13 +553,10 @@
 }
 
 .title {
-    font-size: 24px;
+    font-size: 36px;
     margin-bottom: 20px;
     line-height: 1.5;
-}
-
-.text-center {
-    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
     </style>
