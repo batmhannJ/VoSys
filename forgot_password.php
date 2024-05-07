@@ -108,18 +108,24 @@ include 'includes/header.php';
         xhr.send('email=' + encodeURIComponent(email) + '&otp=' + encodeURIComponent(otp));
     }
 
-    function changePassword(email, new_password) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'update_password.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                var response = xhr.responseText;
-                alert(response); // You can handle success or error messages here
+    // Inside the changePassword function
+function changePassword(email, new_password) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'update_password.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var response = JSON.parse(xhr.responseText);
+            alert(response.message); // You can handle success or error messages here
+            if (response.status === 'success') {
+                // Redirect to voters_login.php
+                window.location.href = 'voters_login.php';
             }
-        };
-        xhr.send('email=' + encodeURIComponent(email) + '&new_password=' + encodeURIComponent(new_password));
-    }
+        }
+    };
+    xhr.send('email=' + encodeURIComponent(email) + '&new_password=' + encodeURIComponent(new_password));
+}
+
 </script>
 </body>
 </html>
