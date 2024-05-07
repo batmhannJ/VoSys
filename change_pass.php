@@ -38,7 +38,11 @@ include 'includes/header.php';
                         <button type="button" class="btn btn-primary" id="sendOTP">Send OTP</button>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Reset Password</button>
+                <div class="row">
+                        <div class="col-xs-12">
+                        <button type="submit" class="btn btn-primary" name="resetPass">Reset Password</button>
+                        </div>
+                    </div>
             </form>
         </div>
     </div>
