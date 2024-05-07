@@ -50,7 +50,7 @@ include 'includes/header.php';
             <!-- Bar Graphs for President, Vice President, and Secretary -->
             <div class="row">
                 <!-- President Bar Graph Box -->
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>President Candidates</b></h3>
@@ -67,7 +67,7 @@ include 'includes/header.php';
                 <!-- /.col -->
 
                 <!-- Vice President Bar Graph Box -->
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>Vice President Candidates</b></h3>
@@ -82,12 +82,9 @@ include 'includes/header.php';
                     <!-- /.box -->
                 </div>
                 <!-- /.col -->
-            </div>
-            <!-- /.row -->
 
-            <!-- Secretary Bar Graph Box -->
-            <div class="row">
-                <div class="col-md-6">
+                <!-- Secretary Bar Graph Box -->
+                <div class="col-md-4">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>Secretary Candidates</b></h3>
@@ -196,7 +193,7 @@ include 'includes/header.php';
     updateData();
 
     // Call the updateData function every 60 seconds (adjust as needed)
-    setInterval(updateData, 3000); // 60000 milliseconds = 60 seconds
+    setInterval(updateData, 60000); // 60000 milliseconds = 60 seconds
 </script>
 
 </body>
