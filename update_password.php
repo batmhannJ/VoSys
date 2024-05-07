@@ -5,17 +5,16 @@ if (isset($_POST['email']) && isset($_POST['new_password'])) {
     $email = $_POST['email'];
     $newPassword = $_POST['new_password'];
 
-    // Assuming you have a database connection established
-    // Replace this with your actual database connection code
+    // Step 1: Establish a database connection
     $connection = mysqli_connect("localhost", "u247141684_vosys", "vosysOlshco5", "u247141684_votesystem");
     if (!$connection) {
         die("Database connection failed: " . mysqli_connect_error());
     }
 
-    // Hash the new password for security
+    // Step 2: Hash the new password for security
     $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
 
-    // Update the user's password in the database
+    // Step 3: Update the user's password in the database
     $query = "UPDATE voters SET password = ? WHERE email = ?";
     $stmt = mysqli_prepare($connection, $query);
     if (!$stmt) {
@@ -26,14 +25,14 @@ if (isset($_POST['email']) && isset($_POST['new_password'])) {
         die("Execute statement failed: " . mysqli_error($connection));
     }
 
-    // Close database connection
+    // Step 4: Close database connection
     mysqli_stmt_close($stmt);
     mysqli_close($connection);
 
-    // Return success response
+    // Step 5: Return success response
     $response = array("status" => "success", "message" => "Password updated successfully");
 
-    // Return JSON response
+    // Step 6: Return JSON response
     header('Content-Type: application/json');
     echo json_encode($response);
     exit(); // Make sure to exit after sending the JSON response
