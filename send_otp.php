@@ -9,6 +9,9 @@ function sendOTP($email, $otp) {
     // Create a new PHPMailer instance
     $mail = new PHPMailer\PHPMailer\PHPMailer();
 
+    // Enable verbose debug output
+    $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+
     // SMTP Configuration
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com'; // Your SMTP server
