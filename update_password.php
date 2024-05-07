@@ -1,28 +1,51 @@
 <?php
-// Include your database connection file
-include 'includes/conn.php';
+include 'includes/session.php';
 
-// Check if the form is submitted
-if (isset($_POST['resetPassword'])) {
-    // Retrieve token and new password from the form
-    $token = $_POST['token'];
-    $new_password = $_POST['new_password'];
+if (isset($_GET['return'])) {
+    $return = $_GET['return'];
+} else {
+    $return = 'home.php';
+}
 
-    // Update password in the database
-    $stmt = $conn->prepare("UPDATE voters SET password = ? WHERE token = ?");
-    $stmt->bind_param("ss", $new_password, $token);
-    if ($stmt->execute()) {
-        // Password updated successfully, redirect to success page
-        header("Location: password_update_success.php");
-        exit();
+if (isset($_POST['reset'])) {
+    $password = $_POST['new_password'];
+    $confirm_password = $_POST['confirm_password']; 
+    $otp = $_POST['otp'];
+
+    // Check if the entered password matches the confirm password
+    if ($password != $confirm_password) {
+        $_SESSION['error'] = 'Password and confirm password do not match';
+        header('Location: '.$return);
+        exit;
+    }
+
+    // Check if the entered OTP matches the stored OTP
+    if (isset($_SESSION['otp']) && $_SESSION['otp'] == $otp) {
+        // OTP matched, proceed with saving the updated information
+        // Hash the new password
+        $new_password = password_hash($password, PASSWORD_DEFAULT);
+
+        $sql = "UPDATE voters SET password = '$new_password' WHERE email = '".$user['email']."'";
+        if ($conn->query($sql)) {
+            $_SESSION['success'] = 'Admin profile updated successfully';
+        } else {
+            $_SESSION['error'] = $conn->error;
+        }
+
+        // Clear the OTP from session
+        unset($_SESSION['otp']);
+
+        header('Location: '.$return);
+        exit;
     } else {
-        // Error in updating password, redirect back to change_pass.php with error message
-        header("Location: change_pass.php?error=1");
-        exit();
+        // OTP verification failed
+        $_SESSION['error'] = 'OTP verification failed';
+        header('Location: '.$return);
+        exit;
     }
 } else {
-    // If the form is not submitted, redirect to error page or another appropriate action
-    header("Location: error.php");
-    exit();
+    $_SESSION['error'] = 'Fill up required details first';
+    header('Location: '.$return);
+    exit;
 }
 ?>
