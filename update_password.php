@@ -15,7 +15,7 @@ if (isset($_POST['email']) && isset($_POST['new_password'])) {
     $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
 
     // Step 3: Update the user's password in the database
-    $query = "UPDATE voters SET password = '$hashedPassword' WHERE email = ?";
+    $query = "UPDATE voters SET password = ? WHERE email = ?";
     $stmt = mysqli_prepare($connection, $query);
     if (!$stmt) {
         die("Prepare statement failed: " . mysqli_error($connection));
