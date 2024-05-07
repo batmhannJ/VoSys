@@ -41,7 +41,7 @@ if (isset($_POST['email']) && isset($_POST['otp'])) {
         exit();
     } else {
         // Show generic error message
-        echo 'Incorrect email or OTP';
+        die('Incorrect email or OTP');
     }
 
     // Close database connection
@@ -49,6 +49,6 @@ if (isset($_POST['email']) && isset($_POST['otp'])) {
     mysqli_close($connection);
 } else {
     // If email or OTP parameter is missing
-    echo 'Missing email or OTP parameter';
+    die('Missing email or OTP parameter');
 }
 ?>
