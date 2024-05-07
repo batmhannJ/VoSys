@@ -1,6 +1,5 @@
 <?php
 include 'includes/session.php';
-include 'includes/conn.php';
 
 if (isset($_POST['reset'])) {
     // Get the form data
@@ -11,12 +10,16 @@ if (isset($_POST['reset'])) {
     // Check if the entered password matches the confirm password
     if ($password != $confirm_password) {
         $_SESSION['error'] = 'Password and confirm password do not match';
-        echo "Passwords do not match"; // Debugging statement
+        echo "<script>alert('Password and confirm password do not match');</script>";
+        header('Location: '.$_SERVER['HTTP_REFERER']); // Redirect back to the previous page
         exit;
     }
 
     // Hash the new password
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    // Establish database connection (assuming $conn is your database connection)
+    include 'includes/db_connect.php'; // Adjust the filename as per your actual file
 
     // Update the password in the database
     $sql = "UPDATE voters SET password = ? WHERE email = ?";
@@ -27,15 +30,16 @@ if (isset($_POST['reset'])) {
         $stmt->bind_param("ss", $hashed_password, $email);
         if ($stmt->execute()) {
             $_SESSION['success'] = 'Password updated successfully';
+            echo "<script>alert('Password updated successfully');</script>";
         } else {
             $_SESSION['error'] = 'Failed to update password: ' . $stmt->error;
-            echo "Failed to update password"; // Debugging statement
+            echo "<script>alert('Failed to update password');</script>";
         }
         // Close the statement
         $stmt->close();
     } else {
         $_SESSION['error'] = 'Prepare statement failed: ' . $conn->error;
-        echo "Prepare statement failed"; // Debugging statement
+        echo "<script>alert('Prepare statement failed');</script>";
     }
 
     // Redirect back to the previous page
@@ -43,7 +47,7 @@ if (isset($_POST['reset'])) {
     exit;
 } else {
     $_SESSION['error'] = 'Invalid request';
-    echo "Invalid request"; // Debugging statement
+    echo "<script>alert('Invalid request');</script>";
     header('Location: '.$_SERVER['HTTP_REFERER']);
     exit;
 }
