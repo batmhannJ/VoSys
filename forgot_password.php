@@ -82,11 +82,11 @@ function validateOTP(email, otp) {
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200) {
-                var response = xhr.responseText;
-                if (response === 'OTP correct') {
+                var response = JSON.parse(xhr.responseText);
+                if (response.status === 'success') {
                     window.location.href = 'change_pass.php'; // Redirect to change_pass.php if OTP is correct
                 } else {
-                    alert('Incorrect OTP. Please try again.'); // Show error message if OTP is incorrect
+                    alert(response.message); // Show error message if OTP is incorrect
                 }
             } else {
                 alert('Error occurred. Please try again.'); // Show error message
@@ -95,6 +95,7 @@ function validateOTP(email, otp) {
     };
     xhr.send('email=' + encodeURIComponent(email) + '&otp=' + encodeURIComponent(otp));
 }
+
 
 </script>
 

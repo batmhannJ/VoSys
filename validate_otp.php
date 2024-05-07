@@ -1,6 +1,7 @@
 <?php
 session_start();
-include 'includes/header.php'; // Include your header file
+// Include your header file
+include 'includes/header.php';
 
 if (isset($_POST['email']) && isset($_POST['otp'])) {
     $email = $_POST['email'];
@@ -13,14 +14,8 @@ if (isset($_POST['email']) && isset($_POST['otp'])) {
         die("Database connection failed: " . mysqli_connect_error());
     }
 
-    // Debugging: Output the email, OTP, and SQL query
-    echo "Email: $email<br>";
-    echo "OTP: $otp<br>";
-
     // Assuming you have a table named "otp_verification"
     $query = "SELECT * FROM otp_verifcation WHERE email = ? AND otp = ?";
-    echo "SQL Query: $query<br>";
-
     $stmt = mysqli_prepare($connection, $query);
     if (!$stmt) {
         die("Prepare statement failed: " . mysqli_error($connection));
@@ -30,24 +25,23 @@ if (isset($_POST['email']) && isset($_POST['otp'])) {
         die("Execute statement failed: " . mysqli_error($connection));
     }
     $result = mysqli_stmt_get_result($stmt);
-    if (!$result) {
-        die("Get result failed: " . mysqli_error($connection));
-    }
-    $row = mysqli_fetch_assoc($result);
 
-    if ($row) {
-        // Redirect to change password page if OTP is correct
-        echo 'OTP correct';
-        // header("Location: change_pass.php");
-        // exit();
+    // Check if OTP is correct
+    if ($row = mysqli_fetch_assoc($result)) {
+        // OTP is correct
+        $response = array("status" => "success", "message" => "OTP correct");
     } else {
-        // Show generic error message
-        die('Incorrect email or OTP');
+        // OTP is incorrect
+        $response = array("status" => "error", "message" => "Incorrect email or OTP");
     }
 
     // Close database connection
     mysqli_stmt_close($stmt);
     mysqli_close($connection);
+
+    // Return JSON response
+    header('Content-Type: application/json');
+    echo json_encode($response);
 } else {
     // If email or OTP parameter is missing
     die('Missing email or OTP parameter');
