@@ -10,39 +10,43 @@ if (isset($_POST['reset'])) {
 
     // Check if the entered password matches the confirm password
     if ($password != $confirm_password) {
-        $_SESSION['error'] = 'Password and confirm password do not match';
-        header("Location: update_password.php"); // Redirect back to the form
-        exit; // Exit here without further processing
-    }
-
-    // Hash the new password
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-    // Establish database connection (assuming $conn is your database connection)
-    include 'includes/conn.php'; // Adjust the filename as per your actual file
-
-    // Update the password in the database
-    $sql = "UPDATE voters SET password = ? WHERE email = ?";
-    $stmt = $conn->prepare($sql);
-
-    if ($stmt) {
-        // Bind parameters and execute the statement
-        $stmt->bind_param("ss", $hashed_password, $email);
-        if ($stmt->execute()) {
-            $response = [
-                'success' => true,
-                'message' => 'Password updated successfully'
-            ]; // Exit here after successful password update
-        } else {
-            $_SESSION['error'] = 'Failed to update password';
-            header("Location: update_password.php"); // Redirect back to the form with error message
-            exit; // Exit here after displaying the error message
-        }
-        // Close the sta
+        $response = [
+            'success' => false,
+            'message' => 'Password and confirm password do not match'
+        ];
     } else {
-        $_SESSION['error'] = 'Failed to prepare statement';
-        header("Location: update_password.php"); // Redirect back to the form with error message
-        exit; // Exit here after displaying the error message
+        // Hash the new password
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+        // Establish database connection (assuming $conn is your database connection)
+        include 'includes/conn.php'; // Adjust the filename as per your actual file
+
+        // Update the password in the database
+        $sql = "UPDATE voters SET password = ? WHERE email = ?";
+        $stmt = $conn->prepare($sql);
+
+        if ($stmt) {
+            // Bind parameters and execute the statement
+            $stmt->bind_param("ss", $hashed_password, $email);
+            if ($stmt->execute()) {
+                $response = [
+                    'success' => true,
+                    'message' => 'Password updated successfully'
+                ];
+            } else {
+                $response = [
+                    'success' => false,
+                    'message' => 'Failed to update password: ' . $stmt->error
+                ];
+            }
+            // Close the statement
+            $stmt->close();
+        } else {
+            $response = [
+                'success' => false,
+                'message' => 'Prepare statement failed: ' . $conn->error
+            ];
+        }
     }
 } else {
     $response = [
@@ -50,6 +54,8 @@ if (isset($_POST['reset'])) {
         'message' => 'Invalid request'
     ];
 }
+
+// Output the response as JSON
 header('Content-Type: application/json');
 echo json_encode($response);
 ?>
