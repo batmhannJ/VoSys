@@ -71,15 +71,15 @@
                     <td>'.$row['title'].'</td>
                     <td>' . $row['voters'];
             '</td>';
-            if ($row['status'] === 'active') {
-              echo '<td><span class="badge rounded-pill bg-success">Active</span></td>';
+            if ($row['status'] === 0) {
+              echo '<td><a href="#" name="status" class="btn badge rounded-pill btn-secondary election-status" data-id="' . $row['id'] . '" data-status="1" data-name="Activate">Not active</a></td>';
             } else {
-              echo '<td><span class="badge rounded-pill bg-secondary">Not Active</span></td>';
+              echo '<td><a href="#" name="status" class="btn badge rounded-pill btn-success election-status" data-id="' . $row['id'] . '" data-status="0" data-name="Deactivate">Active</a></td>';
             }
             echo '<td class="text-center">
-            <a href="#" class="btn btn-primary btn-sm edit btn-flat" data-bs-toggle="modal" data-bs-target="#editElection" data-id="' . $row['id'] . '">Edit</a>
-            <button class="btn btn-success btn-sm archive btn-flat" data-id="' . $row['id'] . '" data-name="' . $row['title'] . '">Archive</button></td>
-          </tr>';    
+                        <a href="#" class="btn btn-primary btn-sm edit btn-flat" data-bs-toggle="modal" data-bs-target="#editElection" data-id="' . $row['id'] . '">Edit</a>
+                        <a href="#" class="btn btn-danger btn-sm delete btn-flat" data-bs-toggle="modal" data-bs-target="#deleteElection" data-id="' . $row['id'] . '" data-name="' . $row['title'] . '">Delete</a></td>
+                  </tr>';
           } ?>
         </tbody>
       </table><!-- End Election lists Table -->
@@ -92,28 +92,7 @@
 
   <?php include 'includes/footer.php'; ?>
   <?php include 'includes/election_modal.php'; ?>
-
-<!-- Confirmation Modal for Archive -->
-<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmationModalLabel">Archive Election</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to archive this election?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="confirmArchive">Archive</button>
-            </div>
-        </div>
-    </div>
 </div>
-
 <?php include 'includes/scripts.php'; ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
@@ -127,8 +106,15 @@ $(function(){
     getRow(id);
   });
 
-});
+  $(document).on('click', '.delete', function(e){
+    e.preventDefault();
+    $('#delete').modal('show');
+    var id = $(this).data('id');
+    getRow(id);
+  });
 
+
+});
 function getRow(id){
   $.ajax({
     type: 'POST',
@@ -146,14 +132,13 @@ function getRow(id){
     }
   });
 }
+    $(function () {
+        $('#starttime').datetimepicker();
+        $('#endtime').datetimepicker();
+    });
 
-$(function () {
-    $('#starttime').datetimepicker();
-    $('#endtime').datetimepicker();
-});
 
-
-$(document).on('click', '.election-status', function(e) {
+  $(document).on('click', '.election-status', function(e) {
     e.preventDefault();
 
     var electionId = $(this).data('id');
@@ -166,6 +151,7 @@ $(document).on('click', '.election-status', function(e) {
     if (confirmed) {
         $.ajax({
             type: 'POST',
+            url: 'http://localhost/votesystem/admin/controllers/app.php?action=election_status',
             data: {
                 election_id: electionId,
                 status: status
@@ -174,8 +160,16 @@ $(document).on('click', '.election-status', function(e) {
             beforeSend: function() {
                 showLoadingOverlay();
             },
-            success: function() {
-                location.reload(); // Reload page after successful archive
+            success: function(response) {
+                console.log(response);
+                if (response.status === 'success') {
+                    toastr.success(response.message);
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+                } else {
+                    toastr.error(response.message);
+                }
             },
             error: function(xhr, status, error) {
                 // Handle AJAX errors, if any
@@ -188,32 +182,6 @@ $(document).on('click', '.election-status', function(e) {
         // User canceled to change status
         toastr.info('Status change canceled.');
     }
-});
-
-// Archive button click event
-$(document).on('click', '.archive', function(e) {
-    e.preventDefault();
-    var electionId = $(this).data('id');
-    var electionName = $(this).data('name');
-    $('#confirmationModal').modal('show');
-
-    // Confirm archive action
-    $('#confirmArchive').click(function() {
-        $.ajax({
-            type: 'POST',
-            url: 'archive_election.php',
-            data: {election_id: electionId},
-            dataType: 'json',
-            success: function() {
-                location.reload(); // Reload page after successful archive
-            },
-            error: function(xhr, status, error) {
-                // Handle AJAX errors, if any
-                console.error(error);
-                console.error('An error occurred during the request.', status, error);
-            }
-        });
-    });
 });
 
 </script>
