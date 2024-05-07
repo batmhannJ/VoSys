@@ -11,7 +11,7 @@
 	      <section class="content">
 	      	<h1 class="page-header text-center title">
 	      		<img src="images/codg.jpg" alt="CSC Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
-	      		<b>CODE-TG - Coalition of Disciplined<br>Future Enforcers of Todays <br>Generation Election</b></h1>
+	      		<b>Coalition of Disciplined Future Enforcers of Todays Generation Election</b></h1>
 	        <div class="row">
 	        	<div class="col-sm-10 col-sm-offset-1">
 	        		<?php
