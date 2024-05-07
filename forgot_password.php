@@ -36,7 +36,7 @@ include 'includes/header.php';
                     </div>
                 <div class="row">
                     <div class="col-xs-12">
-                        <a href="change_pass.php"><button type="submit" class="btn btn-primary btn-block btn-flat" name="resetPass">Reset Password</button></a>
+                        <a href="change_pass.php"><button type="submit" class="btn btn-primary btn-block btn-flat" name="validateOTP">Reset Password</button></a>
                     </div>
                 </div>
             </form>
@@ -44,25 +44,58 @@ include 'includes/header.php';
     </div>
     <?php include 'includes/scripts.php' ?>
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('sendOTP').addEventListener('click', function() {
-            var email = document.querySelector('input[name="email"]').value; // Get email value from input field
-            sendOTP(email);
-        });
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('sendOTP').addEventListener('click', function() {
+        var email = document.querySelector('input[name="email"]').value; // Get email value from input field
+        sendOTP(email);
     });
 
-    function sendOTP(email) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'send_otp.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
+    // Handle form submission
+    document.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission behavior
+        
+        var email = document.querySelector('input[name="email"]').value;
+        var otp = document.querySelector('input[name="otp"]').value;
+
+        // Validate OTP
+        validateOTP(email, otp);
+    });
+});
+
+function sendOTP(email) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'send_otp.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var response = xhr.responseText;
+            alert(response); // Show response message (e.g., "OTP sent successfully")
+        }
+    };
+    xhr.send('email=' + encodeURIComponent(email));
+}
+
+function validateOTP(email, otp) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'validate_otp.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
                 var response = xhr.responseText;
-                alert(response); // Show response message (e.g., "OTP sent successfully")
+                if (response === 'OTP correct') {
+                    window.location.href = 'change_pass.php'; // Redirect to change_pass.php if OTP is correct
+                } else {
+                    alert('Incorrect OTP. Please try again.'); // Show error message if OTP is incorrect
+                }
+            } else {
+                alert('Error occurred. Please try again.'); // Show error message
             }
-        };
-        xhr.send('email=' + encodeURIComponent(email));
-    }
+        }
+    };
+    xhr.send('email=' + encodeURIComponent(email) + '&otp=' + encodeURIComponent(otp));
+}
 </script>
+
 </body>
 </html>
