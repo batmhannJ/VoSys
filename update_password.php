@@ -30,7 +30,7 @@ if (isset($_POST['email']) && isset($_POST['new_password'])) {
     mysqli_close($connection);
 
     // Step 5: Return success response
-    $response = array("Password updated successfully");
+    $response = array("status" => "success", "message" => "Password updated successfully");
 
     // Step 6: Return JSON response
     header('Location: voters_login.php');
