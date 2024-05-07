@@ -76,23 +76,26 @@ include 'includes/header.php';
         }
 
         function validateOTP(email, otp) {
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'validate_otp.php', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    var response = JSON.parse(xhr.responseText);
-                    if (response.status === 'success') {
-                        window.location.href = 'change_pass.php'; // Redirect to change_pass.php if OTP is correct
-                    } else {
-                        alert(response.message); // Show error message if OTP is incorrect
-                    }
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'validate_otp.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                var response = JSON.parse(xhr.responseText);
+                if (response.status === 'success') {
+                    window.location.href = 'change_pass.php'; // Redirect to change_pass.php if OTP is correct
                 } else {
-                    alert('Error occurred. Please try again.'); // Show error message
+                    alert(response.message); // Show error message if OTP is incorrect
                 }
-            };
-            xhr.send('email=' + encodeURIComponent(email) + '&otp=' + encodeURIComponent(otp));
+            } else {
+                alert('Error occurred. Please try again.'); // Show error message for failed request
+            }
         }
+    };
+    xhr.send('email=' + encodeURIComponent(email) + '&otp=' + encodeURIComponent(otp));
+}
+
     </script>
 </body>
 </html>
