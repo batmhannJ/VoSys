@@ -78,7 +78,7 @@
             }
             echo '<td class="text-center">
             <a href="#" class="btn btn-primary btn-sm edit btn-flat" data-bs-toggle="modal" data-bs-target="#editElection" data-id="' . $row['id'] . '">Edit</a>
-            <a href="#" class="btn btn-warning btn-sm archive btn-flat" data-bs-toggle="modal" data-bs-target="#archiveElection" data-id="' . $row['id'] . '" data-name="' . $row['title'] . '">Archive</a></td>
+            <a href="#" class="btn btn-success btn-sm archive btn-flat" data-bs-toggle="modal" data-bs-target="#archiveElection" data-id="' . $row['id'] . '" data-name="' . $row['title'] . '">Archive</a></td>
           </tr>';    
           } ?>
         </tbody>
@@ -105,14 +105,6 @@ $(function(){
     var id = $(this).data('id');
     getRow(id);
   });
-
-  $(document).on('click', '.delete', function(e){
-    e.preventDefault();
-    $('#delete').modal('show');
-    var id = $(this).data('id');
-    getRow(id);
-  });
-
 
 });
 function getRow(id){
@@ -151,7 +143,6 @@ function getRow(id){
     if (confirmed) {
         $.ajax({
             type: 'POST',
-            url: 'http://localhost/votesystem/admin/controllers/app.php?action=election_status',
             data: {
                 election_id: electionId,
                 status: status

@@ -24,16 +24,12 @@ if (isset($_POST['reset'])) {
     else {
         $new_password = password_hash($password, PASSWORD_DEFAULT);
 
-        $sql = "UPDATE voters SET email = '$email', password = '$new_password' WHERE id = '".$user['id']."'";
+        $sql = "UPDATE voters SET password = '$new_password' WHERE email = '".$user['email']."'";
         if ($conn->query($sql)) {
             $_SESSION['success'] = 'Password updated successfully';
         } else {
             $_SESSION['error'] = $conn->error;
         }
-
-        // Clear the OTP from session
-        unset($_SESSION['otp']);
-
         header('Location: '.$return);
         exit;
     } 

@@ -154,10 +154,7 @@ include 'includes/header.php';
             },
             axisY: {
                 title: "Candidates",
-                includeZero: true,
-                labelFormatter: function (e) {
-                    return Math.round(e.value);
-                }
+                includeZero: true
             },
             axisX: {
                 title: "Vote Count",

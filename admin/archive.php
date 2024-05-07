@@ -16,6 +16,8 @@
             echo "Voter Archived";
           } elseif(isset($_GET['type']) && $_GET['type'] === 'admin'){
             echo "Admin Archived";
+          } elseif(isset($_GET['type']) && $_GET['type'] === 'election'){
+            echo "Election Archived";
           } else {
             echo "Archived";
           }
@@ -29,6 +31,8 @@
               echo "Voter Archived";
             } elseif(isset($_GET['type']) && $_GET['type'] === 'admin'){
               echo "Admin Archived";
+            } elseif(isset($_GET['type']) && $_GET['type'] === 'election'){
+              echo "Election Archived";
             } else {
               echo "Archived";
             }
@@ -71,6 +75,7 @@
                 <ul class="dropdown-menu" aria-labelledby="archiveDropdown">
                     <li><a href="?type=voters" class="archive-type">Voters Archived</a></li>
                     <li><a href="?type=admin" class="archive-type">Admin Archived</a></li>
+                    <li><a href="?type=election" class="archive-type">Election Archived</a></li>
                 </ul>
             </div>
           </div>
@@ -97,9 +102,12 @@
                   <th>Photo</th>
                   <th>Username</th>
                   <th>Email</th>
+                  <?php elseif(isset($_GET['type']) && $_GET['type'] === 'election'): ?>
+                  <th>ID</th>
+                  <th>Title</th>
+                  <th>Voters</th>
                   <?php endif; ?>
                   <th>Tools</th>
-
                 </thead>
                 <tbody>
                   <?php
@@ -107,6 +115,9 @@
                       $sql = "SELECT * FROM voters WHERE archived = TRUE";
                     } elseif(isset($_GET['type']) && $_GET['type'] === 'admin') {
                       $sql = "SELECT * FROM admin WHERE archived = TRUE";
+                    } elseif(isset($_GET['type']) && $_GET['type'] === 'election') {
+                      // SQL Query for Election Archived
+                      $sql = "SELECT * FROM election WHERE archived = TRUE";
                     }
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
@@ -148,6 +159,19 @@
                                   <td>
                                       <button class='btn btn-success btn-sm restore-admin btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#adminConfirmationModal'><i class='fa fa-reply'></i> Restore</button>
                                     <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."' data-user='admin'><i class='fa fa-trash'></i> Delete</button>
+                                  </td>
+                              </tr>
+                          ";
+                      } elseif(isset($_GET['type']) && $_GET['type'] === 'election') {
+                          // For election table
+                          // Add code to display election archive here
+                          echo "
+                              <tr>
+                                  <td>".$row['id']."</td>
+                                  <td>".$row['title']."</td>
+                                  <td>".$row['voters']."</td>
+                                  <td>
+                                      <!-- Add buttons for election restoration and deletion here -->
                                   </td>
                               </tr>
                           ";
