@@ -2,9 +2,6 @@
 session_start();
 include 'includes/header.php'; // Include your header file
 
-// Ensure database connection is established before proceeding
-// Replace "your_database_connection" with your actual database connection code
-
 if (isset($_POST['email']) && isset($_POST['otp'])) {
     $email = $_POST['email'];
     $otp = $_POST['otp'];
@@ -16,8 +13,12 @@ if (isset($_POST['email']) && isset($_POST['otp'])) {
         die("Database connection failed: " . mysqli_connect_error());
     }
 
-    // Assuming you have a table named "otp_verification"
+    // Debugging: Output the email, OTP, and SQL query
+    echo "Email: $email<br>";
+    echo "OTP: $otp<br>";
     $query = "SELECT * FROM otp_verifcation WHERE email = ? AND otp = ?";
+    echo "SQL Query: $query<br>";
+
     $stmt = mysqli_prepare($connection, $query);
     if (!$stmt) {
         die("Prepare statement failed: " . mysqli_error($connection));
