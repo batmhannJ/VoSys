@@ -76,6 +76,8 @@ function sendOTP(email) {
 }
 
 function validateOTP(email, otp) {
+    console.log("Email:", email);
+    console.log("OTP:", otp);
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'validate_otp.php', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -95,6 +97,7 @@ function validateOTP(email, otp) {
     };
     xhr.send('email=' + encodeURIComponent(email) + '&otp=' + encodeURIComponent(otp));
 }
+
 
 </script>
 
