@@ -36,11 +36,11 @@ function sendOTP($email, $otp) {
 }
 
 // Log received email parameter
-error_log('Received email: ' . $_POST['email']);
+$email = $_POST['email'] ?? null;
+error_log('Received email: ' . $email);
 
 // Check if email parameter is received
-if (isset($_POST['email'])) {
-    $email = $_POST['email'];
+if ($email) {
     $otp = mt_rand(100000, 999999); // Generate a random OTP
     if (sendOTP($email, $otp)) {
         echo 'OTP sent successfully';
@@ -50,4 +50,9 @@ if (isset($_POST['email'])) {
 } else {
     echo 'No email parameter received';
 }
+
+// Debugging: Output the $_POST array
+echo '<pre>';
+print_r($_POST);
+echo '</pre>';
 ?>
