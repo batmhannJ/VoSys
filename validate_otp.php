@@ -1,31 +1,30 @@
 <?php
 session_start();
+include 'includes/header.php'; // Include your header file
 
-// Check if email and OTP parameters are received
+// Ensure database connection is established before proceeding
+// Replace "your_database_connection" with your actual database connection code
+
 if (isset($_POST['email']) && isset($_POST['otp'])) {
-    // Assuming you have a database connection established
-    // Replace this with your actual database logic to check if the OTP is correct
-    
-    // Retrieve the email and OTP from the POST data
     $email = $_POST['email'];
     $otp = $_POST['otp'];
     
-    
-    $query = "SELECT * FROM otp_verifcation WHERE email = '$email' AND otp = '$otp'";
-    $result = mysqli_query($connection, $query);
+    // Assuming you have a database connection established
+    // Replace this with your actual database logic to check if the OTP is correct using prepared statements
+    $query = "SELECT * FROM otp_verifcation WHERE email = ? AND otp = ?";
+    $stmt = mysqli_prepare($connection, $query);
+    mysqli_stmt_bind_param($stmt, "ss", $email, $otp);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
     $row = mysqli_fetch_assoc($result);
 
     if ($row) {
-        echo 'OTP correct';
+        // Redirect to change password page if OTP is correct
+        header("Location: change_pass.php");
+        exit();
     } else {
-        echo 'Incorrect OTP';
-    }
-
-    // For this example, let's assume the OTP is correct if it matches "123456"
-    if ($otp === '123456') {
-        echo 'OTP correct';
-    } else {
-        echo 'Incorrect OTP';
+        // Show generic error message
+        echo 'Incorrect email or OTP';
     }
 } else {
     // If email or OTP parameter is missing
