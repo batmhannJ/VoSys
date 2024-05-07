@@ -9,10 +9,10 @@
 	    <div class="container">
 	      <!-- Main content -->
 	      <section class="content">
-          <h1 class="page-header text-center title">
-            <img src="images/codg.jpg" alt="CSC Logo">
-            <b>CODE-TG - Coalition of Disciplined Future Enforcers of Todays Generation Election</b>
-        </h1>
+	      	<h1 class="page-header text-center title">
+	      		<img src="images/codg.jpg" alt="CSC Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
+	      		<b>CODE-TG - Coalition of Disciplined<br>Future Enforcers of Todays <br>Generation Election</b></h1>
+	        <div class="row">
 	        	<div class="col-sm-10 col-sm-offset-1">
 	        		<?php
                         if(isset($_SESSION['error'])){
@@ -527,26 +527,37 @@
 .text-center {
     text-align: center;
 }
+
 .content {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .title {
-            margin: 0;
-            padding: 0;
-            text-align: center;
-            color: #333;
-        }
-        .title img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.page-header {
+    margin-top: 0;
+    color: #333;
+}
+
+.page-header img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.text-center {
+    text-align: center;
+}
 
     </style>
 </style>
