@@ -3,6 +3,9 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include 'includes/header.php';
+
+// Move session_start() to the beginning of the file
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -57,8 +60,6 @@ include 'includes/header.php';
 </script>
 
 <?php
-include 'includes/session.php';
-
 if (isset($_POST['reset'])) {
     // Get the form data
     $email = $_POST['email'];
