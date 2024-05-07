@@ -95,6 +95,7 @@ function validateOTP(email, otp) {
     };
     xhr.send('email=' + encodeURIComponent(email) + '&otp=' + encodeURIComponent(otp));
 }
+
 </script>
 
 </body>
