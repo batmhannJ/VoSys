@@ -26,6 +26,14 @@ include 'includes/header.php';
                     <input type="email" class="form-control" name="email" placeholder="Email" required>
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 </div>
+                <div class="form-group has-feedback">
+                    <label for="new_password">New Password:</label>
+                    <input type="password" class="form-control" id="new_password" name="new_password" required>
+                </div>
+                <div class="form-group has-feedback">
+                    <label for="confirm_password">Confirm Password:</label>
+                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                </div>
                 <div class="form-group">
                     <div class="col-sm-6">
                         <input type="number" class="form-control" id="otp" name="otp" placeholder="Enter OTP" required>
@@ -75,27 +83,40 @@ include 'includes/header.php';
             xhr.send('email=' + encodeURIComponent(email));
         }
 
-        function validateOTP(email, otp) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'validate_otp.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4) {
-            if (xhr.status == 200) {
-                var response = JSON.parse(xhr.responseText);
-                if (response.status === 'success') {
-                    window.location.href = 'change_pass.php'; // Redirect to change_pass.php if OTP is correct
+        function validateOTP(email, otp, newPassword) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'validate_otp.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4) {
+                if (xhr.status == 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.status === 'success') {
+                        // Send the new password to change_pass.php
+                        changePassword(email, newPassword);
+                    } else {
+                        alert(response.message);
+                    }
                 } else {
-                    alert(response.message); // Show error message if OTP is incorrect
+                    alert('Error occurred. Please try again.');
                 }
-            } else {
-                alert('Error occurred. Please try again.'); // Show error message for failed request
             }
-        }
-    };
-    xhr.send('email=' + encodeURIComponent(email) + '&otp=' + encodeURIComponent(otp));
-}
+        };
+        xhr.send('email=' + encodeURIComponent(email) + '&otp=' + encodeURIComponent(otp));
+    }
 
-    </script>
+    function changePassword(email, newPassword) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'updatePassword.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var response = xhr.responseText;
+                alert(response); // You can handle success or error messages here
+            }
+        };
+        xhr.send('email=' + encodeURIComponent(email) + '&new_password=' + encodeURIComponent(newPassword));
+    }
+</script>
 </body>
 </html>
