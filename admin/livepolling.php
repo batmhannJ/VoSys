@@ -58,104 +58,89 @@
 <?php include 'includes/scripts.php'; ?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
 <script>
-  var organizationColors = {
-    "JPCS": "#4CAF50",
-    "PASOA": "#e6cc00",
-    "CSC": "#595959",
-    "YMF": "#00008b",
-    "CODE-TG": "#800000",
-    "HMSO": "#fff080"
-  };
+    // Function to generate bar graph
+    function generateBarGraph(dataPoints, containerId, organization) {
+        var color;
 
-  function updateCharts() {
-    var organization = document.getElementById("organization").value;
+        // Set color based on organization
+        switch (organization) {
+            case 'JPCS':
+                color = "#4CAF50"; // Green
+                break;
+            case 'CSC':
+                color = "#000000"; // Black
+                break;
+            case 'CODE-TG':
+                color = "#800000"; // Maroon
+                break;
+            case 'YMF':
+                color = "#00008b"; // Dark Blue
+                break;
+            case 'HMSO':
+                color = "#cba328"; // Gold
+                break;
+            case 'PASOA':
+                color = "#e6cc00"; // Yellow
+                break;
+            default:
+                color = "#000000"; // Default to Black
+        }
 
-    updatePresidentChart(organization);
-  }
-
-  function updatePresidentChart(organization) {
-    var presidentDataPoints = [];
-    var vicePresidentDataPoints = [];
-
-    // Fetch data dynamically based on the selected organization
-
-    // For demonstration, I'm using static data for each organization
-    if (organization === "JPCS") {
-        presidentDataPoints = [
-            { y: 20, label: "President" }
-        ];
-        vicePresidentDataPoints = [
-            { y: 30, label: "Vice President" }
-        ];
+        var chart = new CanvasJS.Chart(containerId, {
+            animationEnabled: true,
+            title:{
+                text: "Vote Counts"
+            },
+            axisY: {
+                 title: "Candidates",
+                includeZero: true,
+                 labelFormatter: function (e) {
+        // Include candidate name and round vote count to whole number
+        return dataPoints[e.value].label + " - " + Math.round(e.value);
     }
-    // Add more else if conditions for other organizations
+},
 
-    var chart = new CanvasJS.Chart("presidentChart", {
-        title: { text: "President and Vice President" },
-        axisY: {
-            title: "Votes"
-        },
-        toolTip: {
-            shared: true
-        },
-        legend: {
-            cursor: "pointer",
-            verticalAlign: "top",
-            itemclick: function(e) {
-                if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-                    e.dataSeries.visible = false;
-                } else {
-                    e.dataSeries.visible = true;
-                }
-                e.chart.render();
+            axisX: {
+                title: "Vote Count",
+                includeZero: true
+            },
+            data: [{
+                type: "bar", // Change type to "bar"
+                dataPoints: dataPoints,
+                color: color // Set the color based on organization
+            }]
+        });
+        chart.render();
+    }
+
+    // Function to fetch updated data from the server
+    function updateData() {
+        $.ajax({
+            url: 'update_data.php', // Change this to the URL of your update data script
+            type: 'GET',
+            dataType: 'json',
+            data: {organization: $('#organization').val()}, // Pass the selected organization to the server
+            success: function(response) {
+                // Update president bar graph with color based on organization
+                generateBarGraph(response.presidentData, "presidentGraph", $('#organization').val());
+
+                // Update vice president bar graph with color based on organization
+                generateBarGraph(response.vicePresidentData, "vicePresidentGraph", $('#organization').val());
+
+                // Update secretary bar graph with color based on organization
+                generateBarGraph(response.secretaryData, "secretaryGraph", $('#organization').val());
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching data: ' + error);
             }
-        },
-        data: [{
-            type: "bar",
-            showInLegend: true,
-            name: "President",
-            dataPoints: presidentDataPoints,
-            color: organizationColors[organization]
-        },
-        {
-            type: "bar",
-            showInLegend: true,
-            name: "Vice President",
-            dataPoints: vicePresidentDataPoints,
-            color: organizationColors[organization]
-        }]
-    });
-
-    chart.render();
-
-    // Update chart every second
-    setInterval(function () {
-        updatePresidentDataPoints(organization, chart);
-    }, 1000);
-}
-
-  function updatePresidentDataPoints(organization, chart) {
-    // Update dataPoints based on the selected organization
-    // For demonstration, I'm using random values for each data point
-    var newPresidentDataPoints = [];
-    var newVicePresidentDataPoints = [];
-    
-    for (var i = 0; i < chart.options.data[0].dataPoints.length; i++) {
-      newPresidentDataPoints.push({ label: "President", y: Math.random() * 100 });
+        });
     }
 
-    for (var i = 0; i < chart.options.data[1].dataPoints.length; i++) {
-      newVicePresidentDataPoints.push({ label: "Vice President", y: Math.random() * 100 });
-    }
-    
-    chart.options.data[0].dataPoints = newPresidentDataPoints;
-    chart.options.data[1].dataPoints = newVicePresidentDataPoints;
-    chart.render();
-  }
+    // Call the updateData function initially
+    updateData();
 
-  window.onload = function () {
-    updateCharts();
-  };
+    // Call the updateData function every 60 seconds (adjust as needed)
+    setInterval(updateData, 3000); // 60000 milliseconds = 60 seconds
 </script>
 </body>
 </html>
