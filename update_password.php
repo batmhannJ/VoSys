@@ -1,4 +1,5 @@
 <?php
+// Include your header file
 include 'includes/session.php';
 
 if (isset($_POST['reset'])) {
