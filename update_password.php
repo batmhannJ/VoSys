@@ -10,9 +10,8 @@ if (isset($_POST['reset'])) {
     // Check if the entered password matches the confirm password
     if ($password != $confirm_password) {
         $_SESSION['error'] = 'Password and confirm password do not match';
-        echo "<script>alert('Password and confirm password do not match');</script>";
-        header('Location: '.$_SERVER['HTTP_REFERER']); // Redirect back to the previous page
-        exit;
+        echo "<script>alert('Password and confirm password do not match');</script>"; // Display alert
+        exit; // Exit here without redirection
     }
 
     // Hash the new password
@@ -30,16 +29,16 @@ if (isset($_POST['reset'])) {
         $stmt->bind_param("ss", $hashed_password, $email);
         if ($stmt->execute()) {
             $_SESSION['success'] = 'Password updated successfully';
-            echo "<script>alert('Password updated successfully');</script>";
+            echo "<script>alert('Password updated successfully');</script>"; // Display alert
         } else {
             $_SESSION['error'] = 'Failed to update password: ' . $stmt->error;
-            echo "<script>alert('Failed to update password');</script>";
+            echo "<script>alert('Failed to update password');</script>"; // Display alert
         }
         // Close the statement
         $stmt->close();
     } else {
         $_SESSION['error'] = 'Prepare statement failed: ' . $conn->error;
-        echo "<script>alert('Prepare statement failed');</script>";
+        echo "<script>alert('Prepare statement failed');</script>"; // Display alert
     }
 
     // Redirect back to the previous page
@@ -47,7 +46,7 @@ if (isset($_POST['reset'])) {
     exit;
 } else {
     $_SESSION['error'] = 'Invalid request';
-    echo "<script>alert('Invalid request');</script>";
+    echo "<script>alert('Invalid request');</script>"; // Display alert
     header('Location: '.$_SERVER['HTTP_REFERER']);
     exit;
 }
