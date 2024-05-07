@@ -72,5 +72,6 @@ function sendOTP(email) {
     xhr.send('email=' + encodeURIComponent(email));
 }
 
+</script>
 </body>
 </html>
