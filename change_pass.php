@@ -25,11 +25,11 @@ include 'includes/header.php';
             <!-- Password reset form -->
             <form action="update_password.php" method="POST">
                 <input type="hidden" class="form-control" id="email" name="email" value="<?php echo $user['email']; ?>" required>
-                <div class="form-group">
+                <div class="form-group has-feedback">
                     <label for="new_password">New Password:</label>
                     <input type="password" class="form-control" id="new_password" name="new_password" required>
                 </div>
-                <div class="form-group">
+                <div class="form-group has-feedback">
                     <label for="confirm_password">Confirm Password:</label>
                     <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
                 </div>

@@ -1,41 +1,49 @@
 <?php
 include 'includes/session.php';
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-if (isset($_GET['return'])) {
-    $return = $_GET['return'];
-} else {
-    $return = 'voters_login.php';
-}
-
 if (isset($_POST['reset'])) {
-    $password = $_POST['new_password'];
-    $confirm_password = $_POST['confirm_password']; 
+    // Get the form data
     $email = $_POST['email'];
+    $password = $_POST['new_password'];
+    $confirm_password = $_POST['confirm_password'];
 
     // Check if the entered password matches the confirm password
     if ($password != $confirm_password) {
         $_SESSION['error'] = 'Password and confirm password do not match';
-        header('Location: '.$return);
+        echo "Passwords do not match"; // Debugging statement
         exit;
     }
-    else {
-        $new_password = password_hash($password, PASSWORD_DEFAULT);
 
-        $sql = "UPDATE voters SET password = '$new_password' WHERE email = '".$user['email']."'";
-        if ($conn->query($sql)) {
+    // Hash the new password
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    // Update the password in the database
+    $sql = "UPDATE voters SET password = ? WHERE email = ?";
+    $stmt = $conn->prepare($sql);
+
+    if ($stmt) {
+        // Bind parameters and execute the statement
+        $stmt->bind_param("ss", $hashed_password, $email);
+        if ($stmt->execute()) {
             $_SESSION['success'] = 'Password updated successfully';
         } else {
-            $_SESSION['error'] = $conn->error;
+            $_SESSION['error'] = 'Failed to update password: ' . $stmt->error;
+            echo "Failed to update password"; // Debugging statement
         }
-        header('Location: '.$return);
-        exit;
-    } 
+        // Close the statement
+        $stmt->close();
+    } else {
+        $_SESSION['error'] = 'Prepare statement failed: ' . $conn->error;
+        echo "Prepare statement failed"; // Debugging statement
+    }
+
+    // Redirect back to the previous page
+    header('Location: '.$_SERVER['HTTP_REFERER']);
+    exit;
 } else {
-    $_SESSION['error'] = 'Fill up required details first';
-    header('Location: '.$return);
+    $_SESSION['error'] = 'Invalid request';
+    echo "Invalid request"; // Debugging statement
+    header('Location: '.$_SERVER['HTTP_REFERER']);
     exit;
 }
 ?>
