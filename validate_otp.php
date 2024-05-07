@@ -16,7 +16,9 @@ if (isset($_POST['email']) && isset($_POST['otp'])) {
     // Debugging: Output the email, OTP, and SQL query
     echo "Email: $email<br>";
     echo "OTP: $otp<br>";
-    $query = "SELECT * FROM otp_verifcation WHERE email = ? AND otp = ?";
+
+    // Assuming you have a table named "otp_verification"
+    $query = "SELECT * FROM otp_verification WHERE email = ? AND otp = ?";
     echo "SQL Query: $query<br>";
 
     $stmt = mysqli_prepare($connection, $query);
