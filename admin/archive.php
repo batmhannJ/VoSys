@@ -166,7 +166,7 @@
                             // For election table
                             echo "
                                 <tr>
-                                    <td>".$row['sid']."</td>
+                                    <td>".$row['id']."</td>
                                     <td>".$row['title']."</td>
                                     <td>".$row['voters']."</td>
                                     <td>
