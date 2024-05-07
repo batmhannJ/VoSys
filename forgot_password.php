@@ -86,7 +86,7 @@ include 'includes/header.php';
             xhr.send('email=' + encodeURIComponent(email));
         }
 
-        function validateOTP(email, otp, newPassword) {
+        function validateOTP(email, otp, new_password) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', 'validate_otp.php', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
