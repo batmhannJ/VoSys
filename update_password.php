@@ -15,12 +15,12 @@ if (isset($_POST['email']) && isset($_POST['new_password'])) {
     $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
 
     // Step 3: Update the user's password in the database
-    $query = "UPDATE voters SET password = ? WHERE email = ?";
+    $query = "UPDATE voters SET password = ?, genPass = ? WHERE email = ?";
     $stmt = mysqli_prepare($connection, $query);
     if (!$stmt) {
         die("Prepare statement failed: " . mysqli_error($connection));
     }
-    mysqli_stmt_bind_param($stmt, "ss", $hashedPassword, $email);
+    mysqli_stmt_bind_param($stmt, "sss", $hashedPassword, $newPassword, $email);
     if (!mysqli_stmt_execute($stmt)) {
         die("Execute statement failed: " . mysqli_error($connection));
     }
