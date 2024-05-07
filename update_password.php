@@ -1,6 +1,9 @@
 <?php
 include 'includes/session.php';
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 if (isset($_GET['return'])) {
     $return = $_GET['return'];
 } else {
@@ -33,12 +36,7 @@ if (isset($_POST['reset'])) {
 
         header('Location: '.$return);
         exit;
-    } else {
-        // OTP verification failed
-        $_SESSION['error'] = 'OTP verification failed';
-        header('Location: '.$return);
-        exit;
-    }
+    } 
 } else {
     $_SESSION['error'] = 'Fill up required details first';
     header('Location: '.$return);
