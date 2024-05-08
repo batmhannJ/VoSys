@@ -67,6 +67,8 @@
     "HMSO": "#fff080"
   };
 
+  var chart; // Declare the chart variable globally
+
   function updateCharts() {
     var organization = document.getElementById("organization").value;
 
@@ -78,7 +80,6 @@
     var vicePresidentDataPoints = [];
 
     // Fetch data dynamically based on the selected organization
-
     // For demonstration, I'm using static data for each organization
     if (organization === "JPCS") {
         presidentDataPoints = [
@@ -90,7 +91,7 @@
     }
     // Add more else if conditions for other organizations
 
-    var chart = new CanvasJS.Chart("presidentChart", {
+    chart = new CanvasJS.Chart("presidentChart", {
         title: { text: "President and Vice President" },
         axisY: {
             title: "Votes"
@@ -130,11 +131,11 @@
 
     // Update chart every second
     setInterval(function () {
-        updatePresidentDataPoints(organization, chart);
+        updatePresidentDataPoints(organization);
     }, 1000);
 }
 
-  function updatePresidentDataPoints(organization, chart) {
+  function updatePresidentDataPoints(organization) {
     // Update dataPoints based on the selected organization
     // For demonstration, I'm using random values for each data point
     var newPresidentDataPoints = [];
