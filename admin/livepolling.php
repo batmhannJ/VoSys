@@ -67,6 +67,8 @@
     "HMSO": "#fff080"
   };
 
+  var chart; // Declare the chart variable globally
+
   function updateCharts() {
     var organization = document.getElementById("organization").value;
 
@@ -74,80 +76,99 @@
   }
 
   function updatePresidentChart(organization) {
+    // AJAX request to fetch data from the server
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+          var data = JSON.parse(xhr.responseText);
+          renderPresidentChart(data, organization);
+        } else {
+          console.error('Failed to fetch data');
+        }
+      }
+    };
+    xhr.open('GET', 'fetch_data.php?organization=' + organization, true);
+    xhr.send();
+  }
+
+  function renderPresidentChart(data, organization) {
     var presidentDataPoints = [];
     var vicePresidentDataPoints = [];
-
-    // Fetch data dynamically based on the selected organization
-
-    // For demonstration, I'm using static data for each organization
-    if (organization === "JPCS") {
-        presidentDataPoints = [
-            { y: 20, label: "President" }
-        ];
-        vicePresidentDataPoints = [
-            { y: 30, label: "Vice President" }
-        ];
+    
+    // Process data received from the server
+    for (var i = 0; i < data.length; i++) {
+      presidentDataPoints.push({ label: data[i].label, y: data[i].presidentVotes });
+      vicePresidentDataPoints.push({ label: data[i].label, y: data[i].vicePresidentVotes });
     }
-    // Add more else if conditions for other organizations
 
-    var chart = new CanvasJS.Chart("presidentChart", {
-        title: { text: "President and Vice President" },
-        axisY: {
-            title: "Votes"
-        },
-        toolTip: {
-            shared: true
-        },
-        legend: {
-            cursor: "pointer",
-            verticalAlign: "top",
-            itemclick: function(e) {
-                if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-                    e.dataSeries.visible = false;
-                } else {
-                    e.dataSeries.visible = true;
-                }
-                e.chart.render();
-            }
-        },
-        data: [{
-            type: "bar",
-            showInLegend: true,
-            name: "President",
-            dataPoints: presidentDataPoints,
-            color: organizationColors[organization]
-        },
-        {
-            type: "bar",
-            showInLegend: true,
-            name: "Vice President",
-            dataPoints: vicePresidentDataPoints,
-            color: organizationColors[organization]
-        }]
+    // Create and render the chart
+    chart = new CanvasJS.Chart("presidentChart", {
+      title: { text: "President and Vice President" },
+      axisY: { title: "Votes" },
+      toolTip: { shared: true },
+      legend: {
+        cursor: "pointer",
+        verticalAlign: "top",
+        itemclick: function(e) {
+          if (typeof e.dataSeries.visible === "undefined" || e.dataSeries.visible) {
+            e.dataSeries.visible = false;
+          } else {
+            e.dataSeries.visible = true;
+          }
+          e.chart.render();
+        }
+      },
+      data: [{
+        type: "bar",
+        showInLegend: true,
+        name: "President",
+        dataPoints: presidentDataPoints,
+        color: organizationColors[organization]
+      }, {
+        type: "bar",
+        showInLegend: true,
+        name: "Vice President",
+        dataPoints: vicePresidentDataPoints,
+        color: organizationColors[organization]
+      }]
     });
-
     chart.render();
 
     // Update chart every second
-    setInterval(function () {
-        updatePresidentDataPoints(organization, chart);
+    setInterval(function() {
+      updatePresidentDataPoints(organization);
     }, 1000);
-}
+  }
 
-  function updatePresidentDataPoints(organization, chart) {
-    // Update dataPoints based on the selected organization
-    // For demonstration, I'm using random values for each data point
+  function updatePresidentDataPoints(organization) {
+    // AJAX request to fetch updated data from the server
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+          var data = JSON.parse(xhr.responseText);
+          renderUpdatedData(data);
+        } else {
+          console.error('Failed to fetch updated data');
+        }
+      }
+    };
+    xhr.open('GET', 'fetch_data.php?organization=' + organization, true);
+    xhr.send();
+  }
+
+  function renderUpdatedData(data) {
+    // Process updated data received from the server
     var newPresidentDataPoints = [];
     var newVicePresidentDataPoints = [];
     
-    for (var i = 0; i < chart.options.data[0].dataPoints.length; i++) {
-      newPresidentDataPoints.push({ label: "President", y: Math.random() * 100 });
+    for (var i = 0; i < data.length; i++) {
+      newPresidentDataPoints.push({ label: data[i].label, y: data[i].presidentVotes });
+      newVicePresidentDataPoints.push({ label: data[i].label, y: data[i].vicePresidentVotes });
     }
 
-    for (var i = 0; i < chart.options.data[1].dataPoints.length; i++) {
-      newVicePresidentDataPoints.push({ label: "Vice President", y: Math.random() * 100 });
-    }
-    
+    // Update the chart with the new data
     chart.options.data[0].dataPoints = newPresidentDataPoints;
     chart.options.data[1].dataPoints = newVicePresidentDataPoints;
     chart.render();
