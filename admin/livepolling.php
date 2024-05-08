@@ -48,35 +48,17 @@ include 'includes/header.php';
                 </div>
             </div>
 
-            <!-- Bar Graphs for President and Vice President -->
+            <!-- Dual Y-axis Bar Graph for President and Vice President -->
             <div class="row">
-                <!-- President Bar Graph Box -->
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">President Candidates Vote Count</h3>
+                            <h3 class="box-title">Vote Counts</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <!-- President Bar Graph Container -->
-                            <div id="presidentGraph" style="height: 300px;"></div>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                    <!-- /.box -->
-                </div>
-                <!-- /.col -->
-
-                <!-- Vice President Bar Graph Box -->
-                <div class="col-md-6">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Vice President Candidates Vote Count</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <!-- Vice President Bar Graph Container -->
-                            <div id="vicePresidentGraph" style="height: 300px;"></div>
+                            <!-- Dual Y-axis Bar Graph Container -->
+                            <div id="dualYBarGraph" style="height: 300px;"></div>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -100,32 +82,69 @@ include 'includes/header.php';
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    // Function to generate bar graph
-    function generateBarGraph(dataPoints, containerId) {
+    // Function to generate dual Y-axis bar graph
+    function generateDualYBarGraph(presidentData, vicePresidentData, containerId) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
-            title:{
+            title: {
                 text: "Vote Counts"
             },
             axisY: {
-                title: "Candidates"
-            },
-            axisX: {
-                title: "Vote Count",
+                title: "President Votes",
+                titleFontColor: "#4F81BC",
+                lineColor: "#4F81BC",
+                labelFontColor: "#4F81BC",
+                tickColor: "#4F81BC",
                 includeZero: true
             },
+            axisY2: {
+                title: "Vice President Votes",
+                titleFontColor: "#C0504E",
+                lineColor: "#C0504E",
+                labelFontColor: "#C0504E",
+                tickColor: "#C0504E",
+                includeZero: true
+            },
+            toolTip: {
+                shared: true
+            },
+            legend: {
+                cursor: "pointer",
+                itemclick: toggleDataSeries
+            },
             data: [{
-                type: "bar", // Change type to "bar"
-                dataPoints: dataPoints
+                type: "bar",
+                name: "President Votes",
+                axisYType: "primary",
+                showInLegend: true,
+                color: "#4F81BC",
+                dataPoints: presidentData
+            },
+            {
+                type: "bar",
+                name: "Vice President Votes",
+                axisYType: "secondary",
+                showInLegend: true,
+                color: "#C0504E",
+                dataPoints: vicePresidentData
             }]
         });
         chart.render();
         return chart;
     }
 
-    // Initialize charts
-    var presidentChart;
-    var vicePresidentChart;
+    // Function to toggle data series visibility
+    function toggleDataSeries(e) {
+        if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+            e.dataSeries.visible = false;
+        } else {
+            e.dataSeries.visible = true;
+        }
+        e.chart.render();
+    }
+
+    // Initialize chart
+    var dualYBarChart;
 
     // Function to fetch updated data from the server
     function updateData() {
@@ -135,18 +154,11 @@ include 'includes/header.php';
             dataType: 'json',
             data: {organization: $('#organization').val()}, // Pass the selected organization to the server
             success: function(response) {
-                // Update president bar graph
-                if (!presidentChart) {
-                    presidentChart = generateBarGraph(response.presidentData, "presidentGraph");
+                // Update dual Y-axis bar graph
+                if (!dualYBarChart) {
+                    dualYBarChart = generateDualYBarGraph(response.presidentData, response.vicePresidentData, "dualYBarGraph");
                 } else {
-                    updateBarGraph(response.presidentData, presidentChart);
-                }
-
-                // Update vice president bar graph
-                if (!vicePresidentChart) {
-                    vicePresidentChart = generateBarGraph(response.vicePresidentData, "vicePresidentGraph");
-                } else {
-                    updateBarGraph(response.vicePresidentData, vicePresidentChart);
+                    updateDualYBarGraph(response.presidentData, response.vicePresidentData, dualYBarChart);
                 }
             },
             error: function(xhr, status, error) {
@@ -155,30 +167,11 @@ include 'includes/header.php';
         });
     }
 
-    // Function to update bar graph with animation
-    function updateBarGraph(newDataPoints, chart) {
-        var oldDataPoints = chart.options.data[0].dataPoints;
-        for (var i = 0; i < newDataPoints.length; i++) {
-            var oldVotes = oldDataPoints[i].y;
-            var newVotes = newDataPoints[i].y;
-            var diffVotes = newVotes - oldVotes;
-            animateBar(i, diffVotes, chart);
-        }
-    }
-
-    // Function to animate individual bar
-    function animateBar(index, diffVotes, chart) {
-        var count = 0;
-        var interval = setInterval(function() {
-            if (count < Math.abs(diffVotes)) {
-                var step = diffVotes > 0 ? 1 : -1;
-                chart.options.data[0].dataPoints[index].y += step;
-                chart.render();
-                count++;
-            } else {
-                clearInterval(interval);
-            }
-        }, 50); // Animation speed (adjust as needed)
+    // Function to update dual Y-axis bar graph
+    function updateDualYBarGraph(presidentData, vicePresidentData, chart) {
+        chart.options.data[0].dataPoints = presidentData;
+        chart.options.data[1].dataPoints = vicePresidentData;
+        chart.render();
     }
 
     // Call the updateData function initially
