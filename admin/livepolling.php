@@ -120,7 +120,12 @@ include 'includes/header.php';
             }]
         });
         chart.render();
+        return chart;
     }
+
+    // Initialize charts
+    var presidentChart = generateBarGraph([], "presidentGraph");
+    var vicePresidentChart = generateBarGraph([], "vicePresidentGraph");
 
     // Function to fetch updated data from the server
     function updateData() {
@@ -131,10 +136,12 @@ include 'includes/header.php';
             data: {organization: $('#organization').val()}, // Pass the selected organization to the server
             success: function(response) {
                 // Update president bar graph
-                generateBarGraph(response.presidentData, "presidentGraph");
+                presidentChart.options.data[0].dataPoints = response.presidentData;
+                presidentChart.render();
 
                 // Update vice president bar graph
-                generateBarGraph(response.vicePresidentData, "vicePresidentGraph");
+                vicePresidentChart.options.data[0].dataPoints = response.vicePresidentData;
+                vicePresidentChart.render();
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data: ' + error);
