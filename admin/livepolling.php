@@ -136,17 +136,23 @@ include 'includes/header.php';
             data: {organization: $('#organization').val()}, // Pass the selected organization to the server
             success: function(response) {
                 // Update president bar graph
-                presidentChart.options.data[0].dataPoints = response.presidentData;
-                presidentChart.render();
+                updateBarGraph(response.presidentData, presidentChart);
 
                 // Update vice president bar graph
-                vicePresidentChart.options.data[0].dataPoints = response.vicePresidentData;
-                vicePresidentChart.render();
+                updateBarGraph(response.vicePresidentData, vicePresidentChart);
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data: ' + error);
             }
         });
+    }
+
+    // Function to update bar graph with animation
+    function updateBarGraph(newDataPoints, chart) {
+        for (var i = 0; i < newDataPoints.length; i++) {
+            chart.options.data[0].dataPoints[i].y = newDataPoints[i].y;
+        }
+        chart.render();
     }
 
     // Call the updateData function initially
