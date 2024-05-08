@@ -124,8 +124,8 @@ include 'includes/header.php';
     }
 
     // Initialize charts
-    var presidentChart = generateBarGraph([], "presidentGraph");
-    var vicePresidentChart = generateBarGraph([], "vicePresidentGraph");
+    var presidentChart;
+    var vicePresidentChart;
 
     // Function to fetch updated data from the server
     function updateData() {
@@ -136,10 +136,18 @@ include 'includes/header.php';
             data: {organization: $('#organization').val()}, // Pass the selected organization to the server
             success: function(response) {
                 // Update president bar graph
-                updateBarGraph(response.presidentData, presidentChart);
+                if (!presidentChart) {
+                    presidentChart = generateBarGraph(response.presidentData, "presidentGraph");
+                } else {
+                    updateBarGraph(response.presidentData, presidentChart);
+                }
 
                 // Update vice president bar graph
-                updateBarGraph(response.vicePresidentData, vicePresidentChart);
+                if (!vicePresidentChart) {
+                    vicePresidentChart = generateBarGraph(response.vicePresidentData, "vicePresidentGraph");
+                } else {
+                    updateBarGraph(response.vicePresidentData, vicePresidentChart);
+                }
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data: ' + error);
@@ -149,9 +157,7 @@ include 'includes/header.php';
 
     // Function to update bar graph with animation
     function updateBarGraph(newDataPoints, chart) {
-        for (var i = 0; i < newDataPoints.length; i++) {
-            chart.options.data[0].dataPoints[i].y = newDataPoints[i].y;
-        }
+        chart.options.data[0].dataPoints = newDataPoints;
         chart.render();
     }
 
