@@ -1,51 +1,43 @@
 <?php
-include 'includes/session.php';
+session_start();
 
-if (isset($_POST['reset'])) {
-    // Get the form data
+if (isset($_POST['email']) && isset($_POST['new_password'])) {
     $email = $_POST['email'];
-    $password = $_POST['new_password'];
-    $confirm_password = $_POST['confirm_password'];
+    $newPassword = $_POST['new_password'];
 
-    // Check if the entered password matches the confirm password
-    if ($password != $confirm_password) {
-        $_SESSION['error'] = 'Password and confirm password do not match';
-        header("Location: update_password.php"); // Redirect back to the form
-        exit; // Exit here without further processing
+    // Step 1: Establish a database connection
+    $connection = mysqli_connect("localhost", "u247141684_vosys", "vosysOlshco5", "u247141684_votesystem");
+    if (!$connection) {
+        die("Database connection failed: " . mysqli_connect_error());
     }
 
-    // Hash the new password
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    // Step 2: Hash the new password for security
+    $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
 
-    // Establish database connection (assuming $conn is your database connection)
-    include 'includes/conn.php'; // Adjust the filename as per your actual file
-
-    // Update the password in the database
-    $sql = "UPDATE voters SET password = ? WHERE email = ?";
-    $stmt = $conn->prepare($sql);
-
-    if ($stmt) {
-        // Bind parameters and execute the statement
-        $stmt->bind_param("ss", $hashed_password, $email);
-        if ($stmt->execute()) {
-            $_SESSION['success'] = 'Password updated successfully';
-            header("Location: voters_login.php"); // Redirect to a success page or back to the form
-            exit; // Exit here after successful password update
-        } else {
-            $_SESSION['error'] = 'Failed to update password: ' . $stmt->error;
-            header("Location: update_password.php"); // Redirect back to the form with error message
-            exit; // Exit here after displaying the error message
-        }
-        // Close the statement
-        $stmt->close();
-    } else {
-        $_SESSION['error'] = 'Prepare statement failed: ' . $conn->error;
-        header("Location: update_password.php"); // Redirect back to the form with error message
-        exit; // Exit here after displaying the error message
+    // Step 3: Update the user's password in the database
+    $query = "UPDATE voters SET password = ? WHERE email = ?";
+    $stmt = mysqli_prepare($connection, $query);
+    if (!$stmt) {
+        die("Prepare statement failed: " . mysqli_error($connection));
     }
+    mysqli_stmt_bind_param($stmt, "ss", $hashedPassword, $email);
+    if (!mysqli_stmt_execute($stmt)) {
+        die("Execute statement failed: " . mysqli_error($connection));
+    }
+
+    // Step 4: Close database connection
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+
+    // Step 5: Return success response
+    $response = array("status" => "success", "message" => "Password updated successfully");
+
+    // Step 6: Return JSON response
+    header('Content-Type: application/json');
+    echo json_encode($response);
+    exit(); // Make sure to exit after sending the JSON response
 } else {
-    $_SESSION['error'] = 'Invalid request';
-    header("Location: update_password.php"); // Redirect back to the form with error message
-    exit; // Exit here after displaying the error message
+    // If email or new password parameter is missing
+    die('Missing email or new password parameter');
 }
 ?>

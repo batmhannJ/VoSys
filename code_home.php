@@ -4,13 +4,14 @@
 <div class="wrapper">
 
 	<?php include 'includes/navbar.php'; ?>
-    <div class="content-wrapper">
+	 
+	  <div class="content-wrapper">
 	    <div class="container">
 	      <!-- Main content -->
 	      <section class="content">
 	      	<h1 class="page-header text-center title">
 	      		<img src="images/codg.jpg" alt="CSC Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
-	      		<b>CODE-TG - Coalition of Disciplined<br>Future Enforcers of Todays <br>Generation Election</b></h1>
+	      		<b>Coalition of Disciplined Future Enforcers of Todays Generation Election</b></h1>
 	        <div class="row">
 	        	<div class="col-sm-10 col-sm-offset-1">
 	        		<?php
@@ -75,6 +76,7 @@
                         }
                         else{
                             ?>
+                            <!-- Voting Ballot -->
                             <form method="POST" id="ballotForm" action="submit_ballot_code.php">
     <?php
     include 'includes/slugify.php';
@@ -136,219 +138,6 @@
         </div>';
     }
     ?>
-</form>
-<style>
- /* Style for the position container */
-.position-container {
-    margin: 20px auto; /* Center the container horizontally and add margin on top and bottom */
-    max-width: 800px; /* Set a maximum width to make it responsive */
-    padding: 20px; /* Add padding inside the container */
-    border: 1px solid #ccc; /* Add border for visual separation */
-    border-radius: 10px; /* Add border radius for rounded corners */
-    background-color: #fff; /* Change background color */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.9); /* Add shadow for depth */
-}
-
-/* Style for the box header */
-.box-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #800000;
-    color: #fff;
-    padding: 10px;
-}
-
-/* Adjust space between position and reset button */
-.box-header .box-title {
-    margin-right: auto; /* Push position title to the left */
-}
-
-/* Style for the reset button */
-.reset {
-    margin-left: auto; /* Push reset button to the right */
-}
-
-
-/* Style for the box title */
-.box-title {
-    margin: 0;
-    font-size: 20px;
-    font-weight: 300;
-}
-
-/* Style for the box body */
-.box-body {
-    padding: 10px;
-}
-
-/* Style for the voting instructions */
-.instruction {
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-/* Style for the candidate list */
-.candidate-list ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-/* Bagong istilo para sa mga item sa listahan ng mga kandidato */
-.candidate-list li {
-    display: flex; /* Baguhin ang display sa flex */
-    flex-wrap: wrap; /* Pahintulutan ang pag-wrap ng mga item sa loob ng flex container */
-    justify-content: space-between; /* I-set ang mga item na sa layong pare-pareho */
-    align-items: center; /* I-align ang mga item sa gitna */
-    border-radius: 5px; /* Radius ng border */
-    padding: 10px; /* Padding para sa mga item */
-    margin-bottom: 10px; /* Espasyo sa pagitan ng mga item */
-    background-color: #f9f9f9; /* Kulay ng background */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Shadow para sa depth */
-}
-
-/* Media query para sa mas maliit na mga screen */
-@media (max-width: 768px) {
-    .platform {
-        padding: 6px 16px; /* I-adjust ang padding para sa mas maliit na screen */
-        font-size: 14px; /* I-adjust ang font size */
-        width: auto; /* I-adjust ang lapad */
-    }
-    .candidate-list li {
-        flex-direction: column; /* Baguhin ang direksyon ng flex container sa column */
-        align-items: center; /* I-align ang mga item sa gitna */
-        padding: 15px; /* I-adjust ang padding para sa mas maliit na screen */
-    }
-
-    .candidate-list li img {
-        width: 100px; /* I-adjust ang lapad ng mga larawan para sa mas maliit na screen */
-        height: 100px; /* I-adjust ang taas ng mga larawan para sa mas maliit na screen */
-        margin: 0 auto; /* Ilipat ang mga larawan sa gitna */
-    }
-}
-
-
-
-
-/* Adjusted style for candidate name */
-.cname {
-    font-size: 18px; /* Default font size */
-    margin-left: auto; /* Push candidate name to the end */
-    font-weight: bold;
-}
-
-/* Media query for smaller screens */
-@media (max-width: 768px) {
-    .cname {
-        font-size: 15px; /* Reduce font size on smaller screens */
-    }
-}
-
-/* Adjusted style for platform button */
-.platform {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 20px; /* Make it pill-shaped */
-    padding: 8px 20px; /* Add padding */
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-left: auto; /* Push platform button to the end */
-    display: flex; /* Use flexbox to align icon and text */
-    align-items: center; /* Center items vertically */
-}
-
-.platform:hover {
-    background-color: #0056b3;
-}
-
-.platform i {
-    font-style: normal; /* Ibalik ang font style sa normal */
-    font-weight: bold; /* I-set ang font weight sa bold */
-    font-size: 14px; /* I-adjust ang font size */
-}
-
-
-/* Media query for smaller screens */
-@media (max-width: 768px) {
-  
-    .platform {
-        padding: 6px 16px; /* I-adjust ang padding para sa mas maliit na screen */
-        font-size: 14px; /* I-adjust ang font size */
-        width: auto; /* I-adjust ang lapad */
-        margin: 10px auto; /* Igitna ang platform button */
-    }
-}
-
-    .platform i.fa {
-        margin-right: 0; /* Remove right margin for icon */
-    }
-
-    .platform span.text {
-        display: none; /* Hide text on smaller screens */
-    }
-}
-
-/* Updated styles for candidate image */
-.clist {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-right: 10px;
-    grid-column: span 1;
-}
-
-/* Media query for smaller screens */
-@media (max-width: 768px) {
-    .position-container {
-        padding: 10px; /* Adjust padding for smaller screens */
-    }
-}
-
-/* Media query for larger screens */
-@media (min-width: 768px) {
-    /* Apply flex-end alignment to candidate image */
-    .candidate-list li {
-        display: flex;
-        justify-content: space-between; /* Align items to the end of the container */
-        align-items: center;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        padding: 10px;
-        margin-bottom: 10px;
-        background-color: #f9f9f9;
-    }
-
-    /* Updated styles for candidate image */
-    .clist {
-        width: 100px;
-        height: 100px;
-        object-fit: cover;
-        border-radius: 50%;
-        margin-right: 10px;
-        grid-column: span 1;
-    }
-
-    /* Media query for smaller screens */
-    @media (max-width: 768px) {
-        .candidate-list li {
-            display: flex;
-            align-items: center; /* Center items vertically */
-            margin-bottom: 10px;
-        }
-
-        .clist {
-            width: 80px; /* Reduce image width on smaller screens */
-            height: 80px; /* Reduce image height on smaller screens */
-            margin-right: 10px; /* Adjust margin for smaller screens */
-        }
-    }
-}
-
-
-</style>
-
                                 <div class="text-center">
                                     <button type="button" class="btn btn-primary btn-flat" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
                                 </div>
@@ -374,71 +163,6 @@
                                 </div>
                             </div>
                             </form>
-                        <style>
-              /* Style for the primary button */
-.btn-primary {
-    background-color: #007bff;
-    color: #fff;
-    border-color: #007bff;
-}
-
-/* Style for the success button */
-.btn-success {
-    background-color: #28a745;
-    color: #fff;
-    border-color: #28a745;
-}
-
-/* Style for the secondary button */
-.btn-secondary {
-    color: #6c757d;
-    border-color: #6c757d;
-}
-
-/* Style for the modal header */
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: maroon;
-    color: #fff;
-}
-
-/* Style for the modal title */
-.modal-title {
-    margin-right: auto; /* Pushes the modal title to the left */
-    font-weight: bold;
-}
-
-/* Style for the close button in the modal header */
-.modal-header .close {
-    padding-left: 20px; /* Adds space to the left of the close button */
-    color: #fff;
-    opacity: 0.5;
-}
-
-
-/* Style for the modal body */
-.modal-body {
-    padding: 20px;
-}
-
-/* Style for the modal footer */
-.modal-footer {
-    justify-content: space-between;
-    padding: 20px;
-}
-
-/* Center the text in the text-center div */
-.text-center {
-    text-align: center;
-}
-
-
-                            </style>
-                        
-
-                
 
 				        	<!-- End Voting Ballot -->
 				    		<?php
@@ -538,4 +262,303 @@
     });
 </script>
 </body>
+
+<style>
+
+    /* Style for the position container */
+.position-container {
+    margin: 20px auto; /* Center the container horizontally and add margin on top and bottom */
+    max-width: 800px; /* Set a maximum width to make it responsive */
+    padding: 20px; /* Add padding inside the container */
+    border: 1px solid #ccc; /* Add border for visual separation */
+    border-radius: 10px; /* Add border radius for rounded corners */
+    background-color: #fff; /* Change background color */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.9); /* Add shadow for depth */
+}
+
+/* Style for the box header */
+.box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #800000;
+    color: #fff;
+    padding: 10px;
+}
+
+/* Adjust space between position and reset button */
+.box-header .box-title {
+    margin-right: auto; /* Push position title to the left */
+}
+
+/* Style for the reset button */
+.reset {
+    margin-left: auto; /* Push reset button to the right */
+}
+
+/* Style for the box title */
+.box-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 300;
+}
+
+/* Style for the box body */
+.box-body {
+    padding: 10px;
+}
+
+/* Style for the voting instructions */
+.instruction {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+/* Style for the candidate list */
+.candidate-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Bagong istilo para sa mga item sa listahan ng mga kandidato */
+.candidate-list li {
+    display: flex; /* Baguhin ang display sa flex */
+    flex-wrap: wrap; /* Pahintulutan ang pag-wrap ng mga item sa loob ng flex container */
+    justify-content: space-between; /* I-set ang mga item na sa layong pare-pareho */
+    align-items: center; /* I-align ang mga item sa gitna */
+    border-radius: 5px; /* Radius ng border */
+    padding: 10px; /* Padding para sa mga item */
+    margin-bottom: 10px; /* Espasyo sa pagitan ng mga item */
+    background-color: #f9f9f9; /* Kulay ng background */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Shadow para sa depth */
+}
+
+/* Media query para sa mas maliit na mga screen */
+@media (max-width: 768px) {
+    .platform {
+        padding: 6px 16px; /* I-adjust ang padding para sa mas maliit na screen */
+        font-size: 14px; /* I-adjust ang font size */
+        width: auto; /* I-adjust ang lapad */
+    }
+    .candidate-list li {
+        flex-direction: column; /* Baguhin ang direksyon ng flex container sa column */
+        align-items: center; /* I-align ang mga item sa gitna */
+        padding: 15px; /* I-adjust ang padding para sa mas maliit na screen */
+    }
+
+    .candidate-list li img {
+        width: 100px; /* I-adjust ang lapad ng mga larawan para sa mas maliit na screen */
+        height: 100px; /* I-adjust ang taas ng mga larawan para sa mas maliit na screen */
+        margin: 0 auto; /* Ilipat ang mga larawan sa gitna */
+    }
+}
+
+
+
+/* Adjusted style for candidate name */
+.cname {
+    font-size: 18px; /* Default font size */
+    margin-left: auto; /* Push candidate name to the end */
+    font-weight: bold;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .cname {
+        font-size: 15px; /* Reduce font size on smaller screens */
+    }
+}
+
+/* Adjusted style for platform button */
+.platform {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 20px; /* Make it pill-shaped */
+    padding: 8px 20px; /* Add padding */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: auto; /* Push platform button to the end */
+    display: flex; /* Use flexbox to align icon and text */
+    align-items: center; /* Center items vertically */
+}
+
+.platform:hover {
+    background-color: #0056b3;
+}
+
+.platform i {
+    font-style: normal; /* Ibalik ang font style sa normal */
+    font-weight: bold; /* I-set ang font weight sa bold */
+    font-size: 14px; /* I-adjust ang font size */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  
+    .platform {
+        padding: 6px 16px; /* I-adjust ang padding para sa mas maliit na screen */
+        font-size: 14px; /* I-adjust ang font size */
+        width: auto; /* I-adjust ang lapad */
+        margin: 10px auto; /* Igitna ang platform button */
+    }
+
+
+    .platform i.fa {
+        margin-right: 0; /* Remove right margin for icon */
+    }
+
+    .platform span.text {
+        display: none; /* Hide text on smaller screens */
+    }
+}
+
+/* Updated styles for candidate image */
+.clist {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 10px;
+    grid-column: span 1;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .position-container {
+        padding: 10px; /* Adjust padding for smaller screens */
+    }
+}
+
+/* Media query for larger screens */
+@media (min-width: 768px) {
+    /* Apply flex-end alignment to candidate image */
+    .candidate-list li {
+        display: flex;
+        justify-content: space-between; /* Align items to the end of the container */
+        align-items: center;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: #f9f9f9;
+    }
+
+    /* Updated styles for candidate image */
+    .clist {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-right: 10px;
+        grid-column: span 1;
+    }
+
+    /* Media query for smaller screens */
+    @media (max-width: 768px) {
+        .candidate-list li {
+            display: flex;
+            align-items: center; /* Center items vertically */
+            margin-bottom: 10px;
+        }
+
+        .clist {
+            width: 80px; /* Reduce image width on smaller screens */
+            height: 80px; /* Reduce image height on smaller screens */
+            margin-right: 10px; /* Adjust margin for smaller screens */
+        }
+    }
+}
+
+              /* Style for the primary button */
+              .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+/* Style for the success button */
+.btn-success {
+    background-color: #28a745;
+    color: #fff;
+    border-color: #28a745;
+}
+
+/* Style for the secondary button */
+.btn-secondary {
+    color: #6c757d;
+    border-color: #6c757d;
+}
+
+/* Style for the modal header */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: maroon;
+    color: #fff;
+}
+
+/* Style for the modal title */
+.modal-title {
+    margin-right: auto; /* Pushes the modal title to the left */
+    font-weight: bold;
+}
+
+/* Style for the close button in the modal header */
+.modal-header .close {
+    padding-left: 20px; /* Adds space to the left of the close button */
+    color: #fff;
+    opacity: 0.5;
+}
+
+/* Style for the modal body */
+.modal-body {
+    padding: 20px;
+}
+
+/* Style for the modal footer */
+.modal-footer {
+    justify-content: space-between;
+    padding: 20px;
+}
+
+/* Center the text in the text-center div */
+.text-center {
+    text-align: center;
+}
+
+.content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background-image: url('your-background-image.jpg');
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.page-header {
+    margin-top: 0;
+    color: #fff;
+    text-align: center;
+}
+
+.page-header img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.title {
+    font-size: 36px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+    </style>
+</style>
 </html>
