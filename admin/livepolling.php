@@ -83,64 +83,23 @@ include 'includes/header.php';
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     // Function to generate dual Y-axis bar graph
-    function generateDualYBarGraph(presidentData, vicePresidentData, containerId) {
+    function generateDualYBarGraph(dataPoints, containerId) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
             title: {
                 text: "Vote Counts"
             },
             axisY: {
-                title: "President Votes",
-                titleFontColor: "#4F81BC",
-                lineColor: "#4F81BC",
-                labelFontColor: "#4F81BC",
-                tickColor: "#4F81BC",
+                title: "Vote Count",
                 includeZero: true
-            },
-            axisY2: {
-                title: "Vice President Votes",
-                titleFontColor: "#C0504E",
-                lineColor: "#C0504E",
-                labelFontColor: "#C0504E",
-                tickColor: "#C0504E",
-                includeZero: true
-            },
-            toolTip: {
-                shared: true
-            },
-            legend: {
-                cursor: "pointer",
-                itemclick: toggleDataSeries
             },
             data: [{
                 type: "bar",
-                name: "President Votes",
-                axisYType: "primary",
-                showInLegend: true,
-                color: "#4F81BC",
-                dataPoints: presidentData
-            },
-            {
-                type: "bar",
-                name: "Vice President Votes",
-                axisYType: "secondary",
-                showInLegend: true,
-                color: "#C0504E",
-                dataPoints: vicePresidentData
+                dataPoints: dataPoints
             }]
         });
         chart.render();
         return chart;
-    }
-
-    // Function to toggle data series visibility
-    function toggleDataSeries(e) {
-        if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
-            e.dataSeries.visible = false;
-        } else {
-            e.dataSeries.visible = true;
-        }
-        e.chart.render();
     }
 
     // Initialize chart
@@ -156,9 +115,9 @@ include 'includes/header.php';
             success: function(response) {
                 // Update dual Y-axis bar graph
                 if (!dualYBarChart) {
-                    dualYBarChart = generateDualYBarGraph(response.presidentData, response.vicePresidentData, "dualYBarGraph");
+                    dualYBarChart = generateDualYBarGraph(response.dataPoints, "dualYBarGraph");
                 } else {
-                    updateDualYBarGraph(response.presidentData, response.vicePresidentData, dualYBarChart);
+                    updateDualYBarGraph(response.dataPoints, dualYBarChart);
                 }
             },
             error: function(xhr, status, error) {
@@ -168,9 +127,8 @@ include 'includes/header.php';
     }
 
     // Function to update dual Y-axis bar graph
-    function updateDualYBarGraph(presidentData, vicePresidentData, chart) {
-        chart.options.data[0].dataPoints = presidentData;
-        chart.options.data[1].dataPoints = vicePresidentData;
+    function updateDualYBarGraph(dataPoints, chart) {
+        chart.options.data[0].dataPoints = dataPoints;
         chart.render();
     }
 
