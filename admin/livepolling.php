@@ -178,7 +178,7 @@ include 'includes/header.php';
             } else {
                 clearInterval(interval);
             }
-        }, 50); // Animation speed (adjust as needed)
+        }, 50); // Animation speed
     }
 
     // Call the updateData function initially
