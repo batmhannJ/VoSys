@@ -157,8 +157,27 @@ include 'includes/header.php';
 
     // Function to update bar graph with animation
     function updateBarGraph(newDataPoints, chart) {
-        chart.options.data[0].dataPoints = newDataPoints;
-        chart.render();
+        for (var i = 0; i < newDataPoints.length; i++) {
+            var currentHeight = chart.options.data[0].dataPoints[i].y;
+            var targetHeight = newDataPoints[i].y;
+            var steps = 20; // Number of steps for animation
+            var stepHeight = (targetHeight - currentHeight) / steps;
+            animateBar(i, steps, stepHeight, chart);
+        }
+    }
+
+    // Function to animate individual bar
+    function animateBar(index, steps, stepHeight, chart) {
+        var count = 0;
+        var interval = setInterval(function() {
+            if (count < steps) {
+                chart.options.data[0].dataPoints[index].y += stepHeight;
+                chart.render();
+                count++;
+            } else {
+                clearInterval(interval);
+            }
+        }, 50); // Animation speed (adjust as needed)
     }
 
     // Call the updateData function initially
@@ -167,6 +186,5 @@ include 'includes/header.php';
     // Call the updateData function every 60 seconds (adjust as needed)
     setInterval(updateData, 3000); // 60000 milliseconds = 60 seconds
 </script>
-
 </body>
 </html>
