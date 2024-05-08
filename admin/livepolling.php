@@ -157,21 +157,22 @@ include 'includes/header.php';
 
     // Function to update bar graph with animation
     function updateBarGraph(newDataPoints, chart) {
+        var oldDataPoints = chart.options.data[0].dataPoints;
         for (var i = 0; i < newDataPoints.length; i++) {
-            var currentHeight = chart.options.data[0].dataPoints[i].y;
-            var targetHeight = newDataPoints[i].y;
-            var steps = 20; // Number of steps for animation
-            var stepHeight = (targetHeight - currentHeight) / steps;
-            animateBar(i, steps, stepHeight, chart);
+            var oldVotes = oldDataPoints[i].y;
+            var newVotes = newDataPoints[i].y;
+            var diffVotes = newVotes - oldVotes;
+            animateBar(i, diffVotes, chart);
         }
     }
 
     // Function to animate individual bar
-    function animateBar(index, steps, stepHeight, chart) {
+    function animateBar(index, diffVotes, chart) {
         var count = 0;
         var interval = setInterval(function() {
-            if (count < steps) {
-                chart.options.data[0].dataPoints[index].y += stepHeight;
+            if (count < Math.abs(diffVotes)) {
+                var step = diffVotes > 0 ? 1 : -1;
+                chart.options.data[0].dataPoints[index].y += step;
                 chart.render();
                 count++;
             } else {
