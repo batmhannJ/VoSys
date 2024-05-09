@@ -80,7 +80,7 @@ include 'includes/header.php';
     // Initialize combined chart
     var combinedChart;
 
-    // Function to generate combined bar graph with candidates grouped side by side
+    // Function to generate combined bar graph with president and vice president candidates grouped side by side
     function generateCombinedGraph(presidentDataPoints, vicePresidentDataPoints, containerId) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
