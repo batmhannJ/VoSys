@@ -30,6 +30,7 @@ include 'includes/header.php';
                                 <div class="form-group">
                                     <label for="organization">Select Organization:</label>
                                     <select class="form-control" name="organization" id="organization">
+                                        <option value="">All Organizations</option>
                                         <?php
                                         // Fetch and display organizations
                                         $organizationQuery = $conn->query("SELECT DISTINCT organization FROM voters");
@@ -40,20 +41,20 @@ include 'includes/header.php';
                                         ?>
                                     </select>
                                 </div>
-                                <!-- Remove the filter button -->
+                                <button type="submit" class="btn btn-primary">Filter</button>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Bar Graphs for President, Vice President, and Secretary -->
+            <!-- Bar Graphs for President and Vice President -->
             <div class="row">
                 <!-- President Bar Graph Box -->
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><b>President Candidates</b></h3>
+                            <h3 class="box-title">President Candidates Vote Count</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -67,32 +68,15 @@ include 'includes/header.php';
                 <!-- /.col -->
 
                 <!-- Vice President Bar Graph Box -->
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><b>Vice President Candidates</b></h3>
+                            <h3 class="box-title">Vice President Candidates Vote Count</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
                             <!-- Vice President Bar Graph Container -->
                             <div id="vicePresidentGraph" style="height: 300px;"></div>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                    <!-- /.box -->
-                </div>
-                <!-- /.col -->
-
-                <!-- Secretary Bar Graph Box -->
-                <div class="col-md-4">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>Secretary Candidates</b></h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <!-- Secretary Bar Graph Container -->
-                            <div id="secretaryGraph" style="height: 300px;"></div>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -117,33 +101,7 @@ include 'includes/header.php';
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     // Function to generate bar graph
-    function generateBarGraph(dataPoints, containerId, organization) {
-        var color;
-
-        // Set color based on organization
-        switch (organization) {
-            case 'JPCS':
-                color = "#4CAF50"; // Green
-                break;
-            case 'CSC':
-                color = "#000000"; // Black
-                break;
-            case 'CODE-TG':
-                color = "#800000"; // Maroon
-                break;
-            case 'YMF':
-                color = "#00008b"; // Dark Blue
-                break;
-            case 'HMSO':
-                color = "#cba328"; // Gold
-                break;
-            case 'PASOA':
-                color = "#e6cc00"; // Yellow
-                break;
-            default:
-                color = "#000000"; // Default to Black
-        }
-
+    function generateBarGraph(dataPoints, containerId) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
             title:{
@@ -151,7 +109,9 @@ include 'includes/header.php';
             },
             axisY: {
                 title: "Candidates",
-                includeZero: true
+                labelFormatter: function(e) {
+                    return Math.round(e.value); // Display whole numbers
+                }
             },
             axisX: {
                 title: "Vote Count",
@@ -159,12 +119,16 @@ include 'includes/header.php';
             },
             data: [{
                 type: "bar", // Change type to "bar"
-                dataPoints: dataPoints,
-                color: color // Set the color based on organization
+                dataPoints: dataPoints
             }]
         });
         chart.render();
+        return chart;
     }
+
+    // Initialize charts
+    var presidentChart;
+    var vicePresidentChart;
 
     // Function to fetch updated data from the server
     function updateData() {
@@ -174,14 +138,19 @@ include 'includes/header.php';
             dataType: 'json',
             data: {organization: $('#organization').val()}, // Pass the selected organization to the server
             success: function(response) {
-                // Update president bar graph with color based on organization
-                generateBarGraph(response.presidentData, "presidentGraph", $('#organization').val());
+                // Update president bar graph
+                if (!presidentChart) {
+                    presidentChart = generateBarGraph(response.presidentData, "presidentGraph");
+                } else {
+                    updateBarGraph(response.presidentData, presidentChart);
+                }
 
-                // Update vice president bar graph with color based on organization
-                generateBarGraph(response.vicePresidentData, "vicePresidentGraph", $('#organization').val());
-
-                // Update secretary bar graph with color based on organization
-                generateBarGraph(response.secretaryData, "secretaryGraph", $('#organization').val());
+                // Update vice president bar graph
+                if (!vicePresidentChart) {
+                    vicePresidentChart = generateBarGraph(response.vicePresidentData, "vicePresidentGraph");
+                } else {
+                    updateBarGraph(response.vicePresidentData, vicePresidentChart);
+                }
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data: ' + error);
@@ -189,12 +158,37 @@ include 'includes/header.php';
         });
     }
 
+    // Function to update bar graph with animation
+    function updateBarGraph(newDataPoints, chart) {
+        var oldDataPoints = chart.options.data[0].dataPoints;
+        for (var i = 0; i < newDataPoints.length; i++) {
+            var oldVotes = oldDataPoints[i].y;
+            var newVotes = newDataPoints[i].y;
+            var diffVotes = newVotes - oldVotes;
+            animateBar(i, diffVotes, chart);
+        }
+    }
+
+    // Function to animate individual bar
+    function animateBar(index, diffVotes, chart) {
+        var count = 0;
+        var interval = setInterval(function() {
+            if (count < Math.abs(diffVotes)) {
+                var step = diffVotes > 0 ? 1 : -1;
+                chart.options.data[0].dataPoints[index].y += step;
+                chart.render();
+                count++;
+            } else {
+                clearInterval(interval);
+            }
+        }, 50); // Animation speed
+    }
+
     // Call the updateData function initially
     updateData();
 
     // Call the updateData function every 60 seconds (adjust as needed)
-    setInterval(updateData, 60000); // 60000 milliseconds = 60 seconds
+    setInterval(updateData, 3000); // 60000 milliseconds = 60 seconds
 </script>
-
 </body>
 </html>
