@@ -48,13 +48,12 @@ include 'includes/header.php';
                 </div>
             </div>
 
-            <!-- Dual Bar Graphs for President and Vice President -->
+            <!-- Dual Y-Axis Bar Graph for President Candidates -->
             <div class="row">
-                <!-- President Bar Graph Box -->
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">President Candidates Vote Count</h3>
+                            <h3 class="box-title">President Candidates Vote Count and Percentage</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
@@ -84,19 +83,39 @@ include 'includes/header.php';
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     // Function to generate bar graph
-    function generateBarGraph(dataPoints, containerId) {
+    function generateBarGraph(dataPoints1, dataPoints2, containerId) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
             title:{
-                text: "Vote Counts"
+                text: "Vote Counts and Percentage"
             },
-            axisY: {
-                title: "Vote Count",
-                includeZero: true
+            axisY: [{
+                title: "Vote Count"
+            }, {
+                title: "Percentage",
+                titleFontColor: "#4F81BC",
+                lineColor: "#4F81BC",
+                tickColor: "#4F81BC",
+                labelFontColor: "#4F81BC",
+                suffix: "%",
+                reversed: true
+            }],
+            axisX: {
+                title: "Candidates"
             },
             data: [{
-                type: "bar", // Change type to "bar"
-                dataPoints: dataPoints
+                type: "column",
+                name: "Vote Count",
+                legendText: "Vote Count",
+                showInLegend: true,
+                dataPoints: dataPoints1
+            }, {
+                type: "line",
+                name: "Percentage",
+                legendText: "Percentage",
+                axisYIndex: 1,
+                showInLegend: true,
+                dataPoints: dataPoints2
             }]
         });
         chart.render();
@@ -116,9 +135,9 @@ include 'includes/header.php';
             success: function(response) {
                 // Update president bar graph
                 if (!presidentChart) {
-                    presidentChart = generateBarGraph(response.presidentData, "presidentGraph");
+                    presidentChart = generateBarGraph(response.voteCountData, response.percentageData, "presidentGraph");
                 } else {
-                    updateBarGraph(response.presidentData, presidentChart);
+                    updateBarGraph(response.voteCountData, response.percentageData, presidentChart);
                 }
             },
             error: function(xhr, status, error) {
@@ -128,9 +147,12 @@ include 'includes/header.php';
     }
 
     // Function to update bar graph with animation
-    function updateBarGraph(newDataPoints, chart) {
-        for (var i = 0; i < newDataPoints.length; i++) {
-            chart.options.data[0].dataPoints[i].y = newDataPoints[i].y;
+    function updateBarGraph(newDataPoints1, newDataPoints2, chart) {
+        for (var i = 0; i < newDataPoints1.length; i++) {
+            chart.options.data[0].dataPoints[i].y = newDataPoints1[i].y;
+        }
+        for (var i = 0; i < newDataPoints2.length; i++) {
+            chart.options.data[1].dataPoints[i].y = newDataPoints2[i].y;
         }
         chart.render();
     }
