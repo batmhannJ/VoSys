@@ -50,8 +50,9 @@ include 'includes/header.php';
 
             <!-- Bar Graphs for President and Vice President -->
             <div class="row">
-                <!-- President Bar Graph Box -->
+                <!-- President and Vice President Bar Graphs Side by Side -->
                 <div class="col-md-6">
+                    <!-- President Bar Graph Box -->
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">President Candidates Vote Count</h3>
@@ -66,9 +67,8 @@ include 'includes/header.php';
                     <!-- /.box -->
                 </div>
                 <!-- /.col -->
-
-                <!-- Vice President Bar Graph Box -->
                 <div class="col-md-6">
+                    <!-- Vice President Bar Graph Box -->
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Vice President Candidates Vote Count</h3>
