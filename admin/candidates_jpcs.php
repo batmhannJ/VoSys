@@ -99,7 +99,7 @@
   </div>
     
   <?php include 'includes/footer.php'; ?>
-  <?php include 'includes/candidates_modal.php'; ?>
+  <?php include 'includes/can_jpcs_modal.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
 <script>
