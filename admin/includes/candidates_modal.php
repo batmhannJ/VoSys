@@ -27,7 +27,7 @@
               <h4 class="modal-title"><b>Add New Candidate</b></h4>
             </div>
             <div class="modal-body">
-              <form class="form-horizontal" method="POST" action="candidate_jpcs_add.php" enctype="multipart/form-data">
+              <form class="form-horizontal" method="POST" action="candidates_add.php" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="firstname" class="col-sm-3 control-label">Firstname</label>
 
