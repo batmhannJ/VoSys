@@ -48,21 +48,25 @@ include 'includes/header.php';
                 </div>
             </div>
 
-            <!-- Bar Graphs for President and Vice President -->
-<div class="row">
-    <div class="col-md-12">
-        <div class="box">
-            <div class="box-header with-border">
-                <h3 class="box-title">Election Results</h3>
+            <!-- President and Vice President Bar Graph Box -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Candidates Vote Count</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!-- Bar Graph Container -->
+                            <div id="candidatesGraph" style="height: 300px;"></div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
             </div>
-            <div class="box-body">
-                <!-- Combined Bar Graph Container -->
-                <div id="combinedGraph" style="height: 300px;"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
+            <!-- /.row -->
         </section>
         <!-- /.content -->
     </div>
@@ -78,67 +82,87 @@ include 'includes/header.php';
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-   // Initialize combined chart
-var combinedChart;
+    // Function to generate bar graph
+    function generateBarGraph(dataPoints, containerId) {
+        var chart = new CanvasJS.Chart(containerId, {
+            animationEnabled: true,
+            title:{
+                text: "Candidates Vote Counts"
+            },
+            axisY: {
+                title: "Candidates"
+            },
+            axisX: {
+                title: "Vote Count",
+                includeZero: true
+            },
+            data: [{
+                type: "bar", // Change type to "bar"
+                dataPoints: dataPoints
+            }]
+        });
+        chart.render();
+        return chart;
+    }
 
-// Function to generate combined bar graph with president and vice president candidates grouped side by side
-function generateCombinedGraph(dataPoints, containerId) {
-    var chart = new CanvasJS.Chart(containerId, {
-        animationEnabled: true,
-        title: {
-            text: "Election Results"
-        },
-        axisY: {
-            title: "Vote Count"
-        },
-        axisX: {
-            title: "Candidates"
-        },
-        data: [{
-            type: "stackedColumn",
-            showInLegend: true,
-            name: "President",
-            color: "blue",
-            dataPoints: dataPoints
-        }]
-    });
-    chart.render();
-    return chart;
-}
+    // Initialize chart
+    var candidatesChart;
 
-// Function to update combined bar graph
-function updateCombinedGraph(dataPoints, chart) {
-    chart.options.data[0].dataPoints = dataPoints;
-    chart.render();
-}
+    // Function to fetch updated data from the server
+    function updateData() {
+        $.ajax({
+            url: 'update_data.php', // Change this to the URL of your update data script
+            type: 'GET',
+            dataType: 'json',
+            data: {organization: $('#organization').val()}, // Pass the selected organization to the server
+            success: function(response) {
+                // Merge president and vice president data
+                var mergedData = response.presidentData.concat(response.vicePresidentData);
 
-// Fetch and update data initially
-updateData();
-
-// Fetch and update data every 3 seconds
-setInterval(updateData, 3000);
-
-// Function to fetch updated data from the server
-function updateData() {
-    $.ajax({
-        url: 'update_data.php',
-        type: 'GET',
-        dataType: 'json',
-        data: {organization: $('#organization').val()},
-        success: function(response) {
-            // Update combined bar graph
-            if (!combinedChart) {
-                combinedChart = generateCombinedGraph(response.dataPoints, "combinedGraph");
-            } else {
-                updateCombinedGraph(response.dataPoints, combinedChart);
+                // Update merged bar graph
+                if (!candidatesChart) {
+                    candidatesChart = generateBarGraph(mergedData, "candidatesGraph");
+                } else {
+                    updateBarGraph(mergedData, candidatesChart);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching data: ' + error);
             }
-        },
-        error: function(xhr, status, error) {
-            console.error('Error fetching data: ' + error);
-        }
-    });
-}
-</script>
+        });
+    }
 
+    // Call the updateData function initially
+    updateData();
+
+    // Call the updateData function every 3 seconds
+    setInterval(updateData, 3000); // Adjust as needed
+
+    // Function to update bar graph with animation
+    function updateBarGraph(newDataPoints, chart) {
+        var oldDataPoints = chart.options.data[0].dataPoints;
+        for (var i = 0; i < newDataPoints.length; i++) {
+            var oldVotes = oldDataPoints[i].y;
+            var newVotes = newDataPoints[i].y;
+            var diffVotes = newVotes - oldVotes;
+            animateBar(i, diffVotes, chart);
+        }
+    }
+
+    // Function to animate individual bar
+    function animateBar(index, diffVotes, chart) {
+        var count = 0;
+        var interval = setInterval(function() {
+            if (count < Math.abs(diffVotes)) {
+                var step = diffVotes > 0 ? 1 : -1;
+                chart.options.data[0].dataPoints[index].y += step;
+                chart.render();
+                count++;
+            } else {
+                clearInterval(interval);
+            }
+        }, 50); // Animation speed
+    }
+</script>
 </body>
 </html>
