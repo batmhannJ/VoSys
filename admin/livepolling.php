@@ -50,16 +50,33 @@ include 'includes/header.php';
 
             <!-- Dual Bar Graphs for President and Vice President -->
             <div class="row">
-                <!-- Dual Graph Box -->
-                <div class="col-md-12">
+                <!-- President Bar Graph Box -->
+                <div class="col-md-6">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Vote Counts</h3>
+                            <h3 class="box-title">President Candidates Vote Count</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <!-- Dual Bar Graph Container -->
-                            <div id="dualGraph" style="height: 300px;"></div>
+                            <!-- President Bar Graph Container -->
+                            <div id="presidentGraph" style="height: 300px;"></div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+
+                <!-- Vice President Bar Graph Box -->
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Vice President Candidates Vote Count</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!-- Vice President Bar Graph Container -->
+                            <div id="vicePresidentGraph" style="height: 300px;"></div>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -84,40 +101,31 @@ include 'includes/header.php';
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     // Function to generate bar graph
-    function generateBarGraph(dataPoints1, dataPoints2, containerId) {
+    function generateBarGraph(dataPoints, containerId) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
             title:{
                 text: "Vote Counts"
             },
-            axisY: [{
-                title: "President Candidates"
-            }, {
-                title: "Vice President Candidates",
-                reversed: true
-            }],
+            axisY: {
+                title: "Candidates"
+            },
             axisX: {
                 title: "Vote Count",
                 includeZero: true
             },
             data: [{
-                type: "bar",
-                showInLegend: true,
-                legendText: "President",
-                dataPoints: dataPoints1
-            }, {
-                type: "bar",
-                showInLegend: true,
-                legendText: "Vice President",
-                dataPoints: dataPoints2
+                type: "bar", // Change type to "bar"
+                dataPoints: dataPoints
             }]
         });
         chart.render();
         return chart;
     }
 
-    // Initialize chart
-    var dualChart;
+    // Initialize charts
+    var presidentChart;
+    var vicePresidentChart;
 
     // Function to fetch updated data from the server
     function updateData() {
@@ -127,11 +135,18 @@ include 'includes/header.php';
             dataType: 'json',
             data: {organization: $('#organization').val()}, // Pass the selected organization to the server
             success: function(response) {
-                // Update chart
-                if (!dualChart) {
-                    dualChart = generateBarGraph(response.presidentData, response.vicePresidentData, "dualGraph");
+                // Update president bar graph
+                if (!presidentChart) {
+                    presidentChart = generateBarGraph(response.presidentData, "presidentGraph");
                 } else {
-                    updateBarGraph(response.presidentData, response.vicePresidentData, dualChart);
+                    updateBarGraph(response.presidentData, presidentChart);
+                }
+
+                // Update vice president bar graph
+                if (!vicePresidentChart) {
+                    vicePresidentChart = generateBarGraph(response.vicePresidentData, "vicePresidentGraph");
+                } else {
+                    updateBarGraph(response.vicePresidentData, vicePresidentChart);
                 }
             },
             error: function(xhr, status, error) {
@@ -141,14 +156,29 @@ include 'includes/header.php';
     }
 
     // Function to update bar graph with animation
-    function updateBarGraph(newDataPoints1, newDataPoints2, chart) {
-        for (var i = 0; i < newDataPoints1.length; i++) {
-            chart.options.data[0].dataPoints[i].y = newDataPoints1[i].y;
+    function updateBarGraph(newDataPoints, chart) {
+        var oldDataPoints = chart.options.data[0].dataPoints;
+        for (var i = 0; i < newDataPoints.length; i++) {
+            var oldVotes = oldDataPoints[i].y;
+            var newVotes = newDataPoints[i].y;
+            var diffVotes = newVotes - oldVotes;
+            animateBar(i, diffVotes, chart);
         }
-        for (var i = 0; i < newDataPoints2.length; i++) {
-            chart.options.data[1].dataPoints[i].y = newDataPoints2[i].y;
-        }
-        chart.render();
+    }
+
+    // Function to animate individual bar
+    function animateBar(index, diffVotes, chart) {
+        var count = 0;
+        var interval = setInterval(function() {
+            if (count < Math.abs(diffVotes)) {
+                var step = diffVotes > 0 ? 1 : -1;
+                chart.options.data[0].dataPoints[index].y += step;
+                chart.render();
+                count++;
+            } else {
+                clearInterval(interval);
+            }
+        }, 50); // Animation speed
     }
 
     // Call the updateData function initially
