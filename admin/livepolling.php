@@ -1,150 +1,211 @@
 <?php
-// Include necessary PHP files
-include 'includes/session.php';
-include 'includes/header.php';
+require_once("../conf.php");
 ?>
-<body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
-    <?php include 'includes/navbar.php'; ?>
-    <?php include 'includes/menubar.php'; ?>
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>phpChart - Bar Chart</title>
+</head>
+    <body>
+        <div><span> </span><span id="info1b"></span></div>
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <h1>
-                Election Results
-            </h1>
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li class="active">Results</li>
-            </ol>
-        </section>
-        <!-- Main content -->
-        <section class="content">
-            <!-- Organization Filter -->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-body">
-                            <form method="get" action="">
-                                <div class="form-group">
-                                    <label for="organization">Select Organization:</label>
-                                    <select class="form-control" name="organization" id="organization">
-                                        <option value="">All Organizations</option>
-                                        <?php
-                                        // Fetch and display organizations
-                                        $organizationQuery = $conn->query("SELECT DISTINCT organization FROM voters");
-                                        while($organizationRow = $organizationQuery->fetch_assoc()){
-                                            $selected = ($_GET['organization'] ?? '') == $organizationRow['organization'] ? 'selected' : '';
-                                            echo "<option value='".$organizationRow['organization']."' $selected>".$organizationRow['organization']."</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Filter</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<?php
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Bar 1 Example
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    $s1 = array(2, 6, 7, 10);
+    $ticks = array('a', 'b', 'c', 'd');
+    
+    $pc = new C_PhpChartX(array($s1),'chart1');
+    $pc->add_plugins(array('highlighter','pointLabels'));
+	$pc->set_animate(true);
+	$pc->set_series_default(array(
+		'renderer'=>'plugin::BarRenderer',
+		'pointLabels'=> array('show'=>true)));
+    $pc->set_axes(array(
+         'xaxis'=>array(
+			'renderer'=>'plugin::CategoryAxisRenderer',
+			'ticks'=>$ticks)
+    ));
+    $pc->set_highlighter(array('show'=>false));
+    $pc->bind_js('jqplotDataClick',array(
+		'series'=>'seriesIndex',
+		'point'=>'pointIndex',
+		'data'=>'data'));
+    $pc->draw(400,300);
 
-            <!-- Combined Bar Graph for President and Vice President Candidates -->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Candidates Vote Count</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <!-- Bar Graph Container -->
-                            <div id="candidatesGraph" style="height: 300px;"></div>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                    <!-- /.box -->
-                </div>
-                <!-- /.col -->
-            </div>
-            <!-- /.row -->
-        </section>
-        <!-- /.content -->
-    </div>
 
-    <!-- /.content-wrapper -->
-    <?php include 'includes/footer.php'; ?>
-    <?php include 'includes/votes_modal.php'; ?>
-</div>
-<!-- ./wrapper -->
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Bar 2 Example
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    $s1 = array(2, 6, 7, 10);
+    $s2 = array(7, 5, 3, 2);
+    $ticks = array('a', 'b', 'c', 'd');
 
-<!-- Include necessary scripts -->
-<?php include 'includes/scripts.php'; ?>
+    $pc = new C_PhpChartX(array($s1,$s2),'chart2');
+    $pc->add_plugins(array('highlighter','pointLabels'));
+	$pc->set_animate(true);
+	$pc->set_series_default(array(
+		'renderer'=>'plugin::BarRenderer',
+		'pointLabels'=> array('show'=>true)));
+	$pc->set_axes(array(
+         'xaxis'=>array(
+			'renderer'=>'plugin::CategoryAxisRenderer',
+			'ticks'=>$ticks)
+    ));
+    $pc->bind_js('jqplotDataHighlight',array(
+		'series'=>'seriesIndex',
+		'point'=>'pointIndex',
+		'data'=>'data'));
+    $pc->bind_js('jqplotDataUnhighlight',array('Nothing'));
+    $pc->draw(600,400);
 
-<!-- Bar Graph Script -->
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-<!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-    // Function to generate bar graph for combined candidates
-    function generateBarGraph(dataPoints, containerId, title) {
-        var chart = new CanvasJS.Chart(containerId, {
-            animationEnabled: true,
-            title:{
-                text: title
-            },
-            axisY: {
-                title: "Vote Count"
-            },
-            axisX: {
-                title: "Candidates"
-            },
-            data: [{
-                type: "column",
-                dataPoints: dataPoints
-            }]
-        });
-        chart.render();
-        return chart;
-    }
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Bar 2b Example
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    echo '<div><span id="info2c"></span></div>';
 
-    // Initialize chart
-    var candidatesChart;
+    $s1 = array(2, 6, 7, 10);
+    $s2 = array(7, 5, 3, 2);
+    $ticks = array('a', 'b', 'c', 'd');
 
-    // Function to fetch updated data from the server
-    function updateData() {
-        $.ajax({
-            url: 'update_data.php', // Change this to the URL of your update data script
-            type: 'GET',
-            dataType: 'json',
-            data: {organization: $('#organization').val()}, // Pass the selected organization to the server
-            success: function(response) {
-                // Update combined bar graph for candidates
-                if (!candidatesChart) {
-                    candidatesChart = generateBarGraph(response.candidatesData, "candidatesGraph", "Candidates Vote Count");
-                } else {
-                    updateBarGraph(response.candidatesData, candidatesChart);
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching data: ' + error);
-            }
-        });
-    }
+    $pc = new C_PhpChartX(array(array(array(2,1), array(4,2), array(6,3), array(3,4)), array(array(5,1), array(1,2), array(3,3), array(4,4)), array(array(4,1), array(7,2), array(1,3), array(2,4))),'chart2b');
+    $pc->add_plugins(array('highlighter','pointLabels'));   
+	$pc->set_animate(true);
+    $pc->set_series_default(array('renderer'=>'plugin::BarRenderer',
+                                  'pointLabels'=> array('show'=>true,'location'=>'e','edgeTolerance'=>-15),
+                                  'shadowAngle'=>135,
+                                  'rendererOptions'=>array('barDirection'=>'horizontal')));
+    $pc->set_axes(array(
+         'yaxis'=>array('renderer'=>'plugin::CategoryAxisRenderer')
+    ));
+    //$pc->set_highlighter(array('show'=>false));
+    $pc->bind_js('jqplotDataHighlight',array(
+		'series'=>'seriesIndex',
+		'point'=>'pointIndex',
+		'data'=>'data',
+		'pageX'=>'ev.pageX',
+		'pageY'=>'ev.pageY'));
+    $pc->bind_js('jqplotDataClick',array(
+		'series'=>'seriesIndex',
+		'point'=>'pointIndex',
+		'data'=>'data',
+		'pageX'=>'ev.pageX',
+		'pageY'=>'ev.pageY'),'','info2c');
+    $pc->bind_js('jqplotDataUnhighlight',array('Nothing'));
+    $pc->draw(600,400);
 
-    // Function to update bar graph with animation
-    function updateBarGraph(newDataPoints, chart) {
-        for (var i = 0; i < newDataPoints.length; i++) {
-            chart.options.data[0].dataPoints[i].y = newDataPoints[i].y;
-        }
-        chart.render();
-    }
 
-    // Call the updateData function initially
-    updateData();
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Bar 3 Example
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    $s1 = array(2, 6, 7, 10);
+    $s2 = array(7, 5, 3, 2);
+    $s3 = array(14, 9, 3, 8);
 
-    // Call the updateData function every 60 seconds (adjust as needed)
-    setInterval(updateData, 3000); // 60000 milliseconds = 60 seconds
-</script>
-</body>
+    $pc = new C_PhpChartX(array($s1,$s2,$s3),'chart3');
+    $pc->add_plugins(array('highlighter','pointLabels'));
+    $pc->set_stack_series(true);
+	$pc->set_animate(true);
+    $pc->set_capture_right_click(true);
+    $pc->set_series_default(array(
+		'renderer'=>'plugin::BarRenderer',
+		'rendererOptions'=>array('highlightMouseDown'=>true),
+		'pointLabels'=> array('show'=>true)));
+    $pc->set_legend(array('show'=>true,'location'=>'e','placement'=>'outside'));
+    $pc->bind_js('jqplotDataRightClick',array('series'=>'seriesIndex','point'=>'pointIndex','data'=>'data'));
+    $pc->draw(600,400);
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Bar 4 Example
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    $pc = new C_PhpChartX(array(array(array(2,1), array(6,2), array(7,3), array(10,4)), array(array(7,1), array(5,2),array(3,3),array(2,4)), array(array(14,1), array(9,2), array(9,3), array(8,4))),'chart4');
+    $pc->add_plugins(array('highlighter','pointLabels'));
+	$pc->set_animate(true);
+    $pc->set_stack_series(true);
+    $pc->set_capture_right_click(true);
+    $pc->set_series_default(array('renderer'=>'plugin::BarRenderer',
+                                  'shadowAngle'=>'135',
+                                  'rendererOptions'=>array('highlightMouseDown'=>true,
+                                                          'barDirection'=>'horizontal'),
+                                  'pointLabels'=>array('show'=>true,'formatString'=>'%d')));
+    $pc->set_legend(array('show'=>true,
+                          'location'=>'e',
+                          'placement'=>'outside'));
+    $pc->set_axes(array(
+         'yaxis'=>array('renderer'=>'plugin::CategoryAxisRenderer')
+    ));
+
+    $pc->draw(600,400);
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Bar 5 Example
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    $pc = new C_PhpChartX(array(array(array(2,1), array(null,2), array(7,3), array(10,4))),'chart5');
+    $pc->add_plugins(array('highlighter'));
+	$pc->set_animate(true);
+    $pc->set_series_default(array('renderer'=>'plugin::BarRenderer',
+                                  'shadowAngle'=>135,
+                                  'rendererOptions'=>array('highlightMouseDown'=>true,
+                                                          'barDirection'=>'horizontal'),
+                                  'pointLabels'=>array('show'=>true,'formatString'=>'%d')));
+    $pc->add_series(array('rendererOptions'=>array('highlightMouseDown'=>true, 'barDirection'=>'horizontal')));
+    $pc->set_capture_right_click(true);
+
+    $pc->set_legend(array('show'=>true,
+                          'location'=>'e',
+                          'placement'=>'outside'));
+    $pc->set_yaxes(array(
+         'yaxis'=>array('renderer'=>'plugin::CategoryAxisRenderer')
+    ));
+
+    $pc->draw(600,400);
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Pie 6 Example
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    $pc = new C_PhpChartX(array(array(1,2,3,4)),'chart6');
+    $pc->add_plugins(array('highlighter','pointLabels'));
+	$pc->set_animate(true);
+    $pc->set_series_default(array('renderer'=>'plugin::PieRenderer'));
+    $pc->draw(600,400);
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //Bar 7 Example
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    $s1 = array(2, -6, 7, -5);
+    $ticks = array('a', 'b', 'c', 'd');
+    $pc = new C_PhpChartX(array($s1),'chart7');
+	$pc->set_animate(true, true);
+    $pc->add_plugins(array('highlighter','pointLabels'));
+    $pc->set_series_default(array('renderer'=>'plugin::BarRenderer',
+                                  'rendererOptions'=>array('fillToZero'=>true),
+                                  'pointLabels'=>array('show'=>true)));
+    $pc->set_axes(array(
+         //'yaxis'=>array('autoscale'=>true),
+         'xaxis'=>array('renderer'=>'plugin::CategoryAxisRenderer','ticks'=>$ticks)
+    ));
+
+    $pc->draw(300,300);
+
+?>
+
+    </body>
 </html>
