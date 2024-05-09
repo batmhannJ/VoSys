@@ -11,7 +11,7 @@
 			move_uploaded_file($_FILES['photo']['tmp_name'], '../images/'.$filename);	
 		}
 
-		$sql = "INSERT INTO candidates (category_id, firstname, lastname, photo, platform) VALUES ('$position', '$firstname', '$lastname', '$filename', '$platform')";
+		$sql = "INSERT INTO candidates (election_id, category_id, firstname, lastname, photo, platform) VALUES ('1', '$position', '$firstname', '$lastname', '$filename', '$platform')";
 		if($conn->query($sql)){
 			$_SESSION['success'] = 'Candidate added successfully';
 		}
