@@ -48,25 +48,20 @@ include 'includes/header.php';
                 </div>
             </div>
 
-            <!-- President and Vice President Bar Graph Box -->
+            <!-- Combined Bar Graph for President and Vice President -->
             <div class="row">
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Candidates Vote Count</h3>
+                            <h3 class="box-title">Election Results</h3>
                         </div>
-                        <!-- /.box-header -->
                         <div class="box-body">
-                            <!-- Bar Graph Container -->
-                            <div id="candidatesGraph" style="height: 300px;"></div>
+                            <!-- Combined Bar Graph Container -->
+                            <div id="combinedGraph" style="height: 300px;"></div>
                         </div>
-                        <!-- /.box-body -->
                     </div>
-                    <!-- /.box -->
                 </div>
-                <!-- /.col -->
             </div>
-            <!-- /.row -->
         </section>
         <!-- /.content -->
     </div>
@@ -82,12 +77,15 @@ include 'includes/header.php';
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    // Function to generate bar graph
-    function generateBarGraph(dataPoints, containerId) {
+    // Initialize combined chart
+    var combinedChart;
+
+    // Function to generate combined bar graph
+    function generateCombinedGraph(presidentDataPoints, vicePresidentDataPoints, containerId) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
-            title:{
-                text: "Candidates Vote Counts"
+            title: {
+                text: "Election Results"
             },
             axisY: {
                 title: "Candidates"
@@ -97,71 +95,56 @@ include 'includes/header.php';
                 includeZero: true
             },
             data: [{
-                type: "bar", // Change type to "bar"
-                dataPoints: dataPoints
+                type: "bar",
+                showInLegend: true,
+                name: "President",
+                color: "blue",
+                dataPoints: presidentDataPoints
+            },
+            {
+                type: "bar",
+                showInLegend: true,
+                name: "Vice President",
+                color: "green",
+                dataPoints: vicePresidentDataPoints
             }]
         });
         chart.render();
         return chart;
     }
 
-    // Initialize chart
-    var candidatesChart;
+    // Function to update combined bar graph
+    function updateCombinedGraph(presidentDataPoints, vicePresidentDataPoints, chart) {
+        chart.options.data[0].dataPoints = presidentDataPoints;
+        chart.options.data[1].dataPoints = vicePresidentDataPoints;
+        chart.render();
+    }
+
+    // Fetch and update data initially
+    updateData();
+
+    // Fetch and update data every 3 seconds
+    setInterval(updateData, 3000);
 
     // Function to fetch updated data from the server
     function updateData() {
         $.ajax({
-            url: 'update_data.php', // Change this to the URL of your update data script
+            url: 'update_data.php',
             type: 'GET',
             dataType: 'json',
-            data: {organization: $('#organization').val()}, // Pass the selected organization to the server
+            data: {organization: $('#organization').val()},
             success: function(response) {
-                // Merge president and vice president data
-                var mergedData = response.presidentData.concat(response.vicePresidentData);
-
-                // Update merged bar graph
-                if (!candidatesChart) {
-                    candidatesChart = generateBarGraph(mergedData, "candidatesGraph");
+                // Update combined bar graph
+                if (!combinedChart) {
+                    combinedChart = generateCombinedGraph(response.presidentData, response.vicePresidentData, "combinedGraph");
                 } else {
-                    updateBarGraph(mergedData, candidatesChart);
+                    updateCombinedGraph(response.presidentData, response.vicePresidentData, combinedChart);
                 }
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data: ' + error);
             }
         });
-    }
-
-    // Call the updateData function initially
-    updateData();
-
-    // Call the updateData function every 3 seconds
-    setInterval(updateData, 3000); // Adjust as needed
-
-    // Function to update bar graph with animation
-    function updateBarGraph(newDataPoints, chart) {
-        var oldDataPoints = chart.options.data[0].dataPoints;
-        for (var i = 0; i < newDataPoints.length; i++) {
-            var oldVotes = oldDataPoints[i].y;
-            var newVotes = newDataPoints[i].y;
-            var diffVotes = newVotes - oldVotes;
-            animateBar(i, diffVotes, chart);
-        }
-    }
-
-    // Function to animate individual bar
-    function animateBar(index, diffVotes, chart) {
-        var count = 0;
-        var interval = setInterval(function() {
-            if (count < Math.abs(diffVotes)) {
-                var step = diffVotes > 0 ? 1 : -1;
-                chart.options.data[0].dataPoints[index].y += step;
-                chart.render();
-                count++;
-            } else {
-                clearInterval(interval);
-            }
-        }, 50); // Animation speed
     }
 </script>
 </body>
