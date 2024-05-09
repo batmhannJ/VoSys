@@ -114,14 +114,14 @@
                     <label for="edit_position" class="col-sm-3 control-label">Position</label>
 
                     <div class="col-sm-9">
-                      <select class="form-control" id="edit_position" name="position" required>
+                      <select class="form-control" id="edit_name" name="name" required>
                         <option value="" selected id="posselect"></option>
                         <?php
-                          $sql = "SELECT * FROM positions";
+                          $sql = "SELECT * FROM categories WHERE election_id = 1";
                           $query = $conn->query($sql);
                           while($row = $query->fetch_assoc()){
                             echo "
-                              <option value='".$row['id']."'>".$row['description']."</option>
+                              <option value='".$row['id']."'>".$row['name']."</option>
                             ";
                           }
                         ?>

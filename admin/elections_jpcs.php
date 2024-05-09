@@ -1,9 +1,9 @@
 <?php include 'includes/session.php'; ?>
-<?php include 'includes/header.php'; ?>
-<body class="hold-transition skin-blue sidebar-mini">
+<?php include 'includes/header_jpcs.php'; ?>
+<body class="hold-transition skin-green sidebar-mini">
 <div class="wrapper">
 
-  <?php include 'includes/navbar.php'; ?>
+  <?php include 'includes/navbar_jpcs.php'; ?>
   <?php include 'includes/menubar_jpcs.php'; ?>
 
   <!-- Content Wrapper. Contains page content -->
@@ -53,7 +53,6 @@
       <table id="example1" class="table table-bordered">
         <thead>
             <th scope="col">#</th>
-            <th scope="col">Id</th>
             <th scope="col">Title</th>
             <th scope="col">Voters</th>
             <th scope="col">Status</th>
@@ -69,7 +68,6 @@
 
             echo '<tr>
                     <th scope="row">' . $i++ . '</th>
-                    <td>'.$row['id'].'</td>
                     <td>'.$row['title'].'</td>
                     <td>' . $row['voters'];
             '</td>';

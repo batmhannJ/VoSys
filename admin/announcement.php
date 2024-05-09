@@ -87,23 +87,24 @@
                   </thead>
                   <tbody>
                     <?php
-                    $sql = "SELECT *, announcement.id AS id, 
+                    $sql = "SELECT *, announcement.id_announcement AS id, 
                             announcement.announcement AS announcement, 
                             announcement.startdate AS start, 
                             announcement.addedby AS added
                             FROM announcement
-                            GROUP BY announcement.id
+                            GROUP BY announcement.id_announcement
                             ORDER BY announcement.startdate ASC";
                     $query = $conn->query($sql);
+                    $counter = 1;
                     while ($row = $query->fetch_assoc()) {
                       echo "
                         <tr>
                           <td class='hidden'></td>
                           <td>
-                              <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
-                              <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."'><i class='fa fa-trash'></i> Delete</button>
+                              <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['id_announcement']."'><i class='fa fa-edit'></i> Edit</button>
+                              <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id_announcement']."'><i class='fa fa-trash'></i> Delete</button>
                             </td>
-                          <td>" . $row['id'] . "</td>
+                          <td>" . ($counter++) . "</td>
                           <td>" . $row['announcement'] . "</td>
                           <td>" . $row['startdate'] . "</td>
                           <td>" . $row['addedby'] . "</td>
@@ -130,17 +131,17 @@
 
   <script>
   $(function(){
-    $(document).on('click', '.edit', function(e){
+    $(document).on('click', '.editAnnouncement', function(e){
       e.preventDefault();
-      $('#edit').modal('show');
-      var id = $(this).data('id');
+      $('#editAnnouncement').modal('show');
+      var id = $(this).data('id_announcement');
       getRow(id);
     });
 
-    $(document).on('click', '.delete', function(e){
+    $(document).on('click', '.deleteAnnouncement', function(e){
       e.preventDefault();
-      $('#delete').modal('show');
-      var id = $(this).data('id');
+      $('#deleteAnnouncement').modal('show');
+      var id = $(this).data('id_announcement');
       getRow(id);
     });
 

@@ -42,15 +42,17 @@ include 'includes/header.php';
       <?php
 
 $colors = array(
-  "JPCS" => array("remaining-JPCS " => "#95d097", "voted-JPCS" => "#4CAF50"), // Example color for JPCS
-  "CODE-TG" => array("remaining-CODE-TG" => "#ff6666", "voted-CODE-TG" => "#800000"), // Example color for CODE-TG
-  "CSC" => array("remaining-CSC" => "#595959", "voted-CSC" => "#000000"), // Example color for CSC
-  "YMF" => array("remaining-YMF" => "#4d4dff", "voted-YMF" => "#00008b"), // Example color for YMF
-  "HMSO" => array("remaining-HMSO" => "#e6cc7f", "voted-HMSO" => "#cba328"),
-  "PASOA" => array("remaining-PASOA" => "#fff080", "voted-PASOA" => "#e6cc00")  // Example color for HMSO
+  "JPCS" => array("remaining" => "#95d097", "voted" => "#4CAF50"), // Example color for JPCS
+  "CODE-TG" => array("remaining" => "#ff6666", "voted" => "#800000"), // Example color for CODE-TG
+  "CSC" => array("remaining" => "#595959", "voted" => "#000000"), // Example color for CSC
+  "YMF" => array("remaining" => "#4d4dff", "voted" => "#00008b"), // Example color for YMF
+  "HMSO" => array("remaining" => "#e6cc7f", "voted" => "#cba328"),
+  "PASOA" => array("remaining" => "#fff080", "voted" => "#e6cc00")  // Example color for HMSO
 );
 // Query to get the number of voters voted for all organizations
-$sql_voters_voted = "SELECT voters.organization, COUNT(*) AS voters_voted_count
+
+// Query to count the total number of voters who have voted per organization
+$sql_voters_voted = "SELECT voters.organization, COUNT(DISTINCT votes.voters_id) AS voters_voted_count
                      FROM votes 
                      JOIN voters ON votes.voters_id = voters.id 
                      GROUP BY voters.organization";
@@ -77,7 +79,6 @@ while ($row = $query_remaining_voters->fetch_assoc()) {
 }
 
 // Combine the data to construct the $dataPoints array
-// Combine the data to construct the $dataPoints array
 $dataPoints = array();
 foreach ($voters_voted_by_organization as $organization => $voters_voted_count) {
     $remaining_voters_count = $remaining_voters_by_organization[$organization];
@@ -85,12 +86,12 @@ foreach ($voters_voted_by_organization as $organization => $voters_voted_count) 
     $dataPoints[] = array("organization" => $organization, "label" => "Voters Voted", "y" => $voters_voted_count, "color" => $colors[$organization]["voted"]);
 }
 
-
 // Close connection
 $conn->close();
 
 // Outputting the data points (optional)
 ?>
+
 
     </section>   
   </div>

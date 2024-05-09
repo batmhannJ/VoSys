@@ -2,19 +2,19 @@
 	include 'includes/session.php';
 	include 'includes/slugify.php';
 
-	$sql = "SELECT * FROM positions";
+	$sql = "SELECT * FROM categories WHERE election_id = 1";
 	$pquery = $conn->query($sql);
 
 	$output = '';
 	$candidate = '';
 
-	$sql = "SELECT * FROM positions ORDER BY priority ASC";
+	$sql = "SELECT * FROM categories WHERE election_id = 1 ORDER BY priority ASC";
 	$query = $conn->query($sql);
 	$num = 1;
 	while($row = $query->fetch_assoc()){
-		$input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red '.slugify($row['description']).'" name="'.slugify($row['description'])."[]".'">' : '<input type="radio" class="flat-red '.slugify($row['description']).'" name="'.slugify($row['description']).'">';
+		$input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red '.slugify($row['name']).'" name="'.slugify($row['name'])."[]".'">' : '<input type="radio" class="flat-red '.slugify($row['name']).'" name="'.slugify($row['name']).'">';
 
-		$sql = "SELECT * FROM candidates WHERE position_id='".$row['id']."'";
+		$sql = "SELECT * FROM candidates WHERE category_id='".$row['id']."'";
 		$cquery = $conn->query($sql);
 		while($crow = $cquery->fetch_assoc()){
 			$image = (!empty($crow['photo'])) ? '../images/'.$crow['photo'] : '../images/profile.jpg';
@@ -35,7 +35,7 @@
 				<div class="col-xs-12">
 					<div class="box box-solid" id="'.$row['id'].'">
 						<div class="box-header with-border">
-							<h3 class="box-title"><b>'.$row['description'].'</b></h3>
+							<h3 class="box-title"><b>'.$row['name'].'</b></h3>
 							<div class="pull-right box-tools">
 				                <button type="button" class="btn btn-default btn-sm moveup" data-id="'.$row['id'].'" '.$updisable.'><i class="fa fa-arrow-up"></i> </button>
 				                <button type="button" class="btn btn-default btn-sm movedown" data-id="'.$row['id'].'" '.$downdisable.'><i class="fa fa-arrow-down"></i></button>
@@ -58,7 +58,7 @@
 			</div>
 		';
 
-		$sql = "UPDATE positions SET priority = '$num' WHERE id = '".$row['id']."'";
+		$sql = "UPDATE categories SET priority = '$num' WHERE id = '".$row['id']."'";
 		$conn->query($sql);
 
 		$num++;

@@ -3,7 +3,7 @@
 
 	if(isset($_POST['id'])){
 		$id = $_POST['id'];
-		$sql = "SELECT * FROM positions WHERE id = '$id'";
+		$sql = "SELECT * FROM categories WHERE id = '$id' and election_id = 1";
 		$query = $conn->query($sql);
 		$row = $query->fetch_assoc();
 

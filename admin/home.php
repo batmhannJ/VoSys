@@ -87,18 +87,18 @@
           <div class="small-box">
             <div class="inner">
               <?php
-                $sql = "SELECT * FROM categories";
+                $sql = "SELECT * FROM sub_admin";
                 $query = $conn->query($sql);
 
                 echo "<h3>".$query->num_rows."</h3>";
               ?>
           
-              <p>Categories</p>
+              <p>Sub Admins</p>
             </div>
             <div class="icon">
-              <i class="fa fa-black-tie"></i>
+              <i class="fa fa-user-plus"></i>
             </div>
-            <a href="categories.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="sub_admin.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -176,31 +176,28 @@
           <div class="small-box">
             <div class="inner">
             <?php
-// Query to count the total number of votes in the 'JPCS' organization
-                $sql_total_votes = "SELECT COUNT(*) AS total_votes
-                                    FROM votes 
-                                    JOIN voters ON votes.voters_id = voters.id 
-                                    WHERE voters.organization = 'JPCS'";
-                $result_total_votes = $conn->query($sql_total_votes);
-                $row_total_votes = $result_total_votes->fetch_assoc();
-                $totalVotes = $row_total_votes['total_votes'];
+    // Query to count the total number of voters who have voted
+    $sql_voters_voted = "SELECT COUNT(DISTINCT voters_id) AS voters_voted
+                         FROM votes";
+    $result_voters_voted = $conn->query($sql_voters_voted);
+    $row_voters_voted = $result_voters_voted->fetch_assoc();
+    $votersVoted = $row_voters_voted['voters_voted'];
 
-                // Query to count the total number of voters in the 'JPCS' organization
-                $sql_total_voters = "SELECT COUNT(*) AS total_voters
-                                    FROM voters 
-                                    WHERE organization = 'JPCS'";
-                $result_total_voters = $conn->query($sql_total_voters);
-                $row_total_voters = $result_total_voters->fetch_assoc();
-                $totalNumberOfVoters = $row_total_voters['total_voters'];
+    // Assuming you have a variable containing the total number of voters
+    $totalNumberOfVoters = 12;
 
-                // Calculate and display the percentage
-                if ($totalNumberOfVoters > 0) {
-                    $percentage = ($totalVotes / $totalNumberOfVoters) * 100;
-                    echo "<h3>" . $percentage . "%" ."</h3>";
-                } else {
-                    echo "Total number of voters is 0. Cannot calculate percentage.";
-                }
-                ?>
+    // Calculate and display the percentage
+    if ($totalNumberOfVoters > 0) {
+        $percentage = ($votersVoted / $totalNumberOfVoters) * 100;
+        $percentage = number_format($percentage, 1);
+        echo "<h3>" . $percentage . "%" ."</h3>";
+    } else {
+        echo "Total number of voters is 0. Cannot calculate percentage.";
+    }
+?>
+
+
+
           
               <p>Voters Turnout</p>
             </div>
@@ -208,17 +205,6 @@
               <i class="fa fa-black-tie"></i>
             </div>
             <a href="turnout.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-      </div>
-
-      <p>Live Poll</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-black-tie"></i>
-            </div>
-            <a href="livepoll.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->

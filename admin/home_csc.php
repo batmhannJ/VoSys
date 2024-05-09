@@ -1,7 +1,7 @@
 <?php include 'includes/session.php'; ?>
 <?php include 'includes/slugify.php'; ?>
-<?php include 'includes/header.php'; ?>
-<body class="hold-transition skin-blue sidebar-mini">
+<?php include 'includes/header_csc.php'; ?>
+<body class="hold-transition skin-black sidebar-mini">
 <div class="wrapper">
 
   <?php include 'includes/navbar_csc.php'; ?>
@@ -50,7 +50,7 @@
           <div class="small-box">
             <div class="inner">
               <?php
-                $sql = "SELECT * FROM categories WHERE election_id = 1";
+                $sql = "SELECT * FROM categories WHERE election_id = 20";
                 $query = $conn->query($sql);
 
                 echo "<h3>".$query->num_rows."</h3>";
@@ -61,13 +61,13 @@
             <div class="icon">
               <i class="fa fa-tasks"></i>
             </div>
-            <a href="positions_jpcs.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="positions_csc.php" class="small-box-footer_csc">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
           <!-- small box -->
           <!--<div class="small-box">
             <div class="inner">
               <?php
-                $sql = "SELECT * FROM positions";
+                $sql = "SELECT * FROM categories WHERE election_id = 20";
                 $query = $conn->query($sql);
 
                 echo "<h3>".$query->num_rows."</h3>";
@@ -87,7 +87,7 @@
           <div class="small-box">
             <div class="inner">
               <?php
-                $sql = "SELECT * FROM candidates WHERE election_id = 1";
+                $sql = "SELECT * FROM candidates WHERE election_id = 20";
                 $query = $conn->query($sql);
 
                 echo "<h3>".$query->num_rows."</h3>";
@@ -98,7 +98,7 @@
             <div class="icon">
               <i class="fa fa-black-tie"></i>
             </div>
-            <a href="candidates_jpcs.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="candidates_csc.php" class="small-box-footer_csc">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -107,7 +107,7 @@
           <div class="small-box">
             <div class="inner">
               <?php
-                $sql = "SELECT * FROM voters WHERE organization = 'JPCS'";
+                $sql = "SELECT * FROM voters";
                 $query = $conn->query($sql);
 
                 echo "<h3>".$query->num_rows."</h3>";
@@ -118,7 +118,7 @@
             <div class="icon">
               <i class="fa fa-users"></i>
             </div>
-            <a href="voters_jpcs.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="voters_csc.php" class="small-box-footer_csc">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -126,23 +126,23 @@
           <!-- small box -->
           <div class="small-box">
             <div class="inner">
-              <?php
-                $sql = "SELECT * 
-                        FROM votes 
-                        JOIN voters ON votes.voters_id = voters.id 
-                        WHERE voters.organization = 'JPCS' 
-                        GROUP BY votes.voters_id";
-                $query = $conn->query($sql);
+            <?php
+              $sql = "SELECT COUNT(*) AS total_votes
+                      FROM votes_csc 
+                      JOIN voters ON votes_csc.voters_id = voters.id";
+              $query = $conn->query($sql);
+              $row = $query->fetch_assoc();
+              $totalVotes = $row['total_votes'];
 
-                echo "<h3>".$query->num_rows."</h3>";
-              ?>
+              echo "<h3>".$totalVotes."</h3>";
+            ?>
 
               <p>Voters Voted</p>
             </div>
             <div class="icon">
               <i class="fa fa-edit"></i>
             </div>
-            <a href="votersVoted_jpcs.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="votersVoted_csc.php" class="small-box-footer_csc">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -153,9 +153,9 @@
               <?php
                 $sql = "SELECT voters.id, voters.lastname
         FROM voters
-        LEFT JOIN votes ON voters.id = votes.voters_id
-        WHERE votes.voters_id IS NULL
-        AND voters.organization = 'JPCS'";
+        LEFT JOIN votes_csc ON voters.id = votes_csc.voters_id
+        WHERE votes_csc.voters_id IS NULL
+        AND voters.organization = 'CSC'";
                 $query = $conn->query($sql);
 
                 echo "<h3>".$query->num_rows."</h3>";
@@ -166,7 +166,7 @@
             <div class="icon">
               <i class="fa fa-black-tie"></i>
             </div>
-            <a href="remainingVoters_jpcs.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="remainingVoters_csc.php" class="small-box-footer_csc">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -178,13 +178,13 @@
               $sql = "SELECT * 
                       FROM votes 
                       JOIN voters ON votes.voters_id = voters.id 
-                      WHERE voters.organization = 'JPCS' 
+                      WHERE voters.organization = 'CSC' 
                       GROUP BY votes.voters_id";
               $query = $conn->query($sql);
 
               $totalRows = $query->num_rows; // Total number of rows fetched
               // Assuming you have a database connection, replace 'your_db_connection' with your actual database connection variable
-              $sql_count_voters = "SELECT COUNT(*) AS total_voters FROM voters WHERE organization = 'JPCS'";
+              $sql_count_voters = "SELECT COUNT(*) AS total_voters FROM voters";
               $result_count_voters = $conn->query($sql_count_voters);
               $row_count_voters = $result_count_voters->fetch_assoc();
               $totalNumberOfVoters = $row_count_voters['total_voters'];
@@ -200,6 +200,7 @@
               // Calculate and display the percentage
               if ($totalNumberOfVoters > 0) {
                   $percentage = ($totalRows / $totalNumberOfVoters) * 100;
+                  $percentage = number_format($percentage, 1);
                   echo "<h3>" . $percentage . "%" ."</h3>";
               } else {
                   echo "Total number of voters is 0. Cannot calculate percentage.";
@@ -211,7 +212,7 @@
             <div class="icon">
               <i class="fa fa-black-tie"></i>
             </div>
-            <a href="turnout_jpcs.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="turnout_csc.php" class="small-box-footer_csc">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -228,7 +229,7 @@
       </div>
 
       <?php
-        $sql = "SELECT * FROM positions ORDER BY priority ASC";
+        $sql = "SELECT * FROM categories WHERE election_id = 20 ORDER BY priority ASC";
         $query = $conn->query($sql);
         $inc = 2;
         while($row = $query->fetch_assoc()){
@@ -238,11 +239,11 @@
             <div class='col-sm-6'>
               <div class='box box-solid'>
                 <div class='box-header with-border'>
-                  <h4 class='box-title'><b>".$row['description']."</b></h4>
+                  <h4 class='box-title'><b>".$row['name']."</b></h4>
                 </div>
                 <div class='box-body'>
                   <div class='chart'>
-                    <canvas id='".slugify($row['description'])."' style='height:200px'></canvas>
+                    <canvas id='".slugify($row['name'])."' style='height:200px'></canvas>
                   </div>
                 </div>
               </div>
@@ -337,4 +338,22 @@
   }
 ?>
 </body>
+<style>
+  .small-box-footer_csc{
+    border-bottom-right-radius:20px;
+    border-bottom-left-radius:20px;
+    position:relative;
+    text-align:center;
+    padding:3px 0;
+    color:#0000ff;
+    display:block;
+    z-index:10;
+    background:rgba(0,0,0,0.1);
+    text-decoration:none
+  }
+  .small-box-footer_csc:hover{
+    color: #fff;
+    background-color: black;
+  }
+</style>
 </html>
