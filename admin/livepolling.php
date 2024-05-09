@@ -50,16 +50,16 @@ include 'includes/header.php';
 
             <!-- Dual Bar Graphs for President and Vice President -->
             <div class="row">
-                <!-- President Bar Graph Box -->
+                <!-- Dual Graph Box -->
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">President Candidates Vote Count</h3>
+                            <h3 class="box-title">Vote Counts</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <!-- President Bar Graph Container -->
-                            <div id="presidentGraph" style="height: 300px;"></div>
+                            <!-- Dual Bar Graph Container -->
+                            <div id="dualGraph" style="height: 300px;"></div>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -84,19 +84,32 @@ include 'includes/header.php';
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     // Function to generate bar graph
-    function generateBarGraph(dataPoints, containerId) {
+    function generateBarGraph(dataPoints1, dataPoints2, containerId) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
             title:{
                 text: "Vote Counts"
             },
-            axisY: {
+            axisY: [{
+                title: "President Candidates"
+            }, {
+                title: "Vice President Candidates",
+                reversed: true
+            }],
+            axisX: {
                 title: "Vote Count",
                 includeZero: true
             },
             data: [{
-                type: "bar", // Change type to "bar"
-                dataPoints: dataPoints
+                type: "bar",
+                showInLegend: true,
+                legendText: "President",
+                dataPoints: dataPoints1
+            }, {
+                type: "bar",
+                showInLegend: true,
+                legendText: "Vice President",
+                dataPoints: dataPoints2
             }]
         });
         chart.render();
@@ -104,7 +117,7 @@ include 'includes/header.php';
     }
 
     // Initialize chart
-    var presidentChart;
+    var dualChart;
 
     // Function to fetch updated data from the server
     function updateData() {
@@ -114,11 +127,11 @@ include 'includes/header.php';
             dataType: 'json',
             data: {organization: $('#organization').val()}, // Pass the selected organization to the server
             success: function(response) {
-                // Update president bar graph
-                if (!presidentChart) {
-                    presidentChart = generateBarGraph(response.presidentData, "presidentGraph");
+                // Update chart
+                if (!dualChart) {
+                    dualChart = generateBarGraph(response.presidentData, response.vicePresidentData, "dualGraph");
                 } else {
-                    updateBarGraph(response.presidentData, presidentChart);
+                    updateBarGraph(response.presidentData, response.vicePresidentData, dualChart);
                 }
             },
             error: function(xhr, status, error) {
@@ -128,9 +141,12 @@ include 'includes/header.php';
     }
 
     // Function to update bar graph with animation
-    function updateBarGraph(newDataPoints, chart) {
-        for (var i = 0; i < newDataPoints.length; i++) {
-            chart.options.data[0].dataPoints[i].y = newDataPoints[i].y;
+    function updateBarGraph(newDataPoints1, newDataPoints2, chart) {
+        for (var i = 0; i < newDataPoints1.length; i++) {
+            chart.options.data[0].dataPoints[i].y = newDataPoints1[i].y;
+        }
+        for (var i = 0; i < newDataPoints2.length; i++) {
+            chart.options.data[1].dataPoints[i].y = newDataPoints2[i].y;
         }
         chart.render();
     }
