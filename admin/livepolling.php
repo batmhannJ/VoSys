@@ -48,7 +48,7 @@ include 'includes/header.php';
                 </div>
             </div>
 
-            <!-- Bar Graphs for President and Vice President -->
+            <!-- Dual Bar Graphs for President and Vice President -->
             <div class="row">
                 <!-- President Bar Graph Box -->
                 <div class="col-md-6">
