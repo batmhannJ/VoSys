@@ -48,7 +48,7 @@ include 'includes/header.php';
                 </div>
             </div>
 
-            <!-- Combined Bar Graph for President and Vice President -->
+            <!-- Bar Graphs for President and Vice President -->
             <div class="row">
                 <div class="col-md-12">
                     <div class="box">
@@ -80,7 +80,7 @@ include 'includes/header.php';
     // Initialize combined chart
     var combinedChart;
 
-    // Function to generate combined bar graph
+    // Function to generate combined bar graph with candidates grouped side by side
     function generateCombinedGraph(presidentDataPoints, vicePresidentDataPoints, containerId) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
@@ -88,21 +88,20 @@ include 'includes/header.php';
                 text: "Election Results"
             },
             axisY: {
-                title: "Candidates"
+                title: "Vote Count"
             },
             axisX: {
-                title: "Vote Count",
-                includeZero: true
+                title: "Candidates"
             },
             data: [{
-                type: "bar",
+                type: "stackedColumn",
                 showInLegend: true,
                 name: "President",
                 color: "blue",
                 dataPoints: presidentDataPoints
             },
             {
-                type: "bar",
+                type: "stackedColumn",
                 showInLegend: true,
                 name: "Vice President",
                 color: "green",
