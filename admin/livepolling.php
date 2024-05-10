@@ -161,17 +161,17 @@ include 'includes/header.php';
 
     // Function to update bar graph with animation
     function updateBarGraph(newDataPoints, chart) {
-        var oldDataPoints = chart.options.data[0].dataPoints;
         for (var i = 0; i < newDataPoints.length; i++) {
-            var oldVotes = oldDataPoints[i].y;
             var newVotes = newDataPoints[i].y;
-            var diffVotes = newVotes - oldVotes;
-            animateBar(i, diffVotes, chart);
+            chart.options.data[0].dataPoints[i].y = newVotes; // Update vote count directly
+            animateBar(i, newVotes, chart); // Animate the bar
         }
     }
 
     // Function to animate individual bar
-    function animateBar(index, diffVotes, chart) {
+    function animateBar(index, newVotes, chart) {
+        var oldVotes = chart.options.data[0].dataPoints[index].y;
+        var diffVotes = newVotes - oldVotes;
         var count = 0;
         var interval = setInterval(function() {
             if (count < Math.abs(diffVotes)) {
