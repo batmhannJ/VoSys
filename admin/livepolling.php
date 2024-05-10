@@ -136,17 +136,21 @@ include 'includes/header.php';
             data: {organization: $('#organization').val()}, // Pass the selected organization to the server
             success: function(response) {
                 // Update president bar graph
-                if (!presidentChart) {
-                    presidentChart = generateBarGraph(response.presidentData, "presidentGraph");
-                } else {
-                    updateBarGraph(response.presidentData, presidentChart);
+                if (response.presidentData.length > 0) {
+                    if (!presidentChart) {
+                        presidentChart = generateBarGraph(response.presidentData, "presidentGraph");
+                    } else {
+                        updateBarGraph(response.presidentData, presidentChart);
+                    }
                 }
 
                 // Update vice president bar graph
-                if (!vicePresidentChart) {
-                    vicePresidentChart = generateBarGraph(response.vicePresidentData, "vicePresidentGraph");
-                } else {
-                    updateBarGraph(response.vicePresidentData, vicePresidentChart);
+                if (response.vicePresidentData.length > 0) {
+                    if (!vicePresidentChart) {
+                        vicePresidentChart = generateBarGraph(response.vicePresidentData, "vicePresidentGraph");
+                    } else {
+                        updateBarGraph(response.vicePresidentData, vicePresidentChart);
+                    }
                 }
             },
             error: function(xhr, status, error) {
@@ -185,7 +189,7 @@ include 'includes/header.php';
     updateData();
 
     // Call the updateData function every 60 seconds (adjust as needed)
-    setInterval(updateData, 3000); // 60000 milliseconds = 60 seconds
+    setInterval(updateData, 60000); // 60000 milliseconds = 60 seconds
 </script>
 </body>
 </html>
