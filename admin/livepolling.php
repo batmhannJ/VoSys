@@ -48,7 +48,7 @@ include 'includes/header.php';
                 </div>
             </div>
 
-            <!-- Bar Graphs for President and Vice President -->
+            <!-- Bar Graphs for President and Vice Presidents -->
             <div class="row">
                 <!-- President Bar Graph Box -->
                 <div class="col-md-6">
@@ -67,15 +67,15 @@ include 'includes/header.php';
                 </div>
                 <!-- /.col -->
 
-                <!-- Vice President Bar Graph Box -->
+                <!-- Vice Presidents Bar Graph Box -->
                 <div class="col-md-6">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Vice President Candidates Vote Count</h3>
+                            <h3 class="box-title">Vice Presidents Vote Count</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <!-- Vice President Bar Graph Container -->
+                            <!-- Vice Presidents Bar Graph Container -->
                             <div id="vicePresidentGraph" style="height: 300px;"></div>
                         </div>
                         <!-- /.box-body -->
@@ -123,54 +123,8 @@ include 'includes/header.php';
         return chart;
     }
 
-    // Initialize charts
-    var presidentChart;
-    var vicePresidentChart;
-    
-
-    // Function to fetch updated data from the server
-    function updateData() {
-        $.ajax({
-            url: 'update_data.php', // Change this to the URL of your update data script
-            type: 'GET',
-            dataType: 'json',
-            data: {organization: $('#organization').val()}, // Pass the selected organization to the server
-            success: function(response) {
-                // Update president bar graph
-                if (response.presidentData.length > 0) {
-                    if (!presidentChart) {
-                        presidentChart = generateBarGraph(response.presidentData, "presidentGraph");
-                    } else {
-                        updateBarGraph(response.presidentData, presidentChart);
-                    }
-                }
-
-                // Update vice president bar graph
-                if (response.vicePresidentData.length > 0) {
-                    if (!vicePresidentChart) {
-                        vicePresidentChart = generateBarGraph(response.vicePresidentData, "vicePresidentGraph");
-                    } else {
-                        updateBarGraph(response.vicePresidentData, vicePresidentChart);
-                    }
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching data: ' + error);
-            }
-        });
-    }
-
-    // Function to update bar graph with animation
-    function updateBarGraph(newDataPoints, chart) {
-        for (var i = 0; i < newDataPoints.length; i++) {
-            var newVotes = newDataPoints[i].y;
-            chart.options.data[0].dataPoints[i].y = newVotes; // Update vote count directly
-            animateBar(i, newVotes, chart); // Animate the bar
-        }
-    }
-
-   // Function to fetch updated data and update graphs
-   function updateDataAndGraphs() {
+    // Function to fetch updated data and update graphs
+    function updateDataAndGraphs() {
         $.ajax({
             url: 'update_data.php',
             type: 'GET',
@@ -180,8 +134,8 @@ include 'includes/header.php';
                 presidentChart.options.data[0].dataPoints = response.presidentData;
                 presidentChart.render();
 
-                // Update vice president graph
-                vicePresidentChart.options.data[0].dataPoints = response.vicePresidentData;
+                // Update vice presidents graph
+                vicePresidentChart.options.data[0].dataPoints = response.vicePresidentsData;
                 vicePresidentChart.render();
             },
             error: function(xhr, status, error) {
@@ -193,29 +147,6 @@ include 'includes/header.php';
     // Initialize charts
     var presidentChart = generateBarGraph([], "presidentGraph");
     var vicePresidentChart = generateBarGraph([], "vicePresidentGraph");
-
-    // Function to generate bar graph
-    function generateBarGraph(dataPoints, containerId) {
-        var chart = new CanvasJS.Chart(containerId, {
-            animationEnabled: true,
-            title: {
-                text: "Vote Counts"
-            },
-            axisY: {
-                title: "Candidates"
-            },
-            axisX: {
-                title: "Vote Count",
-                includeZero: true
-            },
-            data: [{
-                type: "bar",
-                dataPoints: dataPoints
-            }]
-        });
-        chart.render();
-        return chart;
-    }
 
     // Call the updateDataAndGraphs function initially
     updateDataAndGraphs();
