@@ -67,16 +67,31 @@ include 'includes/header.php';
                 </div>
                 <!-- /.col -->
 
-                <!-- Vice Presidents Bar Graph Box -->
+                <!-- Vice Presidents Bar Graphs Box -->
                 <div class="col-md-6">
+                    <!-- Vice President for Internal Affairs Bar Graph Box -->
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Vice Presidents for Internal and External Affairs Vote Count</h3>
+                            <h3 class="box-title">Vice President for Internal Affairs Vote Count</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <!-- Vice Presidents Bar Graph Container -->
-                            <div id="vicePresidentGraph" style="height: 300px;"></div>
+                            <!-- Vice President for Internal Affairs Bar Graph Container -->
+                            <div id="vicePresidentInternalGraph" style="height: 300px;"></div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+
+                    <!-- Vice President for External Affairs Bar Graph Box -->
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Vice President for External Affairs Vote Count</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!-- Vice President for External Affairs Bar Graph Container -->
+                            <div id="vicePresidentExternalGraph" style="height: 300px;"></div>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -134,9 +149,13 @@ include 'includes/header.php';
                 presidentChart.options.data[0].dataPoints = response.presidentData;
                 presidentChart.render();
 
-                // Update vice presidents graph
-                vicePresidentChart.options.data[0].dataPoints = response.vicePresidentsData;
-                vicePresidentChart.render();
+                // Update vice president for internal affairs graph
+                vicePresidentInternalChart.options.data[0].dataPoints = response.vicePresidentInternalData;
+                vicePresidentInternalChart.render();
+
+                // Update vice president for external affairs graph
+                vicePresidentExternalChart.options.data[0].dataPoints = response.vicePresidentExternalData;
+                vicePresidentExternalChart.render();
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data: ' + error);
@@ -146,7 +165,8 @@ include 'includes/header.php';
 
     // Initialize charts
     var presidentChart = generateBarGraph([], "presidentGraph");
-    var vicePresidentChart = generateBarGraph([], "vicePresidentGraph");
+    var vicePresidentInternalChart = generateBarGraph([], "vicePresidentInternalGraph");
+    var vicePresidentExternalChart = generateBarGraph([], "vicePresidentExternalGraph");
 
     // Call the updateDataAndGraphs function initially
     updateDataAndGraphs();
