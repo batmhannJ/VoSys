@@ -48,10 +48,10 @@ include 'includes/header.php';
                 </div>
             </div>
 
-            <!-- Dual Bar Graphs for President and Vice President -->
+            <!-- Bar Graphs for President, Vice President for Internal Affairs, and Vice President for External Affairs -->
             <div class="row">
                 <!-- President Bar Graph Box -->
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">President Candidates Vote Count</h3>
@@ -65,24 +65,36 @@ include 'includes/header.php';
                     </div>
                     <!-- /.box -->
                 </div>
-                <!-- /.col -->
-
-                <!-- Vice President Bar Graph Box -->
-                <div class="col-md-6">
+                <!-- Vice President for Internal Affairs Bar Graph Box -->
+                <div class="col-md-4">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Vice President Candidates Vote Count</h3>
+                            <h3 class="box-title">Vice President for Internal Affairs Candidates Vote Count</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <!-- Vice President Bar Graph Container -->
-                            <div id="vicePresidentGraph" style="height: 300px;"></div>
+                            <!-- Vice President for Internal Affairs Bar Graph Container -->
+                            <div id="vpInternalAffairsGraph" style="height: 300px;"></div>
                         </div>
                         <!-- /.box-body -->
                     </div>
                     <!-- /.box -->
                 </div>
-                <!-- /.col -->
+                <!-- Vice President for External Affairs Bar Graph Box -->
+                <div class="col-md-4">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Vice President for External Affairs Candidates Vote Count</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!-- Vice President for External Affairs Bar Graph Container -->
+                            <div id="vpExternalAffairsGraph" style="height: 300px;"></div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
             </div>
             <!-- /.row -->
         </section>
@@ -125,65 +137,44 @@ include 'includes/header.php';
 
     // Initialize charts
     var presidentChart;
-    var vicePresidentChart;
+    var vpInternalAffairsChart;
+    var vpExternalAffairsChart;
 
-    
-    // Function to generate bar graph
-    // Your existing generateBarGraph function here...
+    // Function to fetch updated data and update graphs
+    function updateDataAndGraphs() {
+        $.ajax({
+            url: 'update_data.php',
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                // Update president graph
+                presidentChart.options.data[0].dataPoints = response.presidentData;
+                presidentChart.render();
+
+                // Update vice president for internal affairs graph
+                vpInternalAffairsChart.options.data[0].dataPoints = response.vpInternalAffairsData;
+                vpInternalAffairsChart.render();
+
+                // Update vice president for external affairs graph
+                vpExternalAffairsChart.options.data[0].dataPoints = response.vpExternalAffairsData;
+                vpExternalAffairsChart.render();
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching data: ' + error);
+            }
+        });
+    }
 
     // Initialize charts
-    var presidentChart;
-    var vicePresidentChart;
+    presidentChart = generateBarGraph([], "presidentGraph");
+    vpInternalAffairsChart = generateBarGraph([], "vpInternalAffairsGraph");
+    vpExternalAffairsChart = generateBarGraph([], "vpExternalAffairsGraph");
 
-    // Function to fetch updated data from the server
-    function updateData() {
-    $.ajax({
-        url: 'update_data.php',
-        type: 'GET',
-        dataType: 'json',
-        data: {organization: $('#organization').val()},
-        success: function(response) {
-            // Check if there are no votes yet
-            if (response.noVotes) {
-                // Handle case where there are no votes yet
-                // Display a message or adjust UI accordingly
-                $('#presidentGraph').html('No votes yet');
-                $('#vicePresidentGraph').html('No votes yet');
-            } else {
-                // Update president bar graph
-                if (!presidentChart) {
-                    presidentChart = generateBarGraph(response.presidentData, "presidentGraph");
-                } else {
-                    updateBarGraph(response.presidentData, presidentChart);
-                }
+    // Call the updateDataAndGraphs function initially
+    updateDataAndGraphs();
 
-                // Update vice president bar graph
-                if (!vicePresidentChart) {
-                    vicePresidentChart = generateBarGraph(response.vicePresidentData, "vicePresidentGraph");
-                } else {
-                    updateBarGraph(response.vicePresidentData, vicePresidentChart);
-                }
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error('Error fetching data: ' + error);
-        }
-    });
-}
-
-
-    // Function to update bar graph with animation
-    // Your existing updateBarGraph function here...
-
-    // Function to animate individual bar
-    // Your existing animateBar function here...
-
-    // Call the updateData function initially
-    updateData();
-
-    // Call the updateData function every 3 seconds (adjust as needed)
-    setInterval(updateData, 3000);
+    // Call the updateDataAndGraphs function every 5 seconds
+    setInterval(updateDataAndGraphs, 5000);
 </script>
-
 </body>
 </html>
