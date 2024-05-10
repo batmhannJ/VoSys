@@ -188,8 +188,8 @@ include 'includes/header.php';
     // Call the updateData function initially
     updateData();
 
-    // Call the updateData function every 60 seconds (adjust as needed)
-    setInterval(updateData, 1000); // 60000 milliseconds = 60 seconds
+    // Call the updateData function every 5 seconds (adjust as needed)
+    setInterval(updateData, 5000);
 </script>
 </body>
 </html>

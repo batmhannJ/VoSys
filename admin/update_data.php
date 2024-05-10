@@ -45,5 +45,5 @@ $response = array(
 );
 
 // Return the updated data as JSON
-echo json_encode($response);
+echo json_encode(array('presidentData' => $presidentData, 'vicePresidentData' => $vicePresidentData));
 ?>
