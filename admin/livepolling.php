@@ -128,49 +128,69 @@ include 'includes/header.php';
     var vicePresidentChart;
     
 
-    // Function to fetch updated data from the server and update charts
-function updateData() {
-    $.ajax({
-        url: 'update_data.php',
-        type: 'GET',
-        dataType: 'json',
-        data: { organization: $('#organization').val() },
-        success: function(response) {
-            if (response) {
+    // Function to fetch updated data from the server
+    function updateData() {
+        $.ajax({
+            url: 'update_data.php', // Change this to the URL of your update data script
+            type: 'GET',
+            dataType: 'json',
+            data: {organization: $('#organization').val()}, // Pass the selected organization to the server
+            success: function(response) {
                 // Update president bar graph
-                if (response.presidentData && response.presidentData.length > 0) {
-                    updateBarGraph(response.presidentData, presidentChart);
+                if (response.presidentData.length > 0) {
+                    if (!presidentChart) {
+                        presidentChart = generateBarGraph(response.presidentData, "presidentGraph");
+                    } else {
+                        updateBarGraph(response.presidentData, presidentChart);
+                    }
                 }
 
                 // Update vice president bar graph
-                if (response.vicePresidentData && response.vicePresidentData.length > 0) {
-                    updateBarGraph(response.vicePresidentData, vicePresidentChart);
+                if (response.vicePresidentData.length > 0) {
+                    if (!vicePresidentChart) {
+                        vicePresidentChart = generateBarGraph(response.vicePresidentData, "vicePresidentGraph");
+                    } else {
+                        updateBarGraph(response.vicePresidentData, vicePresidentChart);
+                    }
                 }
-            } else {
-                console.error('Invalid response format:', response);
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching data: ' + error);
             }
-        },
-        error: function(xhr, status, error) {
-            console.error('Error fetching data:', error);
+        });
+    }
+
+    // Function to update bar graph with animation
+    function updateBarGraph(newDataPoints, chart) {
+        for (var i = 0; i < newDataPoints.length; i++) {
+            var newVotes = newDataPoints[i].y;
+            chart.options.data[0].dataPoints[i].y = newVotes; // Update vote count directly
+            animateBar(i, newVotes, chart); // Animate the bar
         }
-    });
-}
+    }
 
-// Function to update bar graph with new data points
-function updateBarGraph(newDataPoints, chart) {
-    newDataPoints.forEach(function(dataPoint, index) {
-        var newDataY = dataPoint.y;
-        chart.options.data[0].dataPoints[index].y = newDataY;
-    });
-    chart.render();
-}
+    // Function to animate individual bar
+    function animateBar(index, newVotes, chart) {
+        var oldVotes = chart.options.data[0].dataPoints[index].y;
+        var diffVotes = newVotes - oldVotes;
+        var count = 0;
+        var interval = setInterval(function() {
+            if (count < Math.abs(diffVotes)) {
+                var step = diffVotes > 0 ? 1 : -1;
+                chart.options.data[0].dataPoints[index].y += step;
+                chart.render();
+                count++;
+            } else {
+                clearInterval(interval);
+            }
+        }, 10); // Animation speed
+    }
 
-// Call the updateData function initially
-updateData();
+    // Call the updateData function initially
+    updateData();
 
-// Call the updateData function every 5 seconds
-setInterval(updateData, 5000);
-
+    // Call the updateData function every 5 seconds (adjust as needed)
+    setInterval(updateData, 5000);
 </script>
 </body>
 </html>
