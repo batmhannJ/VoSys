@@ -108,10 +108,7 @@ include 'includes/header.php';
                 text: "Vote Counts"
             },
             axisY: {
-                title: "Candidates",
-                labelFormatter: function(e) {
-                    return Math.round(e.value); // Display whole numbers
-                }
+                title: "Candidates"
             },
             axisX: {
                 title: "Vote Count",
