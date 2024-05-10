@@ -48,7 +48,7 @@ include 'includes/header.php';
                 </div>
             </div>
 
-            <!-- Bar Graphs for President and Vice President -->
+            <!-- Bar Graphs for President and Vice President for Internal Affairs -->
             <div class="row">
                 <!-- President Bar Graph Box -->
                 <div class="col-md-6">
@@ -67,15 +67,15 @@ include 'includes/header.php';
                 </div>
                 <!-- /.col -->
 
-                <!-- Vice President Bar Graph Box -->
+                <!-- Vice President for Internal Affairs Bar Graph Box -->
                 <div class="col-md-6">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Vice President Candidates Vote Count</h3>
+                            <h3 class="box-title">Vice President for Internal Affairs Candidates Vote Count</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <!-- Vice President Bar Graph Container -->
+                            <!-- Vice President for Internal Affairs Bar Graph Container -->
                             <div id="vicePresidentGraph" style="height: 300px;"></div>
                         </div>
                         <!-- /.box-body -->
@@ -193,29 +193,6 @@ include 'includes/header.php';
     // Initialize charts
     var presidentChart = generateBarGraph([], "presidentGraph");
     var vicePresidentChart = generateBarGraph([], "vicePresidentGraph");
-
-    // Function to generate bar graph
-    function generateBarGraph(dataPoints, containerId) {
-        var chart = new CanvasJS.Chart(containerId, {
-            animationEnabled: true,
-            title: {
-                text: "Vote Counts"
-            },
-            axisY: {
-                title: "Candidates"
-            },
-            axisX: {
-                title: "Vote Count",
-                includeZero: true
-            },
-            data: [{
-                type: "bar",
-                dataPoints: dataPoints
-            }]
-        });
-        chart.render();
-        return chart;
-    }
 
     // Call the updateDataAndGraphs function initially
     updateDataAndGraphs();
