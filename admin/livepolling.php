@@ -126,10 +126,7 @@ include 'includes/header.php';
     // Initialize charts
     var presidentChart;
     var vicePresidentChart;
-    // Function to handle AJAX errors
-function handleAjaxError(xhr, status, error) {
-    console.error('AJAX Error:', error);
-}
+    
 
     // Function to fetch updated data from the server
     function updateData() {
