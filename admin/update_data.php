@@ -26,11 +26,11 @@ if ($queryPresident) {
     echo "Error fetching president data: " . $conn->error;
 }
 
-// Fetch updated data for vice president candidates
+// Fetch updated data for vice president for internal affairs candidates
 $sqlVicePresident = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
                     COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
                     FROM positions 
-                    LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'Vice President'
+                    LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'Vice President for Internal Affairs'
                     LEFT JOIN votes ON candidates.id = votes.candidate_id
                     LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
                     WHERE voters1.organization != ''
