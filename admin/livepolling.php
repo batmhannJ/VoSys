@@ -71,7 +71,7 @@ include 'includes/header.php';
                 <div class="col-md-6">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Vice Presidents Vote Count</h3>
+                            <h3 class="box-title">Vice Presidents for Internal and External Affairs Vote Count</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
