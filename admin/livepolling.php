@@ -169,28 +169,59 @@ include 'includes/header.php';
         }
     }
 
-    // Function to animate individual bar
-    function animateBar(index, newVotes, chart) {
-        var oldVotes = chart.options.data[0].dataPoints[index].y;
-        var diffVotes = newVotes - oldVotes;
-        var count = 0;
-        var interval = setInterval(function() {
-            if (count < Math.abs(diffVotes)) {
-                var step = diffVotes > 0 ? 1 : -1;
-                chart.options.data[0].dataPoints[index].y += step;
-                chart.render();
-                count++;
-            } else {
-                clearInterval(interval);
+   // Function to fetch updated data and update graphs
+   function updateDataAndGraphs() {
+        $.ajax({
+            url: 'update_data.php',
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                // Update president graph
+                presidentChart.options.data[0].dataPoints = response.presidentData;
+                presidentChart.render();
+
+                // Update vice president graph
+                vicePresidentChart.options.data[0].dataPoints = response.vicePresidentData;
+                vicePresidentChart.render();
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching data: ' + error);
             }
-        }, 10); // Animation speed
+        });
     }
 
-    // Call the updateData function initially
-    updateData();
+    // Initialize charts
+    var presidentChart = generateBarGraph([], "presidentGraph");
+    var vicePresidentChart = generateBarGraph([], "vicePresidentGraph");
 
-    // Call the updateData function every 5 seconds (adjust as needed)
-    setInterval(updateData, 5000);
+    // Function to generate bar graph
+    function generateBarGraph(dataPoints, containerId) {
+        var chart = new CanvasJS.Chart(containerId, {
+            animationEnabled: true,
+            title: {
+                text: "Vote Counts"
+            },
+            axisY: {
+                title: "Candidates"
+            },
+            axisX: {
+                title: "Vote Count",
+                includeZero: true
+            },
+            data: [{
+                type: "bar",
+                dataPoints: dataPoints
+            }]
+        });
+        chart.render();
+        return chart;
+    }
+
+    // Call the updateDataAndGraphs function initially
+    updateDataAndGraphs();
+
+    // Call the updateDataAndGraphs function every 5 seconds
+    setInterval(updateDataAndGraphs, 5000);
 </script>
 </body>
 </html>
