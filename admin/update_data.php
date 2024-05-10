@@ -17,8 +17,13 @@ $sqlPresident = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) A
                 WHERE voters1.organization != ''
                 GROUP BY candidates.id";
 $queryPresident = $conn->query($sqlPresident);
-while ($row = $queryPresident->fetch_assoc()) {
-    $presidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+if ($queryPresident) {
+    while ($row = $queryPresident->fetch_assoc()) {
+        $presidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+    }
+} else {
+    // Handle query error
+    echo "Error fetching president data: " . $conn->error;
 }
 
 // Fetch updated data for vice president candidates
@@ -31,8 +36,13 @@ $sqlVicePresident = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastnam
                     WHERE voters1.organization != ''
                     GROUP BY candidates.id";
 $queryVicePresident = $conn->query($sqlVicePresident);
-while ($row = $queryVicePresident->fetch_assoc()) {
-    $vicePresidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+if ($queryVicePresident) {
+    while ($row = $queryVicePresident->fetch_assoc()) {
+        $vicePresidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+    }
+} else {
+    // Handle query error
+    echo "Error fetching vice president data: " . $conn->error;
 }
 
 // Close database connection
