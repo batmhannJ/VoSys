@@ -101,11 +101,11 @@ include 'includes/header.php';
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     // Function to generate bar graph
-    function generateBarGraph(dataPoints, containerId) {
+    function generateBarGraph(dataPoints, containerId, title) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
             title:{
-                text: "Vote Counts"
+                text: title
             },
             axisY: {
                 title: "Candidates"
@@ -123,76 +123,28 @@ include 'includes/header.php';
         return chart;
     }
 
-    // Initialize charts
-    var presidentChart;
-    var vicePresidentChart;
-    
-
-    // Function to fetch updated data from the server
-    function updateData() {
-        $.ajax({
-            url: 'update_data.php', // Change this to the URL of your update data script
-            type: 'GET',
-            dataType: 'json',
-            data: {organization: $('#organization').val()}, // Pass the selected organization to the server
-            success: function(response) {
-                // Update president bar graph
-                if (response.presidentData.length > 0) {
-                    if (!presidentChart) {
-                        presidentChart = generateBarGraph(response.presidentData, "presidentGraph");
-                    } else {
-                        updateBarGraph(response.presidentData, presidentChart);
-                    }
-                }
-
-                // Update vice president bar graph
-                if (response.vicePresidentData.length > 0) {
-                    if (!vicePresidentChart) {
-                        vicePresidentChart = generateBarGraph(response.vicePresidentData, "vicePresidentGraph");
-                    } else {
-                        updateBarGraph(response.vicePresidentData, vicePresidentChart);
-                    }
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching data: ' + error);
-            }
-        });
-    }
-
-    // Function to update bar graph with animation
-    function updateBarGraph(newDataPoints, chart) {
-        for (var i = 0; i < newDataPoints.length; i++) {
-            var newVotes = newDataPoints[i].y;
-            chart.options.data[0].dataPoints[i].y = newVotes; // Update vote count directly
-            animateBar(i, newVotes, chart); // Animate the bar
-        }
-    }
-
-   // Function to fetch updated data and update graphs
-   function updateDataAndGraphs() {
+    // Function to fetch updated data and update graphs
+    function updateDataAndGraphs() {
         $.ajax({
             url: 'update_data.php',
             type: 'GET',
             dataType: 'json',
             success: function(response) {
                 // Update president graph
-                presidentChart.options.data[0].dataPoints = response.presidentData;
-                presidentChart.render();
+                if (response.presidentData.length > 0) {
+                    var presidentChart = generateBarGraph(response.presidentData, "presidentGraph", "President Candidates Vote Count");
+                }
 
-                // Update vice president graph
-                vicePresidentChart.options.data[0].dataPoints = response.vicePresidentData;
-                vicePresidentChart.render();
+                // Update vice president for internal affairs graph
+                if (response.vicePresidentData.length > 0) {
+                    var vicePresidentChart = generateBarGraph(response.vicePresidentData, "vicePresidentGraph", "Vice President for Internal Affairs Candidates Vote Count");
+                }
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data: ' + error);
             }
         });
     }
-
-    // Initialize charts
-    var presidentChart = generateBarGraph([], "presidentGraph");
-    var vicePresidentChart = generateBarGraph([], "vicePresidentGraph");
 
     // Call the updateDataAndGraphs function initially
     updateDataAndGraphs();
