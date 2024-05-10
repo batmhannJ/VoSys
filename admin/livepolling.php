@@ -137,12 +137,19 @@ include 'includes/header.php';
 
     // Function to fetch updated data from the server
     function updateData() {
-        $.ajax({
-            url: 'update_data.php',
-            type: 'GET',
-            dataType: 'json',
-            data: {organization: $('#organization').val()},
-            success: function(response) {
+    $.ajax({
+        url: 'update_data.php',
+        type: 'GET',
+        dataType: 'json',
+        data: {organization: $('#organization').val()},
+        success: function(response) {
+            // Check if there are no votes yet
+            if (response.noVotes) {
+                // Handle case where there are no votes yet
+                // Display a message or adjust UI accordingly
+                $('#presidentGraph').html('No votes yet');
+                $('#vicePresidentGraph').html('No votes yet');
+            } else {
                 // Update president bar graph
                 if (!presidentChart) {
                     presidentChart = generateBarGraph(response.presidentData, "presidentGraph");
@@ -156,12 +163,14 @@ include 'includes/header.php';
                 } else {
                     updateBarGraph(response.vicePresidentData, vicePresidentChart);
                 }
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching data: ' + error);
             }
-        });
-    }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error fetching data: ' + error);
+        }
+    });
+}
+
 
     // Function to update bar graph with animation
     // Your existing updateBarGraph function here...
