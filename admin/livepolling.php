@@ -48,7 +48,7 @@ include 'includes/header.php';
                 </div>
             </div>
 
-            <!-- Bar Graphs for President and Vice Presidents -->
+            <!-- Bar Graphs for Positions -->
             <div class="row">
                 <!-- President Bar Graph Box -->
                 <div class="col-md-6">
@@ -67,9 +67,8 @@ include 'includes/header.php';
                 </div>
                 <!-- /.col -->
 
-                <!-- Vice Presidents Bar Graphs Box -->
+                <!-- Vice President for Internal Affairs Bar Graph Box -->
                 <div class="col-md-6">
-                    <!-- Vice President for Internal Affairs Bar Graph Box -->
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Vice President for Internal Affairs Vote Count</h3>
@@ -82,8 +81,14 @@ include 'includes/header.php';
                         <!-- /.box-body -->
                     </div>
                     <!-- /.box -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
 
-                    <!-- Vice President for External Affairs Bar Graph Box -->
+            <div class="row">
+                <!-- Vice President for External Affairs Bar Graph Box -->
+                <div class="col-md-6">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Vice President for External Affairs Vote Count</h3>
@@ -98,8 +103,139 @@ include 'includes/header.php';
                     <!-- /.box -->
                 </div>
                 <!-- /.col -->
+
+                <!-- Secretary Bar Graph Box -->
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Secretary Vote Count</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!-- Secretary Bar Graph Container -->
+                            <div id="secretaryGraph" style="height: 300px;"></div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
             </div>
             <!-- /.row -->
+
+            <div class="row">
+                <!-- Treasurer Bar Graph Box -->
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Treasurer Vote Count</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!-- Treasurer Bar Graph Container -->
+                            <div id="treasurerGraph" style="height: 300px;"></div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+
+                <!-- Auditor Bar Graph Box -->
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Auditor Vote Count</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!-- Auditor Bar Graph Container -->
+                            <div id="auditorGraph" style="height: 300px;"></div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+
+            <div class="row">
+                <!-- P.R.O Bar Graph Box -->
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">P.R.O Vote Count</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!-- P.R.O Bar Graph Container -->
+                            <div id="proGraph" style="height: 300px;"></div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+
+                <!-- Director for Membership Bar Graph Box -->
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Director for Membership Vote Count</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!-- Director for Membership Bar Graph Container -->
+                            <div id="membershipDirectorGraph" style="height: 300px;"></div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+
+            <div class="row">
+                <!-- Director for Special Project Bar Graph Box -->
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Director for Special Project Vote Count</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!-- Director for Special Project Bar Graph Container -->
+                            <div id="specialProjectDirectorGraph" style="height: 300px;"></div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+
+                <!-- Block A 1st Year Representative Bar Graph Box -->
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Block A 1st Year Representative Vote Count</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!-- Block A 1st Year Representative Bar Graph Container -->
+                            <div id="blockA1stYearRepGraph" style="height: 300px;"></div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+
+            <!-- Add other positions' bar graph boxes here -->
+
         </section>
         <!-- /.content -->
     </div>
@@ -149,13 +285,36 @@ include 'includes/header.php';
                 presidentChart.options.data[0].dataPoints = response.presidentData;
                 presidentChart.render();
 
-                // Update vice president for internal affairs graph
+                // Update vice presidents graphs
                 vicePresidentInternalChart.options.data[0].dataPoints = response.vicePresidentInternalData;
                 vicePresidentInternalChart.render();
 
-                // Update vice president for external affairs graph
                 vicePresidentExternalChart.options.data[0].dataPoints = response.vicePresidentExternalData;
                 vicePresidentExternalChart.render();
+
+                // Update other position graphs here
+                secretaryChart.options.data[0].dataPoints = response.secretaryData;
+                secretaryChart.render();
+
+                treasurerChart.options.data[0].dataPoints = response.treasurerData;
+                treasurerChart.render();
+
+                auditorChart.options.data[0].dataPoints = response.auditorData;
+                auditorChart.render();
+
+                proChart.options.data[0].dataPoints = response.proData;
+                proChart.render();
+
+                membershipDirectorChart.options.data[0].dataPoints = response.membershipDirectorData;
+                membershipDirectorChart.render();
+
+                specialProjectDirectorChart.options.data[0].dataPoints = response.specialProjectDirectorData;
+                specialProjectDirectorChart.render();
+
+                blockA1stYearRepChart.options.data[0].dataPoints = response.blockA1stYearRepData;
+                blockA1stYearRepChart.render();
+
+                // Update other positions' charts here
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data: ' + error);
@@ -167,6 +326,14 @@ include 'includes/header.php';
     var presidentChart = generateBarGraph([], "presidentGraph");
     var vicePresidentInternalChart = generateBarGraph([], "vicePresidentInternalGraph");
     var vicePresidentExternalChart = generateBarGraph([], "vicePresidentExternalGraph");
+    var secretaryChart = generateBarGraph([], "secretaryGraph");
+    var treasurerChart = generateBarGraph([], "treasurerGraph");
+    var auditorChart = generateBarGraph([], "auditorGraph");
+    var proChart = generateBarGraph([], "proGraph");
+    var membershipDirectorChart = generateBarGraph([], "membershipDirectorGraph");
+    var specialProjectDirectorChart = generateBarGraph([], "specialProjectDirectorGraph");
+    var blockA1stYearRepChart = generateBarGraph([], "blockA1stYearRepGraph");
+    // Initialize other positions' charts here
 
     // Call the updateDataAndGraphs function initially
     updateDataAndGraphs();
