@@ -314,7 +314,8 @@ include 'includes/header.php';
                 blockA1stYearRepChart.options.data[0].dataPoints = response.blockA1stYearRepData;
                 blockA1stYearRepChart.render();
 
-                // Update other positions' charts here
+                // Add updates for other positions' charts here
+
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data: ' + error);
@@ -333,7 +334,6 @@ include 'includes/header.php';
     var membershipDirectorChart = generateBarGraph([], "membershipDirectorGraph");
     var specialProjectDirectorChart = generateBarGraph([], "specialProjectDirectorGraph");
     var blockA1stYearRepChart = generateBarGraph([], "blockA1stYearRepGraph");
-    // Initialize other positions' charts here
 
     // Call the updateDataAndGraphs function initially
     updateDataAndGraphs();
