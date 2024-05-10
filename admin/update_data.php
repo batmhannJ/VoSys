@@ -34,6 +34,7 @@ $queryVicePresident = $conn->query($sqlVicePresident);
 while ($row = $queryVicePresident->fetch_assoc()) {
     $vicePresidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
 }
+
 $response = [
     'noVotes' => false, // Set this to true if there are no votes yet
     'presidentData' => $presidentData,
