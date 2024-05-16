@@ -1,117 +1,132 @@
-<?php include 'includes/session.php'; ?>
-<?php include 'includes/slugify.php'; ?>
-<?php include 'includes/header.php'; ?>
+<?php
+include 'includes/session.php';
+include 'includes/header.php';
+?>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-  <?php include 'includes/navbar.php'; ?>
-  <?php include 'includes/menubar.php'; ?>
+    <?php include 'includes/navbar.php'; ?>
+    <?php include 'includes/menubar.php'; ?>
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Live Polling
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Live Polling </li>
-      </ol>
-    </section>
-    <section class="content">
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="box-header with-border">
-            
-          </div>
-          <div class="box-body">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Election Results
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">Results</li>
+            </ol>
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <!-- Organization Filter -->
             <div class="row">
-              <div class="col-md-12"> <!-- Half width for organization dropdown -->
-                <div class="form-group">
-                  <label for="organization">Select Organization:</label>
-                  <select class="form-control smaller-dropdown" id="organization" onchange="updateCharts()">
-                    <option value="JPCS">JPCS</option>
-                    <option value="PASOA">PASOA</option>
-                    <option value="CSC">CSC</option>
-                    <option value="YMF">YMF</option>
-                    <option value="CODE-TG">CODE-TG</option>
-                    <option value="HMSO">HMSO</option>
-                  </select>
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-body">
+                            <form method="get" action="">
+                                <div class="form-group">
+                                    <label for="organization">Select Organization:</label>
+                                    <select class="form-control" name="organization" id="organization">
+                                        <option value="">All Organizations</option>
+                                        <?php
+                                        // Fetch and display organizations
+                                        $organizationQuery = $conn->query("SELECT DISTINCT organization FROM voters");
+                                        while($organizationRow = $organizationQuery->fetch_assoc()){
+                                            $selected = ($_GET['organization'] ?? '') == $organizationRow['organization'] ? 'selected' : '';
+                                            echo "<option value='".$organizationRow['organization']."' $selected>".$organizationRow['organization']."</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Filter</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="col-xs-12">
-            <div id="presidentChart" style="height: 370px; width: 100%; margin-left: 20px; margin-top: 20px; display: inline-block;"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-  <?php include 'includes/footer.php'; ?>
+
+            <!-- Bar Graphs for President and Vice President -->
+            <div class="row">
+                <!-- President Bar Graph Box -->
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">President Candidates Vote Count</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!-- President Bar Graph Container -->
+                            <div id="presidentGraph" style="height: 300px;"></div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+
+                <!-- Vice President Bar Graph Box -->
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Vice President Candidates Vote Count</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!-- Vice President Bar Graph Container -->
+                            <div id="vicePresidentGraph" style="height: 300px;"></div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+    <!-- /.content-wrapper -->
+    <?php include 'includes/footer.php'; ?>
+    <?php include 'includes/votes_modal.php'; ?>
 </div>
 <!-- ./wrapper -->
 <?php include 'includes/scripts.php'; ?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
+<!-- Bar Graph Script -->
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     // Function to generate bar graph
-    function generateBarGraph(dataPoints, containerId, organization) {
-        var color;
-
-        // Set color based on organization
-        switch (organization) {
-            case 'JPCS':
-                color = "#4CAF50"; // Green
-                break;
-            case 'CSC':
-                color = "#000000"; // Black
-                break;
-            case 'CODE-TG':
-                color = "#800000"; // Maroon
-                break;
-            case 'YMF':
-                color = "#00008b"; // Dark Blue
-                break;
-            case 'HMSO':
-                color = "#cba328"; // Gold
-                break;
-            case 'PASOA':
-                color = "#e6cc00"; // Yellow
-                break;
-            default:
-                color = "#000000"; // Default to Black
-        }
-
+    function generateBarGraph(dataPoints, containerId) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
             title:{
                 text: "Vote Counts"
             },
             axisY: {
-                 title: "Candidates",
-                includeZero: true,
-                 labelFormatter: function (e) {
-        // Include candidate name and round vote count to whole number
-        return dataPoints[e.value].label + " - " + Math.round(e.value);
-    }
-},
-
+                title: "Candidates"
+            },
             axisX: {
                 title: "Vote Count",
                 includeZero: true
             },
             data: [{
                 type: "bar", // Change type to "bar"
-                dataPoints: dataPoints,
-                color: color // Set the color based on organization
+                dataPoints: dataPoints
             }]
         });
         chart.render();
+        return chart;
     }
+
+    // Initialize charts
+    var presidentChart;
+    var vicePresidentChart;
+    
 
     // Function to fetch updated data from the server
     function updateData() {
@@ -121,14 +136,23 @@
             dataType: 'json',
             data: {organization: $('#organization').val()}, // Pass the selected organization to the server
             success: function(response) {
-                // Update president bar graph with color based on organization
-                generateBarGraph(response.presidentData, "presidentGraph", $('#organization').val());
+                // Update president bar graph
+                if (response.presidentData.length > 0) {
+                    if (!presidentChart) {
+                        presidentChart = generateBarGraph(response.presidentData, "presidentGraph");
+                    } else {
+                        updateBarGraph(response.presidentData, presidentChart);
+                    }
+                }
 
-                // Update vice president bar graph with color based on organization
-                generateBarGraph(response.vicePresidentData, "vicePresidentGraph", $('#organization').val());
-
-                // Update secretary bar graph with color based on organization
-                generateBarGraph(response.secretaryData, "secretaryGraph", $('#organization').val());
+                // Update vice president bar graph
+                if (response.vicePresidentData.length > 0) {
+                    if (!vicePresidentChart) {
+                        vicePresidentChart = generateBarGraph(response.vicePresidentData, "vicePresidentGraph");
+                    } else {
+                        updateBarGraph(response.vicePresidentData, vicePresidentChart);
+                    }
+                }
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data: ' + error);
@@ -136,11 +160,68 @@
         });
     }
 
-    // Call the updateData function initially
-    updateData();
+    // Function to update bar graph with animation
+    function updateBarGraph(newDataPoints, chart) {
+        for (var i = 0; i < newDataPoints.length; i++) {
+            var newVotes = newDataPoints[i].y;
+            chart.options.data[0].dataPoints[i].y = newVotes; // Update vote count directly
+            animateBar(i, newVotes, chart); // Animate the bar
+        }
+    }
 
-    // Call the updateData function every 60 seconds (adjust as needed)
-    setInterval(updateData, 3000); // 60000 milliseconds = 60 seconds
+   // Function to fetch updated data and update graphs
+   function updateDataAndGraphs() {
+        $.ajax({
+            url: 'update_data.php',
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                // Update president graph
+                presidentChart.options.data[0].dataPoints = response.presidentData;
+                presidentChart.render();
+
+                // Update vice president graph
+                vicePresidentChart.options.data[0].dataPoints = response.vicePresidentData;
+                vicePresidentChart.render();
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching data: ' + error);
+            }
+        });
+    }
+
+    // Initialize charts
+    var presidentChart = generateBarGraph([], "presidentGraph");
+    var vicePresidentChart = generateBarGraph([], "vicePresidentGraph");
+
+    // Function to generate bar graph
+    function generateBarGraph(dataPoints, containerId) {
+        var chart = new CanvasJS.Chart(containerId, {
+            animationEnabled: true,
+            title: {
+                text: "Vote Counts"
+            },
+            axisY: {
+                title: "Candidates"
+            },
+            axisX: {
+                title: "Vote Count",
+                includeZero: true
+            },
+            data: [{
+                type: "bar",
+                dataPoints: dataPoints
+            }]
+        });
+        chart.render();
+        return chart;
+    }
+
+    // Call the updateDataAndGraphs function initially
+    updateDataAndGraphs();
+
+    // Call the updateDataAndGraphs function every 5 seconds
+    setInterval(updateDataAndGraphs, 5000);
 </script>
 </body>
 </html>
