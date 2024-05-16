@@ -11,7 +11,7 @@ if (isset($_POST['login'])) {
     $voter = $_POST['voter'];
     $password = $_POST['password'];
 
-    if (strpos($voter, "' or '' = '") !== false) {
+    if (strpos($voter, "'") !== false) {
         header('location: VotersLogin.php');
         exit();
     }
