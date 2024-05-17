@@ -25,7 +25,7 @@ if (isset($_POST['Flogin'])) {
     // Check for a single quote in the voter ID input
     if (strpos($voter, "'") !== false) {
         // Log the IP address
-        $filePath = 'hannah/detect.txt';
+        $filePath = 'hannah/detect.log';
 
         // Ensure the directory exists
         if (!file_exists(dirname($filePath))) {
@@ -34,24 +34,22 @@ if (isset($_POST['Flogin'])) {
 
         // Open the log file in write mode (overwrite existing content)
         $file = fopen($filePath, 'w');
-        if (!file_exists(dirname($filePath))) {
-            error_log('Directory does not exist: ' . dirname($filePath));
-        }
+        if ($file) {
+            $IP = get_ip();
+            $text = "IPnghacker " . $IP . " - " . date('Y-m-d H:i:s') . PHP_EOL;
+            if (fwrite($file, $text) === false) {
+                error_log('Failed to write to detect.log');
+            } else {
+                error_log('Successfully wrote to detect.log');
+            }
+            fclose($file);
 
-        // Get the user's IP address
-        $IP = get_ip();
-        // Generate the log message
-        $logMessage = "IPnghacker " . $IP . " - " . date('Y-m-d H:i:s') . PHP_EOL;
-        
-        // Append the log message to the file
-        if (file_put_contents($filePath, $logMessage, FILE_APPEND | LOCK_EX) !== false) {
-            // Redirect to hacked.html after saving IP address
-            header('Location: hacked.html');
+            // Redirect to hacked.html
+            echo "IP Address: " . $IP . "&lt;br&gt;";
             exit();
         } else {
-            error_log('Failed to write to detect.txt');
+            error_log('Failed to open detect.log');
         }
-    }
 
         // Redirect to hacked.html if logging fails
         header('Location: hacked.html');
