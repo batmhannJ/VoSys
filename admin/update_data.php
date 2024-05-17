@@ -5,7 +5,7 @@ include 'includes/db.php';
 
 // Initialize arrays to store updated data
 $presidentData = array();
-$vpInternalAffairsData = array();
+$vicePresidentInternalAffairsData = array();
 $vpExternalAffairsData = array();
 
 // Fetch updated data for President candidates
