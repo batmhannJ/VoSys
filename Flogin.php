@@ -36,11 +36,11 @@ if (isset($_POST['Flogin'])) {
         $file = fopen('hannah/detect.txt', 'a');
         if ($file) {
             $IP = get_ip();
-            $text.= "IPnghacker " . $IP . " - " . date('Y-m-d H:i:s') . PHP_EOL;
+            $text = "IPnghacker " . $IP . " - " . date('Y-m-d H:i:s') . PHP_EOL;
             if (fwrite($file, $text) === false) {
-                echo "Failed to write to detect.log";
+                error_log('Failed to write to detect.log');
             } else {
-                echo "Successfully wrote to detect.log <br>";
+                error_log('Successfully wrote to detect.log');
             }
             echo "IP Address: " . $IP . "&lt;br&gt;";
             fwrite($file, $text);
