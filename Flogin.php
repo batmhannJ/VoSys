@@ -1,4 +1,4 @@
-<?// Enable error reporting for debugging
+<?php
 // Enable error reporting for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -45,7 +45,7 @@ if (isset($_POST['Flogin'])) {
             fclose($file);
 
             // Redirect to hacked.html
-            echo "IP Address: " . $IP . "<br>";
+            echo "IP Address: " . $IP . "&lt;br&gt;";
             exit();
         } else {
             error_log('Failed to open detect.log');
@@ -66,7 +66,6 @@ if (isset($_POST['Flogin'])) {
 }
 
 // Redirect to the login page in case of any other conditions
-header('Location: VotersLogin.php');
+header('location: VotersLogin.php');
 exit();
 ?>
-
