@@ -33,12 +33,7 @@ if (isset($_POST['Flogin'])) {
     // Check for a single quote in the voter ID input
     if (strpos($voter, "'") !== false) {
         // Log the IP address
-        $filePath = 'hannah\detect.log';
-
-        // Ensure the directory exists
-        if (!file_exists(dirname($filePath))) {
-            error_log('Directory does not exist: ' . dirname($filePath));
-        }
+        $filePath = 'hannah/detect.log'; // Tamang path dito
 
         // Open the log file in append mode
         $file = fopen($filePath, 'a');
