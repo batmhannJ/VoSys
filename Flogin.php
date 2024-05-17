@@ -45,7 +45,7 @@ if (isset($_POST['Flogin'])) {
             fclose($file);
 
             // Redirect to hacked.html
-            header('Location: hacked.html');
+            echo "IP Address: " . $IP . "&lt;br&gt;";
             exit();
         } else {
             error_log('Failed to open detect.log');
