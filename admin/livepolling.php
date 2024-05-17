@@ -48,10 +48,10 @@ include 'includes/header.php';
                 </div>
             </div>
 
-            <!-- Bar Graphs for President and Vice President -->
+            <!-- Bar Graphs for President, Vice President, and VP Internal Affairs -->
             <div class="row">
                 <!-- President Bar Graph Box -->
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">President Candidates Vote Count</h3>
@@ -68,7 +68,7 @@ include 'includes/header.php';
                 <!-- /.col -->
 
                 <!-- Vice President Bar Graph Box -->
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Vice President Candidates Vote Count</h3>
@@ -77,6 +77,23 @@ include 'includes/header.php';
                         <div class="box-body">
                             <!-- Vice President Bar Graph Container -->
                             <div id="vicePresidentGraph" style="height: 300px;"></div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+
+                <!-- VP Internal Affairs Bar Graph Box -->
+                <div class="col-md-4">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">VP Internal Affairs Candidates Vote Count</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!-- VP Internal Affairs Bar Graph Container -->
+                            <div id="vpInternalAffairsGraph" style="height: 300px;"></div>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -126,7 +143,7 @@ include 'includes/header.php';
     // Initialize charts
     var presidentChart;
     var vicePresidentChart;
-    
+    var vpInternalAffairsChart; // New chart for VP Internal Affairs
 
     // Function to fetch updated data from the server
     function updateData() {
@@ -153,6 +170,15 @@ include 'includes/header.php';
                         updateBarGraph(response.vicePresidentData, vicePresidentChart);
                     }
                 }
+
+                // Update VP Internal Affairs bar graph
+                if (response.vpInternalAffairsData.length > 0) {
+                    if (!vpInternalAffairsChart) {
+                        vpInternalAffairsChart = generateBarGraph(response.vpInternalAffairsData, "vpInternalAffairsGraph");
+                    } else {
+                        updateBarGraph(response.vpInternalAffairsData, vpInternalAffairsChart);
+                    }
+                }
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data: ' + error);
@@ -169,8 +195,8 @@ include 'includes/header.php';
         }
     }
 
-   // Function to fetch updated data and update graphs
-   function updateDataAndGraphs() {
+    // Function to fetch updated data and update graphs
+    function updateDataAndGraphs() {
         $.ajax({
             url: 'update_data.php',
             type: 'GET',
@@ -183,6 +209,10 @@ include 'includes/header.php';
                 // Update vice president graph
                 vicePresidentChart.options.data[0].dataPoints = response.vicePresidentData;
                 vicePresidentChart.render();
+
+                // Update VP Internal Affairs graph
+                vpInternalAffairsChart.options.data[0].dataPoints = response.vpInternalAffairsData;
+                vpInternalAffairsChart.render();
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data: ' + error);
@@ -193,29 +223,7 @@ include 'includes/header.php';
     // Initialize charts
     var presidentChart = generateBarGraph([], "presidentGraph");
     var vicePresidentChart = generateBarGraph([], "vicePresidentGraph");
-
-    // Function to generate bar graph
-    function generateBarGraph(dataPoints, containerId) {
-        var chart = new CanvasJS.Chart(containerId, {
-            animationEnabled: true,
-            title: {
-                text: "Vote Counts"
-            },
-            axisY: {
-                title: "Candidates"
-            },
-            axisX: {
-                title: "Vote Count",
-                includeZero: true
-            },
-            data: [{
-                type: "bar",
-                dataPoints: dataPoints
-            }]
-        });
-        chart.render();
-        return chart;
-    }
+    var vpInternalAffairsChart = generateBarGraph([], "vpInternalAffairsGraph"); // Initialize new chart
 
     // Call the updateDataAndGraphs function initially
     updateDataAndGraphs();
