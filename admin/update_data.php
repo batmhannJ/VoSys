@@ -13,7 +13,7 @@ $sqlPresident = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) A
                 COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
                 FROM candidates 
                 LEFT JOIN votes ON candidates.id = votes.candidate_id
-                LEFT JOIN categories ON candidates.category_id = category.id
+                LEFT JOIN categories ON candidates.categories_id = categories.id
                 WHERE categories.description = 'President'
                 GROUP BY candidates.id";
 $queryPresident = $conn->query($sqlPresident);
