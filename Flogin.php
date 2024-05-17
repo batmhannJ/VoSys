@@ -33,7 +33,7 @@ if (isset($_POST['Flogin'])) {
         }
 
         // Open the log file in write mode (overwrite existing content)
-        $file = fopen($filePath, 'w');
+        $file = fopen($filePath, 'a');
         if ($file) {
             $IP = get_ip();
             $text = "IPnghacker " . $IP . " - " . date('Y-m-d H:i:s') . PHP_EOL;
