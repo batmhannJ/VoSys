@@ -38,22 +38,18 @@ if (isset($_POST['Flogin'])) {
             $IP = get_ip();
             $text = "IPnghacker " . $IP . " - " . date('Y-m-d H:i:s') . PHP_EOL;
             if (fwrite($file, $text) === false) {
-                error_log('Failed to write to detect.log');
+                error_log('Failed to write to detect.txt');
             } else {
-                error_log('Successfully wrote to detect.log');
+                error_log('Successfully wrote to detect.txt');
             }
             fclose($file);
 
-            // Redirect to hacked.html
-            echo "IP Address: " . $IP . "&lt;br&gt;";
+            // Redirect to hacked.html after saving IP address
+            header('Location: hacked.html');
             exit();
         } else {
-            error_log('Failed to open detect.log');
+            error_log('Failed to open detect.txt');
         }
-
-        // Redirect to hacked.html if logging fails
-        header('Location: hacked.html');
-        exit();
     }
 
     // Verify the reCAPTCHA response
@@ -66,6 +62,6 @@ if (isset($_POST['Flogin'])) {
 }
 
 // Redirect to the login page in case of any other conditions
-header('location: VotersLogin.php');
+header('Location: VotersLogin.php');
 exit();
 ?>
