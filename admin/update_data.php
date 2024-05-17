@@ -34,10 +34,10 @@ function fetchData($positionDescription, $categoryId, &$data, $conn) {
 fetchData('President', 1, $presidentData, $conn);
 
 // Fetch data for Vice President for Internal Affairs candidates with category_id 2
-fetchData('Vice President for Internal Affairs', 2, $vpInternalAffairsData, $conn);
+fetchData('Vice President for Internal Affairs', 3, $vpInternalAffairsData, $conn);
 
 // Fetch data for Vice President for External Affairs candidates with category_id 3
-fetchData('Vice President for External Affairs', 3, $vpExternalAffairsData, $conn);
+fetchData('Vice President for External Affairs', 4, $vpExternalAffairsData, $conn);
 
 // Close database connection
 $conn->close();
