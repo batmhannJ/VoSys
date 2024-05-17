@@ -13,16 +13,38 @@
                     <label for="firstname" class="col-sm-3 control-label">Firstname</label>
 
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="firstname" name="firstname" value="<?php echo $voter['firstname']; ?>">
+                        <input type="text" class="form-control" id="firstname" name="firstname" oninput="validateFirstName(this)" value="<?php echo $voter['firstname']; ?>">
                     </div>
                 </div>
+                <script>
+                    function validateFirstName(input) {
+                        // Regular expression to match only letters
+                        var letters = /^[A-Za-z]+$/;
+                        // Check if the input value matches the regular expression
+                        if (!input.value.match(letters)) {
+                            // If it doesn't match, clear the input value
+                            input.value = input.value.replace(/[^A-Za-z]/g, '');
+                        }
+                    }
+                </script>
                 <div class="form-group">
                     <label for="lastname" class="col-sm-3 control-label">Lastname</label>
 
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="lastname" name="lastname" value="<?php echo $voter['lastname']; ?>">
+                        <input type="text" class="form-control" id="lastname" name="lastname" oninput="validateLastName(this)" value="<?php echo $voter['lastname']; ?>">
                     </div>
                 </div>
+                <script>
+                    function validateLastName(input) {
+                    // Regular expression to match only letters
+                        var letters = /^[A-Za-z]+$/;
+                        // Check if the input value matches the regular expression
+                        if (!input.value.match(letters)) {
+                            // If it doesn't match, clear the input value
+                            input.value = input.value.replace(/[^A-Za-z]/g, '');
+                        }
+                    }
+                </script>
                 <div class="form-group">
                     <label for="curr_password" class="col-sm-3 control-label">Current Password:</label>
 
