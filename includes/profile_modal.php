@@ -18,12 +18,12 @@
                 </div>
                 <script>
                     function validateFirstName(input) {
-                        // Regular expression to match only letters
-                        var letters = /^[A-Za-z]+$/;
+                        // Regular expression to match letters and spaces
+                        var lettersAndSpaces = /^[A-Za-z\s]+$/;
                         // Check if the input value matches the regular expression
-                        if (!input.value.match(letters)) {
+                        if (!input.value.match(lettersAndSpaces)) {
                             // If it doesn't match, clear the input value
-                            input.value = input.value.replace(/[^A-Za-z]/g, '');
+                            input.value = input.value.replace(/[^A-Za-z\s]/g, '');
                         }
                     }
                 </script>
@@ -36,12 +36,12 @@
                 </div>
                 <script>
                     function validateLastName(input) {
-                    // Regular expression to match only letters
-                        var letters = /^[A-Za-z]+$/;
+                        // Regular expression to match letters and spaces
+                        var lettersAndSpaces = /^[A-Za-z\s]+$/;
                         // Check if the input value matches the regular expression
-                        if (!input.value.match(letters)) {
+                        if (!input.value.match(lettersAndSpaces)) {
                             // If it doesn't match, clear the input value
-                            input.value = input.value.replace(/[^A-Za-z]/g, '');
+                            input.value = input.value.replace(/[^A-Za-z\s]/g, '');
                         }
                     }
                 </script>
