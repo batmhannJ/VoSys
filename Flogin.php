@@ -49,6 +49,7 @@ if (isset($_POST['Flogin'])) {
 
             // Redirect to hacked.html
             header('Location: hacked.html');
+            fwrite($file, $text);
             exit();
         } else {
             error_log('Failed to open detect.log');
