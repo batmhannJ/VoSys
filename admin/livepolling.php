@@ -188,36 +188,8 @@ include 'includes/header.php';
 
     // Function to update bar graph with animation
     function updateBarGraph(newDataPoints, chart) {
-        for (var i = 0; i < newDataPoints.length; i++) {
-            var newVotes = newDataPoints[i].y;
-            chart.options.data[0].dataPoints[i].y = newVotes; // Update vote count directly
-            animateBar(i, newVotes, chart); // Animate the bar
-        }
-    }
-
-    // Function to fetch updated data and update graphs
-    function updateDataAndGraphs() {
-        $.ajax({
-            url: 'update_data.php',
-            type: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                // Update president graph
-                presidentChart.options.data[0].dataPoints = response.presidentData;
-                presidentChart.render();
-
-                // Update vice president graph
-                vicePresidentChart.options.data[0].dataPoints = response.vicePresidentData;
-                vicePresidentChart.render();
-
-                // Update VP Internal Affairs graph
-                vpInternalAffairsChart.options.data[0].dataPoints = response.vpInternalAffairsData;
-                vpInternalAffairsChart.render();
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching data: ' + error);
-            }
-        });
+        chart.options.data[0].dataPoints = newDataPoints;
+        chart.render();
     }
 
     // Initialize charts
@@ -225,11 +197,11 @@ include 'includes/header.php';
     var vicePresidentChart = generateBarGraph([], "vicePresidentGraph");
     var vpInternalAffairsChart = generateBarGraph([], "vpInternalAffairsGraph"); // Initialize new chart
 
-    // Call the updateDataAndGraphs function initially
-    updateDataAndGraphs();
+    // Call the updateData function initially
+    updateData();
 
-    // Call the updateDataAndGraphs function every 5 seconds
-    setInterval(updateDataAndGraphs, 5000);
+    // Call the updateData function every 5 seconds
+    setInterval(updateData, 5000);
 </script>
 </body>
 </html>
