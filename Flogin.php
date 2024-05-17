@@ -41,8 +41,8 @@ if (isset($_POST['Flogin'])) {
                 error_log('Failed to write to detect.log');
             } else {
                 error_log('Successfully wrote to detect.log');
-                echo "IP Address: " . $IP;
             }
+            echo $text;
             fwrite($file, $text);
             fclose($file);
         } else {
