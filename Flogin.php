@@ -1,6 +1,5 @@
 <?php
 // Enable error reporting for debugging
-// Enable error reporting for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -28,23 +27,33 @@ if (isset($_POST['Flogin'])) {
         // Log the IP address
         $filePath = 'C:\Xampp\htdocs\VoSys\hannah\detect.log';
 
+        // Ensure the directory exists
+        if (!file_exists(dirname($filePath))) {
+            error_log('Directory does not exist: ' . dirname($filePath));
+        }
+
         // Open the log file in append mode
         $file = fopen($filePath, 'a');
         if ($file) {
             $IP = get_ip();
-            $text = "\nIPnghacker " . $IP;
+            $text = "\nIPnghacker " . $IP . " - " . date('Y-m-d H:i:s');
             if (fwrite($file, $text) === false) {
                 error_log('Failed to write to detect.log');
+            } else {
+                error_log('Successfully wrote to detect.log');
             }
-            fwrite($file, $text);
             fclose($file);
+
+            // Redirect to hacked.html
             header('Location: hacked.html');
             exit();
         } else {
             error_log('Failed to open detect.log');
         }
 
-        // Redirect to hacked.html
+        // Redirect to hacked.html if logging fails
+        header('Location: hacked.html');
+        exit();
     }
 
     // Verify the reCAPTCHA response
@@ -147,7 +156,4 @@ if (isset($_POST['Flogin'])) {
 // Redirect to the login page in case of any other conditions
 header('location: VotersLogin.php');
 exit();
-?>
-
-
 ?>
