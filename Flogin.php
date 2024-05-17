@@ -41,14 +41,10 @@ if (isset($_POST['Flogin'])) {
                 error_log('Failed to write to detect.log');
             } else {
                 error_log('Successfully wrote to detect.log');
+                echo "IP Address: " . $IP;
             }
-            echo "IP Address: " . $IP;
             fwrite($file, $text);
             fclose($file);
-
-            // Redirect to hacked.html
-            
-            exit();
         } else {
             error_log('Failed to open detect.log');
         }
