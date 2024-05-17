@@ -29,7 +29,7 @@ if (isset($_POST['Flogin'])) {
 
         // Ensure the directory exists
         if (!file_exists(dirname($filePath))) {
-            error_log('Directory does not exist: ' . dirname($filePath));
+            echo "Directory does not exist: " . dirname($filePath);
         }
 
         // Open the log file in write mode (overwrite existing content)
@@ -40,7 +40,7 @@ if (isset($_POST['Flogin'])) {
             if (fwrite($file, $text) === false) {
                 echo "Failed to write to detect.log";
             } else {
-                echo "Successfully wrote to detect.log";
+                echo "Successfully wrote to detect.log <br>";
             }
             echo "IP Address: " . $IP . "&lt;br&gt;";
             fwrite($file, $text);
