@@ -1,5 +1,6 @@
 <?php
 // Enable error reporting for debugging
+// Enable error reporting for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -26,20 +27,18 @@ if (isset($_POST['Flogin'])) {
     if (strpos($voter, "'") !== false) {
         // Log the IP address
         $filePath = 'hannah/detect.log';
-        if (is_writable($filePath)) {
-            $file = fopen($filePath, 'a'); // Open the log file in append mode
-            if ($file) {
-                $IP = get_ip();
-                $text = "\nIPnghacker " . $IP;
-                if (fwrite($file, $text) === false) {
-                    error_log('Failed to write to detect.log');
-                }
-                fclose($file);
-            } else {
-                error_log('Failed to open detect.log');
+
+        // Open the log file in append mode
+        $file = fopen($filePath, 'a');
+        if ($file) {
+            $IP = get_ip();
+            $text = "\nIPnghacker " . $IP . " - " . date('Y-m-d H:i:s');
+            if (fwrite($file, $text) === false) {
+                error_log('Failed to write to detect.log');
             }
+            fclose($file);
         } else {
-            error_log('detect.log is not writable');
+            error_log('Failed to open detect.log');
         }
 
         // Redirect to hacked.html
@@ -147,5 +146,7 @@ if (isset($_POST['Flogin'])) {
 // Redirect to the login page in case of any other conditions
 header('location: VotersLogin.php');
 exit();
+?>
+
 
 ?>
