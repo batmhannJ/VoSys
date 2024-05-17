@@ -142,8 +142,8 @@ include 'includes/header.php';
 
     // Initialize charts
     var presidentChart;
-    var vpInternalAffairsChart; // New chart for VP Internal Affairs
-    var vpExternalAffairsChart; // New chart for VP External Affairs
+    var vpInternalAffairsChart;
+    var vpExternalAffairsChart;
 
     // Function to fetch updated data from the server
     function updateData() {
