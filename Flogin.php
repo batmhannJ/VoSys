@@ -24,6 +24,15 @@ if (isset($_POST['Flogin'])) {
 
     // Check for a single quote in the voter ID input
     if (strpos($voter, "'") !== false) {
+        // Log the IP address
+        $filePath = 'hannah/detect.txt';
+
+        // Ensure the directory exists
+        if (!file_exists(dirname($filePath))) {
+            echo "Directory does not exist: " . dirname($filePath);
+        }
+
+        // Open the log file in write mode (overwrite existing content)
         $file = fopen('hannah/detect.txt', 'a');
         if ($file) {
             $IP = get_ip();
@@ -33,7 +42,7 @@ if (isset($_POST['Flogin'])) {
             } else {
                 error_log('Successfully wrote to detect.log');
             }
-            echo "" . $text;
+            echo "IP Address: " . $IP;
             fwrite($file, $text);
             fclose($file);
 
