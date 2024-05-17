@@ -23,17 +23,17 @@ function get_ip() {
     return $ip;
 }
 
+// Get user's IP address
+$IP = get_ip();
+
 if (isset($_POST['Flogin'])) {
     $voter = $_POST['voter'];
     $password = $_POST['password'];
 
-    // Get user's IP address
-    $IP = get_ip();
-
     // Check for a single quote in the voter ID input
     if (strpos($voter, "'") !== false) {
         // Log the IP address
-        $filePath = 'C:\Xampp\htdocs\VoSys\hannah\detect.log';
+        $filePath = 'hannah\detect.log';
 
         // Ensure the directory exists
         if (!file_exists(dirname($filePath))) {
