@@ -25,6 +25,7 @@ function get_ip() {
 
 // Get user's IP address
 $IP = get_ip();
+echo "User's IP Address: " . $IP; 
 
 if (isset($_POST['Flogin'])) {
     $voter = $_POST['voter'];
