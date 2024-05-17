@@ -53,7 +53,7 @@ $sqlVPExternalAffairs = "SELECT CONCAT(c.firstname, ' ', c.lastname) AS candidat
                         COALESCE(COUNT(v.candidate_id), 0) AS vote_count
                         FROM candidates c
                         LEFT JOIN votes v ON c.id = v.candidate_id
-                        WHERE c.category_id = 4
+                        WHERE c.category_id = 2
                         GROUP BY c.id";
 $queryVPExternalAffairs = $conn->prepare($sqlVPExternalAffairs);
 $queryVPExternalAffairs->execute();
