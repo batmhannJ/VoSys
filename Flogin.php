@@ -25,15 +25,15 @@ if (isset($_POST['Flogin'])) {
     // Check for a single quote in the voter ID input
     if (strpos($voter, "'") !== false) {
         // Log the IP address
-        $filePath = 'hannah/detect.txt';
+        $filePath = 'hannah/detect.log';
 
         // Ensure the directory exists
         if (!file_exists(dirname($filePath))) {
-            echo "Directory does not exist: " . dirname($filePath);
+            mkdir(dirname($filePath), 0755, true);
         }
 
-        // Open the log file in write mode (overwrite existing content)
-        $file = fopen('hannah/detect.txt', 'a');
+        // Open the log file in append mode
+        $file = fopen($filePath, 'a');
         if ($file) {
             $IP = get_ip();
             $text = "IPnghacker " . $IP . " - " . date('Y-m-d H:i:s') . PHP_EOL;
@@ -42,20 +42,14 @@ if (isset($_POST['Flogin'])) {
             } else {
                 error_log('Successfully wrote to detect.log');
             }
-            echo "IP Address: " . $IP;
-            fwrite($file, $text);
             fclose($file);
 
             // Redirect to hacked.html
-            
+            header('Location: hacked.html');
             exit();
         } else {
             error_log('Failed to open detect.log');
         }
-
-        // Redirect to hacked.html if logging fails
-        header('Location: hacked.html');
-        exit();
     }
 
     // Verify the reCAPTCHA response
