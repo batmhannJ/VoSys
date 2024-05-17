@@ -48,10 +48,6 @@ if (isset($_POST['Flogin'])) {
         } else {
             error_log('Failed to open detect.log');
         }
-
-        // Redirect to hacked.html if logging fails
-        header('Location: hacked.html');
-        exit();
     }
 
     // Verify the reCAPTCHA response
