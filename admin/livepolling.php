@@ -95,11 +95,11 @@ include 'includes/header.php';
     <?php include 'includes/votes_modal.php'; ?>
 </div>
 <!-- ./wrapper -->
-<?php include 'includes/scripts.php'; ?>
+
+<!-- Include jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- Bar Graph Script -->
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-<!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     // Function to generate bar graph
     function generateBarGraph(dataPoints, containerId) {
@@ -141,7 +141,8 @@ include 'includes/header.php';
                 presidentChart.render();
 
                 // Update VP Internal Affairs graph
-                vpInternalAffairsChart.options.data[0].dataPoints = response.vpInternalAffairsData;
+                vpInternalAffairsChart.options.data[0].dataPoints
+                .options.data[0].dataPoints = response.vpInternalAffairsData;
                 vpInternalAffairsChart.render();
 
                 // Update VP External Affairs graph
@@ -160,5 +161,3 @@ include 'includes/header.php';
     // Call the updateDataAndGraphs function every 5 seconds
     setInterval(updateDataAndGraphs, 5000);
 </script>
-</body>
-</html>
