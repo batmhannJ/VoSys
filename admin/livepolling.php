@@ -48,7 +48,7 @@ include 'includes/header.php';
                 </div>
             </div>
 
-            <!-- Bar Graphs for President, Vice President, and VP Internal Affairs -->
+            <!-- Bar Graphs for President and Vice Presidents -->
             <div class="row">
                 <!-- President Bar Graph Box -->
                 <div class="col-md-4">
@@ -67,23 +67,6 @@ include 'includes/header.php';
                 </div>
                 <!-- /.col -->
 
-                <!-- Vice President Bar Graph Box -->
-                <div class="col-md-4">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Vice President Candidates Vote Count</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <!-- Vice President Bar Graph Container -->
-                            <div id="vicePresidentGraph" style="height: 300px;"></div>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                    <!-- /.box -->
-                </div>
-                <!-- /.col -->
-
                 <!-- VP Internal Affairs Bar Graph Box -->
                 <div class="col-md-4">
                     <div class="box">
@@ -94,6 +77,23 @@ include 'includes/header.php';
                         <div class="box-body">
                             <!-- VP Internal Affairs Bar Graph Container -->
                             <div id="vpInternalAffairsGraph" style="height: 300px;"></div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+
+                <!-- VP External Affairs Bar Graph Box -->
+                <div class="col-md-4">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">VP External Affairs Candidates Vote Count</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!-- VP External Affairs Bar Graph Container -->
+                            <div id="vpExternalAffairsGraph" style="height: 300px;"></div>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -132,7 +132,7 @@ include 'includes/header.php';
                 includeZero: true
             },
             data: [{
-                type: "bar", // Change type to "bar"
+                type: "bar",
                 dataPoints: dataPoints
             }]
         });
@@ -142,8 +142,8 @@ include 'includes/header.php';
 
     // Initialize charts
     var presidentChart;
-    var vicePresidentChart;
     var vpInternalAffairsChart; // New chart for VP Internal Affairs
+    var vpExternalAffairsChart; // New chart for VP External Affairs
 
     // Function to fetch updated data from the server
     function updateData() {
@@ -162,21 +162,21 @@ include 'includes/header.php';
                     }
                 }
 
-                // Update vice president bar graph
-                if (response.vicePresidentData.length > 0) {
-                    if (!vicePresidentChart) {
-                        vicePresidentChart = generateBarGraph(response.vicePresidentData, "vicePresidentGraph");
-                    } else {
-                        updateBarGraph(response.vicePresidentData, vicePresidentChart);
-                    }
-                }
-
                 // Update VP Internal Affairs bar graph
                 if (response.vpInternalAffairsData.length > 0) {
                     if (!vpInternalAffairsChart) {
                         vpInternalAffairsChart = generateBarGraph(response.vpInternalAffairsData, "vpInternalAffairsGraph");
                     } else {
                         updateBarGraph(response.vpInternalAffairsData, vpInternalAffairsChart);
+                    }
+                }
+
+                // Update VP External Affairs bar graph
+                if (response.vpExternalAffairsData.length > 0) {
+                    if (!vpExternalAffairsChart) {
+                        vpExternalAffairsChart = generateBarGraph(response.vpExternalAffairsData, "vpExternalAffairsGraph");
+                    } else {
+                        updateBarGraph(response.vpExternalAffairsData, vpExternalAffairsChart);
                     }
                 }
             },
@@ -194,13 +194,13 @@ include 'includes/header.php';
 
     // Initialize charts
     var presidentChart = generateBarGraph([], "presidentGraph");
-    var vicePresidentChart = generateBarGraph([], "vicePresidentGraph");
-    var vpInternalAffairsChart = generateBarGraph([], "vpInternalAffairsGraph"); // Initialize new chart
+    var vpInternalAffairsChart = generateBarGraph([], "vpInternalAffairsGraph");
+    var vpExternalAffairsChart = generateBarGraph([], "vpExternalAffairsGraph");
 
-    // Call the updateData function initially
+    // Fetch initial data and update graphs
     updateData();
 
-    // Call the updateData function every 5 seconds
+    // Set interval to update data and graphs every 5 seconds
     setInterval(updateData, 5000);
 </script>
 </body>
