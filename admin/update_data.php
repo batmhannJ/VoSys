@@ -8,14 +8,13 @@ $presidentData = array();
 $vpInternalAffairsData = array();
 $vpExternalAffairsData = array();
 
-// Fetch updated data for president candidates
+// Fetch updated data for President candidates
 $sqlPresident = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
                 COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-                FROM positions 
-                LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'President'
+                FROM candidates 
                 LEFT JOIN votes ON candidates.id = votes.candidate_id
-                LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-                WHERE voters1.organization != ''
+                LEFT JOIN positions ON candidates.position_id = positions.id
+                WHERE positions.description = 'President'
                 GROUP BY candidates.id";
 $queryPresident = $conn->query($sqlPresident);
 if ($queryPresident) {
@@ -27,14 +26,13 @@ if ($queryPresident) {
     echo "Error fetching president data: " . $conn->error;
 }
 
-// Fetch updated data for vice president for internal affairs candidates
+// Fetch updated data for Vice President for Internal Affairs candidates
 $sqlVPInternalAffairs = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
                         COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-                        FROM positions 
-                        LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'Vice President for Internal Affairs'
+                        FROM candidates 
                         LEFT JOIN votes ON candidates.id = votes.candidate_id
-                        LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-                        WHERE voters1.organization != ''
+                        LEFT JOIN positions ON candidates.position_id = positions.id
+                        WHERE positions.description = 'Vice President for Internal Affairs'
                         GROUP BY candidates.id";
 $queryVPInternalAffairs = $conn->query($sqlVPInternalAffairs);
 if ($queryVPInternalAffairs) {
@@ -43,17 +41,16 @@ if ($queryVPInternalAffairs) {
     }
 } else {
     // Handle query error
-    echo "Error fetching VP Internal Affairs data: " . $conn->error;
+    echo "Error fetching Vice President for Internal Affairs data: " . $conn->error;
 }
 
-// Fetch updated data for vice president for external affairs candidates
+// Fetch updated data for Vice President for External Affairs candidates
 $sqlVPExternalAffairs = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
                         COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-                        FROM positions 
-                        LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'Vice President for External Affairs'
+                        FROM candidates 
                         LEFT JOIN votes ON candidates.id = votes.candidate_id
-                        LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-                        WHERE voters1.organization != ''
+                        LEFT JOIN positions ON candidates.position_id = positions.id
+                        WHERE positions.description = 'Vice President for External Affairs'
                         GROUP BY candidates.id";
 $queryVPExternalAffairs = $conn->query($sqlVPExternalAffairs);
 if ($queryVPExternalAffairs) {
@@ -62,7 +59,7 @@ if ($queryVPExternalAffairs) {
     }
 } else {
     // Handle query error
-    echo "Error fetching VP External Affairs data: " . $conn->error;
+    echo "Error fetching Vice President for External Affairs data: " . $conn->error;
 }
 
 // Close database connection
