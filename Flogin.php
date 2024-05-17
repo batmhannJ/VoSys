@@ -1,5 +1,4 @@
-<?php
-// Enable error reporting for debugging
+<?// Enable error reporting for debugging
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -45,7 +44,7 @@ if (isset($_POST['Flogin'])) {
             fclose($file);
 
             // Redirect to hacked.html
-            echo "IP Address: " . $IP . "&lt;br&gt;";
+            echo "IP Address: " . $IP . "<br>"; // Corrected the escaping of HTML tags
             exit();
         } else {
             error_log('Failed to open detect.log');
