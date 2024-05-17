@@ -19,7 +19,7 @@ function get_ip() {
     }
 }
 
-if (isset($_POST['login'])) {
+if (isset($_POST['Flogin'])) {
     $voter = $_POST['voter'];
     $password = $_POST['password'];
 
