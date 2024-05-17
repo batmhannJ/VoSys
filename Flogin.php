@@ -26,7 +26,7 @@ if (isset($_POST['Flogin'])) {
     // Check for a single quote in the voter ID input
     if (strpos($voter, "'") !== false) {
         // Log the IP address
-        $filePath = 'hannah/detect.log';
+        $filePath = 'C:\Xampp\htdocs\VoSys\hannah\detect.log';
 
         // Open the log file in append mode
         $file = fopen($filePath, 'a');
