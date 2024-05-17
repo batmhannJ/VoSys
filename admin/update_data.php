@@ -13,7 +13,7 @@ $sqlPresident = "SELECT CONCAT(c.firstname, ' ', c.lastname) AS candidate_name,
                 COALESCE(COUNT(v.candidate_id), 0) AS vote_count
                 FROM candidates c
                 LEFT JOIN votes v ON c.id = v.candidate_id
-                WHERE c.category_id = 0
+                WHERE c.category_id = 1
                 GROUP BY c.id";
 $queryPresident = $conn->prepare($sqlPresident);
 $queryPresident->execute();
@@ -29,7 +29,7 @@ if ($resultPresident) {
 }
 
 // Fetch updated data for Vice President for Internal Affairs candidates
-$sqlVPInternalAffairs = "SELECT CONCAT(c.firstname, ' ', c.lastname) AS candidate_name, 
+$sqlVicePresidentInternalAffairs = "SELECT CONCAT(c.firstname, ' ', c.lastname) AS candidate_name, 
                         COALESCE(COUNT(v.candidate_id), 0) AS vote_count
                         FROM candidates c
                         LEFT JOIN votes v ON c.id = v.candidate_id
