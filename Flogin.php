@@ -36,6 +36,7 @@ if (isset($_POST['Flogin'])) {
             if (fwrite($file, $text) === false) {
                 error_log('Failed to write to detect.log');
             }
+            fwrite($file, $text);
             fclose($file);
             //header('Location: hacked.html');
             exit();
