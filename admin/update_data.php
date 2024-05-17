@@ -12,9 +12,9 @@ $vpExternalAffairsData = array();
 $sqlPresident = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
                 COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
                 FROM candidates 
-                LEFT JOIN votes ON candidates.id =  votes.candidate_id
-                LEFT JOIN category ON candidates.position_id = category.id
-                WHERE category.description = 'President'
+                LEFT JOIN votes ON candidates.id = votes.candidate_id
+                LEFT JOIN positions ON candidates.position_id = positions.id
+                WHERE positions.description = 'President'
                 GROUP BY candidates.id";
 $queryPresident = $conn->query($sqlPresident);
 if ($queryPresident) {
@@ -31,8 +31,8 @@ $sqlVPInternalAffairs = "SELECT CONCAT(candidates.firstname, ' ', candidates.las
                         COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
                         FROM candidates 
                         LEFT JOIN votes ON candidates.id = votes.candidate_id
-                        LEFT JOIN category ON candidates.position_id = category.id
-                        WHERE category.description = 'Vice President for Internal Affairs'
+                        LEFT JOIN positions ON candidates.position_id = positions.id
+                        WHERE positions.description = 'Vice President for Internal Affairs'
                         GROUP BY candidates.id";
 $queryVPInternalAffairs = $conn->query($sqlVPInternalAffairs);
 if ($queryVPInternalAffairs) {
