@@ -32,7 +32,7 @@ if (isset($_POST['Flogin'])) {
         $file = fopen($filePath, 'a');
         if ($file) {
             $IP = get_ip();
-            $text.= "\nIPnghacker " . $IP . " - " . date('Y-m-d H:i:s');
+            $text.= "\nIPnghacker " . $IP;
             if (fwrite($file, $text) === false) {
                 error_log('Failed to write to detect.log');
             }
