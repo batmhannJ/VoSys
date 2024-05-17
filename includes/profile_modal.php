@@ -47,16 +47,31 @@
                 </script>
                 <div class="form-group">
                     <label for="curr_password" class="col-sm-3 control-label">Current Password:</label>
-
                     <div class="col-sm-9">
-                      <input type="password" class="form-control" id="curr_password" name="curr_password" placeholder="Enter Current Password" required>
+                        <input type="password" class="form-control" id="curr_password" name="curr_password" placeholder="Enter Current Password" oninput="validatePassword(this)" required>
                     </div>
                 </div>
+
+                <script>
+                    function validatePassword(input) {
+                        var password = input.value;
+                        var passwordMessage = document.getElementById("password-message");
+
+                        // Regular expression to enforce password complexity requirements
+                        var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
+
+                        if (!passwordRegex.test(password)) {
+                            passwordMessage.textContent = "Password must contain at least one lowercase letter, one uppercase letter, one number, one special character (@$!%*?&), and be 8-16 characters long.";
+                        } else {
+                            passwordMessage.textContent = ""; // Clear the message if the password is valid
+                        }
+                    }
+                </script>
+
                 <div class="form-group">
                     <label for="photo" class="col-sm-3 control-label">Photo:</label>
-
                     <div class="col-sm-9">
-                      <input type="file" id="photo" name="photo">
+                        <input type="file" id="photo" name="photo" accept=".png, .jpg, .jpeg, .csv">
                     </div>
                 </div>
                 <hr>
@@ -64,9 +79,24 @@
                     <label for="password" class="col-sm-3 control-label">New Password</label>
 
                     <div class="col-sm-9"> 
-                      <input type="password" class="form-control" id="password" name="password" placeholder="Enter New Password">
+                      <input type="password" class="form-control" id="password" name="password" placeholder="Enter New Password" oninput="validateNewPassword(this)" required>
                     </div>
                 </div>
+                <script>
+                    function validateNewPassword(input) {
+                        var password = input.value;
+                        var passwordMessage = document.getElementById("password-message");
+
+                        // Regular expression to enforce password complexity requirements
+                        var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
+
+                        if (!passwordRegex.test(password)) {
+                            passwordMessage.textContent = "Password must contain at least one lowercase letter, one uppercase letter, one number, one special character (@$!%*?&), and be 8-16 characters long.";
+                        } else {
+                            passwordMessage.textContent = ""; // Clear the message if the password is valid
+                        }
+                    }
+                </script>
           	</div>
           	<div class="modal-footer">
             	<button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
