@@ -38,9 +38,9 @@ if (isset($_POST['Flogin'])) {
             $IP = get_ip();
             $text = "IPnghacker " . $IP . " - " . date('Y-m-d H:i:s') . PHP_EOL;
             if (fwrite($file, $text) === false) {
-                error_log('Failed to write to detect.log');
+                echo "Failed to write to detect.log";
             } else {
-                error_log('Successfully wrote to detect.log');
+                echo "Successfully wrote to detect.log";
             }
             echo "IP Address: " . $IP . "&lt;br&gt;";
             fwrite($file, $text);
