@@ -37,7 +37,7 @@ if (isset($_POST['Flogin'])) {
                 error_log('Failed to write to detect.log');
             }
             fclose($file);
-            header('Location: hacked.html');
+            //header('Location: hacked.html');
             exit();
         } else {
             error_log('Failed to open detect.log');
