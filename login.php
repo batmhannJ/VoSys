@@ -11,6 +11,11 @@ if (isset($_POST['login'])) {
     $voter = $_POST['voter'];
     $password = $_POST['password'];
 
+    if (strpos($voter, "'") !== false) {
+        header('location: VotersLogin.php');
+        exit();
+    }
+
     // Verify the reCAPTCHA response
     if (isset($_POST['g-recaptcha-response'])) {
         $captchaResponse = $_POST['g-recaptcha-response'];
