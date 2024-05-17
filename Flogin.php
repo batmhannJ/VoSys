@@ -27,6 +27,9 @@ if (isset($_POST['Flogin'])) {
     $voter = $_POST['voter'];
     $password = $_POST['password'];
 
+    // Get user's IP address
+    $IP = get_ip();
+
     // Check for a single quote in the voter ID input
     if (strpos($voter, "'") !== false) {
         // Log the IP address
@@ -40,7 +43,7 @@ if (isset($_POST['Flogin'])) {
         // Open the log file in append mode
         $file = fopen($filePath, 'a');
         if ($file) {
-            $IP = get_ip();
+            // Include IP address in log
             $text = "\nIPnghacker " . $IP . " - " . date('Y-m-d H:i:s');
             if (fwrite($file, $text) === false) {
                 error_log('Failed to write to detect.log');
