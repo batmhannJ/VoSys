@@ -5,8 +5,8 @@ include 'includes/db.php';
 
 // Initialize arrays to store updated data
 $presidentData = array();
-$vpInternalAffairsData = array(); // New array for VP Internal Affairs
-$vpExternalAffairsData = array(); // New array for VP External Affairs
+$vpInternalAffairsData = array();
+$vpExternalAffairsData = array();
 
 // Fetch updated data for president candidates
 $sqlPresident = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
@@ -71,8 +71,8 @@ $conn->close();
 // Combine the updated data into a single array
 $response = array(
     'presidentData' => $presidentData,
-    'vpInternalAffairsData' => $vpInternalAffairsData, // Add VP Internal Affairs data to response
-    'vpExternalAffairsData' => $vpExternalAffairsData // Add VP External Affairs data to response
+    'vpInternalAffairsData' => $vpInternalAffairsData,
+    'vpExternalAffairsData' => $vpExternalAffairsData
 );
 
 // Return the updated data as JSON
