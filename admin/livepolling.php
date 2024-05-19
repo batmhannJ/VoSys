@@ -48,152 +48,59 @@ include 'includes/header.php';
                 </div>
             </div>
 
-            <!-- Bar Graphs for President and Vice President -->
+            <!-- Bar Graphs for President, Vice President for Internal Affairs, and Vice President for External Affairs -->
             <div class="row">
                 <!-- President Bar Graph Box -->
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">President Candidates Vote Count</h3>
                         </div>
-                        <!-- /.box-header -->
                         <div class="box-body">
-                            <!-- President Bar Graph Container -->
                             <div id="presidentGraph" style="height: 300px;"></div>
                         </div>
-                        <!-- /.box-body -->
                     </div>
-                    <!-- /.box -->
                 </div>
-                <!-- /.col -->
 
-                <!-- Vice President Bar Graph Box -->
-                <div class="col-md-6">
+                <!-- Vice President for Internal Affairs Bar Graph Box -->
+                <div class="col-md-4">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Vice President Candidates Vote Count</h3>
+                            <h3 class="box-title">Vice President for Internal Affairs Candidates Vote Count</h3>
                         </div>
-                        <!-- /.box-header -->
                         <div class="box-body">
-                            <!-- Vice President Bar Graph Container -->
-                            <div id="vicePresidentGraph" style="height: 300px;"></div>
+                            <div id="vpInternalAffairsGraph" style="height: 300px;"></div>
                         </div>
-                        <!-- /.box-body -->
                     </div>
-                    <!-- /.box -->
                 </div>
-                <!-- /.col -->
+
+                <!-- Vice President for External Affairs Bar Graph Box -->
+                <div class="col-md-4">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Vice President for External Affairs Candidates Vote Count</h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="vpExternalAffairsGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- /.row -->
         </section>
         <!-- /.content -->
     </div>
-
     <!-- /.content-wrapper -->
     <?php include 'includes/footer.php'; ?>
     <?php include 'includes/votes_modal.php'; ?>
 </div>
 <!-- ./wrapper -->
-<?php include 'includes/scripts.php'; ?>
+
+<!-- Include jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- Bar Graph Script -->
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-<!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    // Function to generate bar graph
-    function generateBarGraph(dataPoints, containerId) {
-        var chart = new CanvasJS.Chart(containerId, {
-            animationEnabled: true,
-            title:{
-                text: "Vote Counts"
-            },
-            axisY: {
-                title: "Candidates"
-            },
-            axisX: {
-                title: "Vote Count",
-                includeZero: true
-            },
-            data: [{
-                type: "bar", // Change type to "bar"
-                dataPoints: dataPoints
-            }]
-        });
-        chart.render();
-        return chart;
-    }
-
-    // Initialize charts
-    var presidentChart;
-    var vicePresidentChart;
-    
-
-    // Function to fetch updated data from the server
-    function updateData() {
-        $.ajax({
-            url: 'update_data.php', // Change this to the URL of your update data script
-            type: 'GET',
-            dataType: 'json',
-            data: {organization: $('#organization').val()}, // Pass the selected organization to the server
-            success: function(response) {
-                // Update president bar graph
-                if (response.presidentData.length > 0) {
-                    if (!presidentChart) {
-                        presidentChart = generateBarGraph(response.presidentData, "presidentGraph");
-                    } else {
-                        updateBarGraph(response.presidentData, presidentChart);
-                    }
-                }
-
-                // Update vice president bar graph
-                if (response.vicePresidentData.length > 0) {
-                    if (!vicePresidentChart) {
-                        vicePresidentChart = generateBarGraph(response.vicePresidentData, "vicePresidentGraph");
-                    } else {
-                        updateBarGraph(response.vicePresidentData, vicePresidentChart);
-                    }
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching data: ' + error);
-            }
-        });
-    }
-
-    // Function to update bar graph with animation
-    function updateBarGraph(newDataPoints, chart) {
-        for (var i = 0; i < newDataPoints.length; i++) {
-            var newVotes = newDataPoints[i].y;
-            chart.options.data[0].dataPoints[i].y = newVotes; // Update vote count directly
-            animateBar(i, newVotes, chart); // Animate the bar
-        }
-    }
-
-   // Function to fetch updated data and update graphs
-   function updateDataAndGraphs() {
-        $.ajax({
-            url: 'update_data.php',
-            type: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                // Update president graph
-                presidentChart.options.data[0].dataPoints = response.presidentData;
-                presidentChart.render();
-
-                // Update vice president graph
-                vicePresidentChart.options.data[0].dataPoints = response.vicePresidentData;
-                vicePresidentChart.render();
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching data: ' + error);
-            }
-        });
-    }
-
-    // Initialize charts
-    var presidentChart = generateBarGraph([], "presidentGraph");
-    var vicePresidentChart = generateBarGraph([], "vicePresidentGraph");
-
     // Function to generate bar graph
     function generateBarGraph(dataPoints, containerId) {
         var chart = new CanvasJS.Chart(containerId, {
@@ -217,11 +124,40 @@ include 'includes/header.php';
         return chart;
     }
 
+    // Initialize charts for all positions
+    var presidentChart = generateBarGraph([], "presidentGraph");
+    var vpInternalAffairsChart = generateBarGraph([], "vpInternalAffairsGraph");
+    var vpExternalAffairsChart = generateBarGraph([], "vpExternalAffairsGraph");
+
+    // Function to fetch updated data and update graphs for all positions
+    function updateDataAndGraphs() {
+        $.ajax({
+            url: 'update_data.php',
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                // Update President graph
+                presidentChart.options.data[0].dataPoints = response.presidentData;
+                presidentChart.render();
+
+                // Update VP Internal Affairs graph
+                vpInternalAffairsChart.options.data[0].dataPoints
+                .options.data[0].dataPoints = response.vpInternalAffairsData;
+                vpInternalAffairsChart.render();
+
+                // Update VP External Affairs graph
+                vpExternalAffairsChart.options.data[0].dataPoints = response.vpExternalAffairsData;
+                vpExternalAffairsChart.render();
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching data: ' + error);
+            }
+        });
+    }
+
     // Call the updateDataAndGraphs function initially
     updateDataAndGraphs();
 
     // Call the updateDataAndGraphs function every 5 seconds
     setInterval(updateDataAndGraphs, 5000);
 </script>
-</body>
-</html>

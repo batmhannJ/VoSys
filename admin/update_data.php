@@ -5,45 +5,39 @@ include 'includes/db.php';
 
 // Initialize arrays to store updated data
 $presidentData = array();
-$vicePresidentData = array();
+$vpInternalAffairsData = array();
+$vpExternalAffairsData = array();
 
-// Fetch updated data for president candidates
-$sqlPresident = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
+// Function to fetch data based on position description and category id
+function fetchData($positionDescription, $categoryId, &$data, $conn) {
+    $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
                 COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-                FROM positions 
-                LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'President'
+                FROM candidates 
                 LEFT JOIN votes ON candidates.id = votes.candidate_id
-                LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-                WHERE voters1.organization != ''
+                LEFT JOIN positions ON candidates.position_id = positions.id
+                WHERE positions.description = '$positionDescription'
+                AND candidates.category_id = $categoryId
                 GROUP BY candidates.id";
-$queryPresident = $conn->query($sqlPresident);
-if ($queryPresident) {
-    while ($row = $queryPresident->fetch_assoc()) {
-        $presidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+
+    $query = $conn->query($sql);
+    if ($query) {
+        while ($row = $query->fetch_assoc()) {
+            $data[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+        }
+    } else {
+        // Handle query error
+        echo "Error fetching data for $positionDescription: " . $conn->error;
     }
-} else {
-    // Handle query error
-    echo "Error fetching president data: " . $conn->error;
 }
 
-// Fetch updated data for vice president candidates
-$sqlVicePresident = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-                    COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-                    FROM positions 
-                    LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'Vice President'
-                    LEFT JOIN votes ON candidates.id = votes.candidate_id
-                    LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-                    WHERE voters1.organization != ''
-                    GROUP BY candidates.id";
-$queryVicePresident = $conn->query($sqlVicePresident);
-if ($queryVicePresident) {
-    while ($row = $queryVicePresident->fetch_assoc()) {
-        $vicePresidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
-    }
-} else {
-    // Handle query error
-    echo "Error fetching vice president data: " . $conn->error;
-}
+// Fetch data for President candidates with category_id 1
+fetchData('President', 1, $presidentData, $conn);
+
+// Fetch data for Vice President for Internal Affairs candidates with category_id 2
+fetchData('Vice President for Internal Affairs', 3, $vpInternalAffairsData, $conn);
+
+// Fetch data for Vice President for External Affairs candidates with category_id 3
+fetchData('Vice President for External Affairs', 4, $vpExternalAffairsData, $conn);
 
 // Close database connection
 $conn->close();
@@ -51,7 +45,8 @@ $conn->close();
 // Combine the updated data into a single array
 $response = array(
     'presidentData' => $presidentData,
-    'vicePresidentData' => $vicePresidentData
+    'vpInternalAffairsData' => $vpInternalAffairsData,
+    'vpExternalAffairsData' => $vpExternalAffairsData
 );
 
 // Return the updated data as JSON
