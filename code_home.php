@@ -264,13 +264,7 @@
 </body>
 
 <style>
-body {
-    background-color: #f5f5f5; /* Fallback color */
-    background-image: linear-gradient(to bottom right, #4CAF50, #2196F3); /* Gradient background */
-    background-size: cover; /* Cover the entire background */
-    background-repeat: no-repeat; /* No repeating background */
-    background-attachment: fixed; /* Fixed background position */
-}
+
 
     /* Style for the position container */
 .position-container {
@@ -539,12 +533,13 @@ body {
     max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
-    background-image: url('your-background-image.jpg');
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('your-background-image.jpg');
     background-size: cover;
     background-position: center;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
 
 .page-header {
     margin-top: 0;
