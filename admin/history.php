@@ -51,7 +51,7 @@ include 'includes/header.php';
             <!-- President and Vice President Ranking Boxes -->
             <div class="row">
                 <!-- President Ranking List Box -->
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Ranking of President Candidates</h3>
@@ -104,7 +104,7 @@ include 'includes/header.php';
                 <!-- /.col -->
 
                 <!-- Vice President for Internal Affairs Ranking List Box -->
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Ranking of Vice President for Internal Affairs Candidates</h3>
@@ -154,13 +154,65 @@ include 'includes/header.php';
                     <!-- /.box -->
                 </div>
                 <!-- /.col -->
+
+                <!-- Vice President for External Affairs Ranking List Box -->
+                <div class="col-md-4">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Ranking of Vice President for External Affairs Candidates</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!-- Vice President Ranking Table -->
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Organization</th>
+                                    <th>Candidate</th>
+                                    <th>Vote Count</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                // Fetch and display vice president candidate ranking based on vote count and organization filter
+                                $sql = "SELECT voters1.organization, CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
+                                        COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
+                                        FROM categories 
+                                        LEFT JOIN candidates ON categories.id = candidates.category_id
+                                        LEFT JOIN votes ON candidates.id = votes.candidate_id
+                                        LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
+                                        WHERE voters1.organization != '' AND categories.name = 'Vice President for External Affairs'".$organizationFilter."
+                                        GROUP BY voters1.organization, candidates.id
+                                        ORDER BY vote_count DESC";
+                                $query = $conn->query($sql);
+                                $rank = 1;
+                                while($row = $query->fetch_assoc()){
+                                    echo "
+                                        <tr>
+                                        <td>".$rank."</td>
+                                        <td>".$row['organization']."</td>
+                                        <td>".$row['candidate_name']."</td>
+                                        <td>".$row['vote_count']."</td>
+                                        </tr>";
+                                    $rank++;
+                                }
+                                ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
             </div>
             <!-- /.row -->
 
-            <!-- Bar Graphs for President and Vice President for Internal Affairs -->
+            <!-- Bar Graphs for President and Vice Presidents -->
             <div class="row">
                 <!-- President Bar Graph Box -->
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">President Candidates Vote Count</h3>
@@ -177,7 +229,7 @@ include 'includes/header.php';
                 <!-- /.col -->
 
                 <!-- Vice President for Internal Affairs Bar Graph Box -->
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Vice President for Internal Affairs Candidates Vote Count</h3>
@@ -185,7 +237,24 @@ include 'includes/header.php';
                         <!-- /.box-header -->
                         <div class="box-body">
                             <!-- Vice President Bar Graph Container -->
-                            <div id="vicePresidentGraph" style="height: 300px;"></div>
+                            <div id="vicePresidentInternalGraph" style="height: 300px;"></div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+
+                <!-- Vice President for External Affairs Bar Graph Box -->
+                <div class="col-md-4">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Vice President for External Affairs Candidates Vote Count</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!-- Vice President Bar Graph Container -->
+                            <div id="vicePresidentExternalGraph" style="height: 300px;"></div>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -259,7 +328,7 @@ include 'includes/header.php';
 
     // Fetch and process vice president for internal affairs data
     <?php
-    $vicePresidentData = array();
+    $vicePresidentInternalData = array();
     $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
             COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
             FROM categories 
@@ -271,12 +340,33 @@ include 'includes/header.php';
             GROUP BY candidates.id";
     $query = $conn->query($sql);
     while($row = $query->fetch_assoc()) {
-        $vicePresidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+        $vicePresidentInternalData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
     }
     ?>
 
     // Generate vice president for internal affairs bar graph
-    generateBarGraph(<?php echo json_encode($vicePresidentData); ?>, "vicePresidentGraph");
+    generateBarGraph(<?php echo json_encode($vicePresidentInternalData); ?>, "vicePresidentInternalGraph");
+
+    // Fetch and process vice president for external affairs data
+    <?php
+    $vicePresidentExternalData = array();
+    $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
+            COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
+            FROM categories 
+            LEFT JOIN candidates ON categories.id = candidates.category_id
+            LEFT JOIN votes ON candidates.id = votes.candidate_id
+            LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
+            WHERE voters1.organization != '' AND categories.name = 'Vice President for External Affairs'
+            ".$organizationFilter."
+            GROUP BY candidates.id";
+    $query = $conn->query($sql);
+    while($row = $query->fetch_assoc()) {
+        $vicePresidentExternalData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+    }
+    ?>
+
+    // Generate vice president for external affairs bar graph
+    generateBarGraph(<?php echo json_encode($vicePresidentExternalData); ?>, "vicePresidentExternalGraph");
 </script>
 </body>
 </html>
