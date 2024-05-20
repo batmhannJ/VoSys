@@ -167,7 +167,7 @@ function archiveVoter(id) {
     $('#submitBtn').on('click', function() {
         $.ajax({
             type: "POST",
-            url: "archive_csc_voter.php",
+            url: "archive_voter.php",
             data: { id: id },
             success: function(response) {
                 // Refresh the page or update the table as needed
