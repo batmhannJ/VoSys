@@ -34,7 +34,7 @@ if (isset($_POST['email']) && isset($_POST['new_password']) && isset($_POST['con
         die("Execute statement failed: " . mysqli_error($connection));
     }
 
-    
+
     // Step 5: Close database connection
     mysqli_stmt_close($stmt);
     mysqli_close($connection);
@@ -48,7 +48,7 @@ if (isset($_POST['email']) && isset($_POST['new_password']) && isset($_POST['con
     exit(); // Make sure to exit after sending the JSON response
 } else {
     // If email, new password, or confirm password parameter is missing
-    $response = array("status" => "error", "message" => "Missing email, new password, or confirm password parameter");
+    $response = array("status" => "error", "message" => "New password and confirm password does not match.error ");
     header('Content-Type: application/json');
     echo json_encode($response);
     exit(); // Exit without updating the password

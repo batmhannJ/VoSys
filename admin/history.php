@@ -51,7 +51,7 @@ include 'includes/header.php';
             <!-- President, Vice Presidents, and Secretary Ranking Boxes -->
             <div class="row">
                 <!-- President Ranking List Box -->
-                <div class="col-md-6 col-lg-3">
+                <div class="col-md-3">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Ranking of President Candidates</h3>
@@ -100,7 +100,7 @@ include 'includes/header.php';
                 </div>
 
                 <!-- Vice President for Internal Affairs Ranking List Box -->
-                <div class="col-md-6 col-lg-3">
+                <div class="col-md-3">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Ranking of Vice President for Internal Affairs Candidates</h3>
@@ -148,7 +148,7 @@ include 'includes/header.php';
                 </div>
 
                 <!-- Vice President for External Affairs Ranking List Box -->
-                <div class="col-md-6 col-lg-3">
+                <div class="col-md-3">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Ranking of Vice President for External Affairs Candidates</h3>
@@ -195,7 +195,7 @@ include 'includes/header.php';
                 </div>
 
                 <!-- Secretary Ranking List Box -->
-                <div class="col-md-6 col-lg-3">
+                <div class="col-md-3">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Ranking of Secretary Candidates</h3>
@@ -246,7 +246,7 @@ include 'includes/header.php';
             <!-- Bar Graphs for President, Vice Presidents, and Secretary -->
             <div class="row">
                 <!-- President Bar Graph Box -->
-                <div class="col-md-6 col-lg-3">
+                <div class="col-md-3">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">President Candidates Vote Count</h3>
@@ -258,7 +258,7 @@ include 'includes/header.php';
                 </div>
 
                 <!-- Vice President for Internal Affairs Bar Graph Box -->
-                <div class="col-md-6 col-lg-3">
+                <div class="col-md-3">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Vice President for Internal Affairs Candidates Vote Count</h3>
@@ -270,7 +270,7 @@ include 'includes/header.php';
                 </div>
 
                 <!-- Vice President for External Affairs Bar Graph Box -->
-                <div class="col-md-6 col-lg-3">
+                <div class="col-md-3">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Vice President for External Affairs Candidates Vote Count</h3>
@@ -282,7 +282,7 @@ include 'includes/header.php';
                 </div>
 
                 <!-- Secretary Bar Graph Box -->
-                <div class="col-md-6 col-lg-3">
+                <div class="col-md-3">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Secretary Candidates Vote Count</h3>
@@ -413,3 +413,4 @@ include 'includes/header.php';
     generateBarGraph(<?php echo json_encode($secretaryData); ?>, "secretaryGraph");
 </script>
 </body>
+</html>
