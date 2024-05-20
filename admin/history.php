@@ -254,6 +254,9 @@ include 'includes/header.php';
     }
     ?>
 
+    // Log president data to console for debugging
+    console.log("President Data: ", <?php echo json_encode($presidentData); ?>);
+
     // Generate president bar graph
     generateBarGraph(<?php echo json_encode($presidentData); ?>, "presidentGraph");
 
@@ -274,6 +277,9 @@ include 'includes/header.php';
         $vicePresidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
     }
     ?>
+
+    // Log vice president for internal affairs data to console for debugging
+    console.log("Vice President for Internal Affairs Data: ", <?php echo json_encode($vicePresidentData); ?>);
 
     // Generate vice president for internal affairs bar graph
     generateBarGraph(<?php echo json_encode($vicePresidentData); ?>, "vicePresidentGraph");
