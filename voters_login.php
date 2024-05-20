@@ -557,30 +557,24 @@ main.sign-up-mode .carousel {
 
         </div>
     </div>
-    <script>
+<script>
   const images = document.querySelectorAll('.image');
   let currentIndex = 0;
-  
   function nextImage() {
     currentIndex = (currentIndex + 1) % images.length;
     updateSlider();
   }
-  
   function updateSlider() {
-    const offset = -currentIndex * 100; // Assuming each image takes 100% width in the carousel
-    document.querySelector('.images-wrapper').style.transform = `translateX(${offset}%)`;
-    
-    // Optional: Implement a fade-in effect
-    images.forEach(image => {
-      image.style.opacity = 0; // Hide all images
-    });
-    images[currentIndex].style.opacity = 1; // Show the current image
-  }
-  
+  const offset = -currentIndex * images[0].offsetWidth || 0;
+  document.querySelector('.images-wrapper').style.transform = `translateX(${offset}px)`;
+  // Flash effect
+  images.forEach(image => {
+    image.style.opacity = 0; // Hide all images
+  });
+  images[currentIndex].style.opacity = 1; // Show the current image
+}
   setInterval(nextImage, 3000); // Change image every 3 seconds
 </script>
-
-
 
     <script src="app.js"></script>
     <?php include 'includes/scripts.php' ?>
