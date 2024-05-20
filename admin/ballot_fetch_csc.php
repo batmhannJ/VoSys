@@ -14,7 +14,8 @@
 	while($row = $query->fetch_assoc()){
 		$input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red '.slugify($row['name']).'" name="'.slugify($row['name'])."[]".'">' : '<input type="radio" class="flat-red '.slugify($row['name']).'" name="'.slugify($row['name']).'">';
 
-		$sql = "SELECT * FROM candidates WHERE category_id='".$row['id']."'";
+		// Use the updated SQL query to exclude archived candidates
+		$sql = "SELECT * FROM candidates WHERE category_id='".$row['id']."' AND archived = 0";
 		$cquery = $conn->query($sql);
 		while($crow = $cquery->fetch_assoc()){
 			$image = (!empty($crow['photo'])) ? '../images/'.$crow['photo'] : '../images/profile.jpg';
@@ -66,5 +67,4 @@
 	}
 
 	echo json_encode($output);
-
 ?>
