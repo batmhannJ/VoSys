@@ -542,27 +542,37 @@
 
 .page-header {
     margin-top: 0;
-    color: #333; /* Text color */
+    color: #fff; /* Text color */
     text-align: center;
+    position: relative; /* Position relative for stacking context */
+    background-image: url('images/codg.jpg'); /* Set the logo as the background image */
+    background-size: cover; /* Cover the entire header with the background image */
+    background-position: center; /* Center the background image */
+    padding: 50px 0; /* Add padding to create space for the content */
 }
 
-.page-header img {
-    width: 80px; /* Image width */
-    height: 80px; /* Image height */
-    border-radius: 50%; /* Rounded corners for the image */
-    margin-right: 10px; /* Margin to separate image from text */
+.page-header:before {
+    content: ''; /* Add content for the pseudo-element */
+    position: absolute; /* Position the pseudo-element */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Background overlay with opacity */
 }
 
 .title {
-    font-size: 28px; /* Font size */
-    margin-bottom: 20px; /* Bottom margin */
-    line-height: 1.5; /* Line height */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Text shadow for effect */
-    color: #800000; /* Text color */
+    font-size: 36px; /* Increase font size */
+    margin-bottom: 30px; /* Increase bottom margin */
+    line-height: 1.3; /* Adjust line height */
     font-family: 'Arial', sans-serif; /* Font family */
     font-weight: bold; /* Font weight */
     text-transform: uppercase; /* Uppercase text */
+    position: relative; /* Position relative for stacking context */
+    z-index: 1; /* Ensure text appears above the background overlay */
 }
+
+
 
 </style>
 </html>
