@@ -64,20 +64,26 @@
                   $sql = "SELECT 
                               activity_log.voters_id AS voters_id, 
                               activity_log.email AS email, 
+                              activity_log.activity_type AS activity_type,
+                              activity_log.activity_time AS activity_time,
                               voters.firstname AS votfirst, 
                               voters.lastname AS votlast
                           FROM activity_log 
-                          LEFT JOIN voters ON voters.id = activity_log.voters_id 
+                          LEFT JOIN voters ON voters.voters_id = activity_log.voters_id 
                           ORDER BY activity_log.id ASC";
                           
                   $query = $conn->query($sql);
+                  $i = 1;
                   while ($row = $query->fetch_assoc()) {
                       echo "
                           <tr>
                               <td class='hidden'></td>
+                              <td>".$i++."</td>
                               <td>".$row['voters_id']."</td>
                               <td>".$row['email']."</td>
                               <td>".$row['votfirst'].' '.$row['votlast']."</td>
+                              <td>".$row['activity_type']."</td>
+                              <td>".$row['activity_time']."</td>
                           </tr>
                       ";
                   }
