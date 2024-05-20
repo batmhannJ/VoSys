@@ -16,6 +16,11 @@ if (isset($_SESSION['voters_id']) && isset($_SESSION['activity_time'])) {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssis", $timeout, $duration_of_use, $voter_id, $timein);
     $stmt->execute();
+    if ($stmt->error) {
+        echo "Error: " . $stmt->error;
+    } else {
+        echo "Update successful!";
+    }
     $stmt->close();
 }
 
