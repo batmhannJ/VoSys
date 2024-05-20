@@ -540,49 +540,43 @@ main.sign-up-mode .carousel {
             </form>
           </div>
 
+          
+
           <div class="carousel">
             <div class="images-wrapper">
               <img src="./images/c.png" class="image img-1 show" alt="" />
               <img src="./images/j.png" class="image img-2 show" alt="" />
               <img src="./images/y.png" class="image img-3 show" alt="" />
               <img src="./images/ct.png" class="image img-4 show" alt="" />
-              <img src="./images/p.png" class="image img-5 shozw" alt="" />
+              <img src="./images/p.png" class="image img-5 show" alt="" />
               <img src="./images/h.png" class="image img-6 show" alt="" />
             </div>
         </div>
       </div>
     </main>
 
-
-
-
-
-
-
-
         </div>
     </div>
     <script>
   const images = document.querySelectorAll('.image');
   let currentIndex = 0;
-
+  
   function nextImage() {
     currentIndex = (currentIndex + 1) % images.length;
     updateSlider();
   }
-
+  
   function updateSlider() {
-  const offset = -currentIndex * images[0].offsetWidth || 0;
-  document.querySelector('.images-wrapper').style.transform = `translateX(${offset}px)`;
-
-  // Flash effect
-  images.forEach(image => {
-    image.style.opacity = 0; // Hide all images
-  });
-  images[currentIndex].style.opacity = 1; // Show the current image
-}
-
-
+    const offset = -currentIndex * 100; // Assuming each image takes 100% width in the carousel
+    document.querySelector('.images-wrapper').style.transform = `translateX(${offset}%)`;
+    
+    // Optional: Implement a fade-in effect
+    images.forEach(image => {
+      image.style.opacity = 0; // Hide all images
+    });
+    images[currentIndex].style.opacity = 1; // Show the current image
+  }
+  
   setInterval(nextImage, 3000); // Change image every 3 seconds
 </script>
 
