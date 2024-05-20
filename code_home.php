@@ -541,34 +541,37 @@
 }
 
 .page-header {
-    margin-top: 0;
-    color: #333; /* Text color */
+    margin-top: 20px; /* Add margin to top */
+    color: #444; /* Text color */
     text-align: center;
-    padding: 50px 0; /* Add padding to create space for the content */
+    padding: 30px 0; /* Decrease padding */
+    background-color: #f7f7f7; /* Background color */
+    border-bottom: 2px solid #ddd; /* Add bottom border */
 }
 
 .page-header img {
-    width: 140px; /* Increase image width */
-    height: 150px; /* Increase image height */
-    border-radius: 50%; /* Rounded corners for the image */
-    margin-bottom: 20px; /* Add margin to separate image from text */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+    width: 120px; /* Decrease image width */
+    height: auto; /* Auto height */
+    border-radius: 8px; /* Decrease border radius */
+    margin-bottom: 10px; /* Decrease margin */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Modify shadow */
 }
 
 .title {
-    font-size: 36px; /* Increase font size */
-    margin-bottom: 20px; /* Add margin below the title */
-    font-family: 'Arial', sans-serif; /* Font family */
-    font-weight: bold; /* Font weight */
-    text-transform: uppercase; /* Uppercase text */
-    letter-spacing: 2px; /* Add letter spacing for emphasis */
+    font-size: 40px; /* Increase font size */
+    margin-bottom: 10px; /* Decrease margin */
+    font-family: 'Helvetica', sans-serif; /* Change font family */
+    font-weight: normal; /* Normal font weight */
+    text-transform: capitalize; /* Capitalize text */
+    letter-spacing: 1px; /* Decrease letter spacing */
 }
 
 .subtitle {
-    font-size: 20px; /* Font size for subtitle */
-    font-weight: 400; /* Normal font weight */
-    color: #666; /* Subtitle color */
+    font-size: 18px; /* Decrease font size */
+    font-weight: 300; /* Lighter font weight */
+    color: #888; /* Subtitle color */
 }
+
 
 
 
