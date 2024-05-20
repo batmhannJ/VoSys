@@ -114,7 +114,7 @@ $(function(){
   $(document).on('click', '.archive', function(e){
     e.preventDefault();
     var id = $(this).data('id');
-    archiveVoter(id);
+    archiveCandidate(id);
   });
 
   $(document).on('click', '.photo', function(e){
@@ -131,7 +131,7 @@ $(function(){
 
 });
 
-function archiveVoter(id) {
+function archiveCandidate(id) {
     $('#confirmationModal').modal('show'); // Show the confirmation modal
 
     $('#submitBtn').on('click', function() {
