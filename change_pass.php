@@ -2,51 +2,41 @@
 // Include your header file
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-include 'includes/header.php';
-
-// Move session_start() to the beginning of the file
-session_start();
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Change Password</title>
-    <!-- Include your CSS files -->
-</head>
+<?php include 'includes/header.php'; ?>
+
 <body class="hold-transition login-page">
-<div class="login-box">
-    <div class="login-box-body">
-        <div class="login-logo">
-            <img src="images/olshco.png" class="olshco-logo" alt="College Voting System Logo">
-            <b>College Voting System</b>
-        </div>
-        <p class="login-box-msg">Change Password</p>
-        <!-- Password reset form -->
-        <form action="" method="POST" onsubmit="return validateForm()">
-            <input type="hidden" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
-            <div class="form-group has-feedback">
-                <label for="new_password">New Password:</label>
-                <input type="password" class="form-control" id="new_password" name="new_password" required>
+    <div class="login-box">
+        <div class="login-box-body">
+            <div class="login-logo">
+                <img src="images/olshco.png" class="olshco-logo" alt="College Voting System Logo">
+                <b>College Voting System</b>
             </div>
-            <div class="form-group has-feedback">
-                <label for="confirm_password">Confirm Password:</label>
-                <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <button type="submit" class="btn btn-primary" name="reset">Reset Password</button>
+            <p class="login-box-msg">Change Password</p>
+            <!-- Password reset form -->
+            <form id="password_reset_form" method="POST">
+                <input type="hidden" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
+                <div class="form-group has-feedback">
+                    <label for="new_password">New Password:</label>
+                    <input type="password" class="form-control" id="new_password" name="new_password" required>
                 </div>
-            </div>
-        </form>
+                <div class="form-group has-feedback">
+                    <label for="confirm_password">Confirm Password:</label>
+                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button type="button" class="btn btn-primary" onclick="resetPassword()" id="reset" name="reset">Reset Password</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<?php include 'includes/scripts.php' ?>
+    <?php include 'includes/scripts.php' ?>
 
-<script>
+    <script>
     function validateForm() {
         var newPassword = document.getElementById("new_password").value;
         var confirmPassword = document.getElementById("confirm_password").value;
@@ -57,55 +47,39 @@ session_start();
         }
         return true;
     }
+
+    function resetPassword() {
+        if (validateForm()) {
+            var form = document.getElementById("password_reset_form");
+            var formData = new FormData(form);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "update_password.php", true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        // Request was successful
+                        var response = JSON.parse(xhr.responseText);
+                        if (response.success) {
+                            alert(response.message); // Display success message
+                            window.location.href = "voters_login.php"; // Redirect to login page
+                        } else {
+                            alert(response.message); // Display error message
+                        }
+                    } else {
+                        // Request failed
+                        alert("Failed to update password");
+
+                        // Log the error
+                        console.error("Failed to update password. Status code: " + xhr.status);
+                        console.error("Response: " + xhr.responseText);
+                    }
+                }
+            };
+            xhr.send(formData);
+        }
+    }
 </script>
 
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['reset'])) {
-    // Get the form data
-    $email = $_POST['email'];
-    $password = $_POST['new_password'];
-    $confirm_password = $_POST['confirm_password'];
-
-    // Check if the entered password matches the confirm password
-    if ($password != $confirm_password) {
-        $_SESSION['error'] = 'Password and confirm password do not match';
-        header("Location: update_password.php"); // Redirect back to the form
-        exit; // Exit here without further processing
-    }
-
-    // Hash the new password
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-    // Establish database connection (assuming $conn is your database connection)
-    include 'includes/conn.php'; // Adjust the filename as per your actual file
-
-    // Update the password in the database
-    $sql = "UPDATE voters SET password = ? WHERE email = ?";
-    $stmt = $conn->prepare($sql);
-
-    if ($stmt) {
-        // Bind parameters and execute the statement
-        $stmt->bind_param("ss", $hashed_password, $email);
-        if ($stmt->execute()) {
-            $_SESSION['success'] = 'Password updated successfully';
-            exit; // Exit here after successful password update
-        } else {
-            $_SESSION['error'] = 'Failed to update password: ' . $stmt->error;
-            header("Location: update_password.php"); // Redirect back to the form with error message
-            exit; // Exit here after displaying the error message
-        }
-        // Close the statement
-        $stmt->close();
-    } else {
-        $_SESSION['error'] = 'Prepare statement failed: ' . $conn->error;
-        header("Location: update_password.php"); // Redirect back to the form with error message
-        exit; // Exit here after displaying the error message
-    }
-} else {
-    $_SESSION['error'] = 'Invalid request';
-    header("Location: update_password.php"); // Redirect back to the form with error message
-    exit; // Exit here after displaying the error message
-}
-?>
 </body>
 </html>

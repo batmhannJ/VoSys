@@ -3,36 +3,52 @@
 include 'includes/session.php';
 include 'includes/db.php';
 
-// Initialize array to store updated data
+// Initialize arrays to store updated data
 $presidentData = array();
+$vpInternalAffairsData = array();
+$vpExternalAffairsData = array();
 
-// Fetch organization from GET parameter
-$organization = isset($_GET['organization']) ? $_GET['organization'] : '';
+// Function to fetch data based on position description and category id
+function fetchData($positionDescription, $categoryId, &$data, $conn) {
+    $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
+                COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
+                FROM candidates 
+                LEFT JOIN votes ON candidates.id = votes.candidate_id
+                LEFT JOIN positions ON candidates.position_id = positions.id
+                WHERE positions.description = '$positionDescription'
+                AND candidates.category_id = $categoryId
+                GROUP BY candidates.id";
 
-// Prepare SQL query with organization filter
-$sql = "SELECT candidates.firstname, candidates.lastname, COUNT(votes.id) AS vote_count
-        FROM candidates
-        LEFT JOIN votes ON candidates.id = votes.candidate_id
-        LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-        WHERE candidates.position = 'President' AND voters1.organization = '$organization'
-        GROUP BY candidates.id";
-
-// Execute SQL query
-$result = $conn->query($sql);
-
-// Process query results
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        // Construct candidate name
-        $candidateName = $row['firstname'] . ' ' . $row['lastname'];
-        // Store data in the array
-        $presidentData[] = array("y" => intval($row['vote_count']), "label" => $candidateName);
+    $query = $conn->query($sql);
+    if ($query) {
+        while ($row = $query->fetch_assoc()) {
+            $data[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+        }
+    } else {
+        // Handle query error
+        echo "Error fetching data for $positionDescription: " . $conn->error;
     }
 }
+
+// Fetch data for President candidates with category_id 1
+fetchData('President', 1, $presidentData, $conn);
+
+// Fetch data for Vice President for Internal Affairs candidates with category_id 2
+fetchData('Vice President for Internal Affairs', 3, $vpInternalAffairsData, $conn);
+
+// Fetch data for Vice President for External Affairs candidates with category_id 3
+fetchData('Vice President for External Affairs', 4, $vpExternalAffairsData, $conn);
 
 // Close database connection
 $conn->close();
 
-// Return JSON response
-echo json_encode($presidentData);
+// Combine the updated data into a single array
+$response = array(
+    'presidentData' => $presidentData,
+    'vpInternalAffairsData' => $vpInternalAffairsData,
+    'vpExternalAffairsData' => $vpExternalAffairsData
+);
+
+// Return the updated data as JSON
+echo json_encode($response);
 ?>

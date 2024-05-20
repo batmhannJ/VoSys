@@ -2,5 +2,5 @@
     <div class="pull-right hidden-xs">
       <b>All rights reserved</b>
     </div>
-    <strong>Copyright &copy; 2023 <a href="https://www.campcodes.com">JPCS OLSHCO - Chapter</a></strong>
+    <strong>Designed and Developed by: <a href="developers.html">VOSYS TEAM</a></strong>
 </footer>
