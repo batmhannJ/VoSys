@@ -82,8 +82,8 @@ include 'includes/header.php';
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    // Function to generate combined column graph with multiple axes
-    function generateCombinedGraph(presidentDataPoints, vicePresidentDataPoints, containerId) {
+    // Function to generate combined column graph with different colors for each candidate
+    function generateCombinedGraph(dataPoints, containerId) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
             title: {
@@ -96,22 +96,10 @@ include 'includes/header.php';
             axisX: {
                 title: "Candidates"
             },
-            data: [
-                {
-                    type: "column",
-                    name: "President",
-                    showInLegend: true,
-                    color: "#4F81BC", // Blue color for president candidates
-                    dataPoints: presidentDataPoints
-                },
-                {
-                    type: "column",
-                    name: "Vice President",
-                    showInLegend: true,
-                    color: "#C0504E", // Red color for vice president candidates
-                    dataPoints: vicePresidentDataPoints
-                }
-            ]
+            data: [{
+                type: "column",
+                dataPoints: dataPoints
+            }]
         });
         chart.render();
         return chart;
@@ -128,13 +116,26 @@ include 'includes/header.php';
             dataType: 'json',
             data: {organization: $('#organization').val()}, // Pass the selected organization to the server
             success: function(response) {
+                // Combine president and vice president data into one array with distinct colors
+                var combinedDataPoints = [];
+
+                // Assign a unique color to each president candidate
+                response.presidentData.forEach(function(candidate, index) {
+                    candidate.color = CanvasJS.Chart.defaults.colors[index % CanvasJS.Chart.defaults.colors.length];
+                    combinedDataPoints.push(candidate);
+                });
+
+                // Assign a unique color to each vice president candidate
+                response.vicePresidentData.forEach(function(candidate, index) {
+                    candidate.color = CanvasJS.Chart.defaults.colors[(index + response.presidentData.length) % CanvasJS.Chart.defaults.colors.length];
+                    combinedDataPoints.push(candidate);
+                });
+
                 // Update combined column graph
-                if (response.presidentData.length > 0 || response.vicePresidentData.length > 0) {
-                    if (!combinedChart) {
-                        combinedChart = generateCombinedGraph(response.presidentData, response.vicePresidentData, "combinedGraph");
-                    } else {
-                        updateCombinedGraph(response.presidentData, response.vicePresidentData, combinedChart);
-                    }
+                if (!combinedChart) {
+                    combinedChart = generateCombinedGraph(combinedDataPoints, "combinedGraph");
+                } else {
+                    updateCombinedGraph(combinedDataPoints, combinedChart);
                 }
             },
             error: function(xhr, status, error) {
@@ -144,14 +145,13 @@ include 'includes/header.php';
     }
 
     // Function to update combined column graph with animation
-    function updateCombinedGraph(newPresidentDataPoints, newVicePresidentDataPoints, chart) {
-        chart.options.data[0].dataPoints = newPresidentDataPoints;
-        chart.options.data[1].dataPoints = newVicePresidentDataPoints;
+    function updateCombinedGraph(newDataPoints, chart) {
+        chart.options.data[0].dataPoints = newDataPoints;
         chart.render();
     }
 
     // Initialize chart
-    var combinedChart = generateCombinedGraph([], [], "combinedGraph");
+    var combinedChart = generateCombinedGraph([], "combinedGraph");
 
     // Call the updateData function initially
     updateData();
