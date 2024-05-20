@@ -530,18 +530,19 @@ main.sign-up-mode .carousel {
                   <span class="form-control-feedback"></span>
                 </div>
 
-                <div class="input-wrap">
+                <div class="input-wrap" style="display: flex;">
                   <input
                     type="number"
                     minlength="6"
                     class="input-field"
                     id="otp"
                     name="otp"
-                    placeholder="Enter OTP" style="font-size: 15px;"
+                    placeholder="Enter OTP" style="font-size: 15px; flex-grow: 1;"
                     required
                   />
                     <span class="form-control-feedback"></span>
                   <label style="font-size:15px;"></label>
+                  <input type="button" name="sendOTP" id="sendOTP" value="Send OTP" class="sign-btn" style="width: 100px; font-size:15px; justify-content: flex-end; background-color: grey;">
                 </div>
             </div>
 

@@ -265,6 +265,7 @@
 
 <style>
 
+
     /* Style for the position container */
 .position-container {
     margin: 20px auto; /* Center the container horizontally and add margin on top and bottom */
@@ -541,24 +542,33 @@
 
 .page-header {
     margin-top: 0;
-    color: #fff;
+    color: #333; /* Text color */
     text-align: center;
+    position: relative; /* Position relative for stacking context */
 }
 
 .page-header img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-right: 10px;
+    width: 100px; /* Increase image width */
+    height: 100px; /* Increase image height */
+    border-radius: 50%; /* Rounded corners for the image */
+    margin-bottom: 20px; /* Increase margin between image and text */
+    display: block; /* Ensure image is displayed as a block element */
+    margin: 0 auto; /* Center align image */
+    border: 4px solid #fff; /* Add a border with white color */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add shadow for depth */
 }
 
 .title {
-    font-size: 36px;
-    margin-bottom: 20px;
-    line-height: 1.5;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-size: 36px; /* Increase font size */
+    margin-bottom: 30px; /* Increase bottom margin */
+    line-height: 1.3; /* Adjust line height */
+    color: #800000; /* Text color */
+    font-family: 'Arial', sans-serif; /* Font family */
+    font-weight: bold; /* Font weight */
+    text-transform: uppercase; /* Uppercase text */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Adjust text shadow */
 }
 
-    </style>
+
 </style>
 </html>
