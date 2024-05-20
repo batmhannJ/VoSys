@@ -81,7 +81,7 @@
                           <td><a href='#platform' data-toggle='modal' class='btn btn-info btn-sm btn-flat platform' data-id='".$row['canid']."'><i class='fa fa-search'></i> View</a></td>
                           <td>
                             <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['canid']."'><i class='fa fa-edit'></i> Edit</button>
-                            <button class='btn btn-warning btn-sm archive btn-flat' data-id='".$row['canid']."'><i class='fa fa-archive'></i> Archive</button>
+                            <button class='btn btn-warning btn-sm archive btn-flat' data-id='".$row['id']."'><i class='fa fa-archive'></i> Archive</button>
                           </td>
                         </tr>
                       ";
@@ -109,11 +109,6 @@ $(function(){
     getRow(id);
   });
 
-  $(document).on('click', '.archive', function(e){
-    e.preventDefault();
-    var id = $(this).data('id');
-    archiveCandidate(id);
-  });
 
   $(document).on('click', '.photo', function(e){
     e.preventDefault();
@@ -127,20 +122,30 @@ $(function(){
     getRow(id);
   });
 
+  $(document).on('click', '.archive', function(e){
+    e.preventDefault();
+    var id = $(this).data('id');
+    archiveCandidate(id);
+  });
+
 });
 
 function archiveCandidate(id) {
-    $.ajax({
-        type: "POST",
-        url: "archive_candidate.php",
-        data: { id: id },
-        success: function(response) {
-            $('#confirmationModal').modal('hide');
-            location.reload();
-        },
-        error: function(xhr, status, error) {
-            console.error(xhr.responseText);
-        }
+    $('#confirmationModal').modal('show'); // Show the confirmation modal
+
+    $('#submitBtn').on('click', function() {
+        $.ajax({
+            type: "POST",
+            url: "archive_candidate.php",
+            data: { id: id },
+            success: function(response) {
+                // Refresh the page or update the table as needed
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
     });
 }
 
