@@ -63,7 +63,7 @@
                 </thead>
                 <tbody>
                   <?php
-                    $sql = "SELECT * FROM voters";
+                    $sql = "SELECT * FROM voters WHERE archived = FALSE";
                     $query = $conn->query($sql);
                     $i = 1;
                     while($row = $query->fetch_assoc()){
