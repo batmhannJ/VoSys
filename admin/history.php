@@ -275,5 +275,15 @@ include 'includes/header.php';
     // Generate vice president for external affairs bar graph
     generateBarGraph(<?php echo json_encode($vicePresidentExternalData); ?>, "vicePresidentExternalGraph");
 </script>
+
+<!-- Export PDF Script -->
+<script>
+    $(document).ready(function(){
+        $('.export-pdf').click(function(){
+            var organization = $('#organization').val();
+            window.location.href = 'export_results.php?organization=' + organization;
+        });
+    });
+</script>
 </body>
 </html>
