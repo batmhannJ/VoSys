@@ -6,7 +6,9 @@
   <?php include 'includes/navbar_csc.php'; ?>
   <?php include 'includes/menubar_csc.php'; ?>
 
+  <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
         Candidates List
@@ -16,7 +18,7 @@
         <li class="active">Candidates</li>
       </ol>
     </section>
-    
+    <!-- Main content -->
     <section class="content">
       <?php
         if(isset($_SESSION['error'])){
@@ -62,8 +64,8 @@
                     $sql = "SELECT *, candidates.id AS canid 
                     FROM candidates 
                     LEFT JOIN categories ON categories.id = candidates.category_id 
-                    WHERE candidates.election_id = 20 AND candidates.archived = FALSE 
-                    ORDER BY categories.priority ASC";            
+                    WHERE candidates.election_id = 20 
+                    ORDER BY categories.priority ASC";
 
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
@@ -81,7 +83,7 @@
                           <td><a href='#platform' data-toggle='modal' class='btn btn-info btn-sm btn-flat platform' data-id='".$row['canid']."'><i class='fa fa-search'></i> View</a></td>
                           <td>
                             <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['canid']."'><i class='fa fa-edit'></i> Edit</button>
-                            <button class='btn btn-warning btn-sm archive btn-flat' data-id='".$row['canid']."'><i class='fa fa-archive'></i> Archive</button>
+                            <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['canid']."'><i class='fa fa-trash'></i> Delete</button>
                           </td>
                         </tr>
                       ";
@@ -109,15 +111,11 @@ $(function(){
     getRow(id);
   });
 
-  $(document).on('click', '.archive', function(e){
+  $(document).on('click', '.delete', function(e){
     e.preventDefault();
+    $('#delete').modal('show');
     var id = $(this).data('id');
-    $('#confirmationModal').data('id', id).modal('show'); // Show the confirmation modal and store the ID
-  });
-
-  $('#submitBtn').on('click', function() {
-    var id = $('#confirmationModal').data('id');
-    archiveCandidate(id);
+    getRow(id);
   });
 
   $(document).on('click', '.photo', function(e){
@@ -133,21 +131,6 @@ $(function(){
   });
 
 });
-
-function archiveCandidate(id) {
-    $.ajax({
-        type: "POST",
-        url: "archive_candidate.php",
-        data: { id: id },
-        success: function(response) {
-            $('#confirmationModal').modal('hide');
-            location.reload();
-        },
-        error: function(xhr, status, error) {
-            console.error(xhr.responseText);
-        }
-    });
-}
 
 function getRow(id){
   $.ajax({
@@ -167,48 +150,5 @@ function getRow(id){
   });
 }
 </script>
-<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-
-            <div class="modal-body">
-                <p>Are you sure you want to archive this Candidate?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="submitBtn">Yes, Submit</button>
-            </div>
-        </div>
-    </div>
-</div>
-</body>
-</html>
-
-<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-
-            <div class="modal-body">
-                <p>Are you sure you want to archive this Candidate?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="submitBtn">Yes, Submit</button>
-            </div>
-        </div>
-    </div>
-</div>
 </body>
 </html>
