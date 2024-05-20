@@ -548,7 +548,7 @@
 }
 
 .page-header img {
-    width: 150px; /* Increase image width */
+    width: 140px; /* Increase image width */
     height: 150px; /* Increase image height */
     border-radius: 50%; /* Rounded corners for the image */
     margin-bottom: 20px; /* Add margin to separate image from text */
