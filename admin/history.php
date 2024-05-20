@@ -74,7 +74,7 @@ include 'includes/header.php';
                                 $organizationFilter = !empty($_GET['organization']) ? " AND voters1.organization = '".$_GET['organization']."'" : "";
                                 $sql = "SELECT voters1.organization, CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
                                         COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-                                        FROM votes
+                                        FROM positions
                                         LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'President'
                                         LEFT JOIN votes ON candidates.id = votes.candidate_id
                                         LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
