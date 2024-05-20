@@ -550,12 +550,12 @@
 }
 
 .page-header img {
-    width: 150px; /* Adjust image width */
+    width: 200px; /* Adjust image width */
     height: auto; /* Auto height */
     border-radius: 50%; /* Circular image */
     margin-bottom: 20px; /* Increase margin */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
-    transform: rotate(15deg); /* Rotate the image slightly */
+    filter: grayscale(50%) contrast(150%); /* Apply grayscale and increase contrast */
 }
 
 .title {
@@ -572,6 +572,7 @@
     font-weight: 400; /* Keep font weight */
     color: #666; /* Keep subtitle color */
 }
+
 
 
 
