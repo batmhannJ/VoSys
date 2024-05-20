@@ -64,6 +64,7 @@ include 'includes/header.php';
                                 <tr>
                                     <th>Rank</th>
                                     <th>Organization</th>
+                                    <th>Position</th>
                                     <th>Candidate</th>
                                     <th>Vote Count</th>
                                 </tr>
@@ -72,12 +73,13 @@ include 'includes/header.php';
                                 <?php
                                 // Fetch and display president candidate ranking based on vote count and organization filter
                                 $organizationFilter = !empty($_GET['organization']) ? " AND voters1.organization = '".$_GET['organization']."'" : "";
-                                $sql = "SELECT voters1.organization, CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
+                                $sql = "SELECT voters1.organization, positions.description AS position, CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
                                         COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
                                         FROM categories 
                                         LEFT JOIN candidates ON categories.id = candidates.category_id
                                         LEFT JOIN votes ON candidates.id = votes.candidate_id
                                         LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
+                                        LEFT JOIN positions ON categories.position_id = positions.id
                                         WHERE voters1.organization != ''".$organizationFilter."
                                         GROUP BY voters1.organization, candidates.id
                                         ORDER BY vote_count DESC";
@@ -88,6 +90,7 @@ include 'includes/header.php';
                                         <tr>
                                         <td>".$rank."</td>
                                         <td>".$row['organization']."</td>
+                                        <td>".$row['position']."</td>
                                         <td>".$row['candidate_name']."</td>
                                         <td>".$row['vote_count']."</td>
                                         </tr>";
@@ -117,6 +120,7 @@ include 'includes/header.php';
                                 <tr>
                                     <th>Rank</th>
                                     <th>Organization</th>
+                                    <th>Position</th>
                                     <th>Candidate</th>
                                     <th>Vote Count</th>
                                 </tr>
@@ -124,12 +128,13 @@ include 'includes/header.php';
                                 <tbody>
                                 <?php
                                 // Fetch and display vice president candidate ranking based on vote count and organization filter
-                                $sql = "SELECT voters1.organization, CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
+                                $sql = "SELECT voters1.organization, positions.description AS position, CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
                                         COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
                                         FROM categories 
                                         LEFT JOIN candidates ON categories.id = candidates.category_id
-                                        LEFT JOIN votes ON candidates.id = votes.candidate_id
+                                        LEFT JOIN votes ON candidates.id = votes.candidate                                _id
                                         LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
+                                        LEFT JOIN positions ON categories.position_id = positions.id
                                         WHERE voters1.organization != ''".$organizationFilter."
                                         GROUP BY voters1.organization, candidates.id
                                         ORDER BY vote_count DESC";
@@ -140,6 +145,7 @@ include 'includes/header.php';
                                         <tr>
                                         <td>".$rank."</td>
                                         <td>".$row['organization']."</td>
+                                        <td>".$row['position']."</td>
                                         <td>".$row['candidate_name']."</td>
                                         <td>".$row['vote_count']."</td>
                                         </tr>";
@@ -191,7 +197,7 @@ include 'includes/header.php';
                     </div>
                     <div class="row">
                         <div class="col-xs-12">
-                        <span class="pull-right">
+                            <span class="pull-right">
                               <a href="export_results.php?organization=<?php echo $_GET['organization'] ?? ''; ?>" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Export PDF</a>
                             </span>
                         </div>
@@ -245,6 +251,7 @@ include 'includes/header.php';
             LEFT JOIN candidates ON categories.id = candidates.category_id
             LEFT JOIN votes ON candidates.id = votes.candidate_id
             LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
+            LEFT JOIN positions ON categories.position_id = positions.id
             WHERE voters1.organization != ''
             ".$organizationFilter."
             GROUP BY candidates.id";
@@ -266,6 +273,7 @@ include 'includes/header.php';
             LEFT JOIN candidates ON categories.id = candidates.category_id
             LEFT JOIN votes ON candidates.id = votes.candidate_id
             LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
+            LEFT JOIN positions ON categories.position_id = positions.id
             WHERE voters1.organization != ''
             ".$organizationFilter."
             GROUP BY candidates.id";
@@ -280,3 +288,4 @@ include 'includes/header.php';
 </script>
 </body>
 </html>
+
