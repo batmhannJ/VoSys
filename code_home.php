@@ -545,17 +545,10 @@
     color: #333; /* Text color */
     text-align: center;
     position: relative; /* Position relative for stacking context */
-}
-
-.page-header img {
-    width: 100px; /* Increase image width */
-    height: 100px; /* Increase image height */
-    border-radius: 50%; /* Rounded corners for the image */
-    margin-bottom: 20px; /* Increase margin between image and text */
-    display: block; /* Ensure image is displayed as a block element */
-    margin: 0 auto; /* Center align image */
-    border: 4px solid #fff; /* Add a border with white color */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add shadow for depth */
+    background-image: url('images/codg.jpg'); /* Set the logo as the background image */
+    background-size: cover; /* Cover the entire header with the background image */
+    background-position: center; /* Center the background image */
+    padding: 50px 0; /* Add padding to create space for the content */
 }
 
 .title {
@@ -568,6 +561,7 @@
     text-transform: uppercase; /* Uppercase text */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Adjust text shadow */
 }
+
 
 
 </style>
