@@ -112,12 +112,6 @@ $(function(){
   $(document).on('click', '.archive', function(e){
     e.preventDefault();
     var id = $(this).data('id');
-    $('#confirmationModal').modal('show'); // Show the confirmation modal
-    $('#submitBtn').attr('data-id', id); // Set the id in the modal button
-  });
-
-  $('#submitBtn').on('click', function(){
-    var id = $(this).attr('data-id');
     archiveCandidate(id);
   });
 
