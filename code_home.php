@@ -533,13 +533,12 @@
     max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('your-background-image.jpg');
+    background-image: url('your-background-image.jpg');
     background-size: cover;
     background-position: center;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
 
 .page-header {
     margin-top: 0;
