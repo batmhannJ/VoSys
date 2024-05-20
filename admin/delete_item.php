@@ -2,9 +2,7 @@
 
 include 'includes/conn.php';
 
-// Tiyakin na mayroong POST data na ipinapasa
 if(isset($_POST['id']) && isset($_POST['user'])) {
-    // Kunin ang mga parameter
     $id = $_POST['id'];
     $user = $_POST['user'];
 
