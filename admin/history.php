@@ -182,98 +182,105 @@ include 'includes/header.php';
 
                 <!-- Vice President for Internal Affairs Bar Graph Box -->
                 <div class="col-md-6">
-                    <div class="
                     <div class="box">
-    <div class="box-header with-border">
-        <h3 class="box-title">Vice President for Internal Affairs Candidates Vote Count</h3>
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Vice President for Internal Affairs Candidates Vote Count</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!-- Vice President for Internal Affairs Bar Graph Container -->
+                            <div id="vicePresidentGraph" style="height: 300px;"></div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <span class="pull-right">
+                              <a href="export_results.php?organization=<?php echo $_GET['organization'] ?? ''; ?>" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Export PDF</a>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
     </div>
-    <!-- /.box-header -->
-    <div class="box-body">
-        <!-- Vice President for Internal Affairs Bar Graph Container -->
-        <div id="vicePresidentGraph" style="height: 300px;"></div>
-    </div>
-    <!-- /.box-body -->
-</div>
-<!-- /.box -->
-</div>
-<!-- /.col -->
-</div>
-<!-- /.row -->
-</section>
-<!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
-<?php include 'includes/footer.php'; ?>
-<?php include 'includes/votes_modal.php'; ?>
+
+    <!-- /.content-wrapper -->
+    <?php include 'includes/footer.php'; ?>
+    <?php include 'includes/votes_modal.php'; ?>
 </div>
 <!-- ./wrapper -->
 <?php include 'includes/scripts.php'; ?>
 <!-- Bar Graph Script -->
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
-// Function to generate bar graph
-function generateBarGraph(dataPoints, containerId) {
-    var chart = new CanvasJS.Chart(containerId, {
-        animationEnabled: true,
-        title:{
-            text: "Vote Counts"
-        },
-        axisX: {
-            title: "Candidates"
-        },
-        axisY: {
-            title: "Vote Count",
-            includeZero: true
-        },
-        data: [{
-            type: "column",
-            dataPoints: dataPoints
-        }]
-    });
-    chart.render();
-}
+    // Function to generate bar graph
+    function generateBarGraph(dataPoints, containerId) {
+        var chart = new CanvasJS.Chart(containerId, {
+            animationEnabled: true,
+            title:{
+                text: "Vote Counts"
+            },
+            axisX: {
+                title: "Candidates"
+            },
+            axisY: {
+                title: "Vote Count",
+                includeZero: true
+            },
+            data: [{
+                type: "column",
+                dataPoints: dataPoints
+            }]
+        });
+        chart.render();
+    }
 
-// Fetch and process president data
-<?php
-$presidentData = array();
-$sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-        COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-        FROM positions 
-        LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'President'
-        LEFT JOIN votes ON candidates.id = votes.candidate_id
-        LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-        WHERE voters1.organization != ''
-        ".$organizationFilter."
-        GROUP BY candidates.id";
-$query = $conn->query($sql);
-while($row = $query->fetch_assoc()) {
-    $presidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
-}
-?>
+    // Fetch and process president data
+    <?php
+    $presidentData = array();
+    $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
+            COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
+            FROM positions 
+            LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'President'
+            LEFT JOIN votes ON candidates.id = votes.candidate_id
+            LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
+            WHERE voters1.organization != ''
+            ".$organizationFilter."
+            GROUP BY candidates.id";
+    $query = $conn->query($sql);
+    while($row = $query->fetch_assoc()) {
+        $presidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+    }
+    ?>
 
-// Generate president bar graph
-generateBarGraph(<?php echo json_encode($presidentData); ?>, "presidentGraph");
+    // Generate president bar graph
+    generateBarGraph(<?php echo json_encode($presidentData); ?>, "presidentGraph");
 
-// Fetch and process vice president for internal affairs data
-<?php
-$vicePresidentData = array();
-$sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-        COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-        FROM positions 
-        LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'Vice President for Internal Affairs'
-        LEFT JOIN votes ON candidates.id = votes.candidate_id
-        LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-        WHERE voters1.organization != ''
-        ".$organizationFilter."
-        GROUP BY candidates.id";
-$query = $conn->query($sql);
-while($row = $query->fetch_assoc()) {
-    $vicePresidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
-}
-?>
+    // Fetch and process vice president for internal affairs data
+    <?php
+    $vicePresidentData = array();
+    $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
+            COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
+            FROM positions 
+            LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'Vice President for Internal Affairs'
+            LEFT JOIN votes ON candidates.id = votes.candidate_id
+            LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
+            WHERE voters1.organization != ''
+            ".$organizationFilter."
+            GROUP BY candidates.id";
+    $query = $conn->query($sql);
+    while($row = $query->fetch_assoc()) {
+        $vicePresidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+    }
+    ?>
 
-// Generate vice president for internal affairs bar graph
-generateBarGraph(<?php echo json_encode($vicePresidentData); ?>, "vicePresidentGraph");
+    // Generate vice president for internal affairs bar graph
+    generateBarGraph(<?php echo json_encode($vicePresidentData); ?>, "vicePresidentGraph");
 </script>
 </body>
 </html>
