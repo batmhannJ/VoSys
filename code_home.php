@@ -550,27 +550,29 @@
 }
 
 .page-header img {
-    width: 130px; /* Adjust image width */
+    width: 150px; /* Adjust image width */
     height: auto; /* Auto height */
-    border-radius: 10px; /* Slightly increase border radius */
-    margin-bottom: 15px; /* Increase margin */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Softer shadow */
+    border-radius: 50%; /* Circular image */
+    margin-bottom: 20px; /* Increase margin */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    transform: rotate(15deg); /* Rotate the image slightly */
 }
 
 .title {
-    font-size: 38px; /* Slightly decrease font size */
-    margin-bottom: 15px; /* Increase margin */
-    font-family: 'Verdana', sans-serif; /* Change font family */
+    font-size: 38px; /* Keep font size */
+    margin-bottom: 15px; /* Keep margin */
+    font-family: 'Verdana', sans-serif; /* Keep font family */
     font-weight: bold; /* Bold font weight */
     text-transform: uppercase; /* Uppercase text */
-    letter-spacing: 1.5px; /* Increase letter spacing */
+    letter-spacing: 1.5px; /* Keep letter spacing */
 }
 
 .subtitle {
-    font-size: 22px; /* Slightly increase font size */
-    font-weight: 400; /* Normal font weight */
-    color: #666; /* Subtitle color */
+    font-size: 22px; /* Keep font size */
+    font-weight: 400; /* Keep font weight */
+    color: #666; /* Keep subtitle color */
 }
+
 
 
 
