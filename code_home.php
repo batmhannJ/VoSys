@@ -542,35 +542,35 @@
 
 .page-header {
     margin-top: 0;
-    color: #fff; /* Text color */
+    color: #333; /* Text color */
     text-align: center;
-    position: relative; /* Position relative for stacking context */
-    background-image: url('images/codg.jpg'); /* Set the logo as the background image */
-    background-size: cover; /* Cover the entire header with the background image */
-    background-position: center; /* Center the background image */
     padding: 50px 0; /* Add padding to create space for the content */
 }
 
-.page-header:before {
-    content: ''; /* Add content for the pseudo-element */
-    position: absolute; /* Position the pseudo-element */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Background overlay with opacity */
+.page-header img {
+    width: 150px; /* Increase image width */
+    height: 150px; /* Increase image height */
+    border-radius: 50%; /* Rounded corners for the image */
+    margin-bottom: 20px; /* Add margin to separate image from text */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
 }
 
 .title {
     font-size: 36px; /* Increase font size */
-    margin-bottom: 30px; /* Increase bottom margin */
-    line-height: 1.3; /* Adjust line height */
+    margin-bottom: 20px; /* Add margin below the title */
     font-family: 'Arial', sans-serif; /* Font family */
     font-weight: bold; /* Font weight */
     text-transform: uppercase; /* Uppercase text */
-    position: relative; /* Position relative for stacking context */
-    z-index: 1; /* Ensure text appears above the background overlay */
+    letter-spacing: 2px; /* Add letter spacing for emphasis */
 }
+
+.subtitle {
+    font-size: 20px; /* Font size for subtitle */
+    font-weight: 400; /* Normal font weight */
+    color: #666; /* Subtitle color */
+}
+
+
 
 
 
