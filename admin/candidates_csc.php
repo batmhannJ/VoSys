@@ -112,6 +112,12 @@ $(function(){
   $(document).on('click', '.archive', function(e){
     e.preventDefault();
     var id = $(this).data('id');
+    $('#confirmationModal').modal('show'); // Show the confirmation modal
+    $('#submitBtn').data('id', id); // Set the id in the modal button
+  });
+
+  $('#submitBtn').on('click', function(){
+    var id = $(this).data('id');
     archiveCandidate(id);
   });
 
@@ -130,21 +136,17 @@ $(function(){
 });
 
 function archiveCandidate(id) {
-    $('#confirmationModal').modal('show'); // Show the confirmation modal
-
-    $('#submitBtn').on('click', function() {
-        $.ajax({
-            type: "POST",
-            url: "archive_candidate.php",
-            data: { id: id },
-            success: function(response) {
-                // Refresh the page or update the table as needed
-                location.reload();
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
+    $.ajax({
+        type: "POST",
+        url: "archive_candidate.php",
+        data: { id: id },
+        success: function(response) {
+            $('#confirmationModal').modal('hide');
+            location.reload();
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        }
     });
 }
 
