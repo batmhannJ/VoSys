@@ -533,12 +533,36 @@
     max-width: 1000px;
     margin: 0 auto;
     padding: 20px;
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('your-background-image.jpg');
-    background-size: cover;
-    background-position: center;
+    position: relative; /* Position relative to allow absolute positioning of overlay */
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Ensure overflow does not disrupt overlay */
 }
+
+.content::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('your-background-image.jpg'); /* Replace with your background image */
+    background-size: cover;
+    background-position: center;
+    opacity: 0.6; /* Adjust opacity to control the intensity of the overlay */
+}
+
+.content::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)); /* Adjust gradient colors and transparency */
+    pointer-events: none; /* Ensure overlay does not interfere with content */
+}
+
 
 
 .page-header {

@@ -537,7 +537,7 @@ main.sign-up-mode .carousel {
                     class="input-field"
                     id="otp"
                     name="otp"
-                    placeholder="Enter OTP" style="font-size: 15px;"
+                    placeholder="Enter OTP" style="font-size: 15px; flex-grow: 1;"
                     required
                   />
                     <span class="form-control-feedback"></span>
