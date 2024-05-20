@@ -14,8 +14,6 @@
           <?php
             if(isset($_GET['type']) && $_GET['type'] === 'voters'){
               echo "Voter Archived";
-            } elseif(isset($_GET['type']) && $_GET['type'] === 'admin'){
-              echo "Admin Archived";
             } elseif(isset($_GET['type']) && $_GET['type'] === 'election'){
               echo "Election Archived";
             } else {
@@ -29,8 +27,6 @@
             <?php
               if(isset($_GET['type']) && $_GET['type'] === 'voters'){
                 echo "Voter Archived";
-              } elseif(isset($_GET['type']) && $_GET['type'] === 'admin'){
-                echo "Admin Archived";
               } elseif(isset($_GET['type']) && $_GET['type'] === 'election'){
                 echo "Election Archived";
               } else {
@@ -74,7 +70,6 @@
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="archiveDropdown">
                       <li><a href="?type=voters" class="archive-type">Voters Archived</a></li>
-                      <li><a href="?type=admin" class="archive-type">Admin Archived</a></li>
                       <li><a href="?type=election" class="archive-type">Election Archived</a></li>
                   </ul>
               </div>
@@ -94,14 +89,6 @@
                     <th>Email</th>
                     <th>Year Level</th>
                     <th>Organization</th>
-                    <?php elseif(isset($_GET['type']) && $_GET['type'] === 'admin'): ?>
-                    <th>ID Number</th>
-                    <th>Organization</th>
-                    <th>Last Name</th>
-                    <th>First Name</th>
-                    <th>Photo</th>
-                    <th>Username</th>
-                    <th>Email</th>
                     <?php elseif(isset($_GET['type']) && $_GET['type'] === 'election'): ?>
                     <th>ID</th>
                     <th>Title</th>
@@ -113,8 +100,6 @@
                     <?php
                       if(isset($_GET['type']) && $_GET['type'] === 'voters') {
                         $sql = "SELECT * FROM voters WHERE archived = TRUE";
-                      } elseif(isset($_GET['type']) && $_GET['type'] === 'admin') {
-                        $sql = "SELECT * FROM admin WHERE archived = TRUE";
                       } elseif(isset($_GET['type']) && $_GET['type'] === 'election') {
                         // SQL Query for Election Archived
                         $sql = "SELECT * FROM election WHERE archived = TRUE";
@@ -142,26 +127,6 @@
                               </td>
                             </tr>
                           ";
-                        } elseif(isset($_GET['type']) && $_GET['type'] === 'admin') {
-                            // For admin table
-                            $adminImage = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
-                            echo "
-                                <tr>
-                                    <td>".$row['id']."</td>
-                                    <td>".$row['organization']."</td>
-                                    <td>".$row['lastname']."</td>
-                                    <td>".$row['firstname']."</td>
-                                    <td>
-                                        <img src='".$adminImage."' width='30px' height='30px'>
-                                    </td>
-                                    <td>".$row['username']."</td>
-                                    <td>".$row['email']."</td>
-                                    <td>
-                                        <button class='btn btn-success btn-sm restore-admin btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#adminConfirmationModal'><i class='fa fa-reply'></i> Restore</button>
-                                      <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."' data-user='admin'><i class='fa fa-trash'></i> Delete</button>
-                                    </td>
-                                </tr>
-                            ";
                         } elseif(isset($_GET['type']) && $_GET['type'] === 'election') {
                             // For election table
                             echo "
@@ -190,7 +155,6 @@
     <?php include 'includes/footer.php'; ?>
     <?php include 'includes/voters_modal.php'; ?>
     <?php include 'includes/restore_modal.php'; ?>
-    <?php include 'includes/restore_admin_modal.php'; ?>
 
 <!-- Confirmation Modal for Delete -->
 <div id="deleteConfirmationModal" class="modal fade" role="dialog">
