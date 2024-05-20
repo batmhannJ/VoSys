@@ -127,10 +127,10 @@ include 'includes/header.php';
                                 $sql = "SELECT voters1.organization, CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
                                         COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
                                         FROM positions 
-                                        LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'Vice President for Internal Affairs'
+                                        LEFT JOIN candidates ON positions.id = candidates.position_id 
                                         LEFT JOIN votes ON candidates.id = votes.candidate_id
                                         LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-                                        WHERE voters1.organization != ''".$organizationFilter."
+                                        WHERE positions.category = 'Vice President for Internal Affairs'".$organizationFilter."
                                         GROUP BY voters1.organization, candidates.id
                                         ORDER BY vote_count DESC";
                                 $query = $conn->query($sql);
@@ -267,11 +267,10 @@ include 'includes/header.php';
     $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
             COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
             FROM positions 
-            LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'Vice President for Internal Affairs'
+            LEFT JOIN candidates ON positions.id = candidates.position_id 
             LEFT JOIN votes ON candidates.id = votes.candidate_id
             LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-            WHERE voters1.organization != ''
-            ".$organizationFilter."
+            WHERE positions.category = 'Vice President for Internal Affairs'".$organizationFilter."
             GROUP BY candidates.id";
     $query = $conn->query($sql);
     while($row = $query->fetch_assoc()) {
