@@ -1,27 +1,23 @@
 <?php
 include 'includes/session.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
-    $candidates_id = $_POST['id'];
+if (isset($_POST['id'])) {
+    $id = $_POST['id'];
 
     $sql = "UPDATE candidates SET archived = TRUE WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $candidates_id);
+    $stmt->bind_param('i', $id);
 
     if ($stmt->execute()) {
-        $_SESSION['success'] = "Candidate archived successfully.";
+        $_SESSION['success'] = 'Candidate archived successfully';
     } else {
-        // If the query failed, set an error message
-        $_SESSION['error'] = "Error archiving voter: " . $conn->error;
+        $_SESSION['error'] = 'Something went wrong in archiving candidate';
     }
 
-    // Close the prepared statement
     $stmt->close();
 } else {
-    // If the request method is not POST or ID is not set, set an error message
-    $_SESSION['error'] = "Invalid request.";
+    $_SESSION['error'] = 'Select candidate to archive first';
 }
 
-header("Location: candidates.php");
-exit();
+header('location: candidate_csc.php');
 ?>
