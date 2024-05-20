@@ -541,30 +541,27 @@
 
 .page-header {
     margin-top: 0;
-    color: #fff; /* Text color */
+    color: #333; /* Text color */
     text-align: center;
 }
 
 .page-header img {
-    width: 100px; /* Image width */
-    height: 100px; /* Image height */
+    width: 80px; /* Image width */
+    height: 80px; /* Image height */
     border-radius: 50%; /* Rounded corners for the image */
     margin-right: 10px; /* Margin to separate image from text */
 }
 
 .title {
-    font-size: 36px; /* Font size */
+    font-size: 28px; /* Font size */
     margin-bottom: 20px; /* Bottom margin */
     line-height: 1.5; /* Line height */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow for effect */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Text shadow for effect */
+    color: #800000; /* Text color */
+    font-family: 'Arial', sans-serif; /* Font family */
+    font-weight: bold; /* Font weight */
+    text-transform: uppercase; /* Uppercase text */
 }
 
-/* Custom styling for the text */
-.title b {
-    /* Add your custom styles here */
-    color: #FF5733; /* Change text color */
-    font-style: italic; /* Apply italic style */
-    /* Add any other desired styles */
-}
 </style>
 </html>
