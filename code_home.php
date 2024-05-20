@@ -544,25 +544,31 @@
     margin-top: 0;
     color: #333; /* Text color */
     text-align: center;
+    position: relative; /* Position relative for stacking context */
 }
 
 .page-header img {
-    width: 80px; /* Image width */
-    height: 80px; /* Image height */
+    width: 100px; /* Increase image width */
+    height: 100px; /* Increase image height */
     border-radius: 50%; /* Rounded corners for the image */
-    margin-right: 10px; /* Margin to separate image from text */
+    margin-bottom: 20px; /* Increase margin between image and text */
+    display: block; /* Ensure image is displayed as a block element */
+    margin: 0 auto; /* Center align image */
+    border: 4px solid #fff; /* Add a border with white color */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add shadow for depth */
 }
 
 .title {
-    font-size: 28px; /* Font size */
-    margin-bottom: 20px; /* Bottom margin */
-    line-height: 1.5; /* Line height */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Text shadow for effect */
+    font-size: 36px; /* Increase font size */
+    margin-bottom: 30px; /* Increase bottom margin */
+    line-height: 1.3; /* Adjust line height */
     color: #800000; /* Text color */
     font-family: 'Arial', sans-serif; /* Font family */
     font-weight: bold; /* Font weight */
     text-transform: uppercase; /* Uppercase text */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Adjust text shadow */
 }
+
 
 </style>
 </html>
