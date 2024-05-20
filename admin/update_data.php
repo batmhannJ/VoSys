@@ -8,36 +8,70 @@ $presidentData = array();
 $vpInternalAffairsData = array();
 $vpExternalAffairsData = array();
 
-// Function to fetch data based on position description and category id
-function fetchData($positionDescription, $categoryId, &$data, $conn) {
-    $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-                COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-                FROM candidates 
-                LEFT JOIN votes ON candidates.id = votes.candidate_id
-                LEFT JOIN positions ON candidates.position_id = positions.id
-                WHERE positions.description = '$positionDescription'
-                AND candidates.category_id = $categoryId
-                GROUP BY candidates.id";
+// Fetch updated data for President candidates
+$sqlPresident = "SELECT CONCAT(c.firstname, ' ', c.lastname) AS candidate_name, 
+                COALESCE(COUNT(v.candidate_id), 0) AS vote_count
+                FROM candidates c
+                LEFT JOIN votes v ON c.id = v.candidate_id
+                WHERE c.category_id = 1
+                GROUP BY c.id";
+$queryPresident = $conn->prepare($sqlPresident);
+$queryPresident->execute();
+$resultPresident = $queryPresident->get_result();
 
-    $query = $conn->query($sql);
-    if ($query) {
-        while ($row = $query->fetch_assoc()) {
-            $data[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
-        }
-    } else {
-        // Handle query error
-        echo "Error fetching data for $positionDescription: " . $conn->error;
+if ($resultPresident) {
+    while ($row = $resultPresident->fetch_assoc()) {
+        $presidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
     }
+} else {
+    // Handle query error
+    echo "Error fetching president data: " . $conn->error;
 }
 
-// Fetch data for President candidates with category_id 1
-fetchData('President', 1, $presidentData, $conn);
+// Fetch updated data for Vice President for Internal Affairs candidates
+$sqlVPInternalAffairs = "SELECT CONCAT(c.firstname, ' ', c.lastname) AS candidate_name, 
+                        COALESCE(COUNT(v.candidate_id), 0) AS vote_count
+                        FROM candidates c
+                        LEFT JOIN votes v ON c.id = v.candidate_id
+                        WHERE c.category_id = 2
+                        GROUP BY c.id";
+$queryVPInternalAffairs = $conn->prepare($sqlVPInternalAffairs);
+$queryVPInternalAffairs->execute();
+$resultVPInternalAffairs = $queryVPInternalAffairs->get_result();
 
-// Fetch data for Vice President for Internal Affairs candidates with category_id 2
-fetchData('Vice President for Internal Affairs', 3, $vpInternalAffairsData, $conn);
+if ($resultVPInternalAffairs) {
+    while ($row = $resultVPInternalAffairs->fetch_assoc()) {
+        $vpInternalAffairsData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+    }
+} else {
+    // Handle query error
+    echo "Error fetching Vice President for Internal Affairs data: " . $conn->error;
+}
 
-// Fetch data for Vice President for External Affairs candidates with category_id 3
-fetchData('Vice President for External Affairs', 4, $vpExternalAffairsData, $conn);
+// Fetch updated data for Vice President for External Affairs candidates
+$sqlVPExternalAffairs = "SELECT CONCAT(c.firstname, ' ', c.lastname) AS candidate_name, 
+                        COALESCE(COUNT(v.candidate_id), 0) AS vote_count
+                        FROM candidates c
+                        LEFT JOIN votes v ON c.id = v.candidate_id
+                        WHERE c.category_id = 3
+                        GROUP BY c.id";
+$queryVPExternalAffairs = $conn->prepare($sqlVPExternalAffairs);
+$queryVPExternalAffairs->execute();
+$resultVPExternalAffairs = $queryVPExternalAffairs->get_result();
+
+if ($resultVPExternalAffairs) {
+    while ($row = $resultVPExternalAffairs->fetch_assoc()) {
+        $vpExternalAffairsData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+    }
+} else {
+    // Handle query error
+    echo "Error fetching Vice President for External Affairs data: " . $conn->error;
+}
+
+// Close prepared statements
+$queryPresident->close();
+$queryVPInternalAffairs->close();
+$queryVPExternalAffairs->close();
 
 // Close database connection
 $conn->close();
