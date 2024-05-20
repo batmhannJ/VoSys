@@ -541,24 +541,30 @@
 
 .page-header {
     margin-top: 0;
-    color: #fff;
+    color: #fff; /* Text color */
     text-align: center;
 }
 
 .page-header img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-right: 10px;
+    width: 100px; /* Image width */
+    height: 100px; /* Image height */
+    border-radius: 50%; /* Rounded corners for the image */
+    margin-right: 10px; /* Margin to separate image from text */
 }
 
 .title {
-    font-size: 36px;
-    margin-bottom: 20px;
-    line-height: 1.5;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-size: 36px; /* Font size */
+    margin-bottom: 20px; /* Bottom margin */
+    line-height: 1.5; /* Line height */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Text shadow for effect */
 }
 
-    </style>
+/* Custom styling for the text */
+.title b {
+    /* Add your custom styles here */
+    color: #FF5733; /* Change text color */
+    font-style: italic; /* Apply italic style */
+    /* Add any other desired styles */
+}
 </style>
 </html>
