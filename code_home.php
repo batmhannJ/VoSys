@@ -541,36 +541,37 @@
 }
 
 .page-header {
-    margin-top: 20px; /* Add margin to top */
-    color: #444; /* Text color */
+    margin-top: 30px; /* Add more margin to top */
+    color: #222; /* Darker text color */
     text-align: center;
-    padding: 30px 0; /* Decrease padding */
-    background-color: #f7f7f7; /* Background color */
-    border-bottom: 2px solid #ddd; /* Add bottom border */
+    padding: 40px 0; /* Increase padding */
+    background-color: #f9f9f9; /* Lighter background color */
+    border-bottom: 1px solid #ddd; /* Thin bottom border */
 }
 
 .page-header img {
-    width: 120px; /* Decrease image width */
+    width: 130px; /* Adjust image width */
     height: auto; /* Auto height */
-    border-radius: 8px; /* Decrease border radius */
-    margin-bottom: 10px; /* Decrease margin */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Modify shadow */
+    border-radius: 10px; /* Slightly increase border radius */
+    margin-bottom: 15px; /* Increase margin */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Softer shadow */
 }
 
 .title {
-    font-size: 40px; /* Increase font size */
-    margin-bottom: 10px; /* Decrease margin */
-    font-family: 'Helvetica', sans-serif; /* Change font family */
-    font-weight: normal; /* Normal font weight */
-    text-transform: capitalize; /* Capitalize text */
-    letter-spacing: 1px; /* Decrease letter spacing */
+    font-size: 38px; /* Slightly decrease font size */
+    margin-bottom: 15px; /* Increase margin */
+    font-family: 'Verdana', sans-serif; /* Change font family */
+    font-weight: bold; /* Bold font weight */
+    text-transform: uppercase; /* Uppercase text */
+    letter-spacing: 1.5px; /* Increase letter spacing */
 }
 
 .subtitle {
-    font-size: 18px; /* Decrease font size */
-    font-weight: 300; /* Lighter font weight */
-    color: #888; /* Subtitle color */
+    font-size: 22px; /* Slightly increase font size */
+    font-weight: 400; /* Normal font weight */
+    color: #666; /* Subtitle color */
 }
+
 
 
 
