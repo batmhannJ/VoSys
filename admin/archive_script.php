@@ -124,5 +124,25 @@ $(function(){
       }
     });
   }
+
+  $(document).on('click', '.restore-candidate', function(e){
+    e.preventDefault();
+    var id = $(this).data('id');
+    $('#candidateConfirmationModal').modal('show');
+
+    $('#confirmRestoreCandidate').on('click', function() {
+        $.ajax({
+            type: "POST",
+            url: "restore_candidate.php",
+            data: { id: id },
+            success: function(response) {
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+  });
 });
 </script>
