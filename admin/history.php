@@ -74,8 +74,8 @@ include 'includes/header.php';
                                 $organizationFilter = !empty($_GET['organization']) ? " AND voters1.organization = '".$_GET['organization']."'" : "";
                                 $sql = "SELECT voters1.organization, CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
                                         COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-                                        FROM positions 
-                                        LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'President'
+                                        FROM categories 
+                                        LEFT JOIN candidates ON categories.id = candidates.category_id AND categories.description = 'President'
                                         LEFT JOIN votes ON candidates.id = votes.candidate_id
                                         LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
                                         WHERE voters1.organization != ''".$organizationFilter."
@@ -126,8 +126,8 @@ include 'includes/header.php';
                                 // Fetch and display vice president for internal affairs candidate ranking based on vote count and organization filter
                                 $sql = "SELECT voters1.organization, CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
                                         COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-                                        FROM positions 
-                                        LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'Vice President for Internal Affairs'
+                                        FROM categories 
+                                        LEFT JOIN candidates ON categories.id = candidates.category_id AND categories.description = 'Vice President for Internal Affairs'
                                         LEFT JOIN votes ON candidates.id = votes.candidate_id
                                         LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
                                         WHERE voters1.organization != ''".$organizationFilter."
@@ -241,8 +241,8 @@ include 'includes/header.php';
     $presidentData = array();
     $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
             COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-            FROM positions 
-            LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'President'
+            FROM categories 
+            LEFT JOIN candidates ON categories.id = candidates.category_id AND categories.description = 'President'
             LEFT JOIN votes ON candidates.id = votes.candidate_id
             LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
             WHERE voters1.organization != ''
@@ -265,8 +265,8 @@ include 'includes/header.php';
     $vicePresidentData = array();
     $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
             COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-            FROM positions 
-            LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'Vice President for Internal Affairs'
+            FROM categories 
+            LEFT JOIN candidates ON categories.id = candidates.category_id AND categories.description = 'Vice President for Internal Affairs'
             LEFT JOIN votes ON candidates.id = votes.candidate_id
             LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
             WHERE voters1.organization != ''
