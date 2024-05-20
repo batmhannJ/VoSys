@@ -130,17 +130,21 @@ $(function(){
 });
 
 function archiveCandidate(id) {
-    $.ajax({
-        type: "POST",
-        url: "archive_candidate.php",
-        data: { id: id },
-        success: function(response) {
-            $('#confirmationModal').modal('hide');
-            location.reload();
-        },
-        error: function(xhr, status, error) {
-            console.error(xhr.responseText);
-        }
+    $('#confirmationModal').modal('show'); // Show the confirmation modal
+
+    $('#submitBtn').on('click', function() {
+        $.ajax({
+            type: "POST",
+            url: "archive_candidate.php",
+            data: { id: id },
+            success: function(response) {
+                // Refresh the page or update the table as needed
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
     });
 }
 
