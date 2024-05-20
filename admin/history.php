@@ -188,26 +188,29 @@ include 'includes/header.php';
                     <div class="row">
                         <div class="col-xs-12">
                             <span class="pull-right">
-                              <a href="export_results.php?organization=<?php echo $_GET['organization'] ?? ''; ?>" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span
-                              <a href="export_results.php?organization=<?php echo $_GET['organization'] ?? ''; ?>" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Export PDF</a>
+                                <a href="export_results.php?organization=<?php echo $_GET['organization'] ?? ''; ?>" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Export PDF</a>
                             </span>
                         </div>
                     </div>
+                   
                     <!-- /.box -->
-                </div>
+                    </div>
                 <!-- /.col -->
             </div>
             <!-- /.row -->
         </section>
         <!-- /.content -->
     </div>
-
     <!-- /.content-wrapper -->
+
     <?php include 'includes/footer.php'; ?>
     <?php include 'includes/votes_modal.php'; ?>
+
 </div>
 <!-- ./wrapper -->
+
 <?php include 'includes/scripts.php'; ?>
+
 <!-- Bar Graph Script -->
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
@@ -215,7 +218,7 @@ include 'includes/header.php';
     function generateBarGraph(dataPoints, containerId) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
-            title:{
+            title: {
                 text: "Vote Counts"
             },
             axisX: {
@@ -271,5 +274,6 @@ include 'includes/header.php';
     // Generate vice president bar graph
     generateBarGraph(<?php echo json_encode($vicePresidentData); ?>, "vicePresidentGraph");
 </script>
+
 </body>
 </html>
