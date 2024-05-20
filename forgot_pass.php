@@ -473,57 +473,80 @@ main.sign-up-mode .carousel {
       <div class="box">
         <div class="inner-box">
           <div class="forms-wrap">
-            <form action="login.php" method="post" autocomplete="off" class="sign-in-form">
+            <form id="forgotPasswordForm" autocomplete="off" class="sign-in-form">
               <div class="logo">
                 <img src="./images/olshco.png" alt="easyclass" />
                 <h4 style="font-size:28px; color: maroon;"><b>VOSYS - OLSHCO</b></h4>
               </div>
 
               <div class="heading">
-                <center><h2>Voters Login Page</h2></center>
+                <center><h2>Forgot Password</h2></center>
                 <hr>
               </div>
 
               <div class="actual-form has-feedback">
                  <div class="input-wrap">
                   <input
-                    type="text"
+                    type="email"
                     minlength="4"
                     class="input-field"
-                    name="voter"
-                    placeholder="Voter's ID" style="font-size: 15px;"
+                    name="email"
+                    placeholder="Email" style="font-size: 15px;"
                     required
                   />
                     <span class="form-control-feedback"></span>
                   <label style="font-size:15px;"></label>
                 </div>
 
-                <div class="input-wrap has has-feedback">
+                <div class="input-wrap">
                   <input
                     type="password"
                     minlength="8"
                     class="input-field"
-                    name="password"
-                    placeholder="Password" style="font-size: 15px;"
-                    autocomplete="off"
+                    id="new_password"
+                    name="new_password"
+                    placeholder="New Password" style="font-size: 15px;"
                     required
                   />
+                    <span class="form-control-feedback"></span>
                   <label style="font-size:15px;"></label>
                   <i class="bi bi-eye-slash" id="togglePassword"></i>
                   <span class="form-control-feedback"></span>
                 </div>
 
-                <div style="text-align: right; margin-bottom: 10px;">
-                    <a href="forgot_pass.php" style="font-size: 15px;">Forgot Password?</a>
+                <div class="input-wrap">
+                  <input
+                    type="password"
+                    minlength="8"
+                    class="input-field"
+                    id="confirm_password"
+                    name="confirm_password"
+                    placeholder="Confirm Password" style="font-size: 15px;"
+                    required
+                  />
+                    <span class="form-control-feedback"></span>
+                  <label style="font-size:15px;"></label>
+                  <i class="bi bi-eye-slash" id="togglePassword"></i>
+                  <span class="form-control-feedback"></span>
                 </div>
 
-                <div class="form-group has-feedback">
-                    <div class="g-recaptcha" data-sitekey="6LddHcIpAAAAAJS6Wnenkllxyr3tWUSlSCu8o9eO">
+                <div class="input-wrap">
+                  <input
+                    type="number"
+                    minlength="6"
+                    class="input-field"
+                    id="otp"
+                    name="otp"
+                    placeholder="Enter OTP" style="font-size: 15px;"
+                    required
+                  />
+                    <span class="form-control-feedback"></span>
+                  <label style="font-size:15px;"></label>
                 </div>
             </div>
 
+                <input type="submit" name="sendOTP" id="sendOTP" value="Sign In" class="sign-btn" style="font-size:15px;">
                 <input type="submit" name="login" value="Sign In" class="sign-btn" style="font-size:15px;">
-                <input type="button" value="Back to Homepage" class="back-btn" style="font-size:15px;" onclick="window.location.href = 'index.html';">
 
                         <?php
                 if (isset($_SESSION['error'])) {
@@ -557,6 +580,82 @@ main.sign-up-mode .carousel {
 
         </div>
     </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('sendOTP').addEventListener('click', function() {
+            var email = document.querySelector('input[name="email"]').value; // Get email value from input field
+            sendOTP(email);
+        });
+
+        // Handle form submission
+        document.getElementById('forgotPasswordForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission behavior
+
+            var email = document.querySelector('input[name="email"]').value;
+            var otp = document.querySelector('input[name="otp"]').value;
+            var new_password = document.querySelector('input[name="new_password"]').value;
+
+            // Validate OTP
+            validateOTP(email, otp, new_password);
+            // Change password
+            changePassword(email, new_password);
+        });
+    });
+
+    function sendOTP(email) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'send_otp.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var response = xhr.responseText;
+                alert(response); // Show response message (e.g., "OTP sent successfully")
+            }
+        };
+        xhr.send('email=' + encodeURIComponent(email));
+    }
+
+    function validateOTP(email, otp, new_password) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'validate_otp.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                var response = JSON.parse(xhr.responseText);
+                if (response.status === 'success') {
+                    // Send the new password to change_pass.php
+                    changePassword(email, new_password);
+                } else {
+                    alert(response.message);
+                }
+            } else {
+                alert('Error occurred. Please try again.');
+            }
+        }
+    };
+    xhr.send('email=' + encodeURIComponent(email) + '&otp=' + encodeURIComponent(otp));
+}
+
+// Inside the changePassword function
+function changePassword(email, new_password) {
+var xhr = new XMLHttpRequest();
+xhr.open('POST', 'update_password.php', true);
+xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+        var response = JSON.parse(xhr.responseText);
+        alert(response.message); // You can handle success or error messages here
+        if (response.status === 'success') {
+            // Redirect to voters_login.php
+            window.location.href = 'voters_login.php';
+        }
+    }
+};
+xhr.send('email=' + encodeURIComponent(email) + '&new_password=' + encodeURIComponent(new_password));
+}
+
+</script>
 <script>
   const images = document.querySelectorAll('.image');
   let currentIndex = 0;
