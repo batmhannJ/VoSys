@@ -196,7 +196,7 @@ label {
   cursor: pointer;
   border-radius: 0.8rem;
   font-size: 0.8rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   transition: 0.3s;
 }
 
@@ -214,7 +214,7 @@ label {
   cursor: pointer;
   border-radius: 0.8rem;
   font-size: 0.8rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   transition: 0.3s;
 }
 
@@ -547,6 +547,7 @@ main.sign-up-mode .carousel {
 
                 <input type="submit" name="sendOTP" id="sendOTP" value="Send OTP" class="sign-btn" style="font-size:15px; background-color: grey;">
                 <input type="submit" name="login" value="Change Password" class="sign-btn" style="font-size:15px;">
+                <input type="button" value="Back to Login" class="back-btn" style="font-size:15px;" onclick="window.location.href = 'voters_login.html';">
 
                         <?php
                 if (isset($_SESSION['error'])) {
