@@ -542,7 +542,7 @@ main.sign-up-mode .carousel {
                   />
                     <span class="form-control-feedback"></span>
                   <label style="font-size:15px;"></label>
-                  <input type="button" name="sendOTP" id="sendOTP" value="Send OTP" class="sign-btn" style="width: 100px; font-size:15px; justify-content: flex-end; background-color: grey;">
+                  <input type="button" name="sendOTP" id="sendOTP" value="Send OTP" class="sign-btn" style="width: 100px; font-size:15px; margin-left: 200px; background-color: grey;">
                 </div>
             </div>
 
