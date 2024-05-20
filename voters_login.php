@@ -548,7 +548,7 @@ main.sign-up-mode .carousel {
               <img src="./images/j.png" class="image img-2 show" alt="" />
               <img src="./images/y.png" class="image img-3 show" alt="" />
               <img src="./images/ct.png" class="image img-4 show" alt="" />
-              <img src="./images/p.png" class="image img-5 show" alt="" />
+              <img src="./images/p.png" class="image img-5 shozw" alt="" />
               <img src="./images/h.png" class="image img-6 show" alt="" />
             </div>
         </div>
