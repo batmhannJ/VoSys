@@ -189,25 +189,18 @@ include 'includes/header.php';
                         </div>
                         <!-- /.box-body -->
                     </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <span class="pull-right">
-                              <a href="export_results.php?organization=<?php echo $_GET['organization'] ?? ''; ?>" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Export PDF</a>
-                            </span>
-                        </div>
-                    </div>
                     <!-- /.box -->
-                </div>
-                <!-- /.col -->
-            </div>
-            <!-- /.row -->
-        </section>
-        <!-- /.content -->
-    </div>
-
-    <!-- /.content-wrapper -->
-    <?php include 'includes/footer.php'; ?>
-    <?php include 'includes/votes_modal.php'; ?>
+               
+                    </div>
+<!-- /.col -->
+</div>
+<!-- /.row -->
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<?php include 'includes/footer.php'; ?>
+<?php include 'includes/votes_modal.php'; ?>
 </div>
 <!-- ./wrapper -->
 <?php include 'includes/scripts.php'; ?>
@@ -239,7 +232,7 @@ include 'includes/header.php';
     // Fetch and process president data
     <?php
     $presidentData = array();
-    $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
+    $sql = "SELECT voters1.organization, CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
             COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
             FROM positions 
             LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'President'
@@ -247,20 +240,24 @@ include 'includes/header.php';
             LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
             WHERE voters1.organization != ''
             ".$organizationFilter."
-            GROUP BY candidates.id";
+            GROUP BY voters1.organization, candidates.id";
     $query = $conn->query($sql);
     while($row = $query->fetch_assoc()) {
-        $presidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+        $presidentData[$row['organization']][] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
     }
     ?>
 
-    // Generate president bar graph
-    generateBarGraph(<?php echo json_encode($presidentData); ?>, "presidentGraph");
+    // Generate president bar graphs per organization
+    <?php
+    foreach ($presidentData as $organization => $data) {
+        echo "generateBarGraph(".json_encode($data).", 'presidentGraph_$organization');";
+    }
+    ?>
 
     // Fetch and process vice president data
     <?php
     $vicePresidentData = array();
-    $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
+    $sql = "SELECT voters1.organization, CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
             COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
             FROM positions 
             LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'Vice President'
@@ -268,15 +265,19 @@ include 'includes/header.php';
             LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
             WHERE voters1.organization != ''
             ".$organizationFilter."
-            GROUP BY candidates.id";
+            GROUP BY voters1.organization, candidates.id";
     $query = $conn->query($sql);
     while($row = $query->fetch_assoc()) {
-        $vicePresidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+        $vicePresidentData[$row['organization']][] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
     }
     ?>
 
-    // Generate vice president bar graph
-    generateBarGraph(<?php echo json_encode($vicePresidentData); ?>, "vicePresidentGraph");
+    // Generate vice president bar graphs per organization
+    <?php
+    foreach ($vicePresidentData as $organization => $data) {
+        echo "generateBarGraph(".json_encode($data).", 'vicePresidentGraph_$organization');";
+    }
+    ?>
 </script>
 </body>
 </html>
