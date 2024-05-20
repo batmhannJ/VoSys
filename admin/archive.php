@@ -1,4 +1,4 @@
-  <?php include 'includes/session.php'; ?>
+<?php include 'includes/session.php'; ?>
   <?php include 'includes/header.php'; ?>
   <body class="hold-transition skin-blue sidebar-mini">
   <div class="wrapper">
@@ -80,9 +80,9 @@
               </div>
             </div>
             <div class="box">
-              <div class="box-header with-border">
+              <!--<div class="box-header with-border">
                 <a href="#restoreAllModal" data-toggle="modal" class="btn btn-primary btn-sm btn-flat restore-all"><i class="fa fa-reply"></i> Restore All</a>
-              </div>
+              </div> -->
               <div class="box-body">
                 <table id="example1" class="table table-bordered">
                   <thead>
@@ -192,8 +192,7 @@
     <?php include 'includes/restore_modal.php'; ?>
     <?php include 'includes/restore_admin_modal.php'; ?>
 
-  </div>
-  <?php include 'includes/scripts.php'; ?>
-  <?php include 'includes/archive_script.php'; ?>
-  </body>
-  </html>
+<?php include 'includes/scripts.php'; ?>
+<?php include 'archive_script.php'; ?>
+</body>
+</html>

@@ -39,9 +39,30 @@ $(function(){
     var id = $(this).data('id');
     var user = $(this).data('user');
     deleteItem(id, user);
-});
+  });
 
-function deleteItem(id, user) {
+  $(document).on('click', '.restore-election', function() {
+    var electionId = $(this).data('id');
+    $('#electionConfirmationModal').modal('show');
+
+    // Event handler for confirm restore button
+    $('#confirmRestoreElection').on('click', function() {
+        $.ajax({
+            type: "POST",
+            url: "restore_election.php",
+            data: { id: electionId },
+            success: function(response) {
+                // Refresh the page or update the table as needed
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+  });
+
+  function deleteItem(id, user) {
     $('#deleteConfirmationModal').modal('show'); // Show confirmation modal
 
     // When the "Delete" button inside the modal is clicked, perform deletion
@@ -58,7 +79,7 @@ function deleteItem(id, user) {
             }
         });
     });
-}
+  }
 
   function restoreVoter(id) {
     $.ajax({

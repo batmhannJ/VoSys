@@ -11,6 +11,11 @@ if (isset($_POST['login'])) {
     $voter = $_POST['voter'];
     $password = $_POST['password'];
 
+    if (strpos($voter, "'") !== false) {
+        header('location: VotersLogin.php');
+        exit();
+    }
+
     // Verify the reCAPTCHA response
     if (isset($_POST['g-recaptcha-response'])) {
         $captchaResponse = $_POST['g-recaptcha-response'];
@@ -56,6 +61,16 @@ if (isset($_POST['login'])) {
                     if (password_verify($password, $row['password'])) {
                         $_SESSION['voter'] = $row['id'];
                         $organization = $row['organization'];
+
+                        // Log the login activity
+                        $voter_id = $row['voters_id'];
+                        $email = $row['email']; // Assuming there is an email column in the voters table
+                        $log_sql = "INSERT INTO activity_log (voters_id, email, activity_type) VALUES (?, ?, 'Login')";
+                        $log_stmt = $conn->prepare($log_sql);
+                        $log_stmt->bind_param("is", $voter_id, $email);
+                        $log_stmt->execute();
+                        $log_stmt->close();
+
                         // Check the organization and redirect accordingly
                         $sql_csc = "SELECT * FROM election WHERE organization = 'CSC' AND status = 1";
                         $result_csc = $conn->query($sql_csc);

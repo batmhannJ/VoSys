@@ -1,21 +1,21 @@
 <?php include 'includes/session.php'; ?>
-<?php include 'includes/header_jpcs.php'; ?>
-<body class="hold-transition skin-green sidebar-mini">
+<?php include 'includes/header.php'; ?>
+<body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
-  <?php include 'includes/navbar_jpcs.php'; ?>
-  <?php include 'includes/menubar_jpcs.php'; ?>
+  <?php include 'includes/navbar.php'; ?>
+  <?php include 'includes/menubar.php'; ?>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Votes
+        Activity Log
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Votes</li>
+        <li class="active">Activity Log</li>
       </ol>
     </section>
     <!-- Main content -->
@@ -52,41 +52,41 @@
               <table id="example1" class="table table-bordered">
                 <thead>
                   <th class="hidden"></th>
-                  <th>No. </th>
-                  <th>Position</th>
-                  <th>Candidate</th>
-                  <th>Voter</th>
+                  <th>No.</th>
+                  <th>Voters ID</th>
+                  <th>Email</th>
+                  <th>Name</th>
+                  <th>Activity</th>
+                  <th> Date and Time</th>
                 </thead>
                 <tbody>
-                  <?php
-                  $counter = 1;
-                    $sql = "SELECT *,
-                    candidates.firstname AS canfirst, 
-                    candidates.lastname AS canlast, 
-                    voters1.firstname AS votfirst, 
-                    voters1.lastname AS votlast, 
-                    voters1.organization AS org 
-                    FROM votes 
-                    LEFT JOIN categories ON categories.id=votes.category_id 
-                    LEFT JOIN candidates ON candidates.id=votes.candidate_id 
-                    LEFT JOIN voters AS voters1 ON voters1.id=votes.voters_id 
-                    LEFT JOIN voters AS voters2 ON voters2.organization=votes.organization 
-                    WHERE voters1.organization = 'JPCS'
-                    GROUP BY votes.id
-                    ORDER BY categories.priority ASC";
-                    $query = $conn->query($sql);
-                    while($row = $query->fetch_assoc()){
-        echo "
-            <tr>
-                <td class='hidden'></td>
-                <td>".$counter."</td>
-                <td>".$row['name']."</td>
-                <td>".$row['canfirst'].' '.$row['canlast']."</td>
-                <td>".$row['votfirst'].' '.$row['votlast']."</td>
-            </tr>
-        ";
-                        $counter++;
-    }
+                <?php
+                  $sql = "SELECT 
+                              activity_log.voters_id AS voters_id, 
+                              activity_log.email AS email, 
+                              activity_log.activity_type AS activity_type,
+                              activity_log.activity_time AS activity_time,
+                              voters.firstname AS votfirst, 
+                              voters.lastname AS votlast
+                          FROM activity_log 
+                          LEFT JOIN voters ON voters.voters_id = activity_log.voters_id 
+                          ORDER BY activity_log.id ASC";
+                          
+                  $query = $conn->query($sql);
+                  $i = 1;
+                  while ($row = $query->fetch_assoc()) {
+                      echo "
+                          <tr>
+                              <td class='hidden'></td>
+                              <td>".$i++."</td>
+                              <td>".$row['voters_id']."</td>
+                              <td>".$row['email']."</td>
+                              <td>".$row['votfirst'].' '.$row['votlast']."</td>
+                              <td>".$row['activity_type']."</td>
+                              <td>".$row['activity_time']."</td>
+                          </tr>
+                      ";
+                  }
                   ?>
                 </tbody>
               </table>

@@ -28,6 +28,7 @@
       <li class="header">SETTINGS</li>
       
       <!--<li class=""><a href="#" data-toggle="modal"><i class="fa fa-book"></i> <span>Archives</span></a></li>-->
+      <li class=""><a href="activity_log.php"><i class="fa fa-clock-o"></i> <span>Activity Log</span></a></li>
       <li class=""><a href="history.php"><i class="fa fa-clock-o"></i> <span>History</span></a></li>
       <li class=""><a href="archive.php"><i class="fa fa-archive"></i> <span>Archive</span></a></li>
       
