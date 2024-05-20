@@ -109,11 +109,6 @@ $(function(){
     getRow(id);
   });
 
-  $(document).on('click', '.archive', function(e){
-    e.preventDefault();
-    var id = $(this).data('id');
-    archiveCandidate(id);
-  });
 
   $(document).on('click', '.photo', function(e){
     e.preventDefault();
@@ -127,23 +122,30 @@ $(function(){
     getRow(id);
   });
 
+  $(document).on('click', '.archive', function(e){
+    e.preventDefault();
+    var id = $(this).data('id');
+    archiveCandidate(id);
+  });
+
 });
 
 function archiveCandidate(id) {
-  $('#confirmationModal').modal('show'); // Show the confirmation modal
+    $('#confirmationModal').modal('show'); // Show the confirmation modal
 
     $('#submitBtn').on('click', function() {
-    $.ajax({
-        type: "POST",
-        url: "archive_candidate.php",
-        data: { id: id },
-        success: function(response) {
-            $('#confirmationModal').modal('hide');
-            location.reload();
-        },
-        error: function(xhr, status, error) {
-            console.error(xhr.responseText);
-        }
+        $.ajax({
+            type: "POST",
+            url: "archive_candidate.php",
+            data: { id: id },
+            success: function(response) {
+                // Refresh the page or update the table as needed
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
     });
 }
 
