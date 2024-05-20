@@ -29,6 +29,7 @@
       <li class=""><a href="history_csc.php"><i class="fa fa-clock-o"></i> <span>History</span></a></li>
       
       <li class=""><a href="ballot_csc.php"><i class="fa fa-file-text"></i> <span>Ballot Position</span></a></li>
+      <li class=""><a href="archive_csc.php"><i class="fa fa-archive"></i> <span>Archive</span></a></li>
     </ul>
   </section>
   <!-- /.sidebar -->
