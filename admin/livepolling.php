@@ -58,47 +58,53 @@
 <?php include 'includes/scripts.php'; ?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
 <script>
-    // Function to generate bar graph
-    function generateBarGraph(dataPoints, containerId, organization) {
-        var color;
+  var organizationColors = {
+    "JPCS": "#4CAF50",
+    "PASOA": "#e6cc00",
+    "CSC": "#595959",
+    "YMF": "#00008b",
+    "CODE-TG": "#800000",
+    "HMSO": "#fff080"
+  };
 
-        // Set color based on organization
-        switch (organization) {
-            case 'JPCS':
-                color = "#4CAF50"; // Green
-                break;
-            case 'CSC':
-                color = "#000000"; // Black
-                break;
-            case 'CODE-TG':
-                color = "#800000"; // Maroon
-                break;
-            case 'YMF':
-                color = "#00008b"; // Dark Blue
-                break;
-            case 'HMSO':
-                color = "#cba328"; // Gold
-                break;
-            case 'PASOA':
-                color = "#e6cc00"; // Yellow
-                break;
-            default:
-                color = "#000000"; // Default to Black
-        }
+  function updateCharts() {
+    var organization = document.getElementById("organization").value;
 
+<<<<<<< HEAD
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
             title:{
                 text: "Vote Counts"
             },
             axisY: {
-                 title: "Candidates",
-                includeZero: true,
-                 labelFormatter: function (e) {
+    title: "Candidates",
+    includeZero: true,
+    labelFormatter: function (e) {
         // Include candidate name and round vote count to whole number
-        return dataPoints[e.value].label + " - " + Math.round(e.value);
+        return dataPoints[e.value].label + " - " + Math.round(e.dataPoint.y);
+=======
+    updatePresidentChart(organization);
+  }
+
+  function updatePresidentChart(organization) {
+    var presidentDataPoints = [];
+    var vicePresidentDataPoints = [];
+
+    // Fetch data dynamically based on the selected organization
+
+    // For demonstration, I'm using static data for each organization
+    if (organization === "JPCS") {
+        presidentDataPoints = [
+            { y: 20, label: "President" }
+        ];
+        vicePresidentDataPoints = [
+            { y: 30, label: "Vice President" }
+        ];
+>>>>>>> 9362dc9cae2238737cdfb5058f3097d58043403b
     }
-},
+    // Add more else if conditions for other organizations
+
+<<<<<<< HEAD
 
             axisX: {
                 title: "Vote Count",
@@ -132,15 +138,74 @@
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data: ' + error);
+=======
+    var chart = new CanvasJS.Chart("presidentChart", {
+        title: { text: "President and Vice President" },
+        axisY: {
+            title: "Votes"
+        },
+        toolTip: {
+            shared: true
+        },
+        legend: {
+            cursor: "pointer",
+            verticalAlign: "top",
+            itemclick: function(e) {
+                if (typeof (e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                    e.dataSeries.visible = false;
+                } else {
+                    e.dataSeries.visible = true;
+                }
+                e.chart.render();
+>>>>>>> 9362dc9cae2238737cdfb5058f3097d58043403b
             }
-        });
+        },
+        data: [{
+            type: "bar",
+            showInLegend: true,
+            name: "President",
+            dataPoints: presidentDataPoints,
+            color: organizationColors[organization]
+        },
+        {
+            type: "bar",
+            showInLegend: true,
+            name: "Vice President",
+            dataPoints: vicePresidentDataPoints,
+            color: organizationColors[organization]
+        }]
+    });
+
+    chart.render();
+
+    // Update chart every second
+    setInterval(function () {
+        updatePresidentDataPoints(organization, chart);
+    }, 1000);
+}
+
+  function updatePresidentDataPoints(organization, chart) {
+    // Update dataPoints based on the selected organization
+    // For demonstration, I'm using random values for each data point
+    var newPresidentDataPoints = [];
+    var newVicePresidentDataPoints = [];
+    
+    for (var i = 0; i < chart.options.data[0].dataPoints.length; i++) {
+      newPresidentDataPoints.push({ label: "President", y: Math.random() * 100 });
     }
 
-    // Call the updateData function initially
-    updateData();
+    for (var i = 0; i < chart.options.data[1].dataPoints.length; i++) {
+      newVicePresidentDataPoints.push({ label: "Vice President", y: Math.random() * 100 });
+    }
+    
+    chart.options.data[0].dataPoints = newPresidentDataPoints;
+    chart.options.data[1].dataPoints = newVicePresidentDataPoints;
+    chart.render();
+  }
 
-    // Call the updateData function every 60 seconds (adjust as needed)
-    setInterval(updateData, 3000); // 60000 milliseconds = 60 seconds
+  window.onload = function () {
+    updateCharts();
+  };
 </script>
 </body>
 </html>
