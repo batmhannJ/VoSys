@@ -1,5 +1,8 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 session_start();
+
 include 'includes/conn.php';  // Include your database connection file
 
 if (isset($_SESSION['voters_id']) && isset($_SESSION['activity_time'])) {
@@ -13,6 +16,11 @@ if (isset($_SESSION['voters_id']) && isset($_SESSION['activity_time'])) {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssis", $timeout, $duration_of_use, $voter_id, $timein);
     $stmt->execute();
+    if ($stmt->error) {
+        echo "Error: " . $stmt->error;
+    } else {
+        echo "Update successful!";
+    }
     $stmt->close();
 }
 
