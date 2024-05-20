@@ -195,47 +195,15 @@ include 'includes/header.php';
     var vicePresidentChart = generateBarGraph([], "vicePresidentGraph");
 
     // Function to generate bar graph
-    function generateBarGraph(dataPoints, containerId, organization) {
-        var color;
-
-        // Set color based on organization
-        switch (organization) {
-            case 'JPCS':
-                color = "#4CAF50"; // Green
-                break;
-            case 'CSC':
-                color = "#000000"; // Black
-                break;
-            case 'CODE-TG':
-                color = "#800000"; // Maroon
-                break;
-            case 'YMF':
-                color = "#00008b"; // Dark Blue
-                break;
-            case 'HMSO':
-                color = "#cba328"; // Gold
-                break;
-            case 'PASOA':
-                color = "#e6cc00"; // Yellow
-                break;
-            default:
-                color = "#000000"; // Default to Black
-        }
-
+    function generateBarGraph(dataPoints, containerId) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
             title: {
                 text: "Vote Counts"
             },
             axisY: {
-                 title: "Candidates",
-                includeZero: true,
-                 labelFormatter: function (e) {
-        // Include candidate name and round vote count to whole number
-        return dataPoints[e.value].label + " - " + Math.round(e.value);
-    }
-},
-
+                title: "Candidates"
+            },
             axisX: {
                 title: "Vote Count",
                 includeZero: true
@@ -249,11 +217,11 @@ include 'includes/header.php';
         return chart;
     }
 
-    // Call the updateData function initially
-    updateData();
+    // Call the updateDataAndGraphs function initially
+    updateDataAndGraphs();
 
-    // Call the updateData function every 60 seconds (adjust as needed)
-    setInterval(updateData, 3000); // 60000 milliseconds = 60 seconds
+    // Call the updateDataAndGraphs function every 5 seconds
+    setInterval(updateDataAndGraphs, 5000);
 </script>
 </body>
 </html>
