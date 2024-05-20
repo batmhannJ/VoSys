@@ -82,16 +82,20 @@ include 'includes/header.php';
                                         GROUP BY voters.organization, candidates.id
                                         ORDER BY vote_count DESC";
                                 $query = $conn->query($sql);
-                                $rank = 1;
-                                while($row = $query->fetch_assoc()){
-                                    echo "
-                                        <tr>
-                                        <td>".$rank."</td>
-                                        <td>".$row['organization']."</td>
-                                        <td>".$row['candidate_name']."</td>
-                                        <td>".$row['vote_count']."</td>
-                                        </tr>";
-                                    $rank++;
+                                if($query->num_rows > 0) {
+                                    $rank = 1;
+                                    while($row = $query->fetch_assoc()){
+                                        echo "
+                                            <tr>
+                                            <td>".$rank."</td>
+                                            <td>".$row['organization']."</td>
+                                            <td>".$row['candidate_name']."</td>
+                                            <td>".$row['vote_count']."</td>
+                                            </tr>";
+                                        $rank++;
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='4'>No records found</td></tr>";
                                 }
                                 ?>
                                 </tbody>
@@ -134,16 +138,20 @@ include 'includes/header.php';
                                         GROUP BY voters.organization, candidates.id
                                         ORDER BY vote_count DESC";
                                 $query = $conn->query($sql);
-                                $rank = 1;
-                                while($row = $query->fetch_assoc()){
-                                    echo "
-                                        <tr>
-                                        <td>".$rank."</td>
-                                        <td>".$row['organization']."</td>
-                                        <td>".$row['candidate_name']."</td>
-                                        <td>".$row['vote_count']."</td>
-                                        </tr>";
-                                    $rank++;
+                                if($query->num_rows > 0) {
+                                    $rank = 1;
+                                    while($row = $query->fetch_assoc()){
+                                        echo "
+                                            <tr>
+                                            <td>".$rank."</td>
+                                            <td>".$row['organization']."</td>
+                                            <td>".$row['candidate_name']."</td>
+                                            <td>".$row['vote_count']."</td>
+                                            </tr>";
+                                        $rank++;
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='4'>No records found</td></tr>";
                                 }
                                 ?>
                                 </tbody>
@@ -186,16 +194,20 @@ include 'includes/header.php';
                                         GROUP BY voters.organization, candidates.id
                                         ORDER BY vote_count DESC";
                                 $query = $conn->query($sql);
-                                $rank = 1;
-                                while($row = $query->fetch_assoc()){
-                                    echo "
-                                        <tr>
-                                        <td>".$rank."</td>
-                                        <td>".$row['organization']."</td>
-                                        <td>".$row['candidate_name']."</td>
-                                        <td>".$row['vote_count']."</td>
-                                        </tr>";
-                                    $rank++;
+                                if($query->num_rows > 0) {
+                                    $rank = 1;
+                                    while($row = $query->fetch_assoc()){
+                                        echo "
+                                            <tr>
+                                            <td>".$rank."</td>
+                                            <td>".$row['organization']."</td>
+                                            <td>".$row['candidate_name']."</td>
+                                            <td>".$row['vote_count']."</td>
+                                            </tr>";
+                                        $rank++;
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='4'>No records found</td></tr>";
                                 }
                                 ?>
                                 </tbody>
