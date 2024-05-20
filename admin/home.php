@@ -172,43 +172,41 @@
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
+    <!-- small box -->
           <div class="small-box">
             <div class="inner">
-            <?php
-    // Query to count the total number of voters who have voted
-    $sql_voters_voted = "SELECT COUNT(DISTINCT voters_id) AS voters_voted
-                         FROM votes";
-    $result_voters_voted = $conn->query($sql_voters_voted);
-    $row_voters_voted = $result_voters_voted->fetch_assoc();
-    $votersVoted = $row_voters_voted['voters_voted'];
+              <?php
+                  // Query to count the total number of voters who have voted
+                  $sql_voters_voted = "SELECT COUNT(DISTINCT voters_id) AS voters_voted FROM votes";
+                  $result_voters_voted = $conn->query($sql_voters_voted);
+                  $row_voters_voted = $result_voters_voted->fetch_assoc();
+                  $votersVoted = $row_voters_voted['voters_voted'];
 
-    // Assuming you have a variable containing the total number of voters
-    $totalNumberOfVoters = 12;
+                  // Query to count the total number of voters
+                  $sql_total_voters = "SELECT COUNT(*) AS total_voters FROM voters";
+                  $result_total_voters = $conn->query($sql_total_voters);
+                  $row_total_voters = $result_total_voters->fetch_assoc();
+                  $totalNumberOfVoters = $row_total_voters['total_voters'];
 
-    // Calculate and display the percentage
-    if ($totalNumberOfVoters > 0) {
-        $percentage = ($votersVoted / $totalNumberOfVoters) * 100;
-        $percentage = number_format($percentage, 1);
-        echo "<h3>" . $percentage . "%" ."</h3>";
-    } else {
-        echo "Total number of voters is 0. Cannot calculate percentage.";
-    }
-?>
-
-
-
-          
-              <p>Voters Turnout</p>
+                  // Calculate and display the percentage
+                  if ($totalNumberOfVoters > 0) {
+                      $percentage = ($votersVoted / $totalNumberOfVoters) * 100;
+                      $percentage = number_format($percentage, 1);
+                      echo "<h3>" . $percentage . "%" . "</h3>";
+                  } else {
+                      echo "<h3>0%</h3>";
+                      echo "<p>Total number of voters is 0. Cannot calculate percentage.</p>";
+                  }
+              ?>
+                <p>Voters Turnout</p>
             </div>
-            <div class="icon">
-              <i class="fa fa-black-tie"></i>
-            </div>
-            <a href="turnout.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
+        <div class="icon">
+            <i class="fa fa-black-tie"></i>
         </div>
-        <!-- ./col -->
-      </div>
+        <a href="turnout.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+    </div>
+</div>
+</div>
 
       <!--<div class="row">
         <div class="col-xs-12">
