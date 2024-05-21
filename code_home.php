@@ -264,6 +264,13 @@
 </body>
 
 <style>
+body {
+    background-color: #f5f5f5; /* Fallback color */
+    background-image: linear-gradient(to bottom right, #4CAF50, #2196F3); /* Gradient background */
+    background-size: cover; /* Cover the entire background */
+    background-repeat: no-repeat; /* No repeating background */
+    background-attachment: fixed; /* Fixed background position */
+}
 
     /* Style for the position container */
 .position-container {
