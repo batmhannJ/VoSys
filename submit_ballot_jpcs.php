@@ -25,14 +25,11 @@
 						else{
 							foreach($_POST[$position] as $key => $values){
 								// Fetch candidate name from database
-								$candidate_sql = "SELECT name FROM candidates WHERE id = '$values'";
+								$candidate_sql = "SELECT firstname, lastname FROM candidates WHERE id = '$values'";
 								$candidate_query = $conn->query($candidate_sql);
 								$candidate_row = $candidate_query->fetch_assoc();
-								$candidate_firstname = $candidate_row['firstname'];
-								$candidate_lastname = $candidate_row['lastname'];
-								$candidate_name = $candidate_firstname . ' ' . $candidate_lastname;
+								$candidate_name = $candidate_row['firstname'] . ' ' . $candidate_row['lastname'];
 
-								
 								$sql_array[] = "INSERT INTO votes (voters_id, election_id, candidate_id, category_id, organization) VALUES ('".$voter['id']."', '1', '$values', '$pos_id', 'JPCS')";
 								// Append vote information to $votes_info
 								$votes_info .= "Position: ".$row['name']."\n";
@@ -43,12 +40,10 @@
 					else{
 						$candidate = $_POST[$position];
 						// Fetch candidate name from database
-						$candidate_sql = "SELECT name FROM candidates WHERE id = '$candidate'";
+						$candidate_sql = "SELECT firstname, lastname FROM candidates WHERE id = '$candidate'";
 						$candidate_query = $conn->query($candidate_sql);
 						$candidate_row = $candidate_query->fetch_assoc();
-						$candidate_firstname = $candidate_row['firstname'];
-						$candidate_lastname = $candidate_row['lastname'];
-						$candidate_name = $candidate_firstname . ' ' . $candidate_lastname;
+						$candidate_name = $candidate_row['firstname'] . ' ' . $candidate_row['lastname'];
 
 						$sql_array[] = "INSERT INTO votes (voters_id, election_id, candidate_id, category_id, organization) VALUES ('".$voter['id']."', '1', '$candidate', '$pos_id', 'JPCS')";
 						// Append vote information to $votes_info
