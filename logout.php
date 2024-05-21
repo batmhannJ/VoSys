@@ -1,5 +1,8 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 session_start();
+
 include 'includes/conn.php';  // Include your database connection file
 
 if (isset($_SESSION['voters_id']) && isset($_SESSION['activity_time'])) {
