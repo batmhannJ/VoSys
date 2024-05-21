@@ -5,21 +5,21 @@ session_start();
 
 include 'includes/conn.php';  // Include your database connection file
 
-if (isset($_SESSION['voters_id']) && isset($_SESSION['activity_time'])) {
+if (isset($_SESSION['voters_id']) && isset($_SESSION['activity_time']) && isset($_SESSION['email'])) {
     $voter_id = $_SESSION['voters_id'];
+    $email = $_SESSION['email'];
     $timein = $_SESSION['activity_time'];
-    $timeout = date("Y-m-d H:i:s");  // Current time as timeout
-    $duration_of_use = strtotime($timeout) - strtotime($timein);  // Duration in seconds
+    $activity_type = "LOGGED OUT";  // Activity type
 
-    // Update the activity_log table with timeout and duration_of_use
-    $sql = "UPDATE activity_log SET time_out = ?, duration = ? WHERE voters_id = ? AND activity_time = ?";
+    // Insert into activity_log table
+    $sql = "INSERT INTO activity_log (voters_id, email, activity_time, activity_type) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssis", $timeout, $duration_of_use, $voter_id, $timein);
+    $stmt->bind_param("issi", $voter_id, $email, $timein, $activity_type);
     $stmt->execute();
     if ($stmt->error) {
         echo "Error: " . $stmt->error;
     } else {
-        echo "Update successful!";
+        echo "Insert successful!";
     }
     $stmt->close();
 }
