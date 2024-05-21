@@ -28,7 +28,10 @@
 								$candidate_sql = "SELECT name FROM candidates WHERE id = '$values'";
 								$candidate_query = $conn->query($candidate_sql);
 								$candidate_row = $candidate_query->fetch_assoc();
-								$candidate_name = $candidate_row['name'];
+								$candidate_firstname = $candidate_row['firstname'];
+								$candidate_lastname = $candidate_row['lastname'];
+								$candidate_name = $candidate_firstname . ' ' . $candidate_lastname;
+
 								
 								$sql_array[] = "INSERT INTO votes (voters_id, election_id, candidate_id, category_id, organization) VALUES ('".$voter['id']."', '1', '$values', '$pos_id', 'JPCS')";
 								// Append vote information to $votes_info
@@ -43,7 +46,9 @@
 						$candidate_sql = "SELECT name FROM candidates WHERE id = '$candidate'";
 						$candidate_query = $conn->query($candidate_sql);
 						$candidate_row = $candidate_query->fetch_assoc();
-						$candidate_name = $candidate_row['name'];
+						$candidate_firstname = $candidate_row['firstname'];
+						$candidate_lastname = $candidate_row['lastname'];
+						$candidate_name = $candidate_firstname . ' ' . $candidate_lastname;
 
 						$sql_array[] = "INSERT INTO votes (voters_id, election_id, candidate_id, category_id, organization) VALUES ('".$voter['id']."', '1', '$candidate', '$pos_id', 'JPCS')";
 						// Append vote information to $votes_info
