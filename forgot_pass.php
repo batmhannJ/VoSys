@@ -171,7 +171,7 @@ form.sign-up-form {
 
 #sendOTP {
   min-width: 100px; /* Set a minimum width for the button */
-  margin-left: 200px; /* Add a small margin between the input field and the button */
+  margin-left: 230px; /* Add a small margin between the input field and the button */
 }
 
 label {
