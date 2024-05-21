@@ -549,20 +549,28 @@
     background-size: cover; /* Cover the entire header with the background image */
     background-position: center; /* Center the background image */
     padding: 50px 0; /* Add padding to create space for the content */
-    opacity: 0.3; /* Reduce the opacity of the background image */
+}
+
+.page-header:before {
+    content: ''; /* Add content for the pseudo-element */
+    position: absolute; /* Position the pseudo-element */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Background overlay with opacity */
 }
 
 .title {
     font-size: 36px; /* Increase font size */
     margin-bottom: 30px; /* Increase bottom margin */
     line-height: 1.3; /* Adjust line height */
-    color: #fff; /* Text color */
     font-family: 'Arial', sans-serif; /* Font family */
     font-weight: bold; /* Font weight */
     text-transform: uppercase; /* Uppercase text */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow */
+    position: relative; /* Position relative for stacking context */
+    z-index: 1; /* Ensure text appears above the background overlay */
 }
-
 
 
 
