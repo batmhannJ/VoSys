@@ -109,11 +109,6 @@ $(function(){
     getRow(id);
   });
 
-  $(document).on('click', '.archive', function(e){
-    e.preventDefault();
-    var id = $(this).data('id');
-    archiveCandidate(id);
-  });
 
   $(document).on('click', '.photo', function(e){
     e.preventDefault();
@@ -125,6 +120,12 @@ $(function(){
     e.preventDefault();
     var id = $(this).data('id');
     getRow(id);
+  });
+
+  $(document).on('click', '.archive', function(e){
+    e.preventDefault();
+    var id = $(this).data('id');
+    archiveCandidate(id);
   });
 
 });
