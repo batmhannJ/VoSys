@@ -48,17 +48,35 @@ include 'includes/header.php';
                 </div>
             </div>
 
-            <!-- Combined Column Graph for President and Vice President -->
+            <!-- Column Graphs for President and Vice President -->
             <div class="row">
-                <div class="col-md-12">
+                <!-- President Column Graph Box -->
+                <div class="col-md-6">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Candidates Vote Count</h3>
+                            <h3 class="box-title">President Candidates Vote Count</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <!-- Combined Column Graph Container -->
-                            <div id="combinedGraph" style="height: 400px;"></div>
+                            <!-- President Column Graph Container -->
+                            <div id="presidentGraph" style="height: 300px;"></div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+
+                <!-- Vice President Column Graph Box -->
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Vice President Candidates Vote Count</h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!-- Vice President Column Graph Container -->
+                            <div id="vicePresidentGraph" style="height: 300px;"></div>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -82,8 +100,8 @@ include 'includes/header.php';
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    // Function to generate combined column graph with different colors for each candidate
-    function generateCombinedGraph(dataPoints, containerId) {
+    // Function to generate column graph with multiple axes
+    function generateColumnGraph(dataPoints, containerId) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
             title: {
@@ -97,7 +115,7 @@ include 'includes/header.php';
                 title: "Candidates"
             },
             data: [{
-                type: "column",
+                type: "column", // Change type to "column"
                 dataPoints: dataPoints
             }]
         });
@@ -105,8 +123,9 @@ include 'includes/header.php';
         return chart;
     }
 
-    // Initialize chart
-    var combinedChart;
+    // Initialize charts
+    var presidentChart;
+    var vicePresidentChart;
 
     // Function to fetch updated data from the server
     function updateData() {
@@ -116,26 +135,22 @@ include 'includes/header.php';
             dataType: 'json',
             data: {organization: $('#organization').val()}, // Pass the selected organization to the server
             success: function(response) {
-                // Combine president and vice president data into one array with distinct colors
-                var combinedDataPoints = [];
+                // Update president column graph
+                if (response.presidentData.length > 0) {
+                    if (!presidentChart) {
+                        presidentChart = generateColumnGraph(response.presidentData, "presidentGraph");
+                    } else {
+                        updateColumnGraph(response.presidentData, presidentChart);
+                    }
+                }
 
-                // Assign a unique color to each president candidate
-                response.presidentData.forEach(function(candidate, index) {
-                    candidate.color = CanvasJS.Chart.defaults.colors[index % CanvasJS.Chart.defaults.colors.length];
-                    combinedDataPoints.push(candidate);
-                });
-
-                // Assign a unique color to each vice president candidate
-                response.vicePresidentData.forEach(function(candidate, index) {
-                    candidate.color = CanvasJS.Chart.defaults.colors[(index + response.presidentData.length) % CanvasJS.Chart.defaults.colors.length];
-                    combinedDataPoints.push(candidate);
-                });
-
-                // Update combined column graph
-                if (!combinedChart) {
-                    combinedChart = generateCombinedGraph(combinedDataPoints, "combinedGraph");
-                } else {
-                    updateCombinedGraph(combinedDataPoints, combinedChart);
+                // Update vice president column graph
+                if (response.vicePresidentData.length > 0) {
+                    if (!vicePresidentChart) {
+                        vicePresidentChart = generateColumnGraph(response.vicePresidentData, "vicePresidentGraph");
+                    } else {
+                        updateColumnGraph(response.vicePresidentData, vicePresidentChart);
+                    }
                 }
             },
             error: function(xhr, status, error) {
@@ -144,20 +159,45 @@ include 'includes/header.php';
         });
     }
 
-    // Function to update combined column graph with animation
-    function updateCombinedGraph(newDataPoints, chart) {
-        chart.options.data[0].dataPoints = newDataPoints;
-        chart.render();
+    // Function to update column graph with animation
+    function updateColumnGraph(newDataPoints, chart) {
+        for (var i = 0; i < newDataPoints.length; i++) {
+            var newVotes = newDataPoints[i].y;
+            chart.options.data[0].dataPoints[i].y = newVotes; // Update vote count directly
+            animateColumn(i, newVotes, chart); // Animate the column
+        }
     }
 
-    // Initialize chart
-    var combinedChart = generateCombinedGraph([], "combinedGraph");
+    // Function to fetch updated data and update graphs
+    function updateDataAndGraphs() {
+        $.ajax({
+            url: 'update_data.php',
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                // Update president graph
+                presidentChart.options.data[0].dataPoints = response.presidentData;
+                presidentChart.render();
 
-    // Call the updateData function initially
-    updateData();
+                // Update vice president graph
+                vicePresidentChart.options.data[0].dataPoints = response.vicePresidentData;
+                vicePresidentChart.render();
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching data: ' + error);
+            }
+        });
+    }
 
-    // Call the updateData function every 5 seconds
-    setInterval(updateData, 5000);
+    // Initialize charts
+    var presidentChart = generateColumnGraph([], "presidentGraph");
+    var vicePresidentChart = generateColumnGraph([], "vicePresidentGraph");
+
+    // Call the updateDataAndGraphs function initially
+    updateDataAndGraphs();
+
+    // Call the updateDataAndGraphs function every 5 seconds
+    setInterval(updateDataAndGraphs, 5000);
 </script>
 </body>
 </html>
