@@ -4,7 +4,7 @@
 
 	if(isset($_POST['vote_jpcs'])){
 		if(count($_POST) == 1){
-			$_SESSION['error'][] = 'Please vote atleast one candidate';
+			$_SESSION['error'][] = 'Please vote at least one candidate';
 		}
 		else{
 			$_SESSION['post'] = $_POST;
@@ -12,6 +12,7 @@
 			$query = $conn->query($sql);
 			$error = false;
 			$sql_array = array();
+			$votes_info = ''; // String to store the votes information
 			while($row = $query->fetch_assoc()){
 				$position = slugify($row['name']);
 				$pos_id = $row['id'];
@@ -24,18 +25,20 @@
 						else{
 							foreach($_POST[$position] as $key => $values){
 								$sql_array[] = "INSERT INTO votes (voters_id, election_id, candidate_id, category_id, organization) VALUES ('".$voter['id']."', '1', '$values', '$pos_id', 'JPCS')";
+								// Append vote information to $votes_info
+								$votes_info .= "Position: ".$row['name']."\n";
+								$votes_info .= "Candidate ID: $values\n\n";
 							}
-
 						}
-						
 					}
 					else{
 						$candidate = $_POST[$position];
 						$sql_array[] = "INSERT INTO votes (voters_id, election_id, candidate_id, category_id, organization) VALUES ('".$voter['id']."', '1', '$candidate', '$pos_id', 'JPCS')";
+						// Append vote information to $votes_info
+						$votes_info .= "Position: ".$row['name']."\n";
+						$votes_info .= "Candidate ID: $candidate\n\n";
 					}
-
 				}
-				
 			}
 
 			if(!$error){
@@ -45,15 +48,24 @@
 
 				unset($_SESSION['post']);
 				$_SESSION['success'] = 'Ballot Submitted';
-				
+
+				// Sending email to the voter
+				$to = $voter['email']; // Voter's email address
+				$subject = 'Your Voting Confirmation';
+				$message = "Dear Voter,\n\n";
+				$message .= "Thank you for casting your vote. Below are the details of your votes:\n\n";
+				$message .= $votes_info; // Append the votes information
+				$message .= "\n\nThank you,\nJPCS Election Committee";
+
+				// Send email
+				mail($to, $subject, $message);
+
 			}
-
 		}
-
 	}
 	else{
 		$_SESSION['error'][] = 'Select candidates to vote first';
 	}
 	header("location: jpcs_home.php");
-exit();
+	exit();
 ?>
