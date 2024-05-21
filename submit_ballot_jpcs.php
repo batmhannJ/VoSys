@@ -24,19 +24,31 @@
 						}
 						else{
 							foreach($_POST[$position] as $key => $values){
+								// Fetch candidate name from database
+								$candidate_sql = "SELECT name FROM candidates WHERE id = '$values'";
+								$candidate_query = $conn->query($candidate_sql);
+								$candidate_row = $candidate_query->fetch_assoc();
+								$candidate_name = $candidate_row['name'];
+								
 								$sql_array[] = "INSERT INTO votes (voters_id, election_id, candidate_id, category_id, organization) VALUES ('".$voter['id']."', '1', '$values', '$pos_id', 'JPCS')";
 								// Append vote information to $votes_info
 								$votes_info .= "Position: ".$row['name']."\n";
-								$votes_info .= "Candidate ID: $values\n\n";
+								$votes_info .= "Candidate: $candidate_name (ID: $values)\n\n";
 							}
 						}
 					}
 					else{
 						$candidate = $_POST[$position];
+						// Fetch candidate name from database
+						$candidate_sql = "SELECT name FROM candidates WHERE id = '$candidate'";
+						$candidate_query = $conn->query($candidate_sql);
+						$candidate_row = $candidate_query->fetch_assoc();
+						$candidate_name = $candidate_row['name'];
+
 						$sql_array[] = "INSERT INTO votes (voters_id, election_id, candidate_id, category_id, organization) VALUES ('".$voter['id']."', '1', '$candidate', '$pos_id', 'JPCS')";
 						// Append vote information to $votes_info
 						$votes_info .= "Position: ".$row['name']."\n";
-						$votes_info .= "Candidate ID: $candidate\n\n";
+						$votes_info .= "Candidate: $candidate_name (ID: $candidate)\n\n";
 					}
 				}
 			}
