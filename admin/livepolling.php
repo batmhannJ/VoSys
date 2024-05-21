@@ -48,9 +48,9 @@ include 'includes/header.php';
                 </div>
             </div>
 
-            <!-- Column Charts for President and Vice President -->
+            <!-- Bar Graphs for President and Vice President -->
             <div class="row">
-                <!-- President Column Chart Box -->
+                <!-- President Bar Graph Box -->
                 <div class="col-md-6">
                     <div class="box">
                         <div class="box-header with-border">
@@ -58,8 +58,8 @@ include 'includes/header.php';
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <!-- President Column Chart Container -->
-                            <div id="presidentChartContainer" style="height: 300px; width: 100%;"></div>
+                            <!-- President Bar Graph Container -->
+                            <div id="presidentGraph" style="height: 300px;"></div>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -67,7 +67,7 @@ include 'includes/header.php';
                 </div>
                 <!-- /.col -->
 
-                <!-- Vice President Column Chart Box -->
+                <!-- Vice President Bar Graph Box -->
                 <div class="col-md-6">
                     <div class="box">
                         <div class="box-header with-border">
@@ -75,8 +75,8 @@ include 'includes/header.php';
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <!-- Vice President Column Chart Container -->
-                            <div id="vicePresidentChartContainer" style="height: 300px; width: 100%;"></div>
+                            <!-- Vice President Bar Graph Container -->
+                            <div id="vicePresidentGraph" style="height: 300px;"></div>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -95,57 +95,63 @@ include 'includes/header.php';
 </div>
 <!-- ./wrapper -->
 <?php include 'includes/scripts.php'; ?>
-<!-- Column Chart Script -->
+<!-- Bar Graph Script -->
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    // Function to generate column chart with multiple axes
-    function generateColumnChart(dataPoints, containerId) {
+    // Function to generate bar graph
+    function generateBarGraph(dataPoints, containerId) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
             title:{
                 text: "Vote Counts"
             },
             axisY: {
+                title: "Candidates"
+            },
+            axisX: {
                 title: "Vote Count",
                 includeZero: true
             },
-            toolTip: {
-                shared: true
-            },
             data: [{
-                type: "column",
-                name: "President",
-                showInLegend: true,
-                dataPoints: dataPoints[0]
-            },
-            {
-                type: "column",
-                name: "Vice President",
-                showInLegend: true,
-                dataPoints: dataPoints[1]
+                type: "bar", // Change type to "bar"
+                dataPoints: dataPoints
             }]
         });
         chart.render();
         return chart;
     }
 
+    // Initialize charts
+    var presidentChart;
+    var vicePresidentChart;
+    
+
     // Function to fetch updated data from the server
     function updateData() {
         $.ajax({
-            url: 'update_data.php',
+            url: 'update_data.php', // Change this to the URL of your update data script
             type: 'GET',
             dataType: 'json',
-            data: {organization: $('#organization').val()},
+            data: {organization: $('#organization').val()}, // Pass the selected organization to the server
             success: function(response) {
-                if (response.success) {
-                    // Update president and vice president column charts
-                    if (response.columnChartData.length > 0) {
-                        updateColumnChart(response.columnChartData, presidentVicePresidentChart);
+                // Update president bar graph
+                if (response.presidentData.length > 0) {
+                    if (!presidentChart) {
+                        presidentChart = generateBarGraph(response.presidentData, "presidentGraph");
+                    } else {
+                        updateBarGraph(response.presidentData, presidentChart);
                     }
-                } else {
-                    console.error('Error updating data: ' + response.error);
+                }
+
+                // Update vice president bar graph
+                if (response.vicePresidentData.length > 0) {
+                    if (!vicePresidentChart) {
+                        vicePresidentChart = generateBarGraph(response.vicePresidentData, "vicePresidentGraph");
+                    } else {
+                        updateBarGraph(response.vicePresidentData, vicePresidentChart);
+                    }
                 }
             },
             error: function(xhr, status, error) {
@@ -154,48 +160,68 @@ include 'includes/header.php';
         });
     }
 
-    // Function to update column chart with animation
-    function updateColumnChart(newDataPoints, chart) {
+    // Function to update bar graph with animation
+    function updateBarGraph(newDataPoints, chart) {
         for (var i = 0; i < newDataPoints.length; i++) {
-            for (var j = 0; j < newDataPoints[i].length; j++) {
-                chart.options.data[i].dataPoints[j].y = newDataPoints[i][j].y; // Update vote count directly
-                animateColumn(i, j, newDataPoints[i][j].y, chart); // Animate the column
-            }
+            var newVotes = newDataPoints[i].y;
+            chart.options.data[0].dataPoints[i].y = newVotes; // Update vote count directly
+            animateBar(i, newVotes, chart); // Animate the bar
         }
     }
 
-    // Function to animate column
-    function animateColumn(seriesIndex, dataIndex, newValue, chart) {
-        var dataSeries = chart.options.data[seriesIndex];
-        var dataPoint = dataSeries.dataPoints[dataIndex];
-        var oldValue = dataPoint.y;
-        var delta = newValue - oldValue;
-        var duration = 1000; // Animation duration in milliseconds
-        var frameRate = 30; // Number of frames per second
-        var framesCount = Math.ceil(duration / 1000 * frameRate);
-        var frameNumber = 0;
+   // Function to fetch updated data and update graphs
+   function updateDataAndGraphs() {
+        $.ajax({
+            url: 'update_data.php',
+            type: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                // Update president graph
+                presidentChart.options.data[0].dataPoints = response.presidentData;
+                presidentChart.render();
 
-        var interval = setInterval(function() {
-            frameNumber++;
-            var progress = frameNumber / framesCount;
-            var deltaY = delta * progress;
-            dataPoint.y = oldValue + deltaY;
-            chart.render();
-
-            if (frameNumber == framesCount) {
-                clearInterval(interval);
+                // Update vice president graph
+                vicePresidentChart.options.data[0].dataPoints = response.vicePresidentData;
+                vicePresidentChart.render();
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching data: ' + error);
             }
-        }, 1000 / frameRate);
+        });
     }
 
-    // Initialize chart
-    var presidentVicePresidentChart = generateColumnChart([[], []], "presidentVicePresidentChartContainer");
+    // Initialize charts
+    var presidentChart = generateBarGraph([], "presidentGraph");
+    var vicePresidentChart = generateBarGraph([], "vicePresidentGraph");
 
-    // Call the updateData function initially
-    updateData();
+    // Function to generate bar graph
+    function generateBarGraph(dataPoints, containerId) {
+        var chart = new CanvasJS.Chart(containerId, {
+            animationEnabled: true,
+            title: {
+                text: "Vote Counts"
+            },
+            axisY: {
+                title: "Candidates"
+            },
+            axisX: {
+                title: "Vote Count",
+                includeZero: true
+            },
+            data: [{
+                type: "bar",
+                dataPoints: dataPoints
+            }]
+        });
+        chart.render();
+        return chart;
+    }
 
-    // Call the updateData function every 5 seconds
-    setInterval(updateData, 5000);
+    // Call the updateDataAndGraphs function initially
+    updateDataAndGraphs();
+
+    // Call the updateDataAndGraphs function every 5 seconds
+    setInterval(updateDataAndGraphs, 5000);
 </script>
 </body>
 </html>
