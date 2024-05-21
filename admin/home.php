@@ -205,7 +205,8 @@
         </div>
         <a href="turnout.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
     </div>
-
+</div>
+</div>
 
       <!--<div class="row">
         <div class="col-xs-12">
