@@ -546,7 +546,7 @@ main.sign-up-mode .carousel {
             </div>
 
                 <input type="submit" name="sendOTP" id="sendOTP" value="Send OTP" class="sign-btn" style="font-size:15px; background-color: grey;">
-                <input type="submit" name="login" value="Sign In" class="sign-btn" style="font-size:15px;">
+                <input type="submit" name="login" value="Change Password" class="sign-btn" style="font-size:15px;">
 
                         <?php
                 if (isset($_SESSION['error'])) {
