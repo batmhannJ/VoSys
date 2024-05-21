@@ -549,7 +549,7 @@
     background-size: cover; /* Cover the entire header with the background image */
     background-position: center; /* Center the background image */
     padding: 50px 0; /* Add padding to create space for the content */
-    opacity: 0.7; /* Reduce the opacity of the background image */
+    opacity: 0.3; /* Reduce the opacity of the background image */
 }
 
 .title {
