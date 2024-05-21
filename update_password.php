@@ -34,6 +34,7 @@ if (isset($_POST['email']) && isset($_POST['new_password']) && isset($_POST['con
         die("Execute statement failed: " . mysqli_error($connection));
     }
 
+    
     // Step 5: Close database connection
     mysqli_stmt_close($stmt);
     mysqli_close($connection);
