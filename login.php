@@ -65,7 +65,7 @@ if (isset($_POST['login'])) {
                         // Log the login activity
                         $voter_id = $row['voters_id'];
                         $email = $row['email']; // Assuming there is an email column in the voters table
-                        $log_sql = "INSERT INTO activity_log (voters_id, email, activity_type) VALUES (?, ?, 'login')";
+                        $log_sql = "INSERT INTO activity_log (voters_id, email, activity_type) VALUES (?, ?, 'Login')";
                         $log_stmt = $conn->prepare($log_sql);
                         $log_stmt->bind_param("is", $voter_id, $email);
                         $log_stmt->execute();
