@@ -6,9 +6,7 @@
   <?php include 'includes/navbar_csc.php'; ?>
   <?php include 'includes/menubar_csc.php'; ?>
 
-  <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
         Candidates List
@@ -18,7 +16,7 @@
         <li class="active">Candidates</li>
       </ol>
     </section>
-    <!-- Main content -->
+    
     <section class="content">
       <?php
         if(isset($_SESSION['error'])){
@@ -83,7 +81,7 @@
                           <td><a href='#platform' data-toggle='modal' class='btn btn-info btn-sm btn-flat platform' data-id='".$row['canid']."'><i class='fa fa-search'></i> View</a></td>
                           <td>
                             <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['canid']."'><i class='fa fa-edit'></i> Edit</button>
-                            <button class='btn btn-warning btn-sm archive btn-flat' data-id='".$row['id']."'><i class='fa fa-archive'></i> Archive</button>
+                            <button class='btn btn-warning btn-sm archive btn-flat' data-id='".$row['canid']."'><i class='fa fa-archive'></i> Archive</button>
                           </td>
                         </tr>
                       ";
@@ -140,6 +138,7 @@ function archiveCandidate(id) {
             url: "archive_candidate.php",
             data: { id: id },
             success: function(response) {
+                // Refresh the page or update the table as needed
                 location.reload();
             },
             error: function(xhr, status, error) {
