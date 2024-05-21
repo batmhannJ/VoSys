@@ -65,22 +65,20 @@ include 'includes/header.php';
                                     <th>Rank</th>
                                     <th>Organization</th>
                                     <th>Candidate</th>
-                                    <th>Vote Count</th>
+                                    <th>Category</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <?php
-                                // Fetch and display president candidate ranking based on vote count and organization filter
+                                // Fetch and display president candidate ranking based on categories and organization filter
                                 $organizationFilter = !empty($_GET['organization']) ? " AND voters.organization = '".$_GET['organization']."'" : "";
                                 $sql = "SELECT voters.organization, CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-                                        COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-                                        FROM votes 
-                                        LEFT JOIN candidates ON votes.candidate_id = candidates.id
-                                        LEFT JOIN voters ON votes.voters_id = voters.id
+                                        categories.description AS category_description
+                                        FROM candidates
+                                        LEFT JOIN voters ON candidates.voters_id = voters.id
                                         LEFT JOIN categories ON candidates.category_id = categories.id
                                         WHERE categories.description = 'President'".$organizationFilter."
-                                        GROUP BY voters.organization, candidates.id
-                                        ORDER BY vote_count DESC";
+                                        ORDER BY category_description";
                                 $query = $conn->query($sql);
                                 if($query->num_rows > 0) {
                                     $rank = 1;
@@ -90,7 +88,7 @@ include 'includes/header.php';
                                             <td>".$rank."</td>
                                             <td>".$row['organization']."</td>
                                             <td>".$row['candidate_name']."</td>
-                                            <td>".$row['vote_count']."</td>
+                                            <td>".$row['category_description']."</td>
                                             </tr>";
                                         $rank++;
                                     }
@@ -122,21 +120,19 @@ include 'includes/header.php';
                                     <th>Rank</th>
                                     <th>Organization</th>
                                     <th>Candidate</th>
-                                    <th>Vote Count</th>
+                                    <th>Category</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <?php
-                                // Fetch and display vice president for internal affairs candidate ranking based on vote count and organization filter
+                                // Fetch and display vice president for internal affairs candidate ranking based on categories and organization filter
                                 $sql = "SELECT voters.organization, CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-                                        COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-                                        FROM votes 
-                                        LEFT JOIN candidates ON votes.candidate_id = candidates.id
-                                        LEFT JOIN voters ON votes.voters_id = voters.id
+                                        categories.description AS category_description
+                                        FROM candidates
+                                        LEFT JOIN voters ON candidates.voters_id = voters.id
                                         LEFT JOIN categories ON candidates.category_id = categories.id
                                         WHERE categories.description = 'Vice President for Internal Affairs'".$organizationFilter."
-                                        GROUP BY voters.organization, candidates.id
-                                        ORDER BY vote_count DESC";
+                                        ORDER BY category_description";
                                 $query = $conn->query($sql);
                                 if($query->num_rows > 0) {
                                     $rank = 1;
@@ -146,7 +142,7 @@ include 'includes/header.php';
                                             <td>".$rank."</td>
                                             <td>".$row['organization']."</td>
                                             <td>".$row['candidate_name']."</td>
-                                            <td>".$row['vote_count']."</td>
+                                            <td>".$row['category_description']."</td>
                                             </tr>";
                                         $rank++;
                                     }
@@ -178,21 +174,19 @@ include 'includes/header.php';
                                     <th>Rank</th>
                                     <th>Organization</th>
                                     <th>Candidate</th>
-                                    <th>Vote Count</th>
+                                    <th>Category</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <?php
-                                // Fetch and display vice president for external affairs candidate ranking based on vote count and organization filter
+                                // Fetch and display vice president for external affairs candidate ranking based on categories and organization filter
                                 $sql = "SELECT voters.organization, CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-                                        COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-                                        FROM votes 
-                                        LEFT JOIN candidates ON votes.candidate_id = candidates.id
-                                        LEFT JOIN voters ON votes.voters_id = voters.id
+                                        categories.description AS category_description
+                                        FROM candidates
+                                        LEFT JOIN voters ON candidates.voters_id = voters.id
                                         LEFT JOIN categories ON candidates.category_id = categories.id
                                         WHERE categories.description = 'Vice President for External Affairs'".$organizationFilter."
-                                        GROUP BY voters.organization, candidates.id
-                                        ORDER BY vote_count DESC";
+                                        ORDER BY category_description";
                                 $query = $conn->query($sql);
                                 if($query->num_rows > 0) {
                                     $rank = 1;
@@ -202,7 +196,7 @@ include 'includes/header.php';
                                             <td>".$rank."</td>
                                             <td>".$row['organization']."</td>
                                             <td>".$row['candidate_name']."</td>
-                                            <td>".$row['vote_count']."</td>
+                                            <td>".$row['category_description']."</td>
                                             </tr>";
                                         $rank++;
                                     }
@@ -321,16 +315,15 @@ include 'includes/header.php';
     <?php
     $presidentData = array();
     $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-            COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-            FROM votes 
-            LEFT JOIN candidates ON votes.candidate_id = candidates.id
-            LEFT JOIN voters ON votes.voters_id = voters.id
+            categories.description AS category_description
+            FROM candidates
+            LEFT JOIN voters ON candidates.voters_id = voters.id
             LEFT JOIN categories ON candidates.category_id = categories.id
             WHERE categories.description = 'President'".$organizationFilter."
-            GROUP BY candidates.id";
+            ORDER BY category_description";
     $query = $conn->query($sql);
     while($row = $query->fetch_assoc()) {
-        $presidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+        $presidentData[] = array("y" => intval($row['category_description']), "label" => $row['candidate_name']);
     }
     ?>
 
@@ -341,16 +334,15 @@ include 'includes/header.php';
     <?php
     $vicePresidentInternalData = array();
     $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-            COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-            FROM votes 
-            LEFT JOIN candidates ON votes.candidate_id = candidates.id
-            LEFT JOIN voters ON votes.voters_id = voters.id
+            categories.description AS category_description
+            FROM candidates
+            LEFT JOIN voters ON candidates.voters_id = voters.id
             LEFT JOIN categories ON candidates.category_id = categories.id
             WHERE categories.description = 'Vice President for Internal Affairs'".$organizationFilter."
-            GROUP BY candidates.id";
+            ORDER BY category_description";
     $query = $conn->query($sql);
     while($row = $query->fetch_assoc()) {
-        $vicePresidentInternalData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+        $vicePresidentInternalData[] = array("y" => intval($row['category_description']), "label" => $row['candidate_name']);
     }
     ?>
 
@@ -361,16 +353,15 @@ include 'includes/header.php';
     <?php
     $vicePresidentExternalData = array();
     $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-            COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-            FROM votes 
-            LEFT JOIN candidates ON votes.candidate_id = candidates.id
-            LEFT JOIN voters ON votes.voters_id = voters.id
+            categories.description AS category_description
+            FROM candidates
+            LEFT JOIN voters ON candidates.voters_id = voters.id
             LEFT JOIN categories ON candidates.category_id = categories.id
             WHERE categories.description = 'Vice President for External Affairs'".$organizationFilter."
-            GROUP BY candidates.id";
+            ORDER BY category_description";
     $query = $conn->query($sql);
     while($row = $query->fetch_assoc()) {
-        $vicePresidentExternalData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+        $vicePresidentExternalData[] = array("y" => intval($row['category_description']), "label" => $row['candidate_name']);
     }
     ?>
 
