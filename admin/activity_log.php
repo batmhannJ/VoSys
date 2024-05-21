@@ -71,10 +71,12 @@
                           ORDER BY activity_log.id ASC";
                           
                   $query = $conn->query($sql);
+                  $i = 1;
                   while ($row = $query->fetch_assoc()) {
                       echo "
                           <tr>
                               <td class='hidden'></td>
+                              <td>".$i++."</td>
                               <td>".$row['voters_id']."</td>
                               <td>".$row['email']."</td>
                               <td>".$row['votfirst'].' '.$row['votlast']."</td>
