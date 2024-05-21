@@ -150,6 +150,8 @@ form.sign-up-form {
   position: relative;
   height: 37px;
   margin-bottom: 2rem;
+  display: flex;
+  align-items: center; 
 }
 
 .input-field {
@@ -164,6 +166,12 @@ form.sign-up-form {
   font-size: 0.95rem;
   color: #151111;
   transition: 0.4s;
+  flex-grow: 1; 
+}
+
+#sendOTP {
+  min-width: 100px; /* Set a minimum width for the button */
+  margin-left: 10px; /* Add a small margin between the input field and the button */
 }
 
 label {
@@ -542,7 +550,7 @@ main.sign-up-mode .carousel {
                   />
                     <span class="form-control-feedback"></span>
                   <label style="font-size:15px;"></label>
-                  <input type="button" name="sendOTP" id="sendOTP" value="Send OTP" class="sign-btn" style="width: 100px; font-size:15px; margin-left: 200px; background-color: grey;">
+                  <input type="button" name="sendOTP" id="sendOTP" value="Send OTP" class="sign-btn" style="width: 100px; font-size:15px; background-color: grey;">
                 </div>
             </div>
 
