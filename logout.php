@@ -12,7 +12,7 @@ if (isset($_SESSION['voters_id']) && isset($_SESSION['activity_time'])) {
     $duration_of_use = strtotime($timeout) - strtotime($timein);  // Duration in seconds
 
     // Update the activity_log table with timeout and duration_of_use
-    $sql = "UPDATE activity_log SET timeout = ?, duration = ? WHERE voters_id = ? AND activity_time = ?";
+    $sql = "UPDATE activity_log SET time_out = ?, duration = ? WHERE voters_id = ? AND activity_time = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssis", $timeout, $duration_of_use, $voter_id, $timein);
     $stmt->execute();
