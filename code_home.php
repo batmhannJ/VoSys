@@ -542,25 +542,27 @@
 
 .page-header {
     margin-top: 0;
-    color: #333; /* Text color */
+    color: #fff; /* Text color */
     text-align: center;
     position: relative; /* Position relative for stacking context */
     background-image: url('images/codg.jpg'); /* Set the logo as the background image */
     background-size: cover; /* Cover the entire header with the background image */
     background-position: center; /* Center the background image */
     padding: 50px 0; /* Add padding to create space for the content */
+    opacity: 0.7; /* Reduce the opacity of the background image */
 }
 
 .title {
     font-size: 36px; /* Increase font size */
     margin-bottom: 30px; /* Increase bottom margin */
     line-height: 1.3; /* Adjust line height */
-    color: #800000; /* Text color */
+    color: #fff; /* Text color */
     font-family: 'Arial', sans-serif; /* Font family */
     font-weight: bold; /* Font weight */
     text-transform: uppercase; /* Uppercase text */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Adjust text shadow */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow */
 }
+
 
 
 
