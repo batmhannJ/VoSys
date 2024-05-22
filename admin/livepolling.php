@@ -57,7 +57,7 @@ include 'includes/header.php';
                             <h3 class="box-title">President Candidates Vote Count</h3>
                         </div>
                         <div class="box-body">
-                            <div id="presidentGraph" style="height: 300px;"></div>
+                            <canvas id="presidentGraph" style="height: 300px;"></canvas>
                         </div>
                     </div>
                 </div>
@@ -69,7 +69,7 @@ include 'includes/header.php';
                             <h3 class="box-title">Vice President for Internal Affairs Candidates Vote Count</h3>
                         </div>
                         <div class="box-body">
-                            <div id="vicePresidentInternalGraph" style="height: 300px;"></div>
+                            <canvas id="vicePresidentInternalGraph" style="height: 300px;"></canvas>
                         </div>
                     </div>
                 </div>
@@ -83,7 +83,7 @@ include 'includes/header.php';
                             <h3 class="box-title">Vice President for External Affairs Candidates Vote Count</h3>
                         </div>
                         <div class="box-body">
-                            <div id="vicePresidentExternalGraph" style="height: 300px;"></div>
+                            <canvas id="vicePresidentExternalGraph" style="height: 300px;"></canvas>
                         </div>
                     </div>
                 </div>
@@ -95,7 +95,7 @@ include 'includes/header.php';
                             <h3 class="box-title">Secretary Candidates Vote Count</h3>
                         </div>
                         <div class="box-body">
-                            <div id="secretaryGraph" style="height: 300px;"></div>
+                            <canvas id="secretaryGraph" style="height: 300px;"></canvas>
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
@@ -119,105 +119,73 @@ include 'includes/header.php';
 <!-- ./wrapper -->
 <?php include 'includes/scripts.php'; ?>
 <!-- Bar Graph Script -->
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    // Function to generate bar graph
-    function generateBarGraph(dataPoints, containerId, title) {
-        var chart = new CanvasJS.Chart(containerId, {
-            animationEnabled: true,
-            title: {
-                text: title
+    var presidentChart, vicePresidentInternalChart, vicePresidentExternalChart, secretaryChart;
+
+    function createChart(ctx, data) {
+        return new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: data.map(item => item.label),
+                datasets: [{
+                    label: 'Vote Count',
+                    data: data.map(item => item.y),
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
             },
-            axisX: {
-                title: "Vote Count",
-                includeZero: true
-            },
-            axisY: {
-                title: "Candidates"
-            },
-            data: [{
-                type: "bar",
-                dataPoints: dataPoints
-            }]
+            options: {
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
         });
-        chart.render();
     }
 
-    // Fetch and process data for President
-    <?php
-    $presidentData = array();
-    $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-            COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-            FROM categories 
-            LEFT JOIN candidates ON categories.id = candidates.category_id
-            LEFT JOIN votes ON candidates.id = votes.candidate_id
-            LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-            WHERE voters1.organization != '' AND categories.name = 'President'
-            ".$organizationFilter."
-            GROUP BY candidates.id";
-    $query = $conn->query($sql);
-    while($row = $query->fetch_assoc()) {
-        $presidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+    function updateChart(chart, data) {
+        chart.data.labels = data.map(item => item.label);
+        chart.data.datasets[0].data = data.map(item => item.y);
+        chart.update();
     }
-    ?>
-    generateBarGraph(<?php echo json_encode($presidentData); ?>, "presidentGraph", "President Candidates Vote Count");
 
-    // Fetch and process data for Vice President for Internal Affairs
-    <?php
-    $vicePresidentInternalData = array();
-    $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-            COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-            FROM categories 
-            LEFT JOIN candidates ON categories.id = candidates.category_id
-            LEFT JOIN votes ON candidates.id = votes.candidate_id
-            LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-            WHERE voters1.organization != '' AND categories.name = 'Vice President for Internal Affairs'
-            ".$organizationFilter."
-            GROUP BY candidates.id";
-    $query = $conn->query($sql);
-    while($row = $query->fetch_assoc()) {
-        $vicePresidentInternalData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
-    }
-    ?>
-    generateBarGraph(<?php echo json_encode($vicePresidentInternalData); ?>, "vicePresidentInternalGraph", "Vice President for Internal Affairs Candidates Vote Count");
+    function fetchData() {
+        $.ajax({
+            url: 'update_data.php?organization=<?php echo $_GET['organization'] ?? ''; ?>',
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                if (presidentChart) {
+                    updateChart(presidentChart, response.president);
+                    updateChart(vicePresidentInternalChart, response.vicePresidentInternal);
+                    updateChart(vicePresidentExternalChart, response.vicePresidentExternal);
+                    updateChart(secretaryChart, response.secretary);
+                } else {
+                    var presidentCtx = document.getElementById('presidentGraph').getContext('2d');
+                    var vicePresidentInternalCtx = document.getElementById('vicePresidentInternalGraph').getContext('2d');
+                    var vicePresidentExternalCtx = document.getElementById('vicePresidentExternalGraph').getContext('2d');
+                    var secretaryCtx = document.getElementById('secretaryGraph').getContext('2d');
 
-    // Fetch and process data for Vice President for External Affairs
-    <?php
-    $vicePresidentExternalData = array();
-    $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-            COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-            FROM categories 
-            LEFT JOIN candidates ON categories.id = candidates.category_id
-            LEFT JOIN votes ON candidates.id = votes.candidate_id
-            LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-            WHERE voters1.organization != '' AND categories.name = 'Vice President for External Affairs'
-            ".$organizationFilter."
-            GROUP BY candidates.id";
-    $query = $conn->query($sql);
-    while($row = $query->fetch_assoc()) {
-        $vicePresidentExternalData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+                    presidentChart = createChart(presidentCtx, response.president);
+                    vicePresidentInternalChart = createChart(vicePresidentInternalCtx, response.vicePresidentInternal);
+                    vicePresidentExternalChart = createChart(vicePresidentExternalCtx, response.vicePresidentExternal);
+                    secretaryChart = createChart(secretaryCtx, response.secretary);
+                }
+            }
+        });
     }
-    ?>
-    generateBarGraph(<?php echo json_encode($vicePresidentExternalData); ?>, "vicePresidentExternalGraph", "Vice President for External Affairs Candidates Vote Count");
 
-    // Fetch and process data for Secretary
-    <?php
-    $secretaryData = array();
-    $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-            COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-            FROM categories 
-            LEFT JOIN candidates ON categories.id = candidates.category_id
-            LEFT JOIN votes ON candidates.id = votes.candidate_id
-            LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-            WHERE voters1.organization != '' AND categories.name = 'Secretary'
-            ".$organizationFilter."
-            GROUP BY candidates.id";
-    $query = $conn->query($sql);
-    while($row = $query->fetch_assoc()) {
-        $secretaryData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
-    }
-    ?>
-    generateBarGraph(<?php echo json_encode($secretaryData); ?>, "secretaryGraph", "Secretary Candidates Vote Count");
+    $(document).ready(function() {
+        fetchData();
+        setInterval(fetchData, 5000); // Fetch data every 5 seconds
+    });
 </script>
 </body>
 </html>
