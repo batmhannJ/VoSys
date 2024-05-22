@@ -90,7 +90,7 @@ include 'includes/header.php';
                 text: "Vote Counts by Position"
             },
             axisX: {
-                title: "Positions"
+                title: "Candidates"
             },
             axisY: {
                 title: "Vote Count",
@@ -118,6 +118,7 @@ include 'includes/header.php';
     // Fetch and process combined data for grouped bar graph
     <?php
     $positions = ["President", "Vice President for Internal Affairs", "Vice President for External Affairs", "Secretary"];
+    $positionColors = ["President" => "blue", "Vice President for Internal Affairs" => "green", "Vice President for External Affairs" => "orange", "Secretary" => "red"];
     $combinedData = array();
 
     foreach($positions as $position) {
@@ -139,7 +140,8 @@ include 'includes/header.php';
             "type" => "column",
             "name" => $position,
             "showInLegend" => true,
-            "dataPoints" => $data
+            "dataPoints" => $data,
+            "color" => $positionColors[$position]
         );
     }
     ?>
