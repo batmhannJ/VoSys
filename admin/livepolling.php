@@ -48,64 +48,23 @@ include 'includes/header.php';
                 </div>
             </div>
 
-            <!-- Bar Graphs for President, Vice Presidents, and Secretary -->
+            <!-- Combined Column Graph for President and Vice President -->
             <div class="row">
-                <!-- President Bar Graph Box -->
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">President Candidates Vote Count</h3>
+                            <h3 class="box-title">Candidates Vote Count</h3>
                         </div>
+                        <!-- /.box-header -->
                         <div class="box-body">
-                            <div id="presidentGraph" style="height: 300px;"></div>
+                            <!-- Combined Column Graph Container -->
+                            <div id="combinedGraph" style="height: 400px;"></div>
                         </div>
+                        <!-- /.box-body -->
                     </div>
+                    <!-- /.box -->
                 </div>
-
-                <!-- Vice President for Internal Affairs Bar Graph Box -->
-                <div class="col-md-6">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Vice President for Internal Affairs Candidates Vote Count</h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="vicePresidentInternalGraph" style="height: 300px;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <!-- Vice President for External Affairs Bar Graph Box -->
-                <div class="col-md-6">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Vice President for External Affairs Candidates Vote Count</h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="vicePresidentExternalGraph" style="height: 300px;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Secretary Bar Graph Box -->
-                <div class="col-md-6">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Secretary Candidates Vote Count</h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="secretaryGraph" style="height: 300px;"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <span class="pull-right">
-                                    <a href="export_results.php?organization=<?php echo $_GET['organization'] ?? ''; ?>" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Export PDF</a>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- /.col -->
             </div>
             <!-- /.row -->
         </section>
@@ -118,106 +77,87 @@ include 'includes/header.php';
 </div>
 <!-- ./wrapper -->
 <?php include 'includes/scripts.php'; ?>
-<!-- Bar Graph Script -->
+<!-- Column Graph Script -->
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    // Function to generate bar graph
-    function generateBarGraph(dataPoints, containerId, title) {
+    // Function to generate combined column graph with multiple axes
+    function generateCombinedGraph(presidentDataPoints, vicePresidentDataPoints, containerId) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
             title: {
-                text: title
+                text: "Vote Counts"
             },
-            axisX: {
+            axisY: {
                 title: "Vote Count",
                 includeZero: true
             },
-            axisY: {
+            axisX: {
                 title: "Candidates"
             },
-            data: [{
-                type: "bar",
-                dataPoints: dataPoints
-            }]
+            data: [
+                {
+                    type: "column",
+                    name: "President",
+                    showInLegend: true,
+                    color: "#4F81BC", // Blue color for president candidates
+                    dataPoints: presidentDataPoints
+                },
+                {
+                    type: "column",
+                    name: "Vice President",
+                    showInLegend: true,
+                    color: "#C0504E", // Red color for vice president candidates
+                    dataPoints: vicePresidentDataPoints
+                }
+            ]
         });
+        chart.render();
+        return chart;
+    }
+
+    // Initialize chart
+    var combinedChart;
+
+    // Function to fetch updated data from the server
+    function updateData() {
+        $.ajax({
+            url: 'update_data.php', // Change this to the URL of your update data script
+            type: 'GET',
+            dataType: 'json',
+            data: {organization: $('#organization').val()}, // Pass the selected organization to the server
+            success: function(response) {
+                // Update combined column graph
+                if (response.presidentData.length > 0 || response.vicePresidentData.length > 0) {
+                    if (!combinedChart) {
+                        combinedChart = generateCombinedGraph(response.presidentData, response.vicePresidentData, "combinedGraph");
+                    } else {
+                        updateCombinedGraph(response.presidentData, response.vicePresidentData, combinedChart);
+                    }
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching data: ' + error);
+            }
+        });
+    }
+
+    // Function to update combined column graph with animation
+    function updateCombinedGraph(newPresidentDataPoints, newVicePresidentDataPoints, chart) {
+        chart.options.data[0].dataPoints = newPresidentDataPoints;
+        chart.options.data[1].dataPoints = newVicePresidentDataPoints;
         chart.render();
     }
 
-    // Fetch and process data for President
-    <?php
-    $presidentData = array();
-    $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-            COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-            FROM categories 
-            LEFT JOIN candidates ON categories.id = candidates.category_id
-            LEFT JOIN votes ON candidates.id = votes.candidate_id
-            LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-            WHERE voters1.organization != '' AND categories.name = 'President'
-            ".$organizationFilter."
-            GROUP BY candidates.id";
-    $query = $conn->query($sql);
-    while($row = $query->fetch_assoc()) {
-        $presidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
-    }
-    ?>
-    generateBarGraph(<?php echo json_encode($presidentData); ?>, "presidentGraph", "President Candidates Vote Count");
+    // Initialize chart
+    var combinedChart = generateCombinedGraph([], [], "combinedGraph");
 
-    // Fetch and process data for Vice President for Internal Affairs
-    <?php
-    $vicePresidentInternalData = array();
-    $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-            COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-            FROM categories 
-            LEFT JOIN candidates ON categories.id = candidates.category_id
-            LEFT JOIN votes ON candidates.id = votes.candidate_id
-            LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-            WHERE voters1.organization != '' AND categories.name = 'Vice President for Internal Affairs'
-            ".$organizationFilter."
-            GROUP BY candidates.id";
-    $query = $conn->query($sql);
-    while($row = $query->fetch_assoc()) {
-        $vicePresidentInternalData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
-    }
-    ?>
-    generateBarGraph(<?php echo json_encode($vicePresidentInternalData); ?>, "vicePresidentInternalGraph", "Vice President for Internal Affairs Candidates Vote Count");
+    // Call the updateData function initially
+    updateData();
 
-    // Fetch and process data for Vice President for External Affairs
-    <?php
-    $vicePresidentExternalData = array();
-    $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-            COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-            FROM categories 
-            LEFT JOIN candidates ON categories.id = candidates.category_id
-            LEFT JOIN votes ON candidates.id = votes.candidate_id
-            LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-            WHERE voters1.organization != '' AND categories.name = 'Vice President for External Affairs'
-            ".$organizationFilter."
-            GROUP BY candidates.id";
-    $query = $conn->query($sql);
-    while($row = $query->fetch_assoc()) {
-        $vicePresidentExternalData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
-    }
-    ?>
-    generateBarGraph(<?php echo json_encode($vicePresidentExternalData); ?>, "vicePresidentExternalGraph", "Vice President for External Affairs Candidates Vote Count");
-
-    // Fetch and process data for Secretary
-    <?php
-    $secretaryData = array();
-    $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-            COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-            FROM categories 
-            LEFT JOIN candidates ON categories.id = candidates.category_id
-            LEFT JOIN votes ON candidates.id = votes.candidate_id
-            LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-            WHERE voters1.organization != '' AND categories.name = 'Secretary'
-            ".$organizationFilter."
-            GROUP BY candidates.id";
-    $query = $conn->query($sql);
-    while($row = $query->fetch_assoc()) {
-        $secretaryData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
-    }
-    ?>
-    generateBarGraph(<?php echo json_encode($secretaryData); ?>, "secretaryGraph", "Secretary Candidates Vote Count");
+    // Call the updateData function every 5 seconds
+    setInterval(updateData, 5000);
 </script>
 </body>
 </html>
