@@ -1,4 +1,3 @@
-<?php
 // Include necessary files and initialize database connection
 include 'includes/session.php';
 include 'includes/db.php';
@@ -7,14 +6,14 @@ include 'includes/db.php';
 $presidentData = array();
 $vicePresidentData = array();
 
-// Fetch updated data for president candidates
+// Fetch updated data for president candidates based on categories
 $sqlPresident = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
                 COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-                FROM positions 
-                LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'President'
+                FROM categories
+                LEFT JOIN candidates ON categories.id = candidates.category_id
                 LEFT JOIN votes ON candidates.id = votes.candidate_id
                 LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-                WHERE voters1.organization != ''
+                WHERE categories.description = 'President' AND voters1.organization != ''
                 GROUP BY candidates.id";
 $queryPresident = $conn->query($sqlPresident);
 if ($queryPresident) {
@@ -26,14 +25,14 @@ if ($queryPresident) {
     echo "Error fetching president data: " . $conn->error;
 }
 
-// Fetch updated data for vice president candidates
+// Fetch updated data for vice president candidates based on categories
 $sqlVicePresident = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
                     COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-                    FROM positions 
-                    LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'Vice President'
+                    FROM categories
+                    LEFT JOIN candidates ON categories.id = candidates.category_id
                     LEFT JOIN votes ON candidates.id = votes.candidate_id
                     LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-                    WHERE voters1.organization != ''
+                    WHERE categories.description = 'Vice President' AND voters1.organization != ''
                     GROUP BY candidates.id";
 $queryVicePresident = $conn->query($sqlVicePresident);
 if ($queryVicePresident) {
