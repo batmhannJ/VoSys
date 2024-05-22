@@ -48,52 +48,15 @@ include 'includes/header.php';
                 </div>
             </div>
 
-            <!-- Bar Graphs for President, Vice Presidents, and Secretary -->
+            <!-- Combined Bar Graph for President, Vice Presidents, and Secretary -->
             <div class="row">
-                <!-- President Bar Graph Box -->
-                <div class="col-md-3">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">President Candidates Vote Count</h3>
+                            <h3 class="box-title">Candidates Vote Count</h3>
                         </div>
                         <div class="box-body">
-                            <div id="presidentGraph" style="height: 300px;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Vice President for Internal Affairs Bar Graph Box -->
-                <div class="col-md-3">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Vice President for Internal Affairs Candidates Vote Count</h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="vicePresidentInternalGraph" style="height: 300px;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Vice President for External Affairs Bar Graph Box -->
-                <div class="col-md-3">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Vice President for External Affairs Candidates Vote Count</h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="vicePresidentExternalGraph" style="height: 300px;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Secretary Bar Graph Box -->
-                <div class="col-md-3">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Secretary Candidates Vote Count</h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="secretaryGraph" style="height: 300px;"></div>
+                            <div id="combinedGraph" style="height: 300px;"></div>
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
@@ -141,81 +104,27 @@ include 'includes/header.php';
         chart.render();
     }
 
-    // Fetch and process president data
+    // Fetch and process combined data
     <?php
-    $presidentData = array();
-    $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-            COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-            FROM categories 
-            LEFT JOIN candidates ON categories.id = candidates.category_id
-            LEFT JOIN votes ON candidates.id = votes.candidate_id
-            LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-            WHERE voters1.organization != '' AND categories.name = 'President'
-            ".$organizationFilter."
-            GROUP BY candidates.id";
-    $query = $conn->query($sql);
-    while($row = $query->fetch_assoc()) {
-        $presidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+    $combinedData = array();
+    $positions = ["President", "Vice President for Internal Affairs", "Vice President for External Affairs", "Secretary"];
+    foreach($positions as $position) {
+        $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
+                COALESCE(COUNT(votes.candidate_id), 0) AS vote_count, '$position' AS position
+                FROM categories 
+                LEFT JOIN candidates ON categories.id = candidates.category_id
+                LEFT JOIN votes ON candidates.id = votes.candidate_id
+                LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
+                WHERE voters1.organization != '' AND categories.name = '$position'
+                ".$organizationFilter."
+                GROUP BY candidates.id";
+        $query = $conn->query($sql);
+        while($row = $query->fetch_assoc()) {
+            $combinedData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']." (".$row['position'].")");
+        }
     }
     ?>
-    generateBarGraph(<?php echo json_encode($presidentData); ?>, "presidentGraph");
-
-    // Fetch and process vice president for internal affairs data
-    <?php
-    $vicePresidentInternalData = array();
-    $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-            COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-            FROM categories 
-            LEFT JOIN candidates ON categories.id = candidates.category_id
-            LEFT JOIN votes ON candidates.id = votes.candidate_id
-            LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-            WHERE voters1.organization != '' AND categories.name = 'Vice President for Internal Affairs'
-            ".$organizationFilter."
-            GROUP BY candidates.id";
-    $query = $conn->query($sql);
-    while($row = $query->fetch_assoc()) {
-        $vicePresidentInternalData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
-    }
-    ?>
-    generateBarGraph(<?php echo json_encode($vicePresidentInternalData); ?>, "vicePresidentInternalGraph");
-
-    // Fetch and process vice president for external affairs data
-    <?php
-    $vicePresidentExternalData = array();
-    $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-            COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-            FROM categories 
-            LEFT JOIN candidates ON categories.id = candidates.category_id
-            LEFT JOIN votes ON candidates.id = votes.candidate_id
-            LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-            WHERE voters1.organization != '' AND categories.name = 'Vice President for External Affairs'
-            ".$organizationFilter."
-            GROUP BY candidates.id";
-    $query = $conn->query($sql);
-    while($row = $query->fetch_assoc()) {
-        $vicePresidentExternalData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
-    }
-    ?>
-    generateBarGraph(<?php echo json_encode($vicePresidentExternalData); ?>, "vicePresidentExternalGraph");
-
-    // Fetch and process secretary data
-    <?php
-    $secretaryData = array();
-    $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-            COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-            FROM categories 
-            LEFT JOIN candidates ON categories.id = candidates.category_id
-            LEFT JOIN votes ON candidates.id = votes.candidate_id
-            LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-            WHERE voters1.organization != '' AND categories.name = 'Secretary'
-            ".$organizationFilter."
-            GROUP BY candidates.id";
-    $query = $conn->query($sql);
-    while($row = $query->fetch_assoc()) {
-        $secretaryData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
-    }
-    ?>
-    generateBarGraph(<?php echo json_encode($secretaryData); ?>, "secretaryGraph");
+    generateBarGraph(<?php echo json_encode($combinedData); ?>, "combinedGraph");
 </script>
 </body>
 </html>
