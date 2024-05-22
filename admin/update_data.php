@@ -8,11 +8,10 @@ function getVotes($category, $organizationFilter, $conn) {
     $data = array();
     $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
             COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-            FROM categories 
-            LEFT JOIN candidates ON categories.id = candidates.category_id
+            FROM candidates
             LEFT JOIN votes ON candidates.id = votes.candidate_id
             LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-            WHERE categories.name = '$category'
+            WHERE candidates.category = '$category'
             $organizationFilter
             GROUP BY candidates.id";
     $query = $conn->query($sql);

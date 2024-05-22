@@ -139,9 +139,6 @@ include 'includes/header.php';
             },
             options: {
                 scales: {
-                    x: {
-                        beginAtZero: true
-                    },
                     y: {
                         beginAtZero: true
                     }
@@ -158,7 +155,7 @@ include 'includes/header.php';
 
     function fetchData() {
         $.ajax({
-            url: 'update_data.php?organization=<?php echo $_GET['organization'] ?? ''; ?>',
+            url: 'fetch_votes.php?organization=<?php echo $_GET['organization'] ?? ''; ?>',
             method: 'GET',
             dataType: 'json',
             success: function(response) {
