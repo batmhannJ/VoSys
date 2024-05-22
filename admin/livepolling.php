@@ -129,14 +129,14 @@ include 'includes/header.php';
                 text: title
             },
             axisX: {
-                title: "Candidates"
-            },
-            axisY: {
                 title: "Vote Count",
                 includeZero: true
             },
+            axisY: {
+                title: "Candidates"
+            },
             data: [{
-                type: "column",
+                type: "bar",
                 dataPoints: dataPoints
             }]
         });
