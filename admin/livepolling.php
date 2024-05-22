@@ -158,6 +158,11 @@ include 'includes/header.php';
 
     // Call the updateData function every 5 seconds
     setInterval(updateData, 5000);
+
+    // Update data when organization is changed
+    $('#organization').change(function() {
+        updateData();
+    });
 </script>
 </body>
 </html>
