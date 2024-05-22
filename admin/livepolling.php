@@ -155,10 +155,11 @@ include 'includes/header.php';
 
     function fetchData() {
         $.ajax({
-            url: 'update_data.php?organization=<?php echo $_GET['organization'] ?? ''; ?>',
+            url: 'fetch_votes.php?organization=<?php echo $_GET['organization'] ?? ''; ?>',
             method: 'GET',
             dataType: 'json',
             success: function(response) {
+                console.log(response); // Log the response to ensure we get the correct data
                 if (presidentChart) {
                     updateChart(presidentChart, response.president);
                     updateChart(vicePresidentInternalChart, response.vicePresidentInternal);
@@ -175,6 +176,9 @@ include 'includes/header.php';
                     vicePresidentExternalChart = createChart(vicePresidentExternalCtx, response.vicePresidentExternal);
                     secretaryChart = createChart(secretaryCtx, response.secretary);
                 }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('Error fetching data:', textStatus, errorThrown);
             }
         });
     }
