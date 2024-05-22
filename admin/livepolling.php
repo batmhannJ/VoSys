@@ -155,7 +155,7 @@ include 'includes/header.php';
 
     function fetchData() {
         $.ajax({
-            url: 'fetch_votes.php?organization=<?php echo $_GET['organization'] ?? ''; ?>',
+            url: 'update_data.php?organization=<?php echo $_GET['organization'] ?? ''; ?>',
             method: 'GET',
             dataType: 'json',
             success: function(response) {
