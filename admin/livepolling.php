@@ -48,15 +48,15 @@ include 'includes/header.php';
                 </div>
             </div>
 
-            <!-- Combined Bar Graph for President, Vice Presidents, and Secretary -->
+            <!-- Grouped Bar Graph for all positions -->
             <div class="row">
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Candidates Vote Count</h3>
+                            <h3 class="box-title">Candidates Vote Count by Position</h3>
                         </div>
                         <div class="box-body">
-                            <div id="combinedGraph" style="height: 300px;"></div>
+                            <div id="combinedGraph" style="height: 500px;"></div>
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
@@ -82,35 +82,48 @@ include 'includes/header.php';
 <!-- Bar Graph Script -->
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
-    // Function to generate bar graph
-    function generateBarGraph(dataPoints, containerId) {
+    // Function to generate grouped bar graph
+    function generateGroupedBarGraph(dataPoints, containerId) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
             title:{
-                text: "Vote Counts"
+                text: "Vote Counts by Position"
             },
             axisX: {
-                title: "Candidates"
+                title: "Positions"
             },
             axisY: {
                 title: "Vote Count",
                 includeZero: true
             },
-            data: [{
-                type: "column",
-                dataPoints: dataPoints
-            }]
+            toolTip: {
+                shared: true
+            },
+            legend: {
+                cursor: "pointer",
+                itemclick: function (e) {
+                    if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                        e.dataSeries.visible = false;
+                    } else {
+                        e.dataSeries.visible = true;
+                    }
+                    chart.render();
+                }
+            },
+            data: dataPoints
         });
         chart.render();
     }
 
-    // Fetch and process combined data
+    // Fetch and process combined data for grouped bar graph
     <?php
-    $combinedData = array();
     $positions = ["President", "Vice President for Internal Affairs", "Vice President for External Affairs", "Secretary"];
+    $combinedData = array();
+
     foreach($positions as $position) {
+        $data = array();
         $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-                COALESCE(COUNT(votes.candidate_id), 0) AS vote_count, '$position' AS position
+                COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
                 FROM categories 
                 LEFT JOIN candidates ON categories.id = candidates.category_id
                 LEFT JOIN votes ON candidates.id = votes.candidate_id
@@ -120,11 +133,17 @@ include 'includes/header.php';
                 GROUP BY candidates.id";
         $query = $conn->query($sql);
         while($row = $query->fetch_assoc()) {
-            $combinedData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']." (".$row['position'].")");
+            $data[] = array("label" => $row['candidate_name'], "y" => intval($row['vote_count']));
         }
+        $combinedData[] = array(
+            "type" => "column",
+            "name" => $position,
+            "showInLegend" => true,
+            "dataPoints" => $data
+        );
     }
     ?>
-    generateBarGraph(<?php echo json_encode($combinedData); ?>, "combinedGraph");
+    generateGroupedBarGraph(<?php echo json_encode($combinedData); ?>, "combinedGraph");
 </script>
 </body>
 </html>
