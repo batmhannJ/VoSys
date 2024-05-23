@@ -31,8 +31,9 @@ include 'includes/header_csc.php';
                             FROM categories 
                             LEFT JOIN candidates ON categories.id = candidates.category_id
                             LEFT JOIN votes_csc ON candidates.id = votes_csc.candidate_id
-                            WHERE categories.name = '".$position."'
-                            GROUP BY candidates.id
+                            LEFT JOIN voters AS voters1 ON voters1.id = votes_csc.voters_id 
+                            WHERE voters1.organization != '' AND categories.name = '".$position."'".$organizationFilter."
+                            GROUP BY voters1.organization, candidates.id
                             ORDER BY vote_count DESC";
                     $query = $conn->query($sql);
                     $rank = 1;
