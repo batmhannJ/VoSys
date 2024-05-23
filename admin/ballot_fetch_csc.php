@@ -2,9 +2,6 @@
 	include 'includes/session.php';
 	include 'includes/slugify.php';
 
-	// Assume user's organization is stored in session
-	$user_organization = $_SESSION['user_organization'];
-
 	$sql = "SELECT * FROM categories WHERE election_id = 20";
 	$pquery = $conn->query($sql);
 
@@ -17,8 +14,8 @@
 	while($row = $query->fetch_assoc()){
 		$input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red '.slugify($row['name']).'" name="'.slugify($row['name'])."[]".'">' : '<input type="radio" class="flat-red '.slugify($row['name']).'" name="'.slugify($row['name']).'">';
 
-		// Update SQL query to include organization condition
-		$sql = "SELECT * FROM candidates WHERE category_id='".$row['id']."' AND archived = 0 AND organization = '".$conn->real_escape_string($user_organization)."'";
+		// Use the updated SQL query to exclude archived candidates
+		$sql = "SELECT * FROM candidates WHERE category_id='".$row['id']."' AND archived = 0";
 		$cquery = $conn->query($sql);
 		while($crow = $cquery->fetch_assoc()){
 			$image = (!empty($crow['photo'])) ? '../images/'.$crow['photo'] : '../images/profile.jpg';
