@@ -32,7 +32,7 @@ $response['vicePresidentExternal'] = fetchVotes($conn, 'Vice President for Exter
 $response['secretary'] = fetchVotes($conn, 'Secretary', $organizationFilter);
 $response['treasurer'] = fetchVotes($conn, 'Treasurer', $organizationFilter);
 $response['auditor'] = fetchVotes($conn, 'Auditor', $organizationFilter);
-$response['pro'] = fetchVotes($conn, 'P.R.O.', $organizationFilter);
+$response['pro'] = fetchVotes($conn, 'P.R.O', $organizationFilter);
 
 header('Content-Type: application/json');
 echo json_encode($response);
