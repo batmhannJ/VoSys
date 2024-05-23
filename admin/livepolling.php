@@ -46,7 +46,7 @@ include 'includes/header.php';
 
             <div class="row">
                 <!-- Original positions -->
-                <div class="col-md-3">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">President</h3>
@@ -57,7 +57,7 @@ include 'includes/header.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Vice President for Internal Affairs</h3>
@@ -68,7 +68,7 @@ include 'includes/header.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Vice President for External Affairs </h3>
@@ -79,7 +79,7 @@ include 'includes/header.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Secretary</h3>
@@ -93,7 +93,7 @@ include 'includes/header.php';
 
             <div class="row">
                 <!-- Additional positions -->
-                <div class="col-md-3">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Treasurer</h3>
@@ -104,7 +104,7 @@ include 'includes/header.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Auditor</h3>
@@ -115,7 +115,7 @@ include 'includes/header.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">P.R.O</h3>
@@ -126,7 +126,7 @@ include 'includes/header.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Dir. for Membership</h3>
@@ -137,7 +137,7 @@ include 'includes/header.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Dir. for Special Project</h3>
@@ -148,7 +148,7 @@ include 'includes/header.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Block A 1st Year Representative</h3>
@@ -159,7 +159,7 @@ include 'includes/header.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Block B 1st Year Representative</h3>
@@ -171,7 +171,7 @@ include 'includes/header.php';
                 </div>
 
                 <!-- New positions -->
-                <div class="col-md-3">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Block A 2nd Year Representative</h3>
@@ -182,7 +182,7 @@ include 'includes/header.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Block B 2nd Year Representative</h3>
@@ -193,7 +193,7 @@ include 'includes/header.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Block A 3rd Year Representative</h3>
@@ -204,7 +204,7 @@ include 'includes/header.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Block B 3rd Year Representative</h3>
@@ -215,7 +215,7 @@ include 'includes/header.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Block A 4th Year Representative</h3>
@@ -226,7 +226,7 @@ include 'includes/header.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>Block B 4th Year Representative</b></h3>
