@@ -175,10 +175,9 @@
             <div class="inner">
             <?php
               $sql = "SELECT * 
-                      FROM votes 
-                      JOIN voters ON votes.voters_id = voters.id 
-                      WHERE voters.organization = 'CSC' 
-                      GROUP BY votes.voters_id";
+                      FROM votes_csc 
+                      JOIN voters ON votes_csc.voters_id = voters.id
+                      GROUP BY votes_csc.voters_id";
               $query = $conn->query($sql);
 
               $totalRows = $query->num_rows; // Total number of rows fetched
