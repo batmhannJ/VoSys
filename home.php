@@ -430,6 +430,12 @@ if(!is_active_election($conn)){
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Shadow para sa depth */
     border: 2px solid #ccc; /* Add border */
 }
+.candidate-list li img {
+        width: 100px; /* I-adjust ang lapad ng mga larawan para sa mas maliit na screen */
+        height: 100px; /* I-adjust ang taas ng mga larawan para sa mas maliit na screen */
+       
+    border-radius: 8px; /* Rounded corners for images */
+    }
 
 /* Media query para sa mas maliit na mga screen */
 @media (max-width: 768px) {
