@@ -676,58 +676,68 @@
 
 .timer {
     position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 0;
+    right: 0;
     z-index: 1000;
+    width: 250px;
     display: flex;
     justify-content: center;
-    width: auto;
+    margin-top: 570px;
+    margin-right: 12px;
+    margin-bottom: 30px;
 }
 
 .sub_timer {
-    width: 80px;
-    background: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(10px);
-    border-radius: 10px;
+    width: 90px;
+    background: rgba(255, 255, 255, 0.19);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
     overflow: hidden;
-    margin: 0 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: 100px;
+    margin-left: 10px;
 }
 
 .digit {
-    color: #333;
-    font-weight: bold;
-    font-size: 36px;
+    color: black;
+    font-weight: lighter;
+    font-size: 30px;
     text-align: center;
-    margin: 15px 0;
 }
 
 .digit_name {
-    color: #555;
-    font-size: 14px;
+    color: #000;
+    background: lightgrey;
     text-align: center;
-    margin-bottom: 10px;
+    font-size: 15px;
 }
 
 /* Media query for smaller screens */
 @media (max-width: 768px) {
     .timer {
-        top: 10px;
+        position: relative;
+        width: 100%;
+        margin-top: 20px;
+        margin-right: 0;
+        margin-bottom: 20px;
     }
 
     .sub_timer {
-        width: 60px;
+        width: 70px;
+        height: 80px;
     }
 
     .digit {
-        font-size: 28px;
+        font-size: 24px;
     }
 
     .digit_name {
         font-size: 12px;
     }
 }
+
+
+
+
 
 
 
