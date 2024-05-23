@@ -7,7 +7,7 @@
                 <h4 class="modal-title">Vote Preview</h4>
             </div>
             <div class="modal-body">
-    <iframe src="url_ng_nilalaman" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+            <iframe id="iframe_content" frameborder="0" style="width: 100%; height: 100%;"></iframe>
 </div>
 
                 <div id="preview_body"></div>
@@ -48,13 +48,17 @@
 </style>
 
 <script>
-  $(document).ready(function(){
-    $("#preview_modal").on("show.bs.modal", function(){
-        $.get("url_ng_nilalaman", function(data){
-            $("#preview_body").html(data);
-        });
-    });
+  document.addEventListener("DOMContentLoaded", function() {
+    var iframe = document.getElementById('iframe_content');
+    var iframeDocument = iframe.contentWindow ? iframe.contentWindow.document : iframe.contentDocument;
+
+    // Dito mo ilalagay ang code para mag-load ng nilalaman sa iframe.
+    // Halimbawa:
+    iframeDocument.open();
+    iframeDocument.write("<html><body><h1>Nilalaman ng Iframe</h1><p>Ito ay ang nilalaman ng iyong iframe.</p></body></html>");
+    iframeDocument.close();
 });
+
 
 </script>
 
