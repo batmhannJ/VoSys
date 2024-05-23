@@ -53,8 +53,8 @@
                 <thead>
                   <th>No.</th>
                   <th>Organization</th>
-                  <th>Lastname</th>
-                  <th>Firstname</th>
+                  <th>Last Name</th>
+                  <th>First Name</th>
                   <th>Photo</th>
                   <th>Username</th>
                   <th>Email</th>
