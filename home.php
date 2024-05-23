@@ -639,7 +639,7 @@ if(!is_active_election($conn)){
 .page-header {
     margin-top: 10px; /* Increase margin from the top */
     padding: 80px 20px; /* Increase padding on top and bottom to expand the box */
-    background-image: url('images/bcc.png'); /* Add background image */
+    background-image: url('images/bc.png'); /* Add background image */
     background-size: cover; /* Cover the entire background */
     background-repeat: no-repeat; /* Prevent background image from repeating */
     background-position: center; /* Center the background image */
