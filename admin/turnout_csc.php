@@ -37,7 +37,6 @@ include 'includes/header_csc.php';
         $sql_voters_voted = "SELECT * 
                              FROM votes_csc 
                              JOIN voters ON votes_csc.voters_id = voters.id 
-                             WHERE voters.organization = 'CSC' 
                              GROUP BY votes_csc.voters_id";
         $query_voters_voted = $conn->query($sql_voters_voted);
         $num_voters_voted = $query_voters_voted->num_rows;
@@ -46,8 +45,7 @@ include 'includes/header_csc.php';
         $sql_remaining_voters = "SELECT voters.id, voters.lastname
                                  FROM voters
                                  LEFT JOIN votes_csc ON voters.id = votes_csc.voters_id
-                                 WHERE votes_csc.voters_id IS NULL
-                                 AND voters.organization = 'CSC'";
+                                 WHERE votes_csc.voters_id IS NULL";
         $query_remaining_voters = $conn->query($sql_remaining_voters);
         $num_remaining_voters = $query_remaining_voters->num_rows;
         $conn->close();
