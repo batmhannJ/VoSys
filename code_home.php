@@ -205,6 +205,56 @@
 
 <?php include 'includes/scripts.php'; ?>
 <script>
+    function updateCountdown(endTime) {
+        var now = new Date();
+        var timeRemaining = endTime - now;
+        
+        // If time remaining is negative or zero, display message
+        if (timeRemaining <= 0) {
+            //document.getElementById("day").innerText = "00";
+            document.getElementById("hour").innerText = "00";
+            document.getElementById("min").innerText = "00";
+            document.getElementById("sec").innerText = "00";
+            document.getElementById("electionTitle").innerText = "NO ONGOING ELECTION. Stay Tuned, Madlang Pipol!";
+            return;
+        }
+
+        // Calculate days, hours, minutes, and seconds remaining
+        //var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+        
+        // Update the HTML elements with the new countdown values
+        //document.getElementById("day").innerText = formatTime(days);
+        document.getElementById("hour").innerText = formatTime(hours);
+        document.getElementById("min").innerText = formatTime(minutes);
+        document.getElementById("sec").innerText = formatTime(seconds);
+    }
+
+    // Function to format time (prepend 0 if single digit)
+    function formatTime(time) {
+        return time < 10 ? "0" + time : time;
+    }
+
+    // Function to fetch end time from the server
+    function fetchEndTime() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'getEndTime.php', true); // Adjust the path to getEndTime.php if needed
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == XMLHttpRequest.DONE) {
+                if (xhr.status == 200) {
+                    var endTime = new Date(xhr.responseText);
+                    updateCountdown(endTime);
+                    setInterval(function() {
+                        updateCountdown(endTime);
+                    }, 1000);
+                }
+            }
+        };
+        xhr.send();
+    }
+    fetchEndTime();
     $(function(){
         $('.content').iCheck({
             checkboxClass: 'icheckbox_flat-green',
@@ -282,58 +332,6 @@
         });
 
     });
-</script>
-<script>
-    function updateCountdown(endTime) {
-        var now = new Date();
-        var timeRemaining = endTime - now;
-        
-        // If time remaining is negative or zero, display message
-        if (timeRemaining <= 0) {
-            //document.getElementById("day").innerText = "00";
-            document.getElementById("hour").innerText = "00";
-            document.getElementById("min").innerText = "00";
-            document.getElementById("sec").innerText = "00";
-            document.getElementById("electionTitle").innerText = "NO ONGOING ELECTION. Stay Tuned, Madlang Pipol!";
-            return;
-        }
-
-        // Calculate days, hours, minutes, and seconds remaining
-        //var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-        var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-        
-        // Update the HTML elements with the new countdown values
-        //document.getElementById("day").innerText = formatTime(days);
-        document.getElementById("hour").innerText = formatTime(hours);
-        document.getElementById("min").innerText = formatTime(minutes);
-        document.getElementById("sec").innerText = formatTime(seconds);
-    }
-
-    // Function to format time (prepend 0 if single digit)
-    function formatTime(time) {
-        return time < 10 ? "0" + time : time;
-    }
-
-    // Function to fetch end time from the server
-    function fetchEndTime() {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'getEndTime.php', true); // Adjust the path to getEndTime.php if needed
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == XMLHttpRequest.DONE) {
-                if (xhr.status == 200) {
-                    var endTime = new Date(xhr.responseText);
-                    updateCountdown(endTime);
-                    setInterval(function() {
-                        updateCountdown(endTime);
-                    }, 1000);
-                }
-            }
-        };
-        xhr.send();
-    }
-    fetchEndTime();
 </script>
 </body>
 
