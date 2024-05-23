@@ -58,6 +58,8 @@ include 'includes/header.php';
                 </div>
                 <div class="row">
                 <div class="box-body">
+                <div class="box-header with-border">
+                <h3 class="box-title">Vice President for External Affairs Candidates Vote Count</h3>
                             <div id="vicePresidentInternalGraph" style="height: 300px;"></div>
                         </div>
                     </div>
