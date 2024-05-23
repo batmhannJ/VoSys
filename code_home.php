@@ -624,6 +624,47 @@
     }
 }
 
+.timer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1000; /* Adjust z-index as needed */
+    width: 250px; /* Adjust width as needed */
+    display: flex;
+    justify-content: center;
+    margin-top: 570px;
+    margin-right: 12px; /* Adjust margin as needed */
+    margin-bottom: 30px;
+    
+}
+
+
+  .sub_timer {
+    width: 90px;
+    background: rgba(255, 255, 255, 0.19);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    overflow: hidden;
+    height: 100px;
+    margin-left: 10px;
+  }
+
+  .digit {
+    color: black;
+    font-weight: lighter;
+    font-size: 30px;
+    text-align: center;
+    /*padding: 3.5rem 0;*/
+  }
+
+  .digit_name {
+    color: #000;
+    background: lightgrey;
+    text-align: center;
+    /*padding: 0.6rem 0;*/
+    font-size: 15px;
+  }
+
 
 
 
