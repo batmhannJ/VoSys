@@ -1,8 +1,8 @@
 <header class="main-header">
-  <!-- Logo -->
+
   <a href="#" class="logo">
     <!-- logo for regular state and mobile devices -->
-    <span class=""><b>OLSHCO</b> Election </span>
+    <span class="logo-lg"><b>OLSHCO</b> Election </span>
   </a>
   <!-- Header Navbar: style can be found in header.less -->
   <nav class="navbar navbar-static-top">
