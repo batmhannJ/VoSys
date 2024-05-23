@@ -135,8 +135,8 @@ if(!is_active_election($conn)){
                                     <div class="position-container">
                                         <div class="box box-solid" id="'.$row['id'].'">
                                             <div class="box-header">
-                                                <h3 class="box-title">'.$row['description'].'</h3>
-                                                <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="'.slugify($row['description']).'"><i class="fa fa-refresh"></i> Reset</button>
+                                                <h3 class="box-title">'.$row['name'].'</h3>
+                                                <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="'.slugify($row['name']).'"><i class="fa fa-refresh"></i> Reset</button>
                                             </div>
                                             <div class="box-body">
                                                 <p class="instruction">You may select up to '.$row['max_vote'].' candidates</p>
@@ -163,7 +163,7 @@ if(!is_active_election($conn)){
                                                 }
                                             }
                                         }
-                                        $input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : '<input type="radio" class="flat-red '.$slug.'" name="'.slugify($row['description']).'" value="'.$crow['id'].'" '.$checked.'>';
+                                        $input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : '<input type="radio" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
                                         $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
                                         echo '
                                         <li>
