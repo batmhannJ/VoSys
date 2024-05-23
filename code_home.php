@@ -677,7 +677,8 @@
 .timer {
     position: fixed;
     top: 20px;
-    right: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1000;
     display: flex;
     justify-content: center;
@@ -713,7 +714,6 @@
 @media (max-width: 768px) {
     .timer {
         top: 10px;
-        right: 10px;
     }
 
     .sub_timer {
