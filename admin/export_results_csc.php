@@ -74,6 +74,10 @@ tr:nth-child(even) {
 tr:nth-child(odd) {
   background-color: #f9f9f9; /* Light gray background for odd rows */
 }
+
+.highlight {
+  background-color: #ffe6e6; /* Light red background for highest count of votes */
+}
 </style>
 <center>
 <p style='font-family, cursive;'>Our Lady of the Sacred Heart College of Guimba, Inc.</p>
@@ -89,12 +93,19 @@ tr:nth-child(odd) {
     </thead>
 <tbody>";
 
-// Populate data into table rows
+// Initialize variable to track highest count of votes
+$maxVotes = 0;
+
+// Populate data into table rows and find the highest count of votes
 while ($row = $result->fetch_assoc()) {
+    // Update highest count of votes if current count is higher
+    if ($row['vote_count'] > $maxVotes) {
+        $maxVotes = $row['vote_count'];
+    }
     $pdfContent .= "<tr>
                         <td>{$row['position_name']}</td>
                         <td>{$row['firstname']} {$row['lastname']}</td>
-                        <td>{$row['vote_count']}</td>
+                        <td" . ($row['vote_count'] == $maxVotes ? " class='highlight'" : "") . ">{$row['vote_count']}</td>
                     </tr>";
 }
 
