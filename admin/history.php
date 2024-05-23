@@ -77,7 +77,7 @@ include 'includes/header.php';
                 }
 
                 // Array of positions
-                $positions = ['President', 'Vice President for Internal Affairs', 'Vice President for External Affairs', 'Secretary', 'Treasurer', 'Auditor', 'P.R.O.'];
+                $positions = ['President', 'Vice President for Internal Affairs', 'Vice President for External Affairs', 'Secretary', 'Treasurer', 'Auditor', 'P.R.O'];
                 $organizationFilter = !empty($_GET['organization']) ? " AND voters1.organization = '".$_GET['organization']."'" : "";
 
                 // Loop through each position and display the ranking box
