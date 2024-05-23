@@ -642,7 +642,7 @@
 
 
 .title {
-    font-size: 32px; /* Decrease font size */
+    font-size: 40px; /* Decrease font size */
     margin-bottom: 10px; /* Decrease margin bottom */
     font-family: 'Arial', sans-serif; /* Change font family */
     font-weight: bold; /* Bold font weight */
