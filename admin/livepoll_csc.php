@@ -53,7 +53,148 @@ include 'includes/header_csc.php';
 
         <section class="content">
             <div class="row justify-content-center">
-                <!-- Other content remains the same -->
+                <div class="col-md-12 offset-md-1">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>President</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="presidentGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 offset-md-1">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>Vice President</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="vicePresidentGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 offset-md-1">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>Secretary</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="secretaryGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 offset-md-1">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>Treasurer</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="treasurerGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 offset-md-1">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>Auditor</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="auditorGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 offset-md-1">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>Public Information Officer (P.R.O)</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="proGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 offset-md-1">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>Business Manager</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="businessManagerGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 offset-md-1">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>BEED Representative</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="beedRepGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 offset-md-1">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>BSED Representative</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="bsedRepGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 offset-md-1">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>BSHM Representative</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="bshmRepGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 offset-md-1">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>BSOAD Representative</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="bsoadRepGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 offset-md-1">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>BS CRIM Representative</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="bscrimRepGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 offset-md-1">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>BSIT Representative</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="bsitRepGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </div>
@@ -79,17 +220,12 @@ include 'includes/header_csc.php';
                 title: "Candidates"
             },
             data: [{
-                type: "bar",
+                type: "bar",  // Changed to horizontal bar chart
                 dataPoints: dataPoints
             }]
         });
         chart.render();
         return chart;
-    }
-
-    function updateChartData(chart, dataPoints) {
-        chart.options.data[0].dataPoints = dataPoints;
-        chart.render();
     }
 
     function updateVoteCounts() {
@@ -98,19 +234,45 @@ include 'includes/header_csc.php';
             method: 'GET',
             dataType: 'json',
             success: function(response) {
-                updateChartData(presidentChart, response.president);
-                updateChartData(vicePresidentChart, response.vicePresident);
-                updateChartData(secretaryChart, response.secretary);
-                updateChartData(treasurerChart, response.treasurer);
-                updateChartData(auditorChart, response.auditor);
-                updateChartData(proChart, response.publicInformationOfficer);
-                updateChartData(businessManagerChart, response.businessManager);
-                updateChartData(beedRepChart, response.beedRepresentative);
-                updateChartData(bsedRepChart, response.bsedRepresentative);
-                updateChartData(bshmRepChart, response.bshmRepresentative);
-                updateChartData(bsoadRepChart, response.bsoadRepresentative);
-                updateChartData(bscrimRepChart, response.bsCrimRepresentative);
-                updateChartData(bsitRepChart, response.bsitRepresentative);
+                console.log(response);  // Log the response to the console to debug
+                presidentChart.options.data[0].dataPoints = response.president;
+                presidentChart.render();
+
+                vicePresidentChart.options.data[0].dataPoints = response.vicePresident;
+                vicePresidentChart.render();
+
+                secretaryChart.options.data[0].dataPoints = response.secretary;
+                secretaryChart.render();
+
+                treasurerChart.options.data[0].dataPoints = response.treasurer;
+                treasurerChart.render();
+
+                auditorChart.options.data[0].dataPoints = response.auditor;
+                auditorChart.render();
+
+                proChart.options.data[0].dataPoints = response.publicInformationOfficer;
+                proChart.render();
+
+                businessManagerChart.options.data[0].dataPoints = response.businessManager;
+                businessManagerChart.render();
+
+                beedRepChart.options.data[0].dataPoints = response.beedRepresentative;
+                beedRepChart.render();
+
+                bsedRepChart.options.data[0].dataPoints = response.bsedRepresentative;
+                bsedRepChart.render();
+
+                bshmRepChart.options.data[0].dataPoints = response.bshmRepresentative;
+                bshmRepChart.render();
+
+                bsoadRepChart.options.data[0].dataPoints = response.bsoadRepresentative;
+                bsoadRepChart.render();
+
+                bscrimRepChart.options.data[0].dataPoints = response.bsCrimRepresentative;
+                bscrimRepChart.render();
+
+                bsitRepChart.options.data[0].dataPoints = response.bsitRepresentative;
+                bsitRepChart.render();
             },
             error: function(error) {
                 console.error("Error fetching data", error);
@@ -133,6 +295,7 @@ include 'includes/header_csc.php';
     var bsitRepChart = generateBarGraph([], "bsitRepGraph");
 
     updateVoteCounts();
+
     setInterval(updateVoteCounts, 5000);
 
     // Back to top button script
