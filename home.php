@@ -1,7 +1,7 @@
 <?php
 
 include 'includes/session.php';
-include 'includes/header.php';
+include 'includes/header_code.php';
 
 function is_active_election($conn){
 	$sql = "SELECT * FROM election WHERE title = 'CSC - College of Student Council Election' && status = 1";
@@ -24,7 +24,7 @@ if(!is_active_election($conn)){
 <body class="hold-transition skin-black layout-top-nav">
 <div class="wrapper">
 
-	<?php include 'includes/navbar.php'; ?>
+	<?php include 'includes/navbar_code.php'; ?>
 	 
 	  <div class="content-wrapper">
 	    <div class="container">
