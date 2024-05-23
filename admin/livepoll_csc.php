@@ -4,6 +4,16 @@
 include 'includes/session.php';
 include 'includes/header_csc.php';
 ?>
+<head>
+    <!-- Add the style block to center the box titles -->
+    <style>
+        .box-title {
+            text-align: center;
+            width: 100%;
+            display: inline-block;
+        }
+    </style>
+</head>
 <body class="hold-transition skin-black sidebar-mini">
 <div class="wrapper">
     <?php include 'includes/navbar_csc.php'; ?>
@@ -23,22 +33,7 @@ include 'includes/header_csc.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-body">
-                            <form method="get" action="">
-                                <div class="form-group">
-                                    <label for="organization">Select Organization:</label>
-                                    <select class="form-control" name="organization" id="organization" onchange="updateVoteCounts()">
-                                        <option value="">All Organizations</option>
-                                        <?php
-                                        $organizationQuery = $conn->query("SELECT DISTINCT organization FROM voters");
-                                        while($organizationRow = $organizationQuery->fetch_assoc()){
-                                            $selected = ($_GET['organization'] ?? '') == $organizationRow['organization'] ? 'selected' : '';
-                                            echo "<option value='".$organizationRow['organization']."' $selected>".$organizationRow['organization']."</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Filter</button>
-                            </form>
+                            <!-- Select Organization and Filter button removed -->
                         </div>
                     </div>
                 </div>
@@ -222,7 +217,7 @@ include 'includes/header_csc.php';
 
     function updateVoteCounts() {
         $.ajax({
-            url: 'update_data_csc.php?organization=' + $('#organization').val(),
+            url: 'update_data_csc.php',
             method: 'GET',
             dataType: 'json',
             success: function(response) {
