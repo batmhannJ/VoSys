@@ -16,7 +16,20 @@
         </div>
     </div>
 </div>
-
+<style>
+#preview_body {
+  background-color: #f0f0f0; /* Light gray background color */
+  padding: 20px; /* Padding around the content */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow for a slight elevation effect */
+  max-width: 500px; /* Maximum width of the content */
+  margin: 0 auto; /* Center the content horizontally */
+  font-family: Arial, sans-serif; /* Font family */
+  font-size: 16px; /* Font size */
+  line-height: 1.5; /* Line height */
+  color: #333; /* Text color */
+}
+</style>
 <!--<script>
   $('#submit').click(function() {
         // Serialize the form data
