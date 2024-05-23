@@ -66,11 +66,11 @@
                     voters1.firstname AS votfirst, 
                     voters1.lastname AS votlast, 
                     voters1.organization AS org 
-                    FROM votes 
-                    LEFT JOIN categories ON category.id=votes.category_id 
-                    LEFT JOIN candidates ON candidates.id=votes.candidate_id 
-                    LEFT JOIN voters AS voters1 ON voters1.id=votes.voters_id 
-                    LEFT JOIN voters AS voters2 ON voters2.organization=votes.organization 
+                    FROM votes_csc 
+                    LEFT JOIN categories ON category.id=votes_csc.category_id 
+                    LEFT JOIN candidates ON candidates.id=votes_csc.candidate_id 
+                    LEFT JOIN voters AS voters1 ON voters1.id=votes_csc.voters_id 
+                    LEFT JOIN voters AS voters2 ON voters2.organization=votes_csc.organization 
                     WHERE voters1.organization = 'CSC'
                     GROUP BY votes_csc.id
                     ORDER BY categories.priority ASC";
@@ -80,7 +80,7 @@
             <tr>
                 <td class='hidden'></td>
                 <td>".$counter."</td>
-                <td>".$row['description']."</td>
+                <td>".$row['name']."</td>
                 <td>".$row['canfirst'].' '.$row['canlast']."</td>
                 <td>".$row['votfirst'].' '.$row['votlast']."</td>
             </tr>
