@@ -67,7 +67,7 @@
                     $i = 1;
                     while($row = $query->fetch_assoc()){
                       $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
-                      $fullname = $row['lastname'] . ', ' . $row['firstname'];
+                      $fullname = $row['firstname'] . ' ' . $row['lastname'];
                       echo "
                         <tr>
                           <td>".$i++."</td>
