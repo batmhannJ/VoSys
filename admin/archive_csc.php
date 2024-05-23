@@ -192,9 +192,10 @@
     <?php include 'includes/footer.php'; ?>
     <?php include 'includes/voters_modal.php'; ?>
     <?php include 'includes/restore_modal.php'; ?>
+    <?php include 'includes/delete_modal.php'; ?>
 
 <!-- Confirmation Modal for Delete -->
-<div id="deleteConfirmationModal" class="modal fade" role="dialog">
+<!-- <div id="deleteConfirmationModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -210,7 +211,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 
 <?php include 'includes/scripts.php'; ?>
