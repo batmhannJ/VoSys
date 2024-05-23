@@ -466,21 +466,7 @@ main.sign-up-mode .carousel {
     padding: 1rem 1rem 1.5rem;
   }
 }
-.input-wrap {
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-            margin: auto;
-        }
 
-        .input-field {
-            width: 100%;
-            padding: 10px; /* Adjust the padding to make space for the icon */
-            font-size: 15px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
 
         .togglePassword {
             position: absolute;
