@@ -11,6 +11,34 @@
 	      <section class="content">
 	      	<h1 class="page-header text-center title">
                   <b>COALITION OF DISCIPLINED FUTURE ENFORCERS OF TODAYS GENERATION <br> ELECTION</b></h1>
+                  <section class="discover section" id="discover">        
+    <div class="wrapper">
+        <h2 class="section__header">COUNTDOWN FOR UPCOMING ELECTION</h2><br><br>
+
+        <div class="timer">
+            <div class="sub_timer">
+                <h1 id="day" class="digit">00</h1>
+                <hr><br>
+                <p class="digit_name">DAYS</p>
+            </div>
+            <div class="sub_timer">
+                <h1 id="hour" class="digit">00</h1>
+                <hr><br>
+                <p class="digit_name">HOURS</p>
+            </div>
+            <div class="sub_timer">
+                <h1 id="min" class="digit">00</h1>
+                <hr><br>
+                <p class="digit_name">MINUTES</p>
+            </div>
+            <div class="sub_timer">
+                <h1 id="sec" class="digit">00</h1>
+                <hr><br>
+                <p class="digit_name">SECONDS</p>
+            </div>
+        </div>
+    </div>
+</section><br>
 	        <div class="row">
 	        	<div class="col-sm-10 col-sm-offset-1">
 	        		<?php
