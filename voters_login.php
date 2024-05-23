@@ -545,7 +545,7 @@ main.sign-up-mode .carousel {
                 </div>
 
                 <div style="text-align: right; margin-bottom: 10px;">
-                    <a href="forgot_pass.php" style="font-size: 15px;">Forgot Password?</a>
+                    <a href="forgot_password.php" style="font-size: 15px;">Forgot Password?</a>
                 </div>
 
                 <div class="form-group has-feedback">
