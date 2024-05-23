@@ -234,6 +234,7 @@ include 'includes/header_csc.php';
             method: 'GET',
             dataType: 'json',
             success: function(response) {
+                console.log(response);  // Log the response to the console to debug
                 presidentChart.options.data[0].dataPoints = response.president;
                 presidentChart.render();
 
@@ -249,29 +250,32 @@ include 'includes/header_csc.php';
                 auditorChart.options.data[0].dataPoints = response.auditor;
                 auditorChart.render();
 
-                proChart.options.data[0].dataPoints = response.pro;
+                proChart.options.data[0].dataPoints = response.publicInformationOfficer;
                 proChart.render();
 
                 businessManagerChart.options.data[0].dataPoints = response.businessManager;
                 businessManagerChart.render();
 
-                beedRepChart.options.data[0].dataPoints = response.beedRep;
+                beedRepChart.options.data[0].dataPoints = response.beedRepresentative;
                 beedRepChart.render();
 
-                bsedRepChart.options.data[0].dataPoints = response.bsedRep;
+                bsedRepChart.options.data[0].dataPoints = response.bsedRepresentative;
                 bsedRepChart.render();
 
-                bshmRepChart.options.data[0].dataPoints = response.bshmRep;
+                bshmRepChart.options.data[0].dataPoints = response.bshmRepresentative;
                 bshmRepChart.render();
 
-                bsoadRepChart.options.data[0].dataPoints = response.bsoadRep;
+                bsoadRepChart.options.data[0].dataPoints = response.bsoadRepresentative;
                 bsoadRepChart.render();
 
-                bscrimRepChart.options.data[0].dataPoints = response.bscrimRep;
+                bscrimRepChart.options.data[0].dataPoints = response.bsCrimRepresentative;
                 bscrimRepChart.render();
 
-                bsitRepChart.options.data[0].dataPoints = response.bsitRep;
+                bsitRepChart.options.data[0].dataPoints = response.bsitRepresentative;
                 bsitRepChart.render();
+            },
+            error: function(error) {
+                console.error("Error fetching data", error);
             }
         });
     }
