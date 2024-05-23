@@ -124,7 +124,7 @@
                                         <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
                                         
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">
+                                    <button type="button" class="btn btn-primary btn-sm btn-flat platform custom-platform-font" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">
                                     <i class="fa fa-search"> Platform</i>
                                 </button>
                                 
@@ -322,7 +322,7 @@
 }
   /* Custom font for the platform button */
   .custom-platform-font {
-        font-family: Arial, sans-serif; /* Change the font family to Arial or any desired font */
+        font-family: 'Times New Roman', Times, serif; /* Change the font family to Arial or any desired font */
     }
 
 /* Bagong istilo para sa mga item sa listahan ng mga kandidato */
