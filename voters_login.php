@@ -580,7 +580,7 @@ main.sign-up-mode .carousel {
     <script>
 
         document.addEventListener("DOMContentLoaded", function () {
-    var togglePassword = document.querySelectorAll('.toggle-password');
+    var togglePassword = document.querySelectorAll('.togglePassword');
     togglePassword.forEach(function (toggle) {
         toggle.addEventListener('click', function () {
             var input = document.querySelector(this.getAttribute('toggle'));
