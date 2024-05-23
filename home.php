@@ -135,8 +135,8 @@ if(!is_active_election($conn)){
                                     <div class="position-container">
                                         <div class="box box-solid" id="'.$row['id'].'">
                                             <div class="box-header">
-                                                <h3 class="box-title">'.$row['description'].'</h3>
-                                                <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="'.slugify($row['description']).'"><i class="fa fa-refresh"></i> Reset</button>
+                                                <h3 class="box-title">'.$row['name'].'</h3>
+                                                <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="'.slugify($row['name']).'"><i class="fa fa-refresh"></i> Reset</button>
                                             </div>
                                             <div class="box-body">
                                                 <p class="instruction">You may select up to '.$row['max_vote'].' candidates</p>
@@ -163,7 +163,7 @@ if(!is_active_election($conn)){
                                                 }
                                             }
                                         }
-                                        $input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : '<input type="radio" class="flat-red '.$slug.'" name="'.slugify($row['description']).'" value="'.$crow['id'].'" '.$checked.'>';
+                                        $input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : '<input type="radio" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
                                         $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
                                         echo '
                                         <li>
@@ -378,7 +378,7 @@ if(!is_active_election($conn)){
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #800000;
+    background-color: black;
     color: #fff;
     padding: 10px;
 }
@@ -570,7 +570,7 @@ if(!is_active_election($conn)){
 
               /* Style for the primary button */
               .btn-primary {
-    background-color: maroon;
+    background-color: black;
     color: #fff;
     border-color: #007bff;
 }
@@ -593,7 +593,7 @@ if(!is_active_election($conn)){
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: maroon;
+    background-color: black;
     color: #fff;
 }
 
@@ -639,7 +639,7 @@ if(!is_active_election($conn)){
 .page-header {
     margin-top: 10px; /* Increase margin from the top */
     padding: 80px 20px; /* Increase padding on top and bottom to expand the box */
-    background-image: url('images/bc.png'); /* Add background image */
+    background-image: url('images/bcs.png'); /* Add background image */
     background-size: cover; /* Cover the entire background */
     background-repeat: no-repeat; /* Prevent background image from repeating */
     background-position: center; /* Center the background image */
