@@ -472,7 +472,7 @@
 
               /* Style for the primary button */
               .btn-primary {
-    background-color: #007bff;
+    background-color: maroon;
     color: #fff;
     border-color: #007bff;
 }
