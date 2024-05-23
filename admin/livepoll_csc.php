@@ -209,18 +209,18 @@ include 'includes/header_csc.php';
     function generateBarGraph(dataPoints, containerId) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
-            title:{
+            title: {
                 text: "Vote Counts"
             },
             axisX: {
-                title: "Candidates"
-            },
-            axisY: {
                 title: "Vote Count",
                 includeZero: true
             },
+            axisY: {
+                title: "Candidates"
+            },
             data: [{
-                type: "column",
+                type: "bar",  // Changed to horizontal bar chart
                 dataPoints: dataPoints
             }]
         });
