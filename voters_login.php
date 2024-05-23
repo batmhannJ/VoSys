@@ -14,6 +14,7 @@ if (isset($_SESSION['voter'])) {
 ?>
 
 <?php include 'includes/header.php'; ?>
+
 <style>
     @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
 
@@ -500,18 +501,20 @@ main.sign-up-mode .carousel {
 
                 <div class="input-wrap has has-feedback">
                   <input
-                    type="password"
-                    minlength="8"
-                    class="input-field"
-                    name="password"
-                    placeholder="Password" style="font-size: 15px;"
-                    autocomplete="off"
-                    required
+                      id="current-password"
+                      type="password"
+                      minlength="8"
+                      class="input-field"
+                      name="password"
+                      placeholder="Password"
+                      style="font-size: 15px;"
+                      autocomplete="off"
+                      required
                   />
                   <label style="font-size:15px;"></label>
-                  <span toggle="#current-password" class="fa fa-fw fa-eye field-icon togglePassword"></span></i>
+                  <span toggle="#current-password" class="fa fa-fw fa-eye field-icon togglePassword"></span>
                   <span class="form-control-feedback"></span>
-                </div>
+              </div>
 
                 <div style="text-align: right; margin-bottom: 10px;">
                     <a href="forgot_pass.php" style="font-size: 15px;">Forgot Password?</a>
@@ -575,28 +578,26 @@ main.sign-up-mode .carousel {
 }
   setInterval(nextImage, 3000); // Change image every 3 seconds
 </script>
-
     <script src="app.js"></script>
     <script>
-
         document.addEventListener("DOMContentLoaded", function () {
-    var togglePassword = document.querySelectorAll('.togglePassword');
-    togglePassword.forEach(function (toggle) {
-        toggle.addEventListener('click', function () {
-            var input = document.querySelector(this.getAttribute('toggle'));
-            if (input.getAttribute('type') === 'password') {
-                input.setAttribute('type', 'text');
-                this.classList.remove('fa-eye');
-                this.classList.add('fa-eye-slash');
-            } else {
-                input.setAttribute('type', 'password');
-                this.classList.remove('fa-eye-slash');
-                this.classList.add('fa-eye');
-            }
+            var togglePassword = document.querySelectorAll('.togglePassword');
+            togglePassword.forEach(function (toggle) {
+                toggle.addEventListener('click', function () {
+                    var input = document.querySelector(this.getAttribute('toggle'));
+                    if (input.getAttribute('type') === 'password') {
+                        input.setAttribute('type', 'text');
+                        this.classList.remove('fa-eye');
+                        this.classList.add('fa-eye-slash');
+                    } else {
+                        input.setAttribute('type', 'password');
+                        this.classList.remove('fa-eye-slash');
+                        this.classList.add('fa-eye');
+                    }
+                });
+            });
         });
-    });
-});
-</script>
+    </script>
     <?php include 'includes/scripts.php' ?>
 </body>
 
