@@ -9,8 +9,33 @@
 	    <div class="container">
 	      <!-- Main content -->
 	      <section class="content">
-	      	<h1 class="page-header text-center title">
-                  <b>COALITION OF DISCIPLINED FUTURE ENFORCERS OF TODAYS GENERATION <br> ELECTION</b></h1>
+          <div class="image-container">
+    <h1 class="page-header text-center title">
+        <b>COALITION OF DISCIPLINED FUTURE ENFORCERS OF TODAYS GENERATION <br> ELECTION</b>
+    </h1>
+    <section class="discover section" id="discover">      
+        <!--<center><h4 id="electionTitle" class="heading">Remaining time to vote</h4></center>-->
+        <div class="timer">
+            <!--<div class="sub_timer">
+                <h1 id="day" class="digit">00</h1>
+                <p class="digit_name">Days</p>
+            </div>-->
+            <div class="sub_timer">
+                <h1 id="hour" class="digit">00</h1>
+                <p class="digit_name">Hours</p>
+            </div>
+            <div class="sub_timer">
+                <h1 id="min" class="digit">00</h1>
+                <p class="digit_name">Minutes</p>
+            </div>
+            <div class="sub_timer">
+                <h1 id="sec" class="digit">00</h1>
+                <p class="digit_name">Seconds</p>
+            </div>
+        </div>
+    </section>
+</div>
+
 	        <div class="row">
 	        	<div class="col-sm-10 col-sm-offset-1">
 	        		<?php
