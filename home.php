@@ -593,7 +593,7 @@ if(!is_active_election($conn)){
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: maroon;
+    background-color: black;
     color: #fff;
 }
 
