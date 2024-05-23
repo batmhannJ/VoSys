@@ -62,6 +62,26 @@ $(function(){
     });
   });
 
+  $(document).on('click', '.delete-candidate', function(e) {
+    e.preventDefault();
+    var id = $(this).data('id');
+    $('#candidateDeleteConfirmationModal').modal('show');
+
+    $('#confirmDeleteCandidate').on('click', function() {
+        $.ajax({
+            type: "POST",
+            url: "delete_candidates_csc.php",
+            data: { id: id },
+            success: function(response) {
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+  });
+
   function deleteItem(id, user) {
     $('#deleteConfirmationModal').modal('show'); // Show confirmation modal
 
