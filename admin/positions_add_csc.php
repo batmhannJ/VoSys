@@ -24,5 +24,5 @@
 		$_SESSION['error'] = 'Fill up add form first';
 	}
 
-	header('location: positions_add_csc.php');
+	header('location: positions_csc.php');
 ?>
