@@ -10,8 +10,7 @@
 	      <!-- Main content -->
 	      <section class="content">
 	      	<h1 class="page-header text-center title">
-	      		<img src="images/codg.jpg" alt="CSC Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
-	      		<b>Coalition of Disciplined Future Enforcers of Todays Generation Election</b></h1>
+                  <b>COALITION OF DISCIPLINED FUTURE ENFORCERS OF TODAYS GENERATION <br> ELECTION</b></h1>
 	        <div class="row">
 	        	<div class="col-sm-10 col-sm-offset-1">
 	        		<?php
@@ -538,24 +537,34 @@
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
 .page-header {
-    margin-top: 50px; /* Increase margin from the top */
-    padding: 40px 20px; /* Add padding on all sides */
-    background-color: #007bff; /* Change background color */
+    margin-top: 10px; /* Increase margin from the top */
+    padding: 80px 20px; /* Increase padding on top and bottom to expand the box */
+    background-image: url('images/bcc.png'); /* Add background image */
+    background-size: cover; /* Cover the entire background */
+    background-repeat: no-repeat; /* Prevent background image from repeating */
+    background-position: center; /* Center the background image */
+    width: auto;
+    height: auto;
     color: #fff; /* Text color */
     text-align: center; /* Center-align text */
     border-bottom: 2px solid #0056b3; /* Add a solid border at the bottom */
     border-radius: 10px; /* Add border radius for rounded corners */
+    position: relative; /* Position the content relative to the box */
 }
 
 .page-header img {
-    width: 150px; /* Adjust image width */
-    height: auto; /* Auto height */
+    width: 100px; /* Adjust image width */
+    height: 70px; /* Adjust image height */
     border-radius: 50%; /* Circular image */
-    margin-bottom: 20px; /* Add margin at the bottom */
+    margin-bottom: 10px; /* Add margin at the bottom */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    position: absolute; /* Position the image */
+    top: 50%; /* Position from the top */
+    left: 50%; /* Position from the left */
+    transform: translate(-50%, -50%); /* Center the image */
 }
+
 
 .title {
     font-size: 32px; /* Decrease font size */
@@ -563,12 +572,33 @@
     font-family: 'Arial', sans-serif; /* Change font family */
     font-weight: bold; /* Bold font weight */
     text-transform: uppercase; /* Uppercase text */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9); /* Add shadow effect */
 }
 
 .subtitle {
     font-size: 18px; /* Decrease font size */
     font-weight: 300; /* Decrease font weight */
 }
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    .page-header {
+        padding: 100px 20px; /* Adjust padding for smaller screens */
+    }
+    
+    .page-header img {
+        width: 100px; /* Adjust image width for smaller screens */
+    }
+
+    .title {
+        font-size: 24px; /* Decrease font size for smaller screens */
+    }
+
+    .subtitle {
+        font-size: 14px; /* Decrease font size for smaller screens */
+    }
+}
+
 
 
 
