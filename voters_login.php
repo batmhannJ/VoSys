@@ -466,6 +466,35 @@ main.sign-up-mode .carousel {
     padding: 1rem 1rem 1.5rem;
   }
 }
+.input-wrap {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin: auto;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px 40px 10px 10px; /* Adjust the padding to make space for the icon */
+            font-size: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .field-icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 18px;
+            color: #aaa;
+        }
+
+        .field-icon:hover {
+            color: #333;
+        }
 </style>
 
 <body>
