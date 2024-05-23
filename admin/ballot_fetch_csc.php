@@ -31,9 +31,21 @@ if (isset($organization_to_category[$user_organization])) {
 $output = '';
 $candidate = '';
 
+// Debug: Output the categories variable
+// Remove or comment out these lines after debugging
+echo "User Organization: $user_organization<br>";
+echo "Categories to fetch: $categories<br>";
+
 // Fetch categories based on the user's organization
 $sql = "SELECT * FROM categories WHERE election_id = 20 AND name IN ($categories) ORDER BY priority ASC";
 $query = $conn->query($sql);
+
+// Debug: Check if the query is executed correctly
+if (!$query) {
+    echo "SQL Error: " . $conn->error;
+    exit;
+}
+
 $num = 1;
 while ($row = $query->fetch_assoc()) {
     $input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red ' . slugify($row['name']) . '" name="' . slugify($row['name']) . "[]\">" : '<input type="radio" class="flat-red ' . slugify($row['name']) . '" name="' . slugify($row['name']) . '">';
@@ -41,6 +53,13 @@ while ($row = $query->fetch_assoc()) {
     // Update SQL query to include organization condition
     $sql = "SELECT * FROM candidates WHERE category_id='" . $row['id'] . "' AND archived = 0 AND organization = '" . $conn->real_escape_string($user_organization) . "'";
     $cquery = $conn->query($sql);
+
+    // Debug: Check if the query is executed correctly
+    if (!$cquery) {
+        echo "SQL Error: " . $conn->error;
+        exit;
+    }
+
     while ($crow = $cquery->fetch_assoc()) {
         $image = (!empty($crow['photo'])) ? '../images/' . $crow['photo'] : '../images/profile.jpg';
         $candidate .= '
