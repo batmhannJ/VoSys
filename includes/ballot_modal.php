@@ -1,4 +1,5 @@
 <!-- Preview -->
+<!-- Preview -->
 <div class="modal fade" id="preview_modal">
     <div class="modal-dialog modal-lg"> <!-- Use modal-lg to make it large on medium and larger screens -->
         <div class="modal-content">
@@ -10,7 +11,8 @@
             </div>
             <div class="modal-body">
                 <div id="preview_body">
-                    <!-- Content will be dynamically inserted here -->
+                    <!-- Content goes here -->
+                    <p>This is a sample content inside the modal.</p>
                 </div>
             </div>
             <div class="modal-footer">
@@ -20,27 +22,7 @@
     </div>
 </div>
 
-<style>
-    /* Default style */
-    #preview_modal .modal-content {
-        max-height: 80vh; /* Set maximum height */
-        overflow-y: auto; /* Add vertical scrollbar if content exceeds height */
-    }
 
-    /* Adjustments for smaller screens */
-    @media (max-width: 768px) {
-        #preview_modal .modal-content {
-            max-height: 60vh; /* Decrease maximum height for smaller screens */
-        }
-    }
-
-    /* Adjustments for larger screens */
-    @media (min-width: 1200px) {
-        #preview_modal .modal-content {
-            max-height: 90vh; /* Increase maximum height for larger screens */
-        }
-    }
-</style>
 
 
 <!--<script>
