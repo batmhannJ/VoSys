@@ -542,7 +542,8 @@
 .page-header {
     margin-top: 50px; /* Increase margin from the top */
     padding: 40px 20px; /* Add padding on all sides */
-    background-color: #007bff; /* Change background color */
+    background-image: url('images/bc.png'); /* Add background image */
+    background-size: cover; /* Cover the entire element with the background image */
     color: #fff; /* Text color */
     text-align: center; /* Center-align text */
     border-bottom: 2px solid #0056b3; /* Add a solid border at the bottom */
