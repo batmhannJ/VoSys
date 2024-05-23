@@ -52,8 +52,8 @@ include 'includes/header_csc.php';
         </section>
 
         <section class="content">
-            <div class="row">
-                <div class="col-md-11">
+            <div class="row justify-content-center">
+                <div class="col-md-10 offset-md-1">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>President</b></h3>
@@ -64,7 +64,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-11">
+                <div class="col-md-10 offset-md-1">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>Vice President</b></h3>
@@ -75,7 +75,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-11">
+                <div class="col-md-10 offset-md-1">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>Secretary</b></h3>
@@ -86,7 +86,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-11">
+                <div class="col-md-10 offset-md-1">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>Treasurer</b></h3>
@@ -97,7 +97,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-11">
+                <div class="col-md-10 offset-md-1">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>Auditor</b></h3>
@@ -108,7 +108,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-11">
+                <div class="col-md-10 offset-md-1">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>Public Information Officer (P.R.O)</b></h3>
@@ -119,7 +119,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-11">
+                <div class="col-md-10 offset-md-1">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>Business Manager</b></h3>
@@ -130,7 +130,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-11">
+                <div class="col-md-10 offset-md-1">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>BEED Representative</b></h3>
@@ -141,7 +141,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-11">
+                <div class="col-md-10 offset-md-1">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>BSED Representative</b></h3>
@@ -152,7 +152,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-11">
+                <div class="col-md-10 offset-md-1">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>BSHM Representative</b></h3>
@@ -163,7 +163,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-11">
+                <div class="col-md-10 offset-md-1">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>BSOAD Representative</b></h3>
@@ -174,7 +174,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-11">
+                <div class="col-md-10 offset-md-1">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>BS CRIM Representative</b></h3>
@@ -185,7 +185,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-11">
+                <div class="col-md-10 offset-md-1">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>BSIT Representative</b></h3>
