@@ -17,21 +17,35 @@
     </div>
 </div>
 <style>
-/* Base styles for the preview body */
 #preview_body {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 0 auto;
   font-family: Arial, sans-serif;
   font-size: 16px;
   line-height: 1.5;
   color: #333;
 }
 
-@media screen and (max-width: 600px) {
-  #preview_body {
-    max-width: 90%;
-    padding: 15px;
-    font-size: 14px;
-  }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
 }
+
+th, td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
 
 
 </style>
