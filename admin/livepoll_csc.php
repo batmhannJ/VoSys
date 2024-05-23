@@ -18,7 +18,8 @@ include 'includes/header_csc.php';
             </ol>
         </section>
 
-        
+        <section class="content">
+            
 
             <div class="row">
                 <div class="col-md-3">
