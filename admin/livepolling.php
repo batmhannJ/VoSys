@@ -60,10 +60,10 @@ include 'includes/header.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><b>Vice President for Internal Affairs</b></h3>
+                            <h3 class="box-title"style="text-align:center"><b>Vice President for Internal Affairs</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="vicePresidentInternalGraph" style="height: 300px; text-align:center"></div>
+                            <div id="vicePresidentInternalGraph" style="height: 300px;"></div>
                         </div>
                     </div>
                 </div>
