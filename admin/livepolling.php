@@ -130,7 +130,7 @@ include 'includes/header.php';
 
     function updateVoteCounts() {
         $.ajax({
-            url: 'fetch_votes.php?organization=' + $('#organization').val(),
+            url: 'update_data.php?organization=' + $('#organization').val(),
             method: 'GET',
             dataType: 'json',
             success: function(response) {
