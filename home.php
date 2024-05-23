@@ -433,10 +433,13 @@ if(!is_active_election($conn)){
 .candidate-list li img {
         width: 100px; /* I-adjust ang lapad ng mga larawan para sa mas maliit na screen */
         height: 100px; /* I-adjust ang taas ng mga larawan para sa mas maliit na screen */
-        margin: 0 auto; /* Ilipat ang mga larawan sa gitna */
-        display: block; /* Make the image a block element */
-    border-radius: 8px; /* Rounded corners for images */
-    }
+        border-radius: 8px; /* Rounded corners for images */
+        transition: transform 0.3s; /* Add transition effect */
+}
+
+.candidate-list li:hover img {
+    transform: scale(1.1); /* Make the image slightly larger on hover */
+}
 
 /* Media query para sa mas maliit na mga screen */
 @media (max-width: 768px) {
@@ -459,8 +462,12 @@ if(!is_active_election($conn)){
         height: 100px; /* I-adjust ang taas ng mga larawan para sa mas maliit na screen */
         margin: 0 auto; /* Ilipat ang mga larawan sa gitna */
         display: block; /* Make the image a block element */
-    border-radius: 8px; /* Rounded corners for images */
-    }
+        transition: transform 0.3s; /* Add transition effect */
+}
+
+.candidate-list li:hover img {
+    transform: scale(1.1); /* Make the image slightly larger on hover */
+}
 }
 
 
