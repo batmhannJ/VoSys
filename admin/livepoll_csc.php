@@ -234,77 +234,51 @@ include 'includes/header_csc.php';
             method: 'GET',
             dataType: 'json',
             success: function(response) {
-                // Update the dataPoints for each chart with animation
+                console.log(response);  // Log the response to the console to debug
                 presidentChart.options.data[0].dataPoints = response.president;
-                presidentChart.renderAnimated();
+                presidentChart.render();
 
                 vicePresidentChart.options.data[0].dataPoints = response.vicePresident;
-                vicePresidentChart.renderAnimated();
+                vicePresidentChart.render();
 
                 secretaryChart.options.data[0].dataPoints = response.secretary;
-                secretaryChart.renderAnimated();
+                secretaryChart.render();
 
                 treasurerChart.options.data[0].dataPoints = response.treasurer;
-                treasurerChart.renderAnimated();
+                treasurerChart.render();
 
                 auditorChart.options.data[0].dataPoints = response.auditor;
-                auditorChart.renderAnimated();
+                auditorChart.render();
 
                 proChart.options.data[0].dataPoints = response.publicInformationOfficer;
-                proChart.renderAnimated();
+                proChart.render();
 
                 businessManagerChart.options.data[0].dataPoints = response.businessManager;
-                businessManagerChart.renderAnimated();
+                businessManagerChart.render();
 
                 beedRepChart.options.data[0].dataPoints = response.beedRepresentative;
-                beedRepChart.renderAnimated();
+                beedRepChart.render();
 
                 bsedRepChart.options.data[0].dataPoints = response.bsedRepresentative;
-                bsedRepChart.renderAnimated();
+                bsedRepChart.render();
 
                 bshmRepChart.options.data[0].dataPoints = response.bshmRepresentative;
-                bshmRepChart.renderAnimated();
+                bshmRepChart.render();
 
                 bsoadRepChart.options.data[0].dataPoints = response.bsoadRepresentative;
-                bsoadRepChart.renderAnimated();
+                bsoadRepChart.render();
 
                 bscrimRepChart.options.data[0].dataPoints = response.bsCrimRepresentative;
-                bscrimRepChart.renderAnimated();
+                bscrimRepChart.render();
 
                 bsitRepChart.options.data[0].dataPoints = response.bsitRepresentative;
-                bsitRepChart.renderAnimated();
+                bsitRepChart.render();
             },
             error: function(error) {
                 console.error("Error fetching data", error);
             }
         });
     }
-
-    // Define the generateBarGraph function as before
-
-    // Define the charts as before
-
-    updateVoteCounts();
-
-    setInterval(updateVoteCounts, 5000);
-
-    // Back to top button script
-    $(document).ready(function() {
-        var btn = $('#back-to-top');
-        
-        $(window).scroll(function() {
-            if ($(window).scrollTop() > 100) {
-                btn.fadeIn();
-            } else {
-                btn.fadeOut();
-            }
-        });
-        
-        btn.click(function() {
-            $('html, body').animate({scrollTop: 0}, '100');
-            return false;
-        });
-    });
 
     var presidentChart = generateBarGraph([], "presidentGraph");
     var vicePresidentChart = generateBarGraph([], "vicePresidentGraph");
