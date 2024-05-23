@@ -89,6 +89,42 @@ include 'includes/header.php';
                     </div>
                 </div>
             </div>
+
+            <!-- Additional positions -->
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Treasurer Candidates Vote Count</h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="treasurerGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Auditor Candidates Vote Count</h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="auditorGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">P.R.O. Candidates Vote Count</h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="proGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
     </div>
 
@@ -138,6 +174,15 @@ include 'includes/header.php';
 
                 secretaryChart.options.data[0].dataPoints = response.secretary;
                 secretaryChart.render();
+
+                treasurerChart.options.data[0].dataPoints = response.treasurer;
+                treasurerChart.render();
+
+                auditorChart.options.data[0].dataPoints = response.auditor;
+                auditorChart.render();
+
+                proChart.options.data[0].dataPoints = response.pro;
+                proChart.render();
             }
         });
     }
@@ -146,6 +191,9 @@ include 'includes/header.php';
     var vicePresidentInternalChart = generateBarGraph([], "vicePresidentInternalGraph");
     var vicePresidentExternalChart = generateBarGraph([], "vicePresidentExternalGraph");
     var secretaryChart = generateBarGraph([], "secretaryGraph");
+    var treasurerChart = generateBarGraph([], "treasurerGraph");
+    var auditorChart = generateBarGraph([], "auditorGraph");
+    var proChart = generateBarGraph([], "proGraph");
 
     updateVoteCounts();
 
