@@ -61,17 +61,14 @@ include 'includes/header_csc.php';
                     'Secretary', 
                     'Treasurer', 
                     'Auditor', 
-                    'P.R.O.', 
-                    'Dir. for Membership', 
-                    'Dir. for Special Project', 
-                    'Block A 1st Year Representative', 
-                    'Block B 1st Year Representative', 
-                    'Block A 2nd Year Representative', 
-                    'Block B 2nd Year Representative', 
-                    'Block A 3rd Year Representative', 
-                    'Block B 3rd Year Representative', 
-                    'Block A 4th Year Representative', 
-                    'Block B 4th Year Representative'
+                    'Public Information Officer (P.R.O)',
+                    'Business Manager',
+                    'BEED Representative',
+                    'BSED Representative',
+                    'BSHM Representative',
+                    'BSOAD Representative',
+                    'BS CRIM Representative',
+                    'BSIT Representative'
                 ];
 
                 $organizationFilter = !empty($_GET['organization']) ? " AND voters1.organization = '".$_GET['organization']."'" : "";

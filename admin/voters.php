@@ -52,7 +52,7 @@
               <table id="example1" class="table table-bordered">
                 <thead>
                   <th>No.</th>
-                  <th>Fullname</th>
+                  <th>Full Name</th>
                   <th>Photo</th>
                   <th>Voters ID</th>
                   <th>Email</th>
