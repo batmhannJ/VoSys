@@ -2,12 +2,12 @@
 <html>
 <?php
 include 'includes/session.php';
-include 'includes/header.php';
+include 'includes/header_csc.php';
 ?>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-black sidebar-mini">
 <div class="wrapper">
-    <?php include 'includes/navbar.php'; ?>
-    <?php include 'includes/menubar.php'; ?>
+    <?php include 'includes/navbar_csc.php'; ?>
+    <?php include 'includes/menubar_csc.php'; ?>
 
     <div class="content-wrapper">
         <section class="content-header">
