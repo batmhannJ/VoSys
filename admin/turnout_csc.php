@@ -35,7 +35,7 @@ include 'includes/header_csc.php';
                              FROM votes_csc 
                              JOIN voters ON votes.voters_id = voters.id 
                              WHERE voters.organization = 'CSC' 
-                             GROUP BY votes.voters_id";
+                             GROUP BY votes_csc.voters_id";
         $query_voters_voted = $conn->query($sql_voters_voted);
         $num_voters_voted = $query_voters_voted->num_rows;
 
