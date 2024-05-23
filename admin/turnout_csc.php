@@ -9,7 +9,9 @@ include 'includes/header_csc.php';
   <?php include 'includes/navbar_csc.php'; ?>
   <?php include 'includes/menubar_csc.php'; ?>
 
+  <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
         Voter Turnout
@@ -19,40 +21,43 @@ include 'includes/header_csc.php';
         <li class="active">Voter Turnout</li>
       </ol>
     </section>
-
+    <!-- Main content -->
     <section class="content">
+      <!-- Add organization dropdown -->
       <div>
         <label for="organization">Organization:</label>
         <span id="organization">CSC</span>
       </div>
+      <!-- Display the CanvasJS pie chart -->
       <div id="chartContainer" style="height: 370px; width: 100%;"></div>
       <?php
         $colors = array(
-          "CSC" => array("remaining" => "#595959", "voted" => "#000000")
+          "CSC" => array("remaining" => "#595959", "voted" => "#000000")  // Example color for HMSO
         );
-        
         $sql_voters_voted = "SELECT * 
-                             FROM votes_csc 
-                             JOIN voters ON votes.voters_id = voters.id 
-                             WHERE voters.organization = 'CSC' 
-                             GROUP BY votes_csc.voters_id";
+        FROM votes 
+        JOIN voters ON votes.voters_id = voters.id 
+        WHERE voters.organization = 'CSC' 
+        GROUP BY votes.voters_id";
         $query_voters_voted = $conn->query($sql_voters_voted);
         $num_voters_voted = $query_voters_voted->num_rows;
 
+        // Query to get the number of remaining voters
         $sql_remaining_voters = "SELECT voters.id, voters.lastname
-                                 FROM voters
-                                 LEFT JOIN votes_csc ON voters.id = votes_csc.voters_id
-                                 WHERE votes_csc.voters_id IS NULL
-                                 AND voters.organization = 'CSC'";
+            FROM voters
+            LEFT JOIN votes ON voters.id = votes.voters_id
+            WHERE votes.voters_id IS NULL
+            AND voters.organization = 'CSC'";
         $query_remaining_voters = $conn->query($sql_remaining_voters);
         $num_remaining_voters = $query_remaining_voters->num_rows;
         $conn->close();
-
-        $dataPoints = array(
-          array("organization" => "CSC", "label" => "Remaining Voters", "y" => $num_remaining_voters, "color" => $colors["CSC"]["remaining"]),
-          array("organization" => "CSC", "label" => "Voters Voted", "y" => $num_voters_voted, "color" => $colors["CSC"]["voted"])
-        );
+      // Assuming you have the $dataPoints array from the previous chart
+      $dataPoints = array( 
+        array("organization" => "CSC", "label" => "Remaining Voters", "y" => $num_remaining_voters, "color" => $colors["CSC"]["remaining"]),
+        array("organization" => "CSC", "label" => "Voters Voted", "y" => $num_voters_voted, "color" => $colors["CSC"]["voted"])
+      );
       ?>
+
     </section>   
   </div>
 
@@ -61,7 +66,10 @@ include 'includes/header_csc.php';
 </div>
 <?php include 'includes/scripts.php'; ?>
 
+<!-- CanvasJS library -->
 <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+
+<!-- Script to render CanvasJS chart -->
 <script>
 window.onload = function() {
   renderChart(<?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>);
