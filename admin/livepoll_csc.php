@@ -22,7 +22,7 @@ include 'includes/header_csc.php';
             
 
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">President</h3>
@@ -33,7 +33,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Vice President</h3>
@@ -44,7 +44,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Secretary</h3>
@@ -55,7 +55,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Treasurer</h3>
@@ -66,7 +66,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Auditor</h3>
@@ -77,7 +77,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Public Information Officer (P.R.O)</h3>
@@ -88,7 +88,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Business Manager</h3>
@@ -99,7 +99,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">BEED Representative</h3>
@@ -110,7 +110,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">BSED Representative</h3>
@@ -121,7 +121,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">BSHM Representative</h3>
@@ -132,7 +132,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">BSOAD Representative</h3>
@@ -143,7 +143,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">BS CRIM Representative</h3>
@@ -154,7 +154,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">BSIT Representative</h3>
