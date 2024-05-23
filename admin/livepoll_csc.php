@@ -299,7 +299,7 @@ include 'includes/header_csc.php';
         var btn = $('#back-to-top');
         
         $(window).scroll(function() {
-            if ($(window).scrollTop() > 300) {
+            if ($(window).scrollTop() > 100) {
                 btn.fadeIn();
             } else {
                 btn.fadeOut();
@@ -307,7 +307,7 @@ include 'includes/header_csc.php';
         });
         
         btn.click(function() {
-            $('html, body').animate({scrollTop: 0}, '300');
+            $('html, body').animate({scrollTop: 0}, '100');
             return false;
         });
     });
