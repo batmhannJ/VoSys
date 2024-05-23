@@ -124,9 +124,10 @@
                                         <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
                                         
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-sm btn-flat platform custom-platform-font" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">
-                                    <i class="fa fa-search"> Platform</i>
-                                </button>
+                                    <button type="button" class="btn btn-primary btn-sm btn-flat platform">
+                                        <i class="fa fa-search"></i> Platform
+                                    </button>
+
                                 
                                     <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
                                 </li>';
@@ -322,7 +323,7 @@
 }
   /* Custom font for the platform button */
   .custom-platform-font {
-        font-family: Arial, sans-serif !important; /* Change the font family to Arial or any desired font */
+        font-family: Arial, sans-serif; /* Change the font family to Arial or any desired font */
     }
 
 /* Bagong istilo para sa mga item sa listahan ng mga kandidato */
@@ -395,7 +396,8 @@
 .platform i {
     font-style: normal; /* Ibalik ang font style sa normal */
     font-weight: bold; /* I-set ang font weight sa bold */
-    font-size: 14px; /* I-adjust ang font size */
+    font-size: 12px; /* I-adjust ang font size */
+    font-family: Arial, sans-serif; /* Change the font family to Arial or any desired font */
 }
 
 /* Media query for smaller screens */
