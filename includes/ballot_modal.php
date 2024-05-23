@@ -72,7 +72,7 @@
             <div class="modal-body">
               <?php
                 $id = $voter['id'];
-                $sql = "SELECT *, candidates.firstname AS canfirst, candidates.lastname AS canlast FROM votes LEFT JOIN candidates ON candidates.id=votes.candidate_id LEFT JOIN categories ON categories.id=votes.category_id WHERE voters_id = '$id' ORDER BY categories.priority ASC";
+                $sql = "SELECT *, candidates.firstname AS canfirst, candidates.lastname AS canlast FROM votes_csc LEFT JOIN candidates ON candidates.id=votes_csc.candidate_id LEFT JOIN categories ON categories.id=votes_csc.category_id WHERE voters_id = '$id' ORDER BY categories.priority ASC";
                 $query = $conn->query($sql);
                 while($row = $query->fetch_assoc()){
                   echo "
