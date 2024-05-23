@@ -467,10 +467,11 @@ main.sign-up-mode .carousel {
   }
 }
 .input-wrap {
+
             position: relative;
             width: 100%;
             max-width: 400px;
-            margin-top: -10px;
+            margin-top: -5px;
         }
 
         .input-field {
