@@ -44,8 +44,8 @@ include 'includes/header.php';
                 </div>
             </div>
 
-            <!-- Existing categories -->
             <div class="row">
+                <!-- Original positions -->
                 <div class="col-md-3">
                     <div class="box">
                         <div class="box-header with-border">
@@ -56,16 +56,18 @@ include 'includes/header.php';
                         </div>
                     </div>
                 </div>
-                <div class="row">
-               
-                <div class="box-header with-border">
-                <h3 class="box-title">Vice President for External Affairs Candidates Vote Count</h3>
-                <div class="box-body">
+
+                <div class="col-md-3">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Vice President for Internal Affairs Candidates Vote Count</h3>
+                        </div>
+                        <div class="box-body">
                             <div id="vicePresidentInternalGraph" style="height: 300px;"></div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
+
                 <div class="col-md-3">
                     <div class="box">
                         <div class="box-header with-border">
@@ -76,7 +78,7 @@ include 'includes/header.php';
                         </div>
                     </div>
                 </div>
-                <div class="row">
+
                 <div class="col-md-3">
                     <div class="box">
                         <div class="box-header with-border">
@@ -89,9 +91,8 @@ include 'includes/header.php';
                 </div>
             </div>
 
-            <!-- Additional positions -->
-            
             <div class="row">
+                <!-- Additional positions -->
                 <div class="col-md-3">
                     <div class="box">
                         <div class="box-header with-border">
@@ -168,19 +169,12 @@ include 'includes/header.php';
                         </div>
                     </div>
                 </div>
-            </div>
-                <!-- ... other existing categories ... -->
-            </div>
-
-            <!-- Additional positions -->
-            <div class="row">
-                <!-- ... existing categories continued ... -->
 
                 <!-- New positions -->
                 <div class="col-md-3">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Block A 2nd Year Representative Vote Count</h3>
+                            <h3 class="box-title">Block A 2nd Year Representative Candidates Vote Count</h3>
                         </div>
                         <div class="box-body">
                             <div id="blockA2ndYearRepGraph" style="height: 300px;"></div>
@@ -191,7 +185,7 @@ include 'includes/header.php';
                 <div class="col-md-3">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Block B 2nd Year Representative Vote Count</h3>
+                            <h3 class="box-title">Block B 2nd Year Representative Candidates Vote Count</h3>
                         </div>
                         <div class="box-body">
                             <div id="blockB2ndYearRepGraph" style="height: 300px;"></div>
@@ -202,7 +196,7 @@ include 'includes/header.php';
                 <div class="col-md-3">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Block A 3rd Year Representative Vote Count</h3>
+                            <h3 class="box-title">Block A 3rd Year Representative Candidates Vote Count</h3>
                         </div>
                         <div class="box-body">
                             <div id="blockA3rdYearRepGraph" style="height: 300px;"></div>
@@ -213,7 +207,7 @@ include 'includes/header.php';
                 <div class="col-md-3">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Block B 3rd Year Representative Vote Count</h3>
+                            <h3 class="box-title">Block B 3rd Year Representative Candidates Vote Count</h3>
                         </div>
                         <div class="box-body">
                             <div id="blockB3rdYearRepGraph" style="height: 300px;"></div>
@@ -224,7 +218,7 @@ include 'includes/header.php';
                 <div class="col-md-3">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Block A 4th Year Representative Vote Count</h3>
+                            <h3 class="box-title">Block A 4th Year Representative Candidates Vote Count</h3>
                         </div>
                         <div class="box-body">
                             <div id="blockA4thYearRepGraph" style="height: 300px;"></div>
@@ -235,7 +229,7 @@ include 'includes/header.php';
                 <div class="col-md-3">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Block B 4th Year Representative Vote Count</h3>
+                            <h3 class="box-title">Block B 4th Year Representative Candidates Vote Count</h3>
                         </div>
                         <div class="box-body">
                             <div id="blockB4thYearRepGraph" style="height: 300px;"></div>
@@ -314,7 +308,6 @@ include 'includes/header.php';
                 blockB1stYearRepChart.options.data[0].dataPoints = response.blockB1stYearRep;
                 blockB1stYearRepChart.render();
 
-                
                 blockA2ndYearRepChart.options.data[0].dataPoints = response.blockA2ndYearRep;
                 blockA2ndYearRepChart.render();
 
@@ -335,6 +328,7 @@ include 'includes/header.php';
             }
         });
     }
+
     var presidentChart = generateBarGraph([], "presidentGraph");
     var vicePresidentInternalChart = generateBarGraph([], "vicePresidentInternalGraph");
     var vicePresidentExternalChart = generateBarGraph([], "vicePresidentExternalGraph");
@@ -346,6 +340,7 @@ include 'includes/header.php';
     var dirSpecialProjectChart = generateBarGraph([], "dirSpecialProjectGraph");
     var blockA1stYearRepChart = generateBarGraph([], "blockA1stYearRepGraph");
     var blockB1stYearRepChart = generateBarGraph([], "blockB1stYearRepGraph");
+
     var blockA2ndYearRepChart = generateBarGraph([], "blockA2ndYearRepGraph");
     var blockB2ndYearRepChart = generateBarGraph([], "blockB2ndYearRepGraph");
     var blockA3rdYearRepChart = generateBarGraph([], "blockA3rdYearRepGraph");
@@ -353,12 +348,9 @@ include 'includes/header.php';
     var blockA4thYearRepChart = generateBarGraph([], "blockA4thYearRepGraph");
     var blockB4thYearRepChart = generateBarGraph([], "blockB4thYearRepGraph");
 
-    // Initial update of vote counts
     updateVoteCounts();
 
-    // Update vote counts periodically
     setInterval(updateVoteCounts, 5000);
 </script>
 </body>
 </html>
-
