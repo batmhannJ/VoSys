@@ -509,7 +509,7 @@ main.sign-up-mode .carousel {
                     required
                   />
                   <label style="font-size:15px;"></label>
-                  <i class="bi bi-eye-slash" id="togglePassword"></i>
+                  <span toggle="#current-password" class="fa fa-fw fa-eye field-icon togglePassword"></span></i>
                   <span class="form-control-feedback"></span>
                 </div>
 
@@ -589,6 +589,26 @@ main.sign-up-mode .carousel {
 
 
     <script src="app.js"></script>
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+    var togglePassword = document.querySelectorAll('.toggle-password');
+    togglePassword.forEach(function (toggle) {
+        toggle.addEventListener('click', function () {
+            var input = document.querySelector(this.getAttribute('toggle'));
+            if (input.getAttribute('type') === 'password') {
+                input.setAttribute('type', 'text');
+                this.classList.remove('fa-eye');
+                this.classList.add('fa-eye-slash');
+            } else {
+                input.setAttribute('type', 'password');
+                this.classList.remove('fa-eye-slash');
+                this.classList.add('fa-eye');
+            }
+        });
+    });
+});
+</script>
     <?php include 'includes/scripts.php' ?>
 </body>
 
