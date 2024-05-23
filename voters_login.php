@@ -14,7 +14,6 @@ if (isset($_SESSION['voter'])) {
 ?>
 
 <?php include 'includes/header.php'; ?>
-
 <style>
     @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
 
@@ -467,6 +466,35 @@ main.sign-up-mode .carousel {
     padding: 1rem 1rem 1.5rem;
   }
 }
+.input-wrap {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin: auto;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px 40px 10px 10px; /* Adjust the padding to make space for the icon */
+            font-size: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .field-icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 18px;
+            color: #aaa;
+        }
+
+        .field-icon:hover {
+            color: #333;
+        }
 </style>
 
 <body>
@@ -501,20 +529,18 @@ main.sign-up-mode .carousel {
 
                 <div class="input-wrap has has-feedback">
                   <input
-                      id="current-password"
-                      type="password"
-                      minlength="8"
-                      class="input-field"
-                      name="password"
-                      placeholder="Password"
-                      style="font-size: 15px;"
-                      autocomplete="off"
-                      required
+                    type="password"
+                    minlength="8"
+                    class="input-field"
+                    name="password"
+                    placeholder="Password" style="font-size: 15px;"
+                    autocomplete="off"
+                    required
                   />
                   <label style="font-size:15px;"></label>
-                  <span toggle="#current-password" class="fa fa-fw fa-eye field-icon togglePassword"></span>
+                  <i class="fa fa-fw fa-eye field-icon togglePassword" id="togglePassword"></i>
                   <span class="form-control-feedback"></span>
-              </div>
+                </div>
 
                 <div style="text-align: right; margin-bottom: 10px;">
                     <a href="forgot_pass.php" style="font-size: 15px;">Forgot Password?</a>
@@ -578,6 +604,7 @@ main.sign-up-mode .carousel {
 }
   setInterval(nextImage, 3000); // Change image every 3 seconds
 </script>
+
     <script src="app.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
