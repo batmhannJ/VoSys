@@ -539,7 +539,7 @@
 }
 .page-header {
     margin-top: 10px; /* Increase margin from the top */
-    padding: 130px 20px; /* Increase padding on top and bottom to expand the box */
+    padding: 80px 20px; /* Increase padding on top and bottom to expand the box */
     background-image: url('images/bcc.png'); /* Add background image */
     background-size: cover; /* Cover the entire background */
     background-repeat: no-repeat; /* Prevent background image from repeating */
@@ -554,16 +554,17 @@
 }
 
 .page-header img {
-    width: 150px; /* Adjust image width */
-    height: 100px; /* Auto height */
+    width: 100px; /* Adjust image width */
+    height: 70px; /* Adjust image height */
     border-radius: 50%; /* Circular image */
-    margin-bottom: 20px; /* Add margin at the bottom */
+    margin-bottom: 10px; /* Add margin at the bottom */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
     position: absolute; /* Position the image */
     top: 50%; /* Position from the top */
     left: 50%; /* Position from the left */
     transform: translate(-50%, -50%); /* Center the image */
 }
+
 
 .title {
     font-size: 32px; /* Decrease font size */
