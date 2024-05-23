@@ -19,26 +19,26 @@
 <style>
 /* Base styles for the preview body */
 #preview_body {
-  background-color: #f0f0f0; /* Light gray background color */
-  padding: 20px; /* Padding around the content */
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow for a slight elevation effect */
-  max-width: 500px; /* Maximum width of the content */
-  margin: 0 auto; /* Center the content horizontally */
-  font-family: Arial, sans-serif; /* Font family */
-  font-size: 13px; /* Font size */
-  line-height: 1.5; /* Line height */
-  color: #333; /* Text color */
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
 }
 
-/* Media query for smaller screens */
 @media screen and (max-width: 600px) {
   #preview_body {
-    max-width: 90%; /* Adjust maximum width for smaller screens */
-    padding: 15px; /* Adjust padding for smaller screens */
-    font-size: 10px; /* Adjust font size for smaller screens */
+    max-width: 90%;
+    padding: 15px;
+    font-size: 14px;
   }
 }
+
 
 </style>
 <!--<script>
