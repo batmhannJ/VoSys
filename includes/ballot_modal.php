@@ -1,67 +1,21 @@
 <!-- Preview -->
 <div class="modal fade" id="preview_modal">
-    <div class="modal-dialog modal-lg"> <!-- Use modal-lg to make it large on medium and larger screens -->
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-                <h4 class="modal-title">Vote Preview</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               </button>
+              <h4 class="modal-title">Vote Preview</h4>
             </div>
             <div class="modal-body">
-            <iframe id="iframe_content" frameborder="0" style="width: 100%; height: 100%;"></iframe>
-</div>
-
-                <div id="preview_body"></div>
+              <div id="preview_body"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+              <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
             </div>
         </div>
     </div>
 </div>
-
-<style>
-  .modal-body {
-    max-height: calc(100vh - 200px); /* I-adjust ang maximum height ng modal body */
-    overflow-y: auto; /* I-on ang vertical scrollbar kapag ang nilalaman ay lumalampas sa sukat */
-}
-
-  /* Default style */
-#preview_modal .modal-content {
-    max-height: 80vh; /* Set maximum height */
-    overflow-y: auto; /* Add vertical scrollbar if content exceeds height */
-}
-
-/* Adjustments for smaller screens */
-@media (max-width: 768px) {
-    #preview_modal .modal-content {
-        max-height: 60vh; /* Decrease maximum height for smaller screens */
-    }
-}
-
-/* Adjustments for larger screens */
-@media (min-width: 1200px) {
-    #preview_modal .modal-content {
-        max-height: 90vh; /* Increase maximum height for larger screens */
-    }
-}
-
-</style>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    var iframe = document.getElementById('iframe_content');
-    var iframeDocument = iframe.contentWindow ? iframe.contentWindow.document : iframe.contentDocument;
-
-    // Dito mo ilalagay ang code para mag-load ng nilalaman sa iframe.
-    // Halimbawa:
-    iframeDocument.open();
-    iframeDocument.write("<html><body><h1>Nilalaman ng Iframe</h1><p>Ito ay ang nilalaman ng iyong iframe.</p></body></html>");
-    iframeDocument.close();
-});
-
-
-</script>
-
 
 <!--<script>
   $('#submit').click(function() {
