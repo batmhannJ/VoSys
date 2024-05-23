@@ -439,16 +439,20 @@ if(!is_active_election($conn)){
         font-family: sans-serif; /* Change the font family to Arial or any desired font */
     }
     .candidate-list li {
-        flex-direction: column; /* Baguhin ang direksyon ng flex container sa column */
-        align-items: center; /* I-align ang mga item sa gitna */
-        padding: 15px; /* I-adjust ang padding para sa mas maliit na screen */
-    }
+    display: inline-block; /* Convert to inline block */
+    margin: 10px; /* Add some margin between list items */
+    padding: 10px; /* Add padding */
+    border: 2px solid #ccc; /* Add border */
+    border-radius: 10px; /* Rounded corners */
+}
 
-    .candidate-list li img {
-        width: 100px; /* I-adjust ang lapad ng mga larawan para sa mas maliit na screen */
-        height: 100px; /* I-adjust ang taas ng mga larawan para sa mas maliit na screen */
-        margin: 0 auto; /* Ilipat ang mga larawan sa gitna */
-    }
+.candidate-list li img {
+    width: 100px; /* I-adjust ang lapad ng mga larawan para sa mas maliit na screen */
+    height: 100px; /* I-adjust ang taas ng mga larawan para sa mas maliit na screen */
+    margin: 0 auto; /* Ilipat ang mga larawan sa gitna */
+    display: block; /* Make the image a block element */
+    border-radius: 8px; /* Rounded corners for images */
+}
 }
 
 
