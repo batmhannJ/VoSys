@@ -75,7 +75,7 @@ tr:nth-child(odd) {
   background-color: #f9f9f9; /* Light gray background for odd rows */
 }
 
-.highlight {
+.highlight td {
   background-color: #ffe6e6; /* Light red background for highest count of votes */
 }
 </style>
