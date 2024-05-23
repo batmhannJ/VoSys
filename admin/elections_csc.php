@@ -92,7 +92,7 @@
   </div>
 
   <?php include 'includes/footer.php'; ?>
-  <?php include 'includes/election_modal.php'; ?>
+  <?php include 'includes/election_modal_csc.php'; ?>
 
   <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

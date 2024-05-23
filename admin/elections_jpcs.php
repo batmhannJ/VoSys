@@ -91,7 +91,7 @@
 </div>
 
   <?php include 'includes/footer.php'; ?>
-  <?php include 'includes/election_modal.php'; ?>
+  <?php include 'includes/election_modal_jpcs.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
