@@ -542,7 +542,7 @@
     margin-top: 50px; /* Increase margin from the top */
     padding: 40px 20px; /* Add padding on all sides */
     background-image: url('images/bc.png'); /* Add background image */
-    background-size: cover; /* Cover the entire element with the background image */
+    background-size: 100% 100%; /* Display the entire background image */
     width: auto;
     height: auto;
     color: #fff; /* Text color */
@@ -550,6 +550,7 @@
     border-bottom: 2px solid #0056b3; /* Add a solid border at the bottom */
     border-radius: 10px; /* Add border radius for rounded corners */
 }
+
 
 .page-header img {
     width: 150px; /* Adjust image width */
