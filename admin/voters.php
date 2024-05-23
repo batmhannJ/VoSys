@@ -51,8 +51,8 @@
             <div class="box-body">
               <table id="example1" class="table table-bordered">
                 <thead>
-                  <th>Lastname</th>
-                  <th>Firstname</th>
+                  <th>No.</th>
+                  <th>Fullname</th>
                   <th>Photo</th>
                   <th>Voters ID</th>
                   <th>Email</th>
@@ -64,12 +64,14 @@
                   <?php
                     $sql = "SELECT * FROM voters WHERE archived = FALSE";
                     $query = $conn->query($sql);
+                    $i = 1;
                     while($row = $query->fetch_assoc()){
                       $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
+                      $fullname = $row['lastname'] . ', ' . $row['firstname'];
                       echo "
                         <tr>
-                          <td>".$row['lastname']."</td>
-                          <td>".$row['firstname']."</td>
+                          <td>".$i++."</td>
+                          <td>".$fullname."</td>
                           <td>
                             <img src='".$image."' width='30px' height='30px'>
                             <a href='#edit_photo' data-toggle='modal' class='pull-right photo' data-id='".$row['id']."'></a>
