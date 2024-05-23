@@ -1,21 +1,44 @@
 <!-- Preview -->
 <div class="modal fade" id="preview_modal">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg"> <!-- Use modal-lg to make it large on medium and larger screens -->
         <div class="modal-content">
             <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  </button>
-              <h4 class="modal-title">Vote Preview</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                <h4 class="modal-title">Vote Preview</h4>
             </div>
             <div class="modal-body">
-              <div id="preview_body"></div>
+                <div id="preview_body"></div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+                <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+  /* Default style */
+#preview_modal .modal-content {
+    max-height: 80vh; /* Set maximum height */
+    overflow-y: auto; /* Add vertical scrollbar if content exceeds height */
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+    #preview_modal .modal-content {
+        max-height: 60vh; /* Decrease maximum height for smaller screens */
+    }
+}
+
+/* Adjustments for larger screens */
+@media (min-width: 1200px) {
+    #preview_modal .modal-content {
+        max-height: 90vh; /* Increase maximum height for larger screens */
+    }
+}
+
+</style>
+
 
 <!--<script>
   $('#submit').click(function() {

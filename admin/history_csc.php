@@ -57,8 +57,7 @@ include 'includes/header_csc.php';
                 // Array of positions
                 $positions = [
                     'President', 
-                    'Vice President for Internal Affairs', 
-                    'Vice President for External Affairs', 
+                    'Vice President', 
                     'Secretary', 
                     'Treasurer', 
                     'Auditor', 
