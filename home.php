@@ -378,7 +378,7 @@ if(!is_active_election($conn)){
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #800000;
+    background-color: black;
     color: #fff;
     padding: 10px;
 }
