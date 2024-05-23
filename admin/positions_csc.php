@@ -84,7 +84,7 @@
   </div>
     
   <?php include 'includes/footer.php'; ?>
-  <?php include 'includes/positions_modal.php'; ?>
+  <?php include 'includes/positions_modal_csc.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
 <script>
