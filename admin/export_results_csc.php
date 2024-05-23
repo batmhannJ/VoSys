@@ -10,11 +10,15 @@ require_once __DIR__ . '/vendor/autoload.php';
 // Include database connection
 require_once 'includes/conn.php'; // Adjust the path as per your file structure
 
-// Query to calculate vote count for each candidate from votes_csc table
+// Default organization value for CSC
+$defaultOrganization = "CSC"; // Update with your default organization name
+
+// Query to calculate vote count for each candidate from votes_csc table with default organization
 $sql = "SELECT candidates.firstname, candidates.lastname, categories.name AS position_name, COUNT(votes_csc.candidate_id) AS vote_count
         FROM candidates
         LEFT JOIN votes_csc ON candidates.id = votes_csc.candidate_id
         LEFT JOIN categories ON candidates.category_id = categories.id
+        WHERE votes_csc.organization = '$defaultOrganization'
         GROUP BY candidates.id, categories.name
         ORDER BY categories.name ASC";
 

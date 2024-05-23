@@ -58,35 +58,33 @@
                   <th>Voter</th>
                 </thead>
                 <tbody>
-                  <?php
-                  $counter = 1;
-                    $sql = "SELECT *,
-                    candidates.firstname AS canfirst, 
-                    candidates.lastname AS canlast, 
-                    voters1.firstname AS votfirst, 
-                    voters1.lastname AS votlast, 
-                    voters1.organization AS org 
-                    FROM votes_csc 
-                    LEFT JOIN categories ON category.id=votes_csc.category_id 
-                    LEFT JOIN candidates ON candidates.id=votes_csc.candidate_id 
-                    LEFT JOIN voters AS voters1 ON voters1.id=votes_csc.voters_id 
-                    LEFT JOIN voters AS voters2 ON voters2.organization=votes_csc.organization 
-                    GROUP BY votes_csc.id
-                    ORDER BY categories.priority ASC";
-                    $query = $conn->query($sql);
-                    while($row = $query->fetch_assoc()){
-        echo "
-            <tr>
-                <td class='hidden'></td>
-                <td>".$counter."</td>
-                <td>".$row['name']."</td>
-                <td>".$row['canfirst'].' '.$row['canlast']."</td>
-                <td>".$row['votfirst'].' '.$row['votlast']."</td>
-            </tr>
-        ";
-                        $counter++;
-    }
-                  ?>
+                <?php
+                      $sql = "SELECT *,
+                      candidates.firstname AS canfirst, 
+                      candidates.lastname AS canlast, 
+                      voters1.firstname AS votfirst, 
+                      voters1.lastname AS votlast, 
+                      voters1.organization AS org 
+                      FROM votes_csc 
+                      LEFT JOIN categories ON categories.id=votes_csc.category_id 
+                      LEFT JOIN candidates ON candidates.id=votes_csc.candidate_id 
+                      LEFT JOIN voters AS voters1 ON voters1.id=votes_csc.voters_id 
+                      LEFT JOIN voters AS voters2 ON voters2.organization=votes_csc.organization 
+                      GROUP BY votes_csc.id
+                      ORDER BY categories.priority ASC";
+                      $query = $conn->query($sql);
+                      while($row = $query->fetch_assoc()){
+                        echo "
+                          <tr>
+                            <td class='hidden'></td>
+                            <td>".$row['name']."</td>
+                            <td>".$row['canfirst'].' '.$row['canlast']."</td>
+                            <td>".$row['votfirst'].' '.$row['votlast']."</td>
+                            <td>".$row['org']."</td>
+                          </tr>
+                        ";
+                      }
+                    ?>
                 </tbody>
               </table>
             </div>
