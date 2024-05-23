@@ -396,7 +396,7 @@
     font-style: normal; /* Ibalik ang font style sa normal */
     font-weight: bold; /* I-set ang font weight sa bold */
     font-size: 14px; /* I-adjust ang font size */
-    
+    font-family: sans-serif !important; /* Change the font family to Arial or any desired font */
 }
 
 /* Media query for smaller screens */
