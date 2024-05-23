@@ -49,7 +49,7 @@
                       <select class="form-control" id="position" name="position" required>
                         <option value="" selected>- Select -</option>
                         <?php
-                          $sql = "SELECT * FROM categories WHERE election_id = 1";
+                          $sql = "SELECT * FROM categories WHERE election_id = 20";
                           $query = $conn->query($sql);
                           while($row = $query->fetch_assoc()){
                             echo "
