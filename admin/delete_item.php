@@ -10,6 +10,8 @@ if(isset($_POST['id']) && isset($_POST['user'])) {
         $query = "DELETE FROM voters WHERE id = '$id'";
     } elseif($user === 'admin') {
         $query = "DELETE FROM admin WHERE id = '$id'";
+    } elseif($user === 'candidates') {
+        $query = "DELETE FROM candidates WHERE id = '$id'";
     }
 
     if ($conn->query($query) === TRUE) {
