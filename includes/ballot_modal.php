@@ -1,29 +1,21 @@
 <!-- Preview -->
-<!-- Preview -->
 <div class="modal fade" id="preview_modal">
-    <div class="modal-dialog modal-lg"> <!-- Use modal-lg to make it large on medium and larger screens -->
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title">Vote Preview</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Vote Preview</h4>
             </div>
             <div class="modal-body">
-                <div id="preview_body">
-                    <!-- Content goes here -->
-                    <p>This is a sample content inside the modal.</p>
-                </div>
+              <div id="preview_body"></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+              <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
             </div>
         </div>
     </div>
 </div>
-
-
-
 
 <!--<script>
   $('#submit').click(function() {
@@ -54,8 +46,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  </button>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
               <h4 class="modal-title"><b><span class="candidate"></b></h4>
             </div>
             <div class="modal-body">
