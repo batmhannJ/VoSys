@@ -52,8 +52,7 @@
               <table id="example1" class="table table-bordered">
                 <thead>
                   <th>No.</th>
-                  <th>Lastname</th>
-                  <th>Firstname</th>
+                  <th>Fullname</th>
                   <th>Photo</th>
                   <th>Voters ID</th>
                   <th>Email</th>
@@ -68,11 +67,11 @@
                     $i = 1;
                     while($row = $query->fetch_assoc()){
                       $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
+                      $fullname = $row['firstname'] . ' ' . $row['lastname'];
                       echo "
                         <tr>
                           <td>".$i++."</td>
-                          <td>".$row['lastname']."</td>
-                          <td>".$row['firstname']."</td>
+                          <td>".$fullname."</td>
                           <td>
                             <img src='".$image."' width='30px' height='30px'>
                             <a href='#edit_photo' data-toggle='modal' class='pull-right photo' data-id='".$row['id']."'></a>
@@ -173,7 +172,8 @@ function archiveVoter(id) {
                 // Refresh the page or update the table as needed
                 location.reload();
             },
-            error: function(xhr, status, error) {
+            error: function(xhr, status, error)
+            {
                 console.error(xhr.responseText);
             }
         });

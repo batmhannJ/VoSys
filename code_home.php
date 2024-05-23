@@ -642,7 +642,7 @@
 
 
 .title {
-    font-size: 32px; /* Decrease font size */
+    font-size: 40px; /* Decrease font size */
     margin-bottom: 10px; /* Decrease margin bottom */
     font-family: 'Arial', sans-serif; /* Change font family */
     font-weight: bold; /* Bold font weight */
@@ -724,7 +724,7 @@
         justify-content: center;
         margin-bottom: 30px;
         margin-right: 12px;
-        margin-top: 100px; /* Override margin-top */
+        margin-top: 50px; /* Override margin-top */
     }
 }
 
