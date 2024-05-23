@@ -93,5 +93,5 @@ if (isset($_POST['add'])) {
     $_SESSION['error'] = 'Fill up the add form first';
 }
 
-header('location: voters.php');
+header('location: voters_csc.php');
 ?>
