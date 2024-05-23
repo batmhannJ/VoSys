@@ -35,19 +35,17 @@ include 'includes/header_csc.php';
           "CSC" => array("remaining" => "#595959", "voted" => "#000000")  // Example color for HMSO
         );
         $sql_voters_voted = "SELECT * 
-        FROM votes 
-        JOIN voters ON votes.voters_id = voters.id 
-        WHERE voters.organization = 'CSC' 
-        GROUP BY votes.voters_id";
+        FROM votes_csc 
+        JOIN voters ON votes_csc.voters_id = voters.id 
+        GROUP BY votes_csc.voters_id";
         $query_voters_voted = $conn->query($sql_voters_voted);
         $num_voters_voted = $query_voters_voted->num_rows;
 
         // Query to get the number of remaining voters
         $sql_remaining_voters = "SELECT voters.id, voters.lastname
             FROM voters
-            LEFT JOIN votes ON voters.id = votes.voters_id
-            WHERE votes.voters_id IS NULL
-            AND voters.organization = 'CSC'";
+            LEFT JOIN votes_csc ON voters.id = votes_csc.voters_id
+            WHERE votes_csc.voters_id IS NULL";
         $query_remaining_voters = $conn->query($sql_remaining_voters);
         $num_remaining_voters = $query_remaining_voters->num_rows;
         $conn->close();
