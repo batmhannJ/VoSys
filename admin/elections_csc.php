@@ -62,7 +62,7 @@
                 <tbody class="election">
                   <?php
                   $i = 1;
-                  $election = $conn->prepare("SELECT * FROM election WHERE title = 'JPCS - Junior Philippine Computer Society Election'");
+                  $election = $conn->prepare("SELECT * FROM election WHERE organization = 'CSC'");
                   $election->execute();
                   $result = $election->get_result();
                   while ($row = $result->fetch_assoc()) {

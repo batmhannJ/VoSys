@@ -66,14 +66,14 @@
                     voters1.firstname AS votfirst, 
                     voters1.lastname AS votlast, 
                     voters1.organization AS org 
-                    FROM votes 
-                    LEFT JOIN positions ON positions.id=votes.position_id 
-                    LEFT JOIN candidates ON candidates.id=votes.candidate_id 
-                    LEFT JOIN voters AS voters1 ON voters1.id=votes.voters_id 
-                    LEFT JOIN voters AS voters2 ON voters2.organization=votes.organization 
+                    FROM votes_csc 
+                    LEFT JOIN categories ON category.id=votes_csc.category_id 
+                    LEFT JOIN candidates ON candidates.id=votes_csc.candidate_id 
+                    LEFT JOIN voters AS voters1 ON voters1.id=votes_csc.voters_id 
+                    LEFT JOIN voters AS voters2 ON voters2.organization=votes_csc.organization 
                     WHERE voters1.organization = 'CSC'
-                    GROUP BY votes.id
-                    ORDER BY positions.priority ASC";
+                    GROUP BY votes_csc.id
+                    ORDER BY categories.priority ASC";
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
         echo "
