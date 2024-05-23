@@ -714,15 +714,10 @@
 /* Media query for smaller screens */
 @media (max-width: 768px) {
     .timer {
-        position: fixed;
-        top: 0;
-        right: 0;
-        z-index: 1000;
-        width: 250px;
-        display: flex;
-        justify-content: center;
+        position: relative;
+        width: 100%;
         margin-top: 20px;
-        margin-right: 12px;
+        margin-right: 0;
         margin-bottom: 20px;
     }
 
@@ -739,6 +734,10 @@
         font-size: 12px;
     }
 }
+
+
+
+
 
 
 
