@@ -33,6 +33,10 @@ $response['secretary'] = fetchVotes($conn, 'Secretary', $organizationFilter);
 $response['treasurer'] = fetchVotes($conn, 'Treasurer', $organizationFilter);
 $response['auditor'] = fetchVotes($conn, 'Auditor', $organizationFilter);
 $response['pro'] = fetchVotes($conn, 'P.R.O', $organizationFilter);
+$response['dirMembership'] = fetchVotes($conn, 'Dir. for Membership', $organizationFilter);
+$response['dirSpecialProject'] = fetchVotes($conn, 'Dir. for Special Project', $organizationFilter);
+$response['blockA1stYearRep'] = fetchVotes($conn, 'Block A 1st Year Representative', $organizationFilter);
+$response['blockB1stYearRep'] = fetchVotes($conn, 'Block B 1st Year Representative', $organizationFilter);
 
 header('Content-Type: application/json');
 echo json_encode($response);
