@@ -192,6 +192,7 @@
     <?php include 'includes/footer.php'; ?>
     <?php include 'includes/voters_modal.php'; ?>
     <?php include 'includes/restore_modal.php'; ?>
+    <?php include 'includes/candidates_modal_csc.php'; ?>
 
 <!-- Confirmation Modal for Delete -->
 <div id="deleteConfirmationModal" class="modal fade" role="dialog">
