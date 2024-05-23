@@ -121,29 +121,6 @@ if(!is_active_election($conn)){
 				    	}
 				    	else{
 				    		?>
- 					<!--countdown-->
- 						<section class="discover section" id="discover">      
- 							<!--<center><h4 id="electionTitle" class="heading">Remaining time to vote</h4></center>-->
-					        <div class="timer">
-					            <!--<div class="sub_timer">
-					                <h1 id="day" class="digit">00</h1>
-					                <p class="digit_name">Days</p>
-					            </div>-->
-					            <div class="sub_timer">
-					                <h1 id="hour" class="digit">00</h1>
-					                <p class="digit_name">Hours</p>
-					            </div>
-					            <div class="sub_timer">
-					                <h1 id="min" class="digit">00</h1>
-					                <p class="digit_name">Minutes</p>
-					            </div>
-					            <div class="sub_timer">
-					                <h1 id="sec" class="digit">00</h1>
-					                <p class="digit_name">Seconds</p>
-					             </div>
-					        </div>
-					    </section>
- 					<!--end-->
 				    
 			    			<!-- Voting Ballot -->
 						    <form method="POST" id="ballotForm" action="submit_ballot.php">
@@ -154,6 +131,17 @@ if(!is_active_election($conn)){
                                 $sql = "SELECT * FROM categories WHERE election_id = 20 ORDER BY priority ASC";
                                 $query = $conn->query($sql);
                                 while($row = $query->fetch_assoc()){
+                                    echo '
+                                    <div class="position-container">
+                                        <div class="box box-solid" id="'.$row['id'].'">
+                                            <div class="box-header">
+                                                <h3 class="box-title">'.$row['description'].'</h3>
+                                                <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="'.slugify($row['description']).'"><i class="fa fa-refresh"></i> Reset</button>
+                                            </div>
+                                            <div class="box-body">
+                                                <p class="instruction">You may select up to '.$row['max_vote'].' candidates</p>
+                                                <div class="candidate-list">
+                                                    <ul>';
                                     $sql = "SELECT * FROM candidates WHERE category_id='".$row['id']."'";
                                     $cquery = $conn->query($sql);
                                     while($crow = $cquery->fetch_assoc()){
@@ -175,45 +163,27 @@ if(!is_active_election($conn)){
                                                 }
                                             }
                                         }
-                                        $input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : '<input type="radio" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
+                                        $input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : '<input type="radio" class="flat-red '.$slug.'" name="'.slugify($row['description']).'" value="'.$crow['id'].'" '.$checked.'>';
                                         $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
-                                        $candidate .= '
-                                            <li>
-                                                '.$input.'<button type="button" class="btn btn-primary btn-sm btn-flat clist platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'"><i class="fa fa-search"></i> Platform</button><img src="'.$image.'" height="100px" width="100px" class="clist"><span class="cname clist">'.$crow['firstname'].' '.$crow['lastname'].'</span>
-                                            </li>
-                                        ';
-                                    }
-
-                                    $instruct = ($row['max_vote'] > 1) ? 'You may select up to '.$row['max_vote'].' candidates' : 'Select only one candidate';
-
-                                    echo '
-                                        <div class="row">
-                                            <div class="col-xs-12">
-                                                <div class="box box-solid" id="'.$row['id'].'">
-                                                    <div class="box-header with-border"style="background-color: black; color: #fff;"> 
-                                                        <h3 class="box-title"><b>'.$row['name'].'</b></h3>
-                                                    </div>
-                                                    <div class="box-body">
-                                                        <p>'.$instruct.'
-                                                            <span class="pull-right">
-                                                                <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="'.slugify($row['name']).'"><i class="fa fa-refresh"></i> Reset</button>
-                                                            </span>
-                                                        </p>
-                                                        <div id="candidate_list">
-                                                            <ul>
-                                                                '.$candidate.'
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                        echo '
+                                        <li>
+                                            <div class="candidate-info">
+                                                '.$input.'
+                                                <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
+                                                
                                             </div>
-                                        </div>
-                                    ';
-
-                                    $candidate = '';
-
-                                }   
-                                ?>
+                                            <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
+                                        
+                                            <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
+                                        </li>';
+                                    }
+                                echo '</ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>';
+            }
+            ?>
                                 <div class="text-center">
                                     <button type="button" class="btn btn-primary btn-flat" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
                                 </div>
@@ -233,13 +203,13 @@ if(!is_active_election($conn)){
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-success btn-flat" id="preview"><i class="fa fa-file-text"></i> Preview</button> 
-                                            <button type="submit" class="btn btn-primary" id="submitBtn" name="vote">Yes, Submit</button>
+                                            <button type="submit" class="btn btn-primary" id="submitBtn" name="vote_code">Yes, Submit</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                             </form>
+
 				        	<!-- End Voting Ballot -->
 				    		<?php
 				    	}
