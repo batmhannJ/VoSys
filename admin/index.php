@@ -448,6 +448,37 @@ main.sign-up-mode .carousel {
     padding: 1rem 1rem 1.5rem;
   }
 }
+
+.input-wrap {
+
+position: relative;
+width: 100%;
+max-width: 400px;
+margin-top: -5px;
+}
+
+.input-field {
+width: 100%;
+padding: 10px; /* Adjust the padding to make space for the icon */
+font-size: 15px;
+box-sizing: border-box;
+border: 1px solid #ccc;
+border-radius: 4px;
+}
+
+.togglePassword {
+position: absolute;
+top: 50%;
+right: 10px;
+transform: translateY(-50%);
+cursor: pointer;
+font-size: 18px;
+color: #aaa;
+}
+
+.togglePassword:hover {
+color: #333;
+}
 </style>
 
 <body>
@@ -491,7 +522,7 @@ main.sign-up-mode .carousel {
                     required
                   />
                   <label style="font-size:15px;"></label>
-                  <i class="bi bi-eye-slash" id="togglePassword"></i>
+                  <i class="fa fa-fw fa-eye togglePassword" id="togglePassword"></i>
                   <span class="form-control-feedback"></span>
                 </div>
 
@@ -564,6 +595,24 @@ main.sign-up-mode .carousel {
 
 
     <script src="app.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var togglePassword = document.getElementById('togglePassword');
+            togglePassword.addEventListener('click', function () {
+                var input = document.getElementById('current-password');
+                if (input.getAttribute('type') === 'password') {
+                    input.setAttribute('type', 'text');
+                    this.classList.remove('fa-eye');
+                    this.classList.add('fa-eye-slash');
+                } else {
+                    input.setAttribute('type', 'password');
+                    this.classList.remove('fa-eye-slash');
+                    this.classList.add('fa-eye');
+                }
+            });
+        });
+    </script>
     <?php include 'includes/scripts.php' ?>
 </body>
 
