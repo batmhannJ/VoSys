@@ -50,9 +50,6 @@ $num = 1;
 while ($row = $query->fetch_assoc()) {
     $input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red ' . slugify($row['name']) . '" name="' . slugify($row['name']) . "[]\">" : '<input type="radio" class="flat-red ' . slugify($row['name']) . '" name="' . slugify($row['name']) . '">';
 
-    // Debug: Output category being processed
-    echo "Processing Category: " . $row['name'] . "<br>";
-
     // Update SQL query to include organization condition
     $sql = "SELECT * FROM candidates WHERE category_id='" . $row['id'] . "' AND archived = 0 AND organization = '" . $conn->real_escape_string($user_organization) . "'";
     $cquery = $conn->query($sql);
@@ -63,10 +60,7 @@ while ($row = $query->fetch_assoc()) {
         exit;
     }
 
-    // Debug: Check if candidates are fetched correctly
-    $candidates_debug = [];
     while ($crow = $cquery->fetch_assoc()) {
-        $candidates_debug[] = $crow['firstname'] . ' ' . $crow['lastname'];
         $image = (!empty($crow['photo'])) ? '../images/' . $crow['photo'] : '../images/profile.jpg';
         $candidate .= '
             <li>
@@ -74,9 +68,6 @@ while ($row = $query->fetch_assoc()) {
             </li>
         ';
     }
-
-    // Debug: Output the fetched candidates for this category
-    echo "Candidates for Category (" . $row['name'] . "): " . implode(', ', $candidates_debug) . "<br>";
 
     $instruct = ($row['max_vote'] > 1) ? 'You may select up to ' . $row['max_vote'] . ' candidates' : 'Select only one candidate';
 
