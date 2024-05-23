@@ -56,12 +56,13 @@ include 'includes/header.php';
                         </div>
                     </div>
                 </div>
+                <div class="row">
                 <div class="box-body">
                             <div id="vicePresidentInternalGraph" style="height: 300px;"></div>
                         </div>
                     </div>
                 </div>
-
+                <div class="row">
                 <div class="col-md-3">
                     <div class="box">
                         <div class="box-header with-border">
@@ -72,7 +73,7 @@ include 'includes/header.php';
                         </div>
                     </div>
                 </div>
-
+                <div class="row">
                 <div class="col-md-3">
                     <div class="box">
                         <div class="box-header with-border">
@@ -86,6 +87,7 @@ include 'includes/header.php';
             </div>
 
             <!-- Additional positions -->
+            
             <div class="row">
                 <div class="col-md-3">
                     <div class="box">
