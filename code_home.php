@@ -674,6 +674,7 @@
     }
 }
 
+
 .timer {
     position: fixed;
     top: 0;
@@ -709,6 +710,22 @@
     background: lightgrey;
     text-align: center;
     font-size: 15px;
+}
+
+/* Media query for larger screens */
+@media (min-width: 1024px) {
+    .timer {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        z-index: 1000;
+        width: 250px;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+        margin-right: 12px;
+        margin-top: auto; /* Override margin-top */
+    }
 }
 
 /* Media query for smaller screens */
