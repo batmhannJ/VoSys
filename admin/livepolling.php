@@ -49,7 +49,7 @@ include 'includes/header.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><b>President</b</h3>
+                            <h3 class="box-title"><b>President</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="presidentGraph" style="height: 300px;"></div>
@@ -60,7 +60,7 @@ include 'includes/header.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title"style="text-align:center"><b>Vice President for Internal Affairs</b></h3>
+                            <h3 class="box-title"><b>Vice President for Internal Affairs</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="vicePresidentInternalGraph" style="height: 300px;"></div>
@@ -71,7 +71,7 @@ include 'includes/header.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><b>Vice President for External Affairs</b> </h3>
+                            <h3 class="box-title"><b>Vice President for External Affairs</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="vicePresidentExternalGraph" style="height: 300px;"></div>
@@ -243,114 +243,114 @@ include 'includes/header.php';
     <?php include 'includes/footer.php'; ?>
     <?php include 'includes/votes_modal.php'; ?>
 </div>
+
 <?php include 'includes/scripts.php'; ?>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    function generateBarGraph(dataPoints, containerId) {
-        var chart = new CanvasJS.Chart(containerId, {
-            animationEnabled: true,
-            title: {
-                text: "Vote Counts"
-            },
-            axisX: {
-                title: "Vote Count",
-                includeZero: true
-            },
-            axisY: {
-                title: "Candidates"
-            },
-            data: [{
-                type: "bar",
-                dataPoints: dataPoints
-            }]
-        });
-        chart.render();
-        return chart;
-    }
+function generateBarGraph(dataPoints, containerId, titleText) {
+    var chart = new CanvasJS.Chart(containerId, {
+        animationEnabled: true,
+        title: {
+            text: titleText,
+            horizontalAlign: "center" // Center the title
+        },
+        axisX: {
+            title: "Vote Count",
+            includeZero: true
+        },
+        axisY: {
+            title: "Candidates"
+        },
+        data: [{
+            type: "bar",
+            dataPoints: dataPoints
+        }]
+    });
+    chart.render();
+    return chart;
+}
 
-    function updateVoteCounts() {
-        $.ajax({
-            url: 'update_data.php?organization=' + $('#organization').val(),
-            method: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                presidentChart.options.data[0].dataPoints = response.president;
-                presidentChart.render();
+function updateVoteCounts() {
+    $.ajax({
+        url: 'update_data.php?organization=' + $('#organization').val(),
+        method: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            presidentChart.options.data[0].dataPoints = response.president;
+            presidentChart.render();
 
-                vicePresidentInternalChart.options.data[0].dataPoints = response.vicePresidentInternal;
-                vicePresidentInternalChart.render();
+            vicePresidentInternalChart.options.data[0].dataPoints = response.vicePresidentInternal;
+            vicePresidentInternalChart.render();
 
-                vicePresidentExternalChart.options.data[0].dataPoints = response.vicePresidentExternal;
-                vicePresidentExternalChart.render();
+            vicePresidentExternalChart.options.data[0].dataPoints = response.vicePresidentExternal;
+            vicePresidentExternalChart.render();
 
-                secretaryChart.options.data[0].dataPoints = response.secretary;
-                secretaryChart.render();
+            secretaryChart.options.data[0].dataPoints = response.secretary;
+            secretaryChart.render();
 
-                treasurerChart.options.data[0].dataPoints = response.treasurer;
-                treasurerChart.render();
+            treasurerChart.options.data[0].dataPoints = response.treasurer;
+            treasurerChart.render();
 
-                auditorChart.options.data[0].dataPoints = response.auditor;
-                auditorChart.render();
+            auditorChart.options.data[0].dataPoints = response.auditor;
+            auditorChart.render();
 
-                proChart.options.data[0].dataPoints = response.pro;
-                proChart.render();
+            proChart.options.data[0].dataPoints = response.pro;
+            proChart.render();
 
-                dirMembershipChart.options.data[0].dataPoints = response.dirMembership;
-                dirMembershipChart.render();
+            dirMembershipChart.options.data[0].dataPoints = response.dirMembership;
+            dirMembershipChart.render();
 
-                dirSpecialProjectChart.options.data[0].dataPoints = response.dirSpecialProject;
-                dirSpecialProjectChart.render();
+            dirSpecialProjectChart.options.data[0].dataPoints = response.dirSpecialProject;
+            dirSpecialProjectChart.render();
 
-                blockA1stYearRepChart.options.data[0].dataPoints = response.blockA1stYearRep;
-                blockA1stYearRepChart.render();
+            blockA1stYearRepChart.options.data[0].dataPoints = response.blockA1stYearRep;
+            blockA1stYearRepChart.render();
 
-                blockB1stYearRepChart.options.data[0].dataPoints = response.blockB1stYearRep;
-                blockB1stYearRepChart.render();
+            blockB1stYearRepChart.options.data[0].dataPoints = response.blockB1stYearRep;
+            blockB1stYearRepChart.render();
 
-                blockA2ndYearRepChart.options.data[0].dataPoints = response.blockA2ndYearRep;
-                blockA2ndYearRepChart.render();
+            blockA2ndYearRepChart.options.data[0].dataPoints = response.blockA2ndYearRep;
+            blockA2ndYearRepChart.render();
 
-                blockB2ndYearRepChart.options.data[0].dataPoints = response.blockB2ndYearRep;
-                blockB2ndYearRepChart.render();
+            blockB2ndYearRepChart.options.data[0].dataPoints = response.blockB2ndYearRep;
+            blockB2ndYearRepChart.render();
 
-                blockA3rdYearRepChart.options.data[0].dataPoints = response.blockA3rdYearRep;
-                blockA3rdYearRepChart.render();
+            blockA3rdYearRepChart.options.data[0].dataPoints = response.blockA3rdYearRep;
+            blockA3rdYearRepChart.render();
 
-                blockB3rdYearRepChart.options.data[0].dataPoints = response.blockB3rdYearRep;
-                blockB3rdYearRepChart.render();
+            blockB3rdYearRepChart.options.data[0].dataPoints = response.blockB3rdYearRep;
+            blockB3rdYearRepChart.render();
 
-                blockA4thYearRepChart.options.data[0].dataPoints = response.blockA4thYearRep;
-                blockA4thYearRepChart.render();
+            blockA4thYearRepChart.options.data[0].dataPoints = response.blockA4thYearRep;
+            blockA4thYearRepChart.render();
 
-                blockB4thYearRepChart.options.data[0].dataPoints = response.blockB4thYearRep;
-                blockB4thYearRepChart.render();
-            }
-        });
-    }
+            blockB4thYearRepChart.options.data[0].dataPoints = response.blockB4thYearRep;
+            blockB4thYearRepChart.render();
+        }
+    });
+}
 
-    var presidentChart = generateBarGraph([], "presidentGraph");
-    var vicePresidentInternalChart = generateBarGraph([], "vicePresidentInternalGraph");
-    var vicePresidentExternalChart = generateBarGraph([], "vicePresidentExternalGraph");
-    var secretaryChart = generateBarGraph([], "secretaryGraph");
-    var treasurerChart = generateBarGraph([], "treasurerGraph");
-    var auditorChart = generateBarGraph([], "auditorGraph");
-    var proChart = generateBarGraph([], "proGraph");
-    var dirMembershipChart = generateBarGraph([], "dirMembershipGraph");
-    var dirSpecialProjectChart = generateBarGraph([], "dirSpecialProjectGraph");
-    var blockA1stYearRepChart = generateBarGraph([], "blockA1stYearRepGraph");
-    var blockB1stYearRepChart = generateBarGraph([], "blockB1stYearRepGraph");
+var presidentChart = generateBarGraph([], "presidentGraph", "President");
+var vicePresidentInternalChart = generateBarGraph([], "vicePresidentInternalGraph", "Vice President for Internal Affairs");
+var vicePresidentExternalChart = generateBarGraph([], "vicePresidentExternalGraph", "Vice President for External Affairs");
+var secretaryChart = generateBarGraph([], "secretaryGraph", "Secretary");
+var treasurerChart = generateBarGraph([], "treasurerGraph", "Treasurer");
+var auditorChart = generateBarGraph([], "auditorGraph", "Auditor");
+var proChart = generateBarGraph([], "proGraph", "P.R.O");
+var dirMembershipChart = generateBarGraph([], "dirMembershipGraph", "Dir. for Membership");
+var dirSpecialProjectChart = generateBarGraph([], "dirSpecialProjectGraph", "Dir. for Special Project");
+var blockA1stYearRepChart = generateBarGraph([], "blockA1stYearRepGraph", "Block A 1st Year Representative");
+var blockB1stYearRepChart = generateBarGraph([], "blockB1stYearRepGraph", "Block B 1st Year Representative");
+var blockA2ndYearRepChart = generateBarGraph([], "blockA2ndYearRepGraph", "Block A 2nd Year Representative");
+var blockB2ndYearRepChart = generateBarGraph([], "blockB2ndYearRepGraph", "Block B 2nd Year Representative");
+var blockA3rdYearRepChart = generateBarGraph([], "blockA3rdYearRepGraph", "Block A 3rd Year Representative");
+var blockB3rdYearRepChart = generateBarGraph([], "blockB3rdYearRepGraph", "Block B 3rd Year Representative");
+var blockA4thYearRepChart = generateBarGraph([], "blockA4thYearRepGraph", "Block A 4th Year Representative");
+var blockB4thYearRepChart = generateBarGraph([], "blockB4thYearRepGraph", "Block B 4th Year Representative");
 
-    var blockA2ndYearRepChart = generateBarGraph([], "blockA2ndYearRepGraph");
-    var blockB2ndYearRepChart = generateBarGraph([], "blockB2ndYearRepGraph");
-    var blockA3rdYearRepChart = generateBarGraph([], "blockA3rdYearRepGraph");
-    var blockB3rdYearRepChart = generateBarGraph([], "blockB3rdYearRepGraph");
-    var blockA4thYearRepChart = generateBarGraph([], "blockA4thYearRepGraph");
-    var blockB4thYearRepChart = generateBarGraph([], "blockB4thYearRepGraph");
+updateVoteCounts();
 
-    updateVoteCounts();
-
-    setInterval(updateVoteCounts, 5000);
+setInterval(updateVoteCounts, 5000);
 </script>
 </body>
 </html>
