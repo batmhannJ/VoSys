@@ -511,15 +511,16 @@ color: #333;
                   <label style="font-size:15px;"></label>
                 </div>
 
-                <div class="input-wrap has has-feedback">
+                <div class="input-wrap has-feedback">
                   <input
-                    type="password"
-                    minlength="8"
-                    class="input-field"
-                    name="password"
-                    placeholder="Password" style="font-size: 15px;"
-                    autocomplete="off"
-                    required
+                      id="current-password"
+                      type="password"
+                      minlength="8"
+                      class="input-field"
+                      name="password"
+                      placeholder="Password"
+                      autocomplete="off"
+                      required
                   />
                   <label style="font-size:15px;"></label>
                   <i class="fa fa-fw fa-eye togglePassword" id="togglePassword"></i>
