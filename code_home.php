@@ -648,18 +648,7 @@
     font-weight: bold; /* Bold font weight */
     text-transform: uppercase; /* Uppercase text */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9); /* Add shadow effect */
-    
-    /* Pop-up styles */
-    position: fixed;
-    top: 50%; /* Center vertically */
-    left: 50%; /* Center horizontally */
-    transform: translate(-50%, -50%); /* Center alignment */
-    padding: 20px; /* Add some padding */
-    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
-    border-radius: 10px; /* Rounded corners */
-    z-index: 1000; /* Ensure it's above other content */
 }
-
 
 .subtitle {
     font-size: 18px; /* Decrease font size */
