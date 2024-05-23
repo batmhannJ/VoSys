@@ -572,6 +572,7 @@
     font-family: 'Arial', sans-serif; /* Change font family */
     font-weight: bold; /* Bold font weight */
     text-transform: uppercase; /* Uppercase text */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add shadow effect */
 }
 
 .subtitle {
