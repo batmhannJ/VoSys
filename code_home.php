@@ -1,5 +1,26 @@
-<?php include 'includes/session.php'; ?>
-<?php include 'includes/header.php'; ?>
+<?php
+
+include 'includes/session.php';
+include 'includes/header.php';
+
+function is_active_election($conn){
+	$sql = "SELECT * FROM election WHERE title = 'COALITION OF DISCIPLINED FUTURE ENFORCERS OF TODAYS GENERATION <br> ELECTION' && status = 1";
+	$result = $conn->query($sql);
+
+	if($result->num_rows > 0){
+		return true;
+	} else{
+		return false;
+	}
+}
+
+if(!is_active_election($conn)){
+	header("location: no_active_election_home.php");
+	exit();
+}
+
+?>
+
 <body class="hold-transition skin-blue layout-top-nav">
 <div class="wrapper">
 
