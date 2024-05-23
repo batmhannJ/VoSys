@@ -540,36 +540,34 @@
 }
 
 .page-header {
-    margin-top: 30px; /* Add more margin to top */
-    color: #222; /* Darker text color */
-    text-align: center;
-    padding: 40px 0; /* Increase padding */
-    background-color: #f9f9f9; /* Lighter background color */
-    border-bottom: 1px solid #ddd; /* Thin bottom border */
+    margin-top: 50px; /* Increase margin from the top */
+    padding: 40px 20px; /* Add padding on all sides */
+    background-color: #007bff; /* Change background color */
+    color: #fff; /* Text color */
+    text-align: center; /* Center-align text */
+    border-bottom: 2px solid #0056b3; /* Add a solid border at the bottom */
+    border-radius: 10px; /* Add border radius for rounded corners */
 }
 
 .page-header img {
-    width: 200px; /* Adjust image width */
+    width: 150px; /* Adjust image width */
     height: auto; /* Auto height */
     border-radius: 50%; /* Circular image */
-    margin-bottom: 20px; /* Increase margin */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
-    filter: grayscale(50%) contrast(150%); /* Apply grayscale and increase contrast */
+    margin-bottom: 20px; /* Add margin at the bottom */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
 }
 
 .title {
-    font-size: 38px; /* Keep font size */
-    margin-bottom: 15px; /* Keep margin */
-    font-family: 'Verdana', sans-serif; /* Keep font family */
+    font-size: 32px; /* Decrease font size */
+    margin-bottom: 10px; /* Decrease margin bottom */
+    font-family: 'Arial', sans-serif; /* Change font family */
     font-weight: bold; /* Bold font weight */
     text-transform: uppercase; /* Uppercase text */
-    letter-spacing: 1.5px; /* Keep letter spacing */
 }
 
 .subtitle {
-    font-size: 22px; /* Keep font size */
-    font-weight: 400; /* Keep font weight */
-    color: #666; /* Keep subtitle color */
+    font-size: 18px; /* Decrease font size */
+    font-weight: 300; /* Decrease font weight */
 }
 
 
