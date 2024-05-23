@@ -100,7 +100,7 @@
   </div>
     
   <?php include 'includes/footer.php'; ?>
-  <?php include 'includes/candidates_modal.php'; ?>
+  <?php include 'includes/candidates_modal_csc.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
 <script>
