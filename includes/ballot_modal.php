@@ -18,17 +18,36 @@
 </div>
 <style>
 #preview_body {
-  background-color: #f0f0f0; /* Light gray background color */
-  padding: 20px; /* Padding around the content */
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow for a slight elevation effect */
-  max-width: 500px; /* Maximum width of the content */
-  margin: 0 auto; /* Center the content horizontally */
-  font-family: Arial, sans-serif; /* Font family */
-  font-size: 16px; /* Font size */
-  line-height: 1.5; /* Line height */
-  color: #333; /* Text color */
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
 }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th, td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+
+
 </style>
 <!--<script>
   $('#submit').click(function() {
