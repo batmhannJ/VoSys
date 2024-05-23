@@ -124,10 +124,9 @@
                                         <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
                                         
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-sm btn-flat platform">
-                                        <i class="fa fa-search"></i> Platform
-                                    </button>
-
+                                    <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">
+                                    <i class="fa fa-search"> Platform</i>
+                                </button>
                                 
                                     <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
                                 </li>';
@@ -396,8 +395,8 @@
 .platform i {
     font-style: normal; /* Ibalik ang font style sa normal */
     font-weight: bold; /* I-set ang font weight sa bold */
-    font-size: 12px; /* I-adjust ang font size */
-    font-family: Arial, sans-serif; /* Change the font family to Arial or any desired font */
+    font-size: 14px; /* I-adjust ang font size */
+    
 }
 
 /* Media query for smaller screens */
