@@ -320,6 +320,10 @@
     list-style-type: none;
     padding: 0;
 }
+  /* Custom font for the platform button */
+  .custom-platform-font {
+        font-family: Arial, sans-serif; /* Change the font family to Arial or any desired font */
+    }
 
 /* Bagong istilo para sa mga item sa listahan ng mga kandidato */
 .candidate-list li {
