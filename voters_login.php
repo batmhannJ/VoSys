@@ -475,14 +475,14 @@ main.sign-up-mode .carousel {
 
         .input-field {
             width: 100%;
-            padding: 10px 40px 10px 10px; /* Adjust the padding to make space for the icon */
+            padding: 10px; /* Adjust the padding to make space for the icon */
             font-size: 15px;
             box-sizing: border-box;
             border: 1px solid #ccc;
             border-radius: 4px;
         }
 
-        .field-icon {
+        .togglePassword {
             position: absolute;
             top: 50%;
             right: 10px;
@@ -492,7 +492,7 @@ main.sign-up-mode .carousel {
             color: #aaa;
         }
 
-        .field-icon:hover {
+        .togglePassword:hover {
             color: #333;
         }
 </style>
