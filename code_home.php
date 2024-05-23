@@ -542,21 +542,28 @@
     margin-top: 50px; /* Increase margin from the top */
     padding: 40px 20px; /* Add padding on all sides */
     background-image: url('images/bc.png'); /* Add background image */
-    background-size: cover; /* Cover the entire element with the background image */
+    background-size: cover; /* Cover the entire background */
+    background-repeat: no-repeat; /* Prevent background image from repeating */
+    background-position: center; /* Center the background image */
     width: auto;
     height: auto;
     color: #fff; /* Text color */
     text-align: center; /* Center-align text */
     border-bottom: 2px solid #0056b3; /* Add a solid border at the bottom */
     border-radius: 10px; /* Add border radius for rounded corners */
+    position: relative; /* Position the content relative to the box */
 }
 
 .page-header img {
     width: 150px; /* Adjust image width */
-    height: auto; /* Auto height */
+    height: 200px; /* Auto height */
     border-radius: 50%; /* Circular image */
     margin-bottom: 20px; /* Add margin at the bottom */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    position: absolute; /* Position the image */
+    top: 50%; /* Position from the top */
+    left: 50%; /* Position from the left */
+    transform: translate(-50%, -50%); /* Center the image */
 }
 
 .title {
@@ -571,6 +578,7 @@
     font-size: 18px; /* Decrease font size */
     font-weight: 300; /* Decrease font weight */
 }
+
 
 
 
