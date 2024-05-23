@@ -537,10 +537,9 @@
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
 .page-header {
     margin-top: 50px; /* Increase margin from the top */
-    padding: 40px 20px; /* Add padding on all sides */
+    padding: 100px 20px; /* Increase padding on top and bottom to expand the box */
     background-image: url('images/bc.png'); /* Add background image */
     background-size: cover; /* Cover the entire background */
     background-repeat: no-repeat; /* Prevent background image from repeating */
@@ -553,6 +552,7 @@
     border-radius: 10px; /* Add border radius for rounded corners */
     position: relative; /* Position the content relative to the box */
 }
+
 
 .page-header img {
     width: 150px; /* Adjust image width */
