@@ -37,6 +37,12 @@ $response['dirMembership'] = fetchVotes($conn, 'Dir. for Membership', $organizat
 $response['dirSpecialProject'] = fetchVotes($conn, 'Dir. for Special Project', $organizationFilter);
 $response['blockA1stYearRep'] = fetchVotes($conn, 'Block A 1st Year Representative', $organizationFilter);
 $response['blockB1stYearRep'] = fetchVotes($conn, 'Block B 1st Year Representative', $organizationFilter);
+$response['blockA2ndYearRep'] = fetchVotes($conn, 'Block A 2nd Year Representative', $organizationFilter);
+$response['blockB2ndYearRep'] = fetchVotes($conn, 'Block B 2nd Year Representative', $organizationFilter);
+$response['blockA3rdYearRep'] = fetchVotes($conn, 'Block A 3rd Year Representative', $organizationFilter);
+$response['blockB3rdYearRep'] = fetchVotes($conn, 'Block B 3rd Year Representative', $organizationFilter);
+$response['blockA4thYearRep'] = fetchVotes($conn, 'Block A 4th Year Representative', $organizationFilter);
+$response['blockB4thYearRep'] = fetchVotes($conn, 'Block B 4th Year Representative', $organizationFilter);
 
 header('Content-Type: application/json');
 echo json_encode($response);
