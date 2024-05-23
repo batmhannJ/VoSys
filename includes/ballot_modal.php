@@ -7,6 +7,9 @@
                 <h4 class="modal-title">Vote Preview</h4>
             </div>
             <div class="modal-body">
+    <iframe src="url_ng_nilalaman" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+</div>
+
                 <div id="preview_body"></div>
             </div>
             <div class="modal-footer">
@@ -17,6 +20,11 @@
 </div>
 
 <style>
+  .modal-body {
+    max-height: calc(100vh - 200px); /* I-adjust ang maximum height ng modal body */
+    overflow-y: auto; /* I-on ang vertical scrollbar kapag ang nilalaman ay lumalampas sa sukat */
+}
+
   /* Default style */
 #preview_modal .modal-content {
     max-height: 80vh; /* Set maximum height */
@@ -38,6 +46,17 @@
 }
 
 </style>
+
+<script>
+  $(document).ready(function(){
+    $("#preview_modal").on("show.bs.modal", function(){
+        $.get("url_ng_nilalaman", function(data){
+            $("#preview_body").html(data);
+        });
+    });
+});
+
+</script>
 
 
 <!--<script>
