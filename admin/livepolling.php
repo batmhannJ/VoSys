@@ -86,13 +86,6 @@ include 'includes/header.php';
                         <div class="box-body">
                             <div id="secretaryGraph" style="height: 300px;"></div>
                         </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <span class="pull-right">
-                                    <a href="export_results.php?organization=<?php echo $_GET['organization'] ?? ''; ?>" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Export PDF</a>
-                                </span>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
