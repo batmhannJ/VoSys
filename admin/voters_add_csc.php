@@ -22,7 +22,7 @@ if (isset($_POST['add'])) {
 
     if ($resultEmail->num_rows > 0) {
         $_SESSION['error'] = 'Email address already exists';
-        header('location: voters_jpcs.php');
+        header('location: voters_csc.php');
         exit;
     }
 
@@ -32,7 +32,7 @@ if (isset($_POST['add'])) {
 
     if ($resultName->num_rows > 0) {
         $_SESSION['error'] = 'Voter with the same name already exists';
-        header('location: voters_jpcs.php');
+        header('location: voters_csc.php');
         exit;
     }
 
@@ -93,5 +93,5 @@ if (isset($_POST['add'])) {
     $_SESSION['error'] = 'Fill up the add form first';
 }
 
-header('location: voters_jpcs.php');
+header('location: voters_csc.php');
 ?>

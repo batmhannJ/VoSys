@@ -218,7 +218,6 @@ function archiveElection(id) {
         url: "archive_election.php",
         data: { id: id },
         success: function(response) {
-            // Refresh the page or update the table as needed
             location.reload();
         },
         error: function(xhr, status, error) {
