@@ -154,8 +154,7 @@
                 $sql = "SELECT voters.id, voters.lastname
         FROM voters
         LEFT JOIN votes_csc ON voters.id = votes_csc.voters_id
-        WHERE votes_csc.voters_id IS NULL
-        AND voters.organization = 'CSC'";
+        WHERE votes_csc.voters_id IS NULL";
                 $query = $conn->query($sql);
 
                 echo "<h3>".$query->num_rows."</h3>";
