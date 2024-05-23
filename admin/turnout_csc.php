@@ -32,7 +32,7 @@ include 'includes/header_csc.php';
         );
         
         $sql_voters_voted = "SELECT * 
-                             FROM votes 
+                             FROM votes_csc 
                              JOIN voters ON votes.voters_id = voters.id 
                              WHERE voters.organization = 'CSC' 
                              GROUP BY votes.voters_id";
