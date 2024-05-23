@@ -23,29 +23,7 @@ include 'includes/header_csc.php';
         <section class="content">
             <!-- Organization Filter -->
             <div class="row">
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-body">
-                            <form method="get" action="">
-                                <div class="form-group">
-                                    <label for="organization">Select Organization:</label>
-                                    <select class="form-control" name="organization" id="organization">
-                                        <option value="">All Organizations</option>
-                                        <?php
-                                        // Fetch and display organizations
-                                        $organizationQuery = $conn->query("SELECT DISTINCT organization FROM voters");
-                                        while($organizationRow = $organizationQuery->fetch_assoc()){
-                                            $selected = ($_GET['organization'] ?? '') == $organizationRow['organization'] ? 'selected' : '';
-                                            echo "<option value='".$organizationRow['organization']."' $selected>".$organizationRow['organization']."</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Filter</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
 
             <!-- Ranking Boxes for Various Positions -->
