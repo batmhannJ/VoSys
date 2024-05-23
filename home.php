@@ -462,8 +462,12 @@ if(!is_active_election($conn)){
         height: 100px; /* I-adjust ang taas ng mga larawan para sa mas maliit na screen */
         margin: 0 auto; /* Ilipat ang mga larawan sa gitna */
         display: block; /* Make the image a block element */
-    border-radius: 8px; /* Rounded corners for images */
-    }
+        transition: transform 0.3s; /* Add transition effect */
+}
+
+.candidate-list li:hover img {
+    transform: scale(1.1); /* Make the image slightly larger on hover */
+}
 }
 
 
