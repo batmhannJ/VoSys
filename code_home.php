@@ -556,7 +556,7 @@
 
 .page-header img {
     width: 150px; /* Adjust image width */
-    height: 200px; /* Auto height */
+    height: 500px; /* Auto height */
     border-radius: 50%; /* Circular image */
     margin-bottom: 20px; /* Add margin at the bottom */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
