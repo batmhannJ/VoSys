@@ -62,7 +62,7 @@
                 <tbody class="election">
                   <?php
                   $i = 1;
-                  $election = $conn->prepare("SELECT * FROM election WHERE title = 'CSC - College of Student Council Elections'");
+                  $election = $conn->prepare("SELECT * FROM election WHERE organization = 'CSC'");
                   $election->execute();
                   $result = $election->get_result();
                   while ($row = $result->fetch_assoc()) {

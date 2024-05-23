@@ -1,6 +1,5 @@
 <script>
 $(function(){
-  // Restore functions
   $(document).on('click', '.restore', function(e){
     e.preventDefault();
     var id = $(this).data('id');
@@ -35,7 +34,6 @@ $(function(){
     restoreAdmin(id);
   });
 
-  // Delete functions
   $(document).on('click', '.delete', function(e) {
     e.preventDefault();
     var id = $(this).data('id');

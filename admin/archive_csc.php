@@ -192,6 +192,7 @@
     <?php include 'includes/footer.php'; ?>
     <?php include 'includes/voters_modal.php'; ?>
     <?php include 'includes/restore_modal.php'; ?>
+    <?php include 'includes/delete_modal.php'; ?>
 
 <?php include 'includes/scripts.php'; ?>
 <?php include 'archive_script.php'; ?>
