@@ -27,13 +27,12 @@ include 'includes/header_csc.php';
                 // Function to display ranking table
                 function displayRankingTable($conn, $position) {
                     $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-                            COALESCE(COUNT(votes_csc.candidate_id), 0) AS vote_count
+                            COALESCE(SUM(votes_csc.vote_count), 0) AS vote_count
                             FROM categories 
                             LEFT JOIN candidates ON categories.id = candidates.category_id
                             LEFT JOIN votes_csc ON candidates.id = votes_csc.candidate_id
-                            LEFT JOIN voters AS voters1 ON voters1.id = votes_csc.voters_id 
-                            WHERE voters1.organization != '' AND categories.name = '".$position."'".$organizationFilter."
-                            GROUP BY voters1.organization, candidates.id
+                            WHERE categories.name = '".$position."'
+                            GROUP BY candidates.id
                             ORDER BY vote_count DESC";
                     $query = $conn->query($sql);
                     $rank = 1;
