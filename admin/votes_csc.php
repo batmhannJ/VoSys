@@ -72,7 +72,7 @@
                     LEFT JOIN voters AS voters1 ON voters1.id=votes.voters_id 
                     LEFT JOIN voters AS voters2 ON voters2.organization=votes.organization 
                     WHERE voters1.organization = 'CSC'
-                    GROUP BY votes_csc.id
+                    GROUP BY votes.id
                     ORDER BY categories.priority ASC";
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
