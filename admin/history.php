@@ -48,203 +48,72 @@ include 'includes/header.php';
                 </div>
             </div>
 
-            <!-- President, Vice Presidents, and Secretary Ranking Boxes -->
+            <!-- Ranking Boxes for Various Positions -->
             <div class="row">
-                <!-- President Ranking List Box -->
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Ranking of President Candidates</h3>
-                        </div>
-                        <div class="box-body">
-                            <!-- President Ranking Table -->
-                            <table class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>Rank</th>
-                                    <th>Organization</th>
-                                    <th>Candidate</th>
-                                    <th>Vote Count</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <?php
-                                // Fetch and display president candidate ranking based on vote count and organization filter
-                                $organizationFilter = !empty($_GET['organization']) ? " AND voters1.organization = '".$_GET['organization']."'" : "";
-                                $sql = "SELECT voters1.organization, CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-                                        COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-                                        FROM categories 
-                                        LEFT JOIN candidates ON categories.id = candidates.category_id
-                                        LEFT JOIN votes ON candidates.id = votes.candidate_id
-                                        LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-                                        WHERE voters1.organization != '' AND categories.name = 'President'".$organizationFilter."
-                                        GROUP BY voters1.organization, candidates.id
-                                        ORDER BY vote_count DESC";
-                                $query = $conn->query($sql);
-                                $rank = 1;
-                                while($row = $query->fetch_assoc()){
-                                    echo "
-                                        <tr>
-                                        <td>".$rank."</td>
-                                        <td>".$row['organization']."</td>
-                                        <td>".$row['candidate_name']."</td>
-                                        <td>".$row['vote_count']."</td>
-                                        </tr>";
-                                    $rank++;
-                                }
-                                ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                <?php
+                // Function to display ranking table
+                function displayRankingTable($conn, $position, $organizationFilter) {
+                    $sql = "SELECT voters1.organization, CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
+                            COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
+                            FROM categories 
+                            LEFT JOIN candidates ON categories.id = candidates.category_id
+                            LEFT JOIN votes ON candidates.id = votes.candidate_id
+                            LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
+                            WHERE voters1.organization != '' AND categories.name = '".$position."'".$organizationFilter."
+                            GROUP BY voters1.organization, candidates.id
+                            ORDER BY vote_count DESC";
+                    $query = $conn->query($sql);
+                    $rank = 1;
+                    while($row = $query->fetch_assoc()){
+                        echo "
+                            <tr>
+                            <td>".$rank."</td>
+                            <td>".$row['organization']."</td>
+                            <td>".$row['candidate_name']."</td>
+                            <td>".$row['vote_count']."</td>
+                            </tr>";
+                        $rank++;
+                    }
+                }
 
-                <!-- Vice President for Internal Affairs Ranking List Box -->
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Ranking of Vice President for Internal Affairs Candidates</h3>
-                        </div>
-                        <div class="box-body">
-                            <!-- Vice President Ranking Table -->
-                            <table class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>Rank</th>
-                                    <th>Organization</th>
-                                    <th>Candidate</th>
-                                    <th>Vote Count</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <?php
-                                // Fetch and display vice president candidate ranking based on vote count and organization filter
-                                $sql = "SELECT voters1.organization, CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-                                        COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-                                        FROM categories 
-                                        LEFT JOIN candidates ON categories.id = candidates.category_id
-                                        LEFT JOIN votes ON candidates.id = votes.candidate_id
-                                        LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-                                        WHERE voters1.organization != '' AND categories.name = 'Vice President for Internal Affairs'".$organizationFilter."
-                                        GROUP BY voters1.organization, candidates.id
-                                        ORDER BY vote_count DESC";
-                                $query = $conn->query($sql);
-                                $rank = 1;
-                                while($row = $query->fetch_assoc()){
-                                    echo "
-                                        <tr>
-                                        <td>".$rank."</td>
-                                        <td>".$row['organization']."</td>
-                                        <td>".$row['candidate_name']."</td>
-                                        <td>".$row['vote_count']."</td>
-                                        </tr>";
-                                    $rank++;
-                                }
-                                ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                // Array of positions
+                $positions = ['President', 'Vice President for Internal Affairs', 'Vice President for External Affairs', 'Secretary', 'Treasurer', 'Auditor', 'P.R.O.'];
+                $organizationFilter = !empty($_GET['organization']) ? " AND voters1.organization = '".$_GET['organization']."'" : "";
 
-                <!-- Vice President for External Affairs Ranking List Box -->
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Ranking of Vice President for External Affairs Candidates</h3>
-                        </div>
-                        <div class="box-body">
-                            <!-- Vice President Ranking Table -->
-                            <table class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>Rank</th>
-                                    <th>Organization</th>
-                                    <th>Candidate</th>
-                                    <th>Vote Count</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <?php
-                                // Fetch and display vice president candidate ranking based on vote count and organization filter
-                                $sql = "SELECT voters1.organization, CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-                                        COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-                                        FROM categories 
-                                        LEFT JOIN candidates ON categories.id = candidates.category_id
-                                        LEFT JOIN votes ON candidates.id = votes.candidate_id
-                                        LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-                                        WHERE voters1.organization != '' AND categories.name = 'Vice President for External Affairs'".$organizationFilter."
-                                        GROUP BY voters1.organization, candidates.id
-                                        ORDER BY vote_count DESC";
-                                $query = $conn->query($sql);
-                                $rank = 1;
-                                while($row = $query->fetch_assoc()){
-                                    echo "
-                                        <tr>
-                                        <td>".$rank."</td>
-                                        <td>".$row['organization']."</td>
-                                        <td>".$row['candidate_name']."</td>
-                                        <td>".$row['vote_count']."</td>";
-                                    $rank++;
-                                }
-                                ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Secretary Ranking List Box -->
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Ranking of Secretary Candidates</h3>
-                        </div>
-                        <div class="box-body">
-                            <!-- Secretary Ranking Table -->
-                            <table class="table table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>Rank</th>
-                                    <th>Organization</th>
-                                    <th>Candidate</th>
-                                    <th>Vote Count</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <?php
-                                // Fetch and display secretary candidate ranking based on vote count and organization filter
-                                $sql = "SELECT voters1.organization, CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-                                        COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-                                        FROM categories 
-                                        LEFT JOIN candidates ON categories.id = candidates.category_id
-                                        LEFT JOIN votes ON candidates.id = votes.candidate_id
-                                        LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-                                        WHERE voters1.organization != '' AND categories.name = 'Secretary'".$organizationFilter."
-                                        GROUP BY voters1.organization, candidates.id
-                                        ORDER BY vote_count DESC";
-                                $query = $conn->query($sql);
-                                $rank = 1;
-                                while($row = $query->fetch_assoc()){
-                                    echo "
-                                        <tr>
-                                        <td>".$rank."</td>
-                                        <td>".$row['organization']."</td>
-                                        <td>".$row['candidate_name']."</td>
-                                        <td>".$row['vote_count']."</td>";
-                                    $rank++;
-                                }
-                                ?>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <span class="pull-right">
-                                    <a href="export_results.php?organization=<?php echo $_GET['organization'] ?? ''; ?>" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Export PDF</a>
-                                </span>
+                // Loop through each position and display the ranking box
+                foreach ($positions as $position) {
+                    echo "
+                    <div class='col-md-12'>
+                        <div class='box'>
+                            <div class='box-header with-border'>
+                                <h3 class='box-title'>Ranking of ".$position." Candidates</h3>
+                            </div>
+                            <div class='box-body'>
+                                <table class='table table-bordered'>
+                                    <thead>
+                                    <tr>
+                                        <th>Rank</th>
+                                        <th>Organization</th>
+                                        <th>Candidate</th>
+                                        <th>Vote Count</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>";
+                    displayRankingTable($conn, $position, $organizationFilter);
+                    echo "
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
+                    </div>";
+                }
+                ?>
+                <!-- Export Button -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span class="pull-right">
+                            <a href="export_results.php?organization=<?php echo $_GET['organization'] ?? ''; ?>" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Export PDF</a>
+                        </span>
                     </div>
                 </div>
             </div>
