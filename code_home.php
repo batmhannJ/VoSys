@@ -553,10 +553,9 @@
     position: relative; /* Position the content relative to the box */
 }
 
-
 .page-header img {
     width: 150px; /* Adjust image width */
-    height: 500px; /* Auto height */
+    height: auto; /* Auto height */
     border-radius: 50%; /* Circular image */
     margin-bottom: 20px; /* Add margin at the bottom */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
@@ -578,6 +577,25 @@
 .subtitle {
     font-size: 18px; /* Decrease font size */
     font-weight: 300; /* Decrease font weight */
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    .page-header {
+        padding: 100px 20px; /* Adjust padding for smaller screens */
+    }
+    
+    .page-header img {
+        width: 100px; /* Adjust image width for smaller screens */
+    }
+
+    .title {
+        font-size: 24px; /* Decrease font size for smaller screens */
+    }
+
+    .subtitle {
+        font-size: 14px; /* Decrease font size for smaller screens */
+    }
 }
 
 
