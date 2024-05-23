@@ -29,21 +29,13 @@ include 'includes/header_csc.php';
         </section>
 
         <section class="content">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-body">
-                            <!-- Select Organization and Filter button removed -->
-                        </div>
-                    </div>
-                </div>
-            </div>
+           
 
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">President Candidates Vote Count</h3>
+                            <h3 class="box-title"><b>President</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="presidentGraph" style="height: 300px;"></div>
@@ -51,10 +43,10 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Vice President Candidates Vote Count</h3>
+                            <h3 class="box-title"><b>Vice President</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="vicePresidentGraph" style="height: 300px;"></div>
@@ -62,10 +54,10 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Secretary Candidates Vote Count</h3>
+                            <h3 class="box-title"><b>Secretary</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="secretaryGraph" style="height: 300px;"></div>
@@ -73,10 +65,10 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Treasurer Candidates Vote Count</h3>
+                            <h3 class="box-title"><b>Treasurer</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="treasurerGraph" style="height: 300px;"></div>
@@ -84,10 +76,10 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Auditor Candidates Vote Count</h3>
+                            <h3 class="box-title"><b>Auditor</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="auditorGraph" style="height: 300px;"></div>
@@ -95,10 +87,10 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">P.R.O Candidates Vote Count</h3>
+                            <h3 class="box-title"><b>Public Information Officer (P.R.O)</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="proGraph" style="height: 300px;"></div>
@@ -106,10 +98,10 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Business Manager Candidates Vote Count</h3>
+                            <h3 class="box-title"><b>Business Manager</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="businessManagerGraph" style="height: 300px;"></div>
@@ -117,10 +109,10 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">BEED Representative Candidates Vote Count</h3>
+                            <h3 class="box-title"><b>BEED Representative</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="beedRepGraph" style="height: 300px;"></div>
@@ -128,10 +120,10 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">BSED Representative Candidates Vote Count</h3>
+                            <h3 class="box-title"><b>BSED Representative</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="bsedRepGraph" style="height: 300px;"></div>
@@ -139,10 +131,10 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">BSHM Representative Candidates Vote Count</h3>
+                            <h3 class="box-title"><b>BSHM Representative</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="bshmRepGraph" style="height: 300px;"></div>
@@ -150,10 +142,10 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">BSOAD Representative Candidates Vote Count</h3>
+                            <h3 class="box-title"><b>BSOAD Representative</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="bsoadRepGraph" style="height: 300px;"></div>
@@ -161,10 +153,10 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">BS CRIM Representative Candidates Vote Count</h3>
+                            <h3 class="box-title"><b>BS CRIM Representative</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="bscrimRepGraph" style="height: 300px;"></div>
@@ -172,10 +164,10 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">BSIT Representative Candidates Vote Count</h3>
+                            <h3 class="box-title"><b>BSIT Representative</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="bsitRepGraph" style="height: 300px;"></div>
