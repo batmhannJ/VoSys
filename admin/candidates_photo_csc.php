@@ -21,5 +21,5 @@
 		$_SESSION['error'] = 'Select candidate to update photo first';
 	}
 
-	header('location: candidates_jpcs.php');
+	header('location: candidates_csc.php');
 ?>
