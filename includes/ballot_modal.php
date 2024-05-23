@@ -16,6 +16,29 @@
     </div>
 </div>
 
+<style>
+  /* Default style */
+#preview_modal .modal-content {
+    max-height: 80vh; /* Set maximum height */
+    overflow-y: auto; /* Add vertical scrollbar if content exceeds height */
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+    #preview_modal .modal-content {
+        max-height: 60vh; /* Decrease maximum height for smaller screens */
+    }
+}
+
+/* Adjustments for larger screens */
+@media (min-width: 1200px) {
+    #preview_modal .modal-content {
+        max-height: 90vh; /* Increase maximum height for larger screens */
+    }
+}
+
+</style>
+
 
 <!--<script>
   $('#submit').click(function() {
