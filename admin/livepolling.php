@@ -63,7 +63,7 @@ include 'includes/header.php';
                             <h3 class="box-title"><b>Vice President for Internal Affairs</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="vicePresidentInternalGraph" style="height: 300px; text-align:center"></div>
+                            <div id="vicePresidentInternalGraph" style="height: 300px;"style="text-align:center"></div>
                         </div>
                     </div>
                 </div>
