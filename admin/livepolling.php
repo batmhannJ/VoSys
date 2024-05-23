@@ -49,7 +49,7 @@ include 'includes/header.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">President</h3>
+                            <h3 class="box-title"><b>President</b</h3>
                         </div>
                         <div class="box-body">
                             <div id="presidentGraph" style="height: 300px;"></div>
@@ -60,7 +60,7 @@ include 'includes/header.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Vice President for Internal Affairs</h3>
+                            <h3 class="box-title"><b>ice President for Internal Affairs</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="vicePresidentInternalGraph" style="height: 300px;"></div>
@@ -71,7 +71,7 @@ include 'includes/header.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Vice President for External Affairs </h3>
+                            <h3 class="box-title"><b>Vice President for External Affairs</b> </h3>
                         </div>
                         <div class="box-body">
                             <div id="vicePresidentExternalGraph" style="height: 300px;"></div>
@@ -82,7 +82,7 @@ include 'includes/header.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Secretary</h3>
+                            <h3 class="box-title"><b>Secretary</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="secretaryGraph" style="height: 300px;"></div>
@@ -96,7 +96,7 @@ include 'includes/header.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Treasurer</h3>
+                            <h3 class="box-title"><b>Treasurer</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="treasurerGraph" style="height: 300px;"></div>
@@ -107,7 +107,7 @@ include 'includes/header.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Auditor</h3>
+                            <h3 class="box-title"><b>Auditor</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="auditorGraph" style="height: 300px;"></div>
@@ -118,7 +118,7 @@ include 'includes/header.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">P.R.O</h3>
+                            <h3 class="box-title"><b>P.R.O</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="proGraph" style="height: 300px;"></div>
@@ -129,7 +129,7 @@ include 'includes/header.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Dir. for Membership</h3>
+                            <h3 class="box-title"><b>Dir. for Membership</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="dirMembershipGraph" style="height: 300px;"></div>
@@ -140,7 +140,7 @@ include 'includes/header.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Dir. for Special Project</h3>
+                            <h3 class="box-title"><b>Dir. for Special Project</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="dirSpecialProjectGraph" style="height: 300px;"></div>
@@ -151,7 +151,7 @@ include 'includes/header.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Block A 1st Year Representative</h3>
+                            <h3 class="box-title"><b>Block A 1st Year Representative</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="blockA1stYearRepGraph" style="height: 300px;"></div>
@@ -162,7 +162,7 @@ include 'includes/header.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Block B 1st Year Representative</h3>
+                            <h3 class="box-title"><b>Block B 1st Year Representative</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="blockB1stYearRepGraph" style="height: 300px;"></div>
@@ -174,7 +174,7 @@ include 'includes/header.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Block A 2nd Year Representative</h3>
+                            <h3 class="box-title"><b>Block A 2nd Year Representative</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="blockA2ndYearRepGraph" style="height: 300px;"></div>
@@ -185,7 +185,7 @@ include 'includes/header.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Block B 2nd Year Representative</h3>
+                            <h3 class="box-title"><b>Block B 2nd Year Representative</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="blockB2ndYearRepGraph" style="height: 300px;"></div>
@@ -196,7 +196,7 @@ include 'includes/header.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Block A 3rd Year Representative</h3>
+                            <h3 class="box-title"><b>Block A 3rd Year Representative</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="blockA3rdYearRepGraph" style="height: 300px;"></div>
@@ -207,7 +207,7 @@ include 'includes/header.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Block B 3rd Year Representative</h3>
+                            <h3 class="box-title"><b>Block B 3rd Year Representative</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="blockB3rdYearRepGraph" style="height: 300px;"></div>
@@ -218,7 +218,7 @@ include 'includes/header.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Block A 4th Year Representative</h3>
+                            <h3 class="box-title"><b>Block A 4th Year Representative</b></h3>
                         </div>
                         <div class="box-body">
                             <div id="blockA4thYearRepGraph" style="height: 300px;"></div>
