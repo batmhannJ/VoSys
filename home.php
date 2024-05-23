@@ -203,7 +203,7 @@ if(!is_active_election($conn)){
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-success btn-flat" id="preview"><i class="fa fa-file-text"></i> Preview</button> 
-                                            <button type="submit" class="btn btn-primary" id="submitBtn" name="vote_code">Yes, Submit</button>
+                                            <button type="submit" class="btn btn-primary" id="submitBtn" name="vote">Yes, Submit</button>
                                         </div>
                                     </div>
                                 </div>
