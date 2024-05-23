@@ -17,6 +17,7 @@
     </div>
 </div>
 <style>
+/* Base styles for the preview body */
 #preview_body {
   background-color: #f0f0f0; /* Light gray background color */
   padding: 20px; /* Padding around the content */
@@ -25,10 +26,20 @@
   max-width: 500px; /* Maximum width of the content */
   margin: 0 auto; /* Center the content horizontally */
   font-family: Arial, sans-serif; /* Font family */
-  font-size: 16px; /* Font size */
+  font-size: 13px; /* Font size */
   line-height: 1.5; /* Line height */
   color: #333; /* Text color */
 }
+
+/* Media query for smaller screens */
+@media screen and (max-width: 600px) {
+  #preview_body {
+    max-width: 90%; /* Adjust maximum width for smaller screens */
+    padding: 15px; /* Adjust padding for smaller screens */
+    font-size: 10px; /* Adjust font size for smaller screens */
+  }
+}
+
 </style>
 <!--<script>
   $('#submit').click(function() {
