@@ -570,7 +570,7 @@ if(!is_active_election($conn)){
 
               /* Style for the primary button */
               .btn-primary {
-    background-color: maroon;
+    background-color: black;
     color: #fff;
     border-color: #007bff;
 }
