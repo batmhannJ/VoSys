@@ -64,7 +64,7 @@
                     <div class="col">
                       <input type="hidden" name="startdate" value="<?= $cdate ?>">
                       <input type="hidden" name="addedby" value="<?= $user['lastname'] ?>, <?= $user['firstname'] ?>">
-                      <button type="submit" class="btn btn-success" style="margin-left: 89%; font-size: 15px;">Announce</button>
+                      <button type="submit" class="btn btn-warning" style="margin-left: 89%; font-size: 15px;">Announce</button>
                     </div>
                   </div>
                 </form>
@@ -101,7 +101,7 @@
                         <tr>
                           <td class='hidden'></td>
                           <td>
-                              <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['id_announcement']."'><i class='fa fa-edit'></i> Edit</button>
+                              <button class='btn btn-primary btn-sm edit btn-flat' data-id='".$row['id_announcement']."'><i class='fa fa-edit'></i> Edit</button>
                               <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id_announcement']."'><i class='fa fa-trash'></i> Delete</button>
                             </td>
                           <td>" . ($counter++) . "</td>
