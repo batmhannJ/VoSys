@@ -19,7 +19,7 @@ $sql = "SELECT candidates.firstname, candidates.lastname, categories.name AS pos
         LEFT JOIN votes_csc ON candidates.id = votes_csc.candidate_id
         LEFT JOIN categories ON candidates.category_id = categories.id
         WHERE votes_csc.organization = '$defaultOrganization'
-        GROUP BY candidates.id, categories.name
+        GROUP BY categories.name, candidates.id
         ORDER BY categories.priority ASC"; // Ordering by priority in categories
 
 $result = $conn->query($sql);
@@ -93,28 +93,35 @@ tr:nth-child(odd) {
     </thead>
 <tbody>";
 
-// Populate data into table rows and highlight the candidate with the highest count of votes for each category
-$currentCategory = ""; // Variable to track the current category
-$maxVotes = 0; // Variable to track the highest count of votes for the current category
+// Initialize array to track highest vote count for each position
+$positionMaxVotes = array();
 
+// Populate data into table rows and highlight the candidate with the highest count of votes for each position
 while ($row = $result->fetch_assoc()) {
-    // Check if the category has changed
-    if ($row['position_name'] !== $currentCategory) {
-        $currentCategory = $row['position_name'];
-        $maxVotes = 0; // Reset the highest count of votes for the new category
-    }
+    $position = $row['position_name'];
+    $voteCount = $row['vote_count'];
 
-    // Update highest count of votes if current count is higher
-    if ($row['vote_count'] > $maxVotes) {
-        $maxVotes = $row['vote_count'];
+    // Check if position exists in the array
+    if (!isset($positionMaxVotes[$position]) || $voteCount > $positionMaxVotes[$position]) {
+        // Update highest vote count for the position
+        $positionMaxVotes[$position] = $voteCount;
     }
+}
+
+// Reset the data pointer to the beginning of the result set
+$result->data_seek(0);
+
+// Populate data into table rows and apply highlighting
+while ($row = $result->fetch_assoc()) {
+    $position = $row['position_name'];
+    $voteCount = $row['vote_count'];
+    $highlightClass = ($voteCount == $positionMaxVotes[$position]) ? 'highlight' : '';
 
     // Generate table row with conditional highlighting
-    $highlightClass = ($row['vote_count'] == $maxVotes) ? 'highlight' : '';
     $pdfContent .= "<tr>
-                        <td>{$row['position_name']}</td>
+                        <td>{$position}</td>
                         <td>{$row['firstname']} {$row['lastname']}</td>
-                        <td class='{$highlightClass}'>{$row['vote_count']}</td>
+                        <td class='{$highlightClass}'>{$voteCount}</td>
                     </tr>";
 }
 
