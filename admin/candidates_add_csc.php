@@ -24,5 +24,5 @@
 		$_SESSION['error'] = 'Fill up add form first';
 	}
 
-	header('location: candidates_jpcs.php');
+	header('location: candidates_csc.php');
 ?>
