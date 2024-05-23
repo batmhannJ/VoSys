@@ -724,7 +724,7 @@
         justify-content: center;
         margin-bottom: 30px;
         margin-right: 12px;
-        margin-top: auto; /* Override margin-top */
+        margin-top: 100px; /* Override margin-top */
     }
 }
 
