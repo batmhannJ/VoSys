@@ -129,7 +129,7 @@
             <?php
               $sql = "SELECT COUNT(*) AS total_votes
                       FROM votes_csc 
-                      JOIN voters ON votes_csc.voters_id = voters.voters_id";
+                      JOIN voters ON votes_csc.voters_id = voters.id";
               $query = $conn->query($sql);
               $row = $query->fetch_assoc();
               $totalVotes = $row['total_votes'];
