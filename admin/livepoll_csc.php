@@ -29,18 +29,10 @@ include 'includes/header_csc.php';
         </section>
 
         <section class="content">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-body">
-                            <!-- Select Organization and Filter button removed -->
-                        </div>
-                    </div>
-                </div>
-            </div>
+           
 
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">President Candidates Vote Count</h3>
@@ -51,7 +43,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Vice President Candidates Vote Count</h3>
@@ -62,7 +54,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Secretary Candidates Vote Count</h3>
@@ -73,7 +65,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Treasurer Candidates Vote Count</h3>
@@ -84,7 +76,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Auditor Candidates Vote Count</h3>
@@ -95,7 +87,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">P.R.O Candidates Vote Count</h3>
@@ -106,7 +98,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">Business Manager Candidates Vote Count</h3>
@@ -117,7 +109,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">BEED Representative Candidates Vote Count</h3>
@@ -128,7 +120,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">BSED Representative Candidates Vote Count</h3>
@@ -139,7 +131,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">BSHM Representative Candidates Vote Count</h3>
@@ -150,7 +142,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">BSOAD Representative Candidates Vote Count</h3>
@@ -161,7 +153,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">BS CRIM Representative Candidates Vote Count</h3>
@@ -172,7 +164,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-11">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title">BSIT Representative Candidates Vote Count</h3>
