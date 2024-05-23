@@ -5,12 +5,35 @@ include 'includes/session.php';
 include 'includes/header_csc.php';
 ?>
 <head>
-    <!-- Add the style block to center the box titles -->
+    <!-- Add the style block to center the box titles and style the back to top button -->
     <style>
         .box-title {
             text-align: center;
             width: 100%;
             display: inline-block;
+        }
+
+        /* Back to Top button styles */
+        #back-to-top {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            display: none;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 22px;
+            line-height: 50px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        #back-to-top:hover {
+            background-color: #555;
         }
     </style>
 </head>
@@ -29,8 +52,6 @@ include 'includes/header_csc.php';
         </section>
 
         <section class="content">
-           
-
             <div class="row">
                 <div class="col-md-11">
                     <div class="box">
@@ -272,6 +293,28 @@ include 'includes/header_csc.php';
     updateVoteCounts();
 
     setInterval(updateVoteCounts, 5000);
+
+    // Back to top button script
+    $(document).ready(function() {
+        var btn = $('#back-to-top');
+        
+        $(window).scroll(function() {
+            if ($(window).scrollTop() > 300) {
+                btn.fadeIn();
+            } else {
+                btn.fadeOut();
+            }
+        });
+        
+        btn.click(function() {
+            $('html, body').animate({scrollTop: 0}, '300');
+            return false;
+        });
+    });
 </script>
+
+<!-- Back to Top Button -->
+<button id="back-to-top" title="Back to Top">&uarr;</button>
+
 </body>
 </html>
