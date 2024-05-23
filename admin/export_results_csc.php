@@ -93,19 +93,28 @@ tr:nth-child(odd) {
     </thead>
 <tbody>";
 
-// Initialize variable to track highest count of votes
-$maxVotes = 0;
+// Populate data into table rows and highlight the candidate with the highest count of votes for each category
+$currentCategory = ""; // Variable to track the current category
+$maxVotes = 0; // Variable to track the highest count of votes for the current category
 
-// Populate data into table rows and find the highest count of votes
 while ($row = $result->fetch_assoc()) {
+    // Check if the category has changed
+    if ($row['position_name'] !== $currentCategory) {
+        $currentCategory = $row['position_name'];
+        $maxVotes = 0; // Reset the highest count of votes for the new category
+    }
+
     // Update highest count of votes if current count is higher
     if ($row['vote_count'] > $maxVotes) {
         $maxVotes = $row['vote_count'];
     }
+
+    // Generate table row with conditional highlighting
+    $highlightClass = ($row['vote_count'] == $maxVotes) ? 'highlight' : '';
     $pdfContent .= "<tr>
                         <td>{$row['position_name']}</td>
                         <td>{$row['firstname']} {$row['lastname']}</td>
-                        <td" . ($row['vote_count'] == $maxVotes ? " class='highlight'" : "") . ">{$row['vote_count']}</td>
+                        <td class='{$highlightClass}'>{$row['vote_count']}</td>
                     </tr>";
 }
 
