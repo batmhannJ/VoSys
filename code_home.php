@@ -628,18 +628,16 @@
     position: fixed;
     top: 0;
     right: 0;
-    z-index: 1000; /* Adjust z-index as needed */
-    width: 250px; /* Adjust width as needed */
+    z-index: 1000;
+    width: 250px;
     display: flex;
     justify-content: center;
     margin-top: 570px;
-    margin-right: 12px; /* Adjust margin as needed */
+    margin-right: 12px;
     margin-bottom: 30px;
-    
 }
 
-
-  .sub_timer {
+.sub_timer {
     width: 90px;
     background: rgba(255, 255, 255, 0.19);
     backdrop-filter: blur(20px);
@@ -647,23 +645,45 @@
     overflow: hidden;
     height: 100px;
     margin-left: 10px;
-  }
+}
 
-  .digit {
+.digit {
     color: black;
     font-weight: lighter;
     font-size: 30px;
     text-align: center;
-    /*padding: 3.5rem 0;*/
-  }
+}
 
-  .digit_name {
+.digit_name {
     color: #000;
     background: lightgrey;
     text-align: center;
-    /*padding: 0.6rem 0;*/
     font-size: 15px;
-  }
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .timer {
+        position: relative;
+        width: 100%;
+        margin-top: 20px;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .sub_timer {
+        width: 70px;
+        height: 80px;
+    }
+
+    .digit {
+        font-size: 24px;
+    }
+
+    .digit_name {
+        font-size: 12px;
+    }
+}
 
 
 
