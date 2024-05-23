@@ -124,9 +124,8 @@
                                         <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
                                         
                                     </div>
-                                    <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">
-                                    <i class="fa fa-fw fa-search"> PLATFORM</i>
-                                </button>
+                                    <button type="button" class="btn btn-primary btn-sm btn-flat platform">PLATFORM</button>
+    
                                 
                                     <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
                                 </li>';
