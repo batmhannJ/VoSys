@@ -20,7 +20,7 @@ $sql = "SELECT candidates.firstname, candidates.lastname, categories.name AS pos
         LEFT JOIN categories ON candidates.category_id = categories.id
         WHERE votes_csc.organization = '$defaultOrganization'
         GROUP BY candidates.id, categories.name
-        ORDER BY categories.name ASC";
+        ORDER BY categories.priority ASC"; // Ordering by priority in categories
 
 $result = $conn->query($sql);
 
