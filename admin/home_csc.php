@@ -130,7 +130,7 @@
               $sql = "SELECT COUNT(*) AS total_votes
                       FROM votes_csc 
                       JOIN voters ON votes_csc.voters_id = voters.id
-                      GROUP BY voters_id";
+                      GROUP BY votes_csc.voters_id";
               $query = $conn->query($sql);
               $row = $query->fetch_assoc();
               $totalVotes = $row['total_votes'];
