@@ -1,18 +1,10 @@
 <?php
 session_start();
 
-if (isset($_POST['email']) && isset($_POST['new_password']) && isset($_POST['confirm_password'])) {
+if (isset($_POST['email']) && isset($_POST['new_password'])) {
     $email = $_POST['email'];
     $newPassword = $_POST['new_password'];
-    $confirmPassword = $_POST['confirm_password'];
 
-    // Step 1: Check if new password matches the confirmed password
-    if ($newPassword !== $confirmPassword) {
-        $response = array("status" => "error", "message" => "New password and confirm password do not match");
-        header('Content-Type: application/json');
-        echo json_encode($response);
-        exit(); // Exit without updating the password
-    }
 
     // Step 2: Establish a database connection
     $connection = mysqli_connect("localhost", "u247141684_vosys", "vosysOlshco5", "u247141684_votesystem");
@@ -48,7 +40,7 @@ if (isset($_POST['email']) && isset($_POST['new_password']) && isset($_POST['con
     exit(); // Make sure to exit after sending the JSON response
 } else {
     // If email, new password, or confirm password parameter is missing
-    $response = array("status" => "error", "message" => "New password and confirm password does not match.error ");
+    $response = array("status" => "error", "message" => "New password and confirm password does not match.");
     header('Content-Type: application/json');
     echo json_encode($response);
     exit(); // Exit without updating the password
