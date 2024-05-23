@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html>
 <?php
 include 'includes/session.php';
 include 'includes/header.php';
@@ -7,21 +9,16 @@ include 'includes/header.php';
     <?php include 'includes/navbar.php'; ?>
     <?php include 'includes/menubar.php'; ?>
 
-    <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>
-                Election Results
-            </h1>
+            <h1>Election Results</h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                 <li class="active">Results</li>
             </ol>
         </section>
-        <!-- Main content -->
+
         <section class="content">
-            <!-- Organization Filter -->
             <div class="row">
                 <div class="col-md-12">
                     <div class="box">
@@ -29,10 +26,9 @@ include 'includes/header.php';
                             <form method="get" action="">
                                 <div class="form-group">
                                     <label for="organization">Select Organization:</label>
-                                    <select class="form-control" name="organization" id="organization">
+                                    <select class="form-control" name="organization" id="organization" onchange="updateVoteCounts()">
                                         <option value="">All Organizations</option>
                                         <?php
-                                        // Fetch and display organizations
                                         $organizationQuery = $conn->query("SELECT DISTINCT organization FROM voters");
                                         while($organizationRow = $organizationQuery->fetch_assoc()){
                                             $selected = ($_GET['organization'] ?? '') == $organizationRow['organization'] ? 'selected' : '';
@@ -48,116 +44,321 @@ include 'includes/header.php';
                 </div>
             </div>
 
-            <!-- Combined Column Graph for President and Vice President -->
+            <!-- Existing categories -->
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-3">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Candidates Vote Count</h3>
+                            <h3 class="box-title">President Candidates Vote Count</h3>
                         </div>
-                        <!-- /.box-header -->
                         <div class="box-body">
-                            <!-- Combined Column Graph Container -->
-                            <div id="combinedGraph" style="height: 400px;"></div>
+                            <div id="presidentGraph" style="height: 300px;"></div>
                         </div>
-                        <!-- /.box-body -->
                     </div>
-                    <!-- /.box -->
                 </div>
-                <!-- /.col -->
+                <div class="row">
+               
+                <div class="box-header with-border">
+                <h3 class="box-title">Vice President for External Affairs Candidates Vote Count</h3>
+                <div class="box-body">
+                            <div id="vicePresidentInternalGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                <div class="col-md-3">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Vice President for External Affairs Candidates Vote Count</h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="vicePresidentExternalGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                <div class="col-md-3">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Secretary Candidates Vote Count</h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="secretaryGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- /.row -->
+
+            <!-- Additional positions -->
+            
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Treasurer Candidates Vote Count</h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="treasurerGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Auditor Candidates Vote Count</h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="auditorGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">P.R.O. Candidates Vote Count</h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="proGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Dir. for Membership Candidates Vote Count</h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="dirMembershipGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Dir. for Special Project Candidates Vote Count</h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="dirSpecialProjectGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Block A 1st Year Representative Candidates Vote Count</h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="blockA1stYearRepGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Block B 1st Year Representative Candidates Vote Count</h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="blockB1stYearRepGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <!-- ... other existing categories ... -->
+            </div>
+
+            <!-- Additional positions -->
+            <div class="row">
+                <!-- ... existing categories continued ... -->
+
+                <!-- New positions -->
+                <div class="col-md-3">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Block A 2nd Year Representative Vote Count</h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="blockA2ndYearRepGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Block B 2nd Year Representative Vote Count</h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="blockB2ndYearRepGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Block A 3rd Year Representative Vote Count</h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="blockA3rdYearRepGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Block B 3rd Year Representative Vote Count</h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="blockB3rdYearRepGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Block A 4th Year Representative Vote Count</h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="blockA4thYearRepGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Block B 4th Year Representative Vote Count</h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="blockB4thYearRepGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
-        <!-- /.content -->
     </div>
 
-    <!-- /.content-wrapper -->
     <?php include 'includes/footer.php'; ?>
     <?php include 'includes/votes_modal.php'; ?>
 </div>
-<!-- ./wrapper -->
 <?php include 'includes/scripts.php'; ?>
-<!-- Column Graph Script -->
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-<!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    // Function to generate combined column graph with multiple axes
-    function generateCombinedGraph(presidentDataPoints, vicePresidentDataPoints, containerId) {
+    function generateBarGraph(dataPoints, containerId) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
-            title: {
+            title:{
                 text: "Vote Counts"
+            },
+            axisX: {
+                title: "Candidates"
             },
             axisY: {
                 title: "Vote Count",
                 includeZero: true
             },
-            axisX: {
-                title: "Candidates"
-            },
-            data: [
-                {
-                    type: "column",
-                    name: "President",
-                    showInLegend: true,
-                    color: "#4F81BC", // Blue color for president candidates
-                    dataPoints: presidentDataPoints
-                },
-                {
-                    type: "column",
-                    name: "Vice President",
-                    showInLegend: true,
-                    color: "#C0504E", // Red color for vice president candidates
-                    dataPoints: vicePresidentDataPoints
-                }
-            ]
+            data: [{
+                type: "column",
+                dataPoints: dataPoints
+            }]
         });
         chart.render();
         return chart;
     }
 
-    // Initialize chart
-    var combinedChart;
-
-    // Function to fetch updated data from the server
-    function updateData() {
+    function updateVoteCounts() {
         $.ajax({
-            url: 'update_data.php', // Change this to the URL of your update data script
-            type: 'GET',
+            url: 'update_data.php?organization=' + $('#organization').val(),
+            method: 'GET',
             dataType: 'json',
-            data: {organization: $('#organization').val()}, // Pass the selected organization to the server
             success: function(response) {
-                // Update combined column graph
-                if (response.presidentData.length > 0 || response.vicePresidentData.length > 0) {
-                    if (!combinedChart) {
-                        combinedChart = generateCombinedGraph(response.presidentData, response.vicePresidentData, "combinedGraph");
-                    } else {
-                        updateCombinedGraph(response.presidentData, response.vicePresidentData, combinedChart);
-                    }
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching data: ' + error);
+                presidentChart.options.data[0].dataPoints = response.president;
+                presidentChart.render();
+
+                vicePresidentInternalChart.options.data[0].dataPoints = response.vicePresidentInternal;
+                vicePresidentInternalChart.render();
+
+                vicePresidentExternalChart.options.data[0].dataPoints = response.vicePresidentExternal;
+                vicePresidentExternalChart.render();
+
+                secretaryChart.options.data[0].dataPoints = response.secretary;
+                secretaryChart.render();
+
+                treasurerChart.options.data[0].dataPoints = response.treasurer;
+                treasurerChart.render();
+
+                auditorChart.options.data[0].dataPoints = response.auditor;
+                auditorChart.render();
+
+                proChart.options.data[0].dataPoints = response.pro;
+                proChart.render();
+
+                dirMembershipChart.options.data[0].dataPoints = response.dirMembership;
+                dirMembershipChart.render();
+
+                dirSpecialProjectChart.options.data[0].dataPoints = response.dirSpecialProject;
+                dirSpecialProjectChart.render();
+
+                blockA1stYearRepChart.options.data[0].dataPoints = response.blockA1stYearRep;
+                blockA1stYearRepChart.render();
+
+                blockB1stYearRepChart.options.data[0].dataPoints = response.blockB1stYearRep;
+                blockB1stYearRepChart.render();
+
+                
+                blockA2ndYearRepChart.options.data[0].dataPoints = response.blockA2ndYearRep;
+                blockA2ndYearRepChart.render();
+
+                blockB2ndYearRepChart.options.data[0].dataPoints = response.blockB2ndYearRep;
+                blockB2ndYearRepChart.render();
+
+                blockA3rdYearRepChart.options.data[0].dataPoints = response.blockA3rdYearRep;
+                blockA3rdYearRepChart.render();
+
+                blockB3rdYearRepChart.options.data[0].dataPoints = response.blockB3rdYearRep;
+                blockB3rdYearRepChart.render();
+
+                blockA4thYearRepChart.options.data[0].dataPoints = response.blockA4thYearRep;
+                blockA4thYearRepChart.render();
+
+                blockB4thYearRepChart.options.data[0].dataPoints = response.blockB4thYearRep;
+                blockB4thYearRepChart.render();
             }
         });
     }
+    var presidentChart = generateBarGraph([], "presidentGraph");
+    var vicePresidentInternalChart = generateBarGraph([], "vicePresidentInternalGraph");
+    var vicePresidentExternalChart = generateBarGraph([], "vicePresidentExternalGraph");
+    var secretaryChart = generateBarGraph([], "secretaryGraph");
+    var treasurerChart = generateBarGraph([], "treasurerGraph");
+    var auditorChart = generateBarGraph([], "auditorGraph");
+    var proChart = generateBarGraph([], "proGraph");
+    var dirMembershipChart = generateBarGraph([], "dirMembershipGraph");
+    var dirSpecialProjectChart = generateBarGraph([], "dirSpecialProjectGraph");
+    var blockA1stYearRepChart = generateBarGraph([], "blockA1stYearRepGraph");
+    var blockB1stYearRepChart = generateBarGraph([], "blockB1stYearRepGraph");
+    var blockA2ndYearRepChart = generateBarGraph([], "blockA2ndYearRepGraph");
+    var blockB2ndYearRepChart = generateBarGraph([], "blockB2ndYearRepGraph");
+    var blockA3rdYearRepChart = generateBarGraph([], "blockA3rdYearRepGraph");
+    var blockB3rdYearRepChart = generateBarGraph([], "blockB3rdYearRepGraph");
+    var blockA4thYearRepChart = generateBarGraph([], "blockA4thYearRepGraph");
+    var blockB4thYearRepChart = generateBarGraph([], "blockB4thYearRepGraph");
 
-    // Function to update combined column graph with animation
-    function updateCombinedGraph(newPresidentDataPoints, newVicePresidentDataPoints, chart) {
-        chart.options.data[0].dataPoints = newPresidentDataPoints;
-        chart.options.data[1].dataPoints = newVicePresidentDataPoints;
-        chart.render();
-    }
+    // Initial update of vote counts
+    updateVoteCounts();
 
-    // Initialize chart
-    var combinedChart = generateCombinedGraph([], [], "combinedGraph");
-
-    // Call the updateData function initially
-    updateData();
-
-    // Call the updateData function every 5 seconds
-    setInterval(updateData, 5000);
+    // Update vote counts periodically
+    setInterval(updateVoteCounts, 5000);
 </script>
 </body>
 </html>
+

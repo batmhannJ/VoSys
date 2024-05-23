@@ -1,59 +1,49 @@
 <?php
-// Include necessary files and initialize database connection
 include 'includes/session.php';
-include 'includes/db.php';
 
-// Initialize arrays to store updated data
-$presidentData = array();
-$vicePresidentData = array();
-
-// Fetch updated data for president candidates
-$sqlPresident = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-                COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-                FROM positions 
-                LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'President'
-                LEFT JOIN votes ON candidates.id = votes.candidate_id
-                LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-                WHERE voters1.organization != ''
-                GROUP BY candidates.id";
-$queryPresident = $conn->query($sqlPresident);
-if ($queryPresident) {
-    while ($row = $queryPresident->fetch_assoc()) {
-        $presidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
-    }
-} else {
-    // Handle query error
-    echo "Error fetching president data: " . $conn->error;
+$organizationFilter = "";
+if (!empty($_GET['organization'])) {
+    $organizationFilter = " AND voters1.organization = '" . $_GET['organization'] . "'";
 }
 
-// Fetch updated data for vice president candidates
-$sqlVicePresident = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-                    COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
-                    FROM positions 
-                    LEFT JOIN candidates ON positions.id = candidates.position_id AND positions.description = 'Vice President'
-                    LEFT JOIN votes ON candidates.id = votes.candidate_id
-                    LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
-                    WHERE voters1.organization != ''
-                    GROUP BY candidates.id";
-$queryVicePresident = $conn->query($sqlVicePresident);
-if ($queryVicePresident) {
-    while ($row = $queryVicePresident->fetch_assoc()) {
-        $vicePresidentData[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+// Function to fetch votes data
+function fetchVotes($conn, $category, $organizationFilter) {
+    $data = array();
+    $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
+            COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
+            FROM categories 
+            LEFT JOIN candidates ON categories.id = candidates.category_id
+            LEFT JOIN votes ON candidates.id = votes.candidate_id
+            LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
+            WHERE voters1.organization != '' AND categories.name = '$category'
+            $organizationFilter
+            GROUP BY candidates.id";
+    $query = $conn->query($sql);
+    while($row = $query->fetch_assoc()) {
+        $data[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
     }
-} else {
-    // Handle query error
-    echo "Error fetching vice president data: " . $conn->error;
+    return $data;
 }
 
-// Close database connection
-$conn->close();
+$response = array();
+$response['president'] = fetchVotes($conn, 'President', $organizationFilter);
+$response['vicePresidentInternal'] = fetchVotes($conn, 'Vice President for Internal Affairs', $organizationFilter);
+$response['vicePresidentExternal'] = fetchVotes($conn, 'Vice President for External Affairs', $organizationFilter);
+$response['secretary'] = fetchVotes($conn, 'Secretary', $organizationFilter);
+$response['treasurer'] = fetchVotes($conn, 'Treasurer', $organizationFilter);
+$response['auditor'] = fetchVotes($conn, 'Auditor', $organizationFilter);
+$response['pro'] = fetchVotes($conn, 'P.R.O', $organizationFilter);
+$response['dirMembership'] = fetchVotes($conn, 'Dir. for Membership', $organizationFilter);
+$response['dirSpecialProject'] = fetchVotes($conn, 'Dir. for Special Project', $organizationFilter);
+$response['blockA1stYearRep'] = fetchVotes($conn, 'Block A 1st Year Representative', $organizationFilter);
+$response['blockB1stYearRep'] = fetchVotes($conn, 'Block B 1st Year Representative', $organizationFilter);
+$response['blockA2ndYearRep'] = fetchVotes($conn, 'Block A 2nd Year Representative', $organizationFilter);
+$response['blockB2ndYearRep'] = fetchVotes($conn, 'Block B 2nd Year Representative', $organizationFilter);
+$response['blockA3rdYearRep'] = fetchVotes($conn, 'Block A 3rd Year Representative', $organizationFilter);
+$response['blockB3rdYearRep'] = fetchVotes($conn, 'Block B 3rd Year Representative', $organizationFilter);
+$response['blockA4thYearRep'] = fetchVotes($conn, 'Block A 4th Year Representative', $organizationFilter);
+$response['blockB4thYearRep'] = fetchVotes($conn, 'Block B 4th Year Representative', $organizationFilter);
 
-// Combine the updated data into a single array
-$response = array(
-    'presidentData' => $presidentData,
-    'vicePresidentData' => $vicePresidentData
-);
-
-// Return the updated data as JSON
+header('Content-Type: application/json');
 echo json_encode($response);
 ?>
