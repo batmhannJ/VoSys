@@ -43,7 +43,7 @@
               <h4 class="modal-title"><b>Edit Position</b></h4>
             </div>
             <div class="modal-body">
-              <form class="form-horizontal" method="POST" action="positions_edit.php">
+              <form class="form-horizontal" method="POST" action="positions_edit_csc.php">
                 <input type="hidden" class="id" name="id">
                 <div class="form-group">
                     <label for="edit_description" class="col-sm-3 control-label">Description</label>
@@ -79,7 +79,7 @@
               <h4 class="modal-title"><b>Deleting...</b></h4>
             </div>
             <div class="modal-body">
-              <form class="form-horizontal" method="POST" action="positions_delete.php">
+              <form class="form-horizontal" method="POST" action="positions_delete_csc.php">
                 <input type="hidden" class="id" name="id">
                 <div class="text-center">
                     <p>DELETE POSITION</p>
