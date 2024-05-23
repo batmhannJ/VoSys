@@ -11,6 +11,7 @@
 	      <section class="content">
 	      	<h1 class="page-header text-center title">
 	      		<b>Coalition of Disciplined Future Enforcers of Todays Generation Election</b></h1>
+                  <b>COALITION OF DISCIPLINED FUTURE ENFORCERS OF TODAYS GENERATION <br> ELECTION</b></h1>
 	        <div class="row">
 	        	<div class="col-sm-10 col-sm-offset-1">
 	        		<?php
