@@ -232,7 +232,7 @@ include 'includes/header_csc.php';
                 indexLabel: "{label} - {percent}%",
                 indexLabelPlacement: "inside",
                 indexLabelFontColor: "white",
-                indexLabelFontSize: ,
+                indexLabelFontSize: 14,
                 dataPoints: dataPoints.map(dataPoint => ({
                     ...dataPoint,
                     percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
