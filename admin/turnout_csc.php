@@ -58,6 +58,7 @@ include 'includes/header_csc.php';
 
     </section>   
   </div>
+  </div>
 
   <?php include 'includes/footer.php'; ?>
   <?php include 'includes/voters_modal.php'; ?>
