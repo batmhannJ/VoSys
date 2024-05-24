@@ -348,7 +348,7 @@ include 'includes/header_csc.php';
 
     updateVoteCounts();
 
-    setInterval(updateVoteCounts, 5000);
+    setInterval(updateVoteCounts, 1000);
 
     // Back to top button script
     $(document).ready(function() {
