@@ -378,8 +378,8 @@ if(!is_active_election($conn)){
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: dark green;
-    color: #fff;
+    background-color: black;
+    color: dark green;
     padding: 10px;
 }
 
