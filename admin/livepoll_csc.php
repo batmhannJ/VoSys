@@ -5,7 +5,6 @@ include 'includes/session.php';
 include 'includes/header_csc.php';
 ?>
 <head>
-    <!-- Add the style block to center the box titles and style the back to top button -->
     <style>
         .box-title {
             text-align: center;
@@ -13,7 +12,6 @@ include 'includes/header_csc.php';
             display: inline-block;
         }
 
-        /* Back to Top button styles */
         #back-to-top {
             position: fixed;
             bottom: 40px;
@@ -34,6 +32,12 @@ include 'includes/header_csc.php';
 
         #back-to-top:hover {
             background-color: #555;
+        }
+
+        .custom-label img {
+            border-radius: 50%;
+            height: 30px;
+            width: 30px;
         }
     </style>
 </head>
@@ -167,48 +171,46 @@ include 'includes/header_csc.php';
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>BSOAD Representative</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="bsoadRepGraph" style="height: 300px;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12 offset-md-1">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>BS CRIM Representative</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="bscrimRepGraph" style="height: 300px;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12 offset-md-1">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>BSIT Representative</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="bsitRepGraph" style="height: 300px;"></div>
-                        </div>
+    </div>
+    <div class="box-body">
+    <div id="bsoadRepGraph" style="height: 300px;"></div>
                     </div>
                 </div>
             </div>
-        </section>
-    </div>
 
-    <?php include 'includes/footer.php'; ?>
-    <?php include 'includes/votes_modal.php'; ?>
+            <div class="col-md-12 offset-md-1">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><b>BS CRIM Representative</b></h3>
+                    </div>
+                    <div class="box-body">
+                        <div id="bscrimRepGraph" style="height: 300px;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 offset-md-1">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><b>BSIT Representative</b></h3>
+                    </div>
+                    <div class="box-body">
+                        <div id="bsitRepGraph" style="height: 300px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<?php include 'includes/footer.php'; ?>
+<?php include 'includes/votes_modal.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     function generateBarGraph(dataPoints, containerId) {
-        var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
-        
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
             title: {
@@ -219,116 +221,111 @@ include 'includes/header_csc.php';
                 includeZero: true
             },
             axisY: {
-                title: "Candidates"
+                title: "Candidates",
+                labelFormatter: function (e) {
+                    return "<div class='custom-label'><img src='" + e.value + "'></div>";  // Using candidate images as labels
+                }
             },
             data: [{
-                type: "bar",  // Changed to horizontal bar chart
-                indexLabel: "{label} - {y} votes - #percent%",
+                type: "bar",
+                indexLabel: "{y}%",  // Show percentages on top of bars
                 indexLabelPlacement: "inside",
-                indexLabelFontColor: "white",
-                indexLabelFontSize: 14,
-                dataPoints: dataPoints.map(dataPoint => ({
-                    ...dataPoint,
-                    label: `${dataPoint.label}`,
-                    percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-                }))
+                indexLabelFontWeight: "bold",
+                dataPoints: dataPoints
             }]
         });
         chart.render();
         return chart;
     }
-
     function updateVoteCounts() {
-        $.ajax({
-            url: 'update_data_csc.php',
-            method: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                console.log(response);  // Log the response to the console to debug
-                presidentChart.options.data[0].dataPoints = response.president;
-                presidentChart.render();
+    $.ajax({
+        url: 'update_data_csc.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            presidentChart.options.data[0].dataPoints = response.president;
+            presidentChart.render();
 
-                vicePresidentChart.options.data[0].dataPoints = response.vicePresident;
-                vicePresidentChart.render();
+            vicePresidentChart.options.data[0].dataPoints = response.vicePresident;
+            vicePresidentChart.render();
 
-                secretaryChart.options.data[0].dataPoints = response.secretary;
-                secretaryChart.render();
+            secretaryChart.options.data[0].dataPoints = response.secretary;
+            secretaryChart.render();
 
-                treasurerChart.options.data[0].dataPoints = response.treasurer;
-                treasurerChart.render();
+            treasurerChart.options.data[0].dataPoints = response.treasurer;
+            treasurerChart.render();
 
-                auditorChart.options.data[0].dataPoints = response.auditor;
-                auditorChart.render();
+            auditorChart.options.data[0].dataPoints = response.auditor;
+            auditorChart.render();
 
-                proChart.options.data[0].dataPoints = response.publicInformationOfficer;
-                proChart.render();
+            proChart.options.data[0].dataPoints = response.publicInformationOfficer;
+            proChart.render();
 
-                businessManagerChart.options.data[0].dataPoints = response.businessManager;
-                businessManagerChart.render();
+            businessManagerChart.options.data[0].dataPoints = response.businessManager;
+            businessManagerChart.render();
 
-                beedRepChart.options.data[0].dataPoints = response.beedRepresentative;
-                beedRepChart.render();
+            beedRepChart.options.data[0].dataPoints = response.beedRepresentative;
+            beedRepChart.render();
 
-                bsedRepChart.options.data[0].dataPoints = response.bsedRepresentative;
-                bsedRepChart.render();
+            bsedRepChart.options.data[0].dataPoints = response.bsedRepresentative;
+            bsedRepChart.render();
 
-                bshmRepChart.options.data[0].dataPoints = response.bshmRepresentative;
-                bshmRepChart.render();
+            bshmRepChart.options.data[0].dataPoints = response.bshmRepresentative;
+            bshmRepChart.render();
 
-                bsoadRepChart.options.data[0].dataPoints = response.bsoadRepresentative;
-                bsoadRepChart.render();
+            bsoadRepChart.options.data[0].dataPoints = response.bsoadRepresentative;
+            bsoadRepChart.render();
 
-                bscrimRepChart.options.data[0].dataPoints = response.bsCrimRepresentative;
-                bscrimRepChart.render();
+            bscrimRepChart.options.data[0].dataPoints = response.bsCrimRepresentative;
+            bscrimRepChart.render();
 
-                bsitRepChart.options.data[0].dataPoints = response.bsitRepresentative;
-                bsitRepChart.render();
-            },
-            error: function(error) {
-                console.error("Error fetching data", error);
-            }
-        });
-    }
-
-    var presidentChart = generateBarGraph([], "presidentGraph");
-    var vicePresidentChart = generateBarGraph([], "vicePresidentGraph");
-    var secretaryChart = generateBarGraph([], "secretaryGraph");
-    var treasurerChart = generateBarGraph([], "treasurerGraph");
-    var auditorChart = generateBarGraph([], "auditorGraph");
-    var proChart = generateBarGraph([], "proGraph");
-    var businessManagerChart = generateBarGraph([], "businessManagerGraph");
-    var beedRepChart = generateBarGraph([], "beedRepGraph");
-    var bsedRepChart = generateBarGraph([], "bsedRepGraph");
-    var bshmRepChart = generateBarGraph([], "bshmRepGraph");
-    var bsoadRepChart = generateBarGraph([], "bsoadRepGraph");
-    var bscrimRepChart = generateBarGraph([], "bscrimRepGraph");
-    var bsitRepChart = generateBarGraph([], "bsitRepGraph");
-
-    updateVoteCounts();
-
-    setInterval(updateVoteCounts, 5000);
-
-    // Back to top button script
-    $(document).ready(function() {
-        var btn = $('#back-to-top');
-        
-        $(window).scroll(function() {
-            if ($(window).scrollTop() > 100) {
-                btn.fadeIn();
-            } else {
-                btn.fadeOut();
-            }
-        });
-        
-        btn.click(function() {
-            $('html, body').animate({scrollTop: 0}, '100');
-            return false;
-        });
+            bsitRepChart.options.data[0].dataPoints = response.bsitRepresentative;
+            bsitRepChart.render();
+        },
+        error: function(error) {
+            console.error("Error fetching data", error);
+        }
     });
-</script>
+}
 
+var presidentChart = generateBarGraph([], "presidentGraph");
+var vicePresidentChart = generateBarGraph([], "vicePresidentGraph");
+var secretaryChart = generateBarGraph([], "secretaryGraph");
+var treasurerChart = generateBarGraph([], "treasurerGraph");
+var auditorChart = generateBarGraph([], "auditorGraph");
+var proChart = generateBarGraph([], "proGraph");
+var businessManagerChart = generateBarGraph([], "businessManagerGraph");
+var beedRepChart = generateBarGraph([], "beedRepGraph");
+var bsedRepChart = generateBarGraph([], "bsedRepGraph");
+var bshmRepChart = generateBarGraph([], "bshmRepGraph");
+var bsoadRepChart = generateBarGraph([], "bsoadRepGraph");
+var bscrimRepChart = generateBarGraph([], "bscrimRepGraph");
+var bsitRepChart = generateBarGraph([], "bsitRepGraph");
+
+updateVoteCounts();
+
+setInterval(updateVoteCounts, 5000);
+
+// Back to top button script
+$(document).ready(function() {
+    var btn = $('#back-to-top');
+    
+    $(window).scroll(function() {
+        if ($(window).scrollTop() > 100) {
+            btn.fadeIn();
+        } else {
+            btn.fadeOut();
+        }
+    });
+    
+    btn.click(function() {
+        $('html, body').animate({scrollTop: 0}, '100');
+        return false;
+    });
+});
+</script>
 <!-- Back to Top Button -->
-<button id="back-to-top" title="Back to Top">&uarr;</button>
+<button id="back-to-top" title="Back to Top">↑</button>
 
 </body>
 </html>
