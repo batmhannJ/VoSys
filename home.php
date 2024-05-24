@@ -130,7 +130,7 @@ if(!is_active_election($conn)){
                                 $voter_id = $_SESSION['voters_id'];
 
                                 // Fetch the user's organization from the voters table
-                                $sql = "SELECT organization FROM voters WHERE id = '".$voter_id."'";
+                                $sql = "SELECT organization FROM voters WHERE voters_id = '".$voter_id."'";
                                 $query = $conn->query($sql);
                                 $voter = $query->fetch_assoc();
                                 $user_organization = $voter['organization'];
