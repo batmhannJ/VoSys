@@ -49,6 +49,7 @@
               <a href="#reset" data-toggle="modal" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-refresh"></i> Reset</a>
             </div>
             <div class="box-body">
+            <div class="table-responsive" style="overflow-x:auto;">
               <table id="example1" class="table table-bordered">
                 <thead>
                   <th class="hidden"></th>
@@ -56,6 +57,7 @@
                   <th>Position</th>
                   <th>Candidate</th>
                   <th>Voter</th>
+                  <th>Organization</th>
                 </thead>
                 <tbody>
                 <?php
@@ -73,10 +75,12 @@
                       GROUP BY votes_csc.id
                       ORDER BY categories.priority ASC";
                       $query = $conn->query($sql);
+                      $i = 1;
                       while($row = $query->fetch_assoc()){
                         echo "
                           <tr>
                             <td class='hidden'></td>
+                            <td>".$i++."</td>
                             <td>".$row['name']."</td>
                             <td>".$row['canfirst'].' '.$row['canlast']."</td>
                             <td>".$row['votfirst'].' '.$row['votlast']."</td>
@@ -87,6 +91,7 @@
                     ?>
                 </tbody>
               </table>
+              </div>
             </div>
           </div>
         </div>

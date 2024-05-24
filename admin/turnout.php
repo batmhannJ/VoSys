@@ -52,9 +52,9 @@ $colors = array(
 // Query to get the number of voters voted for all organizations
 
 // Query to count the total number of voters who have voted per organization
-$sql_voters_voted = "SELECT voters.organization, COUNT(DISTINCT votes.voters_id) AS voters_voted_count
-                     FROM votes 
-                     JOIN voters ON votes.voters_id = voters.id 
+$sql_voters_voted = "SELECT voters.organization, COUNT(DISTINCT votes_csc.voters_id) AS voters_voted_count
+                     FROM votes_csc 
+                     JOIN voters ON votes_csc.voters_id = voters.id 
                      GROUP BY voters.organization";
 $query_voters_voted = $conn->query($sql_voters_voted);
 
@@ -67,8 +67,8 @@ while ($row = $query_voters_voted->fetch_assoc()) {
 // Query to get the number of remaining voters for all organizations
 $sql_remaining_voters = "SELECT voters.organization, COUNT(*) AS remaining_voters_count
                          FROM voters
-                         LEFT JOIN votes ON voters.id = votes.voters_id
-                         WHERE votes.voters_id IS NULL
+                         LEFT JOIN votes_csc ON voters.id = votes_csc.voters_id
+                         WHERE votes_csc.voters_id IS NULL
                          GROUP BY voters.organization";
 $query_remaining_voters = $conn->query($sql_remaining_voters);
 
