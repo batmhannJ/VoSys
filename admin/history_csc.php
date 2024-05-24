@@ -48,6 +48,25 @@ include 'includes/header_csc.php';
                     }
                 }
 
+                // Function to display bar graph for president
+                function displayPresidentGraph($conn) {
+                    $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
+                            COALESCE(COUNT(votes_csc.candidate_id), 0) AS vote_count
+                            FROM categories 
+                            LEFT JOIN candidates ON categories.id = candidates.category_id
+                            LEFT JOIN votes_csc ON candidates.id = votes_csc.candidate_id
+                            WHERE categories.name = 'President'
+                            GROUP BY candidates.id
+                            ORDER BY vote_count DESC";
+                    $query = $conn->query($sql);
+                    $dataPoints = array();
+                    while($row = $query->fetch_assoc()){
+                        $dataPoints[] = array("label" => $row['candidate_name'], "y" => $row['vote_count']);
+                    }
+                    echo "<div id='presidentGraph'></div>";
+                    echo "<script>generateBarGraph(".json_encode($dataPoints).", 'presidentGraph');</script>";
+                }
+
                 // Array of positions
                 $positions = [
                     'President', 
@@ -90,6 +109,22 @@ include 'includes/header_csc.php';
                             </div>
                         </div>
                     </div>";
+
+                    // Add bar graph for president
+                    if ($position === 'President') {
+                        echo "
+                        <div class='col-md-12'>
+                            <div class='box'>
+                                <div class='box-header with-border'>
+                                    <h3 class='box-title text-center'>President Candidate Votes</h3>
+                                </div>
+                                <div class='box-body'>";
+                        displayPresidentGraph($conn);
+                        echo "
+                                </div>
+                            </div>
+                        </div>";
+                    }
                 }
                 ?>
                 <!-- Export Button -->
@@ -112,5 +147,33 @@ include 'includes/header_csc.php';
 </div>
 <!-- ./wrapper -->
 <?php include 'includes/scripts.php'; ?>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function generateBarGraph(dataPoints, containerId) {
+        var chart = new CanvasJS.Chart(containerId, {
+            animationEnabled: true,
+            theme: "light2",
+            title:{
+                text: "President Candidate Votes"
+            },
+            axisX:{
+                interval: 1
+            },
+            axisY2:{
+                interlacedColor: "rgba(1,77,101,.2)",
+                gridColor: "rgba(1,77,101,.1)"
+            },
+            data: [{
+                type: "bar",
+                name: "votes",
+                axisYType: "secondary",
+                color: "#014D65",
+                dataPoints: dataPoints
+            }]
+        });
+        chart.render();
+    }
+</script>
 </body>
 </html>
