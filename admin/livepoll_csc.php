@@ -227,7 +227,7 @@ include 'includes/header_csc.php';
             },
             data: [{
                 type: "bar",
-                indexLabel: "{percent}%",
+                indexLabel: "{label} - {percent}%",
                 indexLabelPlacement: "inside",
                 indexLabelFontColor: "white",
                 indexLabelFontSize: 14,
