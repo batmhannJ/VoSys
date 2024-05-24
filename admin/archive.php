@@ -106,6 +106,7 @@
                 <th>Username</th>
                 <th>Email</th>
                 <?php elseif(isset($_GET['type']) && $_GET['type'] === 'election'): ?>
+                <th>#</th>
                 <th>ID</th>
                 <th>Title</th>
                 <th>Voters</th>
@@ -194,7 +195,7 @@
     <?php include 'includes/voters_modal.php'; ?>
     <?php include 'includes/restore_modal.php'; ?>
     <?php include 'includes/restore_admin_modal.php'; ?>
-    <?php include 'batch_modal.php'; ?>
+    <?php include 'includes/batch_modal.php'; ?>
 
 <?php include 'includes/scripts.php'; ?>
 <?php include 'archive_script.php'; ?>
