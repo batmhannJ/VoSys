@@ -229,10 +229,9 @@ include 'includes/header_csc.php';
             },
             data: [{
                 type: "bar",
-                indexLabel: "{label} - {percent}%",
+                indexLabel: "{fullname} - {percent}%",
                 indexLabelPlacement: "inside",
                 indexLabelFontColor: "white",
-                indexLabel: "{fullName} - {percent}%", // Use fullName property
                 indexLabelFontSize: 14,
                 dataPoints: dataPoints.map(dataPoint => ({
                     ...dataPoint,
