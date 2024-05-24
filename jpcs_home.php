@@ -33,7 +33,7 @@ if(!is_active_election($conn)){
 	      <section class="content">
           <div class="image-container">
 	      	<h1 class="page-header text-center title">
-	      		<b>JPCS <br> ELECTIONS</b>
+	      		<b>JUNIOR PHILIPPINE COMPUTER SOCIETY<br> ELECTIONS</b>
             </h1>
             <section class="discover section" id="discover">      
         <!--<center><h4 id="electionTitle" class="heading">Remaining time to vote</h4></center>-->
@@ -326,7 +326,7 @@ if(!is_active_election($conn)){
             else{
                 $.ajax({
                     type: 'POST',
-                    url: 'preview.php',
+                    url: 'preview_jpcs',
                     data: form,
                     dataType: 'json',
                     success: function(response){

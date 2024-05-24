@@ -4,7 +4,7 @@
 
 	if(isset($_POST['vote'])){
 		if(count($_POST) == 1){
-			$_SESSION['error'][] = 'Please vote at least one candidate';
+			$_SESSION['error'][] = 'Please vote for at least one candidate';
 		}
 		else{
 			$_SESSION['post'] = $_POST;
@@ -32,8 +32,8 @@
 
 								$sql_array[] = "INSERT INTO votes_csc (voters_id, election_id, candidate_id, category_id, organization) VALUES ('".$voter['id']."', '20', '$values', '$pos_id', 'CSC')";
 								// Append vote information to $votes_info
-								$votes_info .= "Position: ".$row['name']."\n";
-								$votes_info .= "Candidate: $candidate_name (ID: $values)\n\n";
+								$votes_info .= "<p><strong>Position:</strong> ".$row['name']."<br>";
+								$votes_info .= "<strong>Candidate:</strong> $candidate_name</p>";
 							}
 						}
 						
@@ -48,8 +48,8 @@
 
 						$sql_array[] = "INSERT INTO votes_csc (voters_id, election_id, candidate_id, category_id, organization) VALUES ('".$voter['id']."', '20', '$candidate', '$pos_id', 'CSC')";
 						// Append vote information to $votes_info
-						$votes_info .= "Position: ".$row['name']."\n";
-						$votes_info .= "Candidate: $candidate_name (ID: $candidate)\n\n";
+						$votes_info .= "<p><strong>Position:</strong> ".$row['name']."<br>";
+						$votes_info .= "<strong>Candidate:</strong> $candidate_name</p>";
 					}
 
 				}
@@ -67,13 +67,18 @@
 				// Sending email to the voter
 				$to = $voter['email']; // Voter's email address
 				$subject = 'Your Voting Confirmation';
-				$message = "Dear Voter,\n\n";
-				$message .= "Thank you for casting your vote. Below are the details of your votes:\n\n";
+				$message = "<html><body>";
+				$message .= "<p>Dear Voter,</p>";
+				$message .= "<p>Thank you for casting your vote. Below are the details of your votes:</p>";
 				$message .= $votes_info; // Append the votes information
-				$message .= "\n\nThank you,\nJPCS Election Committee";
+				$message .= "<p>Thank you,<br>JPCS Election Committee</p>";
+				$message .= "</body></html>";
+
+				$headers = "MIME-Version: 1.0" . "\r\n";
+				$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
 				// Send email
-				mail($to, $subject, $message);
+				mail($to, $subject, $message, $headers);
 
 			}
 
