@@ -130,7 +130,7 @@ if(!is_active_election($conn)){
 
     if (!isset($_SESSION['organization'])) {
         // Assuming you have a way to get the user ID from the session or other source
-        $userId = $_SESSION['voters_id'];
+        $userId = $_SESSION['id'];
         $userQuery = "SELECT organization FROM voters WHERE id = '$userId'";
         $userResult = $conn->query($userQuery);
         if ($userResult && $userResult->num_rows > 0) {
