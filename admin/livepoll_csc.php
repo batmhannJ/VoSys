@@ -35,6 +35,13 @@ include 'includes/header_csc.php';
         #back-to-top:hover {
             background-color: #555;
         }
+
+        /* Style for the images */
+        .graph-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+        }
     </style>
 </head>
 <body class="hold-transition skin-black sidebar-mini">
@@ -59,7 +66,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>President</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="presidentGraph" style="height: 300px;"></div>
+                            <img src="your-image-url.jpg" class="graph-image" alt="President Image">
                         </div>
                     </div>
                 </div>
@@ -70,7 +77,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>Vice President</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="vicePresidentGraph" style="height: 300px;"></div>
+                            <img src="your-image-url.jpg" class="graph-image" alt="Vice President Image">
                         </div>
                     </div>
                 </div>
@@ -81,7 +88,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>Secretary</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="secretaryGraph" style="height: 300px;"></div>
+                            <img src="your-image-url.jpg" class="graph-image" alt="Secretary Image">
                         </div>
                     </div>
                 </div>
@@ -92,7 +99,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>Treasurer</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="treasurerGraph" style="height: 300px;"></div>
+                            <img src="your-image-url.jpg" class="graph-image" alt="Treasurer Image">
                         </div>
                     </div>
                 </div>
@@ -103,7 +110,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>Auditor</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="auditorGraph" style="height: 300px;"></div>
+                            <img src="your-image-url.jpg" class="graph-image" alt="Auditor Image">
                         </div>
                     </div>
                 </div>
@@ -114,7 +121,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>Public Information Officer (P.R.O)</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="proGraph" style="height: 300px;"></div>
+                            <img src="your-image-url.jpg" class="graph-image" alt="P.R.O Image">
                         </div>
                     </div>
                 </div>
@@ -125,7 +132,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>Business Manager</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="businessManagerGraph" style="height: 300px;"></div>
+                            <img src="your-image-url.jpg" class="graph-image" alt="Business Manager Image">
                         </div>
                     </div>
                 </div>
@@ -136,7 +143,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>BEED Representative</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="beedRepGraph" style="height: 300px;"></div>
+                            <img src="your-image-url.jpg" class="graph-image" alt="BEED Representative Image">
                         </div>
                     </div>
                 </div>
@@ -147,7 +154,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>BSED Representative</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="bsedRepGraph" style="height: 300px;"></div>
+                            <img src="your-image-url.jpg" class="graph-image" alt="BSED Representative Image">
                         </div>
                     </div>
                 </div>
@@ -158,7 +165,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>BSHM Representative</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="bshmRepGraph" style="height: 300px;"></div>
+                            <img src="your-image-url.jpg" class="graph-image" alt="BSHM Representative Image">
                         </div>
                     </div>
                 </div>
@@ -169,7 +176,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>BSOAD Representative</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="bsoadRepGraph" style="height: 300px;"></div>
+                            <img src="your-image-url.jpg" class="graph-image" alt="BSOAD Representative Image">
                         </div>
                     </div>
                 </div>
@@ -180,7 +187,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>BS CRIM Representative</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="bscrimRepGraph" style="height: 300px;"></div>
+                            <img src="your-image-url.jpg" class="graph-image" alt="BS CRIM Representative Image">
                         </div>
                     </div>
                 </div>
@@ -191,7 +198,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>BSIT Representative</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="bsitRepGraph" style="height: 300px;"></div>
+                            <img src="your-image-url.jpg" class="graph-image" alt="BSIT Representative Image">
                         </div>
                     </div>
                 </div>
@@ -205,74 +212,15 @@ include 'includes/header_csc.php';
 <?php include 'includes/scripts.php'; ?>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <script>
-    function generateBarGraph(dataPoints, containerId) {
-        var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
-
-        var chart = new CanvasJS.Chart(containerId, {
-            animationEnabled: true,
-            animationDuration: 2000, // Animation duration for initial rendering
-            title: {
-                text: "Vote Counts"
-            },
-            axisX: {
-                title: "",
-                includeZero: true,
-                interval: 1,
-                labelFormatter: function () {
-                    return " ";
-                }
-            },
-            axisY: {
-                title: "",
-                interval: Math.ceil(totalVotes / 10) // Adjust the Y-axis interval for better scaling
-            },
-            data: [{
-                type: "bar",
-                indexLabel: "{label} - {percent}%",
-                indexLabelPlacement: "inside",
-                indexLabelFontColor: "white",
-                indexLabelFontSize: 14,
-                dataPoints: dataPoints.map(dataPoint => ({
-                    ...dataPoint,
-                    percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-                }))
-            }]
-        });
-        chart.render();
-        return chart;
-    }
-
-    function updateChartData(chart, newDataPoints) {
-        var totalVotes = newDataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
-        chart.options.data[0].dataPoints = newDataPoints.map(dataPoint => ({
-            ...dataPoint,
-            percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-        }));
-        chart.options.animationEnabled = true;
-        chart.options.animationDuration = 2000; // Animation duration for updates
-        chart.render();
-    }
-
     function updateVoteCounts() {
         $.ajax({
             url: 'update_data_csc.php',
             method: 'GET',
             dataType: 'json',
             success: function (response) {
-                updateChartData(presidentChart, response.president);
-                updateChartData(vicePresidentChart, response.vicePresident);
-                updateChartData(secretaryChart, response.secretary);
-                updateChartData(treasurerChart, response.treasurer);
-                updateChartData(auditorChart, response.auditor);
-                updateChartData(proChart, response.publicInformationOfficer);
-                updateChartData(businessManagerChart, response.businessManager);
-                updateChartData(beedRepChart, response.beedRepresentative);
-                updateChartData(bsedRepChart, response.bsedRepresentative);
-                updateChartData(bshmRepChart, response.bshmRepresentative);
-                updateChartData(bsoadRepChart, response.bsoadRepresentative);
-                updateChartData(bscrimRepChart, response.bsCrimRepresentative);
-                updateChartData(bsitRepChart, response.bsitRepresentative);
+                console.log("Vote counts updated");
             },
             error: function (error) {
                 console.error("Error fetching data", error);
@@ -280,22 +228,7 @@ include 'includes/header_csc.php';
         });
     }
 
-    var presidentChart = generateBarGraph([], "presidentGraph");
-    var vicePresidentChart = generateBarGraph([], "vicePresidentGraph");
-    var secretaryChart = generateBarGraph([], "secretaryGraph");
-    var treasurerChart = generateBarGraph([], "treasurerGraph");
-    var auditorChart = generateBarGraph([], "auditorGraph");
-    var proChart = generateBarGraph([], "proGraph");
-    var businessManagerChart = generateBarGraph([], "businessManagerGraph");
-    var beedRepChart = generateBarGraph([], "beedRepGraph");
-    var bsedRepChart = generateBarGraph([], "bsedRepGraph");
-    var bshmRepChart = generateBarGraph([], "bshmRepGraph");
-    var bsoadRepChart = generateBarGraph([], "bsoadRepGraph");
-    var bscrimRepChart = generateBarGraph([], "bscrimRepGraph");
-    var bsitRepChart = generateBarGraph([], "bsitRepGraph");
-
     updateVoteCounts();
-
     setInterval(updateVoteCounts, 5000);
 
     // Back to top button script
