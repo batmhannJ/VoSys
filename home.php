@@ -125,6 +125,7 @@ if(!is_active_election($conn)){
 			    			<!-- Voting Ballot -->
 						    <form method="POST" id="ballotForm" action="submit_ballot.php">
     <?php
+    session_start();
     include 'includes/slugify.php';
 
     // Define the positions to be displayed
@@ -150,7 +151,8 @@ if(!is_active_election($conn)){
                 $positions[] = 'BSOAD Rep';
                 break;
             case 'YMF':
-                $positions[] = 'BSED Rep, BEED Rep';
+                $positions[] = 'BSED Rep';
+                $positions[] = 'BEED Rep';
                 break;
             case 'CODE-TG':
                 $positions[] = 'BS CRIM Rep';
