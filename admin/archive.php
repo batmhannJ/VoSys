@@ -113,42 +113,40 @@
               </tr>
             </thead>
             <tbody>
-              <?php
-                if(isset($_GET['type']) && $_GET['type'] === 'voters') {
-                  $sql = "SELECT * FROM voters WHERE archived = TRUE";
-                } elseif(isset($_GET['type']) && $_GET['type'] === 'admin') {
-                  $sql = "SELECT * FROM admin WHERE archived = TRUE";
-                } elseif(isset($_GET['type']) && $_GET['type'] === 'election') {
-                  $sql = "SELECT * FROM election WHERE archived = TRUE";
-                }
-                $query = $conn->query($sql);
-                while($row = $query->fetch_assoc()){
-                  if(isset($_GET['type']) && $_GET['type'] === 'voters') {
-                    $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
-                    echo "
-                      <tr>
-                        <td><input type='checkbox' class='selectItem' value='".$row['id']."'></td>
-                        <td>".$row['lastname']."</td>
-                        <td>".$row['firstname']."</td>
-                        <td>
-                          <img src='".$image."' width='30px' height='30px'>
-                          <a href='#edit_photo' data-toggle='modal' class='pull-right photo' data-id='".$row['id']."'><span class='fa fa-edit'></span></a>
-                        </td>
-                        <td>".$row['voters_id']."</td>
-                        <td>".$row['email']."</td>
-                        <td>".$row['yearLvl']."</td>
-                        <td>".$row['organization']."</td>
-                        <td>
-                          <button class='btn btn-success btn-sm restore btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#confirmationModal'><i class='fa fa-reply'></i> Restore</button>
-                          <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."' data-user='voters'><i class='fa fa-trash'></i> Delete</button>
-                        </td>
-                      </tr>
-                    ";
+            <?php
+                      if(isset($_GET['type']) && $_GET['type'] === 'voters') {
+                        $sql = "SELECT * FROM voters WHERE archived = TRUE";
+                      } elseif(isset($_GET['type']) && $_GET['type'] === 'admin') {
+                        $sql = "SELECT * FROM admin WHERE archived = TRUE";
+                      } elseif(isset($_GET['type']) && $_GET['type'] === 'election') {
+                        $sql = "SELECT * FROM election WHERE archived = TRUE";
+                      }
+                      $query = $conn->query($sql);
+                      while($row = $query->fetch_assoc()){
+                        if(isset($_GET['type']) && $_GET['type'] === 'voters') {
+                          $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
+                          echo "
+                            <tr>
+                              <td>".$row['lastname']."</td>
+                              <td>".$row['firstname']."</td>
+                              <td>
+                                <img src='".$image."' width='30px' height='30px'>
+                                <a href='#edit_photo' data-toggle='modal' class='pull-right photo' data-id='".$row['id']."'><span class='fa fa-edit'></span></a>
+                              </td>
+                              <td>".$row['voters_id']."</td>
+                              <td>".$row['email']."</td>
+                              <td>".$row['yearLvl']."</td>
+                              <td>".$row['organization']."</td>
+                              <td>
+                                <button class='btn btn-success btn-sm restore btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#confirmationModal'><i class='fa fa-reply'></i> Restore</button>
+                                <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."' data-user='voters'><i class='fa fa-trash'></i> Delete</button>
+                              </td>
+                            </tr>
+                          ";
                   } elseif(isset($_GET['type']) && $_GET['type'] === 'admin') {
                     $adminImage = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
                     echo "
                       <tr>
-                        <td><input type='checkbox' class='selectItem' value='".$row['id']."'></td>
                         <td>".$row['id']."</td>
                         <td>".$row['organization']."</td>
                         <td>".$row['lastname']."</td>
