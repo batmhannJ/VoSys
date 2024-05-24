@@ -128,19 +128,40 @@ if(!is_active_election($conn)){
     session_start();
     include 'includes/slugify.php';
 
-    if (!isset($_SESSION['organization'])) {
-        // Assuming you have a way to get the user ID from the session or other source
+    
+// Verify the database connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+// Fetch the user's organization and set it in the session (if not already set)
+if (!isset($_SESSION['organization'])) {
+    // Assuming you have a way to get the user ID from the session or other source
+    if (isset($_SESSION['id'])) {
         $userId = $_SESSION['id'];
         $userQuery = "SELECT organization FROM voters WHERE id = '$userId'";
         $userResult = $conn->query($userQuery);
-        if ($userResult && $userResult->num_rows > 0) {
-            $userRow = $userResult->fetch_assoc();
-            $_SESSION['organization'] = $userRow['organization'];
+        if ($userResult) {
+            if ($userResult->num_rows > 0) {
+                $userRow = $userResult->fetch_assoc();
+                $_SESSION['organization'] = $userRow['organization'];
+            } else {
+                echo "No organization found for user ID: $userId";
+            }
+        } else {
+            echo "Error in query: " . $conn->error;
         }
+    } else {
+        echo "User ID not set in session.";
     }
-    
-    // Debug: Output the user's organization to verify
+}
+
+// Debug: Output the user's organization to verify
+if (isset($_SESSION['organization'])) {
     echo "User's Organization: " . $_SESSION['organization'];
+} else {
+    echo "User's organization not set.";
+}
 
     // Define the positions to be displayed
     $positions = [
