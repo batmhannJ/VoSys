@@ -144,5 +144,74 @@ $(function(){
         });
     });
   });
+
+  // Select All Checkbox
+  $('#selectAll').click(function() {
+    if (this.checked) {
+      $('.selectItem').each(function() {
+        this.checked = true;
+      });
+    } else {
+      $('.selectItem').each(function() {
+        this.checked = false;
+      });
+    }
+  });
+
+  // Batch Restore Button Click
+  $('#batchRestoreBtn').click(function() {
+    var selected = [];
+    $('.selectItem:checked').each(function() {
+      selected.push($(this).val());
+    });
+
+    if (selected.length > 0) {
+      batchRestore(selected);
+    } else {
+      alert('Please select items to restore.');
+    }
+  });
+
+  // Batch Delete Button Click
+  $('#batchDeleteBtn').click(function() {
+    var selected = [];
+    $('.selectItem:checked').each(function() {
+      selected.push($(this).val());
+    });
+
+    if (selected.length > 0) {
+      batchDelete(selected);
+    } else {
+      alert('Please select items to delete.');
+    }
+  });
+
+  function batchRestore(ids) {
+    $.ajax({
+      type: "POST",
+      url: "batch_restore.php",
+      data: { ids: ids },
+      success: function(response) {
+        location.reload();
+      },
+      error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+      }
+    });
+  }
+
+  function batchDelete(ids) {
+    $.ajax({
+      type: "POST",
+      url: "batch_delete.php",
+      data: { ids: ids },
+      success: function(response) {
+        location.reload();
+      },
+      error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+      }
+    });
+  }
 });
 </script>
