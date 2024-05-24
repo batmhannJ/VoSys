@@ -233,6 +233,7 @@ include 'includes/header_csc.php';
             indexLabelPlacement: "inside",
             indexLabelFontColor: "white",
             indexLabelFontSize: 14,
+            barcornerRadius: 15, // Rounded corners
             dataPoints: dataPoints.map(dataPoint => ({
                 label: dataPoint.label,
                 y: dataPoint.y,
