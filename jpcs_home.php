@@ -33,30 +33,7 @@ if(!is_active_election($conn)){
 	      <section class="content">
 	      	<h1 class="page-header text-center title">
 	      		<img src="images/jpcs.jpg" alt="CSC Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
-	      		<b>JUNIOR PHILIPPINE COMPUTER SOCIETY ELECTION<br> ELECTIONS</b>
-            </h1>
-            <section class="discover section" id="discover"> 
-            <!--<center><h4 id="electionTitle" class="heading">Remaining time to vote</h4></center>-->
-            <div class="timer">
-            <!--<div class="sub_timer">
-                <h1 id="day" class="digit">00</h1>
-                <p class="digit_name">Days</p>
-            </div>-->
-            <div class="sub_timer">
-                <h1 id="hour" class="digit">00</h1>
-                <p class="digit_name">Hours</p>
-            </div>
-            <div class="sub_timer">
-                <h1 id="min" class="digit">00</h1>
-                <p class="digit_name">Minutes</p>
-            </div>
-            <div class="sub_timer">
-                <h1 id="sec" class="digit">00</h1>
-                <p class="digit_name">Seconds</p>
-            </div>
-        </div>
-    </section>
-</div>
+	      		<b>JUNIOR PHILIPPINE COMPUTER SOCIETY ELECTION</b></h1>
 	        <div class="row">
 	        	<div class="col-sm-10 col-sm-offset-1">
 	        		<?php
@@ -79,7 +56,7 @@ if(!is_active_election($conn)){
 					        echo "
 					            <div class='alert alert-success alert-dismissible' id='success-alert'>
 					                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-					                  <h4><i class='icon fa fa-check'></i> Success!</h4>
+					                <h4><i class='icon fa fa-check'></i> Success!</h4>
 					                ".$_SESSION['success']."
 					            </div>
 					        ";
@@ -121,7 +98,6 @@ if(!is_active_election($conn)){
 				    	}
 				    	else{
 				    		?>
-
  					<!--countdown-->
  						<section class="discover section" id="discover">      
  							<!--<center><h4 id="electionTitle" class="heading">Remaining time to vote</h4></center>-->
@@ -155,7 +131,7 @@ if(!is_active_election($conn)){
                                 $sql = "SELECT * FROM categories WHERE election_id = 1 ORDER BY priority ASC";
                                 $query = $conn->query($sql);
                                 while($row = $query->fetch_assoc()){
-
+                                    
                                     $sql = "SELECT * FROM candidates WHERE category_id='".$row['id']."'";
                                     $cquery = $conn->query($sql);
                                     while($crow = $cquery->fetch_assoc()){
@@ -311,7 +287,7 @@ if(!is_active_election($conn)){
         xhr.send();
     }
     fetchEndTime();
-    $(function(){
+$(function(){
         $('.content').iCheck({
             checkboxClass: 'icheckbox_flat-green',
             radioClass: 'iradio_flat-green'
@@ -343,7 +319,7 @@ if(!is_active_election($conn)){
 
 
 
-        $('#preview').click(function(e){
+        $('#preview_jpcs').click(function(e){
             e.preventDefault();
             var form = $('#ballotForm').serialize();
             if(form == ''){
@@ -358,7 +334,7 @@ if(!is_active_election($conn)){
             else{
                 $.ajax({
                     type: 'POST',
-                    url: 'preview.php',
+                    url: 'preview_jpcs.php',
                     data: form,
                     dataType: 'json',
                     success: function(response){
@@ -389,381 +365,23 @@ if(!is_active_election($conn)){
 
     });
 </script>
-</body>
-
 <style>
-
-
-    /* Style for the position container */
-.position-container {
-    margin: 20px auto; /* Center the container horizontally and add margin on top and bottom */
-    max-width: 800px; /* Set a maximum width to make it responsive */
-    padding: 20px; /* Add padding inside the container */
-    border: 1px solid #ccc; /* Add border for visual separation */
-    border-radius: 10px; /* Add border radius for rounded corners */
-    background-color: #fff; /* Change background color */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.9); /* Add shadow for depth */
-}
-
-/* Style for the box header */
-.box-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: black;
-    color: #fff;
-    padding: 10px;
-}
-
-/* Adjust space between position and reset button */
-.box-header .box-title {
-    margin-right: auto; /* Push position title to the left */
-}
-
-/* Style for the reset button */
-.reset {
-    margin-left: auto; /* Push reset button to the right */
-}
-
-/* Style for the box title */
-.box-title {
-    margin: 0;
-    font-size: 20px;
-    font-weight: 300;
-}
-
-/* Style for the box body */
-.box-body {
-    padding: 10px;
-}
-
-/* Style for the voting instructions */
-.instruction {
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-/* Style for the candidate list */
-.candidate-list ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-/* Bagong istilo para sa mga item sa listahan ng mga kandidato */
-.candidate-list li {
-    display: flex; /* Baguhin ang display sa flex */
-    flex-wrap: wrap; /* Pahintulutan ang pag-wrap ng mga item sa loob ng flex container */
-    justify-content: space-between; /* I-set ang mga item na sa layong pare-pareho */
-    align-items: center; /* I-align ang mga item sa gitna */
-    border-radius: 10px; /* Radius ng border */
-    padding: 10px; /* Padding para sa mga item */
-    margin-bottom: 10px; /* Espasyo sa pagitan ng mga item */
-    background-color: #f9f9f9; /* Kulay ng background */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Shadow para sa depth */
-    border: 2px solid #ccc; /* Add border */
-}
-.candidate-list li img {
-        width: 100px; /* I-adjust ang lapad ng mga larawan para sa mas maliit na screen */
-        height: 100px; /* I-adjust ang taas ng mga larawan para sa mas maliit na screen */
-        border-radius: 8px; /* Rounded corners for images */
-        transition: transform 0.3s; /* Add transition effect */
-}
-
-.candidate-list li:hover img {
-    transform: scale(1.1); /* Make the image slightly larger on hover */
-}
-
-/* Media query para sa mas maliit na mga screen */
-@media (max-width: 768px) {
-    .platform {
-        padding: 6px 16px; /* I-adjust ang padding para sa mas maliit na screen */
-        font-size: 14px; /* I-adjust ang font size */
-        width: auto; /* I-adjust ang lapad */
-        font-family: sans-serif; /* Change the font family to Arial or any desired font */
-    }
-    .candidate-list li {
-        flex-direction: column; /* Baguhin ang direksyon ng flex container sa column */
-        align-items: center; /* I-align ang mga item sa gitna */
-        padding: 15px; /* I-adjust ang padding para sa mas maliit na screen */
-        border: 2px solid #ccc; /* Add border */
-    border-radius: 10px; /* Rounded corners */
-    }
-
-    .candidate-list li img {
-        width: 100px; /* I-adjust ang lapad ng mga larawan para sa mas maliit na screen */
-        height: 100px; /* I-adjust ang taas ng mga larawan para sa mas maliit na screen */
-        margin: 0 auto; /* Ilipat ang mga larawan sa gitna */
-        display: block; /* Make the image a block element */
-        transition: transform 0.3s; /* Add transition effect */
-}
-
-.candidate-list li:hover img {
-    transform: scale(1.1); /* Make the image slightly larger on hover */
-}
-}
-
-
-
-/* Adjusted style for candidate name */
-.cname {
-    font-size: 18px; /* Default font size */
-    margin-left: auto; /* Push candidate name to the end */
-    font-weight: bold;
-}
-
-/* Media query for smaller screens */
-@media (max-width: 768px) {
-    .cname {
-        font-size: 15px; /* Reduce font size on smaller screens */
-    }
-}
-
-/* Adjusted style for platform button */
-.platform {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 20px; /* Make it pill-shaped */
-    padding: 8px 20px; /* Add padding */
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-left: auto; /* Push platform button to the end */
-    display: flex; /* Use flexbox to align icon and text */
-    align-items: center; /* Center items vertically */
-}
-
-.platform:hover {
-    background-color: #0056b3;
-}
-
-.platform i {
-    font-style: normal; /* Ibalik ang font style sa normal */
-    font-weight: bold; /* I-set ang font weight sa bold */
-    font-size: 14px; /* I-adjust ang font size */
-}
-
-/* Media query for smaller screens */
-@media (max-width: 768px) {
-  
-    .platform {
-        padding: 6px 16px; /* I-adjust ang padding para sa mas maliit na screen */
-        font-size: 14px; /* I-adjust ang font size */
-        width: auto; /* I-adjust ang lapad */
-        margin: 10px auto; /* Igitna ang platform button */
-    }
-
-
-    .platform i.fa {
-        margin-right: 0; /* Remove right margin for icon */
-    }
-
-    .platform span.text {
-        display: none; /* Hide text on smaller screens */
-    }
-}
-
-/* Updated styles for candidate image */
-.clist {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-right: 10px;
-    grid-column: span 1;
-}
-
-/* Media query for smaller screens */
-@media (max-width: 768px) {
-    .position-container {
-        padding: 10px; /* Adjust padding for smaller screens */
-    }
-}
-
-/* Media query for larger screens */
-@media (min-width: 768px) {
-    /* Apply flex-end alignment to candidate image */
-    .candidate-list li {
-        display: flex;
-        justify-content: space-between; /* Align items to the end of the container */
-        align-items: center;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        padding: 10px;
-        margin-bottom: 10px;
-        background-color: #f9f9f9;
-    }
-
-    /* Updated styles for candidate image */
-    .clist {
-        width: 100px;
-        height: 100px;
-        object-fit: cover;
-        border-radius: 50%;
-        margin-right: 10px;
-        grid-column: span 1;
-    }
-
-    /* Media query for smaller screens */
-    @media (max-width: 768px) {
-        .candidate-list li {
-            display: flex;
-            align-items: center; /* Center items vertically */
-            margin-bottom: 10px;
-        }
-
-        .clist {
-            width: 80px; /* Reduce image width on smaller screens */
-            height: 80px; /* Reduce image height on smaller screens */
-            margin-right: 10px; /* Adjust margin for smaller screens */
-        }
-    }
-}
-
-              /* Style for the primary button */
-              .btn-primary {
-    background-color: black;
-    color: #fff;
-    border-color: #007bff;
-}
-
-/* Style for the success button */
-.btn-success {
-    background-color: #28a745;
-    color: #fff;
-    border-color: #28a745;
-}
-
-/* Style for the secondary button */
-.btn-secondary {
-    color: #6c757d;
-    border-color: #6c757d;
-}
-
-/* Style for the modal header */
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: black;
-    color: #fff;
-}
-
-/* Style for the modal title */
-.modal-title {
-    margin-right: auto; /* Pushes the modal title to the left */
-    font-weight: bold;
-}
-
-/* Style for the close button in the modal header */
-.modal-header .close {
-    padding-left: 20px; /* Adds space to the left of the close button */
-    color: #fff;
-    opacity: 0.5;
-}
-
-/* Style for the modal body */
-.modal-body {
-    padding: 20px;
-}
-
-/* Style for the modal footer */
-.modal-footer {
-    justify-content: space-between;
-    padding: 20px;
-}
-
-/* Center the text in the text-center div */
-.text-center {
-    text-align: center;
-}
-
-.content {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 20px;
-    background-image: url('your-background-image.jpg');
-    background-size: cover;
-    background-position: center;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-.page-header {
-    margin-top: 10px; /* Increase margin from the top */
-    padding: 80px 20px; /* Increase padding on top and bottom to expand the box */
-    background-image: url('images/bcs.png'); /* Add background image */
-    background-size: cover; /* Cover the entire background */
-    background-repeat: no-repeat; /* Prevent background image from repeating */
-    background-position: center; /* Center the background image */
-    width: auto;
-    height: auto;
-    color: #fff; /* Text color */
-    text-align: center; /* Center-align text */
-    border-bottom: 2px solid #0056b3; /* Add a solid border at the bottom */
-    border-radius: 10px; /* Add border radius for rounded corners */
-    position: relative; /* Position the content relative to the box */
-}
-
-.page-header img {
-    width: 100px; /* Adjust image width */
-    height: 70px; /* Adjust image height */
-    border-radius: 50%; /* Circular image */
-    margin-bottom: 10px; /* Add margin at the bottom */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
-    position: absolute; /* Position the image */
-    top: 50%; /* Position from the top */
-    left: 50%; /* Position from the left */
-    transform: translate(-50%, -50%); /* Center the image */
-}
-
-
-.title {
-    font-size: 40px; /* Decrease font size */
-    margin-bottom: 10px; /* Decrease margin bottom */
-    font-family: 'Arial', sans-serif; /* Change font family */
-    font-weight: bold; /* Bold font weight */
-    text-transform: uppercase; /* Uppercase text */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9); /* Add shadow effect */
-}
-
-.subtitle {
-    font-size: 18px; /* Decrease font size */
-    font-weight: 300; /* Decrease font weight */
-}
-
-/* Responsive Styling */
-@media (max-width: 768px) {
-    .page-header {
-        padding: 100px 20px; /* Adjust padding for smaller screens */
-    }
-    
-    .page-header img {
-        width: 100px; /* Adjust image width for smaller screens */
-    }
-
-    .title {
-        font-size: 24px; /* Decrease font size for smaller screens */
-    }
-
-    .subtitle {
-        font-size: 14px; /* Decrease font size for smaller screens */
-    }
-}
-
-
-.timer {
+ .timer {
     position: fixed;
     top: 0;
     right: 0;
-    z-index: 1000;
-    width: 250px;
+    z-index: 1000; /* Adjust z-index as needed */
+    width: 250px; /* Adjust width as needed */
     display: flex;
     justify-content: center;
     margin-top: 570px;
-    margin-right: 12px;
+    margin-right: 12px; /* Adjust margin as needed */
     margin-bottom: 30px;
+    
 }
 
-.sub_timer {
+
+  .sub_timer {
     width: 90px;
     background: rgba(255, 255, 255, 0.19);
     backdrop-filter: blur(20px);
@@ -771,61 +389,25 @@ if(!is_active_election($conn)){
     overflow: hidden;
     height: 100px;
     margin-left: 10px;
-}
+  }
 
-.digit {
+  .digit {
     color: black;
     font-weight: lighter;
     font-size: 30px;
     text-align: center;
-}
+    /*padding: 3.5rem 0;*/
+  }
 
-.digit_name {
+  .digit_name {
     color: #000;
     background: lightgrey;
     text-align: center;
+    /*padding: 0.6rem 0;*/
     font-size: 15px;
-}
+  }
 
-/* Media query for larger screens */
-@media (min-width: 1024px) {
-    .timer {
-        position: fixed;
-        bottom: 0;
-        right: 0;
-        z-index: 1000;
-        width: 250px;
-        display: flex;
-        justify-content: center;
-        margin-bottom: 30px;
-        margin-right: 12px;
-        margin-top: 50px; /* Override margin-top */
-    }
-}
 
-/* Media query for smaller screens */
-@media (max-width: 768px) {
-    .timer {
-        position: relative;
-        width: 100%;
-        margin-top: 20px;
-        margin-right: 0;
-        margin-bottom: 20px;
-    }
-
-    .sub_timer {
-        width: 70px;
-        height: 80px;
-    }
-
-    .digit {
-        font-size: 24px;
-    }
-
-    .digit_name {
-        font-size: 12px;
-    }
-}
 </style>
 </body>
 </html>
