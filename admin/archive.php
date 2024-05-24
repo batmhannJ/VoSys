@@ -80,9 +80,10 @@
               </div>
             </div>
             <div class="box">
-              <!--<div class="box-header with-border">
-                <a href="#restoreAllModal" data-toggle="modal" class="btn btn-primary btn-sm btn-flat restore-all"><i class="fa fa-reply"></i> Restore All</a>
-              </div> -->
+            <div class="box-header with-border">
+              <button id="batch-restore" class="btn btn-success btn-sm" data-target='#batchActionModal'><i class="fa fa-reply"></i> Batch Restore</button>
+              <button id="batch-delete" class="btn btn-danger btn-sm" data-target='#batchActionModal'><i class="fa fa-trash"></i> Batch Delete</button>
+            </div>
               <div class="box-body">
                 <table id="example1" class="table table-bordered">
                   <thead>
@@ -126,6 +127,7 @@
                           $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
                           echo "
                             <tr>
+                            <td><input type='checkbox' class='selectItem' data-id='".$row['id']."'></td>
                               <td>".$row['lastname']."</td>
                               <td>".$row['firstname']."</td>
                               <td>
@@ -147,6 +149,7 @@
                             $adminImage = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
                             echo "
                                 <tr>
+                                <td><input type='checkbox' class='selectItem' data-id='".$row['id']."'></td>
                                     <td>".$row['id']."</td>
                                     <td>".$row['organization']."</td>
                                     <td>".$row['lastname']."</td>
@@ -166,6 +169,7 @@
                             // For election table
                             echo "
                                 <tr>
+                                <td><input type='checkbox' class='selectItem' data-id='".$row['id']."'></td>
                                     <td>".$row['id']."</td>
                                     <td>".$row['title']."</td>
                                     <td>".$row['voters']."</td>
@@ -191,6 +195,27 @@
     <?php include 'includes/voters_modal.php'; ?>
     <?php include 'includes/restore_modal.php'; ?>
     <?php include 'includes/restore_admin_modal.php'; ?>
+
+    <!-- Modal for Batch Actions -->
+<div class="modal fade" id="batchActionModal" tabindex="-1" role="dialog" aria-labelledby="batchActionModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="batchActionModalLabel">Confirm Batch Action</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to perform this action on the selected records?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="confirmBatchAction">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <?php include 'includes/scripts.php'; ?>
 <?php include 'archive_script.php'; ?>

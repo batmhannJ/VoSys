@@ -52,6 +52,7 @@
               <table id="example1" class="table table-bordered">
                 <thead>
                   <th class="hidden"></th>
+                  <th>No.</th>
                   <th>Description</th>
                   <th>Maximum Vote</th>
                   <th>Tools</th>
@@ -60,10 +61,12 @@
                   <?php
                     $sql = "SELECT * FROM categories WHERE election_id = 20 ORDER BY priority ASC";
                     $query = $conn->query($sql);
+                    $i = 1;
                     while($row = $query->fetch_assoc()){
                       echo "
                         <tr>
                           <td class='hidden'></td>
+                          <td>".$i++."</td>
                           <td>".$row['name']."</td>
                           <td>".$row['max_vote']."</td>
                           <td>
