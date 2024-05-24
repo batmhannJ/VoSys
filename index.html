@@ -1452,58 +1452,125 @@ hr {
   }
 }
 
+/* Basic resets */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
+body {
+  font-family: Arial, sans-serif;
+}
 
-/*-----------------------------------*\
-  #TEAM
-\*-----------------------------------*/
+/* Container styling */
 .containerr {
-    max-width: 540px;
-    margin-inline: auto;
-  }
-.team { padding: var(--section-padding) 0; }
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
 
+/* Section title */
+.section-title {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Team list styling */
 .team-list {
+  list-style: none;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
-  gap: 30px;
-  margin-bottom: 70px;
+  gap: 20px;
+  padding: 0;
 }
 
-.team-list li { max-width: 40%; }
+.team-list li {
+  flex: 1 1 calc(25% - 40px); /* Adjust the width as needed */
+  max-width: calc(25% - 40px);
+  margin: 10px;
+}
 
 .team-member {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.team-member:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.team-member figure {
+  margin: 0;
   position: relative;
-  border-radius: 50%;
-  border: 3px solid var(--raisin-black-3);
-  transition: var(--transition-1);
 }
 
-.team-member:is(:hover, :focus) { border-color: var(--orange); }
+.team-member img {
+  width: 100%;
+  display: block;
+  border-radius: 10px;
+}
 
-.team-member img { width: 100%; }
-
-.team-member:is(:hover, :focus) img { opacity: 0.5; }
-
+/* Icon styling */
 .team-member ion-icon {
+  font-size: 2em;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  padding: 10px;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: var(--orange);
-  font-size: 50px;
-  transition: var(--transition-1);
-  opacity: 0;
+  bottom: 10px;
+  right: 10px;
+  transition: background 0.3s;
 }
 
-.team-member:is(:hover, :focus) ion-icon { opacity: 1; }
+.team-member:hover ion-icon {
+  background: rgba(0, 0, 0, 0.8);
+}
 
-.team .btn-primary { margin-inline: auto; }
+/* Button styling */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1em;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+}
 
+.btn:hover {
+  background-color: #0056b3;
+}
 
+/* Responsive styling */
+@media (max-width: 768px) {
+  .team-list li {
+    flex: 1 1 calc(50% - 20px);
+    max-width: calc(50% - 20px);
+  }
+}
 
+@media (max-width: 480px) {
+  .team-list li {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
 
 
   </style>
