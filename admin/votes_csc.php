@@ -73,10 +73,12 @@
                       GROUP BY votes_csc.id
                       ORDER BY categories.priority ASC";
                       $query = $conn->query($sql);
+                      $i = 1;
                       while($row = $query->fetch_assoc()){
                         echo "
                           <tr>
                             <td class='hidden'></td>
+                            <td>".$i++."</td>
                             <td>".$row['name']."</td>
                             <td>".$row['canfirst'].' '.$row['canlast']."</td>
                             <td>".$row['votfirst'].' '.$row['votlast']."</td>
