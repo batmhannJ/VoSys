@@ -12,7 +12,7 @@ function fetchVotes($conn, $category, $organizationFilter) {
     $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
             COALESCE(COUNT(votes_csc.candidate_id), 0) AS vote_count, 
             candidates.photo AS candidate_image
-            FROM categories 
+            FROM candidates
             LEFT JOIN candidates ON categories.id = candidates.category_id
             LEFT JOIN votes_csc ON candidates.id = votes_csc.candidate_id
             LEFT JOIN voters AS voters1 ON voters1.id = votes_csc.voters_id 
