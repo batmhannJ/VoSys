@@ -227,13 +227,12 @@ include 'includes/header_csc.php';
             },
             data: [{
                 type: "bar",
-                indexLabel: "{label} - {y} votes - #percent%",
+                indexLabel: "{percent}%",
                 indexLabelPlacement: "inside",
                 indexLabelFontColor: "white",
                 indexLabelFontSize: 14,
                 dataPoints: dataPoints.map(dataPoint => ({
                     ...dataPoint,
-                    label: `${dataPoint.label}`,
                     percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
                 }))
             }]
