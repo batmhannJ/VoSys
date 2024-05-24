@@ -1,6 +1,6 @@
 <!-- Preview -->
 <div class="modal fade" id="preview_modal">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -16,6 +16,7 @@
         </div>
     </div>
 </div>
+
 
 <!--<script>
   $('#submit').click(function() {
