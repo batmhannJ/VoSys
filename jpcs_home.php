@@ -379,7 +379,7 @@ if(!is_active_election($conn)){
     justify-content: space-between;
     align-items: center;
     background-color: black;
-    color: #fff;
+    color: ##013220;
     padding: 10px;
 }
 
