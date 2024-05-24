@@ -138,8 +138,8 @@ if(!is_active_election($conn)){
     ];
 
     // Add organization-specific representatives
-    if(isset($_SESSION['user_org'])){
-        switch($_SESSION['user_org']){
+    if(isset($_SESSION['organization'])){
+        switch($_SESSION['organization']){
             case 'JPCS':
                 $positions[] = 'BSIT Rep';
                 break;
