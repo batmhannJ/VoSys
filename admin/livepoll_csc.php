@@ -212,6 +212,7 @@ include 'includes/header_csc.php';
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
             animationDuration: 2000, // Animation duration
+            barcornerRadius: 15, // Rounded corners
             title: {
                 text: "Vote Counts"
             },
@@ -233,7 +234,7 @@ include 'includes/header_csc.php';
                 indexLabelPlacement: "inside",
                 indexLabelFontColor: "white",
                 indexLabelFontSize: 14,
-                barcornerRadius: 15, // Rounded corners
+                
                 dataPoints: dataPoints.map(dataPoint => ({
                     ...dataPoint,
                     percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
