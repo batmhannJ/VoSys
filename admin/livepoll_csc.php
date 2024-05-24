@@ -212,7 +212,7 @@ include 'includes/header_csc.php';
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
             animationDuration: 2000, // Animation duration
-            barcornerRadius: 15, // Rounded corners
+            
             title: {
                 text: "Vote Counts"
             },
@@ -220,12 +220,14 @@ include 'includes/header_csc.php';
                 title: "",
                 includeZero: true,
                 interval: 1,
+                barcornerRadius: 15, // Rounded corners
                 labelFormatter: function() {
                     return " ";
                 }
             },
             axisY: {
                 title: "",
+                barcornerRadius: 15, // Rounded corners
                 interval: Math.ceil(totalVotes / 10) // Adjust the Y-axis interval for better scaling
             },
             data: [{
