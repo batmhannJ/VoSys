@@ -53,7 +53,7 @@ include 'includes/header_csc.php';
 
         <section class="content">
             <div class="row justify-content-center">
-                <div class="col-md-12 offset-md-1">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>President</b></h3>
@@ -64,7 +64,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-12 offset-md-1">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>Vice President</b></h3>
@@ -75,7 +75,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-12 offset-md-1">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>Secretary</b></h3>
@@ -86,7 +86,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-12 offset-md-1">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>Treasurer</b></h3>
@@ -97,7 +97,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-12 offset-md-1">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>Auditor</b></h3>
@@ -108,7 +108,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-12 offset-md-1">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>Public Information Officer (P.R.O)</b></h3>
@@ -119,7 +119,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-12 offset-md-1">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>Business Manager</b></h3>
@@ -130,7 +130,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-12 offset-md-1">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>BEED Representative</b></h3>
@@ -141,7 +141,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-12 offset-md-1">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>BSED Representative</b></h3>
@@ -152,7 +152,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-12 offset-md-1">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>BSHM Representative</b></h3>
@@ -163,7 +163,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-12 offset-md-1">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>BSOAD Representative</b></h3>
@@ -174,7 +174,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-12 offset-md-1">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>BS CRIM Representative</b></h3>
@@ -185,7 +185,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-12 offset-md-1">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>BSIT Representative</b></h3>
@@ -215,14 +215,18 @@ include 'includes/header_csc.php';
                 text: "Vote Counts"
             },
             axisX: {
-                title: "Vote Count",
-                includeZero: true
+                title: "",
+                includeZero: true,
+                interval: 1,
+                labelFormatter: function() {
+                    return " ";
+                }
             },
             axisY: {
-                title: "Candidates"
+                title: ""
             },
             data: [{
-                type: "bar",  // Changed to horizontal bar chart
+                type: "bar",
                 indexLabel: "{label} - {y} votes - #percent%",
                 indexLabelPlacement: "inside",
                 indexLabelFontColor: "white",
@@ -244,7 +248,6 @@ include 'includes/header_csc.php';
             method: 'GET',
             dataType: 'json',
             success: function(response) {
-                console.log(response);  // Log the response to the console to debug
                 presidentChart.options.data[0].dataPoints = response.president;
                 presidentChart.render();
 
