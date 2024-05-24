@@ -127,6 +127,14 @@ if(!is_active_election($conn)){
                                 <?php
                                 include 'includes/slugify.php';
 
+                                $voter_id = $_SESSION['voters_id'];
+
+                                // Fetch the user's organization from the voters table
+                                $sql = "SELECT organization FROM voters WHERE voters_id = '".$voter_id."'";
+                                $query = $conn->query($sql);
+                                $voter = $query->fetch_assoc();
+                                $user_organization = $voter['organization'];
+
                                 $candidate = '';
                                 $sql = "SELECT * FROM categories WHERE election_id = 20 ORDER BY priority ASC";
                                 $query = $conn->query($sql);
@@ -142,7 +150,7 @@ if(!is_active_election($conn)){
                                                 <p class="instruction">You may select up to '.$row['max_vote'].' candidates</p>
                                                 <div class="candidate-list">
                                                     <ul>';
-                                    $sql = "SELECT * FROM candidates WHERE category_id='".$row['id']."'";
+                                    $sql = "SELECT * FROM candidates WHERE category_id='".$row['id']."' AND organization='".$user_organization."'";
                                     $cquery = $conn->query($sql);
                                     while($crow = $cquery->fetch_assoc()){
                                         $slug = slugify($row['name']);

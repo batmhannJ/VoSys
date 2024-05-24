@@ -1,6 +1,26 @@
-<?php include 'includes/session.php'; ?>
-<?php include 'includes/slugify.php'; ?>
-<?php include 'includes/header.php'; ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Polling</title>
+  <!-- Add your CSS links here -->
+  <style>
+    /* Style for bar graphs */
+    .canvasjs-chart-canvas {
+      background-color: #f9f9f9; /* Set background color for the chart canvas */
+      border-radius: 10px; /* Add border radius to the chart canvas */
+    }
+
+    .canvasjs-chart-credit {
+      display: none; /* Hide chart credits */
+    }
+
+    .canvasjs-chart-credit-1 {
+      display: none; /* Hide chart credits */
+    }
+  </style>
+</head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
   <?php include 'includes/navbar.php'; ?>
@@ -127,7 +147,9 @@
       data: [{
         type: "bar",
         dataPoints: dataPoints,
-        color: organizationColors[organization] // Set organization-specific color
+        color: organizationColors[organization], // Set organization-specific color
+        indexLabel: "{y}",
+        cornerRadius: 10 // Set the radius value as per your preference
       }]
     });
 
@@ -183,7 +205,9 @@
       data: [{
         type: "bar",
         dataPoints: dataPoints,
-        color: organizationColors[organization] // Set organization-specific color
+        color: organizationColors[organization], // Set organization-specific color
+        indexLabel: "{y}",
+        cornerRadius: 10 // Set the radius value as per your preference
       }]
     });
 

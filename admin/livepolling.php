@@ -255,84 +255,47 @@ include 'includes/header.php';
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+    // Function to generate bar graph
     function generateBarGraph(dataPoints, containerId) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
-            title: {
+            title:{
                 text: "Vote Counts"
+            },
+            axisY: {
+                title: "Candidates"
             },
             axisX: {
                 title: "Vote Count",
                 includeZero: true
             },
-            axisY: {
-                title: "Candidates"
-            },
             data: [{
-                type: "bar",
+                type: "bar", // Change type to "bar"
                 dataPoints: dataPoints
             }]
         });
         chart.render();
-        return chart;
     }
 
-    function updateVoteCounts() {
+    // Function to fetch updated data from the server
+    function updateData() {
         $.ajax({
-            url: 'update_data.php?organization=' + $('#organization').val(),
-            method: 'GET',
+            url: 'update_data.php', // Change this to the URL of your update data script
+            type: 'GET',
             dataType: 'json',
+            data: {organization: $('#organization').val()}, // Pass the selected organization to the server
             success: function(response) {
-                presidentChart.options.data[0].dataPoints = response.president;
-                presidentChart.render();
+                // Update president bar graph
+                generateBarGraph(response.presidentData, "presidentGraph");
 
-                vicePresidentInternalChart.options.data[0].dataPoints = response.vicePresidentInternal;
-                vicePresidentInternalChart.render();
+                // Update vice president bar graph
+                generateBarGraph(response.vicePresidentData, "vicePresidentGraph");
 
-                vicePresidentExternalChart.options.data[0].dataPoints = response.vicePresidentExternal;
-                vicePresidentExternalChart.render();
-
-                secretaryChart.options.data[0].dataPoints = response.secretary;
-                secretaryChart.render();
-
-                treasurerChart.options.data[0].dataPoints = response.treasurer;
-                treasurerChart.render();
-
-                auditorChart.options.data[0].dataPoints = response.auditor;
-                auditorChart.render();
-
-                proChart.options.data[0].dataPoints = response.pro;
-                proChart.render();
-
-                dirMembershipChart.options.data[0].dataPoints = response.dirMembership;
-                dirMembershipChart.render();
-
-                dirSpecialProjectChart.options.data[0].dataPoints = response.dirSpecialProject;
-                dirSpecialProjectChart.render();
-
-                blockA1stYearRepChart.options.data[0].dataPoints = response.blockA1stYearRep;
-                blockA1stYearRepChart.render();
-
-                blockB1stYearRepChart.options.data[0].dataPoints = response.blockB1stYearRep;
-                blockB1stYearRepChart.render();
-
-                blockA2ndYearRepChart.options.data[0].dataPoints = response.blockA2ndYearRep;
-                blockA2ndYearRepChart.render();
-
-                blockB2ndYearRepChart.options.data[0].dataPoints = response.blockB2ndYearRep;
-                blockB2ndYearRepChart.render();
-
-                blockA3rdYearRepChart.options.data[0].dataPoints = response.blockA3rdYearRep;
-                blockA3rdYearRepChart.render();
-
-                blockB3rdYearRepChart.options.data[0].dataPoints = response.blockB3rdYearRep;
-                blockB3rdYearRepChart.render();
-
-                blockA4thYearRepChart.options.data[0].dataPoints = response.blockA4thYearRep;
-                blockA4thYearRepChart.render();
-
-                blockB4thYearRepChart.options.data[0].dataPoints = response.blockB4thYearRep;
-                blockB4thYearRepChart.render();
+                // Update secretary bar graph
+                generateBarGraph(response.secretaryData, "secretaryGraph");
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching data: ' + error);
             }
         });
     }
