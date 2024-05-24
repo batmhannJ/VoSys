@@ -155,6 +155,130 @@
       </div>
     </section>
 
+    <section class="team" id="team">
+      <div class="container">
+
+        <h2 class="h2 section-title">Active Team Members</h2>
+
+        <ul class="team-list">
+
+          <li>
+            <a href="#" class="team-member">
+              <figure>
+                <img src="./assets/images/team-member-1.png" alt="Team member image">
+              </figure>
+
+              <ion-icon name="link-outline"></ion-icon>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="team-member">
+              <figure>
+                <img src="./assets/images/team-member-2.png" alt="Team member image">
+              </figure>
+
+              <ion-icon name="link-outline"></ion-icon>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="team-member">
+              <figure>
+                <img src="./assets/images/team-member-3.png" alt="Team member image">
+              </figure>
+
+              <ion-icon name="link-outline"></ion-icon>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="team-member">
+              <figure>
+                <img src="./assets/images/team-member-4.png" alt="Team member image">
+              </figure>
+
+              <ion-icon name="link-outline"></ion-icon>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="team-member">
+              <figure>
+                <img src="./assets/images/team-member-6.png" alt="Team member image">
+              </figure>
+
+              <ion-icon name="link-outline"></ion-icon>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="team-member">
+              <figure>
+                <img src="./assets/images/team-member-7.png" alt="Team member image">
+              </figure>
+
+              <ion-icon name="link-outline"></ion-icon>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="team-member">
+              <figure>
+                <img src="./assets/images/team-member-8.png" alt="Team member image">
+              </figure>
+
+              <ion-icon name="link-outline"></ion-icon>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="team-member">
+              <figure>
+                <img src="./assets/images/team-member-9.png" alt="Team member image">
+              </figure>
+
+              <ion-icon name="link-outline"></ion-icon>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="team-member">
+              <figure>
+                <img src="./assets/images/team-member-10.png" alt="Team member image">
+              </figure>
+
+              <ion-icon name="link-outline"></ion-icon>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="team-member">
+              <figure>
+                <img src="./assets/images/team-member-11.png" alt="Team member image">
+              </figure>
+
+              <ion-icon name="link-outline"></ion-icon>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="team-member">
+              <figure>
+                <img src="./assets/images/team-member-12.png" alt="Team member image">
+              </figure>
+
+              <ion-icon name="link-outline"></ion-icon>
+            </a>
+          </li>
+
+        </ul>
+
+        <button class="btn btn-primary">view all members</button>
+
+      </div>
+    </section>
+
 
     <section id="organizations" class="place section">
     <h2 class="section__header">ORGANIZATIONS</h2><br>
@@ -1327,6 +1451,54 @@ hr {
     font-size: 4rem; /* Reduce digit size on smaller screens */
   }
 }
+
+
+
+/*-----------------------------------*\
+  #TEAM
+\*-----------------------------------*/
+
+.team { padding: var(--section-padding) 0; }
+
+.team-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 70px;
+}
+
+.team-list li { max-width: 40%; }
+
+.team-member {
+  position: relative;
+  border-radius: 50%;
+  border: 3px solid var(--raisin-black-3);
+  transition: var(--transition-1);
+}
+
+.team-member:is(:hover, :focus) { border-color: var(--orange); }
+
+.team-member img { width: 100%; }
+
+.team-member:is(:hover, :focus) img { opacity: 0.5; }
+
+.team-member ion-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--orange);
+  font-size: 50px;
+  transition: var(--transition-1);
+  opacity: 0;
+}
+
+.team-member:is(:hover, :focus) ion-icon { opacity: 1; }
+
+.team .btn-primary { margin-inline: auto; }
+
 
 
 
