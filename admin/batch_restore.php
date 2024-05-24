@@ -1,8 +1,8 @@
 <?php
 include 'includes/session.php';
 
-if(isset($_POST['ids'])) {
-  $ids = $_POST['ids'];
+if(isset($_POST['id'])) {
+  $id = $_POST['id'];
   foreach($ids as $id) {
     if($_GET['type'] === 'voters') {
       $sql = "UPDATE voters SET archived = FALSE WHERE id = '$id'";
