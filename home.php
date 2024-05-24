@@ -138,7 +138,7 @@ if (isset($voter['id'])) {
 
     // Fetch the user's organization and set it in the session (if not already set)
     if (!isset($_SESSION['organization'])) {
-        $userQuery = "SELECT organization FROM voters WHERE voters_id = '$userId'";
+        $userQuery = "SELECT organization FROM voters WHERE id = '$userId'";
         $userResult = $conn->query($userQuery);
         if ($userResult) {
             if ($userResult->num_rows > 0) {
