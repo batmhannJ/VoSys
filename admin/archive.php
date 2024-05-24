@@ -195,6 +195,7 @@
     <?php include 'includes/voters_modal.php'; ?>
     <?php include 'includes/restore_modal.php'; ?>
     <?php include 'includes/restore_admin_modal.php'; ?>
+    <?php include 'includes/batch_modal.php'; ?>
 
 <?php include 'includes/scripts.php'; ?>
 <?php include 'archive_script.php'; ?>
