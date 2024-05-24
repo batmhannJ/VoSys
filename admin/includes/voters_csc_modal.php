@@ -38,10 +38,19 @@
                     </div>
                 </div>
                 <div class="form-group">
-                  <label for="organization" class="col-sm-3 control-label">Organization</label>
-                  <div class="col-sm-9">
-                      <input type="text" id="organization" name="organization" class="form-control" value="CSC" readonly>
-                  </div>                  
+                    <label for="lastname" class="col-sm-3 control-label">Organization</label>
+
+                    <div class="col-sm-9">
+                      <select id="organization" name="organization" class="form-control" value="Choose below" required>
+                      <option value="" selected hidden>Choose...</option>
+                      <option>CSC</option>
+                      <option>JPCS</option>
+                      <option>YMF</option>
+                      <option>CODE-TG</option>
+                      <option>PASOA</option>
+                      <option>HMSO</option>
+                    </select>
+                    </div>
                 </div>
                 <!--<div class="form-group">
                     <label for="password" class="col-sm-3 control-label">Password</label>
