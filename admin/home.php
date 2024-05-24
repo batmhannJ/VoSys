@@ -127,7 +127,7 @@
           <div class="small-box">
             <div class="inner">
               <?php
-                $sql = "SELECT * FROM votes GROUP BY voters_id";
+                $sql = "SELECT * FROM votes_csc GROUP BY voters_id";
                 $query = $conn->query($sql);
 
                 echo "<h3>".$query->num_rows."</h3>";
@@ -149,14 +149,14 @@
               <?php
                 $sql = "SELECT voters.id, voters.lastname
         FROM voters
-        LEFT JOIN votes ON voters.id = votes.voters_id
-        WHERE votes.voters_id IS NULL";
+        LEFT JOIN votes_csc ON voters.id = votes_csc.voters_id
+        WHERE votes_csc.voters_id IS NULL";
                 $query = $conn->query($sql);
 
                 $sql = "SELECT voters.id, voters.lastname
         FROM voters
-        LEFT JOIN votes ON voters.id = votes.voters_id
-        WHERE votes.voters_id IS NULL";
+        LEFT JOIN votes_csc ON voters.id = votes_csc.voters_id
+        WHERE votes_csc.voters_id IS NULL";
                 $query = $conn->query($sql);
 
                 echo "<h3>".$query->num_rows."</h3>";
@@ -177,7 +177,7 @@
             <div class="inner">
               <?php
                   // Query to count the total number of voters who have voted
-                  $sql_voters_voted = "SELECT COUNT(DISTINCT voters_id) AS voters_voted FROM votes";
+                  $sql_voters_voted = "SELECT COUNT(DISTINCT voters_id) AS voters_voted FROM votes_csc";
                   $result_voters_voted = $conn->query($sql_voters_voted);
                   $row_voters_voted = $result_voters_voted->fetch_assoc();
                   $votersVoted = $row_voters_voted['voters_voted'];
@@ -263,7 +263,7 @@
     $varray = array();
     while($crow = $cquery->fetch_assoc()){
       array_push($carray, $crow['lastname']);
-      $sql = "SELECT * FROM votes WHERE candidate_id = '".$crow['id']."'";
+      $sql = "SELECT * FROM votes_csc WHERE candidate_id = '".$crow['id']."'";
       $vquery = $conn->query($sql);
       array_push($varray, $vquery->num_rows);
     }
