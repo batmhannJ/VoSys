@@ -49,6 +49,7 @@
               <a href="#reset" data-toggle="modal" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-refresh"></i> Reset</a>
             </div>
             <div class="box-body">
+            <div class="table-responsive" style="overflow-x:auto;">
               <table id="example1" class="table table-bordered">
                 <thead>
                   <th class="hidden"></th>
@@ -89,6 +90,7 @@
                     ?>
                 </tbody>
               </table>
+              </div>
             </div>
           </div>
         </div>
