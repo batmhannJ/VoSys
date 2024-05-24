@@ -79,7 +79,7 @@ if(!is_active_election($conn)){
 					        echo "
 					            <div class='alert alert-success alert-dismissible' id='success-alert'>
 					                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-					                <h4><i class='icon fa fa-check'></i> Success!</h4>
+					                  <h4><i class='icon fa fa-check'></i> Success!</h4>
 					                ".$_SESSION['success']."
 					            </div>
 					        ";
@@ -127,6 +127,20 @@ if(!is_active_election($conn)){
     <?php
     session_start();
     include 'includes/slugify.php';
+
+    if (!isset($_SESSION['organization'])) {
+        // Assuming you have a way to get the user ID from the session or other source
+        $userId = $_SESSION['voters_id'];
+        $userQuery = "SELECT organization FROM voters WHERE id = '$userId'";
+        $userResult = $conn->query($userQuery);
+        if ($userResult && $userResult->num_rows > 0) {
+            $userRow = $userResult->fetch_assoc();
+            $_SESSION['organization'] = $userRow['organization'];
+        }
+    }
+    
+    // Debug: Output the user's organization to verify
+    echo "User's Organization: " . $_SESSION['organization'];
 
     // Define the positions to be displayed
     $positions = [
