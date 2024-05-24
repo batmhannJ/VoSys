@@ -43,7 +43,6 @@
                     <div class="col-sm-9">
                       <select id="organization" name="organization" class="form-control" value="Choose below" required>
                       <option value="" selected hidden>Choose...</option>
-                      <option>CSC</option>
                       <option>JPCS</option>
                       <option>YMF</option>
                       <option>CODE-TG</option>
@@ -110,10 +109,14 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="edit_yearlvl" class="col-sm-3 control-label">Year Level</label>
-
+                  <label for="edit_yearlvl" class="col-sm-3 control-label">Year Level</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="edit_yearlvl" name="yearLvl">
+                        <select id="edit_yearlvl" name="yearLvl" class="form-control">
+                            <option value="1">1st Year</option>
+                            <option value="2">2nd Year</option>
+                            <option value="3">3rd Year</option>
+                            <!--<option value="4">4th Year</option>-->
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
