@@ -80,8 +80,10 @@
               </div>
             </div>
             <div class="box">
+            <div class="box-header with-border">
               <button id="batch-restore" class="btn btn-success btn-sm" data-target='#batchActionModal'><i class="fa fa-reply"></i> Batch Restore</button>
-              <button id="batch-delete" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Batch Delete</button>
+              <button id="batch-delete" class="btn btn-danger btn-sm" data-target='#batchActionModal'><i class="fa fa-trash"></i> Batch Delete</button>
+            </div>
               <div class="box-body">
                 <table id="example1" class="table table-bordered">
                   <thead>
