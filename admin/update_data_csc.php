@@ -24,7 +24,7 @@ function fetchVotes($conn, $category, $organizationFilter) {
         $data[] = array(
             "y" => intval($row['vote_count']), 
             "label" => $row['candidate_name'],
-            "image" => !empty($row['candidate_image']) ? 'images/'.$row['candidate_image'] : 'images/photo.png' // Assuming default.png as a placeholder
+            "image" => !empty($row['candidate_image']) ? 'images/'.$row['candidate_image'] : 'images/default.png' // Assuming default.png as a placeholder
         );
     }
     return $data;
