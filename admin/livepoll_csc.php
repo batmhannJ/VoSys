@@ -5,6 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Live Polling</title>
   <!-- Add your CSS links here -->
+  <style>
+    /* Style for bar graphs */
+    .canvasjs-chart-canvas {
+      background-color: #f9f9f9; /* Set background color for the chart canvas */
+      border-radius: 10px; /* Add border radius to the chart canvas */
+    }
+
+    .canvasjs-chart-credit {
+      display: none; /* Hide chart credits */
+    }
+
+    .canvasjs-chart-credit-1 {
+      display: none; /* Hide chart credits */
+    }
+  </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -172,8 +187,7 @@
         { y: 30, label: "Representative 1" },
         { y: 40, label: "Representative 2" }
       ];
-    } else if (
-        organization === "CODE-TG") {
+    } else if (organization === "CODE-TG") {
       dataPoints = [
         { y: 20, label: "Representative 1" },
         { y: 30, label: "Representative 2" }
