@@ -79,7 +79,7 @@ if(!is_active_election($conn)){
 					        echo "
 					            <div class='alert alert-success alert-dismissible' id='success-alert'>
 					                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-					                  <h4><i class='icon fa fa-check'></i> Success!</h4>
+					                <h4><i class='icon fa fa-check'></i> Success!</h4>
 					                ".$_SESSION['success']."
 					            </div>
 					        ";
@@ -124,160 +124,91 @@ if(!is_active_election($conn)){
 				    
 			    			<!-- Voting Ballot -->
 						    <form method="POST" id="ballotForm" action="submit_ballot.php">
-                            <?php
-session_start();
+                                <?php
+                                include 'includes/slugify.php';
 
-// Verify the database connection
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
+                                $candidate = '';
+                                $sql = "SELECT * FROM categories WHERE election_id = 20 ORDER BY priority ASC";
+                                $query = $conn->query($sql);
+                                while($row = $query->fetch_assoc()){
+                                    echo '
+                                    <div class="position-container">
+                                        <div class="box box-solid" id="'.$row['id'].'">
+                                            <div class="box-header">
+                                                <h3 class="box-title">'.$row['name'].'</h3>
+                                                <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="'.slugify($row['name']).'"><i class="fa fa-refresh"></i> Reset</button>
+                                            </div>
+                                            <div class="box-body">
+                                                <p class="instruction">You may select up to '.$row['max_vote'].' candidates</p>
+                                                <div class="candidate-list">
+                                                    <ul>';
+                                    $sql = "SELECT * FROM candidates WHERE category_id='".$row['id']."'";
+                                    $cquery = $conn->query($sql);
+                                    while($crow = $cquery->fetch_assoc()){
+                                        $slug = slugify($row['name']);
+                                        $checked = '';
+                                        if(isset($_SESSION['post'][$slug])){
+                                            $value = $_SESSION['post'][$slug];
 
-// Fetch the user's ID from session
-if (isset($_SESSION['id'])) {
-    $userId = $_SESSION['id'];
-
-    // Fetch the user's organization and set it in the session (if not already set)
-    if (!isset($_SESSION['organization'])) {
-        $userQuery = "SELECT organization FROM voters WHERE voters_id = '$userId'";
-        $userResult = $conn->query($userQuery);
-        if ($userResult) {
-            if ($userResult->num_rows > 0) {
-                $userRow = $userResult->fetch_assoc();
-                $_SESSION['organization'] = $userRow['organization'];
-            } else {
-                echo "No organization found for user ID: $userId";
+                                            if(is_array($value)){
+                                                foreach($value as $val){
+                                                    if($val == $crow['id']){
+                                                        $checked = 'checked';
+                                                    }
+                                                }
+                                            }
+                                            else{
+                                                if($value == $crow['id']){
+                                                    $checked = 'checked';
+                                                }
+                                            }
+                                        }
+                                        $input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : '<input type="radio" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
+                                        $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
+                                        echo '
+                                        <li>
+                                            <div class="candidate-info">
+                                                '.$input.'
+                                                <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
+                                                
+                                            </div>
+                                            <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
+                                        
+                                            <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
+                                        </li>';
+                                    }
+                                echo '</ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>';
             }
-        } else {
-            echo "Error in query: " . $conn->error;
-        }
-    }
-} else {
-    echo "User ID not set in session.";
-}
+            ?>
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-primary btn-flat" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
+                                </div>
 
-// Debug: Output the user's organization to verify
-if (isset($_SESSION['organization'])) {
-    echo "User's Organization: " . $_SESSION['organization'];
-} else {
-    echo "User's organization not set.";
-}
+                                <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
 
-include 'includes/slugify.php';
-
-// Define the positions to be displayed
-$positions = [
-    'President',
-    'Vice President',
-    'Secretary',
-    'Treasurer',
-    'P.R.O',
-    'Business Manager',
-];
-
-// Add organization-specific representatives
-if (isset($_SESSION['organization'])) {
-    switch ($_SESSION['organization']) {
-        case 'JPCS':
-            $positions[] = 'BSIT Rep';
-            break;
-        case 'HMSO':
-            $positions[] = 'BSHM Rep';
-            break;
-        case 'PASOA':
-            $positions[] = 'BSOAD Rep';
-            break;
-        case 'YMF':
-            $positions[] = 'BSED Rep';
-            $positions[] = 'BEED Rep';
-            break;
-        case 'CODE-TG':
-            $positions[] = 'BS CRIM Rep';
-            break;
-    }
-}
-
-$candidate = '';
-$sql = "SELECT * FROM categories WHERE election_id = 20 ORDER BY priority ASC";
-$query = $conn->query($sql);
-while ($row = $query->fetch_assoc()) {
-    if (!in_array($row['name'], $positions)) {
-        continue; // Skip positions not in the list
-    }
-    echo '
-    <div class="position-container">
-        <div class="box box-solid" id="' . $row['id'] . '">
-            <div class="box-header">
-                <h3 class="box-title">' . $row['name'] . '</h3>
-                <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="' . slugify($row['name']) . '"><i class="fa fa-refresh"></i> Reset</button>
-            </div>
-            <div class="box-body">
-                <p class="instruction">You may select up to ' . $row['max_vote'] . ' candidates</p>
-                <div class="candidate-list">
-                    <ul>';
-    $sql = "SELECT * FROM candidates WHERE category_id='" . $row['id'] . "'";
-    $cquery = $conn->query($sql);
-    while ($crow = $cquery->fetch_assoc()) {
-        $slug = slugify($row['name']);
-        $checked = '';
-        if (isset($_SESSION['post'][$slug])) {
-            $value = $_SESSION['post'][$slug];
-
-            if (is_array($value)) {
-                foreach ($value as $val) {
-                    if ($val == $crow['id']) {
-                        $checked = 'checked';
-                    }
-                }
-            } else {
-                if ($value == $crow['id']) {
-                    $checked = 'checked';
-                }
-            }
-        }
-        $input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red ' . $slug . '" name="' . $slug . "[]" . '" value="' . $crow['id'] . '" ' . $checked . '>' : '<input type="radio" class="flat-red ' . $slug . '" name="' . slugify($row['name']) . '" value="' . $crow['id'] . '" ' . $checked . '>';
-        $image = (!empty($crow['photo'])) ? 'images/' . $crow['photo'] : 'images/profile.jpg';
-        echo '
-        <li>
-            <div class="candidate-info">
-                ' . $input . '
-                <span class="cname">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span>
-            </div>
-            <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="' . $crow['platform'] . '" data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">PLATFORM</button>
-            <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="clist">
-        </li>';
-    }
-    echo '</ul>
-            </div>
-        </div>
-    </div>
-</div>';
-}
-?>
-
-    <div class="text-center">
-        <button type="button" class="btn btn-primary btn-flat" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
-    </div>
-
-    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure you want to submit your vote?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success btn-flat" id="preview"><i class="fa fa-file-text"></i> Preview</button> 
-                    <button type="submit" class="btn btn-primary" id="submitBtn" name="vote">Yes, Submit</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
+                                        <div class="modal-body">
+                                            <p>Are you sure you want to submit your vote?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-success btn-flat" id="preview"><i class="fa fa-file-text"></i> Preview</button> 
+                                            <button type="submit" class="btn btn-primary" id="submitBtn" name="vote">Yes, Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </form>
 
 				        	<!-- End Voting Ballot -->
 				    		<?php
