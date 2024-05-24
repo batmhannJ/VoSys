@@ -1,8 +1,8 @@
 <?php
 include 'includes/session.php';
 
-if(isset($_POST['id'])) {
-  $id = $_POST['id'];
+if(isset($_POST['ids'])) {
+  $ids = $_POST['ids'];
   foreach($ids as $id) {
     if($_GET['type'] === 'voters') {
       $sql = "DELETE FROM voters WHERE id = '$id'";
