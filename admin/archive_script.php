@@ -1,20 +1,21 @@
 <script>
 $(function(){
+  // Individual restore and delete event handlers...
   $(document).on('click', '.restore', function(e){
     e.preventDefault();
     var id = $(this).data('id');
-    $('#submitBtn').attr('data-id', id); // Set the data-id attribute for the "Restore" button
+    $('#submitBtn').attr('data-id', id);
   });
 
   $(document).on('click', '.restore-admin', function(e){
     e.preventDefault();
     var id = $(this).data('id');
-    $('#adminSubmitBtn').attr('data-id', id); // Set the data-id attribute for the "Restore Admin" button
+    $('#adminSubmitBtn').attr('data-id', id);
   });
 
   $(document).on('click', '.restore-all', function(e){
     e.preventDefault();
-    $('#restoreAllModal').modal('show'); // Show the "Restore All" modal
+    $('#restoreAllModal').modal('show');
   });
 
   $(document).on('click', '#confirmRestoreAll', function(e){
@@ -45,39 +46,36 @@ $(function(){
     var electionId = $(this).data('id');
     $('#electionConfirmationModal').modal('show');
 
-    // Event handler for confirm restore button
     $('#confirmRestoreElection').on('click', function() {
-        $.ajax({
-            type: "POST",
-            url: "restore_election.php",
-            data: { id: electionId },
-            success: function(response) {
-                // Refresh the page or update the table as needed
-                location.reload();
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
+      $.ajax({
+        type: "POST",
+        url: "restore_election.php",
+        data: { id: electionId },
+        success: function(response) {
+          location.reload();
+        },
+        error: function(xhr, status, error) {
+          console.error(xhr.responseText);
+        }
+      });
     });
   });
 
   function deleteItem(id, user) {
-    $('#deleteConfirmationModal').modal('show'); // Show confirmation modal
+    $('#deleteConfirmationModal').modal('show');
 
-    // When the "Delete" button inside the modal is clicked, perform deletion
     $('#confirmDelete').on('click', function() {
-        $.ajax({
-            type: "POST",
-            url: "delete_item.php",
-            data: { id: id, user: user },
-            success: function(response) {
-                location.reload();
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
+      $.ajax({
+        type: "POST",
+        url: "delete_item.php",
+        data: { id: id, user: user },
+        success: function(response) {
+          location.reload();
+        },
+        error: function(xhr, status, error) {
+          console.error(xhr.responseText);
+        }
+      });
     });
   }
 
@@ -87,7 +85,6 @@ $(function(){
       url: "restore_voter.php",
       data: { id: id },
       success: function(response) {
-        // Refresh the page or update the table as needed
         location.reload();
       },
       error: function(xhr, status, error) {
@@ -102,7 +99,6 @@ $(function(){
       url: "restore_admin.php",
       data: { id: id },
       success: function(response) {
-        // Refresh the page or update the table as needed
         location.reload();
       },
       error: function(xhr, status, error) {
@@ -116,7 +112,6 @@ $(function(){
       type: "POST",
       url: "restore_all_voters.php",
       success: function(response) {
-        // Refresh the page or update the table as needed
         location.reload();
       },
       error: function(xhr, status, error) {
@@ -131,17 +126,17 @@ $(function(){
     $('#candidateConfirmationModal').modal('show');
 
     $('#confirmRestoreCandidate').on('click', function() {
-        $.ajax({
-            type: "POST",
-            url: "restore_candidate.php",
-            data: { id: id },
-            success: function(response) {
-                location.reload();
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
+      $.ajax({
+        type: "POST",
+        url: "restore_candidate.php",
+        data: { id: id },
+        success: function(response) {
+          location.reload();
+        },
+        error: function(xhr, status, error) {
+          console.error(xhr.responseText);
+        }
+      });
     });
   });
 
@@ -166,7 +161,7 @@ $(function(){
     });
 
     if (selected.length > 0) {
-      batchRestore(selected);
+      $('#batchRestoreModal').modal('show');
     } else {
       alert('Please select items to restore.');
     }
@@ -180,10 +175,30 @@ $(function(){
     });
 
     if (selected.length > 0) {
-      batchDelete(selected);
+      $('#batchDeleteModal').modal('show');
     } else {
       alert('Please select items to delete.');
     }
+  });
+
+  // Confirm Batch Restore
+  $('#confirmBatchRestore').click(function() {
+    var selected = [];
+    $('.selectItem:checked').each(function() {
+      selected.push($(this).val());
+    });
+
+    batchRestore(selected);
+  });
+
+  // Confirm Batch Delete
+  $('#confirmBatchDelete').click(function() {
+    var selected = [];
+    $('.selectItem:checked').each(function() {
+      selected.push($(this).val());
+    });
+
+    batchDelete(selected);
   });
 
   function batchRestore(ids) {
