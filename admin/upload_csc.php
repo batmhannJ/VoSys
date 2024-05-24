@@ -24,7 +24,7 @@ function fetchVotes($conn, $category, $organizationFilter) {
         $data[] = array(
             "y" => intval($row['vote_count']),
             "label" => $row['candidate_name'],
-            "image" => $row['image_url'] // Assuming you have a column for the image URL
+            "image" => $row['candidates_photo'] // Assuming you have a column for the image URL
         );
     }
     return $data;
