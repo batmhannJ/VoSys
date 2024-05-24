@@ -144,54 +144,5 @@ $(function(){
         });
     });
   });
-
-  // Batch action modals
-  let actionType = '';
-
-  // Select all checkboxes
-  document.getElementById('select-all').addEventListener('change', function() {
-    var checkboxes = document.querySelectorAll('.record-checkbox');
-    for (var checkbox of checkboxes) {
-      checkbox.checked = this.checked;
-    }
-  });
-
-  // Show modal for batch restore
-  document.getElementById('batch-restore').addEventListener('click', function() {
-    actionType = 'restore';
-    $('#batchActionModal').modal('show');
-  });
-
-  // Show modal for batch delete
-  document.getElementById('batch-delete').addEventListener('click', function() {
-    actionType = 'delete';
-    $('#batchActionModal').modal('show');
-  });
-
-  // Confirm batch action
-  document.getElementById('confirmBatchAction').addEventListener('click', function() {
-    var ids = [];
-    var checkboxes = document.querySelectorAll('.record-checkbox:checked');
-    checkboxes.forEach(function(checkbox) {
-      ids.push(checkbox.value);
-    });
-    if (ids.length > 0) {
-      // Send AJAX request for batch action
-      fetch('batch_action.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: actionType, ids: ids })
-      }).then(response => response.json()).then(data => {
-        if (data.success) {
-          location.reload();
-        } else {
-          alert('Error: ' + data.message);
-        }
-      });
-      $('#batchActionModal').modal('hide');
-    } else {
-      alert('Please select records to proceed.');
-    }
-  });
 });
 </script>
