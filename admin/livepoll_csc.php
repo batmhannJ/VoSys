@@ -1,235 +1,324 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+<?php
+include 'includes/session.php';
+include 'includes/header_csc.php';
+?>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Live Polling</title>
-  <!-- Add your CSS links here -->
+    <!-- Add the style block to center the box titles and style the back to top button -->
+    <style>
+        .box-title {
+            text-align: center;
+            width: 100%;
+            display: inline-block;
+        }
+
+        /* Back to Top button styles */
+        #back-to-top {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            display: none;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 22px;
+            line-height: 50px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        #back-to-top:hover {
+            background-color: #555;
+        }
+    </style>
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-black sidebar-mini">
 <div class="wrapper">
-  <?php include 'includes/navbar.php'; ?>
-  <?php include 'includes/menubar.php'; ?>
+    <?php include 'includes/navbar_csc.php'; ?>
+    <?php include 'includes/menubar_csc.php'; ?>
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Live Polling
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Live Polling </li>
-      </ol>
-    </section>
-    <section class="content">
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="box-header with-border">
-            
-          </div>
-          <div class="box-body">
-            <div class="row">
-              <div class="col-md-3"> <!-- Half width for organization dropdown -->
-                <div class="form-group">
-                  <label for="organization">Select Organization:</label>
-                  <select class="form-control smaller-dropdown" id="organization" onchange="updateCharts()">
-                    <option value="JPCS">JPCS</option>
-                    <option value="PASOA">PASOA</option>
-                    <option value="CSC">CSC</option>
-                    <option value="YMF">YMF</option>
-                    <option value="CODE-TG">CODE-TG</option>
-                    <option value="HMSO">HMSO</option>
-                  </select>
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>Election Results</h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">Results</li>
+            </ol>
+        </section>
+
+        <section class="content">
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>President</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="presidentGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
                 </div>
-              </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>Vice President</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="vicePresidentGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>Secretary</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="secretaryGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>Treasurer</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="treasurerGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>Auditor</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="auditorGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>Public Information Officer (P.R.O)</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="proGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>Business Manager</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="businessManagerGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>BEED Representative</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="beedRepGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>BSED Representative</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="bsedRepGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>BSHM Representative</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="bshmRepGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>BSOAD Representative</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="bsoadRepGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>BS CRIM Representative</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="bscrimRepGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>BSIT Representative</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="bsitRepGraph" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="col-xs-6">
-            <div id="presidentChart" style="height: 370px; width: 100%; margin-left: 20px; margin-top: 20px; display: inline-block;"></div>
-          </div>
-          <div class="col-xs-6">
-            <div id="representativeChart" style="height: 370px; width: 100%; margin-left: 20px; margin-top: 20px; display: inline-block;"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-  <?php include 'includes/footer.php'; ?>
+        </section>
+    </div>
+
+    <?php include 'includes/footer.php'; ?>
+    <?php include 'includes/votes_modal.php'; ?>
 </div>
-<!-- ./wrapper -->
 <?php include 'includes/scripts.php'; ?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-  var organizationColors = {
-    "JPCS": "#4CAF50",
-    "PASOA": "#e6cc00",
-    "CSC": "#595959",
-    "YMF": "#00008b",
-    "CODE-TG": "#800000",
-    "HMSO": "#fff080"
-  };
+    function generateBarGraph(dataPoints, containerId) {
+        var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
-  function updateCharts() {
-    var organization = document.getElementById("organization").value;
-
-    updatePresidentChart(organization);
-    updateRepresentativeChart(organization);
-  }
-
-  function updatePresidentChart(organization) {
-    var dataPoints = [];
-
-    // You can fetch data dynamically based on the selected organization here
-    // For demonstration, I'm using static data for each organization
-
-    if (organization === "JPCS") {
-      dataPoints = [
-        { y: 20, label: "President" },
-        { y: 30, label: "Vice President" },
-        { y: 40, label: "Secretary" }
-      ];
-    } else if (organization === "PASOA") {
-      dataPoints = [
-        { y: 25, label: "President" },
-        { y: 35, label: "Vice President" },
-        { y: 45, label: "Secretary" }
-      ];
-    } else if (organization === "CSC") {
-      dataPoints = [
-        { y: 35, label: "President" },
-        { y: 25, label: "Vice President" },
-        { y: 40, label: "Secretary" }
-      ];
-    } else if (organization === "YMF") {
-      dataPoints = [
-        { y: 30, label: "President" },
-        { y: 40, label: "Vice President" },
-        { y: 30, label: "Secretary" }
-      ];
-    } else if (organization === "CODE-TG") {
-      dataPoints = [
-        { y: 20, label: "President" },
-        { y: 30, label: "Vice President" },
-        { y: 50, label: "Secretary" }
-      ];
-    } else if (organization === "HMSO") {
-      dataPoints = [
-        { y: 15, label: "President" },
-        { y: 35, label: "Vice President" },
-        { y: 50, label: "Secretary" }
-      ];
+        var chart = new CanvasJS.Chart(containerId, {
+            animationEnabled: true,
+            animationDuration: 2000, // Animation duration for initial rendering
+            title: {
+                text: "Vote Counts"
+            },
+            axisX: {
+                title: "",
+                includeZero: true,
+                interval: 1,
+                labelFormatter: function () {
+                    return " ";
+                }
+            },
+            axisY: {
+                title: "",
+                interval: Math.ceil(totalVotes / 10) // Adjust the Y-axis interval for better scaling
+            },
+            data: [{
+                type: "bar",
+                indexLabel: "{label} - {percent}%",
+                indexLabelPlacement: "inside",
+                indexLabelFontColor: "white",
+                indexLabelFontSize: 14,
+                dataPoints: dataPoints.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                }))
+            }]
+        });
+        chart.render();
+        return chart;
     }
-    // Add more else if conditions for other organizations
 
-    var chart = new CanvasJS.Chart("presidentChart", {
-      title: { text: "President, Vice President, Secretary" },
-      data: [{
-        type: "bar",
-        dataPoints: dataPoints,
-        color: organizationColors[organization], // Set organization-specific color
-        indexLabel: "{y}",
-        cornerRadius: 10 // Set the radius value as per your preference
-      }]
+    function updateChartData(chart, newDataPoints) {
+        var totalVotes = newDataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+        chart.options.data[0].dataPoints = newDataPoints.map(dataPoint => ({
+            ...dataPoint,
+            percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+        }));
+        chart.options.animationEnabled = true;
+        chart.options.animationDuration = 2000; // Animation duration for updates
+        chart.render();
+    }
+
+    function updateVoteCounts() {
+        $.ajax({
+            url: 'update_data_csc.php',
+            method: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                updateChartData(presidentChart, response.president);
+                updateChartData(vicePresidentChart, response.vicePresident);
+                updateChartData(secretaryChart, response.secretary);
+                updateChartData(treasurerChart, response.treasurer);
+                updateChartData(auditorChart, response.auditor);
+                updateChartData(proChart, response.publicInformationOfficer);
+                updateChartData(businessManagerChart, response.businessManager);
+                updateChartData(beedRepChart, response.beedRepresentative);
+                updateChartData(bsedRepChart, response.bsedRepresentative);
+                updateChartData(bshmRepChart, response.bshmRepresentative);
+                updateChartData(bsoadRepChart, response.bsoadRepresentative);
+                updateChartData(bscrimRepChart, response.bsCrimRepresentative);
+                updateChartData(bsitRepChart, response.bsitRepresentative);
+            },
+            error: function (error) {
+                console.error("Error fetching data", error);
+            }
+        });
+    }
+
+    var presidentChart = generateBarGraph([], "presidentGraph");
+    var vicePresidentChart = generateBarGraph([], "vicePresidentGraph");
+    var secretaryChart = generateBarGraph([], "secretaryGraph");
+    var treasurerChart = generateBarGraph([], "treasurerGraph");
+    var auditorChart = generateBarGraph([], "auditorGraph");
+    var proChart = generateBarGraph([], "proGraph");
+    var businessManagerChart = generateBarGraph([], "businessManagerGraph");
+    var beedRepChart = generateBarGraph([], "beedRepGraph");
+    var bsedRepChart = generateBarGraph([], "bsedRepGraph");
+    var bshmRepChart = generateBarGraph([], "bshmRepGraph");
+    var bsoadRepChart = generateBarGraph([], "bsoadRepGraph");
+    var bscrimRepChart = generateBarGraph([], "bscrimRepGraph");
+    var bsitRepChart = generateBarGraph([], "bsitRepGraph");
+
+    updateVoteCounts();
+
+    setInterval(updateVoteCounts, 5000);
+
+    // Back to top button script
+    $(document).ready(function () {
+        var btn = $('#back-to-top');
+
+        $(window).scroll(function () {
+            if ($(window).scrollTop() > 100) {
+                btn.fadeIn();
+            } else {
+                btn.fadeOut();
+            }
+        });
+
+        btn.click(function () {
+            $('html, body').animate({ scrollTop: 0 }, '100');
+            return false;
+        });
     });
-
-    chart.render();
-
-    // Update chart every second
-    setInterval(function () {
-      updatePresidentDataPoints(organization, chart);
-    }, 1000);
-  }
-
-  function updateRepresentativeChart(organization) {
-    var dataPoints = [];
-
-    // You can fetch data dynamically based on the selected organization here
-    // For demonstration, I'm using static data for each organization
-
-    if (organization === "JPCS") {
-      dataPoints = [
-        { y: 30, label: "Representative 1" },
-        { y: 40, label: "Representative 2" }
-      ];
-    } else if (organization === "PASOA") {
-      dataPoints = [
-        { y: 20, label: "Representative 1" },
-        { y: 30, label: "Representative 2" }
-      ];
-    } else if (organization === "CSC") {
-      dataPoints = [
-        { y: 25, label: "Representative 1" },
-        { y: 35, label: "Representative 2" }
-      ];
-    } else if (organization === "YMF") {
-      dataPoints = [
-        { y: 30, label: "Representative 1" },
-        { y: 40, label: "Representative 2" }
-      ];
-    } else if (
-        organization === "CODE-TG") {
-      dataPoints = [
-        { y: 20, label: "Representative 1" },
-        { y: 30, label: "Representative 2" }
-      ];
-    } else if (organization === "HMSO") {
-      dataPoints = [
-        { y: 15, label: "Representative 1" },
-        { y: 25, label: "Representative 2" }
-      ];
-    }
-    // Add more else if conditions for other organizations
-
-    var chart = new CanvasJS.Chart("representativeChart", {
-      title: { text: "Representatives" },
-      data: [{
-        type: "bar",
-        dataPoints: dataPoints,
-        color: organizationColors[organization], // Set organization-specific color
-        indexLabel: "{y}",
-        cornerRadius: 10 // Set the radius value as per your preference
-      }]
-    });
-
-    chart.render();
-
-    // Update chart every second
-    setInterval(function () {
-      updateRepresentativeDataPoints(organization, chart);
-    }, 1000);
-  }
-
-  function updatePresidentDataPoints(organization, chart) {
-    // Update dataPoints based on the selected organization
-    // For demonstration, I'm using random values for each data point
-    var newDataPoints = [];
-    for (var i = 0; i < chart.options.data[0].dataPoints.length; i++) {
-      newDataPoints.push({ label: chart.options.data[0].dataPoints[i].label, y: Math.random() * 100 });
-    }
-    chart.options.data[0].dataPoints = newDataPoints;
-    chart.render();
-  }
-
-  function updateRepresentativeDataPoints(organization, chart) {
-    // Update dataPoints based on the selected organization
-    // For demonstration, I'm using random values for each data point
-    var newDataPoints = [];
-    for (var i = 0; i < chart.options.data[0].dataPoints.length; i++) {
-      newDataPoints.push({ label: chart.options.data[0].dataPoints[i].label, y: Math.random() * 100 });
-    }
-    chart.options.data[0].dataPoints = newDataPoints;
-    chart.render();
-  }
-
-  window.onload = function () {
-    updateCharts();
-  };
 </script>
+
+<!-- Back to Top Button -->
+<button id="back-to-top" title="Back to Top">&uarr;</button>
+
 </body>
 </html>
