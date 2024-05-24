@@ -255,6 +255,7 @@ include 'includes/header_csc.php';
             success: function(response) {
                 presidentChart.options.data[0].dataPoints = response.president.map(dataPoint => ({
                     ...dataPoint,
+                    
                     percent: ((dataPoint.y / response.president.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
                 }));
                 presidentChart.render();
@@ -338,6 +339,7 @@ include 'includes/header_csc.php';
     }
 
     var presidentChart = generateBarGraph([], "presidentGraph");
+    $(".bar-chart rect").css("rx", "10px").css("ry", "10px");
     var vicePresidentChart = generateBarGraph([], "vicePresidentGraph");
     var secretaryChart = generateBarGraph([], "secretaryGraph");
     var treasurerChart = generateBarGraph([], "treasurerGraph");
