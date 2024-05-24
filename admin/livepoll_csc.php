@@ -211,6 +211,7 @@ include 'includes/header_csc.php';
         
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
+            animationDuration: 1000, // Adjust animation duration as needed
             title: {
                 text: "Vote Counts"
             },
@@ -247,43 +248,82 @@ include 'includes/header_csc.php';
             method: 'GET',
             dataType: 'json',
             success: function(response) {
-                presidentChart.options.data[0].dataPoints = response.president;
+                presidentChart.options.data[0].dataPoints = response.president.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / response.president.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
+                }));
                 presidentChart.render();
 
-                vicePresidentChart.options.data[0].dataPoints = response.vicePresident;
+                vicePresidentChart.options.data[0].dataPoints = response.vicePresident.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / response.vicePresident.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
+                }));
                 vicePresidentChart.render();
 
-                secretaryChart.options.data[0].dataPoints = response.secretary;
+                secretaryChart.options.data[0].dataPoints = response.secretary.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / response.secretary.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
+                }));
                 secretaryChart.render();
 
-                treasurerChart.options.data[0].dataPoints = response.treasurer;
+                treasurerChart.options.data[0].dataPoints = response.treasurer.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / response.treasurer.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
+                }));
                 treasurerChart.render();
 
-                auditorChart.options.data[0].dataPoints = response.auditor;
+                auditorChart.options.data[0].dataPoints = response.auditor.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / response.auditor.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
+                }));
                 auditorChart.render();
 
-                proChart.options.data[0].dataPoints = response.publicInformationOfficer;
+                proChart.options.data[0].dataPoints = response.publicInformationOfficer.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / response.publicInformationOfficer.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
+                }));
                 proChart.render();
 
-                businessManagerChart.options.data[0].dataPoints = response.businessManager;
+                businessManagerChart.options.data[0].dataPoints = response.businessManager.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / response.businessManager.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
+                }));
                 businessManagerChart.render();
 
-                beedRepChart.options.data[0].dataPoints = response.beedRepresentative;
+                beedRepChart.options.data[0].dataPoints = response.beedRepresentative.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / response.beedRepresentative.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
+                }));
                 beedRepChart.render();
 
-                bsedRepChart.options.data[0].dataPoints = response.bsedRepresentative;
+                bsedRepChart.options.data[0].dataPoints = response.bsedRepresentative.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / response.bsedRepresentative.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
+                }));
                 bsedRepChart.render();
 
-                bshmRepChart.options.data[0].dataPoints = response.bshmRepresentative;
+                bshmRepChart.options.data[0].dataPoints = response.bshmRepresentative.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / response.bshmRepresentative.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
+                }));
                 bshmRepChart.render();
 
-                bsoadRepChart.options.data[0].dataPoints = response.bsoadRepresentative;
+                bsoadRepChart.options.data[0].dataPoints = response.bsoadRepresentative.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / response.bsoadRepresentative.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
+                }));
                 bsoadRepChart.render();
 
-                bscrimRepChart.options.data[0].dataPoints = response.bsCrimRepresentative;
+                bscrimRepChart.options.data[0].dataPoints = response.bsCrimRepresentative.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / response.bsCrimRepresentative.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
+                }));
                 bscrimRepChart.render();
 
-                bsitRepChart.options.data[0].dataPoints = response.bsitRepresentative;
+                bsitRepChart.options.data[0].dataPoints = response.bsitRepresentative.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / response.bsitRepresentative.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
+                }));
                 bsitRepChart.render();
             },
             error: function(error) {
