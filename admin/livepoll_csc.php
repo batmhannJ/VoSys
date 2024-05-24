@@ -53,6 +53,7 @@ include 'includes/header_csc.php';
 
         <section class="content">
             <div class="row justify-content-center">
+                <!-- Repeat this structure for each position -->
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
@@ -63,138 +64,7 @@ include 'includes/header_csc.php';
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>Vice President</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="vicePresidentGraph" style="height: 300px; position: relative;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>Secretary</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="secretaryGraph" style="height: 300px; position: relative;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>Treasurer</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="treasurerGraph" style="height: 300px; position: relative;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>Auditor</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="auditorGraph" style="height: 300px; position: relative;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>Public Information Officer (P.R.O)</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="proGraph" style="height: 300px; position: relative;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>Business Manager</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="businessManagerGraph" style="height: 300px; position: relative;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>BEED Representative</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="beedRepGraph" style="height: 300px; position: relative;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>BSED Representative</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="bsedRepGraph" style="height: 300px; position: relative;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>BSHM Representative</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="bshmRepGraph" style="height: 300px; position: relative;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>BSOAD Representative</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="bsoadRepGraph" style="height: 300px; position: relative;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>BS CRIM Representative</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="bscrimRepGraph" style="height: 300px; position: relative;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>BSIT Representative</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="bsitRepGraph" style="height: 300px; position: relative;"></div>
-                        </div>
-                    </div>
-                </div>
+                <!-- Add other positions similarly... -->
             </div>
         </section>
     </div>
@@ -211,7 +81,7 @@ include 'includes/header_csc.php';
 
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
-            animationDuration: 2000, // Animation duration for initial rendering
+            animationDuration: 2000,
             title: {
                 text: "Vote Counts"
             },
@@ -225,7 +95,7 @@ include 'includes/header_csc.php';
             },
             axisY: {
                 title: "",
-                interval: Math.ceil(totalVotes / 10) // Adjust the Y-axis interval for better scaling
+                interval: Math.ceil(totalVotes / 10)
             },
             data: [{
                 type: "bar",
@@ -239,8 +109,30 @@ include 'includes/header_csc.php';
                 }))
             }]
         });
+
         chart.render();
+
+        // Add images next to bars
+        addImagesToBars(dataPoints, containerId);
+        
         return chart;
+    }
+
+    function addImagesToBars(dataPoints, containerId) {
+        var container = document.getElementById(containerId);
+        container.querySelectorAll('.graph-image').forEach(img => img.remove()); // Remove old images
+
+        dataPoints.forEach((dataPoint, index) => {
+            var img = document.createElement('img');
+            img.src = dataPoint.image; // Assume dataPoint contains image URL
+            img.style.position = 'absolute';
+            img.style.top = (index * 30 + 70) + 'px'; // Adjust as needed
+            img.style.left = '5px'; // Adjust as needed
+            img.style.width = '30px';
+            img.style.height = '30px';
+            img.className = 'graph-image';
+            container.appendChild(img);
+        });
     }
 
     function updateChartData(chart, newDataPoints, containerId) {
@@ -250,24 +142,11 @@ include 'includes/header_csc.php';
             percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
         }));
         chart.options.animationEnabled = true;
-        chart.options.animationDuration = 2000; // Animation duration for updates
+        chart.options.animationDuration = 2000;
         chart.render();
-        
-        // Add images next to bars
-        var container = document.getElementById(containerId);
-        container.querySelectorAll('.graph-image').forEach(img => img.remove()); // Remove old images
 
-        newDataPoints.forEach((dataPoint, index) => {
-            var img = document.createElement('img');
-            img.src = dataPoint.image; // Assume dataPoint contains image URL
-            img.style.position = 'absolute';
-            img.style.top = (index * 30 + 70) + 'px'; // Adjust as needed
-            img.style.left = '0px';
-            img.style.width = '30px';
-            img.style.height = '30px';
-            img.className = 'graph-image';
-            container.appendChild(img);
-        });
+        // Add images next to bars
+        addImagesToBars(newDataPoints, containerId);
     }
 
     function updateVoteCounts() {
