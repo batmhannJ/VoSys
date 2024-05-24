@@ -133,12 +133,12 @@ if (!$conn) {
 }
 
 // Fetch the user's ID from session
-if (isset($_SESSION['voters_id'])) {
-    $userId = $_SESSION['voters_id'];
+if (isset($voter['id'])) {
+    $userId = $voter['id'];
 
     // Fetch the user's organization and set it in the session (if not already set)
     if (!isset($_SESSION['organization'])) {
-        $userQuery = "SELECT organization FROM voters WHERE voters_id = '$userId'";
+        $userQuery = "SELECT organization FROM voters WHERE id = '$userId'";
         $userResult = $conn->query($userQuery);
         if ($userResult) {
             if ($userResult->num_rows > 0) {
@@ -156,11 +156,11 @@ if (isset($_SESSION['voters_id'])) {
 }
 
 // Debug: Output the user's organization to verify
-if (isset($_SESSION['organization'])) {
+/*if (isset($_SESSION['organization'])) {
     echo "User's Organization: " . $_SESSION['organization'];
 } else {
     echo "User's organization not set.";
-}
+}*/
 
 include 'includes/slugify.php';
 
