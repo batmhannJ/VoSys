@@ -1,6 +1,11 @@
-<?php include 'includes/session.php'; ?>
-<?php include 'includes/slugify.php'; ?>
-<?php include 'includes/header.php'; ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Polling</title>
+  <!-- Add your CSS links here -->
+</head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
   <?php include 'includes/navbar.php'; ?>
@@ -127,7 +132,9 @@
       data: [{
         type: "bar",
         dataPoints: dataPoints,
-        color: organizationColors[organization] // Set organization-specific color
+        color: organizationColors[organization], // Set organization-specific color
+        indexLabel: "{y}",
+        cornerRadius: 10 // Set the radius value as per your preference
       }]
     });
 
@@ -165,7 +172,8 @@
         { y: 30, label: "Representative 1" },
         { y: 40, label: "Representative 2" }
       ];
-    } else if (organization === "CODE-TG") {
+    } else if (
+        organization === "CODE-TG") {
       dataPoints = [
         { y: 20, label: "Representative 1" },
         { y: 30, label: "Representative 2" }
@@ -183,7 +191,9 @@
       data: [{
         type: "bar",
         dataPoints: dataPoints,
-        color: organizationColors[organization] // Set organization-specific color
+        color: organizationColors[organization], // Set organization-specific color
+        indexLabel: "{y}",
+        cornerRadius: 10 // Set the radius value as per your preference
       }]
     });
 
