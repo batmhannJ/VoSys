@@ -228,7 +228,7 @@ include 'includes/header_csc.php';
             interval: Math.ceil(totalVotes / 10)
         },
         data: [{
-            type: "bar",
+            type: "spline",
             indexLabel: "{label} - {percent}%",
             indexLabelPlacement: "inside",
             indexLabelFontColor: "white",
