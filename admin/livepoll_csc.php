@@ -211,7 +211,7 @@ include 'includes/header_csc.php';
         
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
-            animationDuration: 1000, // Adjust animation duration as needed
+            animationDuration: 2000, // Animation duration
             title: {
                 text: "Vote Counts"
             },
@@ -224,7 +224,8 @@ include 'includes/header_csc.php';
                 }
             },
             axisY: {
-                title: ""
+                title: "",
+                interval: Math.ceil(totalVotes / 10) // Adjust the Y-axis interval for better scaling
             },
             data: [{
                 type: "bar",
@@ -348,7 +349,7 @@ include 'includes/header_csc.php';
 
     updateVoteCounts();
 
-    setInterval(updateVoteCounts, 1000);
+    setInterval(updateVoteCounts, 5000);
 
     // Back to top button script
     $(document).ready(function() {
