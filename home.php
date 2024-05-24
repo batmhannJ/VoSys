@@ -128,6 +128,20 @@ if(!is_active_election($conn)){
     session_start();
     include 'includes/slugify.php';
 
+    if (!isset($_SESSION['organization'])) {
+        // Assuming you have a way to get the user ID from the session or other source
+        $userId = $_SESSION['voters_id'];
+        $userQuery = "SELECT organization FROM voters WHERE id = '$userId'";
+        $userResult = $conn->query($userQuery);
+        if ($userResult && $userResult->num_rows > 0) {
+            $userRow = $userResult->fetch_assoc();
+            $_SESSION['organization'] = $userRow['organization'];
+        }
+    }
+    
+    // Debug: Output the user's organization to verify
+    echo "User's Organization: " . $_SESSION['organization'];
+
     // Define the positions to be displayed
     $positions = [
         'President',
