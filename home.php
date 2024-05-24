@@ -124,8 +124,77 @@ if(!is_active_election($conn)){
 				    
 			    			<!-- Voting Ballot -->
 						    <form method="POST" id="ballotForm" action="submit_ballot.php">
-                                <?php
-                                include 'includes/slugify.php';
+                            <?php
+session_start();
+
+// Verify the database connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+// Fetch the user's ID from session
+if (isset($_SESSION['id'])) {
+    $userId = $_SESSION['id'];
+
+    // Fetch the user's organization and set it in the session (if not already set)
+    if (!isset($_SESSION['organization'])) {
+        $userQuery = "SELECT organization FROM voters WHERE voters_id = '$userId'";
+        $userResult = $conn->query($userQuery);
+        if ($userResult) {
+            if ($userResult->num_rows > 0) {
+                $userRow = $userResult->fetch_assoc();
+                $_SESSION['organization'] = $userRow['organization'];
+            } else {
+                echo "No organization found for user ID: $userId";
+            }
+        } else {
+            echo "Error in query: " . $conn->error;
+        }
+    }
+} else {
+    echo "User ID not set in session.";
+}
+
+// Debug: Output the user's organization to verify
+if (isset($_SESSION['organization'])) {
+    echo "User's Organization: " . $_SESSION['organization'];
+} else {
+    echo "User's organization not set.";
+}
+
+include 'includes/slugify.php';
+
+// Define the positions to be displayed
+$positions = [
+    'President',
+    'Vice President',
+    'Secretary',
+    'Treasurer',
+    'P.R.O',
+    'Business Manager',
+];
+
+// Add organization-specific representatives
+if (isset($_SESSION['organization'])) {
+    switch ($_SESSION['organization']) {
+        case 'JPCS':
+            $positions[] = 'BSIT Rep';
+            break;
+        case 'HMSO':
+            $positions[] = 'BSHM Rep';
+            break;
+        case 'PASOA':
+            $positions[] = 'BSOAD Rep';
+            break;
+        case 'YMF':
+            $positions[] = 'BSED Rep';
+            $positions[] = 'BEED Rep';
+            break;
+        case 'CODE-TG':
+            $positions[] = 'BS CRIM Rep';
+            break;
+    }
+}
 
                                 $candidate = '';
                                 $sql = "SELECT * FROM categories WHERE election_id = 20 ORDER BY priority ASC";

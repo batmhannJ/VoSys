@@ -128,7 +128,8 @@
             <div class="inner">
             <?php
               $sql = "SELECT COUNT(DISTINCT voters_id) AS total_voters
-                      FROM votes_csc";
+              FROM votes_csc
+              WHERE voters_id NOT IN (SELECT id FROM voters WHERE archived = 1)";      
               $query = $conn->query($sql);
               $row = $query->fetch_assoc();
               $totalVoters = $row['total_voters'];
