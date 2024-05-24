@@ -2,36 +2,42 @@
 include 'includes/session.php';
 
 $data = json_decode(file_get_contents('php://input'), true);
+$action = $data['action'];
+$ids = $data['ids'];
 
-if ($data['action'] == 'restore' && !empty($data['ids'])) {
-  $ids = implode(',', array_map('intval', $data['ids']));
-  if ($_GET['type'] === 'voters') {
-    $sql = "UPDATE voters SET archived = FALSE WHERE id IN ($ids)";
-  } elseif ($_GET['type'] === 'admin') {
-    $sql = "UPDATE admin SET archived = FALSE WHERE id IN ($ids)";
-  } elseif ($_GET['type'] === 'election') {
-    $sql = "UPDATE election SET archived = FALSE WHERE id IN ($ids)";
-  }
-  if ($conn->query($sql)) {
-    echo json_encode(['success' => true]);
-  } else {
-    echo json_encode(['success' => false]);
-  }
-} elseif ($data['action'] == 'delete' && !empty($data['ids'])) {
-  $ids = implode(',', array_map('intval', $data['ids']));
-  if ($_GET['type'] === 'voters') {
-    $sql = "DELETE FROM voters WHERE id IN ($ids)";
-  } elseif ($_GET['type'] === 'admin') {
-    $sql = "DELETE FROM admin WHERE id IN ($ids)";
-  } elseif ($_GET['type'] === 'election') {
-    $sql = "DELETE FROM election WHERE id IN ($ids)";
-  }
-  if ($conn->query($sql)) {
-    echo json_encode(['success' => true]);
-  } else {
-    echo json_encode(['success' => false]);
-  }
+$response = ['success' => false, 'message' => ''];
+
+if($action == 'restore') {
+    foreach($ids as $id) {
+        // Add your restore logic here
+        $sql = "UPDATE table_name SET archived = FALSE WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        if($stmt->execute()) {
+            $response['success'] = true;
+        } else {
+            $response['success'] = false;
+            $response['message'] = 'Restore failed for ID ' . $id;
+            break;
+        }
+    }
+} elseif($action == 'delete') {
+    foreach($ids as $id) {
+        // Add your delete logic here
+        $sql = "DELETE FROM table_name WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        if($stmt->execute()) {
+            $response['success'] = true;
+        } else {
+            $response['success'] = false;
+            $response['message'] = 'Delete failed for ID ' . $id;
+            break;
+        }
+    }
 } else {
-  echo json_encode(['success' => false]);
+    $response['message'] = 'Invalid action';
 }
+
+echo json_encode($response);
 ?>
