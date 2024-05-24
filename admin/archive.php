@@ -89,6 +89,7 @@
             <thead>
               <tr>
                 <?php if(isset($_GET['type']) && $_GET['type'] === 'voters'): ?>
+                <th>#</th>
                 <th>Last Name</th>
                 <th>First Name</th>
                 <th>Photo</th>
@@ -148,7 +149,6 @@
                     $adminImage = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
                     echo "
                       <tr>
-                        <td><input type='checkbox' class='selectItem' value='".$row['id']."'></td>
                         <td>".$row['id']."</td>
                         <td>".$row['organization']."</td>
                         <td>".$row['lastname']."</td>
