@@ -127,6 +127,7 @@
                           $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
                           echo "
                             <tr>
+                            <td><input type='checkbox' class='selectItem' value='".$row['id']."'></td>
                               <td>".$row['lastname']."</td>
                               <td>".$row['firstname']."</td>
                               <td>
