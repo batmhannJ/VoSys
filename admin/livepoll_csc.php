@@ -35,6 +35,11 @@ include 'includes/header_csc.php';
         #back-to-top:hover {
             background-color: #555;
         }
+        /* CSS for rounded corners */
+        .bar-chart rect {
+            rx: 10px; /* Set the x-axis radius for rounded corners */
+            ry: 10px; /* Set the y-axis radius for rounded corners */
+        }
     </style>
 </head>
 <body class="hold-transition skin-black sidebar-mini">
