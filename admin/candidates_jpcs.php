@@ -1,9 +1,9 @@
 <?php include 'includes/session.php'; ?>
-<?php include 'includes/header.php'; ?>
-<body class="hold-transition skin-blue sidebar-mini">
+<?php include 'includes/header_jpcs.php'; ?>
+<body class="hold-transition skin-green sidebar-mini">
 <div class="wrapper">
 
-  <?php include 'includes/navbar.php'; ?>
+  <?php include 'includes/navbar_jpcs.php'; ?>
   <?php include 'includes/menubar_jpcs.php'; ?>
 
   <!-- Content Wrapper. Contains page content -->
@@ -99,7 +99,7 @@
   </div>
     
   <?php include 'includes/footer.php'; ?>
-  <?php include 'includes/candidates_modal.php'; ?>
+  <?php include 'includes/can_jpcs_modal.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
 <script>

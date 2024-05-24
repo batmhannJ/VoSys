@@ -51,8 +51,8 @@
             <div class="box-body">
               <table id="example1" class="table table-bordered">
                 <thead>
-                  <th>Lastname</th>
-                  <th>Firstname</th>
+                  <th>No.</th>
+                  <th>Full Name</th>
                   <th>Photo</th>
                   <th>Voters ID</th>
                   <th>Email</th>
@@ -64,12 +64,14 @@
                   <?php
                     $sql = "SELECT * FROM voters WHERE archived = FALSE";
                     $query = $conn->query($sql);
+                    $i = 1;
                     while($row = $query->fetch_assoc()){
                       $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
+                      $fullname = $row['lastname'] . ', ' . $row['firstname'];
                       echo "
                         <tr>
-                          <td>".$row['lastname']."</td>
-                          <td>".$row['firstname']."</td>
+                          <td>".$i++."</td>
+                          <td>".$fullname."</td>
                           <td>
                             <img src='".$image."' width='30px' height='30px'>
                             <a href='#edit_photo' data-toggle='modal' class='pull-right photo' data-id='".$row['id']."'></a>
@@ -79,8 +81,8 @@
                           <td>".$row['yearLvl']."</td>
                           <td>".$row['organization']."</td>
                           <td>
-                            <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
-                            <button class='btn btn-warning btn-sm archive btn-flat' data-id='".$row['id']."' onclick='archiveVoter(".$row['id'].")'><i class='fa fa-archive'></i> Archive</button>
+                            <button class='btn btn-primary btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
+                            <button class='btn btn-warning btn-sm archive btn-flat' data-id='".$row['id']."'><i class='fa fa-archive'></i> Archive</button>
                           </td>
                         </tr>
                       ";
@@ -136,22 +138,6 @@
 </div>
 <?php include 'includes/scripts.php'; ?>
 <script>
-function archiveVoter(id) {
-  if (confirm("Are you sure you want to archive this voter?")) {
-    $.ajax({
-      type: "POST",
-      url: "archive_voter.php",
-      data: { id: id },
-      success: function(response) {
-        // Refresh the page or update the table as needed
-        location.reload();
-      },
-      error: function(xhr, status, error) {
-        console.error(xhr.responseText);
-      }
-    });
-  }
-}
 $(function(){
   $(document).on('click', '.edit', function(e){
     e.preventDefault();
@@ -160,14 +146,38 @@ $(function(){
     getRow(id);
   });
 
-
   $(document).on('click', '.photo', function(e){
     e.preventDefault();
     var id = $(this).data('id');
     getRow(id);
   });
 
+  $(document).on('click', '.archive', function(e){
+    e.preventDefault();
+    var id = $(this).data('id');
+    archiveVoter(id);
+  });
+
 });
+
+function archiveVoter(id) {
+    $('#confirmationModal').modal('show'); // Show the confirmation modal
+
+    $('#submitBtn').on('click', function() {
+        $.ajax({
+            type: "POST",
+            url: "archive_voter.php",
+            data: { id: id },
+            success: function(response) {
+                // Refresh the page or update the table as needed
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+}
 
 function getRow(id){
   $.ajax({
@@ -187,5 +197,26 @@ function getRow(id){
   });
 }
 </script>
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <p>Are you sure you want to archive this voter?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="submitBtn">Yes, Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

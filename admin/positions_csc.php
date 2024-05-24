@@ -1,6 +1,6 @@
 <?php include 'includes/session.php'; ?>
-<?php include 'includes/header.php'; ?>
-<body class="hold-transition skin-blue sidebar-mini">
+<?php include 'includes/header_csc.php'; ?>
+<body class="hold-transition skin-black sidebar-mini">
 <div class="wrapper">
 
   <?php include 'includes/navbar_csc.php'; ?>
@@ -52,22 +52,25 @@
               <table id="example1" class="table table-bordered">
                 <thead>
                   <th class="hidden"></th>
+                  <th>No.</th>
                   <th>Description</th>
                   <th>Maximum Vote</th>
                   <th>Tools</th>
                 </thead>
                 <tbody>
                   <?php
-                    $sql = "SELECT * FROM positions ORDER BY priority ASC";
+                    $sql = "SELECT * FROM categories WHERE election_id = 20 ORDER BY priority ASC";
                     $query = $conn->query($sql);
+                    $i = 1;
                     while($row = $query->fetch_assoc()){
                       echo "
                         <tr>
                           <td class='hidden'></td>
-                          <td>".$row['description']."</td>
+                          <td>".$i++."</td>
+                          <td>".$row['name']."</td>
                           <td>".$row['max_vote']."</td>
                           <td>
-                            <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
+                            <button class='btn btn-primary btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
                             <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."'><i class='fa fa-trash'></i> Delete</button>
                           </td>
                         </tr>
@@ -84,7 +87,7 @@
   </div>
     
   <?php include 'includes/footer.php'; ?>
-  <?php include 'includes/positions_modal.php'; ?>
+  <?php include 'includes/positions_modal_csc.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
 <script>
@@ -108,14 +111,14 @@ $(function(){
 function getRow(id){
   $.ajax({
     type: 'POST',
-    url: 'positions_row.php',
+    url: 'positions_csc_row.php',
     data: {id:id},
     dataType: 'json',
     success: function(response){
       $('.id').val(response.id);
-      $('#edit_description').val(response.description);
+      $('#edit_name').val(response.name);
       $('#edit_max_vote').val(response.max_vote);
-      $('.description').html(response.description);
+      $('.name').html(response.name);
     }
   });
 }

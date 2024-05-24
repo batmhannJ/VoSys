@@ -24,7 +24,7 @@
 			$password = password_hash($password, PASSWORD_DEFAULT);
 		}
 
-		$sql = "UPDATE sub_admin SET username = '$username', password = '$password', firstname = '$firstname', lastname = '$lastname', email = '$email' WHERE id = '$id'";
+		$sql = "UPDATE admin SET username = '$username', password = '$password', firstname = '$firstname', lastname = '$lastname', email = '$email' WHERE id = '$id'";
 		if($conn->query($sql)){
 			$_SESSION['success'] = 'Admin updated successfully';
 		}

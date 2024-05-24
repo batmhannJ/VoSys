@@ -8,7 +8,7 @@
               <h4 class="modal-title"><b>Add New Voter</b></h4>
             </div>
             <div class="modal-body">
-              <form class="form-horizontal" method="POST" action="voters_add.php" enctype="multipart/form-data">
+              <form class="form-horizontal" method="POST" action="voters_jpcs_add.php" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="firstname" class="col-sm-3 control-label">Firstname</label>
 
@@ -77,7 +77,7 @@
               <h4 class="modal-title"><b>Edit Voter</b></h4>
             </div>
             <div class="modal-body">
-              <form class="form-horizontal" method="POST" action="voters_edit.php">
+              <form class="form-horizontal" method="POST" action="voters_edit_jpcs.php">
                 <input type="hidden" class="id" name="id">
                 <div class="form-group">
                     <label for="edit_firstname" class="col-sm-3 control-label">Firstname</label>
@@ -138,7 +138,7 @@
               <h4 class="modal-title"><b>Deleting...</b></h4>
             </div>
             <div class="modal-body">
-              <form class="form-horizontal" method="POST" action="voters_delete.php">
+              <form class="form-horizontal" method="POST" action="voters_delete_jpcs.php">
                 <input type="hidden" class="id" name="id">
                 <div class="text-center">
                     <p>DELETE VOTER</p>

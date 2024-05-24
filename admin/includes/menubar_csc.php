@@ -15,6 +15,7 @@
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">REPORTS</li>
       <li class=""><a href="home_csc.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+      <li class=""><a href="livepoll_csc.php"><i class="fa fa-bar-chart"> </i><span>Live Polling</span></a></li>
       <li class=""><a href="votes_csc.php"><span class="glyphicon glyphicon-lock"></span> <span>Votes Result</span></a></li>
       <li class="header">MANAGE</li>
       <!--<li class=""><a href="sub_admin.php"><i class="fa fa-user-plus"></i> <span>Sub Admins</span></a></li>-->
@@ -29,6 +30,7 @@
       <li class=""><a href="history_csc.php"><i class="fa fa-clock-o"></i> <span>History</span></a></li>
       
       <li class=""><a href="ballot_csc.php"><i class="fa fa-file-text"></i> <span>Ballot Position</span></a></li>
+      <li class=""><a href="archive_csc.php"><i class="fa fa-archive"></i> <span>Archive</span></a></li>
     </ul>
   </section>
   <!-- /.sidebar -->

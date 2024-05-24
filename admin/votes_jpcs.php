@@ -1,6 +1,6 @@
 <?php include 'includes/session.php'; ?>
-<?php include 'includes/header.php'; ?>
-<body class="hold-transition skin-blue sidebar-mini">
+<?php include 'includes/header_jpcs.php'; ?>
+<body class="hold-transition skin-green sidebar-mini">
 <div class="wrapper">
 
   <?php include 'includes/navbar_jpcs.php'; ?>
@@ -67,19 +67,20 @@
                     voters1.lastname AS votlast, 
                     voters1.organization AS org 
                     FROM votes 
-                    LEFT JOIN positions ON positions.id=votes.position_id 
+                    LEFT JOIN categories ON categories.id=votes.category_id 
                     LEFT JOIN candidates ON candidates.id=votes.candidate_id 
                     LEFT JOIN voters AS voters1 ON voters1.id=votes.voters_id 
                     LEFT JOIN voters AS voters2 ON voters2.organization=votes.organization 
+                    WHERE voters1.organization = 'JPCS'
                     GROUP BY votes.id
-                    ORDER BY positions.priority ASC";
+                    ORDER BY categories.priority ASC";
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
         echo "
             <tr>
                 <td class='hidden'></td>
                 <td>".$counter."</td>
-                <td>".$row['description']."</td>
+                <td>".$row['name']."</td>
                 <td>".$row['canfirst'].' '.$row['canlast']."</td>
                 <td>".$row['votfirst'].' '.$row['votlast']."</td>
             </tr>

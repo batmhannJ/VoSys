@@ -49,44 +49,98 @@
               <a href="#reset" data-toggle="modal" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-refresh"></i> Reset</a>
             </div>
             <div class="box-body">
-              <table id="example1" class="table table-bordered">
-                <thead>
-                  <th class="hidden"></th>
-                  <th>Position</th>
-                  <th>Candidate</th>
-                  <th>Voter</th>
-                  <th>Organization</th>
-                </thead>
-                <tbody>
-                  <?php
-                    $sql = "SELECT *,
-                    candidates.firstname AS canfirst, 
-                    candidates.lastname AS canlast, 
-                    voters1.firstname AS votfirst, 
-                    voters1.lastname AS votlast, 
-                    voters1.organization AS org 
-                    FROM votes 
-                    LEFT JOIN positions ON positions.id=votes.position_id 
-                    LEFT JOIN candidates ON candidates.id=votes.candidate_id 
-                    LEFT JOIN voters AS voters1 ON voters1.id=votes.voters_id 
-                    LEFT JOIN voters AS voters2 ON voters2.organization=votes.organization 
-                    GROUP BY votes.id
-                    ORDER BY positions.priority ASC";
-                    $query = $conn->query($sql);
-                    while($row = $query->fetch_assoc()){
-                      echo "
-                        <tr>
-                          <td class='hidden'></td>
-                          <td>".$row['description']."</td>
-                          <td>".$row['canfirst'].' '.$row['canlast']."</td>
-                          <td>".$row['votfirst'].' '.$row['votlast']."</td>
-                          <td>".$row['org']."</td>
-                        </tr>
-                      ";
-                    }
-                  ?>
-                </tbody>
-              </table>
+              <div class="table-responsive" style="overflow-x:auto;">
+                <table id="example1" class="table table-bordered" style="width: 100%; max-width: 100%; margin-bottom: 1rem; background-color: transparent;">
+                  <thead>
+                    <th class="hidden"></th>
+                    <th>Position</th>
+                    <th>Candidate</th>
+                    <th>Voter</th>
+                    <th>Organization</th>
+                  </thead>
+                  <tbody>
+                    <?php
+                      $sql = "SELECT *,
+                      candidates.firstname AS canfirst, 
+                      candidates.lastname AS canlast, 
+                      voters1.firstname AS votfirst, 
+                      voters1.lastname AS votlast, 
+                      voters1.organization AS org 
+                      FROM votes 
+                      LEFT JOIN categories ON categories.id=votes.category_id 
+                      LEFT JOIN candidates ON candidates.id=votes.candidate_id 
+                      LEFT JOIN voters AS voters1 ON voters1.id=votes.voters_id 
+                      LEFT JOIN voters AS voters2 ON voters2.organization=votes.organization 
+                      GROUP BY votes.id
+                      ORDER BY categories.priority ASC";
+                      $query = $conn->query($sql);
+                      while($row = $query->fetch_assoc()){
+                        echo "
+                          <tr>
+                            <td class='hidden'></td>
+                            <td>".$row['name']."</td>
+                            <td>".$row['canfirst'].' '.$row['canlast']."</td>
+                            <td>".$row['votfirst'].' '.$row['votlast']."</td>
+                            <td>".$row['org']."</td>
+                          </tr>
+                        ";
+                      }
+                    ?>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header with-border">
+              <h4>Votes from CSC</h4>
+              <a href="#reset_csc" data-toggle="modal" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-refresh"></i> Reset</a>
+            </div>
+            <div class="box-body">
+              <div class="table-responsive" style="overflow-x:auto;">
+                <table id="example1" class="table table-bordered" style="width: 100%; max-width: 100%; margin-bottom: 1rem; background-color: transparent;">
+                  <thead>
+                    <th class="hidden"></th>
+                    <th>Position</th>
+                    <th>Candidate</th>
+                    <th>Voter</th>
+                    <th>Organization</th>
+                  </thead>
+                  <tbody>
+                    <?php
+                      $sql = "SELECT *,
+                      candidates.firstname AS canfirst, 
+                      candidates.lastname AS canlast, 
+                      voters1.firstname AS votfirst, 
+                      voters1.lastname AS votlast, 
+                      voters1.organization AS org 
+                      FROM votes_csc 
+                      LEFT JOIN categories ON categories.id=votes_csc.category_id 
+                      LEFT JOIN candidates ON candidates.id=votes_csc.candidate_id 
+                      LEFT JOIN voters AS voters1 ON voters1.id=votes_csc.voters_id 
+                      LEFT JOIN voters AS voters2 ON voters2.organization=votes_csc.organization 
+                      GROUP BY votes_csc.id
+                      ORDER BY categories.priority ASC";
+                      $query = $conn->query($sql);
+                      while($row = $query->fetch_assoc()){
+                        echo "
+                          <tr>
+                            <td class='hidden'></td>
+                            <td>".$row['name']."</td>
+                            <td>".$row['canfirst'].' '.$row['canlast']."</td>
+                            <td>".$row['votfirst'].' '.$row['votlast']."</td>
+                            <td>".$row['org']."</td>
+                          </tr>
+                        ";
+                      }
+                    ?>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>

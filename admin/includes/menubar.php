@@ -15,10 +15,10 @@
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">REPORTS</li>
       <li class=""><a href="home.php"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-      <li class=""><a href="livepolling.php"><span class="glyphicon glyphicon-lock"></span> <span>Live Polling</span></a></li>
+      <li class=""><a href="livepolling.php"><i class="fa fa-bar-chart"> </i><span>Live Polling</span></a></li>
       <li class=""><a href="votes.php"><span class="glyphicon glyphicon-lock"></span> <span>Votes Result</span></a></li>
       <li class="header">MANAGE</li>
-      <li class=""><a href="announcement.php"><i class="fa fa-user-plus"></i> <span>Announcement</span></a></li>
+      <li class=""><a href="announcement.php"><i class="fa fa-bullhorn"></i> <span>Announcement</span></a></li>
       <li class=""><a href="sub_admin.php"><i class="fa fa-user-plus"></i> <span>Sub Admins</span></a></li>
       <li class=""><a href="voters.php"><i class="fa fa-users"></i> <span>Voters</span></a></li>
       <!--<li class=""><a href="positions.php"><i class="fa fa-tasks"></i> <span>Positions</span></a></li>
@@ -28,8 +28,9 @@
       <li class="header">SETTINGS</li>
       
       <!--<li class=""><a href="#" data-toggle="modal"><i class="fa fa-book"></i> <span>Archives</span></a></li>-->
+      <li class=""><a href="activity_log.php"><i class="fa fa-clock-o"></i> <span>Activity Log</span></a></li>
       <li class=""><a href="history.php"><i class="fa fa-clock-o"></i> <span>History</span></a></li>
-      <li class=""><a href="archive.php"><i class="fa fa-clock-o"></i> <span>Archive</span></a></li>
+      <li class=""><a href="archive.php"><i class="fa fa-archive"></i> <span>Archive</span></a></li>
       
       <!--<li class=""><a href="ballot.php"><i class="fa fa-file-text"></i> <span>Ballot Position</span></a></li>-->
     </ul>

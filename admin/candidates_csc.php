@@ -1,6 +1,6 @@
 <?php include 'includes/session.php'; ?>
-<?php include 'includes/header.php'; ?>
-<body class="hold-transition skin-blue sidebar-mini">
+<?php include 'includes/header_csc.php'; ?>
+<body class="hold-transition skin-black sidebar-mini">
 <div class="wrapper">
 
   <?php include 'includes/navbar_csc.php'; ?>
@@ -63,9 +63,10 @@
                   <?php
                     $sql = "SELECT *, candidates.id AS canid 
                     FROM candidates 
-                    LEFT JOIN positions ON positions.id = candidates.position_id 
-                    WHERE candidates.election_id = 1 
-                    ORDER BY positions.priority ASC";
+                    LEFT JOIN categories ON categories.id = candidates.category_id 
+                    WHERE candidates.election_id = 20 
+                    AND candidates.archived = FALSE 
+                    ORDER BY categories.priority ASC";
 
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
@@ -73,17 +74,17 @@
                       echo "
                         <tr>
                           <td class='hidden'></td>
-                          <td>".$row['description']."</td>
+                          <td>".$row['name']."</td>
                           <td>
                             <img src='".$image."' width='30px' height='30px'>
                             <a href='#edit_photo' data-toggle='modal' class='pull-right photo' data-id='".$row['canid']."'><span class='fa fa-edit'></span></a>
                           </td>
                           <td>".$row['firstname']."</td>
                           <td>".$row['lastname']."</td>
-                          <td><a href='#platform' data-toggle='modal' class='btn btn-info btn-sm btn-flat platform' data-id='".$row['canid']."'><i class='fa fa-search'></i> View</a></td>
+                          <td><a href='#platform' data-toggle='modal' class='btn btn-success btn-sm btn-flat platform' data-id='".$row['canid']."'><i class='fa fa-search'></i> View</a></td>
                           <td>
-                            <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['canid']."'><i class='fa fa-edit'></i> Edit</button>
-                            <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['canid']."'><i class='fa fa-trash'></i> Delete</button>
+                            <button class='btn btn-primary btn-sm edit btn-flat' data-id='".$row['canid']."'><i class='fa fa-edit'></i> Edit</button>
+                            <button class='btn btn-warning btn-sm archive btn-flat' data-id='".$row['canid']."'><i class='fa fa-archive'></i> Archive</button>
                           </td>
                         </tr>
                       ";
@@ -99,7 +100,7 @@
   </div>
     
   <?php include 'includes/footer.php'; ?>
-  <?php include 'includes/candidates_modal.php'; ?>
+  <?php include 'includes/candidates_modal_csc.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
 <script>
@@ -111,11 +112,10 @@ $(function(){
     getRow(id);
   });
 
-  $(document).on('click', '.delete', function(e){
+  $(document).on('click', '.archive', function(e){
     e.preventDefault();
-    $('#delete').modal('show');
     var id = $(this).data('id');
-    getRow(id);
+    archiveCandidate(id);
   });
 
   $(document).on('click', '.photo', function(e){
@@ -132,17 +132,36 @@ $(function(){
 
 });
 
+function archiveCandidate(id) {
+    $('#confirmationModal').modal('show'); // Show the confirmation modal
+
+    $('#submitBtn').on('click', function() {
+        $.ajax({
+            type: "POST",
+            url: "archive_candidate.php",
+            data: { id: id },
+            success: function(response) {
+                // Refresh the page or update the table as needed
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+}
+
 function getRow(id){
   $.ajax({
     type: 'POST',
-    url: 'candidates_row.php',
+    url: 'candidates_csc_row.php',
     data: {id:id},
     dataType: 'json',
     success: function(response){
       $('.id').val(response.canid);
       $('#edit_firstname').val(response.firstname);
       $('#edit_lastname').val(response.lastname);
-      $('#posselect').val(response.position_id).html(response.description);      
+      $('#posselect').html(response.name);
       $('#edit_platform').val(response.platform);
       $('.fullname').html(response.firstname+' '+response.lastname);
       $('#desc').html(response.platform);
@@ -150,5 +169,26 @@ function getRow(id){
   });
 }
 </script>
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <p>Are you sure you want to archive this candidate?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="submitBtn">Yes, Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

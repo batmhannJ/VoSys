@@ -64,7 +64,7 @@ include 'includes/header.php';
                 <tbody>
                   <?php
                     // Query to select voters who have voted
-                    $sql = "SELECT DISTINCT v.id, v.lastname, v.firstname, v.photo, v.voters_id, v.email, v.yearLvl, v.organization FROM voters v INNER JOIN votes vt ON v.id = vt.voters_id";
+                    $sql = "SELECT DISTINCT v.id, v.lastname, v.firstname, v.photo, v.voters_id, v.email, v.yearLvl, v.organization FROM voters v INNER JOIN votes_csc vt ON v.id = vt.voters_id";
                     $query = $conn->query($sql);
                     if (!$query) {
                       die("SQL Error: " . $conn->error); // Add error handling here

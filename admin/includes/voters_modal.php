@@ -43,7 +43,6 @@
                     <div class="col-sm-9">
                       <select id="organization" name="organization" class="form-control" value="Choose below" required>
                       <option value="" selected hidden>Choose...</option>
-                      <option>CSC</option>
                       <option>JPCS</option>
                       <option>YMF</option>
                       <option>CODE-TG</option>
@@ -110,10 +109,14 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="edit_yearlvl" class="col-sm-3 control-label">Year Level</label>
-
+                  <label for="edit_yearlvl" class="col-sm-3 control-label">Year Level</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="edit_yearlvl" name="yearLvl">
+                        <select id="edit_yearlvl" name="yearLvl" class="form-control">
+                            <option value="1">1st Year</option>
+                            <option value="2">2nd Year</option>
+                            <option value="3">3rd Year</option>
+                            <!--<option value="4">4th Year</option>-->
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -134,29 +137,22 @@
 </div>
 
 <!-- Delete -->
-<div class="modal fade" id="delete">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title"><b>Deleting...</b></h4>
-            </div>
-            <div class="modal-body">
-              <form class="form-horizontal" method="POST" action="voters_delete.php">
-                <input type="hidden" class="id" name="id">
-                <div class="text-center">
-                    <p>DELETE VOTER</p>
-                    <h2 class="bold fullname"></h2>
-                </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
-              <button type="submit" class="btn btn-danger btn-flat" name="delete"><i class="fa fa-trash"></i> Delete</button>
-              </form>
-            </div>
-        </div>
+<div id="deleteConfirmationModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Confirmation</h4>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this item?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
+      </div>
     </div>
+  </div>
 </div>
 
 <!-- Update Photo -->

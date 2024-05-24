@@ -1,6 +1,6 @@
 <?php include 'includes/session.php'; ?>
-<?php include 'includes/header.php'; ?>
-<body class="hold-transition skin-blue sidebar-mini">
+<?php include 'includes/header_csc.php'; ?>
+<body class="hold-transition skin-black sidebar-mini">
 <div class="wrapper">
 
   <?php include 'includes/navbar_csc.php'; ?>
@@ -109,7 +109,7 @@ $(function(){
 function fetch(){
   $.ajax({
     type: 'POST',
-    url: 'ballot_fetch.php',
+    url: 'ballot_fetch_csc.php',
     dataType: 'json',
     success: function(response){
       $('#content').html(response).iCheck({checkboxClass: 'icheckbox_flat-green',radioClass: 'iradio_flat-green'});

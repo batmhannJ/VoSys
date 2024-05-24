@@ -1,6 +1,6 @@
 <?php include 'includes/session.php'; ?>
-<?php include 'includes/header.php'; ?>
-<body class="hold-transition skin-blue sidebar-mini">
+<?php include 'includes/header_csc.php'; ?>
+<body class="hold-transition skin-black sidebar-mini">
 <div class="wrapper">
 
   <?php include 'includes/navbar_csc.php'; ?>
@@ -51,24 +51,27 @@
             <div class="box-body">
               <table id="example1" class="table table-bordered">
                 <thead>
-                  <th>Lastname</th>
-                  <th>Firstname</th>
+                  <th>No.</th>
+                  <th>Full Name</th>
                   <th>Photo</th>
                   <th>Voters ID</th>
                   <th>Email</th>
                   <th>Year Level</th>
+                  <th>Organization</th>
                   <th>Tools</th>
                 </thead>
                 <tbody>
                   <?php
-                    $sql = "SELECT * FROM voters WHERE organization = 'JPCS'";
+                    $sql = "SELECT * FROM voters WHERE archived = FALSE";
                     $query = $conn->query($sql);
+                    $i = 1;
                     while($row = $query->fetch_assoc()){
                       $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
+                      $fullname = $row['lastname'] . ', ' . $row['firstname'];
                       echo "
                         <tr>
-                          <td>".$row['lastname']."</td>
-                          <td>".$row['firstname']."</td>
+                          <td>".$i++."</td>
+                          <td>".$fullname."</td>
                           <td>
                             <img src='".$image."' width='30px' height='30px'>
                             <a href='#edit_photo' data-toggle='modal' class='pull-right photo' data-id='".$row['id']."'></a>
@@ -76,9 +79,10 @@
                           <td>".$row['voters_id']."</td>
                           <td>".$row['email']."</td>
                           <td>".$row['yearLvl']."</td>
+                          <td>".$row['organization']."</td>
                           <td>
-                            <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
-                            <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."'><i class='fa fa-trash'></i> Delete</button>
+                            <button class='btn btn-primary btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
+                            <button class='btn btn-warning btn-sm archive btn-flat' data-id='".$row['id']."'><i class='fa fa-archive'></i> Archive</button>
                           </td>
                         </tr>
                       ";
@@ -117,7 +121,7 @@
           <div class="box">
             <div class="box-header with-border">
               <h4>Upload Voters</h4>
-            <form action="upload_jpcs.php" method="POST" enctype="multipart/form-data">
+            <form action="upload_csc.php" method="POST" enctype="multipart/form-data">
             <input type="file" accept=".xls,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" name="import_file" class="form-control" />
             <button type="submit" name="save_excel_data" class="btn btn-primary mt-3">Import</button>
           </form>
@@ -130,7 +134,7 @@
   </div>
     
   <?php include 'includes/footer.php'; ?>
-  <?php include 'includes/voters_jpcs_modal.php'; ?>
+  <?php include 'includes/voters_csc_modal.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
 <script>
@@ -142,20 +146,39 @@ $(function(){
     getRow(id);
   });
 
-  $(document).on('click', '.delete', function(e){
-    e.preventDefault();
-    $('#delete').modal('show');
-    var id = $(this).data('id');
-    getRow(id);
-  });
-
   $(document).on('click', '.photo', function(e){
     e.preventDefault();
     var id = $(this).data('id');
     getRow(id);
   });
 
+  $(document).on('click', '.archive', function(e){
+    e.preventDefault();
+    var id = $(this).data('id');
+    archiveVoter(id);
+  });
+
 });
+
+function archiveVoter(id) {
+    $('#confirmationModal').modal('show'); // Show the confirmation modal
+
+    $('#submitBtn').on('click', function() {
+        $.ajax({
+            type: "POST",
+            url: "archive_voter.php",
+            data: { id: id },
+            success: function(response) {
+                // Refresh the page or update the table as needed
+                location.reload();
+            },
+            error: function(xhr, status, error)
+            {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+}
 
 function getRow(id){
   $.ajax({
@@ -175,5 +198,26 @@ function getRow(id){
   });
 }
 </script>
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <p>Are you sure you want to archive this voter?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="submitBtn">Yes, Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

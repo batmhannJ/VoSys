@@ -1,9 +1,6 @@
 <footer class="main-footer">
-    <div class="container">
-      <div class="pull-right hidden-xs">
-        <b>All rights reserved</b>
-      </div>
-      <strong>Copyright &copy; 2023 <a href="https://www.campcodes.com">JPCS OLSHCO - Chapter</a></strong>
+    <div class="pull-right hidden-xs">
+      <b>All rights reserved</b>
     </div>
-    <!-- /.container -->
+    <strong>Designed and Developed by: <a href="developers.html">VOSYS TEAM</a></strong>
 </footer>

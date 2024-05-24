@@ -1,28 +1,48 @@
 <?php
-// Include your database connection file
-include 'includes/conn.php';
+session_start();
 
-// Check if the form is submitted
-if (isset($_POST['resetPassword'])) {
-    // Retrieve token and new password from the form
-    $token = $_POST['token'];
-    $new_password = $_POST['new_password'];
+if (isset($_POST['email']) && isset($_POST['new_password'])) {
+    $email = $_POST['email'];
+    $newPassword = $_POST['new_password'];
 
-    // Update password in the database
-    $stmt = $conn->prepare("UPDATE voters SET password = ? WHERE token = ?");
-    $stmt->bind_param("ss", $new_password, $token);
-    if ($stmt->execute()) {
-        // Password updated successfully, redirect to success page
-        header("Location: password_update_success.php");
-        exit();
-    } else {
-        // Error in updating password, redirect back to change_pass.php with error message
-        header("Location: change_pass.php?error=1");
-        exit();
+
+    // Step 2: Establish a database connection
+    $connection = mysqli_connect("localhost", "u247141684_vosys", "vosysOlshco5", "u247141684_votesystem");
+    if (!$connection) {
+        die("Database connection failed: " . mysqli_connect_error());
     }
+
+    // Step 3: Hash the new password for security
+    $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+
+    // Step 4: Update the user's password in the database
+    $query = "UPDATE voters SET password = ? WHERE email = ?";
+    $stmt = mysqli_prepare($connection, $query);
+    if (!$stmt) {
+        die("Prepare statement failed: " . mysqli_error($connection));
+    }
+    mysqli_stmt_bind_param($stmt, "ss", $hashedPassword, $email);
+    if (!mysqli_stmt_execute($stmt)) {
+        die("Execute statement failed: " . mysqli_error($connection));
+    }
+
+
+    // Step 5: Close database connection
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+
+    // Step 6: Return success response
+    $response = array("status" => "success", "message" => "Password updated successfully");
+
+    // Step 7: Return JSON response
+    header('Content-Type: application/json');
+    echo json_encode($response);
+    exit(); // Make sure to exit after sending the JSON response
 } else {
-    // If the form is not submitted, redirect to error page or another appropriate action
-    header("Location: error.php");
-    exit();
+    // If email, new password, or confirm password parameter is missing
+    $response = array("status" => "error", "message" => "New password and confirm password does not match.");
+    header('Content-Type: application/json');
+    echo json_encode($response);
+    exit(); // Exit without updating the password
 }
 ?>

@@ -51,10 +51,10 @@
             <div class="box-body">
               <table id="example1" class="table table-bordered">
                 <thead>
-                  <th>ID number</th>
+                  <th>No.</th>
                   <th>Organization</th>
-                  <th>Lastname</th>
-                  <th>Firstname</th>
+                  <th>Last Name</th>
+                  <th>First Name</th>
                   <th>Photo</th>
                   <th>Username</th>
                   <th>Email</th>
@@ -62,13 +62,14 @@
                 </thead>
                 <tbody>
                   <?php
-                    $sql = "SELECT * FROM sub_admin";
+                    $sql = "SELECT * FROM admin WHERE archived = FALSE AND organization != 'OSA'";
                     $query = $conn->query($sql);
+                    $i = 1;
                     while($row = $query->fetch_assoc()){
                       $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
                       echo "
                         <tr>
-                        <td>".$row['id']."</td>
+                        <td>".$i++."</td>
                         <td>".$row['organization']."</td>
                           <td>".$row['lastname']."</td>
                           <td>".$row['firstname']."</td>
@@ -79,8 +80,8 @@
                           <td>".$row['username']."</td>
                           <td>".$row['email']."</td>
                           <td>
-                            <button class='btn btn-success btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
-                            <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."'><i class='fa fa-trash'></i> Delete</button>
+                            <button class='btn btn-primary btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
+                            <button class='btn btn-warning btn-sm archive btn-flat' data-id='".$row['id']."'><i class='fa fa-archive'></i> Archive</button>
                           </td>
                         </tr>
                       ";
@@ -108,20 +109,38 @@ $(function(){
     getRow(id);
   });
 
-  $(document).on('click', '.delete', function(e){
-    e.preventDefault();
-    $('#delete').modal('show');
-    var id = $(this).data('id');
-    getRow(id);
-  });
-
   $(document).on('click', '.photo', function(e){
     e.preventDefault();
     var id = $(this).data('id');
     getRow(id);
   });
 
+  $(document).on('click', '.archive', function(e){ // Updated class name
+    e.preventDefault();
+    var id = $(this).data('id');
+    archiveAdmin(id);
+  });
+
 });
+
+function archiveAdmin(id) {
+    $('#confirmationModal').modal('show'); // Show the confirmation modal
+
+    $('#submitBtn').on('click', function() {
+        $.ajax({
+            type: "POST",
+            url: "archive_sub_admin.php",
+            data: { id: id },
+            success: function(response) {
+                // Refresh the page or update the table as needed
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+}
 
 function getRow(id){
   $.ajax({
@@ -141,5 +160,26 @@ function getRow(id){
   });
 }
 </script>
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <p>Are you sure you want to archive this admin?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="submitBtn">Yes, Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

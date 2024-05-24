@@ -1,5 +1,6 @@
 <?php
 	include 'includes/session.php';
+	
 
 	$return = 'home.php';
 	if(isset($_GET['return'])){

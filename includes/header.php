@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   	<!-- Font Awesome -->
   	<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   	<!-- Theme style -->
   	<link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   	<!-- AdminLTE Skins. Choose a skin from the css/skins

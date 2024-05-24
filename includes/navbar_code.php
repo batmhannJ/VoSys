@@ -3,9 +3,6 @@
     <div class="container">
       <div class="navbar-header">
         <a href="#" class="navbar-brand"><b>OLSHCO</b> College Voting System</a>
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
-          <i class="fa fa-bars"></i>
-        </button>
       </div>
 
       <!-- Collect the nav links, forms, and other content for toggling -->

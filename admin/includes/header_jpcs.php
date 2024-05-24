@@ -38,8 +38,42 @@
   	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
   	<style>
-      .skin-green .main-header .navbar_jpcs {
+      .skin-green .wrapper{
+        background-color: #fff;
+      }
+      .skin-green .main-header .navbar {
         background-color: darkgreen;
+      }
+      .skin-green .main-header .logo {
+          background-color: darkgreen;
+          color: #fff;
+          border-bottom: 0 solid transparent;
+      }
+      .skin-green .main-sidebar {
+        background-color: #fff;
+      }
+      .skin-green .sidebar-menu>li.header {
+          color: #000;
+          background: #fff;
+      }
+      .skin-green .user-panel>.info,
+      .skin-green .user-panel>.info>a{
+        color: #000;
+      }
+      .skin-green .sidebar-menu>li.active>a{
+        color: #fff;
+        background-color: darkgreen;
+      }
+      .skin-green .sidebar-menu>li:hover>a,
+      .skin-green .sidebar-menu>li.active>a,
+      .skin-green .sidebar-menu>li.menu-open>a {
+        margin: 1px;
+        color:#fff;
+        background:darkgreen;
+        border-radius: 5px;
+      }
+      .skin-green .sidebar a {
+          color: #000;
       }
       .bold{
         font-weight:bold;

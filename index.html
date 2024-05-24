@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link
       href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css"
       rel="stylesheet"
-    />
+    >
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-    />
+    >
     <title>OLSHCO College Online Voting System</title>
+    <link href="images/olshco.png" rel="icon">
+    <link href="images/olshco.png" rel="apple-touch-icon">
   </head>
   <body>
     <header class="header">
@@ -37,7 +40,7 @@
 </nav>
     <br><br><br><br><br><br><br><br>
       <div class="section__container header__container">
-        <h1>OLSCHO College<br/>Online Voting System</h1><br>
+        <h1>OLSHCO College<br/>Online Voting System</h1><br>
         <p style="font-size: 20px;">Online Voting System for Students of OLSHCO College Department</p>
       </div>
     </header><br><br><br>
@@ -249,6 +252,8 @@
 </div>
 </div>
 </section>
+
+
           
     <section id="location" class="section__container location__container">
       <h2 class="section__header">LOCATION</h2>
@@ -317,14 +322,15 @@
                     </div>
                 </div><br>
 
-                <div class="footer__rights">
+                <a href="developers.html"><div class="footer__rights">
                     <p class="footer__copy">&#169; VOSYS DEVELOPERS 2024</p>
-                </div>
+                </div></a>
             </div>
         </footer>
 
         <!-- Include the countdown timer library (if applicable) -->
-<script src="path/to/countdown-library.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+<!--<script src="path/to/countdown-library.js"></script>-->
 <script src="https://unpkg.com/scrollreveal"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="main.js"></script>
@@ -384,7 +390,7 @@
         document.querySelector('.close').addEventListener('click', hideDescription);
     </script>
 
-    <script>
+<script>
     // Function to update the countdown timer
     function updateCountdown(endTime) {
         var now = new Date();
@@ -467,7 +473,6 @@
     fetchElectionData();
 </script>
 
-
  <script>
   // Fetch countdown date from the server
   fetch('getCountdownDate.php')
@@ -525,6 +530,14 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+}
 .section__container {
   max-width: var(--max-width);
   margin: auto;
@@ -565,14 +578,6 @@ a {
   transition: 0.3s;
 }
 
-html,
-body {
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: "Poppins", sans-serif;
-}
 
 /* CSS Animation for Slideshow */
 @keyframes slideshow {
@@ -692,7 +697,7 @@ nav {
 }
 
 .header__container h1 {
-   font-size: 39px;
+  font-size: 39px;
     font-weight: bold;
     /* Set the text color */
     color: white;
