@@ -53,7 +53,7 @@ include 'includes/header_csc.php';
 
         <section class="content">
             <div class="row justify-content-center">
-                <div class="col-md-12 offset-md-1">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>President</b></h3>
@@ -64,7 +64,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-12 offset-md-1">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>Vice President</b></h3>
@@ -75,7 +75,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-12 offset-md-1">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>Secretary</b></h3>
@@ -86,7 +86,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-12 offset-md-1">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>Treasurer</b></h3>
@@ -97,7 +97,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-12 offset-md-1">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>Auditor</b></h3>
@@ -108,7 +108,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-12 offset-md-1">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>Public Information Officer (P.R.O)</b></h3>
@@ -119,7 +119,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-12 offset-md-1">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>Business Manager</b></h3>
@@ -130,7 +130,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-12 offset-md-1">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>BEED Representative</b></h3>
@@ -141,7 +141,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-12 offset-md-1">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>BSED Representative</b></h3>
@@ -152,7 +152,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-12 offset-md-1">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>BSHM Representative</b></h3>
@@ -163,7 +163,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-12 offset-md-1">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>BSOAD Representative</b></h3>
@@ -174,7 +174,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-12 offset-md-1">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>BS CRIM Representative</b></h3>
@@ -185,7 +185,7 @@ include 'includes/header_csc.php';
                     </div>
                 </div>
 
-                <div class="col-md-12 offset-md-1">
+                <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>BSIT Representative</b></h3>
@@ -207,25 +207,51 @@ include 'includes/header_csc.php';
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     function generateBarGraph(dataPoints, containerId) {
+        var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
+            animationDuration: 2000, // Animation duration for initial rendering
             title: {
                 text: "Vote Counts"
             },
             axisX: {
-                title: "Vote Count",
-                includeZero: true
+                title: "",
+                includeZero: true,
+                interval: 1,
+                labelFormatter: function () {
+                    return " ";
+                }
             },
             axisY: {
-                title: "Candidates"
+                title: "",
+                interval: Math.ceil(totalVotes / 10) // Adjust the Y-axis interval for better scaling
             },
             data: [{
-                type: "bar",  // Changed to horizontal bar chart
-                dataPoints: dataPoints
+                type: "bar",
+                indexLabel: "{label} - {percent}%",
+                indexLabelPlacement: "inside",
+                indexLabelFontColor: "white",
+                indexLabelFontSize: 14,
+                dataPoints: dataPoints.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                }))
             }]
         });
         chart.render();
         return chart;
+    }
+
+    function updateChartData(chart, newDataPoints) {
+        var totalVotes = newDataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+        chart.options.data[0].dataPoints = newDataPoints.map(dataPoint => ({
+            ...dataPoint,
+            percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+        }));
+        chart.options.animationEnabled = true;
+        chart.options.animationDuration = 2000; // Animation duration for updates
+        chart.render();
     }
 
     function updateVoteCounts() {
@@ -233,48 +259,22 @@ include 'includes/header_csc.php';
             url: 'update_data_csc.php',
             method: 'GET',
             dataType: 'json',
-            success: function(response) {
-                console.log(response);  // Log the response to the console to debug
-                presidentChart.options.data[0].dataPoints = response.president;
-                presidentChart.render();
-
-                vicePresidentChart.options.data[0].dataPoints = response.vicePresident;
-                vicePresidentChart.render();
-
-                secretaryChart.options.data[0].dataPoints = response.secretary;
-                secretaryChart.render();
-
-                treasurerChart.options.data[0].dataPoints = response.treasurer;
-                treasurerChart.render();
-
-                auditorChart.options.data[0].dataPoints = response.auditor;
-                auditorChart.render();
-
-                proChart.options.data[0].dataPoints = response.publicInformationOfficer;
-                proChart.render();
-
-                businessManagerChart.options.data[0].dataPoints = response.businessManager;
-                businessManagerChart.render();
-
-                beedRepChart.options.data[0].dataPoints = response.beedRepresentative;
-                beedRepChart.render();
-
-                bsedRepChart.options.data[0].dataPoints = response.bsedRepresentative;
-                bsedRepChart.render();
-
-                bshmRepChart.options.data[0].dataPoints = response.bshmRepresentative;
-                bshmRepChart.render();
-
-                bsoadRepChart.options.data[0].dataPoints = response.bsoadRepresentative;
-                bsoadRepChart.render();
-
-                bscrimRepChart.options.data[0].dataPoints = response.bsCrimRepresentative;
-                bscrimRepChart.render();
-
-                bsitRepChart.options.data[0].dataPoints = response.bsitRepresentative;
-                bsitRepChart.render();
+            success: function (response) {
+                updateChartData(presidentChart, response.president);
+                updateChartData(vicePresidentChart, response.vicePresident);
+                updateChartData(secretaryChart, response.secretary);
+                updateChartData(treasurerChart, response.treasurer);
+                updateChartData(auditorChart, response.auditor);
+                updateChartData(proChart, response.publicInformationOfficer);
+                updateChartData(businessManagerChart, response.businessManager);
+                updateChartData(beedRepChart, response.beedRepresentative);
+                updateChartData(bsedRepChart, response.bsedRepresentative);
+                updateChartData(bshmRepChart, response.bshmRepresentative);
+                updateChartData(bsoadRepChart, response.bsoadRepresentative);
+                updateChartData(bscrimRepChart, response.bsCrimRepresentative);
+                updateChartData(bsitRepChart, response.bsitRepresentative);
             },
-            error: function(error) {
+            error: function (error) {
                 console.error("Error fetching data", error);
             }
         });
@@ -299,19 +299,19 @@ include 'includes/header_csc.php';
     setInterval(updateVoteCounts, 5000);
 
     // Back to top button script
-    $(document).ready(function() {
+    $(document).ready(function () {
         var btn = $('#back-to-top');
-        
-        $(window).scroll(function() {
+
+        $(window).scroll(function () {
             if ($(window).scrollTop() > 100) {
                 btn.fadeIn();
             } else {
                 btn.fadeOut();
             }
         });
-        
-        btn.click(function() {
-            $('html, body').animate({scrollTop: 0}, '100');
+
+        btn.click(function () {
+            $('html, body').animate({ scrollTop: 0 }, '100');
             return false;
         });
     });
