@@ -1,65 +1,123 @@
-<?php include 'includes/session.php'; ?>
-<?php include 'includes/slugify.php'; ?>
-<?php include 'includes/header.php'; ?>
+<?php
+include 'includes/session.php';
+include 'includes/header.php';
+?>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-  <?php include 'includes/navbar.php'; ?>
-  <?php include 'includes/menubar.php'; ?>
+    <?php include 'includes/navbar.php'; ?>
+    <?php include 'includes/menubar.php'; ?>
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Live Polling
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="dashboard.php"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Live Polling </li>
-      </ol>
-    </section>
-    <section class="content">
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="box-header with-border">
-            
-          </div>
-          <div class="box-body">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Election Results
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">Results</li>
+            </ol>
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <!-- Organization Filter -->
             <div class="row">
-              <div class="col-md-3"> <!-- Half width for organization dropdown -->
-                <div class="form-group">
-                  <label for="organization">Select Organization:</label>
-                  <select class="form-control smaller-dropdown" id="organization" onchange="updateCharts()">
-                    <option value="JPCS">JPCS</option>
-                    <option value="PASOA">PASOA</option>
-                    <option value="CSC">CSC</option>
-                    <option value="YMF">YMF</option>
-                    <option value="CODE-TG">CODE-TG</option>
-                    <option value="HMSO">HMSO</option>
-                  </select>
+                <div class="col-md-3">
+                    <div class="box">
+                        <div class="box-body">
+                            <form method="get" action="">
+                                <div class="form-group">
+                                    <label for="organization">Select Organization:</label>
+                                    <select class="form-control" name="organization" id="organization">
+                                        <?php
+                                        // Fetch and display organizations
+                                        $organizationQuery = $conn->query("SELECT DISTINCT organization FROM voters");
+                                        while($organizationRow = $organizationQuery->fetch_assoc()){
+                                            $selected = ($_GET['organization'] ?? '') == $organizationRow['organization'] ? 'selected' : '';
+                                            echo "<option value='".$organizationRow['organization']."' $selected>".$organizationRow['organization']."</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Filter</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="col-xs-6">
-            <div id="presidentChart" style="height: 370px; width: 100%; margin-left: 20px; margin-top: 20px; display: inline-block;"></div>
-          </div>
-          <div class="col-xs-6">
-            <div id="representativeChart" style="height: 370px; width: 100%; margin-left: 20px; margin-top: 20px; display: inline-block;"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-  <?php include 'includes/footer.php'; ?>
+
+            <!-- Bar Graphs for President, Vice President, and Secretary -->
+            <div class="row">
+                <!-- President Bar Graph Box -->
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>President Candidates</b></h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!-- President Bar Graph Container -->
+                            <div id="presidentGraph" style="height: 300px;"></div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+
+                <!-- Vice President Bar Graph Box -->
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>Vice President Candidates</b></h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!-- Vice President Bar Graph Container -->
+                            <div id="vicePresidentGraph" style="height: 300px;"></div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+
+            <!-- Secretary Bar Graph Box -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>Secretary Candidates</b></h3>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            <!-- Secretary Bar Graph Container -->
+                            <div id="secretaryGraph" style="height: 300px;"></div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+    <!-- /.content-wrapper -->
+    <?php include 'includes/footer.php'; ?>
+    <?php include 'includes/votes_modal.php'; ?>
 </div>
 <!-- ./wrapper -->
 <?php include 'includes/scripts.php'; ?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
+<!-- Bar Graph Script -->
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
   var organizationColors = {
     "JPCS": "#4CAF50",
@@ -90,15 +148,35 @@
         { y: 40, label: "Secretary" }
       ];
     } else if (organization === "PASOA") {
-      // PASOA data points
+      dataPoints = [
+        { y: 25, label: "President" },
+        { y: 35, label: "Vice President" },
+        { y: 45, label: "Secretary" }
+      ];
     } else if (organization === "CSC") {
-      // CSC data points
+      dataPoints = [
+        { y: 35, label: "President" },
+        { y: 25, label: "Vice President" },
+        { y: 40, label: "Secretary" }
+      ];
     } else if (organization === "YMF") {
-      // YMF data points
+      dataPoints = [
+        { y: 30, label: "President" },
+        { y: 40, label: "Vice President" },
+        { y: 30, label: "Secretary" }
+      ];
     } else if (organization === "CODE-TG") {
-      // CODE-TG data points
+      dataPoints = [
+        { y: 20, label: "President" },
+        { y: 30, label: "Vice President" },
+        { y: 50, label: "Secretary" }
+      ];
     } else if (organization === "HMSO") {
-      // HMSO data points
+      dataPoints = [
+        { y: 15, label: "President" },
+        { y: 35, label: "Vice President" },
+        { y: 50, label: "Secretary" }
+      ];
     }
     // Add more else if conditions for other organizations
 
@@ -107,7 +185,7 @@
       data: [{
         type: "bar",
         dataPoints: dataPoints,
-        color: (organization === "JPCS") ? "#4CAF50" : organizationColors[organization] // Set organization-specific color, if JPCS use #4CAF50
+        color: organizationColors[organization] // Set organization-specific color
       }]
     });
 
@@ -118,7 +196,6 @@
       updatePresidentDataPoints(organization, chart);
     }, 1000);
   }
-
 
   function updateRepresentativeChart(organization) {
     var dataPoints = [];
@@ -183,24 +260,13 @@
     for (var i = 0; i < chart.options.data[0].dataPoints.length; i++) {
       newDataPoints.push({ label: chart.options.data[0].dataPoints[i].label, y: Math.random() * 100 });
     }
-    chart.options.data[0].dataPoints = newDataPoints;
-    chart.render();
-  }
 
-  function updateRepresentativeDataPoints(organization, chart) {
-    // Update dataPoints based on the selected organization
-    // For demonstration, I'm using random values for each data point
-    var newDataPoints = [];
-    for (var i = 0; i < chart.options.data[0].dataPoints.length; i++) {
-      newDataPoints.push({ label: chart.options.data[0].dataPoints[i].label, y: Math.random() * 100 });
-    }
-    chart.options.data[0].dataPoints = newDataPoints;
-    chart.render();
-  }
+    // Call the updateData function initially
+    updateData();
 
-  window.onload = function () {
-    updateCharts();
-  };
+    // Call the updateData function every 60 seconds (adjust as needed)
+    setInterval(updateData, 3000); // 60000 milliseconds = 60 seconds
 </script>
+
 </body>
 </html>
