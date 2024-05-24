@@ -1,6 +1,6 @@
 <script>
 $(function(){
-  // Existing restore and delete event handlers...
+  // Individual restore and delete event handlers...
   $(document).on('click', '.restore', function(e){
     e.preventDefault();
     var id = $(this).data('id');
