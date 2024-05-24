@@ -43,7 +43,6 @@
                     <div class="col-sm-9">
                       <select id="organization" name="organization" class="form-control" value="Choose below" required>
                       <option value="" selected hidden>Choose...</option>
-                      <option>CSC</option>
                       <option>JPCS</option>
                       <option>YMF</option>
                       <option>CODE-TG</option>
