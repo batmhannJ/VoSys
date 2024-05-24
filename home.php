@@ -133,8 +133,8 @@ if (!$conn) {
 }
 
 // Fetch the user's ID from session
-if (isset($_SESSION['voters_id'])) {
-    $userId = $_SESSION['voters_id'];
+if (isset($_SESSION['id'])) {
+    $userId = $_SESSION['id'];
 
     // Fetch the user's organization and set it in the session (if not already set)
     if (!isset($_SESSION['organization'])) {
