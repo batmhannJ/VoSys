@@ -59,7 +59,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>President</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="presidentGraph" style="height: 300px; position: relative;"></div>
+                            <div id="presidentGraph" style="height: 300px;"></div>
                         </div>
                     </div>
                 </div>
@@ -70,7 +70,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>Vice President</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="vicePresidentGraph" style="height: 300px; position: relative;"></div>
+                            <div id="vicePresidentGraph" style="height: 300px;"></div>
                         </div>
                     </div>
                 </div>
@@ -81,7 +81,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>Secretary</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="secretaryGraph" style="height: 300px; position: relative;"></div>
+                            <div id="secretaryGraph" style="height: 300px;"></div>
                         </div>
                     </div>
                 </div>
@@ -92,7 +92,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>Treasurer</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="treasurerGraph" style="height: 300px; position: relative;"></div>
+                            <div id="treasurerGraph" style="height: 300px;"></div>
                         </div>
                     </div>
                 </div>
@@ -103,7 +103,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>Auditor</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="auditorGraph" style="height: 300px; position: relative;"></div>
+                            <div id="auditorGraph" style="height: 300px;"></div>
                         </div>
                     </div>
                 </div>
@@ -114,7 +114,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>Public Information Officer (P.R.O)</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="proGraph" style="height: 300px; position: relative;"></div>
+                            <div id="proGraph" style="height: 300px;"></div>
                         </div>
                     </div>
                 </div>
@@ -125,7 +125,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>Business Manager</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="businessManagerGraph" style="height: 300px; position: relative;"></div>
+                            <div id="businessManagerGraph" style="height: 300px;"></div>
                         </div>
                     </div>
                 </div>
@@ -136,7 +136,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>BEED Representative</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="beedRepGraph" style="height: 300px; position: relative;"></div>
+                            <div id="beedRepGraph" style="height: 300px;"></div>
                         </div>
                     </div>
                 </div>
@@ -147,7 +147,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>BSED Representative</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="bsedRepGraph" style="height: 300px; position: relative;"></div>
+                            <div id="bsedRepGraph" style="height: 300px;"></div>
                         </div>
                     </div>
                 </div>
@@ -158,7 +158,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>BSHM Representative</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="bshmRepGraph" style="height: 300px; position: relative;"></div>
+                            <div id="bshmRepGraph" style="height: 300px;"></div>
                         </div>
                     </div>
                 </div>
@@ -169,7 +169,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>BSOAD Representative</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="bsoadRepGraph" style="height: 300px; position: relative;"></div>
+                            <div id="bsoadRepGraph" style="height: 300px;"></div>
                         </div>
                     </div>
                 </div>
@@ -180,7 +180,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>BS CRIM Representative</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="bscrimRepGraph" style="height: 300px; position: relative;"></div>
+                            <div id="bscrimRepGraph" style="height: 300px;"></div>
                         </div>
                     </div>
                 </div>
@@ -191,7 +191,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>BSIT Representative</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="bsitRepGraph" style="height: 300px; position: relative;"></div>
+                            <div id="bsitRepGraph" style="height: 300px;"></div>
                         </div>
                     </div>
                 </div>
@@ -243,7 +243,7 @@ include 'includes/header_csc.php';
         return chart;
     }
 
-    function updateChartData(chart, newDataPoints, containerId) {
+    function updateChartData(chart, newDataPoints) {
         var totalVotes = newDataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
         chart.options.data[0].dataPoints = newDataPoints.map(dataPoint => ({
             ...dataPoint,
@@ -252,22 +252,6 @@ include 'includes/header_csc.php';
         chart.options.animationEnabled = true;
         chart.options.animationDuration = 2000; // Animation duration for updates
         chart.render();
-        
-        // Add images next to bars
-        var container = document.getElementById(containerId);
-        container.querySelectorAll('.graph-image').forEach(img => img.remove()); // Remove old images
-
-        newDataPoints.forEach((dataPoint, index) => {
-            var img = document.createElement('img');
-            img.src = dataPoint.image; // Assume dataPoint contains image URL
-            img.style.position = 'absolute';
-            img.style.top = (index * 30 + 70) + 'px'; // Adjust as needed
-            img.style.left = '0px';
-            img.style.width = '30px';
-            img.style.height = '30px';
-            img.className = 'graph-image';
-            container.appendChild(img);
-        });
     }
 
     function updateVoteCounts() {
@@ -276,19 +260,19 @@ include 'includes/header_csc.php';
             method: 'GET',
             dataType: 'json',
             success: function (response) {
-                updateChartData(presidentChart, response.president, 'presidentGraph');
-                updateChartData(vicePresidentChart, response.vicePresident, 'vicePresidentGraph');
-                updateChartData(secretaryChart, response.secretary, 'secretaryGraph');
-                updateChartData(treasurerChart, response.treasurer, 'treasurerGraph');
-                updateChartData(auditorChart, response.auditor, 'auditorGraph');
-                updateChartData(proChart, response.publicInformationOfficer, 'proGraph');
-                updateChartData(businessManagerChart, response.businessManager, 'businessManagerGraph');
-                updateChartData(beedRepChart, response.beedRepresentative, 'beedRepGraph');
-                updateChartData(bsedRepChart, response.bsedRepresentative, 'bsedRepGraph');
-                updateChartData(bshmRepChart, response.bshmRepresentative, 'bshmRepGraph');
-                updateChartData(bsoadRepChart, response.bsoadRepresentative, 'bsoadRepGraph');
-                updateChartData(bscrimRepChart, response.bsCrimRepresentative, 'bscrimRepGraph');
-                updateChartData(bsitRepChart, response.bsitRepresentative, 'bsitRepGraph');
+                updateChartData(presidentChart, response.president);
+                updateChartData(vicePresidentChart, response.vicePresident);
+                updateChartData(secretaryChart, response.secretary);
+                updateChartData(treasurerChart, response.treasurer);
+                updateChartData(auditorChart, response.auditor);
+                updateChartData(proChart, response.publicInformationOfficer);
+                updateChartData(businessManagerChart, response.businessManager);
+                updateChartData(beedRepChart, response.beedRepresentative);
+                updateChartData(bsedRepChart, response.bsedRepresentative);
+                updateChartData(bshmRepChart, response.bshmRepresentative);
+                updateChartData(bsoadRepChart, response.bsoadRepresentative);
+                updateChartData(bscrimRepChart, response.bsCrimRepresentative);
+                updateChartData(bsitRepChart, response.bsitRepresentative);
             },
             error: function (error) {
                 console.error("Error fetching data", error);
