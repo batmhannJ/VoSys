@@ -126,6 +126,7 @@ if(!is_active_election($conn)){
 						    <form method="POST" id="ballotForm" action="submit_ballot.php">
     <?php
     session_start();
+    $_SESSION['voters_id'] = $userId; 
     include 'includes/slugify.php';
 
     
@@ -137,8 +138,8 @@ if (!$conn) {
 // Fetch the user's organization and set it in the session (if not already set)
 if (!isset($_SESSION['organization'])) {
     // Assuming you have a way to get the user ID from the session or other source
-    if (isset($_SESSION['id'])) {
-        $userId = $_SESSION['id'];
+    if (isset($_SESSION['voters_id'])) {
+        $userId = $_SESSION['voters_id'];
         $userQuery = "SELECT organization FROM voters WHERE id = '$userId'";
         $userResult = $conn->query($userQuery);
         if ($userResult) {
