@@ -35,11 +35,6 @@ include 'includes/header_csc.php';
         #back-to-top:hover {
             background-color: #555;
         }
-        /* CSS for rounded corners */
-        .bar-chart rect {
-            rx: 10px; /* Set the x-axis radius for rounded corners */
-            ry: 10px; /* Set the y-axis radius for rounded corners */
-        }
     </style>
 </head>
 <body class="hold-transition skin-black sidebar-mini">
@@ -239,7 +234,7 @@ include 'includes/header_csc.php';
             indexLabelPlacement: "inside",
             indexLabelFontColor: "white",
             indexLabelFontSize: 14,
-            cornerRadius: 100, // Adjust the corner radius as per your preference
+           
             
             dataPoints: dataPoints.map(dataPoint => ({
                 ...dataPoint,
@@ -260,7 +255,6 @@ include 'includes/header_csc.php';
             success: function(response) {
                 presidentChart.options.data[0].dataPoints = response.president.map(dataPoint => ({
                     ...dataPoint,
-                    
                     percent: ((dataPoint.y / response.president.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
                 }));
                 presidentChart.render();
@@ -344,7 +338,6 @@ include 'includes/header_csc.php';
     }
 
     var presidentChart = generateBarGraph([], "presidentGraph");
-    $(".bar-chart rect").css("rx", "10px").css("ry", "10px");
     var vicePresidentChart = generateBarGraph([], "vicePresidentGraph");
     var secretaryChart = generateBarGraph([], "secretaryGraph");
     var treasurerChart = generateBarGraph([], "treasurerGraph");
