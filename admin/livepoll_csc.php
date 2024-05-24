@@ -234,7 +234,7 @@ include 'includes/header_csc.php';
             indexLabelPlacement: "inside",
             indexLabelFontColor: "white",
             indexLabelFontSize: 14,
-            cornerRadius: 10, // Adjust the corner radius as per your preference
+            cornerRadius: 100, // Adjust the corner radius as per your preference
             
             dataPoints: dataPoints.map(dataPoint => ({
                 ...dataPoint,
