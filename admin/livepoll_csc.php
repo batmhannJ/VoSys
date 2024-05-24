@@ -207,6 +207,8 @@ include 'includes/header_csc.php';
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     function generateBarGraph(dataPoints, containerId) {
+        var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+        
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
             title: {
@@ -221,7 +223,15 @@ include 'includes/header_csc.php';
             },
             data: [{
                 type: "bar",  // Changed to horizontal bar chart
-                dataPoints: dataPoints
+                indexLabel: "{label} - {y} votes - #percent%",
+                indexLabelPlacement: "inside",
+                indexLabelFontColor: "white",
+                indexLabelFontSize: 14,
+                dataPoints: dataPoints.map(dataPoint => ({
+                    ...dataPoint,
+                    label: `${dataPoint.label}`,
+                    percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                }))
             }]
         });
         chart.render();
