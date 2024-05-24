@@ -148,6 +148,14 @@ $(function(){
   // Batch action modals
   let actionType = '';
 
+  // Select all checkboxes
+  document.getElementById('select-all').addEventListener('change', function() {
+    var checkboxes = document.querySelectorAll('.record-checkbox');
+    for (var checkbox of checkboxes) {
+      checkbox.checked = this.checked;
+    }
+  });
+
   // Show modal for batch restore
   document.getElementById('batch-restore').addEventListener('click', function() {
     actionType = 'restore';
@@ -164,9 +172,9 @@ $(function(){
   document.getElementById('confirmBatchAction').addEventListener('click', function() {
     var ids = [];
     var checkboxes = document.querySelectorAll('.record-checkbox:checked');
-    for (var checkbox of checkboxes) {
+    checkboxes.forEach(function(checkbox) {
       ids.push(checkbox.value);
-    }
+    });
     if (ids.length > 0) {
       // Send AJAX request for batch action
       fetch('batch_action.php', {
