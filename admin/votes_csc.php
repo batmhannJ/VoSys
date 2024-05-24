@@ -57,6 +57,7 @@
                   <th>Position</th>
                   <th>Candidate</th>
                   <th>Voter</th>
+                  <th>Organization</th>
                 </thead>
                 <tbody>
                 <?php
