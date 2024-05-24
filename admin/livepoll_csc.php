@@ -5,7 +5,6 @@ include 'includes/session.php';
 include 'includes/header_csc.php';
 ?>
 <head>
-    <!-- Add the style block to center the box titles and style the back to top button -->
     <style>
         .box-title {
             text-align: center;
@@ -13,7 +12,6 @@ include 'includes/header_csc.php';
             display: inline-block;
         }
 
-        /* Back to Top button styles */
         #back-to-top {
             position: fixed;
             bottom: 40px;
@@ -211,7 +209,7 @@ include 'includes/header_csc.php';
 
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
-            animationDuration: 2000, // Animation duration for initial rendering
+            animationDuration: 2000,
             title: {
                 text: "Vote Counts"
             },
@@ -225,7 +223,7 @@ include 'includes/header_csc.php';
             },
             axisY: {
                 title: "",
-                interval: Math.ceil(totalVotes / 10) // Adjust the Y-axis interval for better scaling
+                interval: Math.ceil(totalVotes / 10)
             },
             data: [{
                 type: "bar",
@@ -245,80 +243,86 @@ include 'includes/header_csc.php';
 
     function updateChartData(chart, newDataPoints) {
         var totalVotes = newDataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
-        chart.options.data[0].dataPoints = newDataPoints.map(dataPoint => ({
-            ...dataPoint,
-            percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-        }));
-        chart.options.animationEnabled = true;
-        chart.options.animationDuration = 2000; // Animation duration for updates
-        chart.render();
-    }
-
-    function updateVoteCounts() {
-        $.ajax({
-            url: 'update_data_csc.php',
-            method: 'GET',
-            dataType: 'json',
-            success: function (response) {
-                updateChartData(presidentChart, response.president);
-                updateChartData(vicePresidentChart, response.vicePresident);
-                updateChartData(secretaryChart, response.secretary);
-                updateChartData(treasurerChart, response.treasurer);
-                updateChartData(auditorChart, response.auditor);
-                updateChartData(proChart, response.publicInformationOfficer);
-                updateChartData(businessManagerChart, response.businessManager);
-                updateChartData(beedRepChart, response.beedRepresentative);
-                updateChartData(bsedRepChart, response.bsedRepresentative);
-                updateChartData(bshmRepChart, response.bshmRepresentative);
-                updateChartData(bsoadRepChart, response.bsoadRepresentative);
-                updateChartData(bscrimRepChart, response.bsCrimRepresentative);
-                updateChartData(bsitRepChart, response.bsitRepresentative);
-            },
-            error: function (error) {
-                console.error("Error fetching data", error);
-            }
-        });
-    }
-
-    var presidentChart = generateBarGraph([], "presidentGraph");
-    var vicePresidentChart = generateBarGraph([], "vicePresidentGraph");
-    var secretaryChart = generateBarGraph([], "secretaryGraph");
-    var treasurerChart = generateBarGraph([], "treasurerGraph");
-    var auditorChart = generateBarGraph([], "auditorGraph");
-    var proChart = generateBarGraph([], "proGraph");
-    var businessManagerChart = generateBarGraph([], "businessManagerGraph");
-    var beedRepChart = generateBarGraph([], "beedRepGraph");
-    var bsedRepChart = generateBarGraph([], "bsedRepGraph");
-    var bshmRepChart = generateBarGraph([], "bshmRepGraph");
-    var bsoadRepChart = generateBarGraph([], "bsoadRepGraph");
-    var bscrimRepChart = generateBarGraph([], "bscrimRepGraph");
-    var bsitRepChart = generateBarGraph([], "bsitRepGraph");
-
-    updateVoteCounts();
-
-    setInterval(updateVoteCounts, 5000);
-
-    // Back to top button script
-    $(document).ready(function () {
-        var btn = $('#back-to-top');
-
-        $(window).scroll(function () {
-            if ($(window).scrollTop() > 100) {
-                btn.fadeIn();
-            } else {
-                btn.fadeOut();
-            }
+        var oldDataPoints = chart.options.data[0].dataPoints;
+        
+        // Create a map of old data points for easy access
+        var oldDataMap = {};
+        oldDataPoints.forEach(dataPoint => {
+            oldDataMap[dataPoint.label] = dataPoint;
         });
 
-        btn.click(function () {
-            $('html, body').animate({ scrollTop: 0 }, '100');
-            return false;
-        });
+        // Update data points smoothly
+        newDataPoints.forEach(dataPoint => {
+            var oldDataPoint = oldDataMap[dataPoint.label];
+            if (oldDataPoint) {
+                var oldValue = oldDataPoint.y;
+                var newValue = dataPoint.y;
+                var step = (newValue - oldValue) / 100; // Smooth transition steps
+                var currentStep = 0;
+                
+                function animate() {
+                    if (currentStep<= 100) {
+oldDataPoint.y = oldValue + step * currentStep;
+chart.render();
+currentStep++;
+requestAnimationFrame(animate);
+}
+}
+animate();
+        } else {
+            chart.options.data[0].dataPoints.push({
+                ...dataPoint,
+                percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+            });
+        }
     });
-</script>
+}
 
+function updateVoteCounts() {
+    $.ajax({
+        url: 'update_data_csc.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            updateChartData(presidentChart, response.president);
+            updateChartData(vicePresidentChart, response.vicePresident);
+            // Add more charts to update here
+            
+        },
+        error: function (error) {
+            console.error("Error fetching data", error);
+        }
+    });
+}
+
+var presidentChart = generateBarGraph([], "presidentGraph");
+var vicePresidentChart = generateBarGraph([], "vicePresidentGraph");
+// Initialize more charts here
+
+updateVoteCounts();
+
+setInterval(updateVoteCounts, 5000);
+
+// Back to top button script
+$(document).ready(function () {
+    var btn = $('#back-to-top');
+
+    $(window).scroll(function () {
+        if ($(window).scrollTop() > 100) {
+            btn.fadeIn();
+        } else {
+            btn.fadeOut();
+        }
+    });
+
+    btn.click(function () {
+        $('html, body').animate({ scrollTop: 0 }, '100');
+        return false;
+    });
+});
+</script>
 <!-- Back to Top Button -->
-<button id="back-to-top" title="Back to Top">&uarr;</button>
+<button id="back-to-top" title="Back to Top">↑</button>
 
 </body>
 </html>
