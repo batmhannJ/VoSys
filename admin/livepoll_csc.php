@@ -35,6 +35,24 @@ include 'includes/header_csc.php';
         #back-to-top:hover {
             background-color: #555;
         }
+
+        .candidate-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .candidate-container img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin-right: 20px;
+            border-radius: 50%;
+        }
+
+        .chart-container {
+            width: calc(100% - 120px); /* Adjusting the width to account for image size and margin */
+        }
     </style>
 </head>
 <body class="hold-transition skin-black sidebar-mini">
@@ -59,7 +77,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>President</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="presidentGraph" style="height: 300px;"></div>
+                            <div id="presidentGraphContainer"></div>
                         </div>
                     </div>
                 </div>
@@ -70,7 +88,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>Vice President</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="vicePresidentGraph" style="height: 300px;"></div>
+                            <div id="vicePresidentGraphContainer"></div>
                         </div>
                     </div>
                 </div>
@@ -81,7 +99,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>Secretary</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="secretaryGraph" style="height: 300px;"></div>
+                            <div id="secretaryGraphContainer"></div>
                         </div>
                     </div>
                 </div>
@@ -92,7 +110,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>Treasurer</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="treasurerGraph" style="height: 300px;"></div>
+                            <div id="treasurerGraphContainer"></div>
                         </div>
                     </div>
                 </div>
@@ -103,7 +121,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>Auditor</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="auditorGraph" style="height: 300px;"></div>
+                            <div id="auditorGraphContainer"></div>
                         </div>
                     </div>
                 </div>
@@ -114,7 +132,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>Public Information Officer (P.R.O)</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="proGraph" style="height: 300px;"></div>
+                            <div id="proGraphContainer"></div>
                         </div>
                     </div>
                 </div>
@@ -125,7 +143,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>Business Manager</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="businessManagerGraph" style="height: 300px;"></div>
+                            <div id="businessManagerGraphContainer"></div>
                         </div>
                     </div>
                 </div>
@@ -136,7 +154,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>BEED Representative</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="beedRepGraph" style="height: 300px;"></div>
+                            <div id="beedRepGraphContainer"></div>
                         </div>
                     </div>
                 </div>
@@ -147,7 +165,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>BSED Representative</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="bsedRepGraph" style="height: 300px;"></div>
+                            <div id="bsedRepGraphContainer"></div>
                         </div>
                     </div>
                 </div>
@@ -158,7 +176,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>BSHM Representative</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="bshmRepGraph" style="height: 300px;"></div>
+                            <div id="bshmRepGraphContainer"></div>
                         </div>
                     </div>
                 </div>
@@ -169,7 +187,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>BSOAD Representative</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="bsoadRepGraph" style="height: 300px;"></div>
+                            <div id="bsoadRepGraphContainer"></div>
                         </div>
                     </div>
                 </div>
@@ -180,7 +198,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>BS CRIM Representative</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="bscrimRepGraph" style="height: 300px;"></div>
+                            <div id="bscrimRepGraphContainer"></div>
                         </div>
                     </div>
                 </div>
@@ -191,7 +209,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>BSIT Representative</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="bsitRepGraph" style="height: 300px;"></div>
+                            <div id="bsitRepGraphContainer"></div>
                         </div>
                     </div>
                 </div>
@@ -206,39 +224,53 @@ include 'includes/header_csc.php';
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    function generateBarGraph(dataPoints, containerId) {
+    function generateBarGraph(dataPoints, containerId, images) {
         var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
         
-        var chart = new CanvasJS.Chart(containerId, {
-            animationEnabled: true,
-            title: {
-                text: "Vote Counts"
-            },
-            axisX: {
-                title: "",
-                includeZero: true,
-                interval: 1,
-                labelFormatter: function() {
-                    return " ";
-                }
-            },
-            axisY: {
-                title: ""
-            },
-            data: [{
-                type: "bar",
-                indexLabel: "{label} - {percent}%",
-                indexLabelPlacement: "inside",
-                indexLabelFontColor: "white",
-                indexLabelFontSize: 14,
-                dataPoints: dataPoints.map(dataPoint => ({
-                    ...dataPoint,
-                    percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-                }))
-            }]
+        var container = document.getElementById(containerId);
+        container.innerHTML = ""; // Clear previous content
+
+        dataPoints.forEach((dataPoint, index) => {
+            var candidateContainer = document.createElement('div');
+            candidateContainer.classList.add('candidate-container');
+
+            var img = document.createElement('img');
+            img.src = images[index];
+            candidateContainer.appendChild(img);
+
+            var chartContainer = document.createElement('div');
+            chartContainer.classList.add('chart-container');
+            candidateContainer.appendChild(chartContainer);
+
+            container.appendChild(candidateContainer);
+
+            var chart = new CanvasJS.Chart(chartContainer, {
+                animationEnabled: true,
+                axisX: {
+                    title: "",
+                    includeZero: true,
+                    interval: 1,
+                    labelFormatter: function() {
+                        return " ";
+                    }
+                },
+                axisY: {
+                    title: ""
+                },
+                data: [{
+                    type: "bar",
+                    indexLabel: "{label} - {percent}%",
+                    indexLabelPlacement: "inside",
+                    indexLabelFontColor: "white",
+                    indexLabelFontSize: 14,
+                    dataPoints: [{
+                        ...dataPoint,
+                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                    }]
+                }]
+            });
+            chart.render();
         });
-        chart.render();
-        return chart;
     }
 
     function updateVoteCounts() {
@@ -247,64 +279,25 @@ include 'includes/header_csc.php';
             method: 'GET',
             dataType: 'json',
             success: function(response) {
-                presidentChart.options.data[0].dataPoints = response.president;
-                presidentChart.render();
-
-                vicePresidentChart.options.data[0].dataPoints = response.vicePresident;
-                vicePresidentChart.render();
-
-                secretaryChart.options.data[0].dataPoints = response.secretary;
-                secretaryChart.render();
-
-                treasurerChart.options.data[0].dataPoints = response.treasurer;
-                treasurerChart.render();
-
-                auditorChart.options.data[0].dataPoints = response.auditor;
-                auditorChart.render();
-
-                proChart.options.data[0].dataPoints = response.publicInformationOfficer;
-                proChart.render();
-
-                businessManagerChart.options.data[0].dataPoints = response.businessManager;
-                businessManagerChart.render();
-
-                beedRepChart.options.data[0].dataPoints = response.beedRepresentative;
-                beedRepChart.render();
-
-                bsedRepChart.options.data[0].dataPoints = response.bsedRepresentative;
-                bsedRepChart.render();
-
-                bshmRepChart.options.data[0].dataPoints = response.bshmRepresentative;
-                bshmRepChart.render();
-
-                bsoadRepChart.options.data[0].dataPoints = response.bsoadRepresentative;
-                bsoadRepChart.render();
-
-                bscrimRepChart.options.data[0].dataPoints = response.bsCrimRepresentative;
-                bscrimRepChart.render();
-
-                bsitRepChart.options.data[0].dataPoints = response.bsitRepresentative;
-                bsitRepChart.render();
+                generateBarGraph(response.president, "presidentGraphContainer", response.presidentImages);
+                generateBarGraph(response.vicePresident, "vicePresidentGraphContainer", response.vicePresidentImages);
+                generateBarGraph(response.secretary, "secretaryGraphContainer", response.secretaryImages);
+                generateBarGraph(response.treasurer, "treasurerGraphContainer", response.treasurerImages);
+                generateBarGraph(response.auditor, "auditorGraphContainer", response.auditorImages);
+                generateBarGraph(response.publicInformationOfficer, "proGraphContainer", response.proImages);
+                generateBarGraph(response.businessManager, "businessManagerGraphContainer", response.businessManagerImages);
+                generateBarGraph(response.beedRepresentative, "beedRepGraphContainer", response.beedRepImages);
+                generateBarGraph(response.bsedRepresentative, "bsedRepGraphContainer", response.bsedRepImages);
+                generateBarGraph(response.bshmRepresentative, "bshmRepGraphContainer", response.bshmRepImages);
+                generateBarGraph(response.bsoadRepresentative, "bsoadRepGraphContainer", response.bsoadRepImages);
+                generateBarGraph(response.bsCrimRepresentative, "bscrimRepGraphContainer", response.bscrimRepImages);
+                generateBarGraph(response.bsitRepresentative, "bsitRepGraphContainer", response.bsitRepImages);
             },
             error: function(error) {
                 console.error("Error fetching data", error);
             }
         });
     }
-
-    var presidentChart = generateBarGraph([], "presidentGraph");
-    var vicePresidentChart = generateBarGraph([], "vicePresidentGraph");
-    var secretaryChart = generateBarGraph([], "secretaryGraph");
-    var treasurerChart = generateBarGraph([], "treasurerGraph");
-    var auditorChart = generateBarGraph([], "auditorGraph");
-    var proChart = generateBarGraph([], "proGraph");
-    var businessManagerChart = generateBarGraph([], "businessManagerGraph");
-    var beedRepChart = generateBarGraph([], "beedRepGraph");
-    var bsedRepChart = generateBarGraph([], "bsedRepGraph");
-    var bshmRepChart = generateBarGraph([], "bshmRepGraph");
-    var bsoadRepChart = generateBarGraph([], "bsoadRepGraph");
-    var bscrimRepChart = generateBarGraph([], "bscrimRepGraph");
-    var bsitRepChart = generateBarGraph([], "bsitRepGraph");
 
     updateVoteCounts();
 
