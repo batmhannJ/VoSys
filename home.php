@@ -145,13 +145,38 @@ if(!is_active_election($conn)){
         'YMF' => ['BSED Rep', 'BEED Rep'] // Assuming YMF has multiple reps
     ];
 
-    // Fetch and display general positions
-    $general_positions = ['President', 'Vice President', 'Secretary', 'Treasurer', 'Auditor', 'P.R.O', 'Business Manager'];
-
+    // Fetch the categories once
     $sql = "SELECT * FROM categories WHERE election_id = 20 ORDER BY priority ASC";
     $query = $conn->query($sql);
-    while($row = $query->fetch_assoc()){
+    $categories = [];
+    while ($row = $query->fetch_assoc()) {
+        $categories[] = $row;
+    }
+
+    // General positions
+    $general_positions = ['President', 'Vice President', 'Secretary', 'Treasurer', 'Auditor', 'P.R.O', 'Business Manager'];
+
+    foreach ($categories as $row) {
+        $show_category = false;
+
+        // Check if the category is a general position
         if (in_array($row['name'], $general_positions)) {
+            $show_category = true;
+        } 
+        // Check if the category is a representative position based on user's organization
+        elseif (isset($organization_rep_map[$user_organization])) {
+            if (is_array($organization_rep_map[$user_organization])) {
+                if (in_array($row['name'], $organization_rep_map[$user_organization])) {
+                    $show_category = true;
+                }
+            } else {
+                if ($row['name'] == $organization_rep_map[$user_organization]) {
+                    $show_category = true;
+                }
+            }
+        }
+
+        if ($show_category) {
             echo '
             <div class="position-container">
                 <div class="box box-solid" id="'.$row['id'].'">
@@ -163,23 +188,23 @@ if(!is_active_election($conn)){
                         <p class="instruction">You may select up to '.$row['max_vote'].' candidates</p>
                         <div class="candidate-list">
                             <ul>';
+            
             $sql = "SELECT * FROM candidates WHERE category_id='".$row['id']."'";
             $cquery = $conn->query($sql);
-            while($crow = $cquery->fetch_assoc()){
+            while ($crow = $cquery->fetch_assoc()) {
                 $slug = slugify($row['name']);
                 $checked = '';
-                if(isset($_SESSION['post'][$slug])){
+                if (isset($_SESSION['post'][$slug])) {
                     $value = $_SESSION['post'][$slug];
 
-                    if(is_array($value)){
-                        foreach($value as $val){
-                            if($val == $crow['id']){
+                    if (is_array($value)) {
+                        foreach ($value as $val) {
+                            if ($val == $crow['id']) {
                                 $checked = 'checked';
                             }
                         }
-                    }
-                    else{
-                        if($value == $crow['id']){
+                    } else {
+                        if ($value == $crow['id']) {
                             $checked = 'checked';
                         }
                     }
@@ -201,68 +226,6 @@ if(!is_active_election($conn)){
             </div>
         </div>
     </div>';
-        }
-    }
-
-    // Fetch and display representative positions based on the user's organization
-    if (isset($organization_rep_map[$user_organization])) {
-        $rep_positions = $organization_rep_map[$user_organization];
-        $rep_positions = is_array($rep_positions) ? $rep_positions : [$rep_positions];
-
-        $sql = "SELECT * FROM categories WHERE election_id = 20 ORDER BY priority ASC";
-        $query = $conn->query($sql);
-        while($row = $query->fetch_assoc()){
-            if (in_array($row['name'], $rep_positions)) {
-                echo '
-                <div class="position-container">
-                    <div class="box box-solid" id="'.$row['id'].'">
-                        <div class="box-header">
-                            <h3 class="box-title">'.$row['name'].'</h3>
-                            <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="'.slugify($row['name']).'"><i class="fa fa-refresh"></i> Reset</button>
-                        </div>
-                        <div class="box-body">
-                            <p class="instruction">You may select up to '.$row['max_vote'].' candidates</p>
-                            <div class="candidate-list">
-                                <ul>';
-                $sql = "SELECT * FROM candidates WHERE category_id='".$row['id']."'";
-                $cquery = $conn->query($sql);
-                while($crow = $cquery->fetch_assoc()){
-                    $slug = slugify($row['name']);
-                    $checked = '';
-                    if(isset($_SESSION['post'][$slug])){
-                        $value = $_SESSION['post'][$slug];
-
-                        if(is_array($value)){
-                            foreach($value as $val){
-                                if($val == $crow['id']){
-                                    $checked = 'checked';
-                                }
-                            }
-                        }
-                        else{
-                            if($value == $crow['id']){
-                                $checked = 'checked';
-                            }
-                        }
-                    }
-                    $input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : '<input type="radio" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
-                    $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
-                    echo '
-                    <li>
-                        <div class="candidate-info">
-                            '.$input.'
-                            <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
-                        </div>
-                        <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
-                        <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
-                    </li>';
-                }
-                echo '</ul>
-                    </div>
-                </div>
-            </div>
-        </div>';
-            }
         }
     }
     ?>
@@ -290,6 +253,7 @@ if(!is_active_election($conn)){
         </div>
     </div>
 </form>
+
 
 
 
