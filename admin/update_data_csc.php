@@ -6,11 +6,12 @@ if (!empty($_GET['organization'])) {
     $organizationFilter = " AND voters1.organization = '" . $_GET['organization'] . "'";
 }
 
-// Function to fetch votes data
+// Function to fetch votes data with candidate images
 function fetchVotes($conn, $category, $organizationFilter) {
     $data = array();
     $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-            COALESCE(COUNT(votes_csc.candidate_id), 0) AS vote_count
+            COALESCE(COUNT(votes_csc.candidate_id), 0) AS vote_count, 
+            candidates.photo AS candidate_image
             FROM categories 
             LEFT JOIN candidates ON categories.id = candidates.category_id
             LEFT JOIN votes_csc ON candidates.id = votes_csc.candidate_id
@@ -20,7 +21,11 @@ function fetchVotes($conn, $category, $organizationFilter) {
             GROUP BY candidates.id";
     $query = $conn->query($sql);
     while($row = $query->fetch_assoc()) {
-        $data[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
+        $data[] = array(
+            "y" => intval($row['vote_count']), 
+            "label" => $row['candidate_name'],
+            "image" => !empty($row['candidate_image']) ? 'images/'.$row['candidate_image'] : 'images/default.png' // Assuming default.png as a placeholder
+        );
     }
     return $data;
 }
