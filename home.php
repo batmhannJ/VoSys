@@ -127,7 +127,7 @@ if(!is_active_election($conn)){
                                 <?php
                                 include 'includes/slugify.php';
 
-                                $voter_id = $_SESSION['voter_id'];
+                                $voter_id = $_SESSION['voters_id'];
 
                                 // Fetch the user's organization from the voters table
                                 $sql = "SELECT organization FROM voters WHERE id = '".$voter_id."'";
