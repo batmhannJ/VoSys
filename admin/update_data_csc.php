@@ -10,7 +10,6 @@ if (!empty($_GET['organization'])) {
 function fetchVotes($conn, $category, $organizationFilter) {
     $data = array();
     $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-            candidates.photo AS candidate_photo, 
             COALESCE(COUNT(votes_csc.candidate_id), 0) AS vote_count
             FROM categories 
             LEFT JOIN candidates ON categories.id = candidates.category_id
@@ -21,11 +20,7 @@ function fetchVotes($conn, $category, $organizationFilter) {
             GROUP BY candidates.id";
     $query = $conn->query($sql);
     while($row = $query->fetch_assoc()) {
-        $data[] = array(
-            "y" => intval($row['vote_count']), 
-            "label" => $row['candidate_name'],
-            "image" => $row['candidate_photo']  // Include the candidate's photo URL
-        );
+        $data[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
     }
     return $data;
 }
