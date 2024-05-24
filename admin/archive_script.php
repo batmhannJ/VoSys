@@ -140,71 +140,55 @@ $(function(){
     });
   });
 
-  // Select All Checkbox
-  $('#selectAll').click(function() {
-    if (this.checked) {
-      $('.selectItem').each(function() {
-        this.checked = true;
-      });
-    } else {
-      $('.selectItem').each(function() {
-        this.checked = false;
-      });
-    }
-  });
-
-  // Batch Restore Button Click
+  // Batch Restore and Delete Handlers
   $('#batchRestoreBtn').click(function() {
-    var selected = [];
+    var selectedIds = [];
     $('.selectItem:checked').each(function() {
-      selected.push($(this).val());
+      selectedIds.push($(this).val());
     });
 
-    if (selected.length > 0) {
+    if (selectedIds.length > 0) {
       $('#batchRestoreModal').modal('show');
     } else {
       alert('Please select items to restore.');
     }
   });
 
-  // Batch Delete Button Click
-  $('#batchDeleteBtn').click(function() {
-    var selected = [];
+  $('#confirmBatchRestore').click(function() {
+    var selectedIds = [];
     $('.selectItem:checked').each(function() {
-      selected.push($(this).val());
+      selectedIds.push($(this).val());
     });
 
-    if (selected.length > 0) {
+    batchRestore(selectedIds);
+  });
+
+  $('#batchDeleteBtn').click(function() {
+    var selectedIds = [];
+    $('.selectItem:checked').each(function() {
+      selectedIds.push($(this).val());
+    });
+
+    if (selectedIds.length > 0) {
       $('#batchDeleteModal').modal('show');
     } else {
       alert('Please select items to delete.');
     }
   });
 
-  // Confirm Batch Restore
-  $('#confirmBatchRestore').click(function() {
-    var selected = [];
-    $('.selectItem:checked').each(function() {
-      selected.push($(this).val());
-    });
-
-    batchRestore(selected);
-  });
-
-  // Confirm Batch Delete
   $('#confirmBatchDelete').click(function() {
-    var selected = [];
+    var selectedIds = [];
     $('.selectItem:checked').each(function() {
-      selected.push($(this).val());
+      selectedIds.push($(this).val());
     });
 
-    batchDelete(selected);
+    batchDelete(selectedIds);
   });
 
   function batchRestore(ids) {
     $.ajax({
       type: "POST",
-      url: "batch_restore.php",
+      url: "batch_restore.php?type=voters", // Specify type as voters
       data: { ids: ids },
       success: function(response) {
         location.reload();
@@ -218,7 +202,7 @@ $(function(){
   function batchDelete(ids) {
     $.ajax({
       type: "POST",
-      url: "batch_delete.php",
+      url: "batch_delete.php?type=voters", // Specify type as voters
       data: { ids: ids },
       success: function(response) {
         location.reload();
