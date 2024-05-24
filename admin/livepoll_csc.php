@@ -232,6 +232,7 @@ include 'includes/header_csc.php';
                 indexLabel: "{label} - {percent}%",
                 indexLabelPlacement: "inside",
                 indexLabelFontColor: "white",
+                indexLabel: "{fullName} - {percent}%", // Use fullName property
                 indexLabelFontSize: 14,
                 dataPoints: dataPoints.map(dataPoint => ({
                     ...dataPoint,
