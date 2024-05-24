@@ -206,132 +206,75 @@ include 'includes/header_csc.php';
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-   function generateBarGraph(dataPoints, containerId) {
-    var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
-    
-    var chart = new CanvasJS.Chart(containerId, {
-        animationEnabled: true,
-        animationDuration: 2000, // Animation duration
-        
-        title: {
-            text: "Vote Counts"
-        },
-        axisX: {
-            title: "",
-            includeZero: true,
-            interval: 1,
-            labelFormatter: function() {
-                return " ";
-            }
-        },
-        axisY: {
-            title: "",
-            interval: Math.ceil(totalVotes / 10) // Adjust the Y-axis interval for better scaling
-        },
-        data: [{
-            type: "bar",
-            indexLabel: "{label} - {percent}%",
-            indexLabelPlacement: "inside",
-            indexLabelFontColor: "white",
-            indexLabelFontSize: 14,
-           
-            
-            dataPoints: dataPoints.map(dataPoint => ({
-                ...dataPoint,
-                percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-            }))
-        }]
-    });
-    chart.render();
-    return chart;
-}
+    function generateBarGraph(dataPoints, containerId) {
+        var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
+        var chart = new CanvasJS.Chart(containerId, {
+            animationEnabled: true,
+            animationDuration: 2000, // Animation duration for initial rendering
+            title: {
+                text: "Vote Counts"
+            },
+            axisX: {
+                title: "",
+                includeZero: true,
+                interval: 1,
+                labelFormatter: function () {
+                    return " ";
+                }
+            },
+            axisY: {
+                title: "",
+                interval: Math.ceil(totalVotes / 10) // Adjust the Y-axis interval for better scaling
+            },
+            data: [{
+                type: "bar",
+                indexLabel: "{label} - {percent}%",
+                indexLabelPlacement: "inside",
+                indexLabelFontColor: "white",
+                indexLabelFontSize: 14,
+                dataPoints: dataPoints.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                }))
+            }]
+        });
+        chart.render();
+        return chart;
+    }
+
+    function updateChartData(chart, newDataPoints) {
+        var totalVotes = newDataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+        chart.options.data[0].dataPoints = newDataPoints.map(dataPoint => ({
+            ...dataPoint,
+            percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+        }));
+        chart.options.animationEnabled = true;
+        chart.options.animationDuration = 2000; // Animation duration for updates
+        chart.render();
+    }
 
     function updateVoteCounts() {
         $.ajax({
             url: 'update_data_csc.php',
             method: 'GET',
             dataType: 'json',
-            success: function(response) {
-                presidentChart.options.data[0].dataPoints = response.president.map(dataPoint => ({
-                    ...dataPoint,
-                    percent: ((dataPoint.y / response.president.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
-                }));
-                presidentChart.render();
-
-                vicePresidentChart.options.data[0].dataPoints = response.vicePresident.map(dataPoint => ({
-                    ...dataPoint,
-                    percent: ((dataPoint.y / response.vicePresident.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
-                }));
-                vicePresidentChart.render();
-
-                secretaryChart.options.data[0].dataPoints = response.secretary.map(dataPoint => ({
-                    ...dataPoint,
-                    percent: ((dataPoint.y / response.secretary.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
-                }));
-                secretaryChart.render();
-
-                treasurerChart.options.data[0].dataPoints = response.treasurer.map(dataPoint => ({
-                    ...dataPoint,
-                    percent: ((dataPoint.y / response.treasurer.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
-                }));
-                treasurerChart.render();
-
-                auditorChart.options.data[0].dataPoints = response.auditor.map(dataPoint => ({
-                    ...dataPoint,
-                    percent: ((dataPoint.y / response.auditor.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
-                }));
-                auditorChart.render();
-
-                proChart.options.data[0].dataPoints = response.publicInformationOfficer.map(dataPoint => ({
-                    ...dataPoint,
-                    percent: ((dataPoint.y / response.publicInformationOfficer.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
-                }));
-                proChart.render();
-
-                businessManagerChart.options.data[0].dataPoints = response.businessManager.map(dataPoint => ({
-                    ...dataPoint,
-                    percent: ((dataPoint.y / response.businessManager.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
-                }));
-                businessManagerChart.render();
-
-                beedRepChart.options.data[0].dataPoints = response.beedRepresentative.map(dataPoint => ({
-                    ...dataPoint,
-                    percent: ((dataPoint.y / response.beedRepresentative.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
-                }));
-                beedRepChart.render();
-
-                bsedRepChart.options.data[0].dataPoints = response.bsedRepresentative.map(dataPoint => ({
-                    ...dataPoint,
-                    percent: ((dataPoint.y / response.bsedRepresentative.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
-                }));
-                bsedRepChart.render();
-
-                bshmRepChart.options.data[0].dataPoints = response.bshmRepresentative.map(dataPoint => ({
-                    ...dataPoint,
-                    percent: ((dataPoint.y / response.bshmRepresentative.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
-                }));
-                bshmRepChart.render();
-
-                bsoadRepChart.options.data[0].dataPoints = response.bsoadRepresentative.map(dataPoint => ({
-                    ...dataPoint,
-                    percent: ((dataPoint.y / response.bsoadRepresentative.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
-                }));
-                bsoadRepChart.render();
-
-                bscrimRepChart.options.data[0].dataPoints = response.bsCrimRepresentative.map(dataPoint => ({
-                    ...dataPoint,
-                    percent: ((dataPoint.y / response.bsCrimRepresentative.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
-                }));
-                bscrimRepChart.render();
-
-                bsitRepChart.options.data[0].dataPoints = response.bsitRepresentative.map(dataPoint => ({
-                    ...dataPoint,
-                    percent: ((dataPoint.y / response.bsitRepresentative.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
-                }));
-                bsitRepChart.render();
+            success: function (response) {
+                updateChartData(presidentChart, response.president);
+                updateChartData(vicePresidentChart, response.vicePresident);
+                updateChartData(secretaryChart, response.secretary);
+                updateChartData(treasurerChart, response.treasurer);
+                updateChartData(auditorChart, response.auditor);
+                updateChartData(proChart, response.publicInformationOfficer);
+                updateChartData(businessManagerChart, response.businessManager);
+                updateChartData(beedRepChart, response.beedRepresentative);
+                updateChartData(bsedRepChart, response.bsedRepresentative);
+                updateChartData(bshmRepChart, response.bshmRepresentative);
+                updateChartData(bsoadRepChart, response.bsoadRepresentative);
+                updateChartData(bscrimRepChart, response.bsCrimRepresentative);
+                updateChartData(bsitRepChart, response.bsitRepresentative);
             },
-            error: function(error) {
+            error: function (error) {
                 console.error("Error fetching data", error);
             }
         });
@@ -356,19 +299,19 @@ include 'includes/header_csc.php';
     setInterval(updateVoteCounts, 5000);
 
     // Back to top button script
-    $(document).ready(function() {
+    $(document).ready(function () {
         var btn = $('#back-to-top');
-        
-        $(window).scroll(function() {
+
+        $(window).scroll(function () {
             if ($(window).scrollTop() > 100) {
                 btn.fadeIn();
             } else {
                 btn.fadeOut();
             }
         });
-        
-        btn.click(function() {
-            $('html, body').animate({scrollTop: 0}, '100');
+
+        btn.click(function () {
+            $('html, body').animate({ scrollTop: 0 }, '100');
             return false;
         });
     });
