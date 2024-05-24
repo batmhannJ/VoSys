@@ -127,7 +127,13 @@ if(!is_active_election($conn)){
                                 <?php
                                 include 'includes/slugify.php';
 
-                                $user_organization = $_SESSION['organization'];
+                                $voter_id = $_SESSION['voter_id'];
+
+                                // Fetch the user's organization from the voters table
+                                $sql = "SELECT organization FROM voters WHERE id = '".$voter_id."'";
+                                $query = $conn->query($sql);
+                                $voter = $query->fetch_assoc();
+                                $user_organization = $voter['organization'];
 
                                 $candidate = '';
                                 $sql = "SELECT * FROM categories WHERE election_id = 20 ORDER BY priority ASC";
