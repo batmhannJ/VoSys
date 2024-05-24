@@ -81,14 +81,13 @@
       </div>
       <div class="box">
         <div class="box-header with-border">
-          <button class="btn btn-primary btn-sm btn-flat" id="batchRestoreBtn"><i class="fa fa-reply"></i> Batch Restore</button>
-          <button class="btn btn-danger btn-sm btn-flat" id="batchDeleteBtn"><i class="fa fa-trash"></i> Batch Delete</button>
+          <button class="btn btn-primary btn-sm btn-flat" id="batchRestoreBtn" data-target='#batchRestoreModal'><i class="fa fa-reply"></i> Batch Restore</button>
+          <button class="btn btn-danger btn-sm btn-flat" id="batchDeleteBtn" data-target='#batchDeleteModal'><i class="fa fa-trash"></i> Batch Delete</button>
         </div>
         <div class="box-body">
           <table id="example1" class="table table-bordered">
             <thead>
               <tr>
-                <th><input type="checkbox" id="selectAll"></th>
                 <?php if(isset($_GET['type']) && $_GET['type'] === 'voters'): ?>
                 <th>Last Name</th>
                 <th>First Name</th>
