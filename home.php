@@ -141,7 +141,7 @@ if(!is_active_election($conn)){
         'JPCS' => 'BSIT Rep',
         'HMSO' => 'BSHM Rep',
         'PASOA' => 'BSOAD Rep',
-        'CODE-TG' => 'BS CIRM Rep',
+        'CODE-TG' => 'BS CRM Rep',
         'YMF' => ['BSED Rep', 'BEED Rep'] // Assuming YMF has multiple reps
     ];
 
@@ -151,14 +151,18 @@ if(!is_active_election($conn)){
     while($row = $query->fetch_assoc()){
         $show_category = false;
 
-        // Check if the category matches the representative for the user's organization
-        if (is_array($organization_rep_map[$user_organization])) {
-            if (in_array($row['name'], $organization_rep_map[$user_organization])) {
-                $show_category = true;
-            }
-        } else {
-            if ($row['name'] == $organization_rep_map[$user_organization]) {
-                $show_category = true;
+        // Check if the category is a general position or a representative position
+        if (in_array($row['name'], ['President', 'Vice President', 'Secretary', 'Treasurer', 'Auditor', 'P.R.O', 'Business Manager'])) {
+            $show_category = true;
+        } elseif (isset($organization_rep_map[$user_organization])) {
+            if (is_array($organization_rep_map[$user_organization])) {
+                if (in_array($row['name'], $organization_rep_map[$user_organization])) {
+                    $show_category = true;
+                }
+            } else {
+                if ($row['name'] == $organization_rep_map[$user_organization]) {
+                    $show_category = true;
+                }
             }
         }
 
