@@ -206,46 +206,46 @@ include 'includes/header_csc.php';
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    function generateBarGraph(dataPoints, containerId) {
-        var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+   function generateBarGraph(dataPoints, containerId) {
+    var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+    
+    var chart = new CanvasJS.Chart(containerId, {
+        animationEnabled: true,
+        animationDuration: 2000, // Animation duration
         
-        var chart = new CanvasJS.Chart(containerId, {
-            animationEnabled: true,
-            animationDuration: 2000, // Animation duration
+        title: {
+            text: "Vote Counts"
+        },
+        axisX: {
+            title: "",
+            includeZero: true,
+            interval: 1,
+            labelFormatter: function() {
+                return " ";
+            }
+        },
+        axisY: {
+            title: "",
+            interval: Math.ceil(totalVotes / 10) // Adjust the Y-axis interval for better scaling
+        },
+        data: [{
+            type: "bar",
+            indexLabel: "{label} - {percent}%",
+            indexLabelPlacement: "inside",
+            indexLabelFontColor: "white",
+            indexLabelFontSize: 14,
+            cornerRadius: 10, // Adjust the corner radius as per your preference
             
-            title: {
-                text: "Vote Counts"
-            },
-            axisX: {
-                title: "",
-                includeZero: true,
-                interval: 1,
-                barcornerRadius: 15, // Rounded corners
-                labelFormatter: function() {
-                    return " ";
-                }
-            },
-            axisY: {
-                title: "",
-                barcornerRadius: 15, // Rounded corners
-                interval: Math.ceil(totalVotes / 10) // Adjust the Y-axis interval for better scaling
-            },
-            data: [{
-                type: "bar",
-                indexLabel: "{label} - {percent}%",
-                indexLabelPlacement: "inside",
-                indexLabelFontColor: "white",
-                indexLabelFontSize: 14,
-                
-                dataPoints: dataPoints.map(dataPoint => ({
-                    ...dataPoint,
-                    percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-                }))
-            }]
-        });
-        chart.render();
-        return chart;
-    }
+            dataPoints: dataPoints.map(dataPoint => ({
+                ...dataPoint,
+                percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+            }))
+        }]
+    });
+    chart.render();
+    return chart;
+}
+
 
     function updateVoteCounts() {
         $.ajax({
