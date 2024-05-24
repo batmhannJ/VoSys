@@ -106,6 +106,7 @@
                 <th>Username</th>
                 <th>Email</th>
                 <?php elseif(isset($_GET['type']) && $_GET['type'] === 'election'): ?>
+                <th>#</th>
                 <th>ID</th>
                 <th>Title</th>
                 <th>Voters</th>
