@@ -56,5 +56,4 @@ header('Content-Type: application/json');
 $responseJson = json_encode($response);
 echo $responseJson;
 error_log($responseJson);
-
 ?>
