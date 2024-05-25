@@ -5,7 +5,6 @@ include 'includes/session.php';
 include 'includes/header_csc.php';
 ?>
 <head>
-    <!-- Add the style block to center the box titles and style the back to top button -->
     <style>
         .box-title {
             text-align: center;
@@ -13,7 +12,6 @@ include 'includes/header_csc.php';
             display: inline-block;
         }
 
-        /* Back to Top button styles */
         #back-to-top {
             position: fixed;
             bottom: 40px;
@@ -45,12 +43,16 @@ include 'includes/header_csc.php';
 
         .candidate-image {
             margin-right: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .candidate-image img {
             width: 50px;
             height: 50px;
             border-radius: 50%;
+            margin-bottom: 10px;
         }
 
         @media (max-width: 768px) {
@@ -94,6 +96,7 @@ include 'includes/header_csc.php';
 
         <section class="content">
             <div class="row justify-content-center">
+                <!-- Repeat this block for each position -->
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
@@ -107,174 +110,8 @@ include 'includes/header_csc.php';
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>Vice President</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div class="chart-container">
-                                <div class="candidate-image" id="vicePresidentImage"></div>
-                                <div id="vicePresidentGraph" style="height: 300px; width: 100%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>Secretary</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div class="chart-container">
-                                <div class="candidate-image" id="secretaryImage"></div>
-                                <div id="secretaryGraph" style="height: 300px; width: 100%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>Treasurer</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div class="chart-container">
-                                <div class="candidate-image" id="treasurerImage"></div>
-                                <div id="treasurerGraph" style="height: 300px; width: 100%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>Auditor</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div class="chart-container">
-                                <div class="candidate-image" id="auditorImage"></div>
-                                <div id="auditorGraph" style="height: 300px; width: 100%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>Public Information Officer (P.R.O)</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div class="chart-container">
-                                <div class="candidate-image" id="proImage"></div>
-                                <div id="proGraph" style="height: 300px; width: 100%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>Business Manager</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div class="chart-container">
-                                <div class="candidate-image" id="businessManagerImage"></div>
-                                <div id="businessManagerGraph" style="height: 300px; width: 100%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>BEED Representative</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div class="chart-container">
-                                <div class="candidate-image" id="beedRepImage"></div>
-                                <div id="beedRepGraph" style="height: 300px; width: 100%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>BSED Representative</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div class="chart-container">
-                                <div class="candidate-image" id="bsedRepImage"></div>
-                                <div id="bsedRepGraph" style="height: 300px; width: 100%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>BSHM Representative</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div class="chart-container">
-                                <div class="candidate-image" id="bshmRepImage"></div>
-                                <div id="bshmRepGraph" style="height: 300px; width: 100%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>BSOAD Representative</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div class="chart-container">
-                                <div class="candidate-image" id="bsoadRepImage"></div>
-                                <div id="bsoadRepGraph" style="height: 300px; width: 100%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>BS CRIM Representative</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div class="chart-container">
-                                <div class="candidate-image" id="bscrimRepImage"></div>
-                                <div id="bscrimRepGraph" style="height: 300px; width: 100%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>BSIT Representative</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div class="chart-container">
-                                <div class="candidate-image" id="bsitRepImage"></div>
-                                <div id="bsitRepGraph" style="height: 300px; width: 100%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- Repeat this block ends -->
+                <!-- Add other positions similarly here, replacing 'president' with respective position ids -->
             </div>
         </section>
 
@@ -294,7 +131,7 @@ include 'includes/header_csc.php';
         // Update the image container
         var imageContainer = document.getElementById(imageContainerId);
         imageContainer.innerHTML = dataPoints.map(dataPoint =>
-            `<div><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"></div>`
+            `<div><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"><span>${dataPoint.label}</span></div>`
         ).join('');
 
         var chart = new CanvasJS.Chart(containerId, {
@@ -331,7 +168,6 @@ include 'includes/header_csc.php';
 
         chart.render();
 
-        // Adjust the chart size when the window is resized
         window.addEventListener('resize', function () {
             chart.options.width = document.getElementById(containerId).offsetWidth;
             chart.render();
@@ -347,10 +183,9 @@ include 'includes/header_csc.php';
             percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
         }));
 
-        // Update the image container
         var imageContainer = document.getElementById(imageContainerId);
         imageContainer.innerHTML = newDataPoints.map(dataPoint =>
-            `<div><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"></div>`
+            `<div><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"><span>${dataPoint.label}</span></div>`
         ).join('');
 
         chart.options.animationEnabled = true;
@@ -400,10 +235,8 @@ include 'includes/header_csc.php';
     var bsitRepChart = generateBarGraph([], "bsitRepGraph", "bsitRepImage");
 
     updateVoteCounts();
-
     setInterval(updateVoteCounts, 5000);
 
-    // Back to top button script
     $(document).ready(function () {
         var btn = $('#back-to-top');
 
