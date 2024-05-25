@@ -1501,11 +1501,17 @@ hr {
 .team-member figure {
   margin: 0;
   position: relative;
+  width: 150px; /* Set the width of the box */
+  height: 150px; /* Set the height of the box */
+  overflow: hidden;
+  border-radius: 10px;
 }
 
 .team-member img {
-  width: 50%;
+  width: 100%;
+  height: 100%;
   display: block;
+  object-fit: cover;
   border-radius: 10px;
 }
 
@@ -1526,12 +1532,16 @@ hr {
   background: rgba(0, 0, 0, 0.8);
 }
 
-
 /* Responsive styling */
 @media (max-width: 768px) {
   .team-list li {
     flex: 1 1 calc(50% - 20px);
     max-width: calc(50% - 20px);
+  }
+
+  .team-member figure {
+    width: 120px; /* Adjust the width for smaller screens */
+    height: 120px; /* Adjust the height for smaller screens */
   }
 }
 
@@ -1541,7 +1551,11 @@ hr {
     max-width: 100%;
   }
 
-
+  .team-member figure {
+    width: 100px; /* Adjust the width for smaller screens */
+    height: 100px; /* Adjust the height for smaller screens */
+  }
+}
 
   </style>
 </html>
