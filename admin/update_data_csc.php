@@ -21,9 +21,8 @@ function fetchVotes($conn, $category, $organizationFilter) {
             GROUP BY candidates.id";
     $query = $conn->query($sql);
     while($row = $query->fetch_assoc()) {
-        // Ensure the path is correct
-        $imagePath = !empty($row['candidate_image']) ? 'images/' . $row['candidate_image'] : 'images/profile.jpg'; // Adjust the path accordingly
-        
+        $imagePath = !empty($row['candidate_image']) ? 'images/' . $row['candidate_image'] : 'images/profile.jpg';
+
         // Debugging: Check if the file exists and log the path
         if (!file_exists($imagePath)) {
             error_log("Image not found: " . $imagePath);
