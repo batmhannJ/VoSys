@@ -277,7 +277,11 @@ include 'includes/header_csc.php';
                 </div>
             </div>
         </section>
+
+        <!-- Back to Top Button -->
+        <button id="back-to-top"><i class="fa fa-chevron-up"></i></button>
     </div>
+
     <?php include 'includes/footer.php'; ?>
 </div>
 
@@ -295,7 +299,8 @@ include 'includes/header_csc.php';
 
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
-            animationDuration: 2000,
+            animationDuration: 3000,
+            animationEasing: "easeInOutBounce",
             title: {
                 text: "Vote Counts"
             },
@@ -350,6 +355,7 @@ include 'includes/header_csc.php';
 
         chart.options.animationEnabled = true;
         chart.options.animationDuration = 2000;
+        chart.options.animationEasing = "easeInOutBounce";
         chart.render();
     }
 
@@ -415,6 +421,5 @@ include 'includes/header_csc.php';
         });
     });
 </script>
-<button id="back-to-top">&uarr;</button>
 </body>
 </html>
