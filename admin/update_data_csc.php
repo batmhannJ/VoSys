@@ -21,7 +21,7 @@ function fetchVotes($conn, $category, $organizationFilter) {
             GROUP BY candidates.id";
     $query = $conn->query($sql);
     while($row = $query->fetch_assoc()) {
-        $imagePath = !empty($row['candidate_image']) ? 'images/' . $row['candidate_image'] : 'images/profile.jpg';
+        $imagePath = !empty($row['photo']) ? '../images/' . $row['photo'] : '..images/profile.jpg';
 
         // Debugging: Check if the file exists and log the path
         if (!file_exists($imagePath)) {
