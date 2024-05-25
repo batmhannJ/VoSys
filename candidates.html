@@ -41,138 +41,37 @@
 </nav>
 
 
-    <section class="team" id="team">
-      <div class="containerr">
-
-        <h2 class="h2 section-title">Active Team Members</h2>
-
-        <ul class="team-list">
-
-          <li>
-            <a href="#" class="team-member">
-              <figure>
-                <img src="images/can/1.png" alt="Team member image">
-              </figure>
-
-              <ion-icon name="link-outline"></ion-icon>
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="team-member">
-              <figure>
-                <img src="images/can/2.png" alt="Team member image">
-              </figure>
-
-              <ion-icon name="link-outline"></ion-icon>
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="team-member">
-              <figure>
-                <img src="images/can/3.png" alt="Team member image">
-              </figure>
-
-              <ion-icon name="link-outline"></ion-icon>
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="team-member">
-              <figure>
-                <img src="images/can/4.png" alt="Team member image">
-              </figure>
-
-              <ion-icon name="link-outline"></ion-icon>
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="team-member">
-              <figure>
-                <img src="images/can/5.png" alt="Team member image">
-              </figure>
-
-              <ion-icon name="link-outline"></ion-icon>
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="team-member">
-              <figure>
-                <img src="images/can/6.png" alt="Team member image">
-              </figure>
-
-              <ion-icon name="link-outline"></ion-icon>
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="team-member">
-              <figure>
-                <img src="images/can/7.png" alt="Team member image">
-              </figure>
-
-              <ion-icon name="link-outline"></ion-icon>
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="team-member">
-              <figure>
-                <img src="images/can/8.png" alt="Team member image">
-              </figure>
-
-              <ion-icon name="link-outline"></ion-icon>
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="team-member">
-              <figure>
-                <img src="images/can/9.png" alt="Team member image">
-              </figure>
-
-              <ion-icon name="link-outline"></ion-icon>
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="team-member">
-              <figure>
-                <img src="images/can/10.png" alt="Team member image">
-              </figure>
-
-              <ion-icon name="link-outline"></ion-icon>
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="team-member">
-              <figure>
-                <img src="images/can/11.png" alt="Team member image">
-              </figure>
-
-              <ion-icon name="link-outline"></ion-icon>
-            </a>
-          </li>
-
-          <li>
-            <a href="#" class="team-member">
-              <figure>
-                <img src="images/can/12.png" alt="Team member image">
-              </figure>
-
-              <ion-icon name="link-outline"></ion-icon>
-            </a>
-          </li>
-
-        </ul>
-
-
-      </div>
-    </section>
+<section class="brands-sec">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="brand-title mb-5">
+                    <h5 class="h5-title">Trusted by 70+ companies</h5>
+                </div>
+                <div class="brands-row">
+                    <div class="brands-box">
+                        <img src="images/can/1.png" alt="">
+                    </div>
+                    <div class="brands-box">
+                        <img src="images/can/2.png" alt="">
+                    </div>
+                    <div class="brands-box">
+                        <img src="images/can/3.png" alt="">
+                    </div>
+                    <div class="brands-box">
+                        <img src="images/can/4.png" alt="">
+                    </div>
+                    <div class="brands-box">
+                        <img src="images/can/5.png" alt="">
+                    </div>
+                    <div class="brands-box">
+                        <img src="images/can/6.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 
     <!--==================== FOOTER ====================-->
@@ -1050,116 +949,34 @@ hr {
   }
 }
 
-/* Basic resets */
+/* ******************** */
 
-/* Container styling */
-.containerr {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  text-align: center;
+.brands-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 -15px;
 }
 
-/* Section title */
-.section-title {
-  font-size: 2em;
-  margin-bottom: 20px;
-  color: #333;
+.brands-box {
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* Team list styling */
-.team-list {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  padding: 0;
+.brands-box:hover {
+    filter: brightness(0.3);
+    opacity: 0.9;
 }
 
-.team-list li {
-  flex: 1 1 calc(25% - 40px); /* Adjust the width as needed */
-  max-width: calc(25% - 40px);
-  margin: 10px;
+.brand-title .h5-title {
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 2px;
+    opacity: 0.7;
 }
 
-.team-member {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.team-member:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.team-member figure {
-  margin: 0;
-  position: relative;
-}
-
-.team-member img {
-  width: 100%;
-  display: block;
-  border-radius: 10px;
-}
-
-/* Icon styling */
-.team-member ion-icon {
-  font-size: 2em;
-  color: #fff;
-  border-radius: 50%;
-  padding: 10px;
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  transition: background 0.3s;
-}
-
-.team-member:hover ion-icon {
-  background: rgba(0, 0, 0, 0.8);
-}
-
-/* Button styling */
-.btn {
-  display: inline-block;
-  padding: 10px 20px;
-  font-size: 1em;
-  color: #fff;
-  background-color: #007bff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: background-color 0.3s;
-  margin-top: 20px;
-}
-
-.btn:hover {
-  background-color: #0056b3;
-}
-
-/* Responsive styling */
-@media (max-width: 768px) {
-  .team-list li {
-    flex: 1 1 calc(50% - 20px);
-    max-width: calc(50% - 20px);
-  }
-}
-
-@media (max-width: 480px) {
-  .team-list li {
-    flex: 1 1 100%;
-    max-width: 100%;
-  }
-
-  .btn {
-    width: 100%;
-  }
-}
-
+/* ******************** */
 
   </style>
 </html>
