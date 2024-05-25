@@ -40,6 +40,7 @@ include 'includes/header_csc.php';
             display: flex;
             align-items: center;
             margin-bottom: 20px;
+            flex-wrap: wrap;
         }
 
         .candidate-image {
@@ -50,6 +51,30 @@ include 'includes/header_csc.php';
             width: 50px;
             height: 50px;
             border-radius: 50%;
+        }
+
+        @media (max-width: 768px) {
+            .chart-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .candidate-image {
+                margin-bottom: 20px;
+                margin-right: 0;
+            }
+
+            .candidate-image img {
+                width: 75px;
+                height: 75px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .candidate-image img {
+                width: 100px;
+                height: 100px;
+            }
         }
     </style>
 </head>
@@ -253,26 +278,24 @@ include 'includes/header_csc.php';
             </div>
         </section>
     </div>
-
     <?php include 'includes/footer.php'; ?>
-    <?php include 'includes/votes_modal.php'; ?>
 </div>
+
 <?php include 'includes/scripts.php'; ?>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     function generateBarGraph(dataPoints, containerId, imageContainerId) {
         var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
         // Update the image container
         var imageContainer = document.getElementById(imageContainerId);
-        imageContainer.innerHTML = dataPoints.map(dataPoint => 
+        imageContainer.innerHTML = dataPoints.map(dataPoint =>
             `<div><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"></div>`
         ).join('');
 
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
-            animationDuration: 2000, // Animation duration for initial rendering
+            animationDuration: 2000,
             title: {
                 text: "Vote Counts"
             },
@@ -286,7 +309,7 @@ include 'includes/header_csc.php';
             },
             axisY: {
                 title: "",
-                interval: Math.ceil(totalVotes / 10) // Adjust the Y-axis interval for better scaling
+                interval: Math.ceil(totalVotes / 10)
             },
             data: [{
                 type: "bar",
@@ -300,7 +323,15 @@ include 'includes/header_csc.php';
                 }))
             }]
         });
+
         chart.render();
+
+        // Adjust the chart size when the window is resized
+        window.addEventListener('resize', function () {
+            chart.options.width = document.getElementById(containerId).offsetWidth;
+            chart.render();
+        });
+
         return chart;
     }
 
@@ -313,12 +344,12 @@ include 'includes/header_csc.php';
 
         // Update the image container
         var imageContainer = document.getElementById(imageContainerId);
-        imageContainer.innerHTML = newDataPoints.map(dataPoint => 
+        imageContainer.innerHTML = newDataPoints.map(dataPoint =>
             `<div><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"></div>`
         ).join('');
 
         chart.options.animationEnabled = true;
-        chart.options.animationDuration = 2000; // Animation duration for updates
+        chart.options.animationDuration = 2000;
         chart.render();
     }
 
@@ -384,9 +415,6 @@ include 'includes/header_csc.php';
         });
     });
 </script>
-
-<!-- Back to Top Button -->
-<button id="back-to-top" title="Back to Top">&uarr;</button>
-
+<button id="back-to-top">&uarr;</button>
 </body>
 </html>
