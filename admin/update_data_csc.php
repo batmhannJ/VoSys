@@ -21,7 +21,7 @@ function fetchVotes($conn, $category, $organizationFilter) {
             GROUP BY candidates.id";
     $query = $conn->query($sql);
     while($row = $query->fetch_assoc()) {
-        $imagePath = !empty($row['candidate_image']) ? 'images/' . $row['candidate_image'] : 'images/default.png'; // Adjust the path accordingly
+        $imagePath = !empty($row['candidate_image']) ? 'images/' . $row['candidate_image'] : 'images/profile.png'; // Adjust the path accordingly
         $data[] = array(
             "y" => intval($row['vote_count']), 
             "label" => $row['candidate_name'],
