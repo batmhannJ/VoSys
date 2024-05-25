@@ -53,5 +53,8 @@ $response['bsCrimRepresentative'] = fetchVotes($conn, 'BS CRIM Representative', 
 $response['bsitRepresentative'] = fetchVotes($conn, 'BSIT Representative', $organizationFilter);
 
 header('Content-Type: application/json');
-echo json_encode($response);
+$responseJson = json_encode($response);
+echo $responseJson;
+error_log($responseJson);
+
 ?>
