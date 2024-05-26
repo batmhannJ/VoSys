@@ -102,7 +102,7 @@ include 'includes/header_csc.php';
                 <?php
                 $categories = [
                     'president' => 'President',
-                    'vicePresident' => 'Vice President',
+                    'Vice President' => 'Vice President',
                     'secretary' => 'Secretary',
                     'treasurer' => 'Treasurer',
                     'auditor' => 'Auditor',
@@ -112,7 +112,7 @@ include 'includes/header_csc.php';
                     'bsedRep' => 'BSED Rep',
                     'bshmRep' => 'BSHM Rep',
                     'bsoadRep' => 'BSOAD Rep',
-                    'bsCrimRep' => 'BS CRIM Rep',
+                    'BS CRIM Rep' => 'BS CRIM Rep',
                     'bsitRep' => 'BSIT Rep'
                 ];
 
@@ -198,9 +198,9 @@ include 'includes/header_csc.php';
             success: function (response) {
                 // Generate graphs for all categories
                 var categories = [
-                    'president', 'vicePresident', 'secretary', 'treasurer', 'auditor',
+                    'president', 'Vice President', 'secretary', 'treasurer', 'auditor',
                     'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
-                    'bsoadRep', 'bsCrimRep', 'bsitRep'
+                    'bsoadRep', 'BS CRIM Rep', 'bsitRep'
                 ];
 
                 categories.forEach(function (category) {
