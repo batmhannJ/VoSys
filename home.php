@@ -119,55 +119,61 @@ if(!is_active_election($conn)){
         </div>
 
         <!-- Display the live poll results -->
-<!-- Display the live poll results -->
-<h2 class="text-center">Live Poll Results</h2>
-<div class="live-poll-results">
-    <?php
-    // Fetch live poll results for President position only
-    $sql_results = "SELECT 
-                        candidates.firstname,
-                        candidates.lastname,
-                        COUNT(votes_csc.candidate_id) AS vote_count
-                    FROM 
-                        votes_csc
-                    LEFT JOIN 
-                        candidates ON votes_csc.candidate_id = candidates.id
-                    LEFT JOIN 
-                        categories ON votes_csc.category_id = categories.id
-                    WHERE 
-                        votes_csc.election_id = 20
-                    AND
-                        categories.name = 'President'
-                    GROUP BY 
-                        candidates.firstname, candidates.lastname
-                    ORDER BY 
-                        vote_count DESC";
-    $result = $conn->query($sql_results);
+        <h2 class="text-center">Live Poll Results</h2>
+        <div class="live-poll-results">
+            <?php
+            // Fetch live poll results
+            $sql_results = "SELECT 
+                                categories.name AS position_name, 
+                                candidates.firstname, 
+                                candidates.lastname, 
+                                COUNT(votes_csc.candidate_id) AS vote_count
+                            FROM 
+                                votes_csc
+                            LEFT JOIN 
+                                candidates ON votes_csc.candidate_id = candidates.id
+                            LEFT JOIN 
+                                categories ON votes_csc.category_id = categories.id
+                            WHERE 
+                                votes_csc.election_id = 20
+                            GROUP BY 
+                                categories.name, candidates.id
+                            ORDER BY 
+                                categories.priority ASC, vote_count DESC";
+            $result = $conn->query($sql_results);
 
-    // Define colors for candidates
-    $colors = ['#FF5733', '#33FF57', '#5733FF', '#FF33F3', '#33E5FF']; // Add more colors as needed
+            // Collect maximum votes for scaling the bar
+            $max_votes_sql = "SELECT MAX(vote_count) AS max_votes FROM (
+                                SELECT COUNT(votes_csc.candidate_id) AS vote_count
+                                FROM votes_csc
+                                WHERE votes_csc.election_id = 20
+                                GROUP BY votes_csc.candidate_id
+                              ) AS subquery";
+            $max_votes_result = $conn->query($max_votes_sql);
+            $max_votes_row = $max_votes_result->fetch_assoc();
+            $max_votes = $max_votes_row['max_votes'];
 
-    // Display the graph for President position
-    $index = 0;
-    while($row = $result->fetch_assoc()) {
-        $candidateName = $row['firstname'] . ' ' . $row['lastname'];
-        $voteCount = $row['vote_count'];
-        $color = $colors[$index % count($colors)]; // Use modulo to cycle through colors
-        ?>
-        <div style="margin: 10px 0;">
-            <strong>President</strong>
-            <div style="background-color: lightgrey; width: <?php echo $voteCount * 10; ?>px; height: 30px;">
-                <div style="width: 100%; background-color: <?php echo $color; ?>; height: 100%; text-align: center; line-height: 30px;">
-                    <?php echo $voteCount; ?> votes
-                </div>
-            </div>
+            // Define colors for different competitors
+            $colors = array("red", "blue", "green", "orange", "purple");
+
+            // Generate bar graph
+            $color_index = 0;
+            while($row = $result->fetch_assoc()) {
+                $vote_percentage = ($row['vote_count'] / $max_votes) * 100;
+                // Display position name without candidates' names
+                echo "<div style='margin: 10px 0;'>
+                        <strong>{$row['position_name']}</strong>
+                        <div style='background-color: lightgrey; width: 100%; height: 30px;'>
+                            <div style='width: {$vote_percentage}%; background-color: {$colors[$color_index]}; color: white; height: 100%; text-align: center; line-height: 30px;'>
+                                {$row['vote_count']} votes ({$vote_percentage}%)
+                            </div>
+                        </div>
+                      </div>";
+                $color_index = ($color_index + 1) % count($colors); // Rotate through colors
+            }
+            ?>
+
         </div>
-        <?php
-        $index++;
-    }
-    ?>
-</div>
-
         <?php
     }
     else{
