@@ -204,7 +204,7 @@ include 'includes/header_csc.php';
                 var categories = [
                     'president', 'vice President', 'secretary', 'treasurer', 'auditor',
                     'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
-                    'bsoadRep', 'bs CrimRep', 'bsitRep'
+                    'bsoadRep', 'bs crimRep', 'bsitRep'
                 ];
 
                 categories.forEach(function (category) {
