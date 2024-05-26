@@ -66,22 +66,70 @@ $voter_turnout = number_format(($total_voters > 0) ? (($voted_voters / $total_vo
 
 // Create PDF content
 $pdfContent = "
-<div style='font-family: Arial, sans-serif; color: #333;'>
-  <div style='text-align: center;'>
-    <img src='images/logo.png' alt='Logo' style='height: 100px; width: 100px; margin-right: 20px; display: inline-block; vertical-align: middle;'>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+h1, h2 {
+  font-size: 14px;
+  text-align: center;
+  color: #000;
+}
+
+p {
+  font-family: Brush Script MT, cursive;
+  text-align: center;
+  color: #000;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  opacity: 0.8; /* Adjust the opacity value to make the table more transparent */
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+th {
+  color: #fff;
+  background-color: maroon; /* Light gray background for table headers */
+  font-weight: bold;
+}
+
+tr:nth-child(even) {
+  background-color: #fff; /* White background for even rows */
+}
+
+tr:nth-child(odd) {
+  background-color: #f9f9f9; /* Light gray background for odd rows */
+}
+
+.highlight {
+  background-color: #ffe6e6; /* Light red background for highest count of votes */
+}
+
+</style>
+<img src='images/logo.png' alt='Logo' style='height: 100px; width: 100px; margin-right: 20px; float: left;'>
+<div style='text-align: center;'>
     <p style='font-family: Brush Script MT, cursive; display: inline-block; vertical-align: middle;'>Our Lady of the Sacred Heart College of Guimba, Inc.</p>
     <h1 style='font-size: 14px; color: #000; margin-top: 0;'>2024 Election Results</h1>
   </div>
 
-  <table style='width: 100%; border-collapse: collapse; margin-top: 20px; opacity: 0.8;'>
+<table>
     <thead>
-      <tr>
-        <th style='padding: 10px; border: 1px solid #ddd; color: #fff; background-color: maroon; font-weight: bold;'>Position</th>
-        <th style='padding: 10px; border: 1px solid #ddd; color: #fff; background-color: maroon; font-weight: bold;'>Candidate</th>
-        <th style='padding: 10px; border: 1px solid #ddd; color: #fff; background-color: maroon; font-weight: bold;'>Vote Count</th>
-      </tr>
+    <tr>
+        <th>Position</th>
+        <th>Candidate</th>
+        <th>Vote Count</th>
+    </tr>
     </thead>
-    <tbody>";
+<tbody>";
 
 // Initialize array to track highest vote count for each position
 $positionMaxVotes = array();
