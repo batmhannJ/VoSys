@@ -111,13 +111,15 @@ tr:nth-child(odd) {
 }
 .header-container .report-title {
   font-size: 20px;
-  margin: 0;
+  margin-top: -5px;
+  position: relative;
+  top: -10px;
 }
 </style>
 <div class='header-container'>
   <img src='images/logo.png' alt='Logo' style='height: 100px; width: 100px; float: left;'>
   <p class='school-name' style='font-size: 22px; font-weight: bold; margin: 0;'>Our Lady of the Sacred Heart College of Guimba, Inc.</p>
-  <p class='report-title' style='font-size: 20px; margin: 0;'>2024 Election Results</p>
+  <p class='report-title' style='font-size: 20px; margin: 0; position: relative; top: -10px;'>2024 Election Results</p>
 </div>
 <table>
     <thead>
