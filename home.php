@@ -153,20 +153,26 @@ if(!is_active_election($conn)){
             $max_votes_row = $max_votes_result->fetch_assoc();
             $max_votes = $max_votes_row['max_votes'];
 
-            
+            // Define colors for different competitors
+            $colors = array("red", "blue", "green", "orange", "purple");
+
             // Generate bar graph
+            $color_index = 0;
             while($row = $result->fetch_assoc()) {
                 $vote_percentage = ($row['vote_count'] / $max_votes) * 100;
+                // Display position name without candidates' names
                 echo "<div style='margin: 10px 0;'>
-                        <strong>{$row['position_name']} - {$row['firstname']} {$row['lastname']}</strong>
+                        <strong>{$row['position_name']}</strong>
                         <div style='background-color: lightgrey; width: 100%; height: 30px;'>
-                            <div style='width: {$vote_percentage}%; background-color: maroon; color: white; height: 100%; text-align: center; line-height: 30px;'>
+                            <div style='width: {$vote_percentage}%; background-color: {$colors[$color_index]}; color: white; height: 100%; text-align: center; line-height: 30px;'>
                                 {$row['vote_count']} votes ({$vote_percentage}%)
                             </div>
                         </div>
                       </div>";
+                $color_index = ($color_index + 1) % count($colors); // Rotate through colors
             }
             ?>
+
         </div>
         <?php
     }
