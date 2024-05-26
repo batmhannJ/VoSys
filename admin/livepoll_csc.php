@@ -147,8 +147,16 @@ include 'includes/header_csc.php';
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script src="path/to/jquery.min.js"></script>
 <script>
-    function generateBarGraph(dataPoints, containerId, imageContainerId) {
-        var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+    function updateChartData(chart, newDataPoints) {
+        var totalVotes = newDataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+        chart.options.data[0].dataPoints = newDataPoints.map(dataPoint => ({
+            ...dataPoint,
+            percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+        }));
+        chart.options.animationEnabled = true;
+        chart.options.animationDuration = 2000; // Animation duration for updates
+        chart.render();
+    }
 
         // Update the image container
         var imageContainer = document.getElementById(imageContainerId);
@@ -191,6 +199,7 @@ include 'includes/header_csc.php';
             }]
         });
         chart.render();
+        return chart;
     }
 
     function fetchAndGenerateGraphs() {
