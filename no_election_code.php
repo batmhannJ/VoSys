@@ -5,7 +5,7 @@ include 'includes/header.php';
 
 ?>
 
-<body class="hold-transition layout-top-nav">
+<body class="hold-transition skin-blue layout-top-nav">
 <div class="wrapper">
 
 	<?php include 'includes/navbar.php'; ?>
