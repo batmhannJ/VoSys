@@ -256,7 +256,7 @@ include 'includes/header_csc.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><b>BSCrim Representative</b></h3>
+                            <h3 class="box-title"><b>BSCRIM Representative</b></h3>
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
@@ -283,15 +283,13 @@ include 'includes/header_csc.php';
             </div>
         </section>
 
-        <!-- Back to Top Button -->
-        <button id="back-to-top"><i class="fa fa-chevron-up"></i></button>
+        <button id="back-to-top" title="Back to top">&uarr;</button>
     </div>
-
     <?php include 'includes/footer.php'; ?>
 </div>
-
 <?php include 'includes/scripts.php'; ?>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="path/to/jquery.min.js"></script>
 <script>
     function generateBarGraph(dataPoints, containerId, imageContainerId) {
         var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
@@ -299,7 +297,10 @@ include 'includes/header_csc.php';
         // Update the image container
         var imageContainer = document.getElementById(imageContainerId);
         imageContainer.innerHTML = dataPoints.map(dataPoint =>
-            `<div class="candidate-image"><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"><span class="candidate-label">${dataPoint.label}</span></div>`
+            `<div class="candidate-image">
+                <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">
+                <span class="candidate-label">${dataPoint.label}</span>
+            </div>`
         ).join('');
 
         var chart = new CanvasJS.Chart(containerId, {
@@ -355,7 +356,10 @@ include 'includes/header_csc.php';
         // Update the image container
         var imageContainer = document.getElementById(imageContainerId);
         imageContainer.innerHTML = newDataPoints.map(dataPoint =>
-            `<div class="candidate-image"><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"><span class="candidate-label">${dataPoint.label}</span></div>`
+            `<div class="candidate-image">
+                <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">
+                <span class="candidate-label">${dataPoint.label}</span>
+            </div>`
         ).join('');
 
         chart.options.animationEnabled = true;
@@ -408,7 +412,6 @@ include 'includes/header_csc.php';
 
     setInterval(updateVoteCounts, 5000);
 
-    // Back to top button script
     $(document).ready(function () {
         var btn = $('#back-to-top');
 
@@ -426,6 +429,5 @@ include 'includes/header_csc.php';
         });
     });
 </script>
-
 </body>
 </html>
