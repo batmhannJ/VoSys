@@ -121,7 +121,7 @@ include 'includes/header_csc.php';
                         <div class="box-body">
                             <div class="chart-container">
                                 <div class="candidate-images" id="vicePresidentImage"></div>
-                                <div id="vicePresidentGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
+                                <div id="vice presidentGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
                     </div>
@@ -375,7 +375,7 @@ include 'includes/header_csc.php';
             dataType: 'json',
             success: function (response) {
                 updateChartData(presidentChart, response.president, 'presidentImage');
-                updateChartData(vicePresidentChart, response.vicePresident, 'vicePresidentImage');
+                updateChartData(vicepresidentChart, response.vicepresident, 'vicePresidentImage');
                 updateChartData(secretaryChart, response.secretary, 'secretaryImage');
                 updateChartData(treasurerChart, response.treasurer, 'treasurerImage');
                 updateChartData(auditorChart, response.auditor, 'auditorImage');
@@ -395,7 +395,7 @@ include 'includes/header_csc.php';
     }
 
     var presidentChart = generateBarGraph([], "presidentGraph", "presidentImage");
-    var vicePresidentChart = generateBarGraph([], "vicePresidentGraph", "vicePresidentImage");
+    var vicepresidentChart = generateBarGraph([], "vice presidentGraph", "vicePresidentImage");
     var secretaryChart = generateBarGraph([], "secretaryGraph", "secretaryImage");
     var treasurerChart = generateBarGraph([], "treasurerGraph", "treasurerImage");
     var auditorChart = generateBarGraph([], "auditorGraph", "auditorImage");
