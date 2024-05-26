@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	include 'includes/session.php';
 	include 'includes/slugify.php';
 
@@ -8,6 +9,12 @@
 		}
 		else{
 			$_SESSION['post'] = $_POST;
+			$voter_id = $voter['id'];
+			$voter_sql = "SELECT * FROM voters WHERE id = '$voter_id'";
+			$voter_query = $conn->query($voter_sql);
+			$voter = $voter_query->fetch_assoc();
+			
+			$organization = $voter['organization'];
 			$sql = "SELECT * FROM categories WHERE election_id = 20";
 			$query = $conn->query($sql);
 			$error = false;
@@ -30,7 +37,7 @@
 								$candidate_row = $candidate_query->fetch_assoc();
 								$candidate_name = $candidate_row['firstname'] . ' ' . $candidate_row['lastname'];
 
-								$sql_array[] = "INSERT INTO votes_csc (voters_id, election_id, candidate_id, category_id, organization) VALUES ('".$voter['id']."', '20', '$values', '$pos_id', 'CSC')";
+								$sql_array[] = "INSERT INTO votes_csc (voters_id, election_id, candidate_id, category_id, organization) VALUES ('".$voter['id']."', '20', '$values', '$pos_id', '$organization')";
 								// Append vote information to $votes_info
 								$votes_info .= "<p><strong>Position:</strong> ".$row['name']."<br>";
 								$votes_info .= "<strong>Candidate:</strong> $candidate_name</p>";
@@ -46,7 +53,7 @@
 						$candidate_row = $candidate_query->fetch_assoc();
 						$candidate_name = $candidate_row['firstname'] . ' ' . $candidate_row['lastname'];
 
-						$sql_array[] = "INSERT INTO votes_csc (voters_id, election_id, candidate_id, category_id, organization) VALUES ('".$voter['id']."', '20', '$candidate', '$pos_id', 'CSC')";
+						$sql_array[] = "INSERT INTO votes_csc (voters_id, election_id, candidate_id, category_id, organization) VALUES ('".$voter['id']."', '20', '$candidate', '$pos_id', '$organization')";
 						// Append vote information to $votes_info
 						$votes_info .= "<p><strong>Position:</strong> ".$row['name']."<br>";
 						$votes_info .= "<strong>Candidate:</strong> $candidate_name</p>";
