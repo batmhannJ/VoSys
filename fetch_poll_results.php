@@ -61,25 +61,29 @@ include 'includes/header_code.php';
                     WHERE 
                         votes_csc.election_id = 20
                     GROUP BY 
-                        categories.name
+                        categories.name, candidates.id
                     ORDER BY 
-                        categories.priority ASC";
+                        categories.priority ASC, total_votes DESC";
     $result = $conn->query($sql_results);
 
     // Get total number of votes for all positions
     $total_votes = 0;
-
+    while($row = $result->fetch_assoc()) {
+        $total_votes += $row['total_votes'];
+    }
+    $result->data_seek(0); // Reset result pointer
+    
     // Initialize color flag
     $is_blue = true;
 
     // Loop through poll results
     while($row = $result->fetch_assoc()) {
-        // Display position name only once
+        // Display position name
         echo "<div class='position-name'>{$row['position_name']}</div>";
 
         // Calculate percentage based on total votes for the position
         $vote_percentage = number_format(($row['total_votes'] / $total_votes) * 100, 2);
-
+        
         // Determine bar color class
         $color_class = $is_blue ? 'bar' : 'bar alt';
 
@@ -89,11 +93,6 @@ include 'includes/header_code.php';
                     {$vote_percentage}%
                 </div>
               </div>";
-
-        // Set total votes for the first position
-        if ($total_votes === 0) {
-            $total_votes = $row['total_votes'];
-        }
 
         // Toggle color flag
         $is_blue = !$is_blue;
