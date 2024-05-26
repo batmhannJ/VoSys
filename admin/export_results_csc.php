@@ -123,7 +123,7 @@ tr:nth-child(odd) {
 }
 
 </style>
-<div class='header'>
+<div class='header' style='inline-block;'>
   <img src='images/logo.png' alt='Logo' style='height: 100px; /* Set height */
   width: 100px;
   margin-right: 20px;
