@@ -2,7 +2,7 @@
 <?php include 'includes/header.php'; 
 
 function is_active_election($conn){
-	$sql = "SELECT * FROM election WHERE title = 'CODE-TG - Coalition of Disciplined Future Enforcers of Today's Generation Election	' && status = 1";
+	$sql = "SELECT * FROM election WHERE title = 'CODE-TG - Coalition of Disciplined Future Enforcers of Today's Generation Election' && status = 1";
 	$result = $conn->query($sql);
 
 	if($result->num_rows > 0){
