@@ -79,13 +79,12 @@ include 'includes/header.php';
                 // Array of positions
                 $positions = [
                     'President', 
-                    'Vice President for Internal Affairs', 
-                    'Vice President for External Affairs', 
+                    'Vice President', 
                     'Secretary', 
                     'Treasurer', 
                     'Auditor', 
                     'P.R.O.', 
-                    'Dir. for Membership', 
+                    'Business Manager', 
                     'Dir. for Special Project', 
                     'Block A 1st Year Representative', 
                     'Block B 1st Year Representative', 
