@@ -202,7 +202,7 @@ include 'includes/header_csc.php';
 
     $(document).ready(function () {
         if (typeof(EventSource) !== "undefined") {
-            var source = new EventSource('sse_update.php');
+            var source = new EventSource('update_data_csc.php');
             source.onmessage = function (event) {
                 var data = JSON.parse(event.data);
                 updateGraphs(data);
