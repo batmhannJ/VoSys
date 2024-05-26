@@ -213,19 +213,17 @@ include 'includes/header_csc.php';
         });
     }
 
-    // Function to periodically fetch and update graphs
-    function updateGraphsPeriodically() {
-        fetchAndGenerateGraphs(); // Fetch data initially when the page loads
+    // Function to update graphs when a vote is submitted
+    function updateGraphsOnVoteSubmission() {
+        // Assuming there's a function called submitVote() that is triggered when a voter submits their vote
+        // Modify this function according to your actual implementation
+        submitVote(); // Call the function to submit the vote
 
-        // Schedule fetching data every 5 seconds (adjust the interval as needed)
-        setInterval(function () {
-            fetchAndGenerateGraphs();
-        }, 5000); // 5000 milliseconds = 5 seconds
+        // After the vote is successfully submitted, fetch and update the graphs
+        fetchAndGenerateGraphs();
     }
 
     $(document).ready(function () {
-        updateGraphsPeriodically(); // Start updating graphs when the document is ready
-
         // Your existing code for scrolling and back-to-top button
         $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
@@ -240,6 +238,7 @@ include 'includes/header_csc.php';
             return false;
         });
     });
+
 
 </script>
 </body>
