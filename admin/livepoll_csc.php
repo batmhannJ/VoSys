@@ -115,7 +115,7 @@ include 'includes/header_csc.php';
                     'bsedRep' => 'BSED Rep',
                     'bshmRep' => 'BSHM Rep',
                     'bsoadRep' => 'BSOAD Rep',
-                    'bscrimRep' => 'BS CRIM Rep',
+                    'bs crimRep' => 'BS CRIM Rep',
                     'bsitRep' => 'BSIT Rep'
                 ];
 
@@ -204,7 +204,7 @@ include 'includes/header_csc.php';
                 var categories = [
                     'president', 'vicePresident', 'secretary', 'treasurer', 'auditor',
                     'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
-                    'bsoadRep', 'bscrimRep', 'bsitRep'
+                    'bsoadRep', 'bs crimRep', 'bsitRep'
                 ];
 
                 categories.forEach(function (category) {
