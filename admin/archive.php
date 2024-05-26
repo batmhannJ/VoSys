@@ -141,7 +141,7 @@
                         <td>".$row['yearLvl']."</td>
                         <td>".$row['organization']."</td>
                         <td>
-                          <button class='btn btn-success btn-sm restore btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#confirmationModal'><i class='fa fa-reply'></i> Restore</button>
+                          <button class='btn btn-warning btn-sm restore btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#confirmationModal'><i class='fa fa-reply'></i> Restore</button>
                           <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."' data-user='voters'><i class='fa fa-trash'></i> Delete</button>
                         </td>
                       </tr>
@@ -160,7 +160,7 @@
                         <td>".$row['username']."</td>
                         <td>".$row['email']."</td>
                         <td>
-                          <button class='btn btn-success btn-sm restore-admin btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#adminConfirmationModal'><i class='fa fa-reply'></i> Restore</button>
+                          <button class='btn btn-warning btn-sm restore-admin btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#adminConfirmationModal'><i class='fa fa-reply'></i> Restore</button>
                           <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."' data-user='admin'><i class='fa fa-trash'></i> Delete</button>
                         </td>
                       </tr>
@@ -173,7 +173,7 @@
                         <td>".$row['title']."</td>
                         <td>".$row['voters']."</td>
                         <td>
-                          <button class='btn btn-success btn-sm restore-election btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#electionConfirmationModal'><i class='fa fa-reply'></i> Restore</button>
+                          <button class='btn btn-warning btn-sm restore-election btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#electionConfirmationModal'><i class='fa fa-reply'></i> Restore</button>
                           <button class='btn btn-danger btn-sm delete-election btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#deleteConfirmationModal'><i class='fa fa-trash'></i> Delete</button>
                         </td>
                       </tr>
