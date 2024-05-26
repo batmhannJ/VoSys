@@ -81,5 +81,13 @@
       .votelist{
         font-size: 17px;
       }
+      @media (max-width: 991px) {
+      .navbar-collapse.pull-left+.navbar-custom-menu {
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 20px;
+    }
+}
   	</style>		
 </head>
