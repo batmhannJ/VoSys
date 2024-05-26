@@ -164,13 +164,10 @@ if(!is_active_election($conn)){
                 // Alternate color between blue and red
                 $color = $is_blue ? 'blue' : 'red';
 
-                // Ensure minimum width for the bar (10%)
-                $bar_width = max(10, $vote_percentage);
-
-                // Display candidate result with percentage rounded to 2 decimal places
+                // Display candidate result without names and with percentage rounded to 2 decimal places
                 echo "<div style='margin: 10px 0;'>
                         <div style='background-color: lightgrey; width: 100%; height: 30px;'>
-                            <div style='width: {$bar_width}%; background-color: $color; color: white; height: 100%; text-align: center; line-height: 30px;'>
+                            <div style='width: {$vote_percentage}%; background-color: $color; color: white; height: 100%; text-align: center; line-height: 30px;'>
                                 {$vote_percentage}%
                             </div>
                         </div>
@@ -178,8 +175,6 @@ if(!is_active_election($conn)){
                 $is_blue = !$is_blue; // Toggle color
             }
             ?>
-
-
         </div>
         <?php
     }
