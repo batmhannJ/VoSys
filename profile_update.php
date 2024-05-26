@@ -1,6 +1,12 @@
 <?php
 include 'includes/session.php';
 
+if (isset($_GET['return'])) {
+    $return = $_GET['return'];
+} else {
+    $return = 'jpcs_home.php';
+}
+
 if (isset($_POST['save'])) {
     $curr_password = $_POST['curr_password'];
     $password = $_POST['password'];
