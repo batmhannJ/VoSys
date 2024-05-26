@@ -218,6 +218,9 @@ include 'includes/header_csc.php';
     $(document).ready(function () {
         fetchAndGenerateGraphs();
 
+        // Fetch and update the graphs every 30 seconds
+        setInterval(fetchAndGenerateGraphs, 1000);
+
         $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
                 $('#back-to-top').fadeIn();
