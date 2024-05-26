@@ -167,7 +167,7 @@ if(!is_active_election($conn)){
                 // Display candidate result with percentage rounded to 2 decimal places
                 echo "<div style='margin: 10px 0;'>
                         <div style='background-color: lightgrey; width: 100%; height: 30px;'>
-                            <div style='width: {$vote_percentage}%; background-color: $color; color: white; height: 100%; text-align: center; line-height: 30px;'>
+                            <div style='width: 100%; background-color: $color; color: white; height: 100%; text-align: center; line-height: 30px;'>
                                 {$vote_percentage}%
                             </div>
                         </div>
