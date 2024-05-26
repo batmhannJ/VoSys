@@ -105,7 +105,7 @@ include 'includes/header_csc.php';
                 <?php
                 $categories = [
                     'president' => 'President',
-                    'vicePresident' => 'Vice President',
+                    'vice President' => 'Vice President',
                     'secretary' => 'Secretary',
                     'treasurer' => 'Treasurer',
                     'auditor' => 'Auditor',
@@ -202,7 +202,7 @@ include 'includes/header_csc.php';
                 console.log(response); // Log the response to check data
                 // Generate graphs for all categories
                 var categories = [
-                    'president', 'vicePresident', 'secretary', 'treasurer', 'auditor',
+                    'president', 'vice President', 'secretary', 'treasurer', 'auditor',
                     'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
                     'bsoadRep', 'bs crimRep', 'bsitRep'
                 ];
