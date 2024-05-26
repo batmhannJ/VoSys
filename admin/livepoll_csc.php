@@ -138,7 +138,7 @@ include 'includes/header_csc.php';
 </div>
 <?php include 'includes/scripts.php'; ?>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-<script src="path/to/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     function generateBarGraph(dataPoints, containerId, imageContainerId) {
         var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
@@ -201,15 +201,35 @@ include 'includes/header_csc.php';
     }
 
     $(document).ready(function () {
-        if (typeof(EventSource) !== "undefined") {
-            var source = new EventSource('update_data_csc.php');
-            source.onmessage = function (event) {
-                var data = JSON.parse(event.data);
-                updateGraphs(data);
-            };
-        } else {
-            console.error("Your browser does not support Server-Sent Events.");
+        function fetchData() {
+            $.ajax({
+                url: 'update_data_csc.php',
+                method: 'GET',
+                success: function (response) {
+                    var data = JSON.parse(response);
+                    updateGraphs(data);
+                },
+                error: function (xhr, status, error) {
+                    console.error("An error occurred while fetching the data: ", error);
+                }
+            });
         }
+
+        // Bind the fetchData function to the vote submission event
+        $(document).on('submit', '#voteForm', function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: 'submit_vote.php',
+                method: 'POST',
+                data: $(this).serialize(),
+                success: function (response) {
+                    fetchData();
+                },
+                error: function (xhr, status, error) {
+                    console.error("An error occurred while submitting the vote: ", error);
+                }
+            });
+        });
 
         $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
