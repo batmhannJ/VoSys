@@ -107,13 +107,9 @@ tr:nth-child(odd) {
 .header-container .school-name {
   font-size: 22px;
   font-weight: bold;
-  margin: 0;
 }
 .header-container .report-title {
   font-size: 20px;
-  margin-top: -5px;
-  position: relative;
-  top: -10px;
 }
 </style>
 <div class='header-container'>
