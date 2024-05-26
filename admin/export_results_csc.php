@@ -98,7 +98,7 @@ tr:nth-child(odd) {
 }
 .header-container {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   margin: 0;
   padding: 0;
 }
@@ -118,7 +118,7 @@ tr:nth-child(odd) {
   <img src='images/logo.png' alt='Logo' style='height: 70px; width: 70px; float: left;'>
   <img src='images/j.png' alt='Logo' style='height: 70px; width: 70px; float: right;'>
   <p class='school-name' style='font-size: 16px; font-weight: bold; margin-top: -10px; margin-left: 10px; margin-right: 10px;'>Our Lady of the Sacred Heart College of Guimba, Inc.<br>Guimba, Nueva Ecija</p>
-  <p class='report-title' style='font-size: 16px; margin-top: 50px;'>2024 Election Results</p>
+  <p class='report-title' style='font-size: 16px; margin-top: 50px; margin-bottom: 10px;'>2024 Election Results</p>
 </div>
 <table>
     <thead>
