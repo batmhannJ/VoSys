@@ -85,8 +85,8 @@
       .navbar-collapse.pull-left+.navbar-custom-menu {
         display: block;
         position: absolute;
-        top: 0;
-        right: 20px;
+        top: 5px;
+        right: 25px;
     }
 }
   	</style>		
