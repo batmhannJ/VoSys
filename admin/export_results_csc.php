@@ -11,12 +11,21 @@ require_once __DIR__ . '/vendor/autoload.php';
 require_once 'includes/conn.php'; // Adjust the path as per your file structure
 
 // Query to calculate vote count for each candidate from votes_csc table
-$sql = "SELECT candidates.firstname, candidates.lastname, categories.name AS position_name, COUNT(votes_csc.candidate_id) AS vote_count
-        FROM candidates
-        LEFT JOIN votes_csc ON candidates.id = votes_csc.candidate_id
-        LEFT JOIN categories ON candidates.category_id = categories.id
-        GROUP BY categories.name, candidates.id
-        ORDER BY categories.priority ASC, vote_count DESC"; // Ordering by priority in categories
+$sql = "SELECT 
+            candidates.firstname, 
+            candidates.lastname, 
+            categories.name AS position_name, 
+            COUNT(votes_csc.candidate_id) AS vote_count
+        FROM 
+            candidates
+        LEFT JOIN 
+            votes_csc ON candidates.id = votes_csc.candidate_id
+        LEFT JOIN 
+            categories ON candidates.category_id = categories.id
+        GROUP BY 
+            categories.name, candidates.id
+        ORDER BY 
+            categories.priority ASC, vote_count DESC"; // Ordering by priority in categories
 
 $result = $conn->query($sql);
 
