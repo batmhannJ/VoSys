@@ -1,49 +1,67 @@
 <?php
 include 'includes/session.php';
 
-if(isset($_POST['election_id'])){
-    $election_id = $_POST['election_id'];
+$organizationFilter = "";
+if (!empty($_GET['organization'])) {
+    $organizationFilter = " AND voters1.organization = '" . $conn->real_escape_string($_GET['organization']) . "'";
+}
 
-    // Fetching results for different positions
-    $positions = [
-        'President' => 'president',
-        'Vice President' => 'vice_president',
-        'Secretary' => 'secretary',
-        'Treasurer' => 'treasurer',
-        'P.R.O' => 'pro', // Changed to P.R.O
-        'Business Manager' => 'business_manager',
-        'BEED Rep' => 'beed_rep', // Changed to BEED Rep
-        'BSED Rep' => 'bsed_rep', // Changed to BSED Rep
-        'BSHM Rep' => 'bshm_rep', // Changed to BSHM Rep
-        'BSOAD Rep' => 'bsoad_rep', // Changed to BSOAD Rep
-        'BSCRIM Rep' => 'bscrim_rep', // Changed to BSCRIM Rep
-        'BSIT Rep' => 'bsit_rep' // Changed to BSIT Rep
-    ];
+// Function to fetch votes data with candidate images
+function fetchVotes($conn, $category, $organizationFilter) {
+    $data = array();
+    $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
+            COALESCE(COUNT(votes_csc.candidate_id), 0) AS vote_count, 
+            candidates.photo AS candidate_image
+            FROM categories 
+            LEFT JOIN candidates ON categories.id = candidates.category_id
+            LEFT JOIN votes_csc ON candidates.id = votes_csc.candidate_id
+            LEFT JOIN voters AS voters1 ON voters1.id = votes_csc.voters_id 
+            WHERE voters1.organization != '' AND categories.name = '$category'
+            $organizationFilter
+            GROUP BY candidates.id";
+    
+    // Debugging: Log the query for inspection
+    error_log("SQL Query: " . $sql);
 
-    $results = [];
-
-    foreach($positions as $position => $id) {
-        $sql = "SELECT candidates.name AS candidate, COUNT(votes.id) AS vote_count
-                FROM votes
-                LEFT JOIN candidates ON candidates.id = votes.candidate_id
-                LEFT JOIN positions ON positions.id = candidates.position_id
-                WHERE positions.description = '$position' AND votes.election_id = '$election_id'
-                GROUP BY candidates.name
-                ORDER BY vote_count DESC";
-
-        $query = $conn->query($sql);
-        $data = [];
-
-        while($row = $query->fetch_assoc()) {
-            $data[] = [
-                'candidate' => $row['candidate'],
-                'vote_count' => $row['vote_count']
-            ];
-        }
-
-        $results[$id] = $data;
+    $query = $conn->query($sql);
+    if (!$query) {
+        // Log SQL error if query fails
+        error_log("SQL Error: " . $conn->error);
+        return $data;
     }
 
-    echo json_encode($results);
+    while($row = $query->fetch_assoc()) {
+        $imagePath = !empty($row['candidate_image']) ? '../images/' . $row['candidate_image'] : '../images/profile.jpg';
+
+        // Debugging: Check if the file exists and log the path
+        if (!file_exists($imagePath)) {
+            error_log("Image not found: " . $imagePath);
+            $imagePath = '../images/profile.jpg';  // Default image if not found
+        }
+
+        $data[] = array(
+            "y" => intval($row['vote_count']), 
+            "label" => $row['candidate_name'],
+            "image" => $imagePath
+        );
+    }
+    return $data;
 }
+
+$response = array();
+$categories = [
+    'president', 'vice president', 'secretary', 'treasurer', 'auditor',
+    'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
+    'bsoadRep', 'bs crimRep', 'bsitRep'
+];
+
+foreach ($categories as $category) {
+    $response[$category] = fetchVotes($conn, ucfirst(str_replace(['Rep', 'Manager', 'P.R.O'], [' Rep', ' Manager', ' P.R.O'], $category)), $organizationFilter);
+}
+
+// Debugging: Log the final response
+error_log(json_encode($response));
+
+header('Content-Type: application/json');
+echo json_encode($response);
 ?>
