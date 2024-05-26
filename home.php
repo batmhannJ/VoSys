@@ -165,7 +165,6 @@ if(!is_active_election($conn)){
             }
             ?>
 
-
         </div>
         <?php
     }
