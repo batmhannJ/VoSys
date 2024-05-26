@@ -1148,13 +1148,40 @@ hr {
   height: 300px;
 }
 
-.blog1 {
-  background-image: 
-    url("images/pla/2.png");
-
+.blog {
+  background-image: url("images/pla/1.png");
+  background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  height: 300px;
+  height: 500px; /* Reduced height */
+  width: 100%; /* Adjusted width to fill the container */
+  margin-top: 50px;
+}
+
+.blog1 {
+  background-image: url("images/pla/2.png");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  height: 500px; /* Reduced height */
+  width: 100%; /* Adjusted width to fill the container */
+}
+
+/* Optional: Adding some margin and padding for better spacing */
+.blog, .blog1 {
+  margin-bottom: 20px; /* Adjust as needed */
+  padding: 10px; /* Adjust as needed */
+  box-sizing: border-box; /* Ensures padding and border are included in the width and height */
+}
+
+/* Optional: Add a shadow effect for better visual appeal */
+.blog, .blog1 {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.blog:hover, .blog1:hover {
+  transform: scale(1.02);
 }
 
   </style>
