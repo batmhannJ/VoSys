@@ -224,6 +224,10 @@ include 'includes/header_csc.php';
     $(document).ready(function () {
         fetchAndGenerateGraphs();
 
+        updateVoteCounts();
+
+    setInterval(updateVoteCounts, 5000);
+
         $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
                 $('#back-to-top').fadeIn();
