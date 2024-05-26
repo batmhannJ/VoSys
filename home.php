@@ -119,14 +119,14 @@ if(!is_active_election($conn)){
         </div>
 
         <!-- Display the live poll results -->
-        <h2 class="text-center">Live Poll Results</h2>
+<!-- Display the live poll results -->
+<h2 class="text-center">Live Poll Results</h2>
 <div class="live-poll-results">
     <?php
-    // Fetch live poll results
+    // Fetch live poll results for President position only
     $sql_results = "SELECT 
-                        categories.name AS position_name, 
-                        MAX(candidates.firstname) AS firstname, 
-                        MAX(candidates.lastname) AS lastname, 
+                        candidates.firstname,
+                        candidates.lastname,
                         COUNT(votes_csc.candidate_id) AS vote_count
                     FROM 
                         votes_csc
@@ -136,25 +136,38 @@ if(!is_active_election($conn)){
                         categories ON votes_csc.category_id = categories.id
                     WHERE 
                         votes_csc.election_id = 20
+                    AND
+                        categories.name = 'President'
                     GROUP BY 
-                        categories.name
+                        candidates.firstname, candidates.lastname
                     ORDER BY 
-                        categories.priority ASC, vote_count DESC";
+                        vote_count DESC";
     $result = $conn->query($sql_results);
 
-    // Display only the position and the leading candidate without showing their names
+    // Define colors for candidates
+    $colors = ['#FF5733', '#33FF57', '#5733FF', '#FF33F3', '#33E5FF']; // Add more colors as needed
+
+    // Display the graph for President position
+    $index = 0;
     while($row = $result->fetch_assoc()) {
-        echo "<div style='margin: 10px 0;'>
-                <strong>{$row['position_name']}</strong>
-                <div style='background-color: lightgrey; width: 100%; height: 30px;'>
-                    <div style='width: 100%; background-color: maroon; color: white; height: 100%; text-align: center; line-height: 30px;'>
-                        {$row['vote_count']} votes
-                    </div>
+        $candidateName = $row['firstname'] . ' ' . $row['lastname'];
+        $voteCount = $row['vote_count'];
+        $color = $colors[$index % count($colors)]; // Use modulo to cycle through colors
+        ?>
+        <div style="margin: 10px 0;">
+            <strong>President</strong>
+            <div style="background-color: lightgrey; width: <?php echo $voteCount * 10; ?>px; height: 30px;">
+                <div style="width: 100%; background-color: <?php echo $color; ?>; height: 100%; text-align: center; line-height: 30px;">
+                    <?php echo $voteCount; ?> votes
                 </div>
-              </div>";
+            </div>
+        </div>
+        <?php
+        $index++;
     }
     ?>
 </div>
+
         <?php
     }
     else{
