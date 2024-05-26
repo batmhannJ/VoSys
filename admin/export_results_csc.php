@@ -162,7 +162,7 @@ $pdfContent .= "
   </tbody>
 </table>
 <br>
-<p><b>Total Voters:</b> {$total_voters}</p>
+<p style='justify-content: flex-start;'><b>Total Voters:</b> {$total_voters}</p>
 <p><b>Voters Voted:</b> {$voted_voters}</p>
 <p><b>Remaining Voters:</b> {$remaining_voters}</p>
 <p><b>Voter Turnout:</b> {$voter_turnout}%</p>
