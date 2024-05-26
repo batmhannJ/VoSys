@@ -220,14 +220,14 @@ include 'includes/header_csc.php';
                 // Update last vote time
                 lastVoteTime = response.lastVoteTime;
 
-                // Call the function again for the next long poll
-                fetchAndGenerateGraphs();
+                // Call the function again after a longer delay
+                setTimeout(fetchAndGenerateGraphs, 30000); // Fetch every 30 seconds
             },
             error: function (xhr, status, error) {
                 console.error("Error fetching data: ", status, error);
                 
                 // Retry after a delay
-                setTimeout(fetchAndGenerateGraphs, 5000); // Retry after 5 seconds
+                setTimeout(fetchAndGenerateGraphs, 30000); // Retry after 30 seconds
             }
         });
     }
