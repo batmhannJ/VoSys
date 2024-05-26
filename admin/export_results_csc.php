@@ -70,7 +70,7 @@ $pdfContent = "
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
+  margin-top: 10px;
   opacity: 0.8; /* Adjust the opacity value to make the table more transparent */
 }
 
