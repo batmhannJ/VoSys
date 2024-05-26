@@ -79,100 +79,102 @@
           </div>
           <div class="box">
             <div class="box-body">
-              <table id="example1" class="table table-bordered">
-                <thead>
-                  <?php if(isset($_GET['type']) && $_GET['type'] === 'voters'): ?>
-                  <th>Last Name</th>
-                  <th>First Name</th>
-                  <th>Photo</th>
-                  <th>Voters ID</th>
-                  <th>Email</th>
-                  <th>Year Level</th>
-                  <th>Organization</th>
-                  <?php elseif(isset($_GET['type']) && $_GET['type'] === 'election'): ?>
-                  <th>ID</th>
-                  <th>Title</th>
-                  <th>Voters</th>
-                  <?php elseif(isset($_GET['type']) && $_GET['type'] === 'candidates'): ?>
-                  <th class="hidden"></th>
-                  <th>Position</th>
-                  <th>Photo</th>
-                  <th>Firstname</th>
-                  <th>Lastname</th>
-                  <th>Platform</th>
-                  <?php endif; ?>
-                  <th>Tools</th>
-                </thead>
-                <tbody>
-                  <?php
-                    if(isset($_GET['type']) && $_GET['type'] === 'voters') {
-                        $sql = "SELECT * FROM voters WHERE archived = TRUE";
-                    } elseif(isset($_GET['type']) && $_GET['type'] === 'election') {
-                        $sql = "SELECT * FROM election WHERE archived = TRUE";
-                    } elseif(isset($_GET['type']) && $_GET['type'] === 'candidates') {
-                        $sql = "SELECT candidates.*, categories.name AS position 
-                                FROM candidates 
-                                LEFT JOIN categories ON categories.id = candidates.category_id 
-                                WHERE candidates.archived = TRUE";
-                    }
+              <div class="table-responsive">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                    <?php if(isset($_GET['type']) && $_GET['type'] === 'voters'): ?>
+                    <th>Last Name</th>
+                    <th>First Name</th>
+                    <th>Photo</th>
+                    <th>Voters ID</th>
+                    <th>Email</th>
+                    <th>Year Level</th>
+                    <th>Organization</th>
+                    <?php elseif(isset($_GET['type']) && $_GET['type'] === 'election'): ?>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Voters</th>
+                    <?php elseif(isset($_GET['type']) && $_GET['type'] === 'candidates'): ?>
+                    <th class="hidden"></th>
+                    <th>Position</th>
+                    <th>Photo</th>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Platform</th>
+                    <?php endif; ?>
+                    <th>Tools</th>
+                  </thead>
+                  <tbody>
+                    <?php
+                      if(isset($_GET['type']) && $_GET['type'] === 'voters') {
+                          $sql = "SELECT * FROM voters WHERE archived = TRUE";
+                      } elseif(isset($_GET['type']) && $_GET['type'] === 'election') {
+                          $sql = "SELECT * FROM election WHERE archived = TRUE";
+                      } elseif(isset($_GET['type']) && $_GET['type'] === 'candidates') {
+                          $sql = "SELECT candidates.*, categories.name AS position 
+                                  FROM candidates 
+                                  LEFT JOIN categories ON categories.id = candidates.category_id 
+                                  WHERE candidates.archived = TRUE";
+                      }
 
-                    $query = $conn->query($sql);
-                    while($row = $query->fetch_assoc()){
-                        if(isset($_GET['type']) && $_GET['type'] === 'voters') {
-                            $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
-                            echo "
-                                <tr>
-                                    <td>".$row['lastname']."</td>
-                                    <td>".$row['firstname']."</td>
-                                    <td>
-                                        <img src='".$image."' width='30px' height='30px'>
-                                        <a href='#edit_photo' data-toggle='modal' class='pull-right photo' data-id='".$row['id']."'><span class='fa fa-edit'></span></a>
-                                    </td>
-                                    <td>".$row['voters_id']."</td>
-                                    <td>".$row['email']."</td>
-                                    <td>".$row['yearLvl']."</td>
-                                    <td>".$row['organization']."</td>
-                                    <td>
-                                        <button class='btn btn-success btn-sm restore btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#confirmationModal'><i class='fa fa-reply'></i> Restore</button>
-                                        <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."' data-user='voters'><i class='fa fa-trash'></i> Delete</button>
-                                    </td>
-                                </tr>
-                            ";
-                        } elseif(isset($_GET['type']) && $_GET['type'] === 'election') {
-                            echo "
-                                <tr>
-                                    <td>".$row['id']."</td>
-                                    <td>".$row['title']."</td>
-                                    <td>".$row['voters']."</td>
-                                    <td>
-                                        <button class='btn btn-success btn-sm restore-election btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#electionConfirmationModal'><i class='fa fa-reply'></i> Restore</button>
-                                        <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."' data-user='election'><i class='fa fa-trash'></i> Delete</button>
-                                    </td>
-                                </tr>
-                            ";
-                        } elseif(isset($_GET['type']) && $_GET['type'] === 'candidates') {
-                            $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
-                            echo "
-                                <tr>
-                                    <td class='hidden'></td>
-                                    <td>".$row['position']."</td>
-                                    <td>
-                                        <img src='".$image."' width='30px' height='30px'>
-                                    </td>
-                                    <td>".$row['firstname']."</td>
-                                    <td>".$row['lastname']."</td>
-                                    <td>".$row['platform']."</td>
-                                    <td>
-                                        <button class='btn btn-success btn-sm restore-candidate btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#candidateConfirmationModal'><i class='fa fa-reply'></i> Restore</button>
-                                        <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."' data-user='candidates'><i class='fa fa-trash'></i> Delete</button>
-                                    </td>
-                                </tr>
-                            ";
-                        }
-                    }
-                  ?>
-                </tbody>
-              </table>
+                      $query = $conn->query($sql);
+                      while($row = $query->fetch_assoc()){
+                          if(isset($_GET['type']) && $_GET['type'] === 'voters') {
+                              $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
+                              echo "
+                                  <tr>
+                                      <td>".$row['lastname']."</td>
+                                      <td>".$row['firstname']."</td>
+                                      <td>
+                                          <img src='".$image."' width='30px' height='30px'>
+                                          <a href='#edit_photo' data-toggle='modal' class='pull-right photo' data-id='".$row['id']."'><span class='fa fa-edit'></span></a>
+                                      </td>
+                                      <td>".$row['voters_id']."</td>
+                                      <td>".$row['email']."</td>
+                                      <td>".$row['yearLvl']."</td>
+                                      <td>".$row['organization']."</td>
+                                      <td>
+                                          <button class='btn btn-success btn-sm restore btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#confirmationModal'><i class='fa fa-reply'></i> Restore</button>
+                                          <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."' data-user='voters'><i class='fa fa-trash'></i> Delete</button>
+                                      </td>
+                                  </tr>
+                              ";
+                          } elseif(isset($_GET['type']) && $_GET['type'] === 'election') {
+                              echo "
+                                  <tr>
+                                      <td>".$row['id']."</td>
+                                      <td>".$row['title']."</td>
+                                      <td>".$row['voters']."</td>
+                                      <td>
+                                          <button class='btn btn-success btn-sm restore-election btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#electionConfirmationModal'><i class='fa fa-reply'></i> Restore</button>
+                                          <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."' data-user='election'><i class='fa fa-trash'></i> Delete</button>
+                                      </td>
+                                  </tr>
+                              ";
+                          } elseif(isset($_GET['type']) && $_GET['type'] === 'candidates') {
+                              $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
+                              echo "
+                                  <tr>
+                                      <td class='hidden'></td>
+                                      <td>".$row['position']."</td>
+                                      <td>
+                                          <img src='".$image."' width='30px' height='30px'>
+                                      </td>
+                                      <td>".$row['firstname']."</td>
+                                      <td>".$row['lastname']."</td>
+                                      <td>".$row['platform']."</td>
+                                      <td>
+                                          <button class='btn btn-success btn-sm restore-candidate btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#candidateConfirmationModal'><i class='fa fa-reply'></i> Restore</button>
+                                          <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."' data-user='candidates'><i class='fa fa-trash'></i> Delete</button>
+                                      </td>
+                                  </tr>
+                              ";
+                          }
+                      }
+                    ?>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
@@ -181,10 +183,17 @@
   </div>
     
   <?php include 'includes/footer.php'; ?>
-  <?php include 'includes/voters_modal.php'; ?>
+  <?php include 'includes/voters_modal_csc.php'; ?>
   <?php include 'includes/restore_modal.php'; ?>
 
 <?php include 'includes/scripts.php'; ?>
+
+<script>
+  function loadTable(type) {
+    var url = 'archive_csc.php?type=' + type;
+    window.location.href = url;
+}
+  </script>
 <?php include 'archive_script.php'; ?>
 </body>
 </html>

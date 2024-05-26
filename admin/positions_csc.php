@@ -49,36 +49,38 @@
               <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
             </div>
             <div class="box-body">
-              <table id="example1" class="table table-bordered">
-                <thead>
-                  <th class="hidden"></th>
-                  <th>No.</th>
-                  <th>Description</th>
-                  <th>Maximum Vote</th>
-                  <th>Tools</th>
-                </thead>
-                <tbody>
-                  <?php
-                    $sql = "SELECT * FROM categories WHERE election_id = 20 ORDER BY priority ASC";
-                    $query = $conn->query($sql);
-                    $i = 1;
-                    while($row = $query->fetch_assoc()){
-                      echo "
-                        <tr>
-                          <td class='hidden'></td>
-                          <td>".$i++."</td>
-                          <td>".$row['name']."</td>
-                          <td>".$row['max_vote']."</td>
-                          <td>
-                            <button class='btn btn-primary btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
-                            <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."'><i class='fa fa-trash'></i> Delete</button>
-                          </td>
-                        </tr>
-                      ";
-                    }
-                  ?>
-                </tbody>
-              </table>
+              <div class="table-responsive">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                    <th class="hidden"></th>
+                    <th>No.</th>
+                    <th>Description</th>
+                    <th>Maximum Vote</th>
+                    <th>Tools</th>
+                  </thead>
+                  <tbody>
+                    <?php
+                      $sql = "SELECT * FROM categories WHERE election_id = 20 ORDER BY priority ASC";
+                      $query = $conn->query($sql);
+                      $i = 1;
+                      while($row = $query->fetch_assoc()){
+                        echo "
+                          <tr>
+                            <td class='hidden'></td>
+                            <td>".$i++."</td>
+                            <td>".$row['name']."</td>
+                            <td>".$row['max_vote']."</td>
+                            <td>
+                              <button class='btn btn-primary btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
+                              <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."'><i class='fa fa-trash'></i> Delete</button>
+                            </td>
+                          </tr>
+                        ";
+                      }
+                    ?>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>

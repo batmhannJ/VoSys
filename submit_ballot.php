@@ -71,6 +71,8 @@
 				unset($_SESSION['post']);
 				$_SESSION['success'] = 'Ballot Submitted';
 
+				
+
 				// Sending email to the voter
 				$to = $voter['email']; // Voter's email address
 				$subject = 'Your Voting Confirmation';

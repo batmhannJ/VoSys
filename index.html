@@ -35,7 +35,7 @@
     <li><a href="#organizations">Organizations</a></li>
     <li><a href="#location">Location</a></li>
     <li><a href="#discover">Countdown</a></li>
-    <li><a href="candidates.html">Candidates</a></li>
+    <li><a href="#candidate">Candidates</a></li>
     <li><a href="voters_login.php"><button class="btn">Login</button></a></li>
   </ul>
 </nav>
@@ -91,10 +91,11 @@
             </div>
         </div>
     </div>
-</section><br>
+</section><br><br>
+<br>
 
-<section class="section__containerrr instagram__container">
-  <h2 class="section__header">SIKLAB</h2>
+<section class="section__containerrr instagram__container" id="candidate">
+  <h2 class="section__header"><br>SIKLAB PARTYLIST</h2>
   <div class="instagram__flex">
     <img src="images/can/13.png" alt="instagram" />
     <img src="images/can/17.png" alt="instagram" />
@@ -110,7 +111,7 @@
 </section>
 
 <section class="section__containerrr instagram__container1">
-  <h2 class="section__header">HOPE</h2>
+  <h2 class="section__header">HOPE PARTYLIST</h2>
 <div class="instagram__flex1">
   <img src="images/can2/8.png" alt="instagram" />
   <img src="images/can2/1.png" alt="instagram" />
@@ -1373,8 +1374,8 @@ hr {
 }
 
 /* Header styling */
-.section__header {
-  font-size: 2em; /* Larger font size */
+.section__headerrr {
+  font-size: 1em; /* Larger font size */
   font-weight: bold;
   margin-bottom: 20px;
   text-transform: uppercase; /* Uppercase letters */
@@ -1390,47 +1391,55 @@ hr {
   overflow: hidden;
 }
 
-.instagram__flex {
+/* Base styles for .instagram__flex */
+.instagram__flex, .instagram__flex1 {
   margin-top: 2rem;
   width: max-content;
   display: flex;
   align-items: center;
   gap: 1rem;
-
-  animation: scroll 30s linear infinite;
+  animation: scroll-large 20s linear infinite;
 }
 
-.instagram__flex img {
+.instagram__flex img, .instagram__flex1 img {
   width: 200px;
   height: 200px;
 }
 
-@keyframes scroll {
+/* Keyframes for larger screens */
+@keyframes scroll-large {
   to {
-    transform: translateX(calc(-50% - 0.5rem));
+    transform: translateX(calc(-50% - 1rem));
   }
 }
 
-.instagram__flex1 {
-  margin-top: .5rem;
-  width: max-content;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-
-  animation: scroll 30s linear infinite;
-}
-
-.instagram__flex1 img {
-  width: 200px;
-  height: 200px;
-}
-
-@keyframes scroll {
+/* Keyframes for medium screens */
+@keyframes scroll-medium {
   to {
-    transform: translateX(calc(-50% - 0.5rem));
+    transform: translateX(calc(-50% - 1rem));
   }
 }
+
+/* Keyframes for small screens */
+@keyframes scroll-small {
+  to {
+    transform: translateX(calc(-100% - 1rem));
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .instagram__flex, .instagram__flex1 {
+    animation: scroll-medium 20s linear infinite;
+  }
+}
+
+@media (max-width: 768px) {
+  .instagram__flex, .instagram__flex1 {
+    animation: scroll-small 20s linear infinite;
+  }
+}
+
 /* General styling for both blog sections */
 .blog, .blog1 {
   background-size: cover;
