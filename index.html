@@ -1405,11 +1405,45 @@ hr {
   height: 200px;
 }
 
-@keyframes scroll {
+/* Keyframes for larger screens */
+@keyframes scroll-large {
   to {
     transform: translateX(calc(-50% - 1rem));
   }
 }
+
+/* Keyframes for medium screens */
+@keyframes scroll-medium {
+  to {
+    transform: translateX(calc(-50% - 1rem));
+  }
+}
+
+/* Keyframes for small screens */
+@keyframes scroll-small {
+  to {
+    transform: translateX(calc(-100% - 1rem));
+  }
+}
+
+/* Base animation */
+.scroll-animation {
+  animation: scroll-large 10s linear infinite;
+}
+
+/* Media queries to adjust animation for responsiveness */
+@media (max-width: 1200px) {
+  .scroll-animation {
+    animation: scroll-medium 10s linear infinite;
+  }
+}
+
+@media (max-width: 768px) {
+  .scroll-animation {
+    animation: scroll-small 10s linear infinite;
+  }
+}
+
 
 .instagram__flex1 {
   margin-top: .5rem;
@@ -1426,11 +1460,45 @@ hr {
   height: 200px;
 }
 
-@keyframes scroll {
+/* Keyframes for larger screens */
+@keyframes scroll-large {
   to {
     transform: translateX(calc(-50% - 1rem));
   }
 }
+
+/* Keyframes for medium screens */
+@keyframes scroll-medium {
+  to {
+    transform: translateX(calc(-50% - 1rem));
+  }
+}
+
+/* Keyframes for small screens */
+@keyframes scroll-small {
+  to {
+    transform: translateX(calc(-100% - 1rem));
+  }
+}
+
+/* Base animation */
+.scroll-animation {
+  animation: scroll-large 10s linear infinite;
+}
+
+/* Media queries to adjust animation for responsiveness */
+@media (max-width: 1200px) {
+  .scroll-animation {
+    animation: scroll-medium 10s linear infinite;
+  }
+}
+
+@media (max-width: 768px) {
+  .scroll-animation {
+    animation: scroll-small 10s linear infinite;
+  }
+}
+
 /* General styling for both blog sections */
 .blog, .blog1 {
   background-size: cover;
