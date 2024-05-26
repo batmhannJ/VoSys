@@ -106,7 +106,7 @@ include 'includes/header_csc.php';
                     'secretary' => 'Secretary',
                     'treasurer' => 'Treasurer',
                     'auditor' => 'Auditor',
-                    'p.r.o' => 'P.R.O',
+                    'pro' => 'P.R.O',
                     'businessManager' => 'Business Manager',
                     'beedRep' => 'BEED Rep',
                     'bsedRep' => 'BSED Rep',
@@ -142,7 +142,7 @@ include 'includes/header_csc.php';
 </div>
 <?php include 'includes/scripts.php'; ?>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-<script src="path/to/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     function generateBarGraph(dataPoints, containerId, imageContainerId) {
         var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
@@ -199,7 +199,7 @@ include 'includes/header_csc.php';
                 // Generate graphs for all categories
                 var categories = [
                     'president', 'vicePresident', 'secretary', 'treasurer', 'auditor',
-                    'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
+                    'pro', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
                     'bsoadRep', 'bsCrimRep', 'bsitRep'
                 ];
 
