@@ -1,14 +1,14 @@
 <?php
 
 include 'includes/session.php';
-include 'includes/header_ymf.php';
+include 'includes/header_educ.php';
 
 ?>
 
 <body class="hold-transition skin-blue layout-top-nav">
 <div class="wrapper">
 
-	<?php include 'includes/navbar_ymf.php'; ?>
+	<?php include 'includes/navbar_educ.php'; ?>
 	 
 	  <div class="content-wrapper">
 		<div class="container">
