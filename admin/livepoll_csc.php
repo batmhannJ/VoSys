@@ -36,35 +36,36 @@ include 'includes/header_csc.php';
         }
 
         .chart-container {
-            display: flex;
-            align-items: center;
-            margin-bottom: 40px;
             position: relative;
+            margin-bottom: 40px;
         }
 
         .candidate-images {
+            position: absolute;
+            top: 0;
+            left: 0;
             display: flex;
             flex-direction: column;
-            margin-right: 20px;
-            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            padding: 10px;
         }
 
         .candidate-image {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
 
         .candidate-image img {
             width: 50px;
             height: 50px;
             border-radius: 50%;
+            margin-right: 10px;
         }
 
-        .chart {
-            width: 100%;
-            height: 300px;
+        .candidate-label {
+            margin-left: 10px;
         }
 
         @media (max-width: 768px) {
@@ -106,13 +107,12 @@ include 'includes/header_csc.php';
                         <div class="box-body">
                             <div class="chart-container">
                                 <div class="candidate-images" id="presidentImage"></div>
-                                <div id="presidentGraph" class="chart"></div>
+                                <div id="presidentGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Repeat this structure for other positions -->
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
@@ -121,14 +121,165 @@ include 'includes/header_csc.php';
                         <div class="box-body">
                             <div class="chart-container">
                                 <div class="candidate-images" id="vicePresidentImage"></div>
-                                <div id="vicePresidentGraph" class="chart"></div>
+                                <div id="vicePresidentGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Add other positions similarly -->
-                
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>Secretary</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart-container">
+                                <div class="candidate-images" id="secretaryImage"></div>
+                                <div id="secretaryGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>Treasurer</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart-container">
+                                <div class="candidate-images" id="treasurerImage"></div>
+                                <div id="treasurerGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>Auditor</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart-container">
+                                <div class="candidate-images" id="auditorImage"></div>
+                                <div id="auditorGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>Public Information Officer (P.R.O)</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart-container">
+                                <div class="candidate-images" id="proImage"></div>
+                                <div id="proGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>Business Manager</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart-container">
+                                <div class="candidate-images" id="businessManagerImage"></div>
+                                <div id="businessManagerGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>BEED Representative</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart-container">
+                                <div class="candidate-images" id="beedRepImage"></div>
+                                <div id="beedRepGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>BSED Representative</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart-container">
+                                <div class="candidate-images" id="bsedRepImage"></div>
+                                <div id="bsedRepGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>BSHM Representative</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart-container">
+                                <div class="candidate-images" id="bshmRepImage"></div>
+                                <div id="bshmRepGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>BSOAD Representative</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart-container">
+                                <div class="candidate-images" id="bsoadRepImage"></div>
+                                <div id="bsoadRepGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>BSCrim Representative</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart-container">
+                                <div class="candidate-images" id="bscrimRepImage"></div>
+                                <div id="bscrimRepGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>BSIT Representative</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart-container">
+                                <div class="candidate-images" id="bsitRepImage"></div>
+                                <div id="bsitRepGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -148,7 +299,7 @@ include 'includes/header_csc.php';
         // Update the image container
         var imageContainer = document.getElementById(imageContainerId);
         imageContainer.innerHTML = dataPoints.map(dataPoint =>
-            `<div class="candidate-image"><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"><span>${dataPoint.label}</span></div>`
+            `<div class="candidate-image"><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"><span class="candidate-label">${dataPoint.label}</span></div>`
         ).join('');
 
         var chart = new CanvasJS.Chart(containerId, {
@@ -204,7 +355,7 @@ include 'includes/header_csc.php';
         // Update the image container
         var imageContainer = document.getElementById(imageContainerId);
         imageContainer.innerHTML = newDataPoints.map(dataPoint =>
-            `<div class="candidate-image"><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"><span>${dataPoint.label}</span></div>`
+            `<div class="candidate-image"><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"><span class="candidate-label">${dataPoint.label}</span></div>`
         ).join('');
 
         chart.options.animationEnabled = true;
@@ -253,26 +404,28 @@ include 'includes/header_csc.php';
     var bscrimRepChart = generateBarGraph([], "bscrimRepGraph", "bscrimRepImage");
     var bsitRepChart = generateBarGraph([], "bsitRepGraph", "bsitRepImage");
 
-    // Initial load of the vote counts
     updateVoteCounts();
 
-    // Refresh the vote counts every 5 seconds
     setInterval(updateVoteCounts, 5000);
 
-    // Back to Top button functionality
-    var backToTopButton = document.getElementById("back-to-top");
+    // Back to top button script
+    $(document).ready(function () {
+        var btn = $('#back-to-top');
 
-    window.onscroll = function () {
-        if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-            backToTopButton.style.display = "block";
-        } else {
-            backToTopButton.style.display = "none";
-        }
-    };
+        $(window).scroll(function () {
+            if ($(window).scrollTop() > 100) {
+                btn.fadeIn();
+            } else {
+                btn.fadeOut();
+            }
+        });
 
-    backToTopButton.onclick = function () {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
+        btn.click(function () {
+            $('html, body').animate({ scrollTop: 0 }, '100');
+            return false;
+        });
+    });
 </script>
+
 </body>
 </html>
