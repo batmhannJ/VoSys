@@ -113,12 +113,14 @@ tr:nth-child(odd) {
 .highlight {
   background-color: #ffe6e6; /* Light red background for highest count of votes */
 }
-.header{
+.header {
   display: flex;
+  align-items: center; /* Center vertically */
 }
-.header img{
-  height: 100px;
-  width: 100px;
+.header img {
+  height: 100px; /* Set height */
+  width: 100px; /* Set width */
+  margin-right: 20px; /* Adjust margin as needed */
 }
 </style>
 <div class='header'>
