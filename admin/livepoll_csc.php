@@ -107,7 +107,7 @@ include 'includes/header_csc.php';
                         <div class="box-body">
                             <div class="chart-container">
                                 <div class="candidate-images" id="presidentImage"></div>
-                                <div id="presidentGraph" style="height: 300px; width: calc(100% - 100px); margin-left: 100px;"></div>
+                                <div id="presidentGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
                     </div>
@@ -121,7 +121,7 @@ include 'includes/header_csc.php';
                         <div class="box-body">
                             <div class="chart-container">
                                 <div class="candidate-images" id="vicePresidentImage"></div>
-                                <div id="vicePresidentGraph" style="height: 300px; width: calc(100% - 100px); margin-left: 100px;"></div>
+                                <div id="vicePresidentGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
                     </div>
@@ -135,7 +135,7 @@ include 'includes/header_csc.php';
                         <div class="box-body">
                             <div class="chart-container">
                                 <div class="candidate-images" id="secretaryImage"></div>
-                                <div id="secretaryGraph" style="height: 300px; width: calc(100% - 100px); margin-left: 100px;"></div>
+                                <div id="secretaryGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
                     </div>
@@ -149,7 +149,7 @@ include 'includes/header_csc.php';
                         <div class="box-body">
                             <div class="chart-container">
                                 <div class="candidate-images" id="treasurerImage"></div>
-                                <div id="treasurerGraph" style="height: 300px; width: calc(100% - 100px); margin-left: 100px;"></div>
+                                <div id="treasurerGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
                     </div>
@@ -163,7 +163,7 @@ include 'includes/header_csc.php';
                         <div class="box-body">
                             <div class="chart-container">
                                 <div class="candidate-images" id="auditorImage"></div>
-                                <div id="auditorGraph" style="height: 300px; width: calc(100% - 100px); margin-left: 100px;"></div>
+                                <div id="auditorGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
                     </div>
@@ -177,7 +177,7 @@ include 'includes/header_csc.php';
                         <div class="box-body">
                             <div class="chart-container">
                                 <div class="candidate-images" id="proImage"></div>
-                                <div id="proGraph" style="height: 300px; width: calc(100% - 100px); margin-left: 100px;"></div>
+                                <div id="proGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
                     </div>
@@ -191,7 +191,7 @@ include 'includes/header_csc.php';
                         <div class="box-body">
                             <div class="chart-container">
                                 <div class="candidate-images" id="businessManagerImage"></div>
-                                <div id="businessManagerGraph" style="height: 300px; width: calc(100% - 100px); margin-left: 100px;"></div>
+                                <div id="businessManagerGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
                     </div>
@@ -205,7 +205,7 @@ include 'includes/header_csc.php';
                         <div class="box-body">
                             <div class="chart-container">
                                 <div class="candidate-images" id="beedRepImage"></div>
-                                <div id="beedRepGraph" style="height: 300px; width: calc(100% - 100px); margin-left: 100px;"></div>
+                                <div id="beedRepGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
                     </div>
@@ -219,7 +219,7 @@ include 'includes/header_csc.php';
                         <div class="box-body">
                             <div class="chart-container">
                                 <div class="candidate-images" id="bsedRepImage"></div>
-                                <div id="bsedRepGraph" style="height: 300px; width: calc(100% - 100px); margin-left: 100px;"></div>
+                                <div id="bsedRepGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
                     </div>
@@ -233,7 +233,7 @@ include 'includes/header_csc.php';
                         <div class="box-body">
                             <div class="chart-container">
                                 <div class="candidate-images" id="bshmRepImage"></div>
-                                <div id="bshmRepGraph" style="height: 300px; width: calc(100% - 100px); margin-left: 100px;"></div>
+                                <div id="bshmRepGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
                     </div>
@@ -247,7 +247,21 @@ include 'includes/header_csc.php';
                         <div class="box-body">
                             <div class="chart-container">
                                 <div class="candidate-images" id="bsoadRepImage"></div>
-                                <div id="bsoadRepGraph" style="height: 300px; width: calc(100% - 100px); margin-left: 100px;"></div>
+                                <div id="bsoadRepGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>BSCRIM Representative</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart-container">
+                                <div class="candidate-images" id="bscrimRepImage"></div>
+                                <div id="bscrimRepGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
                     </div>
@@ -261,21 +275,7 @@ include 'includes/header_csc.php';
                         <div class="box-body">
                             <div class="chart-container">
                                 <div class="candidate-images" id="bsitRepImage"></div>
-                                <div id="bsitRepGraph" style="height: 300px; width: calc(100% - 100px); margin-left: 100px;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>BSTM Representative</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div class="chart-container">
-                                <div class="candidate-images" id="bstmRepImage"></div>
-                                <div id="bstmRepGraph" style="height: 300px; width: calc(100% - 100px); margin-left: 100px;"></div>
+                                <div id="bsitRepGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
                     </div>
@@ -283,81 +283,150 @@ include 'includes/header_csc.php';
             </div>
         </section>
 
-        <?php include 'includes/footer.php'; ?>
+        <button id="back-to-top" title="Back to top">&uarr;</button>
     </div>
+    <?php include 'includes/footer.php'; ?>
 </div>
-
-<!-- Back to Top button -->
-<button id="back-to-top" title="Back to Top">&uarr;</button>
-
-<?php include 'config_modal.php'; ?>
-
-<!-- Scripts -->
 <?php include 'includes/scripts.php'; ?>
-<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="path/to/jquery.min.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        document.querySelectorAll('.chart-container').forEach(container => {
-            const graphDiv = container.querySelector('div[id$="Graph"]');
-            const imageDiv = container.querySelector('div[id$="Image"]');
-            const position = graphDiv.id.replace('Graph', '');
+    function generateBarGraph(dataPoints, containerId, imageContainerId) {
+        var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
-            fetch(`election_results_${position.toLowerCase()}.php`)
-                .then(response => response.json())
-                .then(data => {
-                    const candidateImages = data.map(candidate => `
-                        <div class="candidate-image">
-                            <img src="${candidate.image}" alt="${candidate.name}">
-                            <span class="candidate-label">${candidate.name}</span>
-                        </div>
-                    `).join('');
+        // Update the image container
+        var imageContainer = document.getElementById(imageContainerId);
+        imageContainer.innerHTML = dataPoints.map(dataPoint =>
+            `<div class="candidate-image">
+                <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">
+                <span class="candidate-label">${dataPoint.label}</span>
+            </div>`
+        ).join('');
 
-                    imageDiv.innerHTML = candidateImages;
-
-                    Highcharts.chart(graphDiv.id, {
-                        chart: { type: 'bar' },
-                        title: { text: '' },
-                        xAxis: {
-                            categories: data.map(candidate => candidate.name),
-                            title: { text: null },
-                            labels: { enabled: false }
-                        },
-                        yAxis: {
-                            min: 0,
-                            title: {
-                                text: 'Votes',
-                                align: 'high'
-                            },
-                            labels: { overflow: 'justify' }
-                        },
-                        tooltip: { valueSuffix: ' votes' },
-                        plotOptions: {
-                            bar: { dataLabels: { enabled: true } }
-                        },
-                        legend: { enabled: false },
-                        credits: { enabled: false },
-                        series: [{
-                            name: 'Votes',
-                            data: data.map(candidate => candidate.votes)
-                        }]
-                    });
-                });
+        var chart = new CanvasJS.Chart(containerId, {
+            animationEnabled: true,
+            animationDuration: 3000,
+            animationEasing: "easeInOutBounce",
+            title: {
+                text: "Vote Counts"
+            },
+            axisX: {
+                title: "",
+                includeZero: true,
+                interval: 1,
+                labelFormatter: function () {
+                    return " ";
+                }
+            },
+            axisY: {
+                title: "",
+                interval: Math.ceil(totalVotes / 10)
+            },
+            data: [{
+                type: "bar",
+                indexLabel: "{label} - {percent}%",
+                indexLabelPlacement: "inside",
+                indexLabelFontColor: "white",
+                indexLabelFontSize: 14,
+                dataPoints: dataPoints.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                }))
+            }]
         });
 
-        // Back to Top button
-        const backToTopButton = document.getElementById("back-to-top");
+        chart.render();
 
-        window.onscroll = function () {
-            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-                backToTopButton.style.display = "block";
-            } else {
-                backToTopButton.style.display = "none";
+        // Adjust the chart size when the window is resized
+        window.addEventListener('resize', function () {
+            chart.options.width = document.getElementById(containerId).offsetWidth;
+            chart.render();
+        });
+
+        return chart;
+    }
+
+    function updateChartData(chart, newDataPoints, imageContainerId) {
+        var totalVotes = newDataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+        chart.options.data[0].dataPoints = newDataPoints.map(dataPoint => ({
+            ...dataPoint,
+            percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+        }));
+
+        // Update the image container
+        var imageContainer = document.getElementById(imageContainerId);
+        imageContainer.innerHTML = newDataPoints.map(dataPoint =>
+            `<div class="candidate-image">
+                <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">
+                <span class="candidate-label">${dataPoint.label}</span>
+            </div>`
+        ).join('');
+
+        chart.options.animationEnabled = true;
+        chart.options.animationDuration = 2000;
+        chart.options.animationEasing = "easeInOutBounce";
+        chart.render();
+    }
+
+    function updateVoteCounts() {
+        $.ajax({
+            url: 'update_data_csc.php',
+            method: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                updateChartData(presidentChart, response.president, 'presidentImage');
+                updateChartData(vicePresidentChart, response.vicePresident, 'vicePresidentImage');
+                updateChartData(secretaryChart, response.secretary, 'secretaryImage');
+                updateChartData(treasurerChart, response.treasurer, 'treasurerImage');
+                updateChartData(auditorChart, response.auditor, 'auditorImage');
+                updateChartData(proChart, response.publicInformationOfficer, 'proImage');
+                updateChartData(businessManagerChart, response.businessManager, 'businessManagerImage');
+                updateChartData(beedRepChart, response.beedRepresentative, 'beedRepImage');
+                updateChartData(bsedRepChart, response.bsedRepresentative, 'bsedRepImage');
+                updateChartData(bshmRepChart, response.bshmRepresentative, 'bshmRepImage');
+                updateChartData(bsoadRepChart, response.bsoadRepresentative, 'bsoadRepImage');
+                updateChartData(bscrimRepChart, response.bsCrimRepresentative, 'bscrimRepImage');
+                updateChartData(bsitRepChart, response.bsitRepresentative, 'bsitRepImage');
+            },
+            error: function (error) {
+                console.error("Error fetching data", error);
             }
-        };
+        });
+    }
 
-        backToTopButton.onclick = function () {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        };
+    var presidentChart = generateBarGraph([], "presidentGraph", "presidentImage");
+    var vicePresidentChart = generateBarGraph([], "vicePresidentGraph", "vicePresidentImage");
+    var secretaryChart = generateBarGraph([], "secretaryGraph", "secretaryImage");
+    var treasurerChart = generateBarGraph([], "treasurerGraph", "treasurerImage");
+    var auditorChart = generateBarGraph([], "auditorGraph", "auditorImage");
+    var proChart = generateBarGraph([], "proGraph", "proImage");
+    var businessManagerChart = generateBarGraph([], "businessManagerGraph", "businessManagerImage");
+    var beedRepChart = generateBarGraph([], "beedRepGraph", "beedRepImage");
+    var bsedRepChart = generateBarGraph([], "bsedRepGraph", "bsedRepImage");
+    var bshmRepChart = generateBarGraph([], "bshmRepGraph", "bshmRepImage");
+    var bsoadRepChart = generateBarGraph([], "bsoadRepGraph", "bsoadRepImage");
+    var bscrimRepChart = generateBarGraph([], "bscrimRepGraph", "bscrimRepImage");
+    var bsitRepChart = generateBarGraph([], "bsitRepGraph", "bsitRepImage");
+
+    updateVoteCounts();
+
+    setInterval(updateVoteCounts, 5000);
+
+    $(document).ready(function () {
+        var btn = $('#back-to-top');
+
+        $(window).scroll(function () {
+            if ($(window).scrollTop() > 100) {
+                btn.fadeIn();
+            } else {
+                btn.fadeOut();
+            }
+        });
+
+        btn.click(function () {
+            $('html, body').animate({ scrollTop: 0 }, '100');
+            return false;
+        });
     });
 </script>
 </body>
