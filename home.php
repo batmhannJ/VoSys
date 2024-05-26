@@ -156,11 +156,11 @@ if (isset($voter['id'])) {
 }
 
 // Debug: Output the user's organization to verify
-if (isset($_SESSION['organization'])) {
+/*if (isset($_SESSION['organization'])) {
     echo "User's Organization: " . $_SESSION['organization'];
 } else {
     echo "User's organization not set.";
-}
+}*/
 
 include 'includes/slugify.php';
 
