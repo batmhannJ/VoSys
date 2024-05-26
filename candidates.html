@@ -1139,14 +1139,14 @@ hr {
   text-align: center;
 }
 
-
 .blog {
   background-image: url("images/pla/1.png");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  height: 800px; /* Reduced height */
-  width: 100%; /* Adjusted width to fill the container */
+  height: 150px; /* Further reduced height */
+  width: calc(100% - 40px); /* Adjust width to leave margin on both sides */
+  margin: 0 20px; /* Margin on both sides */
 }
 
 .blog1 {
@@ -1154,13 +1154,13 @@ hr {
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  height: 800px; /* Reduced height */
-  width: 100%; /* Adjusted width to fill the container */
+  height: 150px; /* Further reduced height */
+  width: calc(100% - 40px); /* Adjust width to leave margin on both sides */
+  margin: 0 20px; /* Margin on both sides */
 }
 
-/* Optional: Adding some margin and padding for better spacing */
+/* Optional: Adding some padding for better spacing */
 .blog, .blog1 {
-  margin-bottom: 20px; /* Adjust as needed */
   padding: 10px; /* Adjust as needed */
   box-sizing: border-box; /* Ensures padding and border are included in the width and height */
 }
@@ -1174,6 +1174,7 @@ hr {
 .blog:hover, .blog1:hover {
   transform: scale(1.02);
 }
+
 
   </style>
 </html>
