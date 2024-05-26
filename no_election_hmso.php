@@ -16,7 +16,7 @@ include 'includes/header_hmso.php';
 		  <!-- Main content -->
 		  <section class="content">
 			  <h1 class="page-header text-center title">
-				  <img src="images/jpcs.jpg" alt="CSC Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
+				  <img src="images/h.png" alt="CSC Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
 				  <b>HMSO - Hospitality Management Students' Organization Election</b></h1>
 			<div class="row">
 				<div class="col-sm-10 col-sm-offset-1">
