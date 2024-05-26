@@ -548,7 +548,7 @@ main.sign-up-mode .carousel {
                   />
                     <span class="form-control-feedback"></span>
                   <label style="font-size:15px;"></label>
-                  <i class="fa fa-fw fa-eye togglePassword" id="togglePassword"></i>
+                  <i class="fa fa-fw fa-eye togglePassword" id="togglePassword1"></i>
                   <span class="form-control-feedback"></span>
                 </div>
 
@@ -715,7 +715,8 @@ xhr.send('email=' + encodeURIComponent(email) + '&new_password=' + encodeURIComp
                     this.classList.add('fa-eye');
                 }
             });
-            togglePassword.addEventListener('click', function () {
+            var togglePassword1 = document.getElementById('togglePassword1');
+            togglePassword1.addEventListener('click', function () {
                 var input = document.getElementById('confirm_password');
                 if (input.getAttribute('type') === 'password') {
                     input.setAttribute('type', 'text');
