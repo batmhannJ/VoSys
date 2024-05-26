@@ -192,15 +192,15 @@ include 'includes/header_csc.php';
 
     function fetchAndGenerateGraphs() {
         $.ajax({
-            url: 'update_data_csc.php',
+            url: 'path/to/your_php_script.php',
             method: 'GET',
             dataType: 'json',
             success: function (response) {
                 // Generate graphs for all categories
                 var categories = [
                     'president', 'vice president', 'secretary', 'treasurer', 'auditor',
-    'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
-    'bsoadRep', 'bs crimRep', 'bsitRep'
+                    'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
+                    'bsoadRep', 'bs crimRep', 'bsitRep'
                 ];
 
                 categories.forEach(function (category) {
