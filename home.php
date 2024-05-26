@@ -153,6 +153,7 @@ if(!is_active_election($conn)){
             $max_votes_row = $max_votes_result->fetch_assoc();
             $max_votes = $max_votes_row['max_votes'];
 
+            
             // Generate bar graph
             while($row = $result->fetch_assoc()) {
                 $vote_percentage = ($row['vote_count'] / $max_votes) * 100;
