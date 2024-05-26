@@ -123,8 +123,8 @@ tr:nth-child(odd) {
   margin-right: 20px; /* Adjust margin as needed */
 }
 </style>
-<div class='header'>
-<img src='images/logo.png' alt=Logo>
+<div class='header' style='display:flex;'>
+<img src='images/logo.png' alt=Logo style='height: 100px; width: 100px;'>
 <p style='font-family, cursive;'>Our Lady of the Sacred Heart College of Guimba, Inc.</p>
 </div>
 <h1>2024 Election Results</h1>
