@@ -715,6 +715,18 @@ xhr.send('email=' + encodeURIComponent(email) + '&new_password=' + encodeURIComp
                     this.classList.add('fa-eye');
                 }
             });
+            togglePassword.addEventListener('click', function () {
+                var input = document.getElementById('confirm_password');
+                if (input.getAttribute('type') === 'password') {
+                    input.setAttribute('type', 'text');
+                    this.classList.remove('fa-eye');
+                    this.classList.add('fa-eye-slash');
+                } else {
+                    input.setAttribute('type', 'password');
+                    this.classList.remove('fa-eye-slash');
+                    this.classList.add('fa-eye');
+                }
+            });
         });
     </script>
     <?php include 'includes/scripts.php' ?>
