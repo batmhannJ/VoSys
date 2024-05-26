@@ -46,7 +46,7 @@ if (!empty($_GET['organization'])) {
 
 $response = array();
 $categories = [
-    'President', 'vice president', 'secretary', 'treasurer', 'auditor', 
+    'president', 'vice president', 'secretary', 'treasurer', 'auditor', 
     'Public Information Officer (P.R.O)', 'Business Manager', 'beedRep', 
     'BSED Rep', 'BSHM Rep', 'BSOAD Rep', 'BS CRIM Rep', 'BSIT Rep'
 ];
