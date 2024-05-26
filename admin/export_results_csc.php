@@ -103,6 +103,7 @@ tr:nth-child(odd) {
 .header-container img {
   height: 100px;
   width: 100px;
+  float: left;
 }
 .header-container .school-name {
   font-size: 22px;
