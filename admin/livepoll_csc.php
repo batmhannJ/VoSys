@@ -177,7 +177,7 @@ include 'includes/header_csc.php';
                         <div class="box-body">
                             <div class="chart-container">
                                 <div class="candidate-images" id="proImage"></div>
-                                <div id="proGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
+                                <div id="p.r.oGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
                     </div>
@@ -399,7 +399,7 @@ include 'includes/header_csc.php';
     var secretaryChart = generateBarGraph([], "secretaryGraph", "secretaryImage");
     var treasurerChart = generateBarGraph([], "treasurerGraph", "treasurerImage");
     var auditorChart = generateBarGraph([], "auditorGraph", "auditorImage");
-    var proChart = generateBarGraph([], "proGraph", "proImage");
+    var proChart = generateBarGraph([], "p.r.oGraph", "proImage");
     var businessManagerChart = generateBarGraph([], "businessManagerGraph", "businessManagerImage");
     var beedRepChart = generateBarGraph([], "beedRepGraph", "beedRepImage");
     var bsedRepChart = generateBarGraph([], "bsedRepGraph", "bsedRepImage");
