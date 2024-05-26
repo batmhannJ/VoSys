@@ -107,17 +107,12 @@ tr:nth-child(odd) {
 .header-container .school-name {
   font-size: 22px;
   font-weight: bold;
-  margin: 0;
 }
 .header-container .report-title {
   font-size: 20px;
-  margin-top: -5px;
-  position: relative;
-  top: -10px;
 }
 </style>
 <div class='header-container'>
-  <img src='images/logo.png' alt='Logo' style='height: 70px; width: 70px; float: left;'>
   <p class='school-name' style='font-size: 18px; font-weight: bold; margin-left: -10px;'>Our Lady of the Sacred Heart College of Guimba, Inc.</p>
   <p class='report-title' style='font-size: 16px; margin: 0; top: -50px; left: 50%; transform: translateX(-50%);'>2024 Election Results</p>
 </div>
