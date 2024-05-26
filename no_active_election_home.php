@@ -11,27 +11,123 @@ include 'includes/header_code.php';
 	<?php include 'includes/navbar_code.php'; ?>
 	 
 	  <div class="content-wrapper">
-	    <div class="container">
+		<div class="container">
 
-	      <!-- Main content -->
-	      <section class="content">
-	      	<h1 class="page-header text-center title">
-	      		<img src="images/csc.jpg" alt="CSC Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
-	      		<b>CSC - COLLEGE STUDENT COUNCIL ELECTIONS</b></h1>
-	        <div class="row">
-	        	<div class="col-sm-10 col-sm-offset-1">
-	        		
-	        	</div><!--end of col-sm-->
-	        </div>
-	      </section>
-	     
-	    </div>
+		  <!-- Main content -->
+		  <section class="content">
+			  <h1 class="page-header text-center title">
+				  <img src="images/c.png" alt="CSC Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
+				  <b>College of Student Council Election</b></h1>
+			<div class="row">
+				<div class="col-sm-10 col-sm-offset-1">
+					<?php
+// Assuming you have already established a database connection
+
+// Perform a query to fetch the most recent announcement
+$query = "SELECT * FROM announcement ORDER BY id_announcement DESC LIMIT 1";
+$result = $conn->query($query);
+
+// Check if the query was successful and if there is at least one row
+if ($result && $result->num_rows > 0) {
+	// Fetch the row as an associative array
+	$row = $result->fetch_assoc();
+	
+	// Now you can access the elements of $row safely
+?>
+<div class="announcement-container">
+<div class="announcement">
+	<div class="announcement-header">
+		<b><h3>New Announcement</h3></b>
+		<p class="announcement-date"><?php echo date("F j, Y"); ?></p>
+	</div>
+	<div class="announcement-body">
+		<hr>
+		<p class="announcement-text"><?php echo $row["announcement"]; ?></p>
+		<p class="announcement-author">Posted by: <?php echo $row["addedby"]; ?></p>
+	</div>
+</div>
+</div>
+<?php
+} else {
+	// Handle the case where there are no announcements
+	echo "<p>No announcements found.</p>";
+}
+?>
+
+				</div><!--end of col-sm-->
+			</div>
+		  </section>
+		 
+		</div>
 	  </div>
   
-  	<?php include 'includes/footer.php'; ?>
-  	<?php include 'includes/ballot_modal.php'; ?>
+	  <?php include 'includes/footer.php'; ?>
+	  <?php include 'includes/ballot_modal.php'; ?>
 </div>
+<style>		
+	hr {
+		border: none; /* Remove default border */
+		height: 3px; /* Set the height to make it thicker */
+		background-color: black; /* Set the color of the line */
+		margin: 20px 0; /* Adjust margin as needed */
+	}
+	/* Container for announcements */
+/* Container for announcements */
+.announcement-container {
+margin: 20px 0;
+}
 
+/* Individual announcement card */
+.announcement {
+background-color: #f8f9fa; /* Light gray background */
+border: 2px solid #006400; /* Matte blue border */
+border-radius: 20px; /* Increased border radius for a rounded look */
+padding: 20px;
+box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added transition for transform and box-shadow */
+}
+
+.announcement:hover {
+transform: translateY(-5px); /* Move the card up slightly on hover */
+box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15); /* Enhance shadow on hover */
+}
+
+/* Header of the announcement */
+.announcement-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 15px;
+}
+
+.announcement-header h3 {
+color: #006400; /* Matte blue color for header text */
+margin: 0;
+font-size: 24px; /* Increased font size for header */
+}
+
+/* Date of the announcement */
+.announcement-date {
+color: #777;
+font-size: 14px;
+}
+
+/* Body text of the announcement */
+.announcement-body {
+font-size: 20px;
+line-height: 1.6;
+color: #000; /* Dark gray color for body text */
+}
+
+/* Author of the announcement */
+.announcement-author {
+color: #999; /* Light gray color for author */
+font-style: italic;
+font-size: 13px;
+}
+
+
+</style>
 <?php include 'includes/scripts.php'; ?>
 <script>
 $(function(){
@@ -41,9 +137,9 @@ $(function(){
 	});
 
 	$(document).on('click', '.reset', function(e){
-	    e.preventDefault();
-	    var desc = $(this).data('desc');
-	    $('.'+desc).iCheck('uncheck');
+		e.preventDefault();
+		var desc = $(this).data('desc');
+		$('.'+desc).iCheck('uncheck');
 	});
 
 	$(document).on('click', '.platform', function(e){
