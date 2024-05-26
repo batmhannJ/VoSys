@@ -192,7 +192,7 @@ include 'includes/header_csc.php';
 
     function fetchAndGenerateGraphs() {
         $.ajax({
-            url: 'update_data_cscphp',
+            url: 'update_data_csc.php',
             method: 'GET',
             dataType: 'json',
             success: function (response) {
