@@ -42,19 +42,19 @@ include 'includes/header_csc.php';
 
         .candidate-images {
             position: absolute;
-            top: 10px;
-            left: 10px;
+            top: 0;
+            left: 0;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: calc(100% - 20px);
-            padding: 0;
+            height: 100%;
+            padding: 10px;
         }
 
         .candidate-image {
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
 
         .candidate-image img {
@@ -112,8 +112,6 @@ include 'includes/header_csc.php';
                         </div>
                     </div>
                 </div>
-                
-                <!-- Repeat for other positions... -->
 
                 <div class="col-md-12">
                     <div class="box">
@@ -174,7 +172,7 @@ include 'includes/header_csc.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><b>Public Information Officer</b></h3>
+                            <h3 class="box-title"><b>Public Information Officer (P.R.O)</b></h3>
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
@@ -258,6 +256,20 @@ include 'includes/header_csc.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
+                            <h3 class="box-title"><b>BSCRIM Representative</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart-container">
+                                <div class="candidate-images" id="bscrimRepImage"></div>
+                                <div id="bscrimRepGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
                             <h3 class="box-title"><b>BSIT Representative</b></h3>
                         </div>
                         <div class="box-body">
@@ -270,111 +282,152 @@ include 'includes/header_csc.php';
                 </div>
             </div>
         </section>
+
+        <button id="back-to-top" title="Back to top">&uarr;</button>
     </div>
     <?php include 'includes/footer.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
-
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="path/to/jquery.min.js"></script>
 <script>
-    function generateBarGraph(dataPoints, graphId, imageId) {
-        var options = {
+    function generateBarGraph(dataPoints, containerId, imageContainerId) {
+        var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+
+        // Update the image container
+        var imageContainer = document.getElementById(imageContainerId);
+        imageContainer.innerHTML = dataPoints.map(dataPoint =>
+            `<div class="candidate-image">
+                <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">
+                <span class="candidate-label">${dataPoint.label}</span>
+            </div>`
+        ).join('');
+
+        var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
-            theme: "light2",
+            animationDuration: 3000,
+            animationEasing: "easeInOutBounce",
             title: {
-                text: ""
+                text: "Vote Counts"
+            },
+            axisX: {
+                title: "",
+                includeZero: true,
+                interval: 1,
+                labelFormatter: function () {
+                    return " ";
+                }
             },
             axisY: {
-                title: "Votes",
-                includeZero: true
+                title: "",
+                interval: Math.ceil(totalVotes / 10)
             },
             data: [{
-                type: "column",
-                dataPoints: dataPoints
+                type: "bar",
+                indexLabel: "{label} - {percent}%",
+                indexLabelPlacement: "inside",
+                indexLabelFontColor: "white",
+                indexLabelFontSize: 14,
+                dataPoints: dataPoints.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                }))
             }]
-        };
-        var chart = new CanvasJS.Chart(graphId, options);
-
-        var imageContainer = document.getElementById(imageId);
-        imageContainer.innerHTML = ""; // Clear previous images
-        dataPoints.forEach(function(dataPoint) {
-            var candidateImage = document.createElement("div");
-            candidateImage.className = "candidate-image";
-            var img = document.createElement("img");
-            img.src = dataPoint.image;
-            candidateImage.appendChild(img);
-            var label = document.createElement("span");
-            label.className = "candidate-label";
-            label.textContent = dataPoint.label;
-            candidateImage.appendChild(label);
-            imageContainer.appendChild(candidateImage);
         });
 
         chart.render();
+
+        // Adjust the chart size when the window is resized
+        window.addEventListener('resize', function () {
+            chart.options.width = document.getElementById(containerId).offsetWidth;
+            chart.render();
+        });
+
         return chart;
     }
 
-    function fetchVoteCounts() {
-        return fetch('votes_csc_result.php')
-            .then(response => response.json())
-            .then(data => data);
+    function updateChartData(chart, newDataPoints, imageContainerId) {
+        var totalVotes = newDataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+        chart.options.data[0].dataPoints = newDataPoints.map(dataPoint => ({
+            ...dataPoint,
+            percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+        }));
+
+        // Update the image container
+        var imageContainer = document.getElementById(imageContainerId);
+        imageContainer.innerHTML = newDataPoints.map(dataPoint =>
+            `<div class="candidate-image">
+                <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">
+                <span class="candidate-label">${dataPoint.label}</span>
+            </div>`
+        ).join('');
+
+        chart.options.animationEnabled = true;
+        chart.options.animationDuration = 2000;
+        chart.options.animationEasing = "easeInOutBounce";
+        chart.render();
     }
 
     function updateVoteCounts() {
-        fetchVoteCounts().then(voteCounts => {
-            // President
-            var presidentData = voteCounts.president.map(item => ({ label: item.name, y: item.votes, image: item.photo }));
-            var presidentChart = generateBarGraph(presidentData, "presidentGraph", "presidentImage");
-
-            // Vice President
-            var vpData = voteCounts.vicePresident.map(item => ({ label: item.name, y: item.votes, image: item.photo }));
-            var vpChart = generateBarGraph(vpData, "vicePresidentGraph", "vicePresidentImage");
-
-            // Secretary
-            var secretaryData = voteCounts.secretary.map(item => ({ label: item.name, y: item.votes, image: item.photo }));
-            var secretaryChart = generateBarGraph(secretaryData, "secretaryGraph", "secretaryImage");
-
-            // Treasurer
-            var treasurerData = voteCounts.treasurer.map(item => ({ label: item.name, y: item.votes, image: item.photo }));
-            var treasurerChart = generateBarGraph(treasurerData, "treasurerGraph", "treasurerImage");
-
-            // Auditor
-            var auditorData = voteCounts.auditor.map(item => ({ label: item.name, y: item.votes, image: item.photo }));
-            var auditorChart = generateBarGraph(auditorData, "auditorGraph", "auditorImage");
-
-            // PRO
-            var proData = voteCounts.pro.map(item => ({ label: item.name, y: item.votes, image: item.photo }));
-            var proChart = generateBarGraph(proData, "proGraph", "proImage");
-
-            // Business Manager
-            var businessManagerData = voteCounts.businessManager.map(item => ({ label: item.name, y: item.votes, image: item.photo }));
-            var businessManagerChart = generateBarGraph(businessManagerData, "businessManagerGraph", "businessManagerImage");
-
-            // BEED Representative
-            var beedRepData = voteCounts.beedRep.map(item => ({ label: item.name, y: item.votes, image: item.photo }));
-            var beedRepChart = generateBarGraph(beedRepData, "beedRepGraph", "beedRepImage");
-
-            // BSED Representative
-            var bsedRepData = voteCounts.bsedRep.map(item => ({ label: item.name, y: item.votes, image: item.photo }));
-            var bsedRepChart = generateBarGraph(bsedRepData, "bsedRepGraph", "bsedRepImage");
-
-            // BSHM Representative
-            var bshmRepData = voteCounts.bshmRep.map(item => ({ label: item.name, y: item.votes, image: item.photo }));
-            var bshmRepChart = generateBarGraph(bshmRepData, "bshmRepGraph", "bshmRepImage");
-
-            // BSOAD Representative
-            var bsoadRepData = voteCounts.bsoadRep.map(item => ({ label: item.name, y: item.votes, image: item.photo }));
-            var bsoadRepChart = generateBarGraph(bsoadRepData, "bsoadRepGraph", "bsoadRepImage");
-
-            // BSIT Representative
-            var bsitRepData = voteCounts.bsitRep.map(item => ({ label: item.name, y: item.votes, image: item.photo }));
-            var bsitRepChart = generateBarGraph(bsitRepData, "bsitRepGraph", "bsitRepImage");
+        $.ajax({
+            url: 'update_data_csc.php',
+            method: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                updateChartData(presidentChart, response.president, 'presidentImage');
+                updateChartData(vicePresidentChart, response.vicePresident, 'vicePresidentImage');
+                updateChartData(secretaryChart, response.secretary, 'secretaryImage');
+                updateChartData(treasurerChart, response.treasurer, 'treasurerImage');
+                updateChartData(auditorChart, response.auditor, 'auditorImage');
+                updateChartData(proChart, response.publicInformationOfficer, 'proImage');
+                updateChartData(businessManagerChart, response.businessManager, 'businessManagerImage');
+                updateChartData(beedRepChart, response.beedRepresentative, 'beedRepImage');
+                updateChartData(bsedRepChart, response.bsedRepresentative, 'bsedRepImage');
+                updateChartData(bshmRepChart, response.bshmRepresentative, 'bshmRepImage');
+                updateChartData(bsoadRepChart, response.bsoadRepresentative, 'bsoadRepImage');
+                updateChartData(bscrimRepChart, response.bsCrimRepresentative, 'bscrimRepImage');
+                updateChartData(bsitRepChart, response.bsitRepresentative, 'bsitRepImage');
+            },
+            error: function (error) {
+                console.error("Error fetching data", error);
+            }
         });
     }
 
-    // Initial call
+    var presidentChart = generateBarGraph([], "presidentGraph", "presidentImage");
+    var vicePresidentChart = generateBarGraph([], "vicePresidentGraph", "vicePresidentImage");
+    var secretaryChart = generateBarGraph([], "secretaryGraph", "secretaryImage");
+    var treasurerChart = generateBarGraph([], "treasurerGraph", "treasurerImage");
+    var auditorChart = generateBarGraph([], "auditorGraph", "auditorImage");
+    var proChart = generateBarGraph([], "proGraph", "proImage");
+    var businessManagerChart = generateBarGraph([], "businessManagerGraph", "businessManagerImage");
+    var beedRepChart = generateBarGraph([], "beedRepGraph", "beedRepImage");
+    var bsedRepChart = generateBarGraph([], "bsedRepGraph", "bsedRepImage");
+    var bshmRepChart = generateBarGraph([], "bshmRepGraph", "bshmRepImage");
+    var bsoadRepChart = generateBarGraph([], "bsoadRepGraph", "bsoadRepImage");
+    var bscrimRepChart = generateBarGraph([], "bscrimRepGraph", "bscrimRepImage");
+    var bsitRepChart = generateBarGraph([], "bsitRepGraph", "bsitRepImage");
+
     updateVoteCounts();
-    // Update every second
-    setInterval(updateVoteCounts, 1000);
+
+    setInterval(updateVoteCounts, 5000);
+
+    $(document).ready(function () {
+        var btn = $('#back-to-top');
+
+        $(window).scroll(function () {
+            if ($(window).scrollTop() > 100) {
+                btn.fadeIn();
+            } else {
+                btn.fadeOut();
+            }
+        });
+
+        btn.click(function () {
+            $('html, body').animate({ scrollTop: 0 }, '100');
+            return false;
+        });
+    });
 </script>
 </body>
 </html>
