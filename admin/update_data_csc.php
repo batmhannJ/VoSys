@@ -1,54 +1,49 @@
 <?php
 include 'includes/session.php';
 
-header('Content-Type: text/event-stream');
-header('Cache-Control: no-cache');
-header('Connection: keep-alive');
+if(isset($_POST['election_id'])){
+    $election_id = $_POST['election_id'];
 
-function fetchVotes($conn, $category, $organizationFilter = "") {
-    $data = array();
-    $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-            COALESCE(COUNT(votes_csc.candidate_id), 0) AS vote_count, 
-            candidates.photo AS candidate_image
-            FROM categories 
-            LEFT JOIN candidates ON categories.id = candidates.category_id
-            LEFT JOIN votes_csc ON candidates.id = votes_csc.candidate_id
-            LEFT JOIN voters AS voters1 ON voters1.id = votes_csc.voters_id 
-            WHERE voters1.organization != '' AND categories.name = '$category'
-            $organizationFilter
-            GROUP BY candidates.id";
+    // Fetching results for different positions
+    $positions = [
+        'President' => 'president',
+        'Vice President' => 'vice_president',
+        'Secretary' => 'secretary',
+        'Treasurer' => 'treasurer',
+        'P.R.O' => 'pro', // Changed to P.R.O
+        'Business Manager' => 'business_manager',
+        'BEED Rep' => 'beed_rep', // Changed to BEED Rep
+        'BSED Rep' => 'bsed_rep', // Changed to BSED Rep
+        'BSHM Rep' => 'bshm_rep', // Changed to BSHM Rep
+        'BSOAD Rep' => 'bsoad_rep', // Changed to BSOAD Rep
+        'BSCRIM Rep' => 'bscrim_rep', // Changed to BSCRIM Rep
+        'BSIT Rep' => 'bsit_rep' // Changed to BSIT Rep
+    ];
 
-    $query = $conn->query($sql);
-    if (!$query) {
-        return $data;
-    }
+    $results = [];
 
-    while ($row = $query->fetch_assoc()) {
-        $imagePath = !empty($row['candidate_image']) ? '../images/' . $row['candidate_image'] : '../images/profile.jpg';
-        if (!file_exists($imagePath)) {
-            $imagePath = '../images/profile.jpg';
+    foreach($positions as $position => $id) {
+        $sql = "SELECT candidates.name AS candidate, COUNT(votes.id) AS vote_count
+                FROM votes
+                LEFT JOIN candidates ON candidates.id = votes.candidate_id
+                LEFT JOIN positions ON positions.id = candidates.position_id
+                WHERE positions.description = '$position' AND votes.election_id = '$election_id'
+                GROUP BY candidates.name
+                ORDER BY vote_count DESC";
+
+        $query = $conn->query($sql);
+        $data = [];
+
+        while($row = $query->fetch_assoc()) {
+            $data[] = [
+                'candidate' => $row['candidate'],
+                'vote_count' => $row['vote_count']
+            ];
         }
 
-        $data[] = array(
-            "y" => intval($row['vote_count']),
-            "label" => $row['candidate_name'],
-            "image" => $imagePath
-        );
+        $results[$id] = $data;
     }
-    return $data;
+
+    echo json_encode($results);
 }
-
-$categories = [
-    'president', 'vice president', 'secretary', 'treasurer', 'auditor',
-    'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
-    'bsoadRep', 'bs crimRep', 'bsitRep'
-];
-
-$response = array();
-foreach ($categories as $category) {
-    $response[$category] = fetchVotes($conn, ucfirst(str_replace(['Rep', 'Manager', 'P.R.O'], [' Rep', ' Manager', ' P.R.O'], $category)));
-}
-
-echo "data: " . json_encode($response) . "\n\n";
-flush();
 ?>
