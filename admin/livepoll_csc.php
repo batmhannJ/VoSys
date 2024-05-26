@@ -40,11 +40,6 @@ include 'includes/header_csc.php';
             margin-bottom: 40px;
         }
 
-        .candidate-container {
-            display: flex;
-            align-items: flex-start;
-        }
-
         .candidate-images {
             display: flex;
             flex-direction: column;
@@ -68,11 +63,6 @@ include 'includes/header_csc.php';
         .candidate-label {
             margin-left: 10px;
             font-weight: bold;
-        }
-
-        .chart {
-            flex: 1;
-            margin-left: 20px; /* Adjust this value as needed */
         }
 
         @media (max-width: 768px) {
@@ -131,10 +121,10 @@ include 'includes/header_csc.php';
                                 <h3 class='box-title'><b>$categoryName</b></h3>
                             </div>
                             <div class='box-body'>
-                                <div class='candidate-container'>
-                                    <div class='candidate-images' id='{$categoryKey}Image'></div>
-                                    <div class='chart' id='{$categoryKey}Graph'></div>
+                                <div class='chart-container'>
+                                    <div id='{$categoryKey}Graph' style='height: 300px; width: calc(100% - 70px); margin-left: 70px;'></div>
                                 </div>
+                                <div class='candidate-images' id='{$categoryKey}Image'></div>
                             </div>
                         </div>
                     </div>";
@@ -218,6 +208,7 @@ include 'includes/header_csc.php';
             },
             error: function (xhr, status, error) {
                 console.error("Error fetching data: ", status, error);
+           
             }
     });
 }
@@ -241,4 +232,3 @@ $(document).ready(function () {
 </script>
 </body>
 </html>
-       
