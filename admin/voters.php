@@ -47,12 +47,12 @@
           <div class="box">
             <div class="box-header with-border">
               <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
-              <button class="btn btn-danger btn-sm btn-flat" id="batchArchiveBtn"><i class="fa fa-archive"></i> Batch Archive</button>
+              <button class="btn btn-warning btn-sm btn-flat" id="batchArchiveBtn"><i class="fa fa-archive"></i> Batch Archive</button>
             </div>
             <div class="box-body">
               <table id="example1" class="table table-bordered">
                 <thead>
-                  <th><input type="checkbox" id="selectAll"></th>
+                  <th>#</th>
                   <th>No.</th>
                   <th>Full Name</th>
                   <th>Photo</th>
@@ -139,7 +139,7 @@
   <?php include 'includes/footer.php'; ?>
   <?php include 'includes/voters_modal.php'; ?>
   <?php include 'includes/batch_modal.php'; ?>
-  
+
 </div>
 <?php include 'includes/scripts.php'; ?>
 <script>
