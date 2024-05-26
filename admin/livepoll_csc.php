@@ -147,6 +147,8 @@ include 'includes/header_csc.php';
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script src="path/to/jquery.min.js"></script>
 <script>
+    var lastVoteTime = '1970-01-01 00:00:00';
+
     function generateBarGraph(dataPoints, containerId, imageContainerId) {
         var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
@@ -198,8 +200,8 @@ include 'includes/header_csc.php';
             url: 'update_data_csc.php',
             method: 'GET',
             dataType: 'json',
+            data: { lastVoteTime: lastVoteTime },
             success: function (response) {
-                console.log(response); // Log the response to check data
                 // Generate graphs for all categories
                 var categories = [
                     'president', 'vice President', 'secretary', 'treasurer', 'auditor',
@@ -214,32 +216,25 @@ include 'includes/header_csc.php';
                         console.warn("No data for category: " + category);
                     }
                 });
+
+                // Update last vote time
+                lastVoteTime = response.lastVoteTime;
+
+                // Call the function again for the next long poll
+                fetchAndGenerateGraphs();
             },
             error: function (xhr, status, error) {
                 console.error("Error fetching data: ", status, error);
+                
+                // Retry after a delay
+                setTimeout(fetchAndGenerateGraphs, 5000); // Retry after 5 seconds
             }
         });
     }
 
-    $(document).ready(function () {
-        fetchAndGenerateGraphs();
-
-        // Fetch and update graphs every 10 seconds
-        setInterval(fetchAndGenerateGraphs, 10000);
-
-        $(window).scroll(function () {
-            if ($(this).scrollTop() > 100) {
-                $('#back-to-top').fadeIn();
-            } else {
-                $('#back-to-top').fadeOut();
-            }
-        });
-
-        $('#back-to-top').click(function () {
-            $('html, body').animate({ scrollTop: 0 }, 600);
-            return false;
-        });
-    });
+    // Call the initial fetch function
+    fetchAndGenerateGraphs();
 </script>
+
 </body>
 </html>
