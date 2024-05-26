@@ -67,62 +67,35 @@ $voter_turnout = number_format(($total_voters > 0) ? (($voted_voters / $total_vo
 // Create PDF content
 $pdfContent = "
 <style>
-body {
-  font-family: Arial, sans-serif;
-  color: #333;
-}
-
-h1, h2 {
-  font-size: 14px;
-  text-align: center;
-  color: #000;
-}
-
-p {
-  font-family: Brush Script MT, cursive;
-  text-align: center;
-  color: #000;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  opacity: 0.8; /* Adjust the opacity value to make the table more transparent */
-}
-
-th, td {
-  padding: 10px;
-  border: 1px solid #ddd;
-}
-
-th {
-  color: #fff;
-  background-color: maroon; /* Light gray background for table headers */
-  font-weight: bold;
-}
-
-tr:nth-child(even) {
-  background-color: #fff; /* White background for even rows */
-}
-
-tr:nth-child(odd) {
-  background-color: #f9f9f9; /* Light gray background for odd rows */
-}
-
-.highlight {
-  background-color: #ffe6e6; /* Light red background for highest count of votes */
-}
+  .header-container {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .header-container img {
+    height: 100px;
+    width: 100px;
+  }
+  .header-container .school-name {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 0;
+  }
+  .header-container .report-title {
+    font-size: 20px;
+    margin: 0;
+  }
 </style>
-<img src='images/logo.png' alt='Logo' style='height: 100px; width: 100px; float: left;'>
-<p style='font-family, cursive;'>Our Lady of the Sacred Heart College of Guimba, Inc.</p>
-<h1>2024 Election Results</h1>
-<table>
+<div class='header-container'>
+  <img src='images/logo.png' alt='Logo' style='height: 100px; width: 100px;'>
+  <p class='school-name' style='font-size: 22px; font-weight: bold; margin: 0;'>Our Lady of the Sacred Heart College of Guimba, Inc.</p>
+  <p class='report-title' style='font-size: 20px; margin: 0;'>2024 Election Results</p>
+</div>
+<table style='width: 100%; border-collapse: collapse; margin-top: 20px;'>
     <thead>
     <tr>
-        <th>Position</th>
-        <th>Candidate</th>
-        <th>Vote Count</th>
+        <th style='padding: 10px; border: 1px solid #ddd; background-color: maroon; color: #fff; font-weight: bold;'>Position</th>
+        <th style='padding: 10px; border: 1px solid #ddd; background-color: maroon; color: #fff; font-weight: bold;'>Candidate</th>
+        <th style='padding: 10px; border: 1px solid #ddd; background-color: maroon; color: #fff; font-weight: bold;'>Vote Count</th>
     </tr>
     </thead>
 <tbody>";
