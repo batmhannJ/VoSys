@@ -201,21 +201,19 @@ include 'includes/header_csc.php';
     }
 
     $(document).ready(function () {
-        function fetchData() {
-            $.ajax({
-                url: 'update_data_csc.php',
-                method: 'GET',
-                success: function (response) {
-                    var data = JSON.parse(response);
-                    updateGraphs(data);
-                },
-                error: function (xhr, status, error) {
-                    console.error("An error occurred while fetching the data: ", error);
-                }
-            });
-        }
+        // Create a new EventSource object to listen to SSE
+        const evtSource = new EventSource('update_data_csc.php');
 
-        // Bind the fetchData function to the vote submission event
+        evtSource.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            updateGraphs(data);
+        };
+
+        evtSource.onerror = function(err) {
+            console.error("EventSource failed:", err);
+            evtSource.close();
+        };
+
         $(document).on('submit', '#voteForm', function (e) {
             e.preventDefault();
             $.ajax({
@@ -223,7 +221,7 @@ include 'includes/header_csc.php';
                 method: 'POST',
                 data: $(this).serialize(),
                 success: function (response) {
-                    fetchData();
+                    // No need to fetch data here, SSE will handle updates
                 },
                 error: function (xhr, status, error) {
                     console.error("An error occurred while submitting the vote: ", error);
