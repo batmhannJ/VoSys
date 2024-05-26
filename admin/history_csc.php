@@ -1,149 +1,116 @@
 <?php
-// Enable error reporting for debugging
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-// Include Composer autoload if using mPDF
-require_once __DIR__ . '/vendor/autoload.php';
-
-// Include database connection
-require_once 'includes/conn.php'; // Adjust the path as per your file structure
-
-// Query to calculate vote count for each candidate from votes_csc table
-$sql = "SELECT 
-            candidates.firstname, 
-            candidates.lastname, 
-            categories.name AS position_name, 
-            COUNT(votes_csc.candidate_id) AS vote_count
-        FROM 
-            candidates
-        LEFT JOIN 
-            votes_csc 
-        ON 
-            candidates.id = votes_csc.candidate_id
-        LEFT JOIN 
-            categories 
-        ON 
-            candidates.category_id = categories.id
-        GROUP BY 
-            categories.name, candidates.id
-        ORDER BY 
-            categories.priority ASC, vote_count DESC"; // Ordering by priority in categories
-
-$result = $conn->query($sql);
-
-// Check for SQL errors
-if (!$result) {
-    die("Query failed: " . $conn->error);
-}
-
-// Create PDF content
-$pdfContent = "
-<style>
-body {
-  font-family: Arial, sans-serif;
-  color: #333;
-}
-
-h1, h2 {
-  font-size: 14px;
-  text-align: center;
-  color: #000;
-}
-
-p {
-  font-family: Brush Script MT, cursive;
-  text-align: center;
-  color: #000;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  opacity: 0.8; /* Adjust the opacity value to make the table more transparent */
-}
-
-th, td {
-  padding: 10px;
-  border: 1px solid #ddd;
-}
-
-th {
-  color: #fff;
-  background-color: maroon; /* Light gray background for table headers */
-  font-weight: bold;
-}
-
-tr:nth-child(even) {
-  background-color: #fff; /* White background for even rows */
-}
-
-tr:nth-child(odd) {
-  background-color: #f9f9f9; /* Light gray background for odd rows */
-}
-
-.highlight {
-  background-color: #ffe6e6; /* Light red background for highest count of votes */
-}
-</style>
-<center>
-<p style='font-family, cursive;'>Our Lady of the Sacred Heart College of Guimba, Inc.</p>
-<h1>2024 Election Results</h1>
-</center>
-<table>
-    <thead>
-    <tr>
-        <th>Position</th>
-        <th>Candidate</th>
-        <th>Vote Count</th>
-    </tr>
-    </thead>
-<tbody>";
-
-// Initialize array to track highest vote count for each position
-$positionMaxVotes = array();
-
-// Populate data into table rows and highlight the candidate with the highest count of votes for each position
-while ($row = $result->fetch_assoc()) {
-    $position = $row['position_name'];
-    $voteCount = $row['vote_count'];
-
-    // Check if position exists in the array
-    if (!isset($positionMaxVotes[$position]) || $voteCount > $positionMaxVotes[$position]) {
-        // Update highest vote count for the position
-        $positionMaxVotes[$position] = $voteCount;
-    }
-}
-
-// Reset the data pointer to the beginning of the result set
-$result->data_seek(0);
-
-// Populate data into table rows and apply highlighting
-while ($row = $result->fetch_assoc()) {
-    $position = $row['position_name'];
-    $voteCount = $row['vote_count'];
-    $highlightClass = ($voteCount == $positionMaxVotes[$position]) ? 'highlight' : '';
-
-    // Generate table row with conditional highlighting
-    $pdfContent .= "<tr>
-                        <td>{$position}</td>
-                        <td>{$row['firstname']} {$row['lastname']}</td>
-                        <td class='{$highlightClass}'>{$voteCount}</td>
-                    </tr>";
-}
-
-$pdfContent .= "
-  </tbody>
-</table>";
-
-// Create PDF using mPDF library
-$mpdf = new \Mpdf\Mpdf();
-$mpdf->WriteHTML($pdfContent);
-
-// Output PDF to browser
-$mpdf->Output('election_results_csc.pdf', 'D'); // 'D' indicates to force download
-
-exit;
+include 'includes/session.php';
+include 'includes/header_csc.php';
 ?>
+<body class="hold-transition skin-black sidebar-mini">
+<div class="wrapper">
+    <?php include 'includes/navbar_csc.php'; ?>
+    <?php include 'includes/menubar_csc.php'; ?>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Election Results
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">Results</li>
+            </ol>
+        </section>
+        <!-- Main content -->
+        <section class="content">
+            <!-- Ranking Boxes for Various Positions -->
+            <div class="row">
+                <?php
+                // Function to display ranking table
+                function displayRankingTable($conn, $position) {
+                    $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
+                            COALESCE(COUNT(votes_csc.candidate_id), 0) AS vote_count
+                            FROM categories 
+                            LEFT JOIN candidates ON categories.id = candidates.category_id
+                            LEFT JOIN votes_csc ON candidates.id = votes_csc.candidate_id
+                            LEFT JOIN voters AS voters1 ON voters1.id = votes_csc.voters_id 
+                            WHERE voters1.organization != '' AND categories.name = '".$position."'".$organizationFilter."
+                            GROUP BY voters1.organization, candidates.id
+                            ORDER BY vote_count DESC";
+                    $query = $conn->query($sql);
+                    $rank = 1;
+                    while($row = $query->fetch_assoc()){
+                        echo "
+                            <tr>
+                                <td>".$rank."</td>
+                                <td>".$row['candidate_name']."</td>
+                                <td>".$row['vote_count']."</td>
+                            </tr>";
+                        $rank++;
+                    }
+                }
+
+                // Array of positions
+                $positions = [
+                    'President', 
+                    'Vice President', 
+                    'Secretary', 
+                    'Treasurer', 
+                    'Auditor', 
+                    'P.R.O',
+                    'Business Manager',
+                    'BEED Rep',
+                    'BSED Rep',
+                    'BSHM Rep',
+                    'BSOAD Rep',
+                    'BS CRIM Rep',
+                    'BSIT Rep'
+                ];
+
+                // Loop through each position and display the ranking box
+                foreach ($positions as $position) {
+                    echo "
+                    <div class='col-md-12'>
+                        <div class='box'>
+                            <div class='box-header with-border'>
+                                <h3 class='box-title text-center'>Ranking of ".$position." Candidates</h3>
+                            </div>
+                            <div class='box-body'>
+                                <table class='table table-bordered'>
+                                    <thead>
+                                    <tr>
+                                        <th>Rank</th>
+                                        <th>Candidate</th>
+                                        <th>Vote Count</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>";
+                    displayRankingTable($conn, $position);
+                    echo "
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>";
+                }
+                ?>
+                <!-- Export Button -->
+                <div class="row">
+                    <div class="col-xs-12">
+                        <span class="pull-right">
+                            <a href="export_results_csc.php" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Export PDF</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <!-- /.row -->
+        </section>
+        <!-- /.content -->
+    </div>
+
+    <!-- /.content-wrapper -->
+    <?php include 'includes/footer.php'; ?>
+    <?php include 'includes/votes_modal.php'; ?>
+</div>
+<!-- ./wrapper -->
+<?php include 'includes/scripts.php'; ?>
+</body>
+</html>
