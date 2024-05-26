@@ -43,6 +43,27 @@ if (!$result) {
     die("Query failed: " . $conn->error);
 }
 
+// Count total voters
+$sql_total_voters = "SELECT COUNT(*) AS total_voters FROM voters";
+$result_total_voters = $conn->query($sql_total_voters);
+$total_voters_row = $result_total_voters->fetch_assoc();
+$total_voters = $total_voters_row['total_voters'];
+
+// Count voters who voted
+$sql_voted_voters = "SELECT COUNT(DISTINCT voters_id) AS voted_voters FROM votes_csc WHERE election_id = ?";
+$stmt_voted_voters = $conn->prepare($sql_voted_voters);
+$stmt_voted_voters->bind_param("i", $election_id);
+$stmt_voted_voters->execute();
+$result_voted_voters = $stmt_voted_voters->get_result();
+$voted_voters_row = $result_voted_voters->fetch_assoc();
+$voted_voters = $voted_voters_row['voted_voters'];
+
+// Calculate remaining voters
+$remaining_voters = $total_voters - $voted_voters;
+
+// Calculate voter turnout percentage
+$voter_turnout = ($total_voters > 0) ? (($voted_voters / $total_voters) * 100) : 0;
+
 // Create PDF content
 $pdfContent = "
 <style>
@@ -141,7 +162,13 @@ while ($row = $result->fetch_assoc()) {
 
 $pdfContent .= "
   </tbody>
-</table>";
+</table>
+<br>
+<p>Total Voters: {$total_voters}</p>
+<p>Voters Voted: {$voted_voters}</p>
+<p>Remaining Voters: {$remaining_voters}</p>
+<p>Voter Turnout: {$voter_turnout}%</p>
+";
 
 // Create PDF using mPDF library
 $mpdf = new \Mpdf\Mpdf();
