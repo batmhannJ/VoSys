@@ -200,6 +200,7 @@ include 'includes/header_csc.php';
             url: 'update_data_csc.php',
             method: 'GET',
             dataType: 'json',
+            data: { lastVoteTime: lastVoteTime },
             success: function (response) {
                 // Generate graphs for all categories
                 var categories = [
@@ -216,8 +217,11 @@ include 'includes/header_csc.php';
                     }
                 });
 
-                // Fetch again after a delay
-                setTimeout(fetchAndGenerateGraphs, 5000); // Fetch every 5 seconds
+                // Update last vote time
+                lastVoteTime = response.lastVoteTime;
+
+                // Call the function again for the next long poll
+                fetchAndGenerateGraphs();
             },
             error: function (xhr, status, error) {
                 console.error("Error fetching data: ", status, error);
