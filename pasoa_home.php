@@ -1,5 +1,23 @@
 <?php include 'includes/session.php'; ?>
-<?php include 'includes/header_pasoa.php'; ?>
+<?php include 'includes/header_pasoa.php'; 
+
+function is_active_election($conn){
+	$sql = "SELECT * FROM election WHERE title = 'PASOA - Philippine Association of Students in Office Administration Election' && status = 1";
+	$result = $conn->query($sql);
+
+	if($result->num_rows > 0){
+		return true;
+	} else{
+		return false;
+	}
+}
+
+if(!is_active_election($conn)){
+	header("location: no_election_pasoa.php");
+	exit();
+}
+
+?>
 <body class="hold-transition skin-yellow layout-top-nav">
 <div class="wrapper">
 
