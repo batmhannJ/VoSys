@@ -1,14 +1,14 @@
 <?php
 
 include 'includes/session.php';
-include 'includes/header_educ.php';
+include 'includes/header.php';
 
 ?>
 
-<body class="hold-transition skin-blue layout-top-nav">
+<body class="hold-transition layout-top-nav">
 <div class="wrapper">
 
-	<?php include 'includes/navbar_educ.php'; ?>
+	<?php include 'includes/navbar.php'; ?>
 	 
 	  <div class="content-wrapper">
 		<div class="container">
@@ -16,8 +16,8 @@ include 'includes/header_educ.php';
 		  <!-- Main content -->
 		  <section class="content">
 			  <h1 class="page-header text-center title">
-				  <img src="images/y.png" alt="CSC Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
-				  <b>Young Mentors of the Future Election</b></h1>
+				  <img src="images/ct.png" alt="CSC Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
+				  <b>Coalition of Disciplined Future Enforcers of Today's Generation Election	</b></h1>
 			<div class="row">
 				<div class="col-sm-10 col-sm-offset-1">
 					<?php
