@@ -1,15 +1,16 @@
 <?php
 include 'includes/session.php';
 
-header('Content-Type: text/event-stream');
-header('Cache-Control: no-cache');
-header('Connection: keep-alive');
+$organizationFilter = "";
+if (!empty($_GET['organization'])) {
+    $organizationFilter = " AND voters1.organization = '" . $_GET['organization'] . "'";
+}
 
-function fetchVotes($conn, $category, $organizationFilter = "") {
+// Function to fetch votes data
+function fetchVotes($conn, $category, $organizationFilter) {
     $data = array();
     $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-            COALESCE(COUNT(votes_csc.candidate_id), 0) AS vote_count, 
-            candidates.photo AS candidate_image
+            COALESCE(COUNT(votes_csc.candidate_id), 0) AS vote_count
             FROM categories 
             LEFT JOIN candidates ON categories.id = candidates.category_id
             LEFT JOIN votes_csc ON candidates.id = votes_csc.candidate_id
@@ -17,10 +18,9 @@ function fetchVotes($conn, $category, $organizationFilter = "") {
             WHERE voters1.organization != '' AND categories.name = '$category'
             $organizationFilter
             GROUP BY candidates.id";
-
     $query = $conn->query($sql);
-    if (!$query) {
-        return $data;
+    while($row = $query->fetch_assoc()) {
+        $data[] = array("y" => intval($row['vote_count']), "label" => $row['candidate_name']);
     }
 
     while ($row = $query->fetch_assoc()) {
