@@ -41,13 +41,9 @@ include 'includes/header_csc.php';
         }
 
         .candidate-images {
-            position: absolute;
-            top: 0;
-            left: 0;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: 100%;
             padding: 10px;
         }
 
@@ -66,6 +62,7 @@ include 'includes/header_csc.php';
 
         .candidate-label {
             margin-left: 10px;
+            font-weight: bold;
         }
 
         @media (max-width: 768px) {
@@ -125,9 +122,9 @@ include 'includes/header_csc.php';
                             </div>
                             <div class='box-body'>
                                 <div class='chart-container'>
-                                    <div class='candidate-images' id='{$categoryKey}Image'></div>
                                     <div id='{$categoryKey}Graph' style='height: 300px; width: calc(100% - 70px); margin-left: 70px;'></div>
                                 </div>
+                                <div class='candidate-images' id='{$categoryKey}Image'></div>
                             </div>
                         </div>
                     </div>";
@@ -211,26 +208,47 @@ include 'includes/header_csc.php';
             },
             error: function (xhr, status, error) {
                 console.error("Error fetching data: ", status, error);
+           
             }
-        });
-    }
-
-    $(document).ready(function () {
-        fetchAndGenerateGraphs();
-
-        $(window).scroll(function () {
-            if ($(this).scrollTop() > 100) {
-                $('#back-to-top').fadeIn();
-            } else {
-                $('#back-to-top').fadeOut();
-            }
-        });
-
-        $('#back-to-top').click(function () {
-            $('html, body').animate({ scrollTop: 0 }, 600);
-            return false;
-        });
     });
+}
+
+$(document).ready(function () {
+    fetchAndGenerateGraphs();
+
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 100) {
+            $('#back-to-top').fadeIn();
+        } else {
+            $('#back-to-top').fadeOut();
+        }
+    });
+
+    $('#back-to-top').click(function () {
+        $('html, body').animate({ scrollTop: 0 }, 600);
+        return false;
+    });
+});
+        }
+    });
+}
+
+$(document).ready(function () {
+    fetchAndGenerateGraphs();
+
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 100) {
+            $('#back-to-top').fadeIn();
+        } else {
+            $('#back-to-top').fadeOut();
+        }
+    });
+
+    $('#back-to-top').click(function () {
+        $('html, body').animate({ scrollTop: 0 }, 600);
+        return false;
+    });
+});
 </script>
 </body>
 </html>
