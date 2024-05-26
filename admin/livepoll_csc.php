@@ -379,14 +379,14 @@ include 'includes/header_csc.php';
                 updateChartData(secretaryChart, response.secretary, 'secretaryImage');
                 updateChartData(treasurerChart, response.treasurer, 'treasurerImage');
                 updateChartData(auditorChart, response.auditor, 'auditorImage');
-                updateChartData(proChart, response.publicInformationOfficer, 'proImage');
+                updateChartData(proChart, response.p.r.o, 'proImage');
                 updateChartData(businessManagerChart, response.businessManager, 'businessManagerImage');
-                updateChartData(beedRepChart, response.beedRepresentative, 'beedRepImage');
-                updateChartData(bsedRepChart, response.bsedRepresentative, 'bsedRepImage');
-                updateChartData(bshmRepChart, response.bshmRepresentative, 'bshmRepImage');
-                updateChartData(bsoadRepChart, response.bsoadRepresentative, 'bsoadRepImage');
-                updateChartData(bscrimRepChart, response.bsCrimRepresentative, 'bscrimRepImage');
-                updateChartData(bsitRepChart, response.bsitRepresentative, 'bsitRepImage');
+                updateChartData(beedRepChart, response.beedRep, 'beedRepImage');
+                updateChartData(bsedRepChart, response.bsedRep, 'bsedRepImage');
+                updateChartData(bshmRepChart, response.bshmRep, 'bshmRepImage');
+                updateChartData(bsoadRepChart, response.bsoadRep, 'bsoadRepImage');
+                updateChartData(bscrimRepChart, response.bsCrimRep, 'bscrimRepImage');
+                updateChartData(bsitRepChart, response.bsitRep, 'bsitRepImage');
             },
             error: function (error) {
                 console.error("Error fetching data", error);
