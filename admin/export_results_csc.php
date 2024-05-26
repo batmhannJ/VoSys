@@ -124,7 +124,7 @@ tr:nth-child(odd) {
 }
 </style>
 <div class='header'>
-<img src='images/logo.png' alt=Logo>
+<img src='images/logo.png' alt=Logo style='height: 100px; width: 100px;'>
 <p style='font-family, cursive;'>Our Lady of the Sacred Heart College of Guimba, Inc.</p>
 </div>
 <h1>2024 Election Results</h1>
