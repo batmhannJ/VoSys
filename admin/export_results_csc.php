@@ -113,8 +113,20 @@ tr:nth-child(odd) {
 .highlight {
   background-color: #ffe6e6; /* Light red background for highest count of votes */
 }
+.header {
+  display: flex;
+  align-items: center; /* Center vertically */
+}
+.header img {
+  height: 100px; /* Set height */
+  width: 100px; /* Set width */
+  margin-right: 20px; /* Adjust margin as needed */
+}
 </style>
+<div class='header' style='display:flex;'>
+<img src='images/logo.png' alt=Logo style='height: 100px; width: 100px;'>
 <p style='font-family, cursive;'>Our Lady of the Sacred Heart College of Guimba, Inc.</p>
+</div>
 <h1>2024 Election Results</h1>
 <table>
     <thead>
@@ -162,10 +174,10 @@ $pdfContent .= "
   </tbody>
 </table>
 <br>
-<p style='justify-content: flex-start;'><b>Total Voters:</b> {$total_voters}</p>
-<p><b>Voters Voted:</b> {$voted_voters}</p>
-<p><b>Remaining Voters:</b> {$remaining_voters}</p>
-<p><b>Voter Turnout:</b> {$voter_turnout}%</p>
+<p style='text-align: left;'><b>Total Voters:</b> {$total_voters}</p>
+<p style='text-align: left;'><b>Voters Voted:</b> {$voted_voters}</p>
+<p style='text-align: left;'><b>Remaining Voters:</b> {$remaining_voters}</p>
+<p style='text-align: left;'><b>Voter Turnout:</b> {$voter_turnout}%</p>
 ";
 
 // Create PDF using mPDF library
