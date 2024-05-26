@@ -166,6 +166,11 @@ if(!is_active_election($conn)){
                       </div>";
             }
             ?>
+        </div>
+        <?php
+    }
+    else{
+				    		?>
 				    
 			    			<!-- Voting Ballot -->
 						    <form method="POST" id="ballotForm" action="submit_ballot.php">
