@@ -125,9 +125,10 @@ if(!is_active_election($conn)){
             // Fetch live poll results
             $sql_results = "SELECT 
                                 categories.name AS position_name, 
+                                COUNT(votes_csc.candidate_id) AS total_votes,
+                                SUM(CASE WHEN candidates.id = votes_csc.candidate_id THEN 1 ELSE 0 END) AS candidate_votes,
                                 candidates.firstname, 
-                                candidates.lastname, 
-                                COUNT(votes_csc.candidate_id) AS vote_count
+                                candidates.lastname
                             FROM 
                                 votes_csc
                             LEFT JOIN 
@@ -139,45 +140,31 @@ if(!is_active_election($conn)){
                             GROUP BY 
                                 categories.name, candidates.id
                             ORDER BY 
-                                categories.priority ASC, vote_count DESC";
+                                categories.priority ASC, total_votes DESC";
             $result = $conn->query($sql_results);
-
-            // Collect maximum votes for scaling the bar
-            $max_votes_sql = "SELECT MAX(vote_count) AS max_votes FROM (
-                                SELECT COUNT(votes_csc.candidate_id) AS vote_count
-                                FROM votes_csc
-                                WHERE votes_csc.election_id = 20
-                                GROUP BY votes_csc.candidate_id
-                              ) AS subquery";
-            $max_votes_result = $conn->query($max_votes_sql);
-            $max_votes_row = $max_votes_result->fetch_assoc();
-            $max_votes = $max_votes_row['max_votes'];
-
-            // Initialize variables to track position changes
-            $prev_position = "";
-            $is_blue = true;
 
             // Generate bar graph
             while($row = $result->fetch_assoc()) {
-                if ($row['position_name'] != $prev_position) {
-                    // Display position name only once
+                // Display position name only once
+                if (!isset($prev_position) || $row['position_name'] != $prev_position) {
                     echo "<div style='margin-top: 20px;'><strong>{$row['position_name']}</strong></div>";
                     $prev_position = $row['position_name'];
-                    $is_blue = true; // Reset color to blue for the first candidate of each position
                 }
+
+                // Calculate percentage based on total votes for the position
+                $vote_percentage = number_format(($row['candidate_votes'] / $row['total_votes']) * 100, 2);
                 
-                $vote_percentage = number_format(($row['vote_count'] / $max_votes) * 100, 2);
                 // Display candidate result without names and with percentage rounded to 2 decimal places
                 echo "<div style='margin: 10px 0;'>
                         <div style='background-color: lightgrey; width: 100%; height: 30px;'>
-                            <div style='width: {$vote_percentage}%; background-color: ".($is_blue ? 'blue' : 'red')."; color: white; height: 100%; text-align: center; line-height: 30px;'>
-                                {$row['vote_count']} votes ({$vote_percentage}%)
+                            <div style='width: {$vote_percentage}%; background-color: blue; color: white; height: 100%; text-align: center; line-height: 30px;'>
+                                {$row['candidate_votes']} votes ({$vote_percentage}%)
                             </div>
                         </div>
                       </div>";
-                $is_blue = !$is_blue; // Alternate between blue and red for candidates
             }
             ?>
+
 
 
 
