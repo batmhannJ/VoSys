@@ -153,22 +153,32 @@ if(!is_active_election($conn)){
             $max_votes_row = $max_votes_result->fetch_assoc();
             $max_votes = $max_votes_row['max_votes'];
 
-            // Generate bar graph
+            // Initialize variables to track position changes
+            $prev_position = "";
             $is_blue = true;
+
+            // Generate bar graph
             while($row = $result->fetch_assoc()) {
+                if ($row['position_name'] != $prev_position) {
+                    // Display position name only once
+                    echo "<div style='margin-top: 20px;'><strong>{$row['position_name']}</strong></div>";
+                    $prev_position = $row['position_name'];
+                    $is_blue = true; // Reset color to blue for the first candidate of each position
+                }
+                
                 $vote_percentage = ($row['vote_count'] / $max_votes) * 100;
-                // Display position name without candidates' names
+                // Display candidate result with alternating colors
                 echo "<div style='margin: 10px 0;'>
-                        <strong>{$row['position_name']}</strong>
                         <div style='background-color: lightgrey; width: 100%; height: 30px;'>
                             <div style='width: {$vote_percentage}%; background-color: ".($is_blue ? 'blue' : 'red')."; color: white; height: 100%; text-align: center; line-height: 30px;'>
-                                {$row['vote_count']} votes ({$vote_percentage}%)
+                                {$row['firstname']} {$row['lastname']} - {$row['vote_count']} votes ({$vote_percentage}%)
                             </div>
                         </div>
                       </div>";
-                $is_blue = !$is_blue; // Alternate between blue and red
+                $is_blue = !$is_blue; // Alternate between blue and red for candidates
             }
             ?>
+
 
 
         </div>
