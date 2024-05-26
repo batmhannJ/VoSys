@@ -64,6 +64,10 @@ include 'includes/header_csc.php';
             margin-right: 10px;
         }
 
+        .candidate-label {
+            margin-left: 10px;
+        }
+
         @media (max-width: 768px) {
             .candidate-image img {
                 width: 75px;
@@ -295,7 +299,7 @@ include 'includes/header_csc.php';
         // Update the image container
         var imageContainer = document.getElementById(imageContainerId);
         imageContainer.innerHTML = dataPoints.map(dataPoint =>
-            `<div class="candidate-image"><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"><span>${dataPoint.label}</span></div>`
+            `<div class="candidate-image"><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"><span class="candidate-label">${dataPoint.label}</span></div>`
         ).join('');
 
         var chart = new CanvasJS.Chart(containerId, {
@@ -351,7 +355,7 @@ include 'includes/header_csc.php';
         // Update the image container
         var imageContainer = document.getElementById(imageContainerId);
         imageContainer.innerHTML = newDataPoints.map(dataPoint =>
-            `<div class="candidate-image"><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"><span>${dataPoint.label}</span></div>`
+            `<div class="candidate-image"><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"><span class="candidate-label">${dataPoint.label}</span></div>`
         ).join('');
 
         chart.options.animationEnabled = true;
