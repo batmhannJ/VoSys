@@ -41,58 +41,36 @@
 </nav>
 
 
-<section class="brands-sec">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="brand-title mb-5">
-                    <h5 class="h5-title">Trusted by 70+ companies</h5>
-                </div>
-                <div class="brands-row">
-                    <div class="brands-box">
-                        <img src="images/can/1.png" alt="">
-                    </div>
-                    <div class="brands-box">
-                        <img src="images/can/2.png" alt="">
-                    </div>
-                    <div class="brands-box">
-                        <img src="images/can/3.png" alt="">
-                    </div>
-                    <div class="brands-box">
-                        <img src="images/can/4.png" alt="">
-                    </div>
-                    <div class="brands-box">
-                        <img src="images/can/5.png" alt="">
-                    </div>
-                    <div class="brands-box">
-                        <img src="images/can/6.png" alt="">
-                    </div>
-                    </div>
-                    <div class="brands-box1">
-                    <div class="brands-box">
-                        <img src="images/can/7.png" alt="">
-                    </div>
-                    <div class="brands-box">
-                        <img src="images/can/8.png" alt="">
-                    </div>
-                    <div class="brands-box">
-                        <img src="images/can/9.png" alt="">
-                    </div>
-                    <div class="brands-box">
-                        <img src="images/can/10.png" alt="">
-                    </div>
-                    <div class="brands-box">
-                        <img src="images/can/11.png" alt="">
-                    </div>
-                    <div class="brands-box">
-                        <img src="images/can/12.png" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<section class="section__container gallery__container">
+  <h2 class="section__header">~ GALLERY ~</h2>
+  <div class="gallery__grid">
+    <img src="assets/image-1.jpg" alt="gallery" />
+    <img src="assets/image-2.jpg" alt="gallery" />
+    <img src="assets/image-3.jpg" alt="gallery" />
+    <img src="assets/image-4.jpg" alt="gallery" />
+    <img src="assets/image-5.jpg" alt="gallery" />
+    <img src="assets/image-6.jpg" alt="gallery" />
+    <img src="assets/image-7.jpg" alt="gallery" />
+    <img src="assets/image-8.jpg" alt="gallery" />
+  </div>
+  <div class="gallery__btn">
+    <button class="btn">VIEW GALLERY</button>
+  </div>
 </section>
 
+<section class="section__container instagram__container">
+  <h2 class="section__header">~ INSTAGRAM ~</h2>
+  <div class="instagram__flex">
+    <img src="assets/image-1.jpg" alt="instagram" />
+    <img src="assets/image-2.jpg" alt="instagram" />
+    <img src="assets/image-3.jpg" alt="instagram" />
+    <img src="assets/image-4.jpg" alt="instagram" />
+    <img src="assets/image-5.jpg" alt="instagram" />
+    <img src="assets/image-6.jpg" alt="instagram" />
+    <img src="assets/image-7.jpg" alt="instagram" />
+    <img src="assets/image-8.jpg" alt="instagram" />
+  </div>
+</section>
 
     <!--==================== FOOTER ====================-->
         <footer class="footer section">
@@ -1071,6 +1049,183 @@ hr {
     }
 }
 
+.service {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
+    url("assets/service.jpg");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.service__container .section__header {
+  color: var(--white);
+}
+
+.service__container .section__description {
+  max-width: 600px;
+  margin-inline: auto;
+  color: var(--extra-light);
+}
+
+.service__grid {
+  margin-top: 4rem;
+  display: grid;
+  gap: 2rem;
+}
+
+.service__card {
+  text-align: center;
+}
+
+.service__card h4 {
+  position: relative;
+  isolation: isolate;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  font-size: 1.75rem;
+  font-weight: 400;
+  font-family: var(--header-font);
+  color: var(--white);
+}
+
+.service__card h4::after {
+  position: absolute;
+  content: "~";
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  line-height: 0;
+}
+
+.service__card p {
+  color: var(--extra-light);
+  line-height: 1.75rem;
+}
+
+.client__container {
+  padding-bottom: 2rem;
+}
+
+.swiper {
+  margin-top: 2rem;
+  padding-bottom: 3rem;
+  width: 100%;
+}
+
+.client__card {
+  max-width: 900px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.client__card img {
+  max-width: 120px;
+  margin-inline: auto;
+  margin-bottom: 2rem;
+  border-radius: 100%;
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+}
+
+.client__card p {
+  margin-bottom: 1rem;
+  color: var(--text-light);
+  line-height: 1.75rem;
+}
+
+.client__card h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.swiper-pagination-bullet-active {
+  background-color: var(--text-dark);
+}
+
+.gallery__grid {
+  margin-block: 2rem;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.gallery__grid img {
+  transition: 0.3s;
+}
+
+.gallery__grid:hover img:not(:hover) {
+  opacity: 0.5;
+}
+
+.gallery__btn {
+  text-align: center;
+}
+
+.blog {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url("assets/blog.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.blog__container {
+  padding-block: 8rem;
+  display: grid;
+}
+
+.blog__content {
+  text-align: center;
+}
+
+.blog__content .section__header {
+  margin-bottom: 2rem;
+  color: var(--white);
+}
+
+.blog__content h4 {
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  font-weight: 400;
+  font-family: var(--header-font);
+  color: var(--white);
+}
+
+.blog__content p {
+  margin-bottom: 2rem;
+  line-height: 1.75rem;
+  color: var(--extra-light);
+}
+
+.blog__content .btn {
+  background-color: transparent;
+  border: 1px solid var(--white);
+}
+
+.instagram__container {
+  overflow: hidden;
+}
+
+.instagram__flex {
+  margin-top: 2rem;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  animation: scroll 45s linear infinite;
+}
+
+.instagram__flex img {
+  max-width: 135px;
+}
+
+@keyframes scroll {
+  to {
+    transform: translateX(calc(-50% - 0.5rem));
+  }
+}
 
   </style>
 </html>
