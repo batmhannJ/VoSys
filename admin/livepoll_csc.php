@@ -1,13 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <?php
 include 'includes/session.php';
 include 'includes/header_csc.php';
 ?>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Election Results</title>
     <style>
         .box-title {
             text-align: center;
@@ -105,7 +102,7 @@ include 'includes/header_csc.php';
                 <?php
                 $categories = [
                     'president' => 'President',
-                    'vice President' => 'Vice President',
+                    'vice president' => 'Vice President',
                     'secretary' => 'Secretary',
                     'treasurer' => 'Treasurer',
                     'auditor' => 'Auditor',
@@ -147,8 +144,6 @@ include 'includes/header_csc.php';
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script src="path/to/jquery.min.js"></script>
 <script>
-    var lastVoteTime = '1970-01-01 00:00:00';
-
     function generateBarGraph(dataPoints, containerId, imageContainerId) {
         var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
@@ -200,41 +195,42 @@ include 'includes/header_csc.php';
             url: 'update_data_csc.php',
             method: 'GET',
             dataType: 'json',
-            data: { lastVoteTime: lastVoteTime },
             success: function (response) {
                 // Generate graphs for all categories
                 var categories = [
-                    'president', 'vice President', 'secretary', 'treasurer', 'auditor',
+                    'president', 'vice president', 'secretary', 'treasurer', 'auditor',
                     'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
                     'bsoadRep', 'bs crimRep', 'bsitRep'
                 ];
 
                 categories.forEach(function (category) {
-                    if (response[category] && response[category].length > 0) {
+                    if (response[category]) {
                         generateBarGraph(response[category], category + 'Graph', category + 'Image');
-                    } else {
-                        console.warn("No data for category: " + category);
                     }
                 });
-
-                // Update last vote time
-                lastVoteTime = response.lastVoteTime;
-
-                // Call the function again after a longer delay
-                setTimeout(fetchAndGenerateGraphs, 30000); // Fetch every 30 seconds
             },
             error: function (xhr, status, error) {
                 console.error("Error fetching data: ", status, error);
-                
-                // Retry after a delay
-                setTimeout(fetchAndGenerateGraphs, 30000); // Retry after 30 seconds
             }
         });
     }
 
-    // Call the initial fetch function
-    fetchAndGenerateGraphs();
-</script>
+    $(document).ready(function () {
+        fetchAndGenerateGraphs();
 
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 100) {
+                $('#back-to-top').fadeIn();
+            } else {
+                $('#back-to-top').fadeOut();
+            }
+        });
+
+        $('#back-to-top').click(function () {
+            $('html, body').animate({ scrollTop: 0 }, 600);
+            return false;
+        });
+    });
+</script>
 </body>
 </html>

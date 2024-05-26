@@ -122,12 +122,19 @@ tr:nth-child(odd) {
   width: 100px; /* Set width */
   margin-right: 20px; /* Adjust margin as needed */
 }
+.header-content {
+  display: flex;
+  flex-direction: column;
+}
 </style>
 <div class='header' style='display:flex;'>
 <img src='images/logo.png' alt=Logo style='height: 100px; width: 100px;'>
-<p style='font-family, cursive;'>Our Lady of the Sacred Heart College of Guimba, Inc.</p>
 </div>
+<div class='header-content'>
+<p style='font-family, cursive;'>Our Lady of the Sacred Heart College of Guimba, Inc.</p>
 <h1>2024 Election Results</h1>
+</div>
+
 <table>
     <thead>
     <tr>
