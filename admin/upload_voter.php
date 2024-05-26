@@ -67,7 +67,7 @@ if(isset($_POST['save_excel_data'])) {
                         $mail->setFrom('olshco.electionupdates@gmail.com', 'EL-UPS OLSHCO');
                         $mail->addAddress($email);
                         $mail->Subject = 'Voter Registration';
-                        $mail->Body = "Hello $firstname $lastname,\n\nYou have been registered as a voter.\n\nVoter ID: $voter\nPassword: $randomPassword\n\nPlease keep this information confidential.\n";
+                        $mail->Body = "Hello $firstname $lastname,\n\nYou have been registered as a voter.\n\nVoter ID: $voter\nPassword: $randomPassword\nKindly click this link to redirect to vosys.org: https://vosys.org/\nPlease keep this information confidential.\n\nRegards,\nJPCS Election Commitee";
 
                         // Enable debug mode
                         $mail->SMTPDebug = SMTP::DEBUG_SERVER;
