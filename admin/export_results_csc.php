@@ -164,10 +164,10 @@ $pdfContent .= "
   </tbody>
 </table>
 <br>
-<p>Total Voters: {$total_voters}</p>
-<p>Voters Voted: {$voted_voters}</p>
-<p>Remaining Voters: {$remaining_voters}</p>
-<p>Voter Turnout: {$voter_turnout}%</p>
+<p style='justify-content: left'><b>Total Voters:</b> {$total_voters}</p>
+<p><b>Voters Voted:</b> {$voted_voters}</p>
+<p><b>Remaining Voters:</b> {$remaining_voters}</p>
+<p><b>Voter Turnout:</b> {$voter_turnout}%</p>
 ";
 
 // Create PDF using mPDF library
