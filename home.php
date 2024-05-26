@@ -119,7 +119,7 @@ if(!is_active_election($conn)){
 
         <!-- Display the live poll results -->
         <h2 class="text-center">Live Poll Results</h2>
-        <div id="live-poll-results" class="live-poll-results">
+        <div id="live-poll-results">
             <?php
             // Fetch live poll results
             $sql_results = "SELECT 
@@ -164,7 +164,7 @@ if(!is_active_election($conn)){
                 // Alternate color between blue and red
                 $color = $is_blue ? 'blue' : 'red';
 
-                // Display candidate result without names and with percentage rounded to 2 decimal places
+                // Display candidate result with percentage rounded to 2 decimal places
                 echo "<div style='margin: 10px 0;'>
                         <div style='background-color: lightgrey; width: 100%; height: 30px;'>
                             <div style='width: {$vote_percentage}%; background-color: $color; color: white; height: 100%; text-align: center; line-height: 30px;'>
@@ -175,34 +175,6 @@ if(!is_active_election($conn)){
                 $is_blue = !$is_blue; // Toggle color
             }
             ?>
-
-            </div>
-
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                function updatePollResults() {
-                    $.ajax({
-                        url: 'get_poll_results.php',
-                        method: 'GET',
-                        success: function(data) {
-                            $('#live-poll-results').html(data); // Update live poll results
-                        }
-                    });
-                }
-
-                // Call the function on page load
-                updatePollResults();
-
-                // Set interval to update results every 5 seconds
-                setInterval(updatePollResults, 5000); // Update every 5 seconds
-            });
-        </script>
-
-
-
-
-
 
         </div>
         <?php
