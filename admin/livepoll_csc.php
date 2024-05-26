@@ -214,21 +214,6 @@ include 'includes/header_csc.php';
             evtSource.close();
         };
 
-        $(document).on('submit', '#voteForm', function (e) {
-            e.preventDefault();
-            $.ajax({
-                url: 'submit_vote.php',
-                method: 'POST',
-                data: $(this).serialize(),
-                success: function (response) {
-                    // No need to fetch data here, SSE will handle updates
-                },
-                error: function (xhr, status, error) {
-                    console.error("An error occurred while submitting the vote: ", error);
-                }
-            });
-        });
-
         $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
                 $('#back-to-top').fadeIn();
@@ -243,5 +228,6 @@ include 'includes/header_csc.php';
         });
     });
 </script>
+
 </body>
 </html>
