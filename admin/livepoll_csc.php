@@ -40,11 +40,18 @@ include 'includes/header_csc.php';
             display: flex;
             align-items: center;
             margin-bottom: 20px;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
+        }
+
+        .candidate-images {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-right: 20px;
         }
 
         .candidate-image {
-            margin-right: 20px;
+            margin-bottom: 10px;
         }
 
         .candidate-image img {
@@ -59,9 +66,16 @@ include 'includes/header_csc.php';
                 align-items: center;
             }
 
-            .candidate-image {
+            .candidate-images {
+                flex-direction: row;
                 margin-bottom: 20px;
                 margin-right: 0;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .candidate-image {
+                margin-right: 10px;
             }
 
             .candidate-image img {
@@ -101,7 +115,7 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-image" id="presidentImage"></div>
+                                <div class="candidate-images" id="presidentImage"></div>
                                 <div id="presidentGraph" style="height: 300px; width: 100%;"></div>
                             </div>
                         </div>
@@ -115,7 +129,7 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-image" id="vicePresidentImage"></div>
+                                <div class="candidate-images" id="vicePresidentImage"></div>
                                 <div id="vicePresidentGraph" style="height: 300px; width: 100%;"></div>
                             </div>
                         </div>
@@ -129,7 +143,7 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-image" id="secretaryImage"></div>
+                                <div class="candidate-images" id="secretaryImage"></div>
                                 <div id="secretaryGraph" style="height: 300px; width: 100%;"></div>
                             </div>
                         </div>
@@ -143,7 +157,7 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-image" id="treasurerImage"></div>
+                                <div class="candidate-images" id="treasurerImage"></div>
                                 <div id="treasurerGraph" style="height: 300px; width: 100%;"></div>
                             </div>
                         </div>
@@ -157,7 +171,7 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-image" id="auditorImage"></div>
+                                <div class="candidate-images" id="auditorImage"></div>
                                 <div id="auditorGraph" style="height: 300px; width: 100%;"></div>
                             </div>
                         </div>
@@ -171,7 +185,7 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-image" id="proImage"></div>
+                                <div class="candidate-images" id="proImage"></div>
                                 <div id="proGraph" style="height: 300px; width: 100%;"></div>
                             </div>
                         </div>
@@ -185,7 +199,7 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-image" id="businessManagerImage"></div>
+                                <div class="candidate-images" id="businessManagerImage"></div>
                                 <div id="businessManagerGraph" style="height: 300px; width: 100%;"></div>
                             </div>
                         </div>
@@ -199,7 +213,7 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-image" id="beedRepImage"></div>
+                                <div class="candidate-images" id="beedRepImage"></div>
                                 <div id="beedRepGraph" style="height: 300px; width: 100%;"></div>
                             </div>
                         </div>
@@ -213,7 +227,7 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-image" id="bsedRepImage"></div>
+                                <div class="candidate-images" id="bsedRepImage"></div>
                                 <div id="bsedRepGraph" style="height: 300px; width: 100%;"></div>
                             </div>
                         </div>
@@ -227,7 +241,7 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-image" id="bshmRepImage"></div>
+                                <div class="candidate-images" id="bshmRepImage"></div>
                                 <div id="bshmRepGraph" style="height: 300px; width: 100%;"></div>
                             </div>
                         </div>
@@ -241,7 +255,7 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-image" id="bsoadRepImage"></div>
+                                <div class="candidate-images" id="bsoadRepImage"></div>
                                 <div id="bsoadRepGraph" style="height: 300px; width: 100%;"></div>
                             </div>
                         </div>
@@ -255,7 +269,7 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-image" id="bscrimRepImage"></div>
+                                <div class="candidate-images" id="bscrimRepImage"></div>
                                 <div id="bscrimRepGraph" style="height: 300px; width: 100%;"></div>
                             </div>
                         </div>
@@ -269,7 +283,7 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-image" id="bsitRepImage"></div>
+                                <div class="candidate-images" id="bsitRepImage"></div>
                                 <div id="bsitRepGraph" style="height: 300px; width: 100%;"></div>
                             </div>
                         </div>
@@ -294,7 +308,7 @@ include 'includes/header_csc.php';
         // Update the image container
         var imageContainer = document.getElementById(imageContainerId);
         imageContainer.innerHTML = dataPoints.map(dataPoint =>
-            `<div><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"></div>`
+            `<div class="candidate-image"><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"></div>`
         ).join('');
 
         var chart = new CanvasJS.Chart(containerId, {
@@ -350,7 +364,7 @@ include 'includes/header_csc.php';
         // Update the image container
         var imageContainer = document.getElementById(imageContainerId);
         imageContainer.innerHTML = newDataPoints.map(dataPoint =>
-            `<div><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"></div>`
+            `<div class="candidate-image"><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"></div>`
         ).join('');
 
         chart.options.animationEnabled = true;
