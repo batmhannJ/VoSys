@@ -271,7 +271,7 @@ include 'includes/header_csc.php';
                 updateChartData(bsedRepChart, response.bsedRepresentative);
                 updateChartData(bshmRepChart, response.bshmRepresentative);
                 updateChartData(bsoadRepChart, response.bsoadRepresentative);
-                updateChartData(bscrimRepChart, response.bsCrimRepresentative);
+                updateChartData(bscrimRepChart, response.bs crimRep);
                 updateChartData(bsitRepChart, response.bsitRepresentative);
             },
             error: function (error) {
