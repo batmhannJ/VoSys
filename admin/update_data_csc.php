@@ -19,14 +19,14 @@ function fetchVotes($conn, $category, $organizationFilter) {
             WHERE voters1.organization != '' AND categories.name = '$category'
             $organizationFilter
             GROUP BY candidates.id";
-    
+
     // Debugging: Log the query for inspection
-    error_log("SQL Query: " . $sql);
+    error_log("SQL Query for $category: " . $sql);
 
     $query = $conn->query($sql);
     if (!$query) {
         // Log SQL error if query fails
-        error_log("SQL Error: " . $conn->error);
+        error_log("SQL Error for $category: " . $conn->error);
         return $data;
     }
 
@@ -56,7 +56,9 @@ $categories = [
 ];
 
 foreach ($categories as $category) {
-    $response[$category] = fetchVotes($conn, ucfirst(str_replace(['Rep', 'Manager', 'P.R.O'], [' Rep', ' Manager', ' P.R.O'], $category)), $organizationFilter);
+    // Adjust category names to match database entries
+    $categoryName = ucfirst(str_replace(['Rep', 'Manager', 'P.R.O'], [' Rep', ' Manager', ' P.R.O'], $category));
+    $response[$category] = fetchVotes($conn, $categoryName, $organizationFilter);
 }
 
 // Debugging: Log the final response
