@@ -116,8 +116,9 @@ tr:nth-child(odd) {
 </style>
 <div class='header-container'>
   <img src='images/logo.png' alt='Logo' style='height: 70px; width: 70px; float: left;'>
-  <p class='school-name' style='font-size: 18px; font-weight: bold; margin-left: -10px;'>Our Lady of the Sacred Heart College of Guimba, Inc.</p>
-  <p class='report-title' style='font-size: 16px; margin-top: 1000px;'>2024 Election Results</p>
+  <img src='images/j.png' alt='Logo' style='height: 70px; width: 70px; float: right;'>
+  <p class='school-name' style='font-size: 20px; font-weight: bold; margin-left: -10px;'>Our Lady of the Sacred Heart College of Guimba, Inc.<br>Guimba, Nueva Ecija</p>
+  <p class='report-title' style='font-size: 16px; margin-top: 50px;'>2024 Election Results</p>
 </div>
 <table>
     <thead>
