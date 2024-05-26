@@ -38,7 +38,7 @@ include 'includes/header_code.php';
                 // Display position name only once
                 static $prev_position = '';
                 if ($row['position_name'] != $prev_position) {
-                    echo "<div style='margin-top: 20px;'><strong>{$row['position_name']}</strong></div>";
+                    echo "<div style='margin-top: 20px; font-size: 20px;'><strong>{$row['position_name']}</strong></div>";
                     $prev_position = $row['position_name'];
                 }
 
