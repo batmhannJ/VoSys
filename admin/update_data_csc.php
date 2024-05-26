@@ -27,7 +27,7 @@ function fetchVotes($conn, $category, $organizationFilter) {
 
 $response = array();
 $response['president'] = fetchVotes($conn, 'President', $organizationFilter);
-$response['vicePresident'] = fetchVotes($conn, 'Vice President', $organizationFilter);
+$response['vice president'] = fetchVotes($conn, 'Vice President', $organizationFilter);
 $response['secretary'] = fetchVotes($conn, 'Secretary', $organizationFilter);
 $response['treasurer'] = fetchVotes($conn, 'Treasurer', $organizationFilter);
 $response['auditor'] = fetchVotes($conn, 'Auditor', $organizationFilter);
