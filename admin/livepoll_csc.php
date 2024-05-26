@@ -5,7 +5,6 @@ include 'includes/session.php';
 include 'includes/header_csc.php';
 ?>
 <head>
-    <!-- Add the style block to center the box titles and style the back to top button -->
     <style>
         .box-title {
             text-align: center;
@@ -37,19 +36,50 @@ include 'includes/header_csc.php';
         }
 
         .chart-container {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .candidate-images {
+            position: absolute;
+            top: 0;
+            left: 0;
             display: flex;
-            align-items: center;
-            margin-bottom: 20px;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            padding: 10px;
         }
 
         .candidate-image {
-            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
         }
 
         .candidate-image img {
             width: 50px;
             height: 50px;
             border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .candidate-label {
+            margin-left: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .candidate-image img {
+                width: 75px;
+                height: 75px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .candidate-image img {
+                width: 100px;
+                height: 100px;
+            }
         }
     </style>
 </head>
@@ -76,8 +106,8 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-image" id="presidentImage"></div>
-                                <div id="presidentGraph" style="height: 300px; width: 100%;"></div>
+                                <div class="candidate-images" id="presidentImage"></div>
+                                <div id="presidentGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
                     </div>
@@ -90,8 +120,8 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-image" id="vicePresidentImage"></div>
-                                <div id="vicePresidentGraph" style="height: 300px; width: 100%;"></div>
+                                <div class="candidate-images" id="vicePresidentImage"></div>
+                                <div id="vicePresidentGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
                     </div>
@@ -104,8 +134,8 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-image" id="secretaryImage"></div>
-                                <div id="secretaryGraph" style="height: 300px; width: 100%;"></div>
+                                <div class="candidate-images" id="secretaryImage"></div>
+                                <div id="secretaryGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
                     </div>
@@ -118,8 +148,8 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-image" id="treasurerImage"></div>
-                                <div id="treasurerGraph" style="height: 300px; width: 100%;"></div>
+                                <div class="candidate-images" id="treasurerImage"></div>
+                                <div id="treasurerGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
                     </div>
@@ -132,8 +162,8 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-image" id="auditorImage"></div>
-                                <div id="auditorGraph" style="height: 300px; width: 100%;"></div>
+                                <div class="candidate-images" id="auditorImage"></div>
+                                <div id="auditorGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
                     </div>
@@ -146,8 +176,8 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-image" id="proImage"></div>
-                                <div id="proGraph" style="height: 300px; width: 100%;"></div>
+                                <div class="candidate-images" id="proImage"></div>
+                                <div id="proGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
                     </div>
@@ -160,8 +190,8 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-image" id="businessManagerImage"></div>
-                                <div id="businessManagerGraph" style="height: 300px; width: 100%;"></div>
+                                <div class="candidate-images" id="businessManagerImage"></div>
+                                <div id="businessManagerGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
                     </div>
@@ -174,8 +204,8 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-image" id="beedRepImage"></div>
-                                <div id="beedRepGraph" style="height: 300px; width: 100%;"></div>
+                                <div class="candidate-images" id="beedRepImage"></div>
+                                <div id="beedRepGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
                     </div>
@@ -188,8 +218,8 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-image" id="bsedRepImage"></div>
-                                <div id="bsedRepGraph" style="height: 300px; width: 100%;"></div>
+                                <div class="candidate-images" id="bsedRepImage"></div>
+                                <div id="bsedRepGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
                     </div>
@@ -202,8 +232,8 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-image" id="bshmRepImage"></div>
-                                <div id="bshmRepGraph" style="height: 300px; width: 100%;"></div>
+                                <div class="candidate-images" id="bshmRepImage"></div>
+                                <div id="bshmRepGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
                     </div>
@@ -216,8 +246,8 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-image" id="bsoadRepImage"></div>
-                                <div id="bsoadRepGraph" style="height: 300px; width: 100%;"></div>
+                                <div class="candidate-images" id="bsoadRepImage"></div>
+                                <div id="bsoadRepGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
                     </div>
@@ -226,12 +256,12 @@ include 'includes/header_csc.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><b>BS CRIM Representative</b></h3>
+                            <h3 class="box-title"><b>BSCRIM Representative</b></h3>
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-image" id="bscrimRepImage"></div>
-                                <div id="bscrimRepGraph" style="height: 300px; width: 100%;"></div>
+                                <div class="candidate-images" id="bscrimRepImage"></div>
+                                <div id="bscrimRepGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
                     </div>
@@ -244,35 +274,39 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-image" id="bsitRepImage"></div>
-                                <div id="bsitRepGraph" style="height: 300px; width: 100%;"></div>
+                                <div class="candidate-images" id="bsitRepImage"></div>
+                                <div id="bsitRepGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-    </div>
 
+        <button id="back-to-top" title="Back to top">&uarr;</button>
+    </div>
     <?php include 'includes/footer.php'; ?>
-    <?php include 'includes/votes_modal.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="path/to/jquery.min.js"></script>
 <script>
     function generateBarGraph(dataPoints, containerId, imageContainerId) {
         var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
         // Update the image container
         var imageContainer = document.getElementById(imageContainerId);
-        imageContainer.innerHTML = dataPoints.map(dataPoint => 
-            `<div><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"></div>`
+        imageContainer.innerHTML = dataPoints.map(dataPoint =>
+            `<div class="candidate-image">
+                <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">
+                <span class="candidate-label">${dataPoint.label}</span>
+            </div>`
         ).join('');
 
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
-            animationDuration: 2000, // Animation duration for initial rendering
+            animationDuration: 3000,
+            animationEasing: "easeInOutBounce",
             title: {
                 text: "Vote Counts"
             },
@@ -286,7 +320,7 @@ include 'includes/header_csc.php';
             },
             axisY: {
                 title: "",
-                interval: Math.ceil(totalVotes / 10) // Adjust the Y-axis interval for better scaling
+                interval: Math.ceil(totalVotes / 10)
             },
             data: [{
                 type: "bar",
@@ -300,7 +334,15 @@ include 'includes/header_csc.php';
                 }))
             }]
         });
+
         chart.render();
+
+        // Adjust the chart size when the window is resized
+        window.addEventListener('resize', function () {
+            chart.options.width = document.getElementById(containerId).offsetWidth;
+            chart.render();
+        });
+
         return chart;
     }
 
@@ -313,12 +355,16 @@ include 'includes/header_csc.php';
 
         // Update the image container
         var imageContainer = document.getElementById(imageContainerId);
-        imageContainer.innerHTML = newDataPoints.map(dataPoint => 
-            `<div><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"></div>`
+        imageContainer.innerHTML = newDataPoints.map(dataPoint =>
+            `<div class="candidate-image">
+                <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">
+                <span class="candidate-label">${dataPoint.label}</span>
+            </div>`
         ).join('');
 
         chart.options.animationEnabled = true;
-        chart.options.animationDuration = 2000; // Animation duration for updates
+        chart.options.animationDuration = 2000;
+        chart.options.animationEasing = "easeInOutBounce";
         chart.render();
     }
 
@@ -366,7 +412,6 @@ include 'includes/header_csc.php';
 
     setInterval(updateVoteCounts, 5000);
 
-    // Back to top button script
     $(document).ready(function () {
         var btn = $('#back-to-top');
 
@@ -384,9 +429,5 @@ include 'includes/header_csc.php';
         });
     });
 </script>
-
-<!-- Back to Top Button -->
-<button id="back-to-top" title="Back to Top">&uarr;</button>
-
 </body>
 </html>

@@ -21,10 +21,17 @@ function fetchVotes($conn, $category, $organizationFilter) {
             GROUP BY candidates.id";
     $query = $conn->query($sql);
     while($row = $query->fetch_assoc()) {
+        $imagePath = !empty($row['candidate_image']) ? '../images/' . $row['candidate_image'] : '../images/profile.jpg';
+
+        // Debugging: Check if the file exists and log the path
+        if (!file_exists($imagePath)) {
+            error_log("Image not found: " . $imagePath);
+        }
+
         $data[] = array(
             "y" => intval($row['vote_count']), 
             "label" => $row['candidate_name'],
-            "image" => !empty($row['candidate_image']) ? 'images/'.$row['candidate_image'] : 'images/default.png' // Assuming default.png as a placeholder
+            "image" => $imagePath
         );
     }
     return $data;
@@ -46,5 +53,7 @@ $response['bsCrimRepresentative'] = fetchVotes($conn, 'BS CRIM Representative', 
 $response['bsitRepresentative'] = fetchVotes($conn, 'BSIT Representative', $organizationFilter);
 
 header('Content-Type: application/json');
-echo json_encode($response);
+$responseJson = json_encode($response);
+echo $responseJson;
+error_log($responseJson);
 ?>

@@ -33,7 +33,7 @@ if(!is_active_election($conn)){
 	      <section class="content">
           <div class="image-container">
 	      	<h1 class="page-header text-center title">
-	      		<b>JPCS <br> ELECTIONS</b>
+	      		<b>JUNIOR PHILIPPINE COMPUTER SOCIETY<br> ELECTIONS</b>
             </h1>
             <section class="discover section" id="discover">      
         <!--<center><h4 id="electionTitle" class="heading">Remaining time to vote</h4></center>-->
@@ -326,7 +326,7 @@ if(!is_active_election($conn)){
             else{
                 $.ajax({
                     type: 'POST',
-                    url: 'preview.php',
+                    url: 'preview_jpcs',
                     data: form,
                     dataType: 'json',
                     success: function(response){
@@ -379,7 +379,7 @@ if(!is_active_election($conn)){
     justify-content: space-between;
     align-items: center;
     background-color: black;
-    color: #fff;
+    color: ##013220;
     padding: 10px;
 }
 
@@ -658,7 +658,7 @@ if(!is_active_election($conn)){
 .page-header {
     margin-top: 10px; /* Increase margin from the top */
     padding: 80px 20px; /* Increase padding on top and bottom to expand the box */
-    background-image: url('images/bcs.png'); /* Add background image */
+    background-image: url('images/bj.png'); /* Add background image */
     background-size: cover; /* Cover the entire background */
     background-repeat: no-repeat; /* Prevent background image from repeating */
     background-position: center; /* Center the background image */
