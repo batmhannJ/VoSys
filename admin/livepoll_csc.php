@@ -6,77 +6,7 @@ include 'includes/header_csc.php';
 ?>
 <head>
     <style>
-        .box-title {
-            text-align: center;
-            width: 100%;
-            display: inline-block;
-        }
-
-        #back-to-top {
-            position: fixed;
-            bottom: 40px;
-            right: 40px;
-            display: none;
-            background-color: #000;
-            color: #fff;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            text-align: center;
-            font-size: 22px;
-            line-height: 50px;
-            cursor: pointer;
-            z-index: 1000;
-        }
-
-        #back-to-top:hover {
-            background-color: #555;
-        }
-
-        .chart-container {
-            position: relative;
-            margin-bottom: 40px;
-        }
-
-        .candidate-images {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 10px;
-        }
-
-        .candidate-image {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .candidate-image img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-
-        .candidate-label {
-            margin-left: 10px;
-            font-weight: bold;
-        }
-
-        @media (max-width: 768px) {
-            .candidate-image img {
-                width: 75px;
-                height: 75px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .candidate-image img {
-                width: 100px;
-                height: 100px;
-            }
-        }
+        /* Your existing CSS styles */
     </style>
 </head>
 <body class="hold-transition skin-black sidebar-mini">
@@ -134,12 +64,14 @@ include 'includes/header_csc.php';
 
         <button id="back-to-top" title="Back to top">&uarr;</button>
     </div>
+
     <?php include 'includes/footer.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    // Function to generate bar graph
     function generateBarGraph(dataPoints, containerId, imageContainerId) {
         var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
@@ -186,6 +118,7 @@ include 'includes/header_csc.php';
         chart.render();
     }
 
+    // Function to update graphs with new data
     function updateGraphs(data) {
         var categories = [
             'president', 'vice president', 'secretary', 'treasurer', 'auditor',
@@ -204,16 +137,20 @@ include 'includes/header_csc.php';
         // Create a new EventSource object to listen to SSE
         const evtSource = new EventSource('update_data_csc.php');
 
+        // Event listener for receiving SSE messages
         evtSource.onmessage = function(event) {
             const data = JSON.parse(event.data);
             updateGraphs(data);
         };
 
-        evtSource.onerror = function(err) {
+        // Event listener for SSE errors
+        evtSource.onerror = function
+        (err) {
             console.error("EventSource failed:", err);
             evtSource.close();
         };
 
+        // Back to top button functionality
         $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
                 $('#back-to-top').fadeIn();
@@ -228,6 +165,5 @@ include 'includes/header_csc.php';
         });
     });
 </script>
-
 </body>
 </html>
