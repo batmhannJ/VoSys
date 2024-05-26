@@ -113,26 +113,24 @@ tr:nth-child(odd) {
 .highlight {
   background-color: #ffe6e6; /* Light red background for highest count of votes */
 }
-.header {
-  display: flex;
-  align-items: center; /* Center vertically */
-}
+
 .header img {
   height: 100px; /* Set height */
   width: 100px; /* Set width */
   margin-right: 20px; /* Adjust margin as needed */
+  display: inline-block;
+  vertical-align: middle;
 }
-.header-content {
-  display: flex;
-  flex-direction: column;
+
+.header p {
+  display: inline-block;
+  vertical-align: middle;
 }
 </style>
-<div class='header' style='display:flex;'>
-<img src='images/logo.png' alt=Logo style='height: 100px; width: 100px;'>
-</div>
-<div class='header-content' style='display: flex; flex-direction: column;'>
-<p style='font-family, cursive;'>Our Lady of the Sacred Heart College of Guimba, Inc.</p>
-<h1>2024 Election Results</h1>
+<div class='header'>
+  <img src='images/logo.png' alt='Logo'>
+  <p>Our Lady of the Sacred Heart College of Guimba, Inc.</p>
+  <h1>2024 Election Results</h1>
 </div>
 
 <table>
