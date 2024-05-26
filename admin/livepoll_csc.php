@@ -172,7 +172,7 @@ include 'includes/header_csc.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><b>Public Information Officer (P.R.O)</b></h3>
+                            <h3 class="box-title"><b>P.R.O</b></h3>
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
@@ -200,7 +200,7 @@ include 'includes/header_csc.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><b>BEED Representative</b></h3>
+                            <h3 class="box-title"><b>BEED Rep</b></h3>
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
@@ -214,7 +214,7 @@ include 'includes/header_csc.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><b>BSED Representative</b></h3>
+                            <h3 class="box-title"><b>BSED Rep</b></h3>
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
@@ -228,7 +228,7 @@ include 'includes/header_csc.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><b>BSHM Representative</b></h3>
+                            <h3 class="box-title"><b>BSHM Rep</b></h3>
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
@@ -242,7 +242,7 @@ include 'includes/header_csc.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><b>BSOAD Representative</b></h3>
+                            <h3 class="box-title"><b>BSOAD Rep</b></h3>
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
@@ -256,7 +256,7 @@ include 'includes/header_csc.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><b>BSCRIM Representative</b></h3>
+                            <h3 class="box-title"><b>BS CRIM Rep</b></h3>
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
@@ -270,7 +270,7 @@ include 'includes/header_csc.php';
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><b>BSIT Representative</b></h3>
+                            <h3 class="box-title"><b>BSIT Rep</b></h3>
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
