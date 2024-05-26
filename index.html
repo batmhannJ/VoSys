@@ -124,6 +124,8 @@
   <img src="images/can2/9.png" alt="instagram" />
   <img src="images/can2/4.png" alt="instagram" />
 </div>
+<div class="blog" id="blog">
+</div>
 </section>
 
 
@@ -1412,6 +1414,47 @@ hr {
   to {
     transform: translateX(calc(-50% - 0.5rem));
   }
+}
+/* General styling for both blog sections */
+.blog, .blog1 {
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  height: 150px; /* Set the height */
+  width: calc(100% - 40px); /* Adjust width to leave margin on both sides */
+  margin: 20px auto; /* Centered margin with top and bottom spacing */
+  padding: 20px; /* Inner padding for content */
+  box-sizing: border-box; /* Include padding and border in element's width and height */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition effects */
+}
+
+/* Specific background images */
+.blog {
+  background-image: url("images/pla/1.png");
+}
+
+.blog1 {
+  background-image: url("images/pla/2.png");
+}
+
+/* Hover effects */
+.blog:hover, .blog1:hover {
+  transform: scale(1.02); /* Slight scale up on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+/* Optional: Adding overlay effect */
+.blog::before, .blog1::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3); /* Dark overlay */
+  border-radius: 10px; /* Match the border radius of the section */
 }
 
   </style>
