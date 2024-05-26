@@ -26,31 +26,27 @@ include 'includes/header_csc.php';
                 <?php
                 // Function to display ranking table
                 function displayRankingTable($conn, $position) {
-                    $sql = "SELECT candidates.firstname, candidates.lastname, 
-                            COALESCE(SUM(votes_csc.vote_count), 0) AS vote_count
+                    $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
+                            COALESCE(COUNT(votes_csc.candidate_id), 0) AS vote_count
                             FROM categories 
                             LEFT JOIN candidates ON categories.id = candidates.category_id
-                            LEFT JOIN (
-                                SELECT candidate_id, COUNT(candidate_id) AS vote_count
-                                FROM votes_csc
-                                GROUP BY candidate_id
-                            ) votes_csc ON candidates.id = votes_csc.candidate_id
+                            LEFT JOIN votes_csc ON candidates.id = votes_csc.candidate_id
                             LEFT JOIN voters AS voters1 ON voters1.id = votes_csc.voters_id 
-                            WHERE voters1.organization != '' AND categories.name = ?
+                            WHERE categories.name = ? AND voters1.organization != ''
                             GROUP BY candidates.firstname, candidates.lastname
                             ORDER BY vote_count DESC";
-                    
+
                     $stmt = $conn->prepare($sql);
                     $stmt->bind_param("s", $position);
                     $stmt->execute();
                     $query = $stmt->get_result();
                     $rank = 1;
-                    while ($row = $query->fetch_assoc()) {
+                    while($row = $query->fetch_assoc()){
                         echo "
                             <tr>
-                                <td>" . $rank . "</td>
-                                <td>" . $row['firstname'] . " " . $row['lastname'] . "</td>
-                                <td>" . $row['vote_count'] . "</td>
+                                <td>".$rank."</td>
+                                <td>".$row['candidate_name']."</td>
+                                <td>".$row['vote_count']."</td>
                             </tr>";
                         $rank++;
                     }
@@ -59,19 +55,19 @@ include 'includes/header_csc.php';
 
                 // Array of positions
                 $positions = [
-                    'President',
-                    'Vice President',
-                    'Secretary',
-                    'Treasurer',
-                    'Auditor',
-                    'Public Information Officer (P.R.O)',
+                    'President', 
+                    'Vice President', 
+                    'Secretary', 
+                    'Treasurer', 
+                    'Auditor', 
+                    'P.R.O',
                     'Business Manager',
-                    'BEED Representative',
-                    'BSED Representative',
-                    'BSHM Representative',
-                    'BSOAD Representative',
-                    'BS CRIM Representative',
-                    'BSIT Representative'
+                    'BEED Rep',
+                    'BSED Rep',
+                    'BSHM Rep',
+                    'BSOAD Rep',
+                    'BS CRIM Rep',
+                    'BSIT Rep'
                 ];
 
                 // Loop through each position and display the ranking box
@@ -80,7 +76,7 @@ include 'includes/header_csc.php';
                     <div class='col-md-12'>
                         <div class='box'>
                             <div class='box-header with-border'>
-                                <h3 class='box-title text-center'>Ranking of " . $position . " Candidates</h3>
+                                <h3 class='box-title text-center'>Ranking of ".$position." Candidates</h3>
                             </div>
                             <div class='box-body'>
                                 <table class='table table-bordered'>
