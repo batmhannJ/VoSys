@@ -103,7 +103,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>Auditor</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="auditorGraph" style="height: 300px;"></div>
+                            <div id="AuditorGraph" style="height: 300px;"></div>
                         </div>
                     </div>
                 </div>
@@ -264,7 +264,7 @@ include 'includes/header_csc.php';
                 updateChartData(vicePresidentChart, response.vicePresident);
                 updateChartData(secretaryChart, response.secretary);
                 updateChartData(treasurerChart, response.treasurer);
-                updateChartData(auditorChart, response.auditor);
+                updateChartData(AuditorChart, response.Auditor);
                 updateChartData(proChart, response.publicInformationOfficer);
                 updateChartData(businessManagerChart, response.businessManager);
                 updateChartData(beedRepChart, response.beedRepresentative);
@@ -284,7 +284,7 @@ include 'includes/header_csc.php';
     var vicePresidentChart = generateBarGraph([], "vicePresidentGraph");
     var secretaryChart = generateBarGraph([], "secretaryGraph");
     var treasurerChart = generateBarGraph([], "treasurerGraph");
-    var auditorChart = generateBarGraph([], "auditorGraph");
+    var AuditorChart = generateBarGraph([], "AuditorGraph");
     var proChart = generateBarGraph([], "proGraph");
     var businessManagerChart = generateBarGraph([], "businessManagerGraph");
     var beedRepChart = generateBarGraph([], "beedRepGraph");
