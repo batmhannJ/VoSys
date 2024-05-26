@@ -180,7 +180,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>BS CRIM Representative</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="bs crimRepGraph" style="height: 300px;"></div>
+                            <div id="bscrimRepGraph" style="height: 300px;"></div>
                         </div>
                     </div>
                 </div>
@@ -271,7 +271,7 @@ include 'includes/header_csc.php';
                 updateChartData(bsedRepChart, response.bsedRepresentative);
                 updateChartData(bshmRepChart, response.bshmRepresentative);
                 updateChartData(bsoadRepChart, response.bsoadRepresentative);
-                updateChartData(bscrimRepChart, response.bs crimRep);
+                updateChartData(bscrimRepChart, response.bsCrimRepresentative);
                 updateChartData(bsitRepChart, response.bsitRepresentative);
             },
             error: function (error) {
@@ -291,7 +291,7 @@ include 'includes/header_csc.php';
     var bsedRepChart = generateBarGraph([], "bsedRepGraph");
     var bshmRepChart = generateBarGraph([], "bshmRepGraph");
     var bsoadRepChart = generateBarGraph([], "bsoadRepGraph");
-    var bscrimRepChart = generateBarGraph([], "bs crimRepGraph");
+    var bscrimRepChart = generateBarGraph([], "bscrimRepGraph");
     var bsitRepChart = generateBarGraph([], "bsitRepGraph");
 
     updateVoteCounts();
