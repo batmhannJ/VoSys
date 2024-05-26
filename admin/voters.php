@@ -47,10 +47,12 @@
           <div class="box">
             <div class="box-header with-border">
               <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
+              <button class="btn btn-danger btn-sm btn-flat" id="batchArchiveBtn"><i class="fa fa-archive"></i> Batch Archive</button>
             </div>
             <div class="box-body">
               <table id="example1" class="table table-bordered">
                 <thead>
+                  <th><input type="checkbox" id="selectAll"></th>
                   <th>No.</th>
                   <th>Full Name</th>
                   <th>Photo</th>
@@ -70,6 +72,7 @@
                       $fullname = $row['lastname'] . ', ' . $row['firstname'];
                       echo "
                         <tr>
+                          <td><input type='checkbox' class='selectItem' value='".$row['id']."'></td>
                           <td>".$i++."</td>
                           <td>".$fullname."</td>
                           <td>
@@ -135,6 +138,8 @@
     
   <?php include 'includes/footer.php'; ?>
   <?php include 'includes/voters_modal.php'; ?>
+  <?php include 'includes/batch_modal.php'; ?>
+  
 </div>
 <?php include 'includes/scripts.php'; ?>
 <script>
@@ -158,25 +163,63 @@ $(function(){
     archiveVoter(id);
   });
 
+  $('#batchArchiveBtn').click(function() {
+    var selected = [];
+    $('.selectItem:checked').each(function() {
+      selected.push($(this).val());
+    });
+
+    if(selected.length > 0) {
+      $('#batchConfirmationModal').modal('show');
+      $('#submitBatchBtn').on('click', function() {
+        $.ajax({
+          type: 'POST',
+          url: 'batch_archive_voter.php',
+          data: { ids: selected },
+          success: function(response) {
+            location.reload();
+          },
+          error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+          }
+        });
+      });
+    } else {
+      alert('No voters selected.');
+    }
+  });
+
+  $('#selectAll').click(function() {
+    if (this.checked) {
+      $('.selectItem').each(function() {
+        this.checked = true;
+      });
+    } else {
+      $('.selectItem').each(function() {
+        this.checked = false;
+      });
+    }
+  });
+
 });
 
 function archiveVoter(id) {
-    $('#confirmationModal').modal('show'); // Show the confirmation modal
+  $('#confirmationModal').modal('show'); // Show the confirmation modal
 
-    $('#submitBtn').on('click', function() {
-        $.ajax({
-            type: "POST",
-            url: "archive_voter.php",
-            data: { id: id },
-            success: function(response) {
-                // Refresh the page or update the table as needed
-                location.reload();
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
+  $('#submitBtn').on('click', function() {
+    $.ajax({
+      type: "POST",
+      url: "archive_voter.php",
+      data: { id: id },
+      success: function(response) {
+        // Refresh the page or update the table as needed
+        location.reload();
+      },
+      error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+      }
     });
+  });
 }
 
 function getRow(id){
@@ -197,26 +240,26 @@ function getRow(id){
   });
 }
 </script>
+
 <!-- Confirmation Modal -->
 <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-
-            <div class="modal-body">
-                <p>Are you sure you want to archive this voter?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="submitBtn">Yes, Submit</button>
-            </div>
-        </div>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to archive this voter?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" id="submitBtn">Archive</button>
+      </div>
     </div>
+  </div>
 </div>
 </body>
 </html>
