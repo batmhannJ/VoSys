@@ -52,7 +52,7 @@ $response = array();
 $categories = [
     'president', 'vicePresident', 'secretary', 'treasurer', 'auditor',
     'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
-    'bsoadRep', 'bsCrimRep', 'bsitRep'
+    'bsoadRep', 'bscrimRep', 'bsitRep'
 ];
 
 foreach ($categories as $category) {
