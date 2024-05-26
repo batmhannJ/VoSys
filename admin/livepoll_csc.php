@@ -180,7 +180,7 @@ include 'includes/header_csc.php';
                             <h3 class="box-title"><b>BS CRIM Representative</b></h3>
                         </div>
                         <div class="box-body">
-                            <div id="bscrimRepGraph" style="height: 300px;"></div>
+                            <div id="bs crimRepGraph" style="height: 300px;"></div>
                         </div>
                     </div>
                 </div>
@@ -291,7 +291,7 @@ include 'includes/header_csc.php';
     var bsedRepChart = generateBarGraph([], "bsedRepGraph");
     var bshmRepChart = generateBarGraph([], "bshmRepGraph");
     var bsoadRepChart = generateBarGraph([], "bsoadRepGraph");
-    var bscrimRepChart = generateBarGraph([], "bscrimRepGraph");
+    var bscrimRepChart = generateBarGraph([], "bs crimRepGraph");
     var bsitRepChart = generateBarGraph([], "bsitRepGraph");
 
     updateVoteCounts();
