@@ -102,7 +102,7 @@ include 'includes/header_csc.php';
                 <?php
                 $categories = [
                     'president' => 'President',
-                    'Vice President' => 'Vice President',
+                    'vicePresident' => 'Vice President',
                     'secretary' => 'Secretary',
                     'treasurer' => 'Treasurer',
                     'auditor' => 'Auditor',
@@ -112,7 +112,7 @@ include 'includes/header_csc.php';
                     'bsedRep' => 'BSED Rep',
                     'bshmRep' => 'BSHM Rep',
                     'bsoadRep' => 'BSOAD Rep',
-                    'BS CRIM Rep' => 'BS CRIM Rep',
+                    'bsCrimRep' => 'BS CRIM Rep',
                     'bsitRep' => 'BSIT Rep'
                 ];
 
@@ -192,15 +192,15 @@ include 'includes/header_csc.php';
 
     function fetchAndGenerateGraphs() {
         $.ajax({
-            url: 'update_data_csc.php',
+            url: 'path/to/your_php_script.php',
             method: 'GET',
             dataType: 'json',
             success: function (response) {
                 // Generate graphs for all categories
                 var categories = [
-                    'president', 'Vice President', 'secretary', 'treasurer', 'auditor',
+                    'president', 'vicePresident', 'secretary', 'treasurer', 'auditor',
                     'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
-                    'bsoadRep', 'BS CRIM Rep', 'bsitRep'
+                    'bsoadRep', 'bsCrimRep', 'bsitRep'
                 ];
 
                 categories.forEach(function (category) {
