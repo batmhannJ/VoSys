@@ -1391,46 +1391,55 @@ hr {
   overflow: hidden;
 }
 
-.instagram__flex {
+/* Base styles for .instagram__flex */
+.instagram__flex, .instagram__flex1 {
   margin-top: 2rem;
   width: max-content;
   display: flex;
   align-items: center;
   gap: 1rem;
-
-  animation: scroll 20s linear infinite;
+  animation: scroll-large 20s linear infinite;
 }
 
-.instagram__flex img {
+.instagram__flex img, .instagram__flex1 img {
   width: 200px;
   height: 200px;
 }
 
-@keyframes scroll {
+/* Keyframes for larger screens */
+@keyframes scroll-large {
   to {
     transform: translateX(calc(-50% - 1rem));
   }
 }
 
-.instagram__flex1 {
-  margin-top: .5rem;
-  width: max-content;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  animation: scroll 20s linear infinite;
-}
-
-.instagram__flex1 img {
-  width: 200px;
-  height: 200px;
-}
-
-@keyframes scroll {
+/* Keyframes for medium screens */
+@keyframes scroll-medium {
   to {
     transform: translateX(calc(-50% - 1rem));
   }
 }
+
+/* Keyframes for small screens */
+@keyframes scroll-small {
+  to {
+    transform: translateX(calc(-100% - 1rem));
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .instagram__flex, .instagram__flex1 {
+    animation: scroll-medium 20s linear infinite;
+  }
+}
+
+@media (max-width: 768px) {
+  .instagram__flex, .instagram__flex1 {
+    animation: scroll-small 20s linear infinite;
+  }
+}
+
 /* General styling for both blog sections */
 .blog, .blog1 {
   background-size: cover;
