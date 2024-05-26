@@ -49,27 +49,19 @@ function fetchVotes($conn, $category, $organizationFilter) {
 }
 
 $response = array();
-$response['president'] = fetchVotes($conn, 'President', $organizationFilter);
-$response['vicePresident'] = fetchVotes($conn, 'Vice President', $organizationFilter);
-$response['secretary'] = fetchVotes($conn, 'Secretary', $organizationFilter);
-$response['treasurer'] = fetchVotes($conn, 'Treasurer', $organizationFilter);
-$response['auditor'] = fetchVotes($conn, 'Auditor', $organizationFilter);
-$response['p.r.o'] = fetchVotes($conn, 'P.R.O', $organizationFilter);
-$response['businessManager'] = fetchVotes($conn, 'Business Manager', $organizationFilter);
-$response['beedRep'] = fetchVotes($conn, 'BEED Rep', $organizationFilter);
-$response['bsedRep'] = fetchVotes($conn, 'BSED Rep', $organizationFilter);
-$response['bshmRep'] = fetchVotes($conn, 'BSHM Rep', $organizationFilter);
-$response['bsoadRep'] = fetchVotes($conn, 'BSOAD Rep', $organizationFilter);
-$response['bsCrimRep'] = fetchVotes($conn, 'BS CRIM Rep', $organizationFilter);
-$response['bsitRep'] = fetchVotes($conn, 'BSIT Rep', $organizationFilter);
+$categories = [
+    'president', 'vicePresident', 'secretary', 'treasurer', 'auditor',
+    'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
+    'bsoadRep', 'bsCrimRep', 'bsitRep'
+];
 
-header('Content-Type: application/json');
-$responseJson = json_encode($response);
-
-if (json_last_error() !== JSON_ERROR_NONE) {
-    error_log("JSON Error: " . json_last_error_msg());
+foreach ($categories as $category) {
+    $response[$category] = fetchVotes($conn, ucfirst(str_replace(['Rep', 'Manager', 'P.R.O'], [' Rep', ' Manager', ' P.R.O'], $category)), $organizationFilter);
 }
 
-echo $responseJson;
-error_log($responseJson);
+// Debugging: Log the final response
+error_log(json_encode($response));
+
+header('Content-Type: application/json');
+echo json_encode($response);
 ?>
