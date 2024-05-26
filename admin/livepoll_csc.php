@@ -219,26 +219,26 @@ include 'includes/header_csc.php';
             error: function (xhr, status, error) {
                 console.error("Error fetching data: ", status, error);
             }
-    });
-}
+        });
+    }
 
-$(document).ready(function () {
-    fetchAndGenerateGraphs();
+    $(document).ready(function () {
+        fetchAndGenerateGraphs();
 
-    $(window).scroll(function () {
-        if ($(this).scrollTop() > 100) {
-            $('#back-to-top').fadeIn();
-        } else {
-            $('#back-to-top').fadeOut();
-        }
-    });
+$(window).scroll(function () {
+    if ($(this).scrollTop() > 100) {
+        $('#back-to-top').fadeIn();
+    } else {
+        $('#back-to-top').fadeOut();
+    }
+});
 
-    $('#back-to-top').click(function () {
-        $('html, body').animate({ scrollTop: 0 }, 600);
-        return false;
-    });
+$('#back-to-top').click(function () {
+    $('html, body').animate({ scrollTop: 0 }, 600);
+    return false;
+});
 });
 </script>
 </body>
 </html>
-       
+
