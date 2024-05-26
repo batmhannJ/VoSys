@@ -51,3 +51,4 @@ foreach ($categories as $category) {
 
 echo "data: " . json_encode($response) . "\n\n";
 flush();
+?>

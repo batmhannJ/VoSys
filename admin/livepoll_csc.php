@@ -12,7 +12,6 @@ include 'includes/header_csc.php';
             display: inline-block;
         }
 
-        /* Back to Top button styles */
         #back-to-top {
             position: fixed;
             bottom: 40px;
@@ -203,7 +202,7 @@ include 'includes/header_csc.php';
 
     $(document).ready(function () {
         if (typeof(EventSource) !== "undefined") {
-            var source = new EventSource('update_data_csc.php');
+            var source = new EventSource('sse_update.php');
             source.onmessage = function (event) {
                 var data = JSON.parse(event.data);
                 updateGraphs(data);
