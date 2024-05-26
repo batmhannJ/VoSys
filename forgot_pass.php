@@ -704,7 +704,7 @@ xhr.send('email=' + encodeURIComponent(email) + '&new_password=' + encodeURIComp
         document.addEventListener("DOMContentLoaded", function () {
             var togglePassword = document.getElementById('togglePassword');
             togglePassword.addEventListener('click', function () {
-                var input = document.getElementById('current-password');
+                var input = document.getElementById('new_password');
                 if (input.getAttribute('type') === 'password') {
                     input.setAttribute('type', 'text');
                     this.classList.remove('fa-eye');
