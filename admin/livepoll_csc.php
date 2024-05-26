@@ -395,7 +395,7 @@ include 'includes/header_csc.php';
     }
 
     var presidentChart = generateBarGraph([], "presidentGraph", "presidentImage");
-    var vicePresidentChart = generateBarGraph([], "vicePresidentGraph", "vicePresidentImage");
+    var vicePresidentChart = generateBarGraph([], "vice PresidentGraph", "vicePresidentImage");
     var secretaryChart = generateBarGraph([], "secretaryGraph", "secretaryImage");
     var treasurerChart = generateBarGraph([], "treasurerGraph", "treasurerImage");
     var auditorChart = generateBarGraph([], "auditorGraph", "auditorImage");
@@ -405,7 +405,7 @@ include 'includes/header_csc.php';
     var bsedRepChart = generateBarGraph([], "bsedRepGraph", "bsedRepImage");
     var bshmRepChart = generateBarGraph([], "bshmRepGraph", "bshmRepImage");
     var bsoadRepChart = generateBarGraph([], "bsoadRepGraph", "bsoadRepImage");
-    var bscrimRepChart = generateBarGraph([], "bscrimRepGraph", "bscrimRepImage");
+    var bscrimRepChart = generateBarGraph([], "bs crimRepGraph", "bscrimRepImage");
     var bsitRepChart = generateBarGraph([], "bsitRepGraph", "bsitRepImage");
 
     updateVoteCounts();
