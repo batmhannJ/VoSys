@@ -1,6 +1,11 @@
 <?php
 include 'includes/session.php';
 
+$organizationFilter = "";
+if (!empty($_GET['organization'])) {
+    $organizationFilter = " AND voters1.organization = '" . $_GET['organization'] . "'";
+}
+
 // Function to fetch votes data with candidate images
 function fetchVotes($conn, $category, $organizationFilter) {
     $data = array();
@@ -11,16 +16,11 @@ function fetchVotes($conn, $category, $organizationFilter) {
             LEFT JOIN candidates ON categories.id = candidates.category_id
             LEFT JOIN votes_csc ON candidates.id = votes_csc.candidate_id
             LEFT JOIN voters AS voters1 ON voters1.id = votes_csc.voters_id 
-            WHERE voters1.organization != '' AND categories.name = ? 
+            WHERE voters1.organization != '' AND categories.name = '$category'
             $organizationFilter
             GROUP BY candidates.id";
-    
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('s', $category);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    
-    while($row = $result->fetch_assoc()) {
+    $query = $conn->query($sql);
+    while($row = $query->fetch_assoc()) {
         $imagePath = !empty($row['candidate_image']) ? '../images/' . $row['candidate_image'] : '../images/profile.jpg';
 
         // Debugging: Check if the file exists and log the path
@@ -34,26 +34,23 @@ function fetchVotes($conn, $category, $organizationFilter) {
             "image" => $imagePath
         );
     }
-    $stmt->close();
     return $data;
 }
 
-$organizationFilter = "";
-if (!empty($_GET['organization'])) {
-    $organization = $_GET['organization'];
-    $organizationFilter = " AND voters1.organization = ?";
-}
-
 $response = array();
-$categories = [
-    'President', 'Vice President', 'Secretary', 'Treasurer', 'Auditor', 
-    'Public Information Officer (P.R.O)', 'Business Manager', 'BEED Rep', 
-    'BSED Rep', 'BSHM Rep', 'BSOAD Rep', 'BS CRIM Rep', 'BSIT Rep'
-];
-
-foreach ($categories as $category) {
-    $response[strtolower(str_replace(' ', '', $category))] = fetchVotes($conn, $category, $organizationFilter);
-}
+$response['president'] = fetchVotes($conn, 'President', $organizationFilter);
+$response['vicePresident'] = fetchVotes($conn, 'Vice President', $organizationFilter);
+$response['secretary'] = fetchVotes($conn, 'Secretary', $organizationFilter);
+$response['treasurer'] = fetchVotes($conn, 'Treasurer', $organizationFilter);
+$response['auditor'] = fetchVotes($conn, 'Auditor', $organizationFilter);
+$response['publicInformationOfficer'] = fetchVotes($conn, 'Public Information Officer (P.R.O)', $organizationFilter);
+$response['businessManager'] = fetchVotes($conn, 'Business Manager', $organizationFilter);
+$response['beedRep'] = fetchVotes($conn, 'BEED Rep', $organizationFilter);
+$response['bsedRep'] = fetchVotes($conn, 'BSED Rep', $organizationFilter);
+$response['bshmRep'] = fetchVotes($conn, 'BSHM Rep', $organizationFilter);
+$response['bsoadRep'] = fetchVotes($conn, 'BSOAD Rep', $organizationFilter);
+$response['bsCrimRep'] = fetchVotes($conn, 'BS CRIM Rep', $organizationFilter);
+$response['bsitRep'] = fetchVotes($conn, 'BSIT Rep', $organizationFilter);
 
 header('Content-Type: application/json');
 $responseJson = json_encode($response);
