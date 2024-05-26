@@ -60,14 +60,14 @@ include 'includes/header_csc.php';
                     'Secretary', 
                     'Treasurer', 
                     'Auditor', 
-                    'Public Information Officer (P.R.O)',
+                    'P.R.O',
                     'Business Manager',
-                    'BEED Representative',
-                    'BSED Representative',
-                    'BSHM Representative',
-                    'BSOAD Representative',
-                    'BS CRIM Representative',
-                    'BSIT Representative'
+                    'BEED Rep',
+                    'BSED Rep',
+                    'BSHM Rep',
+                    'BSOAD Rep',
+                    'BS CRIM Rep',
+                    'BSIT Rep'
                 ];
 
                 // Loop through each position and display the ranking box
