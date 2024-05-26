@@ -151,6 +151,48 @@ include 'includes/header_csc.php';
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script src="path/to/jquery.min.js"></script>
 <script>
+    $(document).ready(function () {
+        fetchAndGenerateGraphs();
+
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 100) {
+                $('#back-to-top').fadeIn();
+            } else {
+                $('#back-to-top').fadeOut();
+            }
+        });
+
+        $('#back-to-top').click(function () {
+            $('html, body').animate({ scrollTop: 0 }, 600);
+            return false;
+        });
+    });
+
+    function fetchAndGenerateGraphs() {
+        $.ajax({
+            url: 'update_data_csc.php',
+            method: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                // Generate graphs for all categories
+                var categories = [
+                    'president', 'vice president', 'secretary', 'treasurer', 'auditor',
+                    'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
+                    'bsoadRep', 'bs crimRep', 'bsitRep'
+                ];
+
+                categories.forEach(function (category) {
+                    if (response[category]) {
+                        generateBarGraph(response[category], category + 'Graph', category + 'Image');
+                    }
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error("Error fetching data: ", status, error);
+            }
+        });
+    }
+
     function generateBarGraph(dataPoints, containerId, imageContainerId) {
         var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
@@ -196,49 +238,8 @@ include 'includes/header_csc.php';
         });
         chart.render();
     }
-
-    function fetchAndGenerateGraphs() {
-        $.ajax({
-            url: 'update_data_csc.php',
-            method: 'GET',
-            dataType: 'json',
-            success: function (response) {
-                // Generate graphs for all categories
-                var categories = [
-                    'president', 'vice president', 'secretary', 'treasurer', 'auditor',
-                    'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
-                    'bsoadRep', 'bs crimRep', 'bsitRep'
-                ];
-
-                categories.forEach(function (category) {
-                    if (response[category]) {
-                        generateBarGraph(response[category], category + 'Graph', category + 'Image');
-                    }
-                });
-            },
-            error: function (xhr, status, error) {
-                console.error("Error fetching data: ", status, error);
-            }
-        });
-    }
-
-    $(document).ready(function () {
-        fetchAndGenerateGraphs();
-
-$(window).scroll(function () {
-    if ($(this).scrollTop() > 100) {
-        $('#back-to-top').fadeIn();
-    } else {
-        $('#back-to-top').fadeOut();
-    }
-});
-
-$('#back-to-top').click(function () {
-    $('html, body').animate({ scrollTop: 0 }, 600);
-    return false;
-});
-});
 </script>
 </body>
 </html>
 
+               
