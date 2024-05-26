@@ -119,7 +119,7 @@ if(!is_active_election($conn)){
 
         <!-- Display the live poll results -->
         <h2 class="text-center">Live Poll Results</h2>
-        <div id="live-poll-results" class="live-poll-results">
+        <div id="live-poll-results">
             <?php
             // Fetch live poll results
             $sql_results = "SELECT 
@@ -175,35 +175,6 @@ if(!is_active_election($conn)){
                 $is_blue = !$is_blue; // Toggle color
             }
             ?>
-
-            </div>
-
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                function updatePollResults() {
-                    $.ajax({
-                        url: 'get_poll_results.php',
-                        method: 'GET',
-                        success: function(data) {
-                            $('#live-poll-results').html(data); // Update live poll results
-                        }
-                    });
-                }
-
-                // Call the function on page load
-                updatePollResults();
-
-                // Set interval to update results every 5 seconds
-                setInterval(updatePollResults, 5000); // Update every 5 seconds
-            });
-        </script>
-
-
-
-
-
-
         </div>
         <?php
     }
