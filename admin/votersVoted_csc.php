@@ -59,7 +59,6 @@ include 'includes/header_csc.php';
                   <th>Email</th>
                   <th>Year Level</th>
                   <th>Organization</th>
-                  <!--<th>Tools</th>-->
                 </thead>
                 <tbody>
                   <?php
@@ -101,8 +100,27 @@ include 'includes/header_csc.php';
   <?php include 'includes/footer.php'; ?>
   <?php include 'includes/voters_modal.php'; ?>
 </div>
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+<!-- DataTables Responsive CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<!-- DataTables Responsive JS -->
+<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+
 <?php include 'includes/scripts.php'; ?>
 <script>
+$(document).ready(function() {
+    $('#example1').DataTable({
+        responsive: true
+    });
+});
+
 $(function(){
   $(document).on('click', '.edit', function(e){
     e.preventDefault();
