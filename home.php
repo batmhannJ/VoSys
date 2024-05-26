@@ -109,65 +109,68 @@ if(!is_active_election($conn)){
 					</script>
 
 <?php
-    $sql = "SELECT * FROM votes_csc WHERE voters_id = '".$voter['id']."'";
-    $vquery = $conn->query($sql);
-    if($vquery->num_rows > 0){
-        ?>
-        <div class="text-center">
-            <h3>You have already voted for this election.</h3>
-            <a href="#view" data-toggle="modal" class="btn btn-flat btn-primary btn-lg">View Ballot</a>
-        </div>
+// Fetch live poll results for all positions
+$sql_results = "SELECT 
+                    categories.name AS position_name, 
+                    MAX(candidates.firstname) AS firstname, 
+                    MAX(candidates.lastname) AS lastname, 
+                    COUNT(votes_csc.candidate_id) AS vote_count
+                FROM 
+                    votes_csc
+                LEFT JOIN 
+                    candidates ON votes_csc.candidate_id = candidates.id
+                LEFT JOIN 
+                    categories ON votes_csc.category_id = categories.id
+                WHERE 
+                    votes_csc.election_id = 20
+                GROUP BY 
+                    categories.name
+                ORDER BY 
+                    categories.priority ASC, vote_count DESC";
 
-        <!-- Display the live poll results -->
-<!-- Display the live poll results -->
-<h2 class="text-center">Live Poll Results</h2>
-<div class="live-poll-results">
-    <?php
-    // Fetch live poll results for President position only
-    $sql_results = "SELECT 
-                        candidates.firstname,
-                        candidates.lastname,
-                        COUNT(votes_csc.candidate_id) AS vote_count
-                    FROM 
-                        votes_csc
-                    LEFT JOIN 
-                        candidates ON votes_csc.candidate_id = candidates.id
-                    LEFT JOIN 
-                        categories ON votes_csc.category_id = categories.id
-                    WHERE 
-                        votes_csc.election_id = 20
-                    AND
-                        categories.name = 'President'
-                    GROUP BY 
-                        candidates.firstname, candidates.lastname
-                    ORDER BY 
-                        vote_count DESC";
-    $result = $conn->query($sql_results);
+$result = $conn->query($sql_results);
 
-    // Define colors for candidates
-    $colors = ['#FF5733', '#33FF57', '#5733FF', '#FF33F3', '#33E5FF']; // Add more colors as needed
+// Initialize variables for calculating total votes
+$total_votes = 0;
 
-    // Display the graph for President position
-    $index = 0;
-    while($row = $result->fetch_assoc()) {
-        $candidateName = $row['firstname'] . ' ' . $row['lastname'];
-        $voteCount = $row['vote_count'];
-        $color = $colors[$index % count($colors)]; // Use modulo to cycle through colors
-        ?>
-        <div style="margin: 10px 0;">
-            <strong>President</strong>
-            <div style="background-color: lightgrey; width: <?php echo $voteCount * 10; ?>px; height: 30px;">
-                <div style="width: 100%; background-color: <?php echo $color; ?>; height: 100%; text-align: center; line-height: 30px;">
-                    <?php echo $voteCount; ?> votes
-                </div>
-            </div>
-        </div>
-        <?php
-        $index++;
-    }
-    ?>
+// Initialize an array to store position names and vote counts
+$positions_data = array();
+
+// Loop through the results and store position names and vote counts
+while($row = $result->fetch_assoc()) {
+    $position_name = $row['position_name'];
+    $vote_count = $row['vote_count'];
+    
+    // Calculate total votes
+    $total_votes += $vote_count;
+    
+    // Store position data in the array
+    $positions_data[$position_name] = $vote_count;
+}
+
+// Initialize variable for generating graph
+$graph_data = '';
+
+// Loop through position data to generate graph
+foreach ($positions_data as $position_name => $vote_count) {
+    // Calculate percentage
+    $percentage = ($vote_count / $total_votes) * 100;
+    
+    // Append position name and percentage to the graph data
+    $graph_data .= "<div style='margin: 10px 0;'>
+                        <strong>{$position_name}</strong>
+                        <div style='background-color: lightgrey; width: {$percentage}%; height: 30px;'>
+                            <div style='width: 100%; background-color: maroon; color: white; height: 100%; text-align: center; line-height: 30px;'>
+                                {$percentage}% ({$vote_count} votes)
+                            </div>
+                        </div>
+                    </div>";
+}
+
+// Display the combined graph
+echo "<div class='live-poll-results'>$graph_data</div>";
+?>
 </div>
-
         <?php
     }
     else{
