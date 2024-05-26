@@ -17,7 +17,7 @@ if ($conn->connect_error) {
 date_default_timezone_set('Asia/Taipei'); // Adjust the timezone as per your requirement
 
 // Query to get election start and end times
-$sql = "SELECT starttime, endtime FROM election WHERE id = 1";
+$sql = "SELECT starttime, endtime FROM election WHERE status = 1";
 
 $result = $conn->query($sql);
 

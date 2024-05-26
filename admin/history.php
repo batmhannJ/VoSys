@@ -28,12 +28,12 @@ include 'includes/header.php';
                         <div class="box-body">
                             <form method="get" action="">
                                 <div class="form-group">
-                                    <label for="organization">Select Organization:</label>
+                                    <label for="organization">Select Election:</label>
                                     <select class="form-control" name="organization" id="organization">
                                         <option value="">All Organizations</option>
                                         <?php
                                         // Fetch and display organizations
-                                        $organizationQuery = $conn->query("SELECT DISTINCT organization FROM voters");
+                                        $organizationQuery = $conn->query("SELECT DISTINCT organization FROM election");
                                         while($organizationRow = $organizationQuery->fetch_assoc()){
                                             $selected = ($_GET['organization'] ?? '') == $organizationRow['organization'] ? 'selected' : '';
                                             echo "<option value='".$organizationRow['organization']."' $selected>".$organizationRow['organization']."</option>";
@@ -54,11 +54,11 @@ include 'includes/header.php';
                 // Function to display ranking table
                 function displayRankingTable($conn, $position, $organizationFilter) {
                     $sql = "SELECT voters1.organization, CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-                            COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
+                            COALESCE(COUNT(votes_csc.candidate_id), 0) AS vote_count
                             FROM categories 
                             LEFT JOIN candidates ON categories.id = candidates.category_id
-                            LEFT JOIN votes ON candidates.id = votes.candidate_id
-                            LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
+                            LEFT JOIN votes_csc ON candidates.id = votes_csc.candidate_id
+                            LEFT JOIN voters AS voters1 ON voters1.id = votes_csc.voters_id 
                             WHERE voters1.organization != '' AND categories.name = '".$position."'".$organizationFilter."
                             GROUP BY voters1.organization, candidates.id
                             ORDER BY vote_count DESC";
@@ -79,22 +79,18 @@ include 'includes/header.php';
                 // Array of positions
                 $positions = [
                     'President', 
-                    'Vice President for Internal Affairs', 
-                    'Vice President for External Affairs', 
+                    'Vice President', 
                     'Secretary', 
                     'Treasurer', 
                     'Auditor', 
                     'P.R.O.', 
-                    'Dir. for Membership', 
-                    'Dir. for Special Project', 
-                    'Block A 1st Year Representative', 
-                    'Block B 1st Year Representative', 
-                    'Block A 2nd Year Representative', 
-                    'Block B 2nd Year Representative', 
-                    'Block A 3rd Year Representative', 
-                    'Block B 3rd Year Representative', 
-                    'Block A 4th Year Representative', 
-                    'Block B 4th Year Representative'
+                    'Business Manager',
+                    'BSED Representative', 
+                    'BEED Representative', 
+                    'BSOAD Representative', 
+                    'BSHM Representative', 
+                    'BS CRIM Representative', 
+                    'BSIT Representative'
                 ];
 
                 $organizationFilter = !empty($_GET['organization']) ? " AND voters1.organization = '".$_GET['organization']."'" : "";

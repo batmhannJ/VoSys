@@ -133,12 +133,12 @@ if (!$conn) {
 }
 
 // Fetch the user's ID from session
-if (isset($_SESSION['id'])) {
-    $userId = $_SESSION['id'];
+if (isset($voter['id'])) {
+    $userId = $voter['id'];
 
     // Fetch the user's organization and set it in the session (if not already set)
     if (!isset($_SESSION['organization'])) {
-        $userQuery = "SELECT organization FROM voters WHERE voters_id = '$userId'";
+        $userQuery = "SELECT organization FROM voters WHERE id = '$userId'";
         $userResult = $conn->query($userQuery);
         if ($userResult) {
             if ($userResult->num_rows > 0) {
@@ -156,11 +156,11 @@ if (isset($_SESSION['id'])) {
 }
 
 // Debug: Output the user's organization to verify
-if (isset($_SESSION['organization'])) {
+/*if (isset($_SESSION['organization'])) {
     echo "User's Organization: " . $_SESSION['organization'];
 } else {
     echo "User's organization not set.";
-}
+}*/
 
 include 'includes/slugify.php';
 
@@ -196,63 +196,64 @@ if (isset($_SESSION['organization'])) {
     }
 }
 
-                                $candidate = '';
-                                $sql = "SELECT * FROM categories WHERE election_id = 20 ORDER BY priority ASC";
-                                $query = $conn->query($sql);
-                                while($row = $query->fetch_assoc()){
-                                    echo '
-                                    <div class="position-container">
-                                        <div class="box box-solid" id="'.$row['id'].'">
-                                            <div class="box-header">
-                                                <h3 class="box-title">'.$row['name'].'</h3>
-                                                <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="'.slugify($row['name']).'"><i class="fa fa-refresh"></i> Reset</button>
-                                            </div>
-                                            <div class="box-body">
-                                                <p class="instruction">You may select up to '.$row['max_vote'].' candidates</p>
-                                                <div class="candidate-list">
-                                                    <ul>';
-                                    $sql = "SELECT * FROM candidates WHERE category_id='".$row['id']."'";
-                                    $cquery = $conn->query($sql);
-                                    while($crow = $cquery->fetch_assoc()){
-                                        $slug = slugify($row['name']);
-                                        $checked = '';
-                                        if(isset($_SESSION['post'][$slug])){
-                                            $value = $_SESSION['post'][$slug];
+$candidate = '';
+$sql = "SELECT * FROM categories WHERE election_id = 20 ORDER BY priority ASC";
+$query = $conn->query($sql);
+while ($row = $query->fetch_assoc()) {
+    if (!in_array($row['name'], $positions)) {
+        continue; // Skip positions not in the list
+    }
+    echo '
+    <div class="position-container">
+        <div class="box box-solid" id="' . $row['id'] . '">
+            <div class="box-header">
+                <h3 class="box-title">' . $row['name'] . '</h3>
+                <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="' . slugify($row['name']) . '"><i class="fa fa-refresh"></i> Reset</button>
+            </div>
+            <div class="box-body">
+                <p class="instruction">You may select up to ' . $row['max_vote'] . ' candidates</p>
+                <div class="candidate-list">
+                    <ul>';
+    $sql = "SELECT * FROM candidates WHERE category_id='" . $row['id'] . "'";
+    $cquery = $conn->query($sql);
+    while ($crow = $cquery->fetch_assoc()) {
+        $slug = slugify($row['name']);
+        $checked = '';
+        if (isset($_SESSION['post'][$slug])) {
+            $value = $_SESSION['post'][$slug];
 
-                                            if(is_array($value)){
-                                                foreach($value as $val){
-                                                    if($val == $crow['id']){
-                                                        $checked = 'checked';
-                                                    }
-                                                }
-                                            }
-                                            else{
-                                                if($value == $crow['id']){
-                                                    $checked = 'checked';
-                                                }
-                                            }
-                                        }
-                                        $input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : '<input type="radio" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
-                                        $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
-                                        echo '
-                                        <li>
-                                            <div class="candidate-info">
-                                                '.$input.'
-                                                <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
-                                                
-                                            </div>
-                                            <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
-                                        
-                                            <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
-                                        </li>';
-                                    }
-                                echo '</ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>';
+            if (is_array($value)) {
+                foreach ($value as $val) {
+                    if ($val == $crow['id']) {
+                        $checked = 'checked';
+                    }
+                }
+            } else {
+                if ($value == $crow['id']) {
+                    $checked = 'checked';
+                }
             }
-            ?>
+        }
+        $input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red ' . $slug . '" name="' . $slug . "[]" . '" value="' . $crow['id'] . '" ' . $checked . '>' : '<input type="radio" class="flat-red ' . $slug . '" name="' . slugify($row['name']) . '" value="' . $crow['id'] . '" ' . $checked . '>';
+        $image = (!empty($crow['photo'])) ? 'images/' . $crow['photo'] : 'images/profile.jpg';
+        echo '
+        <li>
+            <div class="candidate-info">
+                ' . $input . '
+                <span class="cname">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span>
+            </div>
+            <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="' . $crow['platform'] . '" data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">PLATFORM</button>
+            <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="clist">
+        </li>';
+    }
+    echo '</ul>
+            </div>
+        </div>
+    </div>
+</div>';
+}
+?>
+
                                 <div class="text-center">
                                     <button type="button" class="btn btn-primary btn-flat" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
                                 </div>
