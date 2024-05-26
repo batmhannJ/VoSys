@@ -61,8 +61,8 @@ $voted_voters = $voted_voters_row['voted_voters'];
 // Calculate remaining voters
 $remaining_voters = $total_voters - $voted_voters;
 
-// Calculate voter turnout percentage
-$voter_turnout = ($total_voters > 0) ? (($voted_voters / $total_voters) * 100) : 0;
+// Calculate voter turnout percentage with two decimal places
+$voter_turnout = number_format(($total_voters > 0) ? (($voted_voters / $total_voters) * 100) : 0, 2);
 
 // Create PDF content
 $pdfContent = "
@@ -114,10 +114,8 @@ tr:nth-child(odd) {
   background-color: #ffe6e6; /* Light red background for highest count of votes */
 }
 </style>
-<center>
 <p style='font-family, cursive;'>Our Lady of the Sacred Heart College of Guimba, Inc.</p>
 <h1>2024 Election Results</h1>
-</center>
 <table>
     <thead>
     <tr>
@@ -164,7 +162,7 @@ $pdfContent .= "
   </tbody>
 </table>
 <br>
-<p style='justify-content: left'><b>Total Voters:</b> {$total_voters}</p>
+<p><b>Total Voters:</b> {$total_voters}</p>
 <p><b>Voters Voted:</b> {$voted_voters}</p>
 <p><b>Remaining Voters:</b> {$remaining_voters}</p>
 <p><b>Voter Turnout:</b> {$voter_turnout}%</p>
