@@ -5,7 +5,6 @@ include 'includes/session.php';
 include 'includes/header_csc.php';
 ?>
 <head>
-    <!-- Add the style block to center the box titles and style the back to top button -->
     <style>
         .box-title {
             text-align: center;
@@ -37,21 +36,22 @@ include 'includes/header_csc.php';
         }
 
         .chart-container {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
+            position: relative;
+            margin-bottom: 40px;
         }
 
         .candidate-images {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-right: 20px;
+            justify-content: space-around;
+            position: absolute;
+            top: -60px;
+            width: 100%;
         }
 
         .candidate-image {
-            margin-bottom: 10px;
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .candidate-image img {
@@ -61,23 +61,6 @@ include 'includes/header_csc.php';
         }
 
         @media (max-width: 768px) {
-            .chart-container {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .candidate-images {
-                flex-direction: row;
-                margin-bottom: 20px;
-                margin-right: 0;
-                justify-content: center;
-                flex-wrap: wrap;
-            }
-
-            .candidate-image {
-                margin-right: 10px;
-            }
-
             .candidate-image img {
                 width: 75px;
                 height: 75px;
@@ -308,7 +291,7 @@ include 'includes/header_csc.php';
         // Update the image container
         var imageContainer = document.getElementById(imageContainerId);
         imageContainer.innerHTML = dataPoints.map(dataPoint =>
-            `<div class="candidate-image"><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"></div>`
+            `<div class="candidate-image" style="left:${(dataPoint.y / totalVotes) * 100}%"><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"><span>${dataPoint.label}</span></div>`
         ).join('');
 
         var chart = new CanvasJS.Chart(containerId, {
@@ -364,7 +347,7 @@ include 'includes/header_csc.php';
         // Update the image container
         var imageContainer = document.getElementById(imageContainerId);
         imageContainer.innerHTML = newDataPoints.map(dataPoint =>
-            `<div class="candidate-image"><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"></div>`
+            `<div class="candidate-image" style="left:${(dataPoint.y / totalVotes) * 100}%"><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"><span>${dataPoint.label}</span></div>`
         ).join('');
 
         chart.options.animationEnabled = true;
