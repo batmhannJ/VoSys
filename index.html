@@ -1405,11 +1405,6 @@ hr {
   height: 200px;
 }
 
-@keyframes scroll {
-  to {
-    transform: translateX(calc(-50% - 1rem));
-  }
-}
 
 .instagram__flex1 {
   margin-top: .5rem;
@@ -1426,11 +1421,27 @@ hr {
   height: 200px;
 }
 
-@keyframes scroll {
+/* Keyframes for larger screens */
+@keyframes scroll-large {
   to {
     transform: translateX(calc(-50% - 1rem));
   }
 }
+
+/* Keyframes for medium screens */
+@keyframes scroll-medium {
+  to {
+    transform: translateX(calc(-50% - 1rem));
+  }
+}
+
+/* Keyframes for small screens */
+@keyframes scroll-small {
+  to {
+    transform: translateX(calc(-100% - 1rem));
+  }
+}
+
 /* General styling for both blog sections */
 .blog, .blog1 {
   background-size: cover;
