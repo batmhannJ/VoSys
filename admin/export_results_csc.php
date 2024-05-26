@@ -63,7 +63,7 @@ $remaining_voters = $total_voters - $voted_voters;
 
 // Calculate voter turnout percentage with two decimal places
 $voter_turnout = number_format(($total_voters > 0) ? (($voted_voters / $total_voters) * 100) : 0, 2);
-
+$currentDate = date('F j, Y'); 
 // Create PDF content
 $pdfContent = "
 <style>
@@ -120,6 +120,7 @@ tr:nth-child(odd) {
   <p class='school-name' style='font-size: 16px; font-weight: bold; margin-top: -10px; margin-left: 10px; margin-right: 10px;'>Our Lady of the Sacred Heart College of Guimba, Inc.<br>Guimba, Nueva Ecija</p>
   <p class='report-title' style='font-size: 16px; margin-top: 50px; margin-bottom: 10px;'>2024 Election Results</p>
 </div>
+<p style='text-align: center;'>As of {$currentDate}</p>
 <table>
     <thead>
     <tr>
@@ -165,7 +166,7 @@ while ($row = $result->fetch_assoc()) {
 $pdfContent .= "
   </tbody>
 </table>
-<br>
+<br><br>
 <p style='text-align: left;'><b>Total Voters:</b> {$total_voters}</p>
 <p style='text-align: left;'><b>Voters Voted:</b> {$voted_voters}</p>
 <p style='text-align: left;'><b>Remaining Voters:</b> {$remaining_voters}</p>
