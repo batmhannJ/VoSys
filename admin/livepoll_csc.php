@@ -12,6 +12,7 @@ include 'includes/header_csc.php';
             display: inline-block;
         }
 
+        /* Back to Top button styles */
         #back-to-top {
             position: fixed;
             bottom: 40px;
@@ -40,9 +41,13 @@ include 'includes/header_csc.php';
         }
 
         .candidate-images {
+            position: absolute;
+            top: 0;
+            left: 0;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            height: 100%;
             padding: 10px;
         }
 
@@ -61,7 +66,6 @@ include 'includes/header_csc.php';
 
         .candidate-label {
             margin-left: 10px;
-            font-weight: bold;
         }
 
         @media (max-width: 768px) {
@@ -95,40 +99,187 @@ include 'includes/header_csc.php';
 
         <section class="content">
             <div class="row justify-content-center">
-                <?php
-                $categories = [
-                    'president' => 'President',
-                    'vice president' => 'Vice President',
-                    'secretary' => 'Secretary',
-                    'treasurer' => 'Treasurer',
-                    'auditor' => 'Auditor',
-                    'p.r.o' => 'P.R.O',
-                    'businessManager' => 'Business Manager',
-                    'beedRep' => 'BEED Rep',
-                    'bsedRep' => 'BSED Rep',
-                    'bshmRep' => 'BSHM Rep',
-                    'bsoadRep' => 'BSOAD Rep',
-                    'bs crimRep' => 'BS CRIM Rep',
-                    'bsitRep' => 'BSIT Rep'
-                ];
-
-                foreach ($categories as $categoryKey => $categoryName) {
-                    echo "
-                    <div class='col-md-12'>
-                        <div class='box'>
-                            <div class='box-header with-border'>
-                                <h3 class='box-title'><b>$categoryName</b></h3>
-                            </div>
-                            <div class='box-body'>
-                                <div class='chart-container'>
-                                    <div id='{$categoryKey}Graph' style='height: 300px; width: calc(100% - 70px); margin-left: 70px;'></div>
-                                </div>
-                                <div class='candidate-images' id='{$categoryKey}Image'></div>
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>President</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart-container">
+                                <div class="candidate-images" id="presidentImage"></div>
+                                <div id="presidentGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
                             </div>
                         </div>
-                    </div>";
-                }
-                ?>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>Vice President</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart-container">
+                                <div class="candidate-images" id="vicePresidentImage"></div>
+                                <div id="vice presidentGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>Secretary</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart-container">
+                                <div class="candidate-images" id="secretaryImage"></div>
+                                <div id="secretaryGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>Treasurer</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart-container">
+                                <div class="candidate-images" id="treasurerImage"></div>
+                                <div id="treasurerGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>Auditor</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart-container">
+                                <div class="candidate-images" id="auditorImage"></div>
+                                <div id="auditorGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>P.R.O</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart-container">
+                                <div class="candidate-images" id="proImage"></div>
+                                <div id="p.r.oGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>Business Manager</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart-container">
+                                <div class="candidate-images" id="businessManagerImage"></div>
+                                <div id="businessManagerGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>BEED Rep</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart-container">
+                                <div class="candidate-images" id="beedRepImage"></div>
+                                <div id="beedRepGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>BSED Rep</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart-container">
+                                <div class="candidate-images" id="bsedRepImage"></div>
+                                <div id="bsedRepGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>BSHM Rep</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart-container">
+                                <div class="candidate-images" id="bshmRepImage"></div>
+                                <div id="bshmRepGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>BSOAD Rep</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart-container">
+                                <div class="candidate-images" id="bsoadRepImage"></div>
+                                <div id="bsoadRepGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>BS CRIM Rep</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart-container">
+                                <div class="candidate-images" id="bscrimRepImage"></div>
+                                <div id="bscrimRepGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>BSIT Rep</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="chart-container">
+                                <div class="candidate-images" id="bsitRepImage"></div>
+                                <div id="bsitRepGraph" style="height: 300px; width: calc(100% - 70px); margin-left: 70px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -138,7 +289,7 @@ include 'includes/header_csc.php';
 </div>
 <?php include 'includes/scripts.php'; ?>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="path/to/jquery.min.js"></script>
 <script>
     function generateBarGraph(dataPoints, containerId, imageContainerId) {
         var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
@@ -183,51 +334,100 @@ include 'includes/header_csc.php';
                 }))
             }]
         });
+
+        chart.render();
+
+        // Adjust the chart size when the window is resized
+        window.addEventListener('resize', function () {
+            chart.options.width = document.getElementById(containerId).offsetWidth;
+            chart.render();
+        });
+
+        return chart;
+    }
+
+    function updateChartData(chart, newDataPoints, imageContainerId) {
+        var totalVotes = newDataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+        chart.options.data[0].dataPoints = newDataPoints.map(dataPoint => ({
+            ...dataPoint,
+            percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+        }));
+
+        // Update the image container
+        var imageContainer = document.getElementById(imageContainerId);
+        imageContainer.innerHTML = newDataPoints.map(dataPoint =>
+            `<div class="candidate-image">
+                <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">
+                <span class="candidate-label">${dataPoint.label}</span>
+            </div>`
+        ).join('');
+
+        chart.options.animationEnabled = true;
+        chart.options.animationDuration = 2000;
+        chart.options.animationEasing = "easeInOutBounce";
         chart.render();
     }
 
-    function updateGraphs(data) {
-        var categories = [
-            'president', 'vice president', 'secretary', 'treasurer', 'auditor',
-            'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
-            'bsoadRep', 'bs crimRep', 'bsitRep'
-        ];
-
-        categories.forEach(function (category) {
-            if (data[category]) {
-                generateBarGraph(data[category], category + 'Graph', category + 'Image');
+    function updateVoteCounts() {
+        $.ajax({
+            url: 'update_data_csc.php',
+            method: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                updateChartData(presidentChart, response.president, 'presidentImage');
+                updateChartData(vicepresidentChart, response.vicepresident, 'vicePresidentImage');
+                updateChartData(secretaryChart, response.secretary, 'secretaryImage');
+                updateChartData(treasurerChart, response.treasurer, 'treasurerImage');
+                updateChartData(auditorChart, response.auditor, 'auditorImage');
+                updateChartData(proChart, response.pro, 'proImage');
+                updateChartData(businessManagerChart, response.businessManager, 'businessManagerImage');
+                updateChartData(beedRepChart, response.beedRep, 'beedRepImage');
+                updateChartData(bsedRepChart, response.bsedRep, 'bsedRepImage');
+                updateChartData(bshmRepChart, response.bshmRep, 'bshmRepImage');
+                updateChartData(bsoadRepChart, response.bsoadRep, 'bsoadRepImage');
+                updateChartData(bscrimRepChart, response.bsCrimRep, 'bscrimRepImage');
+                updateChartData(bsitRepChart, response.bsitRep, 'bsitRepImage');
+            },
+            error: function (error) {
+                console.error("Error fetching data", error);
             }
         });
     }
 
-    $(document).ready(function () {
-        // Create a new EventSource object to listen to SSE
-        const evtSource = new EventSource('update_data_csc.php');
+    var presidentChart = generateBarGraph([], "presidentGraph", "presidentImage");
+    var vicepresidentChart = generateBarGraph([], "vice presidentGraph", "vicePresidentImage");
+    var secretaryChart = generateBarGraph([], "secretaryGraph", "secretaryImage");
+    var treasurerChart = generateBarGraph([], "treasurerGraph", "treasurerImage");
+    var auditorChart = generateBarGraph([], "auditorGraph", "auditorImage");
+    var proChart = generateBarGraph([], "p.r.oGraph", "proImage");
+    var businessManagerChart = generateBarGraph([], "businessManagerGraph", "businessManagerImage");
+    var beedRepChart = generateBarGraph([], "beedRepGraph", "beedRepImage");
+    var bsedRepChart = generateBarGraph([], "bsedRepGraph", "bsedRepImage");
+    var bshmRepChart = generateBarGraph([], "bshmRepGraph", "bshmRepImage");
+    var bsoadRepChart = generateBarGraph([], "bsoadRepGraph", "bsoadRepImage");
+    var bscrimRepChart = generateBarGraph([], "bscrimRepGraph", "bscrimRepImage");
+    var bsitRepChart = generateBarGraph([], "bsitRepGraph", "bsitRepImage");
 
-        evtSource.onmessage = function(event) {
-            const data = JSON.parse(event.data);
-            updateGraphs(data);
-        };
+    updateVoteCounts();
 
-        evtSource.onerror = function(err) {
-            console.error("EventSource failed:", err);
-            evtSource.close();
-        };
+    setInterval(updateVoteCounts, 5000);
+
+    $(document).ready(function () { 
+        var btn = $('#back-to-top');
 
         $(window).scroll(function () {
-            if ($(this).scrollTop() > 100) {
-                $('#back-to-top').fadeIn();
+            if ($(window).scrollTop() > 100) {
+                btn.fadeIn();
             } else {
-                $('#back-to-top').fadeOut();
+                btn.fadeOut();
             }
         });
 
-        $('#back-to-top').click(function () {
-            $('html, body').animate({ scrollTop: 0 }, 600);
+        btn.click(function () {
+            $('html, body').animate({ scrollTop: 0 }, '100');
             return false;
         });
     });
 </script>
-
 </body>
 </html>
