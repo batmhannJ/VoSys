@@ -6,9 +6,7 @@
   <?php include 'includes/navbar_csc.php'; ?>
   <?php include 'includes/menubar_csc.php'; ?>
 
-  <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
         Election Configuration
@@ -18,7 +16,7 @@
         <li class="active">Election Lists</li>
       </ol>
     </section>
-    <!-- Main content -->
+
     <section class="content">
       <?php
         if(isset($_SESSION['error'])){
@@ -45,45 +43,43 @@
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
-            <!--<div class="box-header with-border">
-              <a href="#addElection" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
-            </div>-->
-            <!-- Table with hoverable rows -->
             <div class="box-body">
-              <table id="example1" class="table table-bordered">
-                <thead>
-                  <th scope="col">#</th>
-                  <th scope="col">Id</th>
-                  <th scope="col">Title</th>
-                  <th scope="col">Voters</th>
-                  <th scope="col">Status</th>
-                  <th class="text-center" scope="col">Action</th>
-                </thead>
-                <tbody class="election">
-                  <?php
-                  $i = 1;
-                  $election = $conn->prepare("SELECT * FROM election WHERE organization = 'CSC'");
-                  $election->execute();
-                  $result = $election->get_result();
-                  while ($row = $result->fetch_assoc()) {
-                    echo '<tr>
-                            <th scope="row">' . $i++ . '</th>
-                            <td>'.$row['id'].'</td>
-                            <td>'.$row['title'].'</td>
-                            <td>' . $row['voters'] . '</td>';
-                    if ($row['status'] === 0) {
-                      echo '<td><a href="#" name="status" class="btn badge rounded-pill btn-secondary election-status" data-id="' . $row['id'] . '" data-status="1" data-name="Activate">Not active</a></td>';
-                    } else {
-                      echo '<td><a href="#" name="status" class="btn badge rounded-pill btn-success election-status" data-id="' . $row['id'] . '" data-status="0" data-name="Deactivate">Active</a></td>';
-                    }
-                    echo '<td class="text-center">
-                            <a href="#" class="btn btn-primary btn-sm edit btn-flat" data-bs-toggle="modal" data-bs-target="#editElection" data-id="' . $row['id'] . '">Edit</a>
-                            <a href="#" class="btn btn-warning btn-sm archive btn-flat" data-bs-toggle="modal" data-bs-target="#confirmationModal" data-id="' . $row['id'] . '" data-name="' . $row['title'] . '">Archive</a>
-                          </td>
-                        </tr>';
-                  } ?>
-                </tbody>
-              </table><!-- End Election lists Table -->
+              <div class="table-responsive">
+                <table id="example1" class="table table-bordered table-hover">
+                  <thead>
+                    <th scope="col">#</th>
+                    <th scope="col">Id</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Voters</th>
+                    <th scope="col">Status</th>
+                    <th class="text-center" scope="col">Action</th>
+                  </thead>
+                  <tbody class="election">
+                    <?php
+                      $i = 1;
+                      $election = $conn->prepare("SELECT * FROM election WHERE organization = 'CSC'");
+                      $election->execute();
+                      $result = $election->get_result();
+                      while ($row = $result->fetch_assoc()) {
+                        echo '<tr>
+                                <th scope="row">' . $i++ . '</th>
+                                <td>'.$row['id'].'</td>
+                                <td>'.$row['title'].'</td>
+                                <td>' . $row['voters'] . '</td>';
+                        if ($row['status'] === 0) {
+                          echo '<td><a href="#" name="status" class="btn badge rounded-pill btn-secondary election-status" data-id="' . $row['id'] . '" data-status="1" data-name="Activate">Not active</a></td>';
+                        } else {
+                          echo '<td><a href="#" name="status" class="btn badge rounded-pill btn-success election-status" data-id="' . $row['id'] . '" data-status="0" data-name="Deactivate">Active</a></td>';
+                        }
+                        echo '<td class="text-center">
+                                <a href="#" class="btn btn-primary btn-sm edit btn-flat" data-bs-toggle="modal" data-bs-target="#editElection" data-id="' . $row['id'] . '">Edit</a>
+                                <a href="#" class="btn btn-warning btn-sm archive btn-flat" data-bs-toggle="modal" data-bs-target="#confirmationModal" data-id="' . $row['id'] . '" data-name="' . $row['title'] . '">Archive</a>
+                              </td>
+                            </tr>';
+                      } ?>
+                  </tbody>
+                </table><!-- End Election lists Table -->
+              </div>
             </div>
           </div>
         </div>
@@ -227,3 +223,4 @@ function archiveElection(id) {
 }
 </script>
 </body>
+</html>
