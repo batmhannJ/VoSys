@@ -369,30 +369,32 @@ include 'includes/header_csc.php';
     }
 
     function updateVoteCounts() {
-        $.ajax({
-            url: 'update_data_csc.php',
-            method: 'GET',
-            dataType: 'json',
-            success: function (response) {
-                updateChartData(presidentChart, response.president, 'presidentImage');
-                updateChartData(vicePresidentChart, response.vicePresident, 'vicePresidentImage');
-                updateChartData(secretaryChart, response.secretary, 'secretaryImage');
-                updateChartData(treasurerChart, response.treasurer, 'treasurerImage');
-                updateChartData(auditorChart, response.auditor, 'auditorImage');
-                updateChartData(proChart, response.pro, 'proImage');
-                updateChartData(businessManagerChart, response.businessManager, 'businessManagerImage');
-                updateChartData(beedRepChart, response.beedRep, 'beedRepImage');
-                updateChartData(bsedRepChart, response.bsedRep, 'bsedRepImage');
-                updateChartData(bshmRepChart, response.bshmRep, 'bshmRepImage');
-                updateChartData(bsoadRepChart, response.bsoadRep, 'bsoadRepImage');
-                updateChartData(bscrimRepChart, response.bsCrimRep, 'bscrimRepImage');
-                updateChartData(bsitRepChart, response.bsitRep, 'bsitRepImage');
-            },
-            error: function (error) {
-                console.error("Error fetching data", error);
-            }
-        });
-    }
+    $.ajax({
+        url: 'update_data_csc.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            console.log(response);  // Log the response to check the structure
+            updateChartData(presidentChart, response.president, 'presidentImage');
+            updateChartData(vicePresidentChart, response.vicePresident, 'vicePresidentImage');
+            updateChartData(secretaryChart, response.secretary, 'secretaryImage');
+            updateChartData(treasurerChart, response.treasurer, 'treasurerImage');
+            updateChartData(auditorChart, response.auditor, 'auditorImage');
+            updateChartData(proChart, response.pro, 'proImage');
+            updateChartData(businessManagerChart, response.businessManager, 'businessManagerImage');
+            updateChartData(beedRepChart, response.beedRep, 'beedRepImage');
+            updateChartData(bsedRepChart, response.bsedRep, 'bsedRepImage');
+            updateChartData(bshmRepChart, response.bshmRep, 'bshmRepImage');
+            updateChartData(bsoadRepChart, response.bsoadRep, 'bsoadRepImage');
+            updateChartData(bscrimRepChart, response.bsCrimRep, 'bscrimRepImage');
+            updateChartData(bsitRepChart, response.bsitRep, 'bsitRepImage');
+        },
+        error: function (error) {
+            console.error("Error fetching data", error);
+        }
+    });
+}
+
 
     var presidentChart = generateBarGraph([], "presidentGraph", "presidentImage");
     var vicePresidentChart = generateBarGraph([], "vicePresidentGraph", "vicePresidentImage");
