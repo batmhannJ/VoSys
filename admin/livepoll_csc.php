@@ -187,37 +187,31 @@ include 'includes/header_csc.php';
         chart.render();
     }
 
-    function fetchAndGenerateGraphs() {
-        $.ajax({
-            url: 'update_data_csc.php',
-            method: 'GET',
-            dataType: 'json',
-            success: function (response) {
-                // Generate graphs for all categories
-                var categories = [
-                    'president', 'vice president', 'secretary', 'treasurer', 'auditor',
-                    'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
-                    'bsoadRep', 'bs crimRep', 'bsitRep'
-                ];
+    function updateGraphs(response) {
+        var categories = [
+            'president', 'vice president', 'secretary', 'treasurer', 'auditor',
+            'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
+            'bsoadRep', 'bs crimRep', 'bsitRep'
+        ];
 
-                categories.forEach(function (category) {
-                    if (response[category]) {
-                        generateBarGraph(response[category], category + 'Graph', category + 'Image');
-                    }
-                });
-            },
-            error: function (xhr, status, error) {
-                console.error("Error fetching data: ", status, error);
+        categories.forEach(function (category) {
+            if (response[category]) {
+                generateBarGraph(response[category], category + 'Graph', category + 'Image');
             }
         });
     }
 
     $(document).ready(function () {
-        // Fetch and generate graphs initially
-        fetchAndGenerateGraphs();
+        if (typeof(EventSource) !== "undefined") {
+            var source = new EventSource('update_data_csc.php');
 
-        // Set interval to update graphs every 10 seconds (10000 milliseconds)
-        setInterval(fetchAndGenerateGraphs, 10000);
+            source.onmessage = function(event) {
+                var data = JSON.parse(event.data);
+                updateGraphs(data);
+            };
+        } else {
+            console.error("Your browser does not support SSE.");
+        }
 
         $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
