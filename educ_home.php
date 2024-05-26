@@ -1,5 +1,23 @@
 <?php include 'includes/session.php'; ?>
-<?php include 'includes/header_educ.php'; ?>
+<?php include 'includes/header_educ.php'; 
+
+function is_active_election($conn){
+	$sql = "SELECT * FROM election WHERE title = 'YMF - Young Mentor of the Future Election' && status = 1";
+	$result = $conn->query($sql);
+
+	if($result->num_rows > 0){
+		return true;
+	} else{
+		return false;
+	}
+}
+
+if(!is_active_election($conn)){
+	header("location: no_election_ymf.php");
+	exit();
+}
+
+?>
 <body class="hold-transition layout-top-nav">
 <div class="wrapper">
 

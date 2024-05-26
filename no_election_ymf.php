@@ -1,14 +1,14 @@
 <?php
 
 include 'includes/session.php';
-include 'includes/header_code.php';
+include 'includes/header_ymf.php';
 
 ?>
 
-<body class="hold-transition skin-black layout-top-nav">
+<body class="hold-transition skin-blue layout-top-nav">
 <div class="wrapper">
 
-	<?php include 'includes/navbar_code.php'; ?>
+	<?php include 'includes/navbar_ymf.php'; ?>
 	 
 	  <div class="content-wrapper">
 		<div class="container">
@@ -16,8 +16,8 @@ include 'includes/header_code.php';
 		  <!-- Main content -->
 		  <section class="content">
 			  <h1 class="page-header text-center title">
-				  <img src="images/c.png" alt="CSC Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
-				  <b>College of Student Council Election</b></h1>
+				  <img src="images/y.png" alt="CSC Logo" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;">
+				  <b>Young Mentor of the Future Election</b></h1>
 			<div class="row">
 				<div class="col-sm-10 col-sm-offset-1">
 					<?php
