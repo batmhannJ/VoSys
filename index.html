@@ -93,7 +93,7 @@
     </div>
 </section><br>
 
-<section class="section__container instagram__container">
+<section class="section__containerrr instagram__container">
   <h2 class="section__header">SIKLAB</h2>
   <div class="instagram__flex">
     <img src="images/can/13.png" alt="instagram" />
@@ -107,14 +107,11 @@
     <img src="images/can/19.png" alt="instagram" />
     <img src="images/can/20.png" alt="instagram" />
   </div>
-</section>
-
-<section class="blog" id="blog">
-  <div class="section__container blog__container">
+  <div class="blog" id="blog">
   </div>
 </section>
 
-<section class="section__container instagram__container1">
+<section class="section__containerrr instagram__container1">
   <h2 class="section__header">HOPE</h2>
 <div class="instagram__flex1">
   <img src="images/can2/8.png" alt="instagram" />
@@ -129,12 +126,10 @@
   <img src="images/can2/9.png" alt="instagram" />
   <img src="images/can2/4.png" alt="instagram" />
 </div>
+<div class="blog" id="blog1">
+</div>
 </section>
 
-<section class="blog" id="blog1">
-  <div class="section__container blog__container">
-  </div>
-</section>
 
 
     <section id="services" class="section__container client__container">
@@ -1422,6 +1417,30 @@ hr {
     transform: translateX(calc(-50% - 0.5rem));
   }
 }
+/* General styling for both blog sections */
+.blog, .blog1 {
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  height: 150px; /* Set the height */
+  width: calc(100% - 40px); /* Adjust width to leave margin on both sides */
+  margin: 20px auto; /* Centered margin with top and bottom spacing */
+  padding: 20px; /* Inner padding for content */
+  box-sizing: border-box; /* Include padding and border in element's width and height */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition effects */
+}
+
+/* Specific background images */
+.blog {
+  background-image: url("images/pla/1.png");
+}
+
+.blog1 {
+  background-image: url("images/pla/2.png");
+}
+
 
   </style>
 </html>

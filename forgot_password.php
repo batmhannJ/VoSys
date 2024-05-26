@@ -11,6 +11,21 @@ include 'includes/header.php';
     <title>Forgot Password</title>
     <!-- Include your CSS files -->
 </head>
+<style>
+    .togglePassword {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 18px;
+            color: #aaa;
+        }
+
+        .togglePassword:hover {
+            color: #333;
+        }
+</style>
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-box-body">
@@ -29,10 +44,12 @@ include 'includes/header.php';
                 <div class="form-group has-feedback">
                     <label for="new_password">New Password:</label>
                     <input type="password" class="form-control" id="new_password" name="new_password" required>
+                    <i class="fa fa-fw fa-eye togglePassword" id="togglePassword"></i>
                 </div>
                 <div class="form-group has-feedback">
                     <label for="confirm_password">Confirm Password:</label>
                     <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                    <i class="fa fa-fw fa-eye togglePassword" id="togglePassword"></i>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-6">
