@@ -113,8 +113,20 @@ tr:nth-child(odd) {
 .highlight {
   background-color: #ffe6e6; /* Light red background for highest count of votes */
 }
+.header {
+  display: flex;
+  align-items: center; /* Center vertically */
+}
+.header img {
+  height: 100px; /* Set height */
+  width: 100px; /* Set width */
+  margin-right: 20px; /* Adjust margin as needed */
+}
 </style>
+<div class='header'>
+<img src='images/logo.png' alt=Logo>
 <p style='font-family, cursive;'>Our Lady of the Sacred Heart College of Guimba, Inc.</p>
+</div>
 <h1>2024 Election Results</h1>
 <table>
     <thead>
