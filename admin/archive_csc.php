@@ -183,7 +183,7 @@
   </div>
     
   <?php include 'includes/footer.php'; ?>
-  <?php include 'includes/voters_modal.php'; ?>
+  <?php include 'includes/voters_modal_csc.php'; ?>
   <?php include 'includes/restore_modal.php'; ?>
 
 <?php include 'includes/scripts.php'; ?>
