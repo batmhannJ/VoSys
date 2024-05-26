@@ -108,19 +108,64 @@ if(!is_active_election($conn)){
 					    };
 					</script>
 
-				    <?php
-				    	$sql = "SELECT * FROM votes_csc WHERE voters_id = '".$voter['id']."'";
-				    	$vquery = $conn->query($sql);
-				    	if($vquery->num_rows > 0){
-				    		?>
-				    		<div class="text-center">
-					    		<h3>You have already voted for this election.</h3>
-					    		<a href="#view" data-toggle="modal" class="btn btn-flat btn-primary btn-lg">View Ballot</a>
-					    	</div>
-				    		<?php
-				    	}
-				    	else{
-				    		?>
+<?php
+    $sql = "SELECT * FROM votes_csc WHERE voters_id = '".$voter['id']."'";
+    $vquery = $conn->query($sql);
+    if($vquery->num_rows > 0){
+        ?>
+        <div class="text-center">
+            <h3>You have already voted for this election.</h3>
+            <a href="#view" data-toggle="modal" class="btn btn-flat btn-primary btn-lg">View Ballot</a>
+        </div>
+
+        <!-- Display the live poll results -->
+        <h2 class="text-center">Live Poll Results</h2>
+        <div class="live-poll-results">
+            <?php
+            // Fetch live poll results
+            $sql_results = "SELECT 
+                                categories.name AS position_name, 
+                                candidates.firstname, 
+                                candidates.lastname, 
+                                COUNT(votes_csc.candidate_id) AS vote_count
+                            FROM 
+                                votes_csc
+                            LEFT JOIN 
+                                candidates ON votes_csc.candidate_id = candidates.id
+                            LEFT JOIN 
+                                categories ON votes_csc.category_id = categories.id
+                            WHERE 
+                                votes_csc.election_id = 20
+                            GROUP BY 
+                                categories.name, candidates.id
+                            ORDER BY 
+                                categories.priority ASC, vote_count DESC";
+            $result = $conn->query($sql_results);
+
+            // Collect maximum votes for scaling the bar
+            $max_votes_sql = "SELECT MAX(vote_count) AS max_votes FROM (
+                                SELECT COUNT(votes_csc.candidate_id) AS vote_count
+                                FROM votes_csc
+                                WHERE votes_csc.election_id = 20
+                                GROUP BY votes_csc.candidate_id
+                              ) AS subquery";
+            $max_votes_result = $conn->query($max_votes_sql);
+            $max_votes_row = $max_votes_result->fetch_assoc();
+            $max_votes = $max_votes_row['max_votes'];
+
+            // Generate bar graph
+            while($row = $result->fetch_assoc()) {
+                $vote_percentage = ($row['vote_count'] / $max_votes) * 100;
+                echo "<div style='margin: 10px 0;'>
+                        <strong>{$row['position_name']} - {$row['firstname']} {$row['lastname']}</strong>
+                        <div style='background-color: lightgrey; width: 100%; height: 30px;'>
+                            <div style='width: {$vote_percentage}%; background-color: maroon; color: white; height: 100%; text-align: center; line-height: 30px;'>
+                                {$row['vote_count']} votes ({$vote_percentage}%)
+                            </div>
+                        </div>
+                      </div>";
+            }
+            ?>
 				    
 			    			<!-- Voting Ballot -->
 						    <form method="POST" id="ballotForm" action="submit_ballot.php">
