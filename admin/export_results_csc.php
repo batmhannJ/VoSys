@@ -99,6 +99,8 @@ tr:nth-child(odd) {
 .header-container {
   text-align: center;
   margin-bottom: 20px;
+  margin: 0;
+  padding: 0;
 }
 .header-container img {
   height: 100px;
