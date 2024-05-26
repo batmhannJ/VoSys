@@ -109,21 +109,21 @@ while ($row = $result->fetch_assoc()) {
 
     // Generate table row with conditional highlighting
     $pdfContent .= "<tr>
-                        <td style='padding: 10px; border: 1px solid #ddd;'>{$position}</td>
-                        <td style='padding: 10px; border: 1px solid #ddd;'>{$row['firstname']} {$row['lastname']}</td>
-                        <td style='padding: 10px; border: 1px solid #ddd;' class='{$highlightClass}'>{$voteCount}</td>
+                        <td>{$position}</td>
+                        <td>{$row['firstname']} {$row['lastname']}</td>
+                        <td class='{$highlightClass}'>{$voteCount}</td>
                     </tr>";
 }
 
 $pdfContent .= "
-    </tbody>
-  </table>
-  <br>
-  <p style='text-align: left;'><b>Total Voters:</b> {$total_voters}</p>
-  <p style='text-align: left;'><b>Voters Voted:</b> {$voted_voters}</p>
-  <p style='text-align: left;'><b>Remaining Voters:</b> {$remaining_voters}</p>
-  <p style='text-align: left;'><b>Voter Turnout:</b> {$voter_turnout}%</p>
-</div>";
+  </tbody>
+</table>
+<br>
+<p style='text-align: left;'><b>Total Voters:</b> {$total_voters}</p>
+<p style='text-align: left;'><b>Voters Voted:</b> {$voted_voters}</p>
+<p style='text-align: left;'><b>Remaining Voters:</b> {$remaining_voters}</p>
+<p style='text-align: left;'><b>Voter Turnout:</b> {$voter_turnout}%</p>
+";
 
 // Create PDF using mPDF library
 $mpdf = new \Mpdf\Mpdf();
