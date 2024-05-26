@@ -16,7 +16,7 @@ function fetchVotes($conn, $category, $organizationFilter) {
             LEFT JOIN candidates ON categories.id = candidates.category_id
             LEFT JOIN votes_csc ON candidates.id = votes_csc.candidate_id
             LEFT JOIN voters AS voters1 ON voters1.id = votes_csc.voters_id 
-            WHERE categories.name = '$category'
+            WHERE voters1.organization != '' AND categories.name = '$category'
             $organizationFilter
             GROUP BY candidates.id";
     
@@ -49,14 +49,14 @@ function fetchVotes($conn, $category, $organizationFilter) {
 }
 
 $response = array();
-$positions = [
-    'President', 'Vice President', 'Secretary', 'Treasurer', 'Auditor',
-    'P.R.O', 'Business Manager', 'BEED Rep', 'BSED Rep', 'BSHM Rep',
-    'BSOAD Rep', 'BS CRIM Rep', 'BSIT Rep'
+$categories = [
+    'president', 'vicePresident', 'secretary', 'treasurer', 'auditor',
+    'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
+    'bsoadRep', 'bsCrimRep', 'bsitRep'
 ];
 
-foreach ($positions as $position) {
-    $response[strtolower(str_replace([' ', '.'], '', $position))] = fetchVotes($conn, $position, $organizationFilter);
+foreach ($categories as $category) {
+    $response[$category] = fetchVotes($conn, ucfirst(str_replace(['Rep', 'Manager', 'P.R.O'], [' Rep', ' Manager', ' P.R.O'], $category)), $organizationFilter);
 }
 
 // Debugging: Log the final response
