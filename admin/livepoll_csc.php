@@ -107,13 +107,13 @@ include 'includes/header_csc.php';
                     'treasurer' => 'Treasurer',
                     'auditor' => 'Auditor',
                     'p.r.o' => 'P.R.O',
-                    'businessManager' => 'Business Manager',
-                    'beedRep' => 'BEED Rep',
-                    'bsedRep' => 'BSED Rep',
-                    'bshmRep' => 'BSHM Rep',
-                    'bsoadRep' => 'BSOAD Rep',
-                    'bs crimRep' => 'BS CRIM Rep',
-                    'bsitRep' => 'BSIT Rep'
+                    'business Manager' => 'Business Manager',
+                    'beed Rep' => 'BEED Rep',
+                    'bsed Rep' => 'BSED Rep',
+                    'bshm Rep' => 'BSHM Rep',
+                    'bsoad Rep' => 'BSOAD Rep',
+                    'bs crim Rep' => 'BS CRIM Rep',
+                    'bsit Rep' => 'BSIT Rep'
                 ];
 
                 foreach ($categories as $categoryKey => $categoryName) {
@@ -199,8 +199,8 @@ include 'includes/header_csc.php';
                 // Generate graphs for all categories
                 var categories = [
                     'president', 'vice president', 'secretary', 'treasurer', 'auditor',
-                    'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
-                    'bsoadRep', 'bs crimRep', 'bsitRep'
+                    'p.r.o', 'business Manager', 'beed Rep', 'bsed Rep', 'bshm Rep',
+                    'bsoad Rep', 'bs crim Rep', 'bsit Rep'
                 ];
 
                 categories.forEach(function (category) {
