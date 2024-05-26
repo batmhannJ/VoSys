@@ -1,100 +1,191 @@
 <?php
-	session_start();
-	include 'includes/session.php';
-	include 'includes/slugify.php';
+session_start();
+include 'includes/session.php';
+include 'includes/slugify.php';
 
-	if(isset($_POST['vote'])){
-		if(count($_POST) == 1){
-			$_SESSION['error'][] = 'Please vote for at least one candidate';
-		}
-		else{
-			$_SESSION['post'] = $_POST;
-			$voter_id = $voter['id'];
-			$voter_sql = "SELECT * FROM voters WHERE id = '$voter_id'";
-			$voter_query = $conn->query($voter_sql);
-			$voter = $voter_query->fetch_assoc();
-			
-			$organization = $voter['organization'];
-			$sql = "SELECT * FROM categories WHERE election_id = 20";
-			$query = $conn->query($sql);
-			$error = false;
-			$sql_array = array();
-			$votes_info = '';
-			while($row = $query->fetch_assoc()){
-				$position = slugify($row['name']);
-				$pos_id = $row['id'];
-				if(isset($_POST[$position])){
-					if($row['max_vote'] > 1){
-						if(count($_POST[$position]) > $row['max_vote']){
-							$error = true;
-							$_SESSION['error'][] = 'You can only choose '.$row['max_vote'].' candidates for '.$row['name'];
-						}
-						else{
-							foreach($_POST[$position] as $key => $values){
-								// Fetch candidate name from database
-								$candidate_sql = "SELECT firstname, lastname FROM candidates WHERE id = '$values'";
-								$candidate_query = $conn->query($candidate_sql);
-								$candidate_row = $candidate_query->fetch_assoc();
-								$candidate_name = $candidate_row['firstname'] . ' ' . $candidate_row['lastname'];
+if(isset($_POST['vote'])){
+    if(count($_POST) == 1){
+        $_SESSION['error'][] = 'Please vote for at least one candidate';
+    }
+    else{
+        $_SESSION['post'] = $_POST;
+        $voter_id = $voter['id'];
+        $voter_sql = "SELECT * FROM voters WHERE id = '$voter_id'";
+        $voter_query = $conn->query($voter_sql);
+        $voter = $voter_query->fetch_assoc();
+        
+        $organization = $voter['organization'];
+        $sql = "SELECT * FROM categories WHERE election_id = 20";
+        $query = $conn->query($sql);
+        $error = false;
+        $sql_array = array();
+        $votes_info = '';
+        while($row = $query->fetch_assoc()){
+            $position = slugify($row['name']);
+            $pos_id = $row['id'];
+            if(isset($_POST[$position])){
+                if($row['max_vote'] > 1){
+                    if(count($_POST[$position]) > $row['max_vote']){
+                        $error = true;
+                        $_SESSION['error'][] = 'You can only choose '.$row['max_vote'].' candidates for '.$row['name'];
+                    }
+                    else{
+                        foreach($_POST[$position] as $key => $values){
+                            // Fetch candidate name from database
+                            $candidate_sql = "SELECT firstname, lastname FROM candidates WHERE id = '$values'";
+                            $candidate_query = $conn->query($candidate_sql);
+                            $candidate_row = $candidate_query->fetch_assoc();
+                            $candidate_name = $candidate_row['firstname'] . ' ' . $candidate_row['lastname'];
 
-								$sql_array[] = "INSERT INTO votes_csc (voters_id, election_id, candidate_id, category_id, organization) VALUES ('".$voter['id']."', '20', '$values', '$pos_id', '$organization')";
-								// Append vote information to $votes_info
-								$votes_info .= "<p><strong>Position:</strong> ".$row['name']."<br>";
-								$votes_info .= "<strong>Candidate:</strong> $candidate_name</p>";
-							}
-						}
-						
-					}
-					else{
-						$candidate = $_POST[$position];
-						// Fetch candidate name from database
-						$candidate_sql = "SELECT firstname, lastname FROM candidates WHERE id = '$candidate'";
-						$candidate_query = $conn->query($candidate_sql);
-						$candidate_row = $candidate_query->fetch_assoc();
-						$candidate_name = $candidate_row['firstname'] . ' ' . $candidate_row['lastname'];
+                            $sql_array[] = "INSERT INTO votes_csc (voters_id, election_id, candidate_id, category_id, organization) VALUES ('".$voter['id']."', '20', '$values', '$pos_id', '$organization')";
+                            // Append vote information to $votes_info
+                            $votes_info .= "<p><strong>Position:</strong> ".$row['name']."<br>";
+                            $votes_info .= "<strong>Candidate:</strong> $candidate_name</p>";
+                        }
+                    }
+                    
+                }
+                else{
+                    $candidate = $_POST[$position];
+                    // Fetch candidate name from database
+                    $candidate_sql = "SELECT firstname, lastname FROM candidates WHERE id = '$candidate'";
+                    $candidate_query = $conn->query($candidate_sql);
+                    $candidate_row = $candidate_query->fetch_assoc();
+                    $candidate_name = $candidate_row['firstname'] . ' ' . $candidate_row['lastname'];
 
-						$sql_array[] = "INSERT INTO votes_csc (voters_id, election_id, candidate_id, category_id, organization) VALUES ('".$voter['id']."', '20', '$candidate', '$pos_id', '$organization')";
-						// Append vote information to $votes_info
-						$votes_info .= "<p><strong>Position:</strong> ".$row['name']."<br>";
-						$votes_info .= "<strong>Candidate:</strong> $candidate_name</p>";
-					}
+                    $sql_array[] = "INSERT INTO votes_csc (voters_id, election_id, candidate_id, category_id, organization) VALUES ('".$voter['id']."', '20', '$candidate', '$pos_id', '$organization')";
+                    // Append vote information to $votes_info
+                    $votes_info .= "<p><strong>Position:</strong> ".$row['name']."<br>";
+                    $votes_info .= "<strong>Candidate:</strong> $candidate_name</p>";
+                }
 
-				}
-				
-			}
+            }
+            
+        }
 
-			if(!$error){
-				foreach($sql_array as $sql_row){
-					$conn->query($sql_row);
-				}
+        if(!$error){
+            foreach($sql_array as $sql_row){
+                $conn->query($sql_row);
+            }
 
-				unset($_SESSION['post']);
-				$_SESSION['success'] = 'Ballot Submitted';
+            unset($_SESSION['post']);
+            $_SESSION['success'] = 'Ballot Submitted';
 
-				// Sending email to the voter
-				$to = $voter['email']; // Voter's email address
-				$subject = 'Your Voting Confirmation';
-				$message = "<html><body>";
-				$message .= "<p>Dear Voter,</p>";
-				$message .= "<p>Thank you for casting your vote. Below are the details of your votes:</p>";
-				$message .= $votes_info; // Append the votes information
-				$message .= "<p>Thank you,<br>JPCS Election Committee</p>";
-				$message .= "</body></html>";
+            // Sending email to the voter
+            $to = $voter['email']; // Voter's email address
+            $subject = 'Your Voting Confirmation';
+            $message = "<html><body>";
+            $message .= "<p>Dear Voter,</p>";
+            $message .= "<p>Thank you for casting your vote. Below are the details of your votes:</p>";
+            $message .= $votes_info; // Append the votes information
+            $message .= "<p>Thank you,<br>JPCS Election Committee</p>";
+            $message .= "</body></html>";
 
-				$headers = "MIME-Version: 1.0" . "\r\n";
-				$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+            $headers = "MIME-Version: 1.0" . "\r\n";
+            $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
-				// Send email
-				mail($to, $subject, $message, $headers);
+            // Send email
+            mail($to, $subject, $message, $headers);
+        }
+    }
+}
+else{
+    $_SESSION['error'][] = 'Select candidates to vote first';
+}
 
-			}
+// Fetch live poll results
+$sql_results = "SELECT 
+                    categories.name AS position_name, 
+                    candidates.firstname, 
+                    candidates.lastname, 
+                    COUNT(votes_csc.candidate_id) AS vote_count
+                FROM 
+                    votes_csc
+                LEFT JOIN 
+                    candidates ON votes_csc.candidate_id = candidates.id
+                LEFT JOIN 
+                    categories ON votes_csc.category_id = categories.id
+                WHERE 
+                    votes_csc.election_id = 20
+                GROUP BY 
+                    categories.name, candidates.id
+                ORDER BY 
+                    categories.priority ASC, vote_count DESC";
+$result = $conn->query($sql_results);
 
-		}
+?>
 
-	}
-	else{
-		$_SESSION['error'][] = 'Select candidates to vote first';
-	}
-	header("location: home.php");
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vote Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .confirmation {
+            text-align: center;
+            margin-top: 50px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: maroon;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="confirmation">
+        <h1>Thank You for Voting!</h1>
+        <?php
+        if(isset($_SESSION['success'])){
+            echo "<p>".$_SESSION['success']."</p>";
+            unset($_SESSION['success']);
+        }
+        if(isset($_SESSION['error'])){
+            foreach($_SESSION['error'] as $error){
+                echo "<p style='color: red;'>$error</p>";
+            }
+            unset($_SESSION['error']);
+        }
+        ?>
+    </div>
+
+    <h2>Live Poll Results</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Position</th>
+                <th>Candidate</th>
+                <th>Vote Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            while($row = $result->fetch_assoc()) {
+                echo "<tr>
+                        <td>{$row['position_name']}</td>
+                        <td>{$row['firstname']} {$row['lastname']}</td>
+                        <td>{$row['vote_count']}</td>
+                    </tr>";
+            }
+            ?>
+        </tbody>
+    </table>
+</body>
+</html>
+<?php
 exit();
 ?>
