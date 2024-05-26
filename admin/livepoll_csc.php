@@ -115,7 +115,7 @@ include 'includes/header_csc.php';
                     'bsedRep' => 'BSED Rep',
                     'bshmRep' => 'BSHM Rep',
                     'bsoadRep' => 'BSOAD Rep',
-                    'bs CrimRep' => 'BS CRIM Rep',
+                    'bs crimRep' => 'BS CRIM Rep',
                     'bsitRep' => 'BSIT Rep'
                 ];
 
