@@ -10,7 +10,10 @@ require_once __DIR__ . '/vendor/autoload.php';
 // Include database connection
 require_once 'includes/conn.php'; // Adjust the path as per your file structure
 
-// Query to calculate vote count for each candidate from votes_csc table
+// Set the desired election ID
+$election_id = 20;
+
+// Query to calculate vote count for each candidate from votes_csc table for a specific election ID
 $sql = "SELECT 
             candidates.firstname, 
             candidates.lastname, 
@@ -22,12 +25,18 @@ $sql = "SELECT
             votes_csc ON candidates.id = votes_csc.candidate_id
         LEFT JOIN 
             categories ON candidates.category_id = categories.id
+        WHERE
+            votes_csc.election_id = ?
         GROUP BY 
             categories.name, candidates.id
         ORDER BY 
             categories.priority ASC, vote_count DESC"; // Ordering by priority in categories
 
-$result = $conn->query($sql);
+// Prepare and execute the SQL query
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $election_id);
+$stmt->execute();
+$result = $stmt->get_result();
 
 // Check for SQL errors
 if (!$result) {
