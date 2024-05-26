@@ -548,7 +548,7 @@ main.sign-up-mode .carousel {
                   />
                     <span class="form-control-feedback"></span>
                   <label style="font-size:15px;"></label>
-                  <i class="fa fa-fw fa-eye togglePassword1" id="togglePassword"></i>
+                  <i class="fa fa-fw fa-eye togglePassword" id="togglePassword1"></i>
                   <span class="form-control-feedback"></span>
                 </div>
 
