@@ -63,31 +63,14 @@ $remaining_voters = $total_voters - $voted_voters;
 
 // Calculate voter turnout percentage with two decimal places
 $voter_turnout = number_format(($total_voters > 0) ? (($voted_voters / $total_voters) * 100) : 0, 2);
-
+$currentDate = date('F j, Y'); 
 // Create PDF content
 $pdfContent = "
 <style>
-body {
-  font-family: Arial, sans-serif;
-  color: #333;
-}
-
-h1, h2 {
-  font-size: 14px;
-  text-align: center;
-  color: #000;
-}
-
-p {
-  font-family: Brush Script MT, cursive;
-  text-align: center;
-  color: #000;
-}
-
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
+  margin-top: 10px;
   opacity: 0.8; /* Adjust the opacity value to make the table more transparent */
 }
 
@@ -113,10 +96,31 @@ tr:nth-child(odd) {
 .highlight {
   background-color: #ffe6e6; /* Light red background for highest count of votes */
 }
+.header-container {
+  text-align: center;
+  margin-bottom: 10px;
+  margin: 0;
+  padding: 0;
+}
+.header-container img {
+  height: 100px;
+  width: 100px;
+}
+.header-container .school-name {
+  font-size: 22px;
+  font-weight: bold;
+}
+.header-container .report-title {
+  font-size: 20px;
+}
 </style>
-<img src='images/logo.png' alt='Logo' style='height: 100px; width: 100px; float: left;'>
-<p style='font-family, cursive;'>Our Lady of the Sacred Heart College of Guimba, Inc.</p>
-<h1>2024 Election Results</h1>
+<div class='header-container'>
+  <img src='images/logo.png' alt='Logo' style='height: 70px; width: 70px; float: left;'>
+  <img src='images/j.png' alt='Logo' style='height: 70px; width: 70px; float: right;'>
+  <p class='school-name' style='font-size: 16px; font-weight: bold; margin-top: -10px; margin-left: 10px; margin-right: 10px;'>Our Lady of the Sacred Heart College of Guimba, Inc.<br>Guimba, Nueva Ecija</p>
+  <p class='report-title' style='font-size: 16px; margin-top: 50px; margin-bottom: 10px;'>2024 Election Results</p>
+</div>
+<p style='text-align: right; padding-top: 0;'>As of {$currentDate}</p>
 <table>
     <thead>
     <tr>
@@ -162,7 +166,7 @@ while ($row = $result->fetch_assoc()) {
 $pdfContent .= "
   </tbody>
 </table>
-<br>
+<br><br>
 <p style='text-align: left;'><b>Total Voters:</b> {$total_voters}</p>
 <p style='text-align: left;'><b>Voters Voted:</b> {$voted_voters}</p>
 <p style='text-align: left;'><b>Remaining Voters:</b> {$remaining_voters}</p>

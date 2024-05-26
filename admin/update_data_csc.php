@@ -1,6 +1,11 @@
 <?php
 include 'includes/session.php';
 
+$organizationFilter = "";
+if (!empty($_GET['organization'])) {
+    $organizationFilter = " AND voters1.organization = '" . $conn->real_escape_string($_GET['organization']) . "'";
+}
+
 // Function to fetch votes data with candidate images
 function fetchVotes($conn, $category, $organizationFilter) {
     $data = array();
@@ -11,21 +16,27 @@ function fetchVotes($conn, $category, $organizationFilter) {
             LEFT JOIN candidates ON categories.id = candidates.category_id
             LEFT JOIN votes_csc ON candidates.id = votes_csc.candidate_id
             LEFT JOIN voters AS voters1 ON voters1.id = votes_csc.voters_id 
-            WHERE voters1.organization != '' AND categories.name = ? 
+            WHERE voters1.organization != '' AND categories.name = '$category'
             $organizationFilter
             GROUP BY candidates.id";
     
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('s', $category);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    
-    while($row = $result->fetch_assoc()) {
+    // Debugging: Log the query for inspection
+    error_log("SQL Query: " . $sql);
+
+    $query = $conn->query($sql);
+    if (!$query) {
+        // Log SQL error if query fails
+        error_log("SQL Error: " . $conn->error);
+        return $data;
+    }
+
+    while($row = $query->fetch_assoc()) {
         $imagePath = !empty($row['candidate_image']) ? '../images/' . $row['candidate_image'] : '../images/profile.jpg';
 
         // Debugging: Check if the file exists and log the path
         if (!file_exists($imagePath)) {
             error_log("Image not found: " . $imagePath);
+            $imagePath = '../images/profile.jpg';  // Default image if not found
         }
 
         $data[] = array(
@@ -34,14 +45,7 @@ function fetchVotes($conn, $category, $organizationFilter) {
             "image" => $imagePath
         );
     }
-    $stmt->close();
     return $data;
-}
-
-$organizationFilter = "";
-if (!empty($_GET['organization'])) {
-    $organization = $_GET['organization'];
-    $organizationFilter = " AND voters1.organization = ?";
 }
 
 $response = array();
@@ -52,11 +56,12 @@ $categories = [
 ];
 
 foreach ($categories as $category) {
-    $response[strtolower(str_replace(' ', '', $category))] = fetchVotes($conn, $category, $organizationFilter);
+    $response[$category] = fetchVotes($conn, ucfirst(str_replace(['Rep', 'Manager', 'P.R.O'], [' Rep', ' Manager', ' P.R.O'], $category)), $organizationFilter);
 }
 
+// Debugging: Log the final response
+error_log(json_encode($response));
+
 header('Content-Type: application/json');
-$responseJson = json_encode($response);
-echo $responseJson;
-error_log($responseJson);
+echo json_encode($response);
 ?>

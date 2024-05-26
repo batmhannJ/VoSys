@@ -41,13 +41,9 @@ include 'includes/header_csc.php';
         }
 
         .candidate-images {
-            position: absolute;
-            top: 0;
-            left: 0;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: 100%;
             padding: 10px;
         }
 
@@ -66,6 +62,7 @@ include 'includes/header_csc.php';
 
         .candidate-label {
             margin-left: 10px;
+            font-weight: bold;
         }
 
         @media (max-width: 768px) {
@@ -125,9 +122,9 @@ include 'includes/header_csc.php';
                             </div>
                             <div class='box-body'>
                                 <div class='chart-container'>
-                                    <div class='candidate-images' id='{$categoryKey}Image'></div>
                                     <div id='{$categoryKey}Graph' style='height: 300px; width: calc(100% - 70px); margin-left: 70px;'></div>
                                 </div>
+                                <div class='candidate-images' id='{$categoryKey}Image'></div>
                             </div>
                         </div>
                     </div>";
@@ -190,13 +187,14 @@ include 'includes/header_csc.php';
         chart.render();
     }
 
+    // Function to fetch updated data from the server
     function fetchAndGenerateGraphs() {
         $.ajax({
-            url: 'update_data_csc.php',
+            url: 'update_data_csc.php', // Modify this URL to point to your server-side script for updating data
             method: 'GET',
             dataType: 'json',
             success: function (response) {
-                // Generate graphs for all categories
+                // Generate graphs for all categories using the updated data
                 var categories = [
                     'president', 'vice president', 'secretary', 'treasurer', 'auditor',
                     'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
@@ -215,9 +213,20 @@ include 'includes/header_csc.php';
         });
     }
 
-    $(document).ready(function () {
-        fetchAndGenerateGraphs();
+    // Function to periodically fetch and update graphs
+    function updateGraphsPeriodically() {
+        fetchAndGenerateGraphs(); // Fetch data initially when the page loads
 
+        // Schedule fetching data every 5 seconds (adjust the interval as needed)
+        setInterval(function () {
+            fetchAndGenerateGraphs();
+        }, 5000); // 5000 milliseconds = 5 seconds
+    }
+
+    $(document).ready(function () {
+        updateGraphsPeriodically(); // Start updating graphs when the document is ready
+
+        // Your existing code for scrolling and back-to-top button
         $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
                 $('#back-to-top').fadeIn();
@@ -231,6 +240,7 @@ include 'includes/header_csc.php';
             return false;
         });
     });
+
 </script>
 </body>
 </html>
