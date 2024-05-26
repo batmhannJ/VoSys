@@ -1,72 +1,231 @@
+<!DOCTYPE html>
+<html>
 <?php
 include 'includes/session.php';
-
-// Set headers for SSE
-header('Content-Type: text/event-stream');
-header('Cache-Control: no-cache');
-header('Connection: keep-alive');
-
-// Function to fetch votes data with candidate images
-function fetchVotes($conn, $category, $organizationFilter) {
-    $data = array();
-    $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-            COALESCE(COUNT(votes_csc.candidate_id), 0) AS vote_count, 
-            candidates.photo AS candidate_image
-            FROM categories 
-            LEFT JOIN candidates ON categories.id = candidates.category_id
-            LEFT JOIN votes_csc ON candidates.id = votes_csc.candidate_id
-            LEFT JOIN voters AS voters1 ON voters1.id = votes_csc.voters_id 
-            WHERE voters1.organization != '' AND categories.name = '$category'
-            $organizationFilter
-            GROUP BY candidates.id";
-    
-    $query = $conn->query($sql);
-    if (!$query) {
-        // Log SQL error if query fails
-        error_log("SQL Error: " . $conn->error);
-        return $data;
-    }
-
-    while($row = $query->fetch_assoc()) {
-        $imagePath = !empty($row['candidate_image']) ? '../images/' . $row['candidate_image'] : '../images/profile.jpg';
-
-        // Check if the file exists and log the path
-        if (!file_exists($imagePath)) {
-            $imagePath = '../images/profile.jpg';  // Default image if not found
+include 'includes/header_csc.php';
+?>
+<head>
+    <style>
+        .box-title {
+            text-align: center;
+            width: 100%;
+            display: inline-block;
         }
 
-        $data[] = array(
-            "y" => intval($row['vote_count']), 
-            "label" => $row['candidate_name'],
-            "image" => $imagePath
-        );
+        /* Back to Top button styles */
+        #back-to-top {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            display: none;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 22px;
+            line-height: 50px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        #back-to-top:hover {
+            background-color: #555;
+        }
+
+        .chart-container {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .candidate-images {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        .candidate-image {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .candidate-image img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .candidate-label {
+            margin-left: 10px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .candidate-image img {
+                width: 75px;
+                height: 75px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .candidate-image img {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+<body class="hold-transition skin-black sidebar-mini">
+<div class="wrapper">
+    <?php include 'includes/navbar_csc.php'; ?>
+    <?php include 'includes/menubar_csc.php'; ?>
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>Election Results</h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li class="active">Results</li>
+            </ol>
+        </section>
+
+        <section class="content">
+            <div class="row justify-content-center">
+                <?php
+                $categories = [
+                    'president' => 'President',
+                    'vice president' => 'Vice President',
+                    'secretary' => 'Secretary',
+                    'treasurer' => 'Treasurer',
+                    'auditor' => 'Auditor',
+                    'p.r.o' => 'P.R.O',
+                    'businessManager' => 'Business Manager',
+                    'beedRep' => 'BEED Rep',
+                    'bsedRep' => 'BSED Rep',
+                    'bshmRep' => 'BSHM Rep',
+                    'bsoadRep' => 'BSOAD Rep',
+                    'bs crimRep' => 'BS CRIM Rep',
+                    'bsitRep' => 'BSIT Rep'
+                ];
+
+                foreach ($categories as $categoryKey => $categoryName) {
+                    echo "
+                    <div class='col-md-12'>
+                        <div class='box'>
+                            <div class='box-header with-border'>
+                                <h3 class='box-title'><b>$categoryName</b></h3>
+                            </div>
+                            <div class='box-body'>
+                                <div class='chart-container'>
+                                    <div id='{$categoryKey}Graph' style='height: 300px; width: calc(100% - 70px); margin-left: 70px;'></div>
+                                </div>
+                                <div class='candidate-images' id='{$categoryKey}Image'></div>
+                            </div>
+                        </div>
+                    </div>";
+                }
+                ?>
+            </div>
+        </section>
+
+        <button id="back-to-top" title="Back to top">&uarr;</button>
+    </div>
+    <?php include 'includes/footer.php'; ?>
+</div>
+<?php include 'includes/scripts.php'; ?>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="path/to/jquery.min.js"></script>
+<script>
+    function generateBarGraph(dataPoints, containerId, imageContainerId) {
+        var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+
+        // Update the image container
+        var imageContainer = document.getElementById(imageContainerId);
+        imageContainer.innerHTML = dataPoints.map(dataPoint =>
+            `<div class="candidate-image">
+                <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">
+                <span class="candidate-label">${dataPoint.label}</span>
+            </div>`
+        ).join('');
+
+        var chart = new CanvasJS.Chart(containerId, {
+            animationEnabled: true,
+            animationDuration: 3000,
+            animationEasing: "easeInOutBounce",
+            title: {
+                text: "Vote Counts"
+            },
+            axisX: {
+                title: "",
+                includeZero: true,
+                interval: 1,
+                labelFormatter: function () {
+                    return " ";
+                }
+            },
+            axisY: {
+                title: "",
+                interval: Math.ceil(totalVotes / 10)
+            },
+            data: [{
+                type: "bar",
+                indexLabel: "{label} - {percent}%",
+                indexLabelPlacement: "inside",
+                indexLabelFontColor: "white",
+                indexLabelFontSize: 14,
+                dataPoints: dataPoints.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                }))
+            }]
+        });
+        chart.render();
     }
-    return $data;
-}
 
-$organizationFilter = "";
-if (!empty($_GET['organization'])) {
-    $organizationFilter = " AND voters1.organization = '" . $conn->real_escape_string($_GET['organization']) . "'";
-}
+    function updateGraphs(response) {
+        var categories = [
+            'president', 'vice president', 'secretary', 'treasurer', 'auditor',
+            'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
+            'bsoadRep', 'bs crimRep', 'bsitRep'
+        ];
 
-while (true) {
-    $response = array();
-    $categories = [
-        'president', 'vice president', 'secretary', 'treasurer', 'auditor',
-        'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
-        'bsoadRep', 'bs crimRep', 'bsitRep'
-    ];
-
-    foreach ($categories as $category) {
-        $response[$category] = fetchVotes($conn, ucfirst(str_replace(['Rep', 'Manager', 'P.R.O'], [' Rep', ' Manager', ' P.R.O'], $category)), $organizationFilter);
+        categories.forEach(function (category) {
+            if (response[category]) {
+                generateBarGraph(response[category], category + 'Graph', category + 'Image');
+            }
+        });
     }
 
-    // Send the latest vote data to the client
-    echo "data: " . json_encode($response) . "\n\n";
-    ob_flush();
-    flush();
+    $(document).ready(function () {
+        if (typeof(EventSource) !== "undefined") {
+            var source = new EventSource('update_data_csc.php');
 
-    // Sleep for a second before checking for new data
-    sleep(1);
-}
-?>
+            source.onmessage = function(event) {
+                var data = JSON.parse(event.data);
+                updateGraphs(data);
+            };
+        } else {
+            console.error("Your browser does not support SSE.");
+        }
+
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 100) {
+                $('#back-to-top').fadeIn();
+            } else {
+                $('#back-to-top').fadeOut();
+            }
+        });
+
+        $('#back-to-top').click(function () {
+            $('html, body').animate({ scrollTop: 0 }, 600);
+            return false;
+        });
+    });
+</script>
+</body>
+</html>
