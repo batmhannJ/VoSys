@@ -107,7 +107,6 @@ if(!is_active_election($conn)){
 					        hideAlerts();
 					    };
 					</script>
-
 <?php
     $sql = "SELECT * FROM votes_csc WHERE voters_id = '".$voter['id']."'";
     $vquery = $conn->query($sql);
@@ -150,6 +149,7 @@ if(!is_active_election($conn)){
             $result->data_seek(0); // Reset result pointer
             
             // Generate bar graph
+            $is_blue = true; // Initialize color
             while($row = $result->fetch_assoc()) {
                 // Display position name only once
                 static $prev_position = '';
@@ -161,16 +161,21 @@ if(!is_active_election($conn)){
                 // Calculate percentage based on total votes for the position
                 $vote_percentage = number_format(($row['total_votes'] / $total_votes) * 100, 2);
                 
+                // Alternate color between blue and red
+                $color = $is_blue ? 'blue' : 'red';
+
                 // Display candidate result without names and with percentage rounded to 2 decimal places
                 echo "<div style='margin: 10px 0;'>
                         <div style='background-color: lightgrey; width: 100%; height: 30px;'>
-                            <div style='width: {$vote_percentage}%; background-color: blue; color: white; height: 100%; text-align: center; line-height: 30px;'>
+                            <div style='width: {$vote_percentage}%; background-color: $color; color: white; height: 100%; text-align: center; line-height: 30px;'>
                                 {$vote_percentage}%
                             </div>
                         </div>
                       </div>";
+                $is_blue = !$is_blue; // Toggle color
             }
             ?>
+
 
 
 
