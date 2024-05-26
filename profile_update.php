@@ -34,6 +34,8 @@ if (isset($_POST['save'])) {
         $sql = "UPDATE voters SET firstname = '$firstname', lastname = '$lastname', password = '$password', photo = '$filename' WHERE id = '" . $voter['id'] . "'";
         if ($conn->query($sql)) {
             $_SESSION['success'] = 'User profile updated successfully';
+            // Clear the error session variable to ensure no error messages are shown
+            unset($_SESSION['error']);
         } else {
             $_SESSION['error'][] = $conn->error; // Push error message onto the array
         }
