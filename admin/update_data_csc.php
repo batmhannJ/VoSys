@@ -3,7 +3,7 @@ include 'includes/session.php';
 
 $organizationFilter = "";
 if (!empty($_GET['organization'])) {
-    $organizationFilter = " AND voters1.organization = '" . $_GET['organization'] . "'";
+    $organizationFilter = " AND voters1.organization = '" . $conn->real_escape_string($_GET['organization']) . "'";
 }
 
 // Function to fetch votes data with candidate images
@@ -19,13 +19,24 @@ function fetchVotes($conn, $category, $organizationFilter) {
             WHERE voters1.organization != '' AND categories.name = '$category'
             $organizationFilter
             GROUP BY candidates.id";
+    
+    // Debugging: Log the query for inspection
+    error_log("SQL Query: " . $sql);
+
     $query = $conn->query($sql);
+    if (!$query) {
+        // Log SQL error if query fails
+        error_log("SQL Error: " . $conn->error);
+        return $data;
+    }
+
     while($row = $query->fetch_assoc()) {
         $imagePath = !empty($row['candidate_image']) ? '../images/' . $row['candidate_image'] : '../images/profile.jpg';
 
         // Debugging: Check if the file exists and log the path
         if (!file_exists($imagePath)) {
             error_log("Image not found: " . $imagePath);
+            $imagePath = '../images/profile.jpg';  // Default image if not found
         }
 
         $data[] = array(
@@ -54,6 +65,11 @@ $response['bsitRep'] = fetchVotes($conn, 'BSIT Rep', $organizationFilter);
 
 header('Content-Type: application/json');
 $responseJson = json_encode($response);
+
+if (json_last_error() !== JSON_ERROR_NONE) {
+    error_log("JSON Error: " . json_last_error_msg());
+}
+
 echo $responseJson;
 error_log($responseJson);
 ?>
