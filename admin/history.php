@@ -28,7 +28,7 @@ include 'includes/header.php';
                         <div class="box-body">
                             <form method="get" action="">
                                 <div class="form-group">
-                                    <label for="organization">Select Organization:</label>
+                                    <label for="organization">Select Election:</label>
                                     <select class="form-control" name="organization" id="organization">
                                         <option value="">All Organizations</option>
                                         <?php
