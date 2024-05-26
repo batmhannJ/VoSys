@@ -28,7 +28,7 @@ include 'includes/header.php';
                         <div class="box-body">
                             <form method="get" action="">
                                 <div class="form-group">
-                                    <label for="organization">Select Election:</label>
+                                    <label for="organization">Select Organization:</label>
                                     <select class="form-control" name="organization" id="organization">
                                         <option value="">All Organizations</option>
                                         <?php
@@ -53,14 +53,14 @@ include 'includes/header.php';
                 <?php
                 // Function to display ranking table
                 function displayRankingTable($conn, $position, $organizationFilter) {
-                    $sql = "SELECT election.organization, CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
-                            COALESCE(COUNT(votes_csc.candidate_id), 0) AS vote_count
+                    $sql = "SELECT voters1.organization, CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
+                            COALESCE(COUNT(votes.candidate_id), 0) AS vote_count
                             FROM categories 
                             LEFT JOIN candidates ON categories.id = candidates.category_id
-                            LEFT JOIN votes_csc ON candidates.id = votes_csc.candidate_id
-                            LEFT JOIN voters AS voters1 ON voters1.id = votes_csc.voters_id 
-                            WHERE election.organization != '' AND categories.name = '".$position."'".$organizationFilter."
-                            GROUP BY election.organization, candidates.id
+                            LEFT JOIN votes ON candidates.id = votes.candidate_id
+                            LEFT JOIN voters AS voters1 ON voters1.id = votes.voters_id 
+                            WHERE voters1.organization != '' AND categories.name = '".$position."'".$organizationFilter."
+                            GROUP BY voters1.organization, candidates.id
                             ORDER BY vote_count DESC";
                     $query = $conn->query($sql);
                     $rank = 1;
@@ -79,21 +79,25 @@ include 'includes/header.php';
                 // Array of positions
                 $positions = [
                     'President', 
-                    'Vice President', 
+                    'Vice President for Internal Affairs', 
+                    'Vice President for External Affairs', 
                     'Secretary', 
                     'Treasurer', 
                     'Auditor', 
                     'P.R.O.', 
-                    'Business Manager', 
-                    'BSED Representative', 
-                    'BEED Representative', 
-                    'BSOAD Representative', 
-                    'BSHM Representative', 
-                    'BS CRIM Representative', 
-                    'BSIT Representative'
+                    'Dir. for Membership', 
+                    'Dir. for Special Project', 
+                    'Block A 1st Year Representative', 
+                    'Block B 1st Year Representative', 
+                    'Block A 2nd Year Representative', 
+                    'Block B 2nd Year Representative', 
+                    'Block A 3rd Year Representative', 
+                    'Block B 3rd Year Representative', 
+                    'Block A 4th Year Representative', 
+                    'Block B 4th Year Representative'
                 ];
 
-                $organizationFilter = !empty($_GET['organization']) ? " AND election.organization = '".$_GET['organization']."'" : "";
+                $organizationFilter = !empty($_GET['organization']) ? " AND voters1.organization = '".$_GET['organization']."'" : "";
 
                 // Loop through each position and display the ranking box
                 foreach ($positions as $position) {
