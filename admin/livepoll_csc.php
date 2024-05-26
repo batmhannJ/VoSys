@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <?php
 include 'includes/session.php';
 include 'includes/header_csc.php';
 ?>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Election Results</title>
     <style>
         .box-title {
             text-align: center;
@@ -196,6 +199,7 @@ include 'includes/header_csc.php';
             method: 'GET',
             dataType: 'json',
             success: function (response) {
+                console.log(response); // Log the response to check data
                 // Generate graphs for all categories
                 var categories = [
                     'president', 'vicePresident', 'secretary', 'treasurer', 'auditor',
@@ -204,8 +208,10 @@ include 'includes/header_csc.php';
                 ];
 
                 categories.forEach(function (category) {
-                    if (response[category]) {
+                    if (response[category] && response[category].length > 0) {
                         generateBarGraph(response[category], category + 'Graph', category + 'Image');
+                    } else {
+                        console.warn("No data for category: " + category);
                     }
                 });
             },
