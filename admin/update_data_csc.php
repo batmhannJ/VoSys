@@ -45,12 +45,12 @@ $response['treasurer'] = fetchVotes($conn, 'Treasurer', $organizationFilter);
 $response['auditor'] = fetchVotes($conn, 'Auditor', $organizationFilter);
 $response['publicInformationOfficer'] = fetchVotes($conn, 'Public Information Officer (P.R.O)', $organizationFilter);
 $response['businessManager'] = fetchVotes($conn, 'Business Manager', $organizationFilter);
-$response['beedRep'] = fetchVotes($conn, 'BEED Representative', $organizationFilter);
-$response['bsedRep'] = fetchVotes($conn, 'BSED Representative', $organizationFilter);
-$response['bshmRep'] = fetchVotes($conn, 'BSHM Representative', $organizationFilter);
-$response['bsoadRep'] = fetchVotes($conn, 'BSOAD Representative', $organizationFilter);
-$response['bsCrimRep'] = fetchVotes($conn, 'BS CRIM Representative', $organizationFilter);
-$response['bsitRep'] = fetchVotes($conn, 'BSIT Representative', $organizationFilter);
+$response['beedRep'] = fetchVotes($conn, 'BEED Rep', $organizationFilter);
+$response['bsedRep'] = fetchVotes($conn, 'BSED Rep', $organizationFilter);
+$response['bshmRep'] = fetchVotes($conn, 'BSHM Rep', $organizationFilter);
+$response['bsoadRep'] = fetchVotes($conn, 'BSOAD Rep', $organizationFilter);
+$response['bsCrimRep'] = fetchVotes($conn, 'BS CRIM Rep', $organizationFilter);
+$response['bsitRep'] = fetchVotes($conn, 'BSIT Rep', $organizationFilter);
 
 header('Content-Type: application/json');
 $responseJson = json_encode($response);
