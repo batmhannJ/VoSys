@@ -31,10 +31,15 @@ include 'includes/header_csc.php';
                             FROM categories 
                             LEFT JOIN candidates ON categories.id = candidates.category_id
                             LEFT JOIN votes_csc ON candidates.id = votes_csc.candidate_id
-                            WHERE categories.name = '".$position."'
-                            GROUP BY candidates.id
+                            LEFT JOIN voters AS voters1 ON voters1.id = votes_csc.voters_id 
+                            WHERE categories.name = ? AND voters1.organization != ''
+                            GROUP BY candidates.firstname, candidates.lastname
                             ORDER BY vote_count DESC";
-                    $query = $conn->query($sql);
+
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("s", $position);
+                    $stmt->execute();
+                    $query = $stmt->get_result();
                     $rank = 1;
                     while($row = $query->fetch_assoc()){
                         echo "
@@ -45,6 +50,7 @@ include 'includes/header_csc.php';
                             </tr>";
                         $rank++;
                     }
+                    $stmt->close();
                 }
 
                 // Array of positions
