@@ -1,10 +1,10 @@
 <?php
 include 'includes/session.php';
 
-$organizationFilter = "";
-if (!empty($_GET['organization'])) {
-    $organizationFilter = " AND voters1.organization = '" . $conn->real_escape_string($_GET['organization']) . "'";
-}
+// Set headers for SSE
+header('Content-Type: text/event-stream');
+header('Cache-Control: no-cache');
+header('Connection: keep-alive');
 
 // Function to fetch votes data with candidate images
 function fetchVotes($conn, $category, $organizationFilter) {
@@ -20,9 +20,6 @@ function fetchVotes($conn, $category, $organizationFilter) {
             $organizationFilter
             GROUP BY candidates.id";
     
-    // Debugging: Log the query for inspection
-    error_log("SQL Query: " . $sql);
-
     $query = $conn->query($sql);
     if (!$query) {
         // Log SQL error if query fails
@@ -33,9 +30,8 @@ function fetchVotes($conn, $category, $organizationFilter) {
     while($row = $query->fetch_assoc()) {
         $imagePath = !empty($row['candidate_image']) ? '../images/' . $row['candidate_image'] : '../images/profile.jpg';
 
-        // Debugging: Check if the file exists and log the path
+        // Check if the file exists and log the path
         if (!file_exists($imagePath)) {
-            error_log("Image not found: " . $imagePath);
             $imagePath = '../images/profile.jpg';  // Default image if not found
         }
 
@@ -48,20 +44,29 @@ function fetchVotes($conn, $category, $organizationFilter) {
     return $data;
 }
 
-$response = array();
-$categories = [
-    'president', 'vice president', 'secretary', 'treasurer', 'auditor',
-    'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
-    'bsoadRep', 'bs crimRep', 'bsitRep'
-];
-
-foreach ($categories as $category) {
-    $response[$category] = fetchVotes($conn, ucfirst(str_replace(['Rep', 'Manager', 'P.R.O'], [' Rep', ' Manager', ' P.R.O'], $category)), $organizationFilter);
+$organizationFilter = "";
+if (!empty($_GET['organization'])) {
+    $organizationFilter = " AND voters1.organization = '" . $conn->real_escape_string($_GET['organization']) . "'";
 }
 
-// Debugging: Log the final response
-error_log(json_encode($response));
+while (true) {
+    $response = array();
+    $categories = [
+        'president', 'vice president', 'secretary', 'treasurer', 'auditor',
+        'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
+        'bsoadRep', 'bs crimRep', 'bsitRep'
+    ];
 
-header('Content-Type: application/json');
-echo json_encode($response);
+    foreach ($categories as $category) {
+        $response[$category] = fetchVotes($conn, ucfirst(str_replace(['Rep', 'Manager', 'P.R.O'], [' Rep', ' Manager', ' P.R.O'], $category)), $organizationFilter);
+    }
+
+    // Send the latest vote data to the client
+    echo "data: " . json_encode($response) . "\n\n";
+    ob_flush();
+    flush();
+
+    // Sleep for a second before checking for new data
+    sleep(1);
+}
 ?>
