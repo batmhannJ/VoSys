@@ -43,6 +43,51 @@ include 'includes/header_code.php';
     }
 </style>
 
+<?php
+include 'includes/session.php';
+include 'includes/conn.php';
+include 'includes/header_code.php';
+?>
+
+<style>
+    /* Container for the live poll results */
+    #live-poll-results {
+        margin-top: 30px;
+    }
+
+    /* Position name */
+    .position-name {
+        margin-bottom: 10px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    /* Bar container */
+    .bar-container {
+        margin-bottom: 10px;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Bar */
+    .bar {
+        height: 30px;
+        line-height: 30px;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+        background-color: #3498db;
+    }
+
+    /* Alternate bar color */
+    .bar.alt {
+        background-color: #e74c3c;
+    }
+</style>
+
 <!-- Display the live poll results -->
 <div id="live-poll-results">
     <?php
@@ -75,4 +120,5 @@ include 'includes/header_code.php';
     }
     ?>
 </div>
+
 
