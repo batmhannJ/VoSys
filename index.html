@@ -1366,8 +1366,6 @@ hr {
     font-size: 4rem; /* Reduce digit size on smaller screens */
   }
 }
-
-/* Container styling */
 .section__containerrr {
   padding: 40px 20px;
   margin: 20px auto;
@@ -1388,34 +1386,61 @@ hr {
   color: #333; /* Dark text color */
 }
 
-/* Flex container for images */
-.instagram__flex, .instagram__flex1 {
+.instagram__container {
+  overflow: hidden;
+}
+
+.instagram__container1 {
+  overflow: hidden;
+}
+
+.instagram__flex {
+  margin-top: 2rem;
+  width: max-content;
   display: flex;
-  flex-wrap: wrap; /* Wrap images to next line */
-  justify-content: center; /* Center the images */
-  gap: 10px; /* Space between images */
+  align-items: center;
+  gap: 1rem;
+
+  animation: scroll 30s linear infinite;
 }
 
-/* Individual image styling */
-.instagram__flex img, .instagram__flex1 img {
-  width: calc(33.33% - 10px); /* Responsive width with gap adjustment */
-  max-width: 200px; /* Maximum width for large screens */
-  height: auto; /* Maintain aspect ratio */
-  border-radius: 10px; /* Rounded corners */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition effects */
+.instagram__flex img {
+  width: 200px;
+  height: 200px;
 }
 
-.instagram__flex img:hover, .instagram__flex1 img:hover {
-  transform: scale(1.05); /* Slight scale up on hover */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+@keyframes scroll {
+  to {
+    transform: translateX(calc(-50% - 0.5rem));
+  }
 }
 
-/* Blog sections inside the containers */
-.blog {
+.instagram__flex1 {
+  margin-top: .5rem;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  animation: scroll 30s linear infinite;
+}
+
+.instagram__flex1 img {
+  width: 200px;
+  height: 200px;
+}
+
+@keyframes scroll {
+  to {
+    transform: translateX(calc(-50% - 0.5rem));
+  }
+}
+/* General styling for both blog sections */
+.blog, .blog1 {
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  height: 200px; /* Set the height */
+  height: 150px; /* Set the height */
   width: calc(100% - 40px); /* Adjust width to leave margin on both sides */
   margin: 20px auto; /* Centered margin with top and bottom spacing */
   padding: 20px; /* Inner padding for content */
@@ -1425,19 +1450,13 @@ hr {
   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition effects */
 }
 
-/* Specific background images for blog sections */
-#blog {
+/* Specific background images */
+.blog {
   background-image: url("images/pla/1.png");
 }
 
-#blog1 {
+.blog1 {
   background-image: url("images/pla/2.png");
-}
-
-/* Hover effects for blog sections */
-#blog:hover, #blog1:hover {
-  transform: scale(1.02); /* Slight scale up on hover */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
 }
 
 
