@@ -105,7 +105,7 @@ include 'includes/header_csc.php';
                 <?php
                 $categories = [
                     'president' => 'President',
-                    'vice President' => 'Vice President',
+                    'vicePresident' => 'Vice President',
                     'secretary' => 'Secretary',
                     'treasurer' => 'Treasurer',
                     'auditor' => 'Auditor',
@@ -115,7 +115,7 @@ include 'includes/header_csc.php';
                     'bsedRep' => 'BSED Rep',
                     'bshmRep' => 'BSHM Rep',
                     'bsoadRep' => 'BSOAD Rep',
-                    'bs crimRep' => 'BS CRIM Rep',
+                    'bsCrimRep' => 'BS CRIM Rep',
                     'bsitRep' => 'BSIT Rep'
                 ];
 
@@ -202,9 +202,9 @@ include 'includes/header_csc.php';
                 console.log(response); // Log the response to check data
                 // Generate graphs for all categories
                 var categories = [
-                    'president', 'vice President', 'secretary', 'treasurer', 'auditor',
+                    'president', 'vicePresident', 'secretary', 'treasurer', 'auditor',
                     'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
-                    'bsoadRep', 'bs crimRep', 'bsitRep'
+                    'bsoadRep', 'bsCrimRep', 'bsitRep'
                 ];
 
                 categories.forEach(function (category) {
@@ -224,9 +224,8 @@ include 'includes/header_csc.php';
     $(document).ready(function () {
         fetchAndGenerateGraphs();
 
-        updateVoteCounts();
-
-    setInterval(updateVoteCounts, 5000);
+        // Fetch and update graphs every 10 seconds
+        setInterval(fetchAndGenerateGraphs, 10000);
 
         $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
