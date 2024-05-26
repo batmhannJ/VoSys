@@ -40,7 +40,6 @@ include 'includes/header_csc.php';
             display: flex;
             align-items: center;
             margin-bottom: 20px;
-            flex-wrap: nowrap;
         }
 
         .candidate-images {
@@ -52,6 +51,7 @@ include 'includes/header_csc.php';
 
         .candidate-image {
             margin-bottom: 10px;
+            text-align: center;
         }
 
         .candidate-image img {
@@ -115,8 +115,8 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-images" id="presidentImage"></div>
                                 <div id="presidentGraph" style="height: 300px; width: 100%;"></div>
+                                <div class="candidate-images" id="presidentImage"></div>
                             </div>
                         </div>
                     </div>
@@ -129,8 +129,8 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-images" id="vicePresidentImage"></div>
                                 <div id="vicePresidentGraph" style="height: 300px; width: 100%;"></div>
+                                <div class="candidate-images" id="vicePresidentImage"></div>
                             </div>
                         </div>
                     </div>
@@ -143,8 +143,8 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-images" id="secretaryImage"></div>
                                 <div id="secretaryGraph" style="height: 300px; width: 100%;"></div>
+                                <div class="candidate-images" id="secretaryImage"></div>
                             </div>
                         </div>
                     </div>
@@ -157,8 +157,8 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-images" id="treasurerImage"></div>
                                 <div id="treasurerGraph" style="height: 300px; width: 100%;"></div>
+                                <div class="candidate-images" id="treasurerImage"></div>
                             </div>
                         </div>
                     </div>
@@ -171,8 +171,8 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-images" id="auditorImage"></div>
                                 <div id="auditorGraph" style="height: 300px; width: 100%;"></div>
+                                <div class="candidate-images" id="auditorImage"></div>
                             </div>
                         </div>
                     </div>
@@ -185,8 +185,8 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-images" id="proImage"></div>
                                 <div id="proGraph" style="height: 300px; width: 100%;"></div>
+                                <div class="candidate-images" id="proImage"></div>
                             </div>
                         </div>
                     </div>
@@ -199,8 +199,8 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-images" id="businessManagerImage"></div>
                                 <div id="businessManagerGraph" style="height: 300px; width: 100%;"></div>
+                                <div class="candidate-images" id="businessManagerImage"></div>
                             </div>
                         </div>
                     </div>
@@ -213,8 +213,8 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-images" id="beedRepImage"></div>
                                 <div id="beedRepGraph" style="height: 300px; width: 100%;"></div>
+                                <div class="candidate-images" id="beedRepImage"></div>
                             </div>
                         </div>
                     </div>
@@ -227,8 +227,8 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-images" id="bsedRepImage"></div>
                                 <div id="bsedRepGraph" style="height: 300px; width: 100%;"></div>
+                                <div class="candidate-images" id="bsedRepImage"></div>
                             </div>
                         </div>
                     </div>
@@ -241,8 +241,8 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-images" id="bshmRepImage"></div>
                                 <div id="bshmRepGraph" style="height: 300px; width: 100%;"></div>
+                                <div class="candidate-images" id="bshmRepImage"></div>
                             </div>
                         </div>
                     </div>
@@ -255,8 +255,8 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-images" id="bsoadRepImage"></div>
                                 <div id="bsoadRepGraph" style="height: 300px; width: 100%;"></div>
+                                <div class="candidate-images" id="bsoadRepImage"></div>
                             </div>
                         </div>
                     </div>
@@ -269,8 +269,8 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-images" id="bscrimRepImage"></div>
                                 <div id="bscrimRepGraph" style="height: 300px; width: 100%;"></div>
+                                <div class="candidate-images" id="bscrimRepImage"></div>
                             </div>
                         </div>
                     </div>
@@ -283,8 +283,8 @@ include 'includes/header_csc.php';
                         </div>
                         <div class="box-body">
                             <div class="chart-container">
-                                <div class="candidate-images" id="bsitRepImage"></div>
                                 <div id="bsitRepGraph" style="height: 300px; width: 100%;"></div>
+                                <div class="candidate-images" id="bsitRepImage"></div>
                             </div>
                         </div>
                     </div>
