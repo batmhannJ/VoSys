@@ -62,6 +62,38 @@
       </div>
     </section>
 
+    <section class="section__container instagram__container">
+      <h2 class="section__header">SIKLAB</h2>
+      <div class="instagram__flex">
+        <img src="images/can/13.png" alt="instagram" />
+        <img src="images/can/17.png" alt="instagram" />
+        <img src="images/can/18.png" alt="instagram" />
+        <img src="images/can/16.png" alt="instagram" />
+        <img src="images/can/15.png" alt="instagram" />
+        <img src="images/can/14.png" alt="instagram" />
+        <img src="images/can/12.png" alt="instagram" />
+        <img src="images/can/19.png" alt="instagram" />
+        <img src="images/can/20.png" alt="instagram" />
+        <img src="images/can/21.png" alt="instagram" />
+      </div>
+    </section>
+    <section class="section__container instagram__container">
+      <h2 class="section__header">HOPE</h2>
+    <div class="instagram__flex1">
+      <img src="images/can2/8.png" alt="instagram" />
+      <img src="images/can2/1.png" alt="instagram" />
+      <img src="images/can2/7.png" alt="instagram" />
+      <img src="images/can2/11.png" alt="instagram" />
+      <img src="images/can2/3.png" alt="instagram" />
+      <img src="images/can2/6.png" alt="instagram" />
+      <img src="images/can2/5.png" alt="instagram" />
+      <img src="images/can2/10.png" alt="instagram" />
+      <img src="images/can2/2.png" alt="instagram" />
+      <img src="images/can2/9.png" alt="instagram" />
+      <img src="images/can2/4.png" alt="instagram" />
+    </div>
+    </section>
+    
 
 <section class="discover section" id="discover">        
     <div class="wrapper">
@@ -1325,6 +1357,48 @@ hr {
 
   .digit {
     font-size: 4rem; /* Reduce digit size on smaller screens */
+  }
+}
+
+
+
+.instagram__container {
+  background-color: #737373;
+  overflow: hidden;
+}
+
+.instagram__flex {
+  margin-top: 2rem;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  animation: scroll 30s linear infinite;
+}
+
+.instagram__flex img {
+  width: 200px;
+  height: 200px;
+}
+.instagram__flex1 {
+  margin-top: .5rem;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  animation: scroll 30s linear infinite;
+}
+
+.instagram__flex1 img {
+  width: 200px;
+  height: 200px;
+}
+
+@keyframes scroll {
+  to {
+    transform: translateX(calc(-30% - 0.5rem));
   }
 }
 
