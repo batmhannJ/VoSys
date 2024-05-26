@@ -86,7 +86,7 @@
         display: block;
         position: absolute;
         top: 3px;
-        right: 30px;
+        right: 15px;
     }
 }
   	</style>		
