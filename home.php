@@ -107,7 +107,6 @@ if(!is_active_election($conn)){
 					        hideAlerts();
 					    };
 					</script>
-
 <?php
     $sql = "SELECT * FROM votes_csc WHERE voters_id = '".$voter['id']."'";
     $vquery = $conn->query($sql);
@@ -120,14 +119,14 @@ if(!is_active_election($conn)){
 
         <!-- Display the live poll results -->
         <h2 class="text-center">Live Poll Results</h2>
-        <div class="live-poll-results">
+        <div id="live-poll-results" class="live-poll-results">
             <?php
             // Fetch live poll results
             $sql_results = "SELECT 
                                 categories.name AS position_name, 
+                                COUNT(votes_csc.id) AS total_votes,
                                 candidates.firstname, 
-                                candidates.lastname, 
-                                COUNT(votes_csc.candidate_id) AS vote_count
+                                candidates.lastname
                             FROM 
                                 votes_csc
                             LEFT JOIN 
@@ -139,45 +138,68 @@ if(!is_active_election($conn)){
                             GROUP BY 
                                 categories.name, candidates.id
                             ORDER BY 
-                                categories.priority ASC, vote_count DESC";
+                                categories.priority ASC, total_votes DESC";
             $result = $conn->query($sql_results);
 
-            // Collect maximum votes for scaling the bar
-            $max_votes_sql = "SELECT MAX(vote_count) AS max_votes FROM (
-                                SELECT COUNT(votes_csc.candidate_id) AS vote_count
-                                FROM votes_csc
-                                WHERE votes_csc.election_id = 20
-                                GROUP BY votes_csc.candidate_id
-                              ) AS subquery";
-            $max_votes_result = $conn->query($max_votes_sql);
-            $max_votes_row = $max_votes_result->fetch_assoc();
-            $max_votes = $max_votes_row['max_votes'];
-
-            // Initialize variables to track position changes
-            $prev_position = "";
-            $is_blue = true;
-
-            // Generate bar graph
+            // Get total number of votes for all positions
+            $total_votes = 0;
             while($row = $result->fetch_assoc()) {
+                $total_votes += $row['total_votes'];
+            }
+            $result->data_seek(0); // Reset result pointer
+            
+            // Generate bar graph
+            $is_blue = true; // Initialize color
+            while($row = $result->fetch_assoc()) {
+                // Display position name only once
+                static $prev_position = '';
                 if ($row['position_name'] != $prev_position) {
-                    // Display position name only once
                     echo "<div style='margin-top: 20px;'><strong>{$row['position_name']}</strong></div>";
                     $prev_position = $row['position_name'];
-                    $is_blue = true; // Reset color to blue for the first candidate of each position
                 }
+
+                // Calculate percentage based on total votes for the position
+                $vote_percentage = number_format(($row['total_votes'] / $total_votes) * 100, 2);
                 
-                $vote_percentage = number_format(($row['vote_count'] / $max_votes) * 100, 2);
+                // Alternate color between blue and red
+                $color = $is_blue ? 'blue' : 'red';
+
                 // Display candidate result without names and with percentage rounded to 2 decimal places
                 echo "<div style='margin: 10px 0;'>
                         <div style='background-color: lightgrey; width: 100%; height: 30px;'>
-                            <div style='width: {$vote_percentage}%; background-color: ".($is_blue ? 'blue' : 'red')."; color: white; height: 100%; text-align: center; line-height: 30px;'>
-                                {$row['vote_count']} votes ({$vote_percentage}%)
+                            <div style='width: {$vote_percentage}%; background-color: $color; color: white; height: 100%; text-align: center; line-height: 30px;'>
+                                {$vote_percentage}%
                             </div>
                         </div>
                       </div>";
-                $is_blue = !$is_blue; // Alternate between blue and red for candidates
+                $is_blue = !$is_blue; // Toggle color
             }
             ?>
+
+            </div>
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                function updatePollResults() {
+                    $.ajax({
+                        url: 'get_poll_results.php',
+                        method: 'GET',
+                        success: function(data) {
+                            $('#live-poll-results').html(data); // Update live poll results
+                        }
+                    });
+                }
+
+                // Call the function on page load
+                updatePollResults();
+
+                // Set interval to update results every 5 seconds
+                setInterval(updatePollResults, 5000); // Update every 5 seconds
+            });
+        </script>
+
+
 
 
 

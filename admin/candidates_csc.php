@@ -49,49 +49,50 @@
               <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
             </div>
             <div class="box-body">
-              <table id="example1" class="table table-bordered">
-                <thead>
-                  <th class="hidden"></th>
-                  <th>Position</th>
-                  <th>Photo</th>
-                  <th>Firstname</th>
-                  <th>Lastname</th>
-                  <th>Platform</th>
-                  <th>Tools</th>
-                </thead>
-                <tbody>
-                  <?php
-                    $sql = "SELECT *, candidates.id AS canid 
-                    FROM candidates 
-                    LEFT JOIN categories ON categories.id = candidates.category_id 
-                    WHERE candidates.election_id = 20 
-                    AND candidates.archived = FALSE 
-                    ORDER BY categories.priority ASC";
-
-                    $query = $conn->query($sql);
-                    while($row = $query->fetch_assoc()){
-                      $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
-                      echo "
-                        <tr>
-                          <td class='hidden'></td>
-                          <td>".$row['name']."</td>
-                          <td>
-                            <img src='".$image."' width='30px' height='30px'>
-                            <a href='#edit_photo' data-toggle='modal' class='pull-right photo' data-id='".$row['canid']."'><span class='fa fa-edit'></span></a>
-                          </td>
-                          <td>".$row['firstname']."</td>
-                          <td>".$row['lastname']."</td>
-                          <td><a href='#platform' data-toggle='modal' class='btn btn-success btn-sm btn-flat platform' data-id='".$row['canid']."'><i class='fa fa-search'></i> View</a></td>
-                          <td>
-                            <button class='btn btn-primary btn-sm edit btn-flat' data-id='".$row['canid']."'><i class='fa fa-edit'></i> Edit</button>
-                            <button class='btn btn-warning btn-sm archive btn-flat' data-id='".$row['canid']."'><i class='fa fa-archive'></i> Archive</button>
-                          </td>
-                        </tr>
-                      ";
-                    }
-                  ?>
-                </tbody>
-              </table>
+              <div class="table-responsive">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                    <th class="hidden"></th>
+                    <th>Position</th>
+                    <th>Photo</th>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Platform</th>
+                    <th>Tools</th>
+                  </thead>
+                  <tbody>
+                    <?php
+                      $sql = "SELECT *, candidates.id AS canid 
+                      FROM candidates 
+                      LEFT JOIN categories ON categories.id = candidates.category_id 
+                      WHERE candidates.election_id = 20 
+                      AND candidates.archived = FALSE 
+                      ORDER BY categories.priority ASC";
+                      $query = $conn->query($sql);
+                      while($row = $query->fetch_assoc()){
+                        $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
+                        echo "
+                          <tr>
+                            <td class='hidden'></td>
+                            <td>".$row['name']."</td>
+                            <td>
+                              <img src='".$image."' width='30px' height='30px'>
+                              <a href='#edit_photo' data-toggle='modal' class='pull-right photo' data-id='".$row['canid']."'><span class='fa fa-edit'></span></a>
+                            </td>
+                            <td>".$row['firstname']."</td>
+                            <td>".$row['lastname']."</td>
+                            <td><a href='#platform' data-toggle='modal' class='btn btn-success btn-sm btn-flat platform' data-id='".$row['canid']."'><i class='fa fa-search'></i> View</a></td>
+                            <td>
+                              <button class='btn btn-primary btn-sm edit btn-flat' data-id='".$row['canid']."'><i class='fa fa-edit'></i> Edit</button>
+                              <button class='btn btn-warning btn-sm archive btn-flat' data-id='".$row['canid']."'><i class='fa fa-archive'></i> Archive</button>
+                            </td>
+                          </tr>
+                        ";
+                      }
+                    ?>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
