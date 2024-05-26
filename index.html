@@ -94,8 +94,8 @@
 </section><br><br>
 <br>
 
-<section class="section__containerrr instagram__container" id="candidate">
-  <h2 class="section__header"><br>SIKLAB PARTYLIST</h2>
+<section class="section__containerrr instagram__container">
+  <h2 class="section__header">SIKLAB</h2>
   <div class="instagram__flex">
     <img src="images/can/13.png" alt="instagram" />
     <img src="images/can/17.png" alt="instagram" />
@@ -108,24 +108,29 @@
     <img src="images/can/19.png" alt="instagram" />
     <img src="images/can/20.png" alt="instagram" />
   </div>
+  <div class="blog" id="blog">
+  </div>
 </section>
 
 <section class="section__containerrr instagram__container1">
-  <h2 class="section__header">HOPE PARTYLIST</h2>
-<div class="instagram__flex1">
-  <img src="images/can2/8.png" alt="instagram" />
-  <img src="images/can2/1.png" alt="instagram" />
-  <img src="images/can2/7.png" alt="instagram" />
-  <img src="images/can2/11.png" alt="instagram" />
-  <img src="images/can2/3.png" alt="instagram" />
-  <img src="images/can2/6.png" alt="instagram" />
-  <img src="images/can2/5.png" alt="instagram" />
-  <img src="images/can2/10.png" alt="instagram" />
-  <img src="images/can2/2.png" alt="instagram" />
-  <img src="images/can2/9.png" alt="instagram" />
-  <img src="images/can2/4.png" alt="instagram" />
-</div>
+  <h2 class="section__header">HOPE</h2>
+  <div class="instagram__flex1">
+    <img src="images/can2/8.png" alt="instagram" />
+    <img src="images/can2/1.png" alt="instagram" />
+    <img src="images/can2/7.png" alt="instagram" />
+    <img src="images/can2/11.png" alt="instagram" />
+    <img src="images/can2/3.png" alt="instagram" />
+    <img src="images/can2/6.png" alt="instagram" />
+    <img src="images/can2/5.png" alt="instagram" />
+    <img src="images/can2/10.png" alt="instagram" />
+    <img src="images/can2/2.png" alt="instagram" />
+    <img src="images/can2/9.png" alt="instagram" />
+    <img src="images/can2/4.png" alt="instagram" />
+  </div>
+  <div class="blog" id="blog1">
+  </div>
 </section>
+
 
 
 
@@ -1391,14 +1396,15 @@ hr {
   overflow: hidden;
 }
 
-/* Base styles for .instagram__flex */
+/* Base styles for .instagram__flex and .instagram__flex1 */
 .instagram__flex, .instagram__flex1 {
   margin-top: 2rem;
-  width: max-content;
   display: flex;
   align-items: center;
   gap: 1rem;
   animation: scroll-large 20s linear infinite;
+  overflow: hidden; /* Ensure overflow is hidden */
+  white-space: nowrap; /* Prevent line breaks */
 }
 
 .instagram__flex img, .instagram__flex1 img {
@@ -1408,22 +1414,31 @@ hr {
 
 /* Keyframes for larger screens */
 @keyframes scroll-large {
-  to {
-    transform: translateX(calc(-50% - 1rem));
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-100% - 1rem));
   }
 }
 
 /* Keyframes for medium screens */
 @keyframes scroll-medium {
-  to {
-    transform: translateX(calc(-50% - 1rem));
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-200% - 1rem));
   }
 }
 
 /* Keyframes for small screens */
 @keyframes scroll-small {
-  to {
-    transform: translateX(calc(-100% - 1rem));
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-300% - 1rem));
   }
 }
 
@@ -1439,6 +1454,7 @@ hr {
     animation: scroll-small 20s linear infinite;
   }
 }
+
 
 /* General styling for both blog sections */
 .blog, .blog1 {
