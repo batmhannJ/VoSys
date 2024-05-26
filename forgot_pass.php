@@ -169,6 +169,20 @@ form.sign-up-form {
   flex-grow: 1; 
 }
 
+.togglePassword {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 18px;
+            color: #aaa;
+        }
+
+        .togglePassword:hover {
+            color: #333;
+        }
+
 #sendOTP {
   min-width: 100px; /* Set a minimum width for the button */
   margin-left: 200px; /* Add a small margin between the input field and the button */
@@ -518,7 +532,7 @@ main.sign-up-mode .carousel {
                   />
                     <span class="form-control-feedback"></span>
                   <label style="font-size:15px;"></label>
-                  <i class="bi bi-eye-slash" id="togglePassword"></i>
+                  <i class="fa fa-fw fa-eye togglePassword" id="togglePassword"></i>
                   <span class="form-control-feedback"></span>
                 </div>
 
@@ -534,7 +548,7 @@ main.sign-up-mode .carousel {
                   />
                     <span class="form-control-feedback"></span>
                   <label style="font-size:15px;"></label>
-                  <i class="bi bi-eye-slash" id="togglePassword"></i>
+                  <i class="fa fa-fw fa-eye togglePassword" id="togglePassword"></i>
                   <span class="form-control-feedback"></span>
                 </div>
 
@@ -685,7 +699,24 @@ xhr.send('email=' + encodeURIComponent(email) + '&new_password=' + encodeURIComp
   setInterval(nextImage, 3000); // Change image every 3 seconds
 </script>
 
-    <script src="app.js"></script>
+<script src="app.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var togglePassword = document.getElementById('togglePassword');
+            togglePassword.addEventListener('click', function () {
+                var input = document.getElementById('current-password');
+                if (input.getAttribute('type') === 'password') {
+                    input.setAttribute('type', 'text');
+                    this.classList.remove('fa-eye');
+                    this.classList.add('fa-eye-slash');
+                } else {
+                    input.setAttribute('type', 'password');
+                    this.classList.remove('fa-eye-slash');
+                    this.classList.add('fa-eye');
+                }
+            });
+        });
+    </script>
     <?php include 'includes/scripts.php' ?>
 </body>
 
