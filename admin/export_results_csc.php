@@ -67,23 +67,6 @@ $voter_turnout = number_format(($total_voters > 0) ? (($voted_voters / $total_vo
 // Create PDF content
 $pdfContent = "
 <style>
-body {
-  font-family: Arial, sans-serif;
-  color: #333;
-}
-
-h1, h2 {
-  font-size: 14px;
-  text-align: center;
-  color: #000;
-}
-
-p {
-  font-family: Brush Script MT, cursive;
-  text-align: center;
-  color: #000;
-}
-
 table {
   width: 100%;
   border-collapse: collapse;
