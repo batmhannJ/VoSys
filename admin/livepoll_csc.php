@@ -102,18 +102,18 @@ include 'includes/header_csc.php';
                 <?php
                 $categories = [
                     'president' => 'President',
-                    'vice president' => 'Vice President',
+                    'vicePresident' => 'Vice President',
                     'secretary' => 'Secretary',
                     'treasurer' => 'Treasurer',
                     'auditor' => 'Auditor',
                     'p.r.o' => 'P.R.O',
-                    'business Manager' => 'Business Manager',
-                    'beed Rep' => 'BEED Rep',
-                    'bsed Rep' => 'BSED Rep',
-                    'bshm Rep' => 'BSHM Rep',
-                    'bsoad Rep' => 'BSOAD Rep',
-                    'bs crim Rep' => 'BS CRIM Rep',
-                    'bsit Rep' => 'BSIT Rep'
+                    'businessManager' => 'Business Manager',
+                    'beedRep' => 'BEED Rep',
+                    'bsedRep' => 'BSED Rep',
+                    'bshmRep' => 'BSHM Rep',
+                    'bsoadRep' => 'BSOAD Rep',
+                    'bsCrimRep' => 'BS CRIM Rep',
+                    'bsitRep' => 'BSIT Rep'
                 ];
 
                 foreach ($categories as $categoryKey => $categoryName) {
@@ -198,9 +198,9 @@ include 'includes/header_csc.php';
             success: function (response) {
                 // Generate graphs for all categories
                 var categories = [
-                    'president', 'vice president', 'secretary', 'treasurer', 'auditor',
-                    'p.r.o', 'business Manager', 'beed Rep', 'bsed Rep', 'bshm Rep',
-                    'bsoad Rep', 'bs crim Rep', 'bsit Rep'
+                    'president', 'vicePresident', 'secretary', 'treasurer', 'auditor',
+                    'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
+                    'bsoadRep', 'bsCrimRep', 'bsitRep'
                 ];
 
                 categories.forEach(function (category) {
