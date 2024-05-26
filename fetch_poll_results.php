@@ -77,34 +77,39 @@ include 'includes/header_code.php';
                         categories.priority ASC, total_votes DESC";
     $result = $conn->query($sql_results);
 
-    // Initialize variable to hold previous position name
-    $prev_position = '';
+    // Check for errors
+    if (!$result) {
+        echo "Error: " . $conn->error;
+    } else {
+        // Initialize variable to hold previous position name
+        $prev_position = '';
 
-    // Loop through poll results
-    while($row = $result->fetch_assoc()) {
-        // Check if position name has changed
-        if ($row['position_name'] != $prev_position) {
-            // If position name changed, display it
-            echo "<div class='position-name'>{$row['position_name']}</div>";
-            // Update previous position name
-            $prev_position = $row['position_name'];
-        }
+        // Loop through poll results
+        while($row = $result->fetch_assoc()) {
+            // Check if position name has changed
+            if ($row['position_name'] != $prev_position) {
+                // If position name changed, display it
+                echo "<div class='position-name'>{$row['position_name']}</div>";
+                // Update previous position name
+                $prev_position = $row['position_name'];
+            }
 
-        // Calculate percentage based on total votes for the position
-        $vote_percentage = number_format(($row['total_votes'] / $total_votes) * 100, 2);
-        
-        // Determine bar color class
-        $color_class = ($vote_percentage > 50) ? 'bar' : 'bar alt';
+            // Calculate percentage based on total votes for the position
+            $vote_percentage = number_format(($row['total_votes'] / $total_votes) * 100, 2);
+            
+            // Determine bar color class
+            $color_class = ($vote_percentage > 50) ? 'bar' : 'bar alt';
 
-        // Display candidate name
-        echo "<div class='candidate-container'>
-                <div class='candidate-name'>{$row['firstname']} {$row['lastname']}</div>
-                <div class='bar-container'>
-                    <div class='$color_class' style='width: {$vote_percentage}%;'>
-                        {$vote_percentage}%
+            // Display candidate name
+            echo "<div class='candidate-container'>
+                    <div class='candidate-name'>{$row['firstname']} {$row['lastname']}</div>
+                    <div class='bar-container'>
+                        <div class='$color_class' style='width: {$vote_percentage}%;'>
+                            {$vote_percentage}%
+                        </div>
                     </div>
-                </div>
-              </div>";
+                  </div>";
+        }
     }
     ?>
 </div>
