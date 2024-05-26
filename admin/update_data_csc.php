@@ -43,14 +43,13 @@ $response['vicePresident'] = fetchVotes($conn, 'Vice President', $organizationFi
 $response['secretary'] = fetchVotes($conn, 'Secretary', $organizationFilter);
 $response['treasurer'] = fetchVotes($conn, 'Treasurer', $organizationFilter);
 $response['auditor'] = fetchVotes($conn, 'Auditor', $organizationFilter);
-$response['publicInformationOfficer'] = fetchVotes($conn, 'Public Information Officer (P.R.O)', $organizationFilter);
-$response['businessManager'] = fetchVotes($conn, 'Business Manager', $organizationFilter);
-$response['beedRepresentative'] = fetchVotes($conn, 'BEED Representative', $organizationFilter);
-$response['bsedRepresentative'] = fetchVotes($conn, 'BSED Representative', $organizationFilter);
-$response['bshmRepresentative'] = fetchVotes($conn, 'BSHM Representative', $organizationFilter);
-$response['bsoadRepresentative'] = fetchVotes($conn, 'BSOAD Representative', $organizationFilter);
-$response['bsCrimRepresentative'] = fetchVotes($conn, 'BS CRIM Representative', $organizationFilter);
-$response['bsitRepresentative'] = fetchVotes($conn, 'BSIT Representative', $organizationFilter);
+$response['pro'] = fetchVotes($conn, 'Public Information Officer (P.R.O)', $organizationFilter); // Changed to P.R.O
+$response['beedRep'] = fetchVotes($conn, 'BEED Representative', $organizationFilter); // Changed to BEED Rep
+$response['bsedRep'] = fetchVotes($conn, 'BSED Representative', $organizationFilter); // Changed to BSED Rep
+$response['bshmRep'] = fetchVotes($conn, 'BSHM Representative', $organizationFilter); // Changed to BSHM Rep
+$response['bsoadRep'] = fetchVotes($conn, 'BSOAD Representative', $organizationFilter); // Changed to BSOAD Rep
+$response['bsCrimRep'] = fetchVotes($conn, 'BS CRIM Representative', $organizationFilter); // Changed to BS CRIM Rep
+$response['bsitRep'] = fetchVotes($conn, 'BSIT Representative', $organizationFilter); // Changed to BSIT Rep
 
 header('Content-Type: application/json');
 $responseJson = json_encode($response);
