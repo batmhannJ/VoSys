@@ -379,7 +379,7 @@ include 'includes/header_csc.php';
                 updateChartData(secretaryChart, response.secretary, 'secretaryImage');
                 updateChartData(treasurerChart, response.treasurer, 'treasurerImage');
                 updateChartData(auditorChart, response.auditor, 'auditorImage');
-                updateChartData(proChart, response.p.r.o, 'proImage');
+                updateChartData(proChart, response.pro, 'proImage');
                 updateChartData(businessManagerChart, response.businessManager, 'businessManagerImage');
                 updateChartData(beedRepChart, response.beedRep, 'beedRepImage');
                 updateChartData(bsedRepChart, response.bsedRep, 'bsedRepImage');
