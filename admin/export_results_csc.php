@@ -120,7 +120,7 @@ tr:nth-child(odd) {
   <p class='school-name' style='font-size: 16px; font-weight: bold; margin-top: -10px; margin-left: 10px; margin-right: 10px;'>Our Lady of the Sacred Heart College of Guimba, Inc.<br>Guimba, Nueva Ecija</p>
   <p class='report-title' style='font-size: 16px; margin-top: 50px; margin-bottom: 10px;'>2024 Election Results</p>
 </div>
-<p style='text-align: center;'>As of {$currentDate}</p>
+<p style='text-align: right; padding-top: 0;'>As of {$currentDate}</p>
 <table>
     <thead>
     <tr>
