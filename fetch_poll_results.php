@@ -50,7 +50,7 @@ include 'includes/header_code.php';
 
                 // Display candidate result without names and with percentage rounded to 2 decimal places
                 echo "<div style='margin: 10px 0;'>
-                        <div style='background-color: lightgrey; width: 100%; height: 30px; border: 1px solid #ccc; border-radius: 5px;'>
+                        <div style='background-color: lightgrey; width: 100%; height: 30px; border: 1px solid #ccc; border-color: #f0f0f0; border-radius: 5px;'>
                             <div style='width: {$vote_percentage}%; background-color: $color; color: white; height: 100%; text-align: center; line-height: 30px; border-radius: 5px;'>
                                 {$vote_percentage}%
                             </div>
