@@ -101,7 +101,7 @@
               <a href="#reset_csc" data-toggle="modal" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-refresh"></i> Reset</a>
             </div>
             <div class="box-body">
-              <div class="table-responsive" style="overflow-x:auto;">
+            <div class="table-responsive" style="overflow-x:auto;">
                 <table id="example1" class="table table-bordered" style="width: 100%; max-width: 100%; margin-bottom: 1rem; background-color: transparent;">
                   <thead>
                     <th class="hidden"></th>

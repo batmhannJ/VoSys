@@ -1,78 +1,61 @@
 <?php
+
 include 'includes/session.php';
+
 include 'includes/conn.php';
+
 include 'includes/header_code.php';
-?>
+            // Fetch live poll results
+            $sql_results = "SELECT 
+                                categories.name AS position_name, 
+                                COUNT(votes_csc.id) AS total_votes,
+                                candidates.firstname, 
+                                candidates.lastname
+                            FROM 
+                                votes_csc
+                            LEFT JOIN 
+                                candidates ON votes_csc.candidate_id = candidates.id
+                            LEFT JOIN 
+                                categories ON votes_csc.category_id = categories.id
+                            WHERE 
+                                votes_csc.election_id = 20
+                            GROUP BY 
+                                categories.name, candidates.id
+                            ORDER BY 
+                                categories.priority ASC, total_votes DESC";
+            $result = $conn->query($sql_results);
 
-<style>
-    /* Container for the live poll results */
-    #live-poll-results {
-        margin-top: 30px;
-    }
+            // Get total number of votes for all positions
+            $total_votes = 0;
+            while($row = $result->fetch_assoc()) {
+                $total_votes += $row['total_votes'];
+            }
+            $result->data_seek(0); // Reset result pointer
+            
+            // Generate bar graph
+            $is_blue = true; // Initialize color
+            while($row = $result->fetch_assoc()) {
+                // Display position name only once
+                static $prev_position = '';
+                if ($row['position_name'] != $prev_position) {
+                    echo "<div style='margin-top: 20px; font-size: 20px;'><strong>{$row['position_name']}</strong></div>";
+                    $prev_position = $row['position_name'];
+                }
 
-    /* Position name */
-    .position-name {
-        margin-bottom: 10px;
-        font-size: 24px;
-        font-weight: bold;
-        color: #333;
-    }
+                // Calculate percentage based on total votes for the position
+                $vote_percentage = number_format(($row['total_votes'] / $total_votes) * 100, 2);
+                
+                // Alternate color between blue and red
+                $color = $is_blue ? 'blue' : 'red';
 
-    /* Bar container */
-    .bar-container {
-        margin-bottom: 10px;
-        background-color: #f0f0f0;
-        border-radius: 5px;
-        overflow: hidden;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Bar */
-    .bar {
-        height: 30px;
-        line-height: 30px;
-        color: white;
-        font-weight: bold;
-        text-align: center;
-        background-color: #3498db;
-    }
-
-    /* Alternate bar color */
-    .bar.alt {
-        background-color: #e74c3c;
-    }
-</style>
-
-<!-- Display the live poll results -->
-<div id="live-poll-results">
-    <?php
-    // Initialize last position name variable
-    $last_position_name = '';
-
-    // Loop through poll results
-    while($row = $result->fetch_assoc()) {
-        // Display position name if it's different from the last one
-        if ($last_position_name != $row['position_name']) {
-            echo "<div class='position-name'>{$row['position_name']}</div>";
-            $last_position_name = $row['position_name'];
-        }
-
-        // Calculate percentage based on total votes for the position
-        $vote_percentage = number_format(($row['total_votes'] / $total_votes) * 100, 2);
-        
-        // Determine bar color class
-        $color_class = $is_blue ? 'bar' : 'bar alt';
-
-        // Display bar with percentage
-        echo "<div class='bar-container'>
-                <div class='$color_class' style='width: {$vote_percentage}%;'>
-                    {$vote_percentage}%
-                </div>
-              </div>";
-
-        // Toggle color flag
-        $is_blue = !$is_blue;
-    }
-    ?>
-</div>
-
+                // Display candidate result without names and with percentage rounded to 2 decimal places
+                echo "<div style='margin: 10px 0;'>
+                        <div style='background-color: #f0f0f0; width: 100%; height: 30px; border: 1px solid #ccc; border-color: #f0f0f0; border-radius: 5px;'>
+                            <div style='width: {$vote_percentage}%; background-color: $color; color: white; height: 100%; text-align: center; line-height: 30px; border-radius: 5px;'>
+                                {$vote_percentage}%
+                            </div>
+                        </div>
+                      </div>";
+                $is_blue = !$is_blue; // Toggle color
+            }
+            ?>

@@ -195,6 +195,7 @@ $positions = [
     'Vice President',
     'Secretary',
     'Treasurer',
+    'Auditor',
     'P.R.O',
     'Business Manager',
 ];

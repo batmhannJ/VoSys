@@ -83,14 +83,14 @@ include 'includes/header.php';
                     'Secretary', 
                     'Treasurer', 
                     'Auditor', 
-                    'P.R.O.', 
+                    'P.R.O', 
                     'Business Manager',
-                    'BSED Representative', 
-                    'BEED Representative', 
-                    'BSOAD Representative', 
-                    'BSHM Representative', 
-                    'BS CRIM Representative', 
-                    'BSIT Representative'
+                    'BSED Rep', 
+                    'BEED Rep', 
+                    'BSOAD Rep', 
+                    'BSHM Rep', 
+                    'BS CRIM Rep', 
+                    'BSIT Rep'
                 ];
 
                 $organizationFilter = !empty($_GET['organization']) ? " AND voters1.organization = '".$_GET['organization']."'" : "";
@@ -127,7 +127,7 @@ include 'includes/header.php';
                 <div class="row">
                     <div class="col-xs-12">
                         <span class="pull-right">
-                            <a href="export_results.php?organization=<?php echo $_GET['organization'] ?? ''; ?>" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Export PDF</a>
+                            <a href="export_results_csc.php?organization=<?php echo $_GET['organization'] ?? ''; ?>" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Export PDF</a>
                         </span>
                     </div>
                 </div>
