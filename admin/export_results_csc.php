@@ -207,6 +207,7 @@ $pdfContent .= "
   <span class='role'>Tabulator</span>
 </div>
 <div class='signature-block'>
+  <span class='sign'> <img src='images/luis.png' alt='Logo'></span>
   <span class='name'>LUIS B. TADENA</span> <br>
   <span class='role'>Head of COMELEC</span>
 </div>
