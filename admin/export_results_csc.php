@@ -211,7 +211,7 @@ $pdfContent .= "
   <span class='role'>Head of COMELEC</span>
 </div>
 <div class='signature-block'>
-  <<span class='name'>JESSICA MAE C. SALAZA</span> <br>
+  <span class='name'>JESSICA MAE C. SALAZAR</span> <br>
   <span class='role'>Student Affair Officer</span>
 </div>
 ";
