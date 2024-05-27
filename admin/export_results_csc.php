@@ -186,13 +186,13 @@ $pdfContent .= "
 <p style='text-align: left;'><b>Voter Turnout:</b> {$voter_turnout}%</p>
 <br><br>
 <p><b>Signatures:</b></p>
-<div class='signature-block'>
+<div class='signature-block' style='display: flex;'>
   <span class='name'>HANNAH JOY REYES</span><br>
   <span class='role'>Tabulator</span>
   <span class='name'>CHARMAINE JOYCE COLOMA</span><br>
   <span class='role'>Tabulator</span>
 </div>
-<div class='signature-block'>
+<div class='signature-block' style='display: flex;'>
   <span class='name'>LYKA REFUGIA</span><br>
   <span class='role'>Tabulator</span>
   <span class='name'>MARIE LORAIN PERONA</span> <br>
