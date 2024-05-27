@@ -217,6 +217,7 @@ $pdfContent .= "
 </div>
 ";
 
+
 // Create PDF using mPDF library
 $mpdf = new \Mpdf\Mpdf();
 $mpdf->WriteHTML($pdfContent);
