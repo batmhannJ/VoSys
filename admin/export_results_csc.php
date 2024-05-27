@@ -188,17 +188,17 @@ $pdfContent .= "
 <p><b>Signatures:</b></p>
 <div class='signature-block' style='display: flex;'>
   <span class='name'>HANNAH JOY REYES</span><br>
-  <span class='role'>Tabulator</span>
+  <span class='role'>Tabulator</span><br>
   <span class='name'>CHARMAINE JOYCE COLOMA</span><br>
-  <span class='role'>Tabulator</span>
+  <span class='role'>Tabulator</span><br>
 </div>
 <div class='signature-block' style='display: flex;'>
   <span class='name'>LYKA REFUGIA</span><br>
-  <span class='role'>Tabulator</span>
+  <span class='role'>Tabulator</span><br>
   <span class='name'>MARIE LORAIN PERONA</span> <br>
-  <span class='role'>Tabulator</span>
+  <span class='role'>Tabulator</span><br>
   <span class='name'>SANTY P. BALMORES</span> <br>
-  <span class='role'>Tabulator</span>
+  <span class='role'>Tabulator</span><br>
 </div>
 <div class='signature-block'>
   <span class='name'>LUIS B. TADENA</span> <br>
