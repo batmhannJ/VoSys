@@ -113,6 +113,19 @@ tr:nth-child(odd) {
 .header-container .report-title {
   font-size: 20px;
 }
+.signature-block {
+  text-align: center;
+  margin-top: 30px;
+}
+.signature-block .name {
+  border-bottom: 1px solid #000;
+  display: inline-block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+.signature-block .role {
+  display: block;
+}
 </style>
 <div class='header-container'>
   <img src='images/logo.png' alt='Logo' style='height: 70px; width: 70px; float: left;'>
@@ -171,6 +184,32 @@ $pdfContent .= "
 <p style='text-align: left;'><b>Voters Voted:</b> {$voted_voters}</p>
 <p style='text-align: left;'><b>Remaining Voters:</b> {$remaining_voters}</p>
 <p style='text-align: left;'><b>Voter Turnout:</b> {$voter_turnout}%</p>
+<br><br>
+<p><b>Signatures:</b></p>
+<div class='signature-block'>
+  <span class='name'>HANNAH JOY REYES</span>
+  <span class='role'>Tabulator</span>
+</div>
+<div class='signature-block'>
+  <span class='name'>JOHN DOE</span>
+  <span class='role'>Tabulator</span>
+</div>
+<div class='signature-block'>
+  <span class='name'>JANE SMITH</span>
+  <span class='role'>Tabulator</span>
+</div>
+<div class='signature-block'>
+  <span class='name'>ALICE BROWN</span>
+  <span class='role'>Tabulator</span>
+</div>
+<div class='signature-block'>
+  <span class='name'>Head of COMELEC</span>
+  <span class='role'>______________________________</span>
+</div>
+<div class='signature-block'>
+  <span class='name'>Office of Student Affairs</span>
+  <span class='role'>______________________________</span>
+</div>
 ";
 
 // Create PDF using mPDF library
