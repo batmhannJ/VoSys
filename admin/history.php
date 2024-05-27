@@ -83,7 +83,7 @@ include 'includes/header.php';
                     'Secretary', 
                     'Treasurer', 
                     'Auditor', 
-                    'P.R.O.', 
+                    'P.R.O', 
                     'Business Manager',
                     'BSED Rep', 
                     'BEED Rep', 
