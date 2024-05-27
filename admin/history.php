@@ -85,12 +85,12 @@ include 'includes/header.php';
                     'Auditor', 
                     'P.R.O.', 
                     'Business Manager',
-                    'BSED Representative', 
-                    'BEED Representative', 
-                    'BSOAD Representative', 
-                    'BSHM Representative', 
-                    'BS CRIM Representative', 
-                    'BSIT Representative'
+                    'BSED Rep', 
+                    'BEED Rep', 
+                    'BSOAD Rep', 
+                    'BSHM Rep', 
+                    'BS CRIM Rep', 
+                    'BSIT Rep'
                 ];
 
                 $organizationFilter = !empty($_GET['organization']) ? " AND voters1.organization = '".$_GET['organization']."'" : "";
