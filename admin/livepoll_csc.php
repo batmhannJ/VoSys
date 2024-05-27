@@ -124,6 +124,7 @@ include 'includes/header_csc.php';
                                 <div class='chart-container'>
                                     <div id='{$categoryKey}Graph' style='height: 300px; width: calc(100% - 70px); margin-left: 70px;'></div>
                                 </div>
+                                <div class='candidate-images' id='{$categoryKey}Image'></div>
                             </div>
                         </div>
                     </div>";
