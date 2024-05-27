@@ -195,6 +195,7 @@ $pdfContent .= "
   <span class='role'>Tabulator</span>
 </div>
 <div class='signature-block'>
+  <img src='images/lyka-esign.png' alt='Logo'><br>
   <span class='name'>LYKA REFUGIA</span><br>
   <span class='role'>Tabulator</span>
 </div>
@@ -203,6 +204,7 @@ $pdfContent .= "
   <span class='role'>Tabulator</span>
 </div>
 <div class='signature-block'>
+  <img src='images/santy-esign.png' alt='Logo'><br>
   <span class='name'>SANTY P. BALMORES</span> <br>
   <span class='role'>Tabulator</span>
 </div>
