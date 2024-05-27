@@ -187,28 +187,26 @@ $pdfContent .= "
 <br><br>
 <p><b>Signatures:</b></p>
 <div class='signature-block'>
-  <span class='name'>HANNAH JOY REYES</span>
+  <span class='name'>HANNAH JOY REYES</span><br>
+  <span class='role'>Tabulator</span>
+  <span class='name'>CHARMAINE JOYCE COLOMA</span><br>
   <span class='role'>Tabulator</span>
 </div>
 <div class='signature-block'>
-  <span class='name'>JOHN DOE</span>
+  <span class='name'>LYKA REFUGIA</span><br>
+  <span class='role'>Tabulator</span>
+  <span class='name'>MARIE LORAIN PERONA</span> <br>
+  <span class='role'>Tabulator</span>
+  <span class='name'>SANTY P. BALMORES</span> <br>
   <span class='role'>Tabulator</span>
 </div>
 <div class='signature-block'>
-  <span class='name'>JANE SMITH</span>
-  <span class='role'>Tabulator</span>
+  <span class='name'>LUIS B. TADENA</span> <br>
+  <span class='role'>Head of COMELEC</span>
 </div>
 <div class='signature-block'>
-  <span class='name'>ALICE BROWN</span>
-  <span class='role'>Tabulator</span>
-</div>
-<div class='signature-block'>
-  <span class='name'>Head of COMELEC</span>
-  <span class='role'>______________________________</span>
-</div>
-<div class='signature-block'>
-  <span class='name'>Office of Student Affairs</span>
-  <span class='role'>______________________________</span>
+  <span class='name'>JESSICA MAE SALAZAE</span> <br>
+  <span class='role'>Student Affair Officer</span>
 </div>
 ";
 
