@@ -36,6 +36,7 @@ include 'includes/header.php';
                                     <label for="organization">Select Organization:</label>
                                     <select class="form-control" name="organization" id="organization" onchange="updateVoteCounts()">
                                         <option value="">All Organizations</option>
+                                        <option value="CSC">CSC</option>
                                         <?php
                                         $organizationQuery = $conn->query("SELECT DISTINCT organization FROM voters");
                                         while($organizationRow = $organizationQuery->fetch_assoc()){
@@ -52,198 +53,8 @@ include 'includes/header.php';
                 </div>
             </div>
 
-            <div class="row">
-                <!-- Original positions -->
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title center-title"><b>President</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="presidentGraph" style="height: 300px;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title center-title"><b>Vice President for Internal Affairs</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="vicePresidentInternalGraph" style="height: 300px;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title center-title"><b>Vice President for External Affairs</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="vicePresidentExternalGraph" style="height: 300px;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title center-title"><b>Secretary</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="secretaryGraph" style="height: 300px;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <!-- Additional positions -->
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title center-title"><b>Treasurer</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="treasurerGraph" style="height: 300px;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title center-title"><b>Auditor</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="auditorGraph" style="height: 300px;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title center-title"><b>P.R.O</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="proGraph" style="height: 300px;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title center-title"><b>Dir. for Membership</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="dirMembershipGraph" style="height: 300px;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title center-title"><b>Dir. for Special Project</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="dirSpecialProjectGraph" style="height: 300px;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title center-title"><b>Block A 1st Year Representative</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="blockA1stYearRepGraph" style="height: 300px;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title center-title"><b>Block B 1st Year Representative</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="blockB1stYearRepGraph" style="height: 300px;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- New positions -->
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title center-title"><b>Block A 2nd Year Representative</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="blockA2ndYearRepGraph" style="height: 300px;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title center-title"><b>Block B 2nd Year Representative</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="blockB2ndYearRepGraph" style="height: 300px;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title center-title"><b>Block A 3rd Year Representative</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="blockA3rdYearRepGraph" style="height: 300px;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title center-title"><b>Block B 3rd Year Representative</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="blockB3rdYearRepGraph" style="height: 300px;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title center-title"><b>Block A 4th Year Representative</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="blockA4thYearRepGraph" style="height: 300px;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title center-title"><b>Block B 4th Year Representative</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="blockB4thYearRepGraph" style="height: 300px;"></div>
-                        </div>
-                    </div>
-                </div>
+            <div class="row" id="positionsContainer">
+                <!-- Dynamic position containers will be generated here -->
             </div>
         </section>
     </div>
@@ -259,7 +70,7 @@ include 'includes/header.php';
     function generateBarGraph(dataPoints, containerId) {
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
-            title:{
+            title: {
                 text: "Vote Counts"
             },
             axisY: {
@@ -270,7 +81,7 @@ include 'includes/header.php';
                 includeZero: true
             },
             data: [{
-                type: "bar", // Change type to "bar"
+                type: "bar",
                 dataPoints: dataPoints
             }]
         });
@@ -278,21 +89,39 @@ include 'includes/header.php';
     }
 
     // Function to fetch updated data from the server
-    function updateData() {
+    function updateVoteCounts() {
+        var organization = $('#organization').val();
+        var url = organization === 'CSC' ? 'update_data_csc.php' : 'update_data.php';
+
         $.ajax({
-            url: 'update_data.php', // Change this to the URL of your update data script
+            url: url,
             type: 'GET',
             dataType: 'json',
-            data: {organization: $('#organization').val()}, // Pass the selected organization to the server
+            data: { organization: organization },
             success: function(response) {
-                // Update president bar graph
-                generateBarGraph(response.presidentData, "presidentGraph");
+                $('#positionsContainer').empty(); // Clear previous graphs
 
-                // Update vice president bar graph
-                generateBarGraph(response.vicePresidentData, "vicePresidentGraph");
+                // Loop through each category in the response
+                for (var category in response) {
+                    var containerId = category + "Graph"; // Create container ID
+                    var categoryName = getCategoryName(category, organization);
 
-                // Update secretary bar graph
-                generateBarGraph(response.secretaryData, "secretaryGraph");
+                    // Append new graph container
+                    $('#positionsContainer').append(`
+                        <div class='col-md-12'>
+                            <div class='box'>
+                                <div class='box-header with-border'>
+                                    <h3 class='box-title center-title'><b>${categoryName}</b></h3>
+                                </div>
+                                <div class='box-body'>
+                                    <div id='${containerId}' style='height: 300px;'></div>
+                                </div>
+                            </div>
+                        </div>
+                    `);
+
+                    generateBarGraph(response[category], containerId); // Generate the graph
+                }
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching data: ' + error);
@@ -300,28 +129,58 @@ include 'includes/header.php';
         });
     }
 
-    var presidentChart = generateBarGraph([], "presidentGraph");
-    var vicePresidentInternalChart = generateBarGraph([], "vicePresidentInternalGraph");
-    var vicePresidentExternalChart = generateBarGraph([], "vicePresidentExternalGraph");
-    var secretaryChart = generateBarGraph([], "secretaryGraph");
-    var treasurerChart = generateBarGraph([], "treasurerGraph");
-    var auditorChart = generateBarGraph([], "auditorGraph");
-    var proChart = generateBarGraph([], "proGraph");
-    var dirMembershipChart = generateBarGraph([], "dirMembershipGraph");
-    var dirSpecialProjectChart = generateBarGraph([], "dirSpecialProjectGraph");
-    var blockA1stYearRepChart = generateBarGraph([], "blockA1stYearRepGraph");
-    var blockB1stYearRepChart = generateBarGraph([], "blockB1stYearRepGraph");
-    var blockA2ndYearRepChart = generateBarGraph([], "blockA2ndYearRepGraph");
-    var blockB2ndYearRepChart = generateBarGraph([], "blockB2ndYearRepGraph");
-    var blockA3rdYearRepChart = generateBarGraph([], "blockA3rdYearRepGraph");
-    var blockB3rdYearRepChart = generateBarGraph([], "blockB3rdYearRepGraph");
-    var blockA4thYearRepChart = generateBarGraph([], "blockA4thYearRepGraph");
-    var blockB4thYearRepChart = generateBarGraph([], "blockB4thYearRepGraph");
+    // Function to get the category name from the key
+    function getCategoryName(categoryKey, organization) {
+        var categories = {};
 
-    updateVoteCounts();
+        if (organization === 'CSC') {
+            categories = {
+                'president': 'President',
+                'vicePresident': 'Vice President',
+                'secretary': 'Secretary',
+                'treasurer': 'Treasurer',
+                'auditor': 'Auditor',
+                'pro': 'P.R.O',
+                'businessManager': 'Business Manager',
+                'beedRep': 'BEED Representative',
+                'bsedRep': 'BSED Representative',
+                'bshmRep': 'BSHM Representative',
+                'bsoadRep': 'BSOAD Representative',
+                'bscrimRep': 'BS Crim Representative',
+                'bsitRep': 'BSIT Representative'
+            };
+        } else {
+            categories = {
+                'president': 'President',
+                'vicePresidentInternal': 'Vice President for Internal Affairs',
+                'vicePresidentExternal': 'Vice President for External Affairs',
+                'secretary': 'Secretary',
+                'treasurer': 'Treasurer',
+                'auditor': 'Auditor',
+                'pro': 'P.R.O',
+                'dirMembership': 'Dir. for Membership',
+                'dirSpecialProject': 'Dir. for Special Project',
+                'blockA1stYearRep': 'Block A 1st Year Representative',
+                'blockB1stYearRep': 'Block B 1st Year Representative',
+                'blockA2ndYearRep': 'Block A 2nd Year Representative',
+                'blockB2ndYearRep': 'Block B 2nd Year Representative',
+                'blockA3rdYearRep': 'Block A 3rd Year Representative',
+                'blockB3rdYearRep': 'Block B 3rd Year Representative',
+                'blockA4thYearRep': 'Block A 4th Year Representative',
+                'blockB4thYearRep': 'Block B 4th Year Representative'
+            };
+        }
 
-    setInterval(updateVoteCounts, 5000);
+        return categories[categoryKey] || categoryKey;
+    }
+
+    $(document).ready(function() {
+        // Fetch and update vote counts
+        updateVoteCounts();
+
+        // Update vote counts every 5 seconds
+        setInterval(updateVoteCounts, 5000);
+    });
 </script>
 </body>
 </html>
-
