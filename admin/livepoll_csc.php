@@ -178,7 +178,6 @@ include 'includes/header_csc.php';
                 indexLabelPlacement: "inside",
                 indexLabelFontColor: "white",
                 indexLabelFontSize: 14,
-                
                 dataPoints: dataPoints.map(dataPoint => ({
                     ...dataPoint,
                     percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
@@ -188,7 +187,7 @@ include 'includes/header_csc.php';
         chart.render();
     }
 
-    function updateChartData() {
+    function fetchAndGenerateGraphs() {
         $.ajax({
             url: 'update_data_csc.php',
             method: 'GET',
@@ -215,10 +214,10 @@ include 'includes/header_csc.php';
 
     $(document).ready(function () {
         // Fetch and generate graphs initially
-        updateVoteCounts();
+        fetchAndGenerateGraphs();
 
         // Set interval to update graphs every 10 seconds (10000 milliseconds)
-        setInterval(updateVoteCounts, 5000);
+        setInterval(fetchAndGenerateGraphs, 10000);
 
         $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
