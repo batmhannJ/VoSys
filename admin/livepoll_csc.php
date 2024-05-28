@@ -187,7 +187,7 @@ include 'includes/header_csc.php';
         chart.render();
     }
 
-    function fetchAndGenerateGraphs() {
+    function updateChartData() {
         $.ajax({
             url: 'update_data_csc.php',
             method: 'GET',
@@ -214,10 +214,10 @@ include 'includes/header_csc.php';
 
     $(document).ready(function () {
         // Fetch and generate graphs initially
-        fetchAndGenerateGraphs();
+        updateVoteCounts();
 
         // Set interval to update graphs every 10 seconds (10000 milliseconds)
-        setInterval(fetchAndGenerateGraphs, 10000);
+        setInterval(updateVoteCounts, 5000);
 
         $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
