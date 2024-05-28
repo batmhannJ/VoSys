@@ -178,6 +178,7 @@ include 'includes/header_csc.php';
                 indexLabelPlacement: "inside",
                 indexLabelFontColor: "white",
                 indexLabelFontSize: 14,
+                var totalVotes = newDataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
                 dataPoints: dataPoints.map(dataPoint => ({
                     ...dataPoint,
                     percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
