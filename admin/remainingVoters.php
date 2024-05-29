@@ -63,7 +63,7 @@ include 'includes/header.php';
                 <tbody>
                   <?php
                     // Query to select voters who have not voted yet
-                    $sql = "SELECT id, lastname, firstname, photo, voters_id, email, yearLvl, organization FROM voters WHERE id NOT IN (SELECT DISTINCT voters_id FROM votes)";
+                    $sql = "SELECT id, lastname, firstname, photo, voters_id, email, yearLvl, organization FROM voters WHERE id NOT IN (SELECT DISTINCT voters_id FROM votes_csc) AND archived = 0";
                     $query = $conn->query($sql);
                     if (!$query) {
                       die("SQL Error: " . $conn->error); // Add error handling here
