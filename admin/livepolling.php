@@ -45,7 +45,7 @@ include 'includes/header.php';
 
     .candidate-images {
         display: flex;
-        flex-direction: row; /* Change to row */
+        flex-direction: column;
         justify-content: space-between;
         margin-right: 10px;
     }
@@ -77,6 +77,15 @@ include 'includes/header.php';
         }
     }
 </style>
+
+<div class="candidate-images">
+    <div class="candidate-image">
+    <img src="../images/13.png" alt="Lorenz Del Rosario" title="Lorenz Del Rosario">
+    </div>
+    <div class="candidate-image">
+    <img src="../images/8.png" alt="John Michael Dancel" title="John Michael Dancel">
+    </div>
+</div>
 
 
 </head>
