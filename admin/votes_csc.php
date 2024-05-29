@@ -54,6 +54,7 @@
                 <thead>
                   <th class="hidden"></th>
                   <th>No. </th>
+                  <th>ID</th>
                   <th>Position</th>
                   <th>Candidate</th>
                   <th>Voter</th>
@@ -81,6 +82,7 @@
                           <tr>
                             <td class='hidden'></td>
                             <td>".$i++."</td>
+                            <td>".$row['id']."</td>
                             <td>".$row['name']."</td>
                             <td>".$row['canfirst'].' '.$row['canlast']."</td>
                             <td>".$row['votfirst'].' '.$row['votlast']."</td>
