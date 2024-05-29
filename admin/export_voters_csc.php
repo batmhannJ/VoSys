@@ -128,7 +128,7 @@ while ($row = $result_remaining_voters->fetch_assoc()) {
                         <td>{$row['firstname']} {$row['lastname']}</td>
                         <td>{$row['organization']}</td>
                         <td>{$row['email']}</td>
-                        <td>{$row['voter_id']}</td>
+                        <td>{$row['voters_id']}</td>
                     </tr>";
 }
 
