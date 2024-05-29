@@ -50,7 +50,7 @@ $total_voters_row = $result_total_voters->fetch_assoc();
 $total_voters = $total_voters_row['total_voters'];
 
 // Count voters who voted
-$sql_voted_voters = "SELECT COUNT(DISTINCT vc.voters_id) AS total_voters
+$sql_voted_voters = "SELECT COUNT(DISTINCT vc.voters_id) AS voters_voted
 FROM votes_csc vc
 JOIN voters v ON vc.voters_id = v.id
 WHERE v.archived = 0 AND election_id = ?";
