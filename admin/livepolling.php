@@ -57,11 +57,13 @@ include 'includes/header.php';
     }
 
     .candidate-image img {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        margin-right: 10px; /* Add margin between images */
-    }
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: -10px;
+    margin-bottom: 25px;
+    margin-top: 35px;
+}
 
     @media (max-width: 768px) {
         .candidate-image img {
