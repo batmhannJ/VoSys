@@ -52,6 +52,7 @@ include 'includes/header_csc.php';
               <table id="example1" class="table table-bordered">
                 <thead>
                   <th>No.</th>
+                  <th>ID</th>
                   <th>Lastname</th>
                   <th>Firstname</th>
                   <th>Photo</th>
@@ -75,6 +76,7 @@ include 'includes/header_csc.php';
                       echo "
                         <tr>
                         <td scope='row'>".$i++."</td>
+                        <td>".$row['id']."</td>
                           <td>".$row['lastname']."</td>
                           <td>".$row['firstname']."</td>
                           <td>
