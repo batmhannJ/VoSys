@@ -207,7 +207,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="submitBtn">Restore</button>
+        <button type="button" class="btn btn-primary" id="submitBtn">Yes, Submit</button>
       </div>
     </div>
   </div>
