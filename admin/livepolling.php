@@ -6,76 +6,78 @@ include 'includes/header.php';
 <div class="wrapper">
     <?php include 'includes/menubar.php'; ?>
 <head>
-    <style>
-        .box-title {
-            text-align: center;
-            width: 100%;
-            display: inline-block;
-        }
+<style>
+    .box-title {
+        text-align: center;
+        width: 100%;
+        display: inline-block;
+    }
 
-        /* Back to Top button styles */
-        #back-to-top {
-            position: fixed;
-            bottom: 40px;
-            right: 40px;
-            display: none;
-            background-color: #000;
-            color: #fff;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            text-align: center;
-            font-size: 22px;
-            line-height: 50px;
-            cursor: pointer;
-            z-index: 1000;
-        }
+    /* Back to Top button styles */
+    #back-to-top {
+        position: fixed;
+        bottom: 40px;
+        right: 40px;
+        display: none;
+        background-color: #000;
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        font-size: 22px;
+        line-height: 50px;
+        cursor: pointer;
+        z-index: 1000;
+    }
 
-        #back-to-top:hover {
-            background-color: #555;
-        }
+    #back-to-top:hover {
+        background-color: #555;
+    }
 
-        .chart-container {
-            position: relative;
-            margin-bottom: 40px;
-            display: flex;
-            align-items: center;
-        }
+    .chart-container {
+        position: relative;
+        margin-bottom: 40px;
+        display: flex;
+        align-items: center;
+    }
 
-        .candidate-images {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            margin-right: 10px;
-        }
+    .candidate-images {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-right: 10px;
+    }
 
-        .candidate-image {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
+    .candidate-image {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
 
+    .candidate-image img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 10px; /* Add margin between images */
+    }
+
+    @media (max-width: 768px) {
         .candidate-image img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
+            width: 75px;
+            height: 75px;
         }
+    }
 
-        @media (max-width: 768px) {
-            .candidate-image img {
-                width: 75px;
-                height: 75px;
-            }
+    @media (max-width: 480px) {
+        .candidate-image img {
+            width: 100px;
+            height: 100px;
         }
+    }
+</style>
 
-        @media (max-width: 480px) {
-            .candidate-image img {
-                width: 100px;
-                height: 100px;
-            }
-        }
-    </style>
 </head>
 <body class="hold-transition skin-black sidebar-mini">
 <div class="wrapper">
