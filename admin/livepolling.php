@@ -80,10 +80,11 @@ include 'includes/header.php';
 
 <div class="candidate-images">
     <div class="candidate-image">
-    <img src="../images/13.png" alt="Lorenz Del Rosario" title="Lorenz Del Rosario">
+    <img src="../images/8.png" alt="John Michael Dancel" title="John Michael Dancel">
     </div>
     <div class="candidate-image">
-    <img src="../images/8.png" alt="John Michael Dancel" title="John Michael Dancel">
+    <img src="../images/13.png" alt="Lorenz Del Rosario" title="Lorenz Del Rosario">
+    
     </div>
 </div>
 
