@@ -45,7 +45,7 @@ include 'includes/header.php';
 
     .candidate-images {
         display: flex;
-        flex-direction: column;
+        flex-direction: row; /* Change to row */
         justify-content: space-between;
         margin-right: 10px;
     }
@@ -60,18 +60,13 @@ include 'includes/header.php';
         width: 60px;
         height: 60px;
         border-radius: 50%;
-        margin-right: -10px; /* Adjusted margin-right */
-        margin-bottom: 25px;
-        margin-top: 35px;
+        margin-right: 10px;
     }
 
     @media (max-width: 768px) {
         .candidate-image img {
             width: 75px;
             height: 75px;
-            margin-right: -15px; /* Adjusted margin-right */
-            margin-bottom: 25px;
-            margin-top: 35px;
         }
     }
 
@@ -79,9 +74,6 @@ include 'includes/header.php';
         .candidate-image img {
             width: 100px;
             height: 100px;
-            margin-right: -20px; /* Adjusted margin-right */
-            margin-bottom: 30px;
-            margin-top: 40px;
         }
     }
 </style>
