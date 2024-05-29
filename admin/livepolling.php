@@ -112,6 +112,33 @@
             border-width: 0 5px 5px;
             border-color: transparent transparent #fff transparent;
         }
+
+        /* Horizontal column graph style */
+        .canvasjs-chart-container {
+            transform: rotate(-90deg);
+            transform-origin: left bottom;
+            overflow-x: hidden;
+            overflow-y: visible;
+            margin-bottom: 50px; /* Adjust margin as needed */
+        }
+
+        .canvasjs-chart-container .canvasjs-chart-credit {
+            transform: rotate(90deg);
+            transform-origin: left bottom;
+            white-space: nowrap;
+            bottom: 0;
+            right: 0;
+            left: auto;
+            top: auto;
+            margin-left: 0;
+            margin-bottom: 0;
+            margin-right: 0; /* Adjust margin as needed */
+            margin-top: -20px; /* Adjust margin as needed */
+        }
+
+        .canvasjs-chart-container .canvasjs-chart-credit a {
+            color: #555;
+        }
     </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -196,7 +223,7 @@
                     interval: Math.ceil(totalVotes / 10)
                 },
                 data: [{
-                    type: "column",
+                    type: "column", // Change graph type to horizontal column
                     indexLabel: "{label} - {percent}%",
                     indexLabelPlacement: "inside",
                     indexLabelFontColor: "white",
@@ -289,7 +316,7 @@
                                         <div class='box-body'>
                                             <div class='chart-container'>
                                                 <div class='candidate-images' id='${category}Image'></div>
-                                                <div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div>
+                                                <div id='${category}Graph' class='canvasjs-chart-container'></div>
                                             </div>
                                         </div>
                                     </div>
