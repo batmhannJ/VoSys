@@ -97,29 +97,35 @@ include 'includes/header.php';
         </section>
 
         <section class="content">
-            <!-- Search Form -->
-            <div class="row">
-                <div class="col-md-12">
-                    <form id="organization-form">
-                        <div class="form-group">
-                            <label for="organization-select">Select Organization:</label>
-                            <select id="organization-select" class="form-control">
-                                <option value="JPCS">JPCS</option>
-                                <option value="CSC">CSC</option>
-                                <option value="YMF">YMF</option>
-                                <option value="PASOA">PASOA</option>
-                                <option value="CODE-TG">CODE-TG</option>
-                                <option value="HMSO">HMSO</option>
-                            </select>
+            <div class="row justify-content-center">
+                <?php
+                // Only CSC positions
+                $categories = [
+                    'president' => 'President',
+                    'vice president' => 'Vice President',
+                    'secretary' => 'Secretary',
+                    'treasurer' => 'Treasurer',
+                    'auditor' => 'Auditor',
+                    'p.r.o' => 'P.R.O'
+                ];
+
+                foreach ($categories as $categoryKey => $categoryName) {
+                    echo "
+                    <div class='col-md-12'>
+                        <div class='box'>
+                            <div class='box-header with-border'>
+                                <h3 class='box-title'><b>$categoryName</b></h3>
+                            </div>
+                            <div class='box-body'>
+                                <div class='chart-container'>
+                                    <div id='{$categoryKey}Graph' style='height: 300px; width: calc(100% - 70px); margin-left: 70px;'></div>
+                                </div>
+                                <div class='candidate-images' id='{$categoryKey}Image'></div>
+                            </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Show Results</button>
-                    </form>
-                </div>
-            </div>
-            
-            <!-- Placeholder for the dynamically generated content -->
-            <div class="row justify-content-center" id="results-container">
-                <!-- Content will be inserted here based on the selected organization -->
+                    </div>";
+                }
+                ?>
             </div>
         </section>
 
@@ -131,56 +137,6 @@ include 'includes/header.php';
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script src="path/to/jquery.min.js"></script>
 <script>
-    const categories = {
-        'JPCS': {
-            'president': 'President',
-            'vice president': 'Vice President',
-            'secretary': 'Secretary',
-            'treasurer': 'Treasurer',
-            'auditor': 'Auditor',
-            'p.r.o': 'P.R.O',
-            'businessManager': 'Business Manager',
-            'beedRep': 'BEED Rep',
-            'bsedRep': 'BSED Rep',
-            'bshmRep': 'BSHM Rep',
-            'bsoadRep': 'BSOAD Rep',
-            'bs crimRep': 'BS CRIM Rep',
-            'bsitRep': 'BSIT Rep'
-        },
-        'CSC': {
-            'president': 'President',
-            'vice president': 'Vice President',
-            'secretary': 'Secretary',
-            'treasurer': 'Treasurer',
-            'auditor': 'Auditor',
-            'p.r.o': 'P.R.O'
-        },
-        'YMF': {
-            'president': 'President',
-            'vice president': 'Vice President',
-            'secretary': 'Secretary',
-            'treasurer': 'Treasurer'
-        },
-        'PASOA': {
-            'president': 'President',
-            'vice president': 'Vice President',
-            'secretary': 'Secretary',
-            'treasurer': 'Treasurer'
-        },
-        'CODE-TG': {
-            'president': 'President',
-            'vice president': 'Vice President',
-            'secretary': 'Secretary',
-            'treasurer': 'Treasurer'
-        },
-        'HMSO': {
-            'president': 'President',
-            'vice president': 'Vice President',
-            'secretary': 'Secretary',
-            'treasurer': 'Treasurer'
-        }
-    };
-
     function generateBarGraph(dataPoints, containerId, imageContainerId) {
         var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
@@ -227,39 +183,22 @@ include 'includes/header.php';
         chart.render();
     }
 
-    function fetchAndGenerateGraphs(organization) {
+    function fetchAndGenerateGraphs() {
         $.ajax({
             url: 'update_data.php',
             method: 'GET',
             dataType: 'json',
             success: function (response) {
-                // Clear previous results
-                $('#results-container').empty();
+                // Generate graphs for CSC categories
+                var categories = [
+                    'president', 'vice president', 'secretary', 'treasurer', 'auditor', 'p.r.o'
+                ];
 
-                // Generate graphs for the selected organization
-                const selectedCategories = categories[organization];
-
-                for (const [categoryKey, categoryName] of Object.entries(selectedCategories)) {
-                    $('#results-container').append(`
-                        <div class='col-md-12'>
-                            <div class='box'>
-                                <div class='box-header with-border'>
-                                    <h3 class='box-title'><b>${categoryName}</b></h3>
-                                </div>
-                                <div class='box-body'>
-                                    <div class='chart-container'>
-                                        <div id='${categoryKey}Graph' style='height: 300px; width: calc(100% - 70px); margin-left: 70px;'></div>
-                                    </div>
-                                    <div class='candidate-images' id='${categoryKey}Image'></div>
-                                </div>
-                            </div>
-                        </div>
-                    `);
-
-                    if (response[categoryKey]) {
-                        generateBarGraph(response[categoryKey], categoryKey + 'Graph', categoryKey + 'Image');
+                categories.forEach(function (category) {
+                    if (response[category]) {
+                        generateBarGraph(response[category], category + 'Graph', category + 'Image');
                     }
-                }
+                });
             },
             error: function (xhr, status, error) {
                 console.error("Error fetching data: ", status, error);
@@ -268,15 +207,11 @@ include 'includes/header.php';
     }
 
     $(document).ready(function () {
-        // Initial fetch for the default organization (e.g., JPCS)
-        fetchAndGenerateGraphs('JPCS');
+        // Fetch and generate graphs initially for CSC
+        fetchAndGenerateGraphs();
 
-        // Handle form submission to fetch data for selected organization
-        $('#organization-form').on('submit', function (event) {
-            event.preventDefault();
-            const selectedOrganization = $('#organization-select').val();
-            fetchAndGenerateGraphs(selectedOrganization);
-        });
+        // Set interval to update graphs every 10 seconds (10000 milliseconds)
+        setInterval(fetchAndGenerateGraphs, 10000);
 
         $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
