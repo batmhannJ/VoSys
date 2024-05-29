@@ -129,7 +129,7 @@
             <?php
               $sql = "SELECT COUNT(DISTINCT vc.voters_id) AS total_voters
               FROM votes_csc vc
-              JOIN voters v ON vc.voters_id = v.voters_id
+              JOIN voters v ON vc.voters_id = v.id
               WHERE v.archived = 0";
            
               $query = $conn->query($sql);
