@@ -120,7 +120,6 @@ tr:nth-child(odd) {
         <th>Organization</th>
         <th>Year Level</th>
         <th>Email</th>
-        <th>Voter ID</th>
     </tr>
     </thead>
 <tbody>";
@@ -134,7 +133,6 @@ while ($row = $result_remaining_voters->fetch_assoc()) {
                         <td>{$row['organization']}</td>
                         <td>{$row['yearLvl']}</td>
                         <td>{$row['email']}</td>
-                        <td>{$row['voters_id']}</td>
                     </tr>";
                     $i++;
 }
