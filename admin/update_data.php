@@ -28,12 +28,12 @@ $categories = [
     'auditor' => 'Auditor',
     'pro' => 'P.R.O',
     'businessManager' => 'Business Manager',
-    'beedRep' => 'BEED Representative',
-    'bsedRep' => 'BSED Representative',
-    'bshmRep' => 'BSHM Representative',
-    'bsoadRep' => 'BSOAD Representative',
-    'bscrimRep' => 'BS Crim Representative',
-    'bsitRep' => 'BSIT Representative'
+    'beedRep' => 'BEED Rep',
+    'bsedRep' => 'BSED Rep',
+    'bshmRep' => 'BSHM Rep',
+    'bsoadRep' => 'BSOAD Rep',
+    'bscrimRep' => 'BS Crim Rep',
+    'bsitRep' => 'BSIT Rep'
 ];
 
 $response = [];
