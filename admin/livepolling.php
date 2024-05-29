@@ -75,70 +75,6 @@
                 height: 100px;
             }
         }
-
-        /* Custom graph design */
-        .canvasjs-chart-credit {
-            display: none;
-        }
-
-        .canvasjs-chart-tooltip {
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-            background-color: #fff;
-            color: #333;
-        }
-
-        .canvasjs-chart-tooltip:after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-style: solid;
-        }
-
-        .canvasjs-chart-tooltip.top:after {
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px 5px 0;
-            border-color: #fff transparent transparent transparent;
-        }
-
-        .canvasjs-chart-tooltip.bottom:after {
-            bottom: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 0 5px 5px;
-            border-color: transparent transparent #fff transparent;
-        }
-
-        /* Horizontal column graph style */
-        .canvasjs-chart-container {
-            transform: rotate(-90deg);
-            transform-origin: left bottom;
-            overflow-x: hidden;
-            overflow-y: visible;
-            margin-bottom: 50px; /* Adjust margin as needed */
-        }
-
-        .canvasjs-chart-container .canvasjs-chart-credit {
-            transform: rotate(90deg);
-            transform-origin: left bottom;
-            white-space: nowrap;
-            bottom: 0;
-            right: 0;
-            left: auto;
-            top: auto;
-            margin-left: 0;
-            margin-bottom: 0;
-            margin-right: 0; /* Adjust margin as needed */
-            margin-top: -20px; /* Adjust margin as needed */
-        }
-
-        .canvasjs-chart-container .canvasjs-chart-credit a {
-            color: #555;
-        }
     </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -223,7 +159,7 @@
                     interval: Math.ceil(totalVotes / 10)
                 },
                 data: [{
-                    type: "column", // Change graph type to horizontal column
+                    type: "bar",
                     indexLabel: "{label} - {percent}%",
                     indexLabelPlacement: "inside",
                     indexLabelFontColor: "white",
@@ -316,7 +252,7 @@
                                         <div class='box-body'>
                                             <div class='chart-container'>
                                                 <div class='candidate-images' id='${category}Image'></div>
-                                                <div id='${category}Graph' class='canvasjs-chart-container'></div>
+                                                <div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div>
                                             </div>
                                         </div>
                                     </div>
