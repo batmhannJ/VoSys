@@ -1,20 +1,20 @@
 <?php
 include 'includes/session.php';
 
-if(isset($_POST['deleteAnnouncement'])){
+if (isset($_POST['deleteAnnouncement'])) {
     $id = $_POST['id_announcement'];
 
-    $sql = "DELETE FROM announcement WHERE id_announcement = '$id'";
-    if($conn->query($sql)){
-        $_SESSION['success'] = 'Announcement deleted successfully';
-    }
-    else{
-        $_SESSION['error'] = $conn->error;
-    }
-}
-else{
-    $_SESSION['error'] = 'Select item to delete first';
-}
+    $sql = "DELETE FROM announcement WHERE id_announcement = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('i', $id);
 
-header('location: announcement.php');
+    if ($stmt->execute()) {
+        $_SESSION['success'] = 'Announcement deleted successfully';
+    } else {
+        $_SESSION['error'] = 'Something went wrong in deleting announcement';
+    }
+
+    $stmt->close();
+    header('location: announcement.php');
+}
 ?>
