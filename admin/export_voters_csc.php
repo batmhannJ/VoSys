@@ -136,6 +136,7 @@ while ($row = $result_remaining_voters->fetch_assoc()) {
                         <td>{$row['email']}</td>
                         <td>{$row['voters_id']}</td>
                     </tr>";
+                    $i++;
 }
 
 $pdfContent .= "
