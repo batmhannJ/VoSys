@@ -75,6 +75,43 @@
                 height: 100px;
             }
         }
+
+        /* Custom graph design */
+        .canvasjs-chart-credit {
+            display: none;
+        }
+
+        .canvasjs-chart-tooltip {
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+            background-color: #fff;
+            color: #333;
+        }
+
+        .canvasjs-chart-tooltip:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+        }
+
+        .canvasjs-chart-tooltip.top:after {
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px 5px 0;
+            border-color: #fff transparent transparent transparent;
+        }
+
+        .canvasjs-chart-tooltip.bottom:after {
+            bottom: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 0 5px 5px;
+            border-color: transparent transparent #fff transparent;
+        }
     </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -159,7 +196,7 @@
                     interval: Math.ceil(totalVotes / 10)
                 },
                 data: [{
-                    type: "bar",
+                    type: "column",
                     indexLabel: "{label} - {percent}%",
                     indexLabelPlacement: "inside",
                     indexLabelFontColor: "white",
