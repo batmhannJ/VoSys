@@ -39,6 +39,8 @@ include 'includes/header.php';
         .chart-container {
             position: relative;
             margin-bottom: 40px;
+            display: flex;
+            align-items: center;
         }
 
         .candidate-images {
@@ -50,6 +52,7 @@ include 'includes/header.php';
 
         .candidate-image {
             display: flex;
+            flex-direction: column;
             align-items: center;
             margin-bottom: 20px;
         }
@@ -58,11 +61,11 @@ include 'includes/header.php';
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            margin-right: 10px;
+            margin-bottom: 5px;
         }
 
         .candidate-label {
-            margin-left: 10px;
+            text-align: center;
             font-weight: bold;
         }
 
@@ -251,9 +254,9 @@ include 'includes/header.php';
                                     </div>
                                     <div class='box-body'>
                                         <div class='chart-container'>
+                                            <div class='candidate-images' id='${category}Image'></div>
                                             <div id='${category}Graph' style='height: 300px; width: calc(100% - 70px); margin-left: 70px;'></div>
                                         </div>
-                                        <div class='candidate-images' id='${category}Image'></div>
                                     </div>
                                 </div>
                             </div>`;
