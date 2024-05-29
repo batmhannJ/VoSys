@@ -52,6 +52,7 @@ include 'includes/header.php';
 
         .candidate-image {
             display: flex;
+            flex-direction: column;
             align-items: center;
             margin-bottom: 10px;
         }
@@ -60,7 +61,10 @@ include 'includes/header.php';
             width: 50px;
             height: 50px;
             border-radius: 50%;
+            margin-bottom: 5px;
         }
+
+        
 
         @media (max-width: 768px) {
             .candidate-image img {
@@ -130,7 +134,8 @@ include 'includes/header.php';
             var candidateDiv = document.createElement('div');
             candidateDiv.className = 'candidate-image';
             candidateDiv.innerHTML = `
-                <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
+                <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">
+                <span class="candidate-label">${dataPoint.label}</span>`;
             imageContainer.appendChild(candidateDiv);
         });
 
@@ -278,7 +283,6 @@ include 'includes/header.php';
 
         $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
-                if ($(this).scrollTop() > 100) {
                 $('#back-to-top').fadeIn();
             } else {
                 $('#back-to-top').fadeOut();
@@ -293,4 +297,3 @@ include 'includes/header.php';
 </script>
 </body>
 </html>
-
