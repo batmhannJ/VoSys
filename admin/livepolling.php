@@ -135,19 +135,19 @@ include 'includes/header.php';
 
         if (organization === 'CSC') {
             categories = {
-                'president': 'President',
-                'vicePresident': 'Vice President',
-                'secretary': 'Secretary',
-                'treasurer': 'Treasurer',
-                'auditor': 'Auditor',
-                'pro': 'P.R.O',
-                'businessManager': 'Business Manager',
-                'beedRep': 'BEED Rep',
-                'bsedRep': 'BSED Rep',
-                'bshmRep': 'BSHM Rep',
-                'bsoadRep': 'BSOAD Rep',
-                'bscrimRep': 'BS Crim Rep',
-                'bsitRep': 'BSIT Rep'
+                'President': 'President',
+                'Vice President': 'Vice President',
+                'Secretary': 'Secretary',
+                'Treasurer': 'Treasurer',
+                'Auditor': 'Auditor',
+                'P.R.O': 'P.R.O',
+                'Business Manager': 'Business Manager',
+                'Beed Rep': 'BEED Rep',
+                'Bsed Rep': 'BSED Rep',
+                'Bshm Rep': 'BSHM Rep',
+                'Bsoad Rep': 'BSOAD Rep',
+                'Bscrim Rep': 'BS Crim Rep',
+                'Bsit Rep': 'BSIT Rep'
             };
         } else {
             categories = {
