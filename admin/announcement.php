@@ -101,13 +101,13 @@ include 'includes/session.php';
                                             <tr>
                                                 <td class='hidden'></td>
                                                 <td>
-                                                    <button class='btn btn-primary btn-sm edit btn-flat' data-id='".$row['id_announcement']."'><i class='fa fa-edit'></i> Edit</button>
-                                                    <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id_announcement']."'><i class='fa fa-trash'></i> Delete</button>
+                                                    <button class='btn btn-primary btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
+                                                    <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."'><i class='fa fa-trash'></i> Delete</button>
                                                 </td>
                                                 <td>" . ($counter++) . "</td>
                                                 <td>" . $row['announcement'] . "</td>
-                                                <td>" . $row['startdate'] . "</td>
-                                                <td>" . $row['addedby'] . "</td>
+                                                <td>" . $row['start'] . "</td>
+                                                <td>" . $row['added'] . "</td>
                                             </tr>
                                         ";
                                     }
