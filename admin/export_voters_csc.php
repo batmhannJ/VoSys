@@ -115,6 +115,7 @@ tr:nth-child(odd) {
 <table>
     <thead>
     <tr>
+        <th>No.</th>
         <th>Name</th>
         <th>Organization</th>
         <th>Year Level</th>
@@ -127,6 +128,7 @@ tr:nth-child(odd) {
 // Populate data into table rows
 while ($row = $result_remaining_voters->fetch_assoc()) {
     $pdfContent .= "<tr>
+                        <td>'.$i++.'</td>
                         <td>{$row['firstname']} {$row['lastname']}</td>
                         <td>{$row['organization']}</td>
                         <td>{$row['yearLvl']}</td>
