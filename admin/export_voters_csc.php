@@ -20,7 +20,8 @@ $sql_remaining_voters = "
         voters.lastname, 
         voters.organization, 
         voters.email, 
-        voters.voters_id
+        voters.voters_id,
+        voters.year_level
     FROM 
         voters
     LEFT JOIN 
@@ -116,6 +117,7 @@ tr:nth-child(odd) {
     <tr>
         <th>Name</th>
         <th>Organization</th>
+        <th>Year Level</th>
         <th>Email</th>
         <th>Voter ID</th>
     </tr>
@@ -127,6 +129,7 @@ while ($row = $result_remaining_voters->fetch_assoc()) {
     $pdfContent .= "<tr>
                         <td>{$row['firstname']} {$row['lastname']}</td>
                         <td>{$row['organization']}</td>
+                        <td>{$row['year_level']}</td>
                         <td>{$row['email']}</td>
                         <td>{$row['voters_id']}</td>
                     </tr>";
