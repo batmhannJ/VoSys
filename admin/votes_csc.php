@@ -63,7 +63,6 @@
                 <tbody>
                 <?php
                       $sql = "SELECT *,
-                      votes_csc.id, 
                       candidates.firstname AS canfirst, 
                       candidates.lastname AS canlast, 
                       voters1.firstname AS votfirst, 
@@ -83,7 +82,6 @@
                           <tr>
                             <td class='hidden'></td>
                             <td>".$i++."</td>
-                            <td>".$row['id']."</td>
                             <td>".$row['name']."</td>
                             <td>".$row['canfirst'].' '.$row['canlast']."</td>
                             <td>".$row['votfirst'].' '.$row['votlast']."</td>
