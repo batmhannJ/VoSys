@@ -64,7 +64,7 @@ include 'includes/header_csc.php';
                 <tbody>
                   <?php
                     // Query to select voters who have not voted yet
-                    $sql = "SELECT id, lastname, firstname, photo, voters_id, email, yearLvl, organization FROM voters WHERE id NOT IN (SELECT DISTINCT voters_id FROM votes_csc)";
+                    $sql = "SELECT id, lastname, firstname, photo, voters_id, email, yearLvl, organization FROM voters WHERE id NOT IN (SELECT DISTINCT voters_id FROM votes_csc) AND archived = 0";
                     $query = $conn->query($sql);
                     $i = 1;
                     if (!$query) {
@@ -93,6 +93,14 @@ include 'includes/header_csc.php';
               </table>
             </div>
           </div>
+        </div>
+      </div>
+      <!-- Export Button -->
+      <div class="row">
+        <div class="col-xs-12">
+          <span class="pull-right">
+            <a href="export_voters_csc.php" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Export PDF</a>
+          </span>
         </div>
       </div>
     </section>   

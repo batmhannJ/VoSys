@@ -97,16 +97,16 @@ include 'includes/header_csc.php';
                     </div>";
                 }
                 ?>
-                <!-- Export Button -->
-                <div class="row">
+            </div>
+            <!-- /.row -->
+            <!-- Export Button -->
+            <div class="row">
                     <div class="col-xs-12">
                         <span class="pull-right">
                             <a href="export_results_csc.php" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Export PDF</a>
                         </span>
                     </div>
                 </div>
-            </div>
-            <!-- /.row -->
         </section>
         <!-- /.content -->
     </div>

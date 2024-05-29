@@ -50,7 +50,10 @@ $total_voters_row = $result_total_voters->fetch_assoc();
 $total_voters = $total_voters_row['total_voters'];
 
 // Count voters who voted
-$sql_voted_voters = "SELECT COUNT(DISTINCT voters_id) AS voted_voters FROM votes_csc WHERE election_id = ?";
+$sql_voted_voters = "SELECT COUNT(DISTINCT vc.voters_id) AS voted_voters
+FROM votes_csc vc
+JOIN voters v ON vc.voters_id = v.id
+WHERE v.archived = 0 AND election_id = ?";
 $stmt_voted_voters = $conn->prepare($sql_voted_voters);
 $stmt_voted_voters->bind_param("i", $election_id);
 $stmt_voted_voters->execute();

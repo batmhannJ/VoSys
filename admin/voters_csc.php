@@ -163,7 +163,7 @@ $(function(){
 });
 
 function archiveVoter(id) {
-    $('#confirmationModal').modal('show'); // Show the confirmation modal
+    $('#confirmationArchive').modal('show'); // Show the confirmation modal
 
     $('#submitBtn').on('click', function() {
         $.ajax({
@@ -210,7 +210,7 @@ setTimeout(function() {
 
 </script>
 <!-- Confirmation Modal -->
-<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+<div class="modal fade" id="confirmationArchive" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

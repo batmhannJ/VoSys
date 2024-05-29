@@ -54,6 +54,7 @@
                 <thead>
                   <th class="hidden"></th>
                   <th>No. </th>
+                  <th>ID</th>
                   <th>Position</th>
                   <th>Candidate</th>
                   <th>Voter</th>
@@ -62,6 +63,7 @@
                 <tbody>
                 <?php
                       $sql = "SELECT *,
+                      votes_csc.id, 
                       candidates.firstname AS canfirst, 
                       candidates.lastname AS canlast, 
                       voters1.firstname AS votfirst, 
@@ -81,6 +83,7 @@
                           <tr>
                             <td class='hidden'></td>
                             <td>".$i++."</td>
+                            <td>".$row['id']."</td>
                             <td>".$row['name']."</td>
                             <td>".$row['canfirst'].' '.$row['canlast']."</td>
                             <td>".$row['votfirst'].' '.$row['votlast']."</td>
@@ -89,6 +92,7 @@
                         ";
                       }
                     ?>
+                    
                 </tbody>
               </table>
               </div>
