@@ -50,9 +50,9 @@ function fetchVotes($conn, $category, $organizationFilter) {
 
 $response = array();
 $categories = [
-    'PRESIDENT', 'VICE PRESIDENT', 'SECRETARY', 'TREASURER', 'AUDITOR',
-    'P.R.O', 'BUSINESS MANAGER', 'BEED Representative', 'BSED Representative', 'BSHM Representive',
-    'BSOAD Representive', 'BS CRIM Representive', 'BSIT Representive'
+    'president', 'vice president', 'secretary', 'treasurer', 'auditor',
+    'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
+    'bsoadRep', 'bs crimRep', 'bsitRep'
 ];
 
 foreach ($categories as $category) {
