@@ -97,6 +97,10 @@ include 'includes/header_csc.php';
                     </div>";
                 }
                 ?>
+            </div>
+            <!-- /.row -->
+        </section>
+        
                 <!-- Export Button -->
                 <div class="row">
                     <div class="col-xs-12">
@@ -105,9 +109,6 @@ include 'includes/header_csc.php';
                         </span>
                     </div>
                 </div>
-            </div>
-            <!-- /.row -->
-        </section>
         <!-- /.content -->
     </div>
 
