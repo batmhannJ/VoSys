@@ -73,7 +73,7 @@
                       LEFT JOIN candidates ON candidates.id=votes_csc.candidate_id 
                       LEFT JOIN voters AS voters1 ON voters1.id=votes_csc.voters_id 
                       LEFT JOIN voters AS voters2 ON voters2.organization=votes_csc.organization 
-                      GROUP BY votes_csc.id 
+                      GROUP BY votes_csc.voters_id 
                       ORDER BY categories.priority ASC";
                       $query = $conn->query($sql);
                       $i = 1;
@@ -82,7 +82,7 @@
                           <tr>
                             <td class='hidden'></td>
                             <td>".$i++."</td>
-                            <td>".$row['id']."</td>
+                            <td>".$row['voters_id']."</td>
                             <td>".$row['name']."</td>
                             <td>".$row['canfirst'].' '.$row['canlast']."</td>
                             <td>".$row['votfirst'].' '.$row['votlast']."</td>
