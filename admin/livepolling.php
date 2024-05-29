@@ -1,9 +1,11 @@
-<!DOCTYPE html>
-<html>
 <?php
 include 'includes/session.php';
 include 'includes/header.php';
 ?>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <?php include 'includes/navbar.php'; ?>
+    <?php include 'includes/menubar.php'; ?>
 <head>
     <style>
         .box-title {
