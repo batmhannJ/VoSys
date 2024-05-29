@@ -58,7 +58,9 @@
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            margin-bottom: 10px;
+            margin-right: -10px;
+            margin-bottom: 25px;
+            margin-top: 35px;
         }
 
         @media (max-width: 768px) {
