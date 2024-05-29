@@ -79,7 +79,6 @@ include 'includes/session.php';
                                 <thead style="background-color: #800000; color: #fff;">
                                     <tr>
                                         <th>Actions</th>
-                                        <th>Announcement No.</th>
                                         <th>Announcement</th>
                                         <th>Date Posted</th>
                                         <th>Added By</th>
@@ -104,7 +103,6 @@ include 'includes/session.php';
                                                     <button class='btn btn-primary btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
                                                     <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."'><i class='fa fa-trash'></i> Delete</button>
                                                 </td>
-                                                <td>" . ($counter++) . "</td>
                                                 <td>" . $row['announcement'] . "</td>
                                                 <td>" . $row['start'] . "</td>
                                                 <td>" . $row['added'] . "</td>
