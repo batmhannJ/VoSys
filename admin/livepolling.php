@@ -4,7 +4,7 @@ include 'includes/header.php';
 ?>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-    <?php include 'includes/navbar.php'; ?>
+    
     <?php include 'includes/menubar.php'; ?>
 <head>
     <style>
@@ -97,41 +97,23 @@ include 'includes/header.php';
         </section>
 
         <section class="content">
-            <div class="row justify-content-center">
-                <?php
-                $categories = [
-                    'president' => 'President',
-                    'vice president' => 'Vice President',
-                    'secretary' => 'Secretary',
-                    'treasurer' => 'Treasurer',
-                    'auditor' => 'Auditor',
-                    'p.r.o' => 'P.R.O',
-                    'businessManager' => 'Business Manager',
-                    'beedRep' => 'BEED Rep',
-                    'bsedRep' => 'BSED Rep',
-                    'bshmRep' => 'BSHM Rep',
-                    'bsoadRep' => 'BSOAD Rep',
-                    'bs crimRep' => 'BS CRIM Rep',
-                    'bsitRep' => 'BSIT Rep'
-                ];
+            <!-- Organization Selection Form -->
+            <form id="organization-form">
+                <label for="organization-select">Select Organization:</label>
+                <select id="organization-select" name="organization">
+                    <option value="csc">CSC</option>
+                    <option value="jpcs">JPCS</option>
+                    <option value="ymf">YMF</option>
+                    <option value="pasoa">PASOA</option>
+                    <option value="code-tg">CODE-TG</option>
+                    <option value="hmso">HMSO</option>
+                </select>
+                <button type="submit">Show Results</button>
+            </form>
+            <br>
 
-                foreach ($categories as $categoryKey => $categoryName) {
-                    echo "
-                    <div class='col-md-12'>
-                        <div class='box'>
-                            <div class='box-header with-border'>
-                                <h3 class='box-title'><b>$categoryName</b></h3>
-                            </div>
-                            <div class='box-body'>
-                                <div class='chart-container'>
-                                    <div id='{$categoryKey}Graph' style='height: 300px; width: calc(100% - 70px); margin-left: 70px;'></div>
-                                </div>
-                                <div class='candidate-images' id='{$categoryKey}Image'></div>
-                            </div>
-                        </div>
-                    </div>";
-                }
-                ?>
+            <div class="row justify-content-center" id="results-container">
+                <!-- Results will be dynamically inserted here -->
             </div>
         </section>
 
@@ -189,21 +171,49 @@ include 'includes/header.php';
         chart.render();
     }
 
-    function fetchAndGenerateGraphs() {
+    function fetchAndGenerateGraphs(organization) {
         $.ajax({
             url: 'update_data.php',
             method: 'GET',
             dataType: 'json',
             success: function (response) {
-                // Generate graphs for all categories
-                var categories = [
-                    'president', 'vice president', 'secretary', 'treasurer', 'auditor',
-                    'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
-                    'bsoadRep', 'bs crimRep', 'bsitRep'
-                ];
+                // Clear previous results
+                $('#results-container').empty();
 
-                categories.forEach(function (category) {
+                // Define categories for each organization
+                var categories = {
+                    'csc': ['President', 'vice president', 'secretary', 'treasurer', 'auditor', 'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep', 'bsoadRep', 'bs crimRep', 'bsitRep'],
+                    'jpcs': ['jpcsPresident', 'jpcsVicePresident', 'jpcsSecretary', 'jpcsTreasurer', 'jpcsRep'],
+                    'ymf': ['ymfPresident', 'ymfVicePresident', 'ymfSecretary', 'ymfTreasurer', 'ymfRep'],
+                    'pasoa': ['pasoaPresident', 'pasoaVicePresident', 'pasoaSecretary', 'pasoaTreasurer', 'pasoaRep'],
+                    'code-tg': ['codePresident', 'codeVicePresident', 'codeSecretary', 'codeTreasurer', 'codeRep'],
+                    'hmso': ['hmsoPresident', 'hmsoVicePresident', 'hmsoSecretary', 'hmsoTreasurer', 'hmsoRep']
+                };
+
+                // Get categories for the selected organization
+                var selectedCategories = categories[organization];
+
+                // Generate graphs for the selected categories
+                selectedCategories.forEach(function (category) {
                     if (response[category]) {
+                        // Create container for each category
+                        var containerHtml = `
+                            <div class='col-md-12'>
+                                <div class='box'>
+                                    <div class='box-header with-border'>
+                                        <h3 class='box-title'><b>${category}</b></h3>
+                                    </div>
+                                    <div class='box-body'>
+                                        <div class='chart-container'>
+                                            <div id='${category}Graph' style='height: 300px; width: calc(100% - 70px); margin-left: 70px;'></div>
+                                        </div>
+                                        <div class='candidate-images' id='${category}Image'></div>
+                                    </div>
+                                </div>
+                            </div>`;
+                        $('#results-container').append(containerHtml);
+
+                        // Generate the bar graph for the category
                         generateBarGraph(response[category], category + 'Graph', category + 'Image');
                     }
                 });
@@ -215,11 +225,15 @@ include 'includes/header.php';
     }
 
     $(document).ready(function () {
-        // Fetch and generate graphs initially
-        fetchAndGenerateGraphs();
+        // Fetch and generate graphs for the default organization (CSC) initially
+        fetchAndGenerateGraphs('csc');
 
-        // Set interval to update graphs every 10 seconds (10000 milliseconds)
-        setInterval(fetchAndGenerateGraphs, 10000);
+        // Handle form submission
+        $('#organization-form').submit(function (event) {
+            event.preventDefault();
+            const selectedOrganization = $('#organization-select').val();
+            fetchAndGenerateGraphs(selectedOrganization);
+        });
 
         $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
