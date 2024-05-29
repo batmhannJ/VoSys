@@ -126,6 +126,7 @@ tr:nth-child(odd) {
 <tbody>";
 
 // Populate data into table rows
+$i = 1;
 while ($row = $result_remaining_voters->fetch_assoc()) {
     $pdfContent .= "<tr>
                         <td>'.$i++.'</td>
