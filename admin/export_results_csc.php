@@ -25,12 +25,15 @@ $sql = "SELECT
             votes_csc ON candidates.id = votes_csc.candidate_id
         LEFT JOIN 
             categories ON candidates.category_id = categories.id
+        INNER JOIN 
+            voters ON votes_csc.voters_id = voters.id
         WHERE
             votes_csc.election_id = ?
         GROUP BY 
             categories.name, candidates.id
         ORDER BY 
-            categories.priority ASC, vote_count DESC"; // Ordering by priority in categories
+            categories.priority ASC, vote_count DESC";
+ // Ordering by priority in categories
 
 // Prepare and execute the SQL query
 $stmt = $conn->prepare($sql);
@@ -198,7 +201,6 @@ $pdfContent .= "
   <span class='role'>Tabulator</span>
 </div>
 <div class='signature-block'>
-  <img src='images/lyka-esign.png' alt='Logo'><br>
   <span class='name'>LYKA REFUGIA</span><br>
   <span class='role'>Tabulator</span>
 </div>
@@ -207,12 +209,10 @@ $pdfContent .= "
   <span class='role'>Tabulator</span>
 </div>
 <div class='signature-block'>
-  <img src='images/santy-esign.png' alt='Logo'><br>
   <span class='name'>SANTY P. BALMORES</span> <br>
   <span class='role'>Tabulator</span>
 </div>
 <div class='signature-block'>
-  <img src='images/luis-esign-removebg-preview.png' alt='Logo'><br>
   <span class='name'>LUIS B. TADENA</span> <br>
   <span class='role'>Head of COMELEC</span>
 </div>
