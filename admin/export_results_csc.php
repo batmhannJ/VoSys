@@ -25,12 +25,15 @@ $sql = "SELECT
             votes_csc ON candidates.id = votes_csc.candidate_id
         LEFT JOIN 
             categories ON candidates.category_id = categories.id
+        INNER JOIN 
+            voters ON votes_csc.voters_id = voters.id
         WHERE
             votes_csc.election_id = ?
         GROUP BY 
             categories.name, candidates.id
         ORDER BY 
-            categories.priority ASC, vote_count DESC"; // Ordering by priority in categories
+            categories.priority ASC, vote_count DESC";
+ // Ordering by priority in categories
 
 // Prepare and execute the SQL query
 $stmt = $conn->prepare($sql);
