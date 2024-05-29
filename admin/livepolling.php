@@ -52,22 +52,21 @@ include 'includes/header.php';
 
     .candidate-image {
         display: flex;
+        flex-direction: column;
         align-items: center;
         margin-bottom: 10px;
     }
 
     .candidate-image img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    margin-right: -10px;
-    margin-bottom: 25px;
-    margin-top: 35px;
-}
-  .candidate-name {
-    margin-bottom: 10px;
-            text-align: center;
-  }
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        margin-bottom: 10px;
+    }
+
+    .candidate-name {
+        text-align: center;
+    }
 
     @media (max-width: 768px) {
         .candidate-image img {
@@ -138,7 +137,8 @@ include 'includes/header.php';
             var candidateDiv = document.createElement('div');
             candidateDiv.className = 'candidate-image';
             candidateDiv.innerHTML = `
-                <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
+                <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">
+                <div class="candidate-name">${dataPoint.label}</div>`;
             imageContainer.appendChild(candidateDiv);
         });
 
@@ -300,5 +300,3 @@ include 'includes/header.php';
 </script>
 </body>
 </html>
-
-                       
