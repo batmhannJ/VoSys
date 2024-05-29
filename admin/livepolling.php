@@ -64,6 +64,10 @@ include 'includes/header.php';
     margin-bottom: 25px;
     margin-top: 35px;
 }
+  .candidate-name {
+    margin-bottom: 10px;
+            text-align: center;
+  }
 
     @media (max-width: 768px) {
         .candidate-image img {
