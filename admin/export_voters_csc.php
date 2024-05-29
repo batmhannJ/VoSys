@@ -139,6 +139,7 @@ $pdfContent .= "
   </tbody>
 </table>
 <br><br>
+<p><b>Signatures:</b></p>
 <div class='signature-block'>
   <span class='name'>HANNAH JOY REYES</span><br>
   <span class='role'>Tabulator</span>
@@ -148,7 +149,6 @@ $pdfContent .= "
   <span class='role'>Tabulator</span>
 </div>
 <div class='signature-block'>
-  <img src='images/lyka-esign.png' alt='Signature'><br>
   <span class='name'>LYKA REFUGIA</span><br>
   <span class='role'>Tabulator</span>
 </div>
@@ -157,12 +157,10 @@ $pdfContent .= "
   <span class='role'>Tabulator</span>
 </div>
 <div class='signature-block'>
-  <img src='images/santy-esign.png' alt='Signature'><br>
   <span class='name'>SANTY P. BALMORES</span><br>
   <span class='role'>Tabulator</span>
 </div>
 <div class='signature-block'>
-  <img src='images/luis-esign-removebg-preview.png' alt='Signature'><br>
   <span class='name'>LUIS B. TADENA</span><br>
   <span class='role'>Head of COMELEC</span>
 </div>
