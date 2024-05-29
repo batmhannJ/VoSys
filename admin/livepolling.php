@@ -182,12 +182,12 @@ include 'includes/header.php';
 
                 // Define categories for each organization
                 var categories = {
-                    'csc': ['president', 'vice president', 'secretary', 'treasurer', 'auditor', 'p.r.o'],
-                    'jpcs': ['jpcsPresident', 'jpcsVicePresident', 'jpcsSecretary', 'jpcsTreasurer'],
-                    'ymf': ['ymfPresident', 'ymfVicePresident', 'ymfSecretary', 'ymfTreasurer'],
-                    'pasoa': ['pasoaPresident', 'pasoaVicePresident', 'pasoaSecretary', 'pasoaTreasurer'],
-                    'code-tg': ['codePresident', 'codeVicePresident', 'codeSecretary', 'codeTreasurer'],
-                    'hmso': ['hmsoPresident', 'hmsoVicePresident', 'hmsoSecretary', 'hmsoTreasurer']
+                    'csc': ['president', 'vice president', 'secretary', 'treasurer', 'auditor', 'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep', 'bsoadRep', 'bs crimRep', 'bsitRep'],
+                    'jpcs': ['jpcsPresident', 'jpcsVicePresident', 'jpcsSecretary', 'jpcsTreasurer', 'jpcsRep'],
+                    'ymf': ['ymfPresident', 'ymfVicePresident', 'ymfSecretary', 'ymfTreasurer', 'ymfRep'],
+                    'pasoa': ['pasoaPresident', 'pasoaVicePresident', 'pasoaSecretary', 'pasoaTreasurer', 'pasoaRep'],
+                    'code-tg': ['codePresident', 'codeVicePresident', 'codeSecretary', 'codeTreasurer', 'codeRep'],
+                    'hmso': ['hmsoPresident', 'hmsoVicePresident', 'hmsoSecretary', 'hmsoTreasurer', 'hmsoRep']
                 };
 
                 // Get categories for the selected organization
