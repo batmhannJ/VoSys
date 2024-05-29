@@ -82,7 +82,7 @@
                           <tr>
                             <td class='hidden'></td>
                             <td>".$i++."</td>
-                            <td>".$row['voters_id']."</td>
+                            <td>".$row['id']."</td>
                             <td>".$row['name']."</td>
                             <td>".$row['canfirst'].' '.$row['canlast']."</td>
                             <td>".$row['votfirst'].' '.$row['votlast']."</td>
