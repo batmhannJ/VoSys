@@ -74,12 +74,15 @@
                               LEFT JOIN categories ON categories.id = votes_csc.category_id 
                               LEFT JOIN candidates ON candidates.id = votes_csc.candidate_id 
                               LEFT JOIN voters AS voters1 ON voters1.id = votes_csc.voters_id 
-                              WHERE votes_csc.voters_id IN (SELECT id FROM voters) 
                               GROUP BY votes_csc.id 
                               ORDER BY categories.priority ASC";
                       $query = $conn->query($sql);
                       $i = 1;
                       while($row = $query->fetch_assoc()){
+                        // Handle cases where the voter has been deleted
+                        $voter_name = !empty($row['votfirst']) ? $row['votfirst'].' '.$row['votlast'] : 'Deleted Voter';
+                        $organization = !empty($row['org']) ? $row['org'] : 'Unknown';
+                        
                         echo "
                           <tr>
                             <td class='hidden'></td>
@@ -87,8 +90,8 @@
                             <td>".$row['id']."</td>
                             <td>".$row['name']."</td>
                             <td>".$row['canfirst'].' '.$row['canlast']."</td>
-                            <td>".$row['votfirst'].' '.$row['votlast']."</td>
-                            <td>".$row['org']."</td>
+                            <td>".$voter_name."</td>
+                            <td>".$organization."</td>
                           </tr>
                         ";
                       }
