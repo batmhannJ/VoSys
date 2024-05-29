@@ -1,18 +1,90 @@
-<!DOCTYPE html>
-<html>
 <?php
 include 'includes/session.php';
 include 'includes/header.php';
 ?>
-<head>
-    <style>
-        .center-title {
-            text-align: center;
-            width: 100%;
-        }
-    </style>
-</head>
 <body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <?php include 'includes/menubar.php'; ?>
+<head>
+<style>
+    .box-title {
+        text-align: center;
+        width: 100%;
+        display: inline-block;
+    }
+
+    /* Back to Top button styles */
+    #back-to-top {
+        position: fixed;
+        bottom: 40px;
+        right: 40px;
+        display: none;
+        background-color: #000;
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        font-size: 22px;
+        line-height: 50px;
+        cursor: pointer;
+        z-index: 1000;
+    }
+
+    #back-to-top:hover {
+        background-color: #555;
+    }
+
+    .chart-container {
+        position: relative;
+        margin-bottom: 40px;
+        display: flex;
+        align-items: center;
+    }
+
+    .candidate-images {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-right: 10px;
+    }
+
+    .candidate-image {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .candidate-image img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        margin-bottom: 10px;
+    }
+
+    .candidate-name {
+        text-align: center;
+    }
+
+    @media (max-width: 768px) {
+        .candidate-image img {
+            width: 75px;
+            height: 75px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .candidate-image img {
+            width: 100px;
+            height: 100px;
+        }
+    }
+</style>
+
+</head>
+<body class="hold-transition skin-black sidebar-mini">
 <div class="wrapper">
     <?php include 'includes/navbar.php'; ?>
     <?php include 'includes/menubar.php'; ?>
@@ -27,159 +99,203 @@ include 'includes/header.php';
         </section>
 
         <section class="content">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-body">
-                            <form method="get" action="">
-                                <div class="form-group">
-                                    <label for="organization">Select Organization:</label>
-                                    <select class="form-control" name="organization" id="organization" onchange="updateVoteCounts()">
-                                        <option value="">All Organizations</option>
-                                        <option value="CSC">CSC</option>
-                                        <?php
-                                        $organizationQuery = $conn->query("SELECT DISTINCT organization FROM voters");
-                                        while($organizationRow = $organizationQuery->fetch_assoc()){
-                                            $selected = ($_GET['organization'] ?? '') == $organizationRow['organization'] ? 'selected' : '';
-                                            echo "<option value='".$organizationRow['organization']."' $selected>".$organizationRow['organization']."</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Filter</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- Organization Selection Form -->
+            <form id="organization-form">
+                <label for="organization-select">Select Organization:</label>
+                <select id="organization-select" name="organization">
+                    <option value="csc">CSC</option>
+                    <option value="jpcs">JPCS</option>
+                    <option value="ymf">YMF</option>
+                    <option value="pasoa">PASOA</option>
+                    <option value="code-tg">CODE-TG</option>
+                    <option value="hmso">HMSO</option>
+                </select>
+                <button type="submit">Show Results</button>
+            </form>
+            <br>
 
-            <div class="row" id="positionsContainer">
-                <!-- Dynamic position containers will be generated here -->
+            <div class="row justify-content-center" id="results-container">
+                <!-- Results will be dynamically inserted here -->
             </div>
         </section>
-    </div>
 
+        <button id="back-to-top" title="Back to top">&uarr;</button>
+    </div>
     <?php include 'includes/footer.php'; ?>
-    <?php include 'includes/votes_modal.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="path/to/jquery.min.js"></script>
 <script>
-    // Function to generate bar graph
-    function generateBarGraph(dataPoints, containerId) {
+    function generateBarGraph(dataPoints, containerId, imageContainerId) {
+        var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+
+        // Ensure images match the data points by iterating in the same order
+        var imageContainer = document.getElementById(imageContainerId);
+        imageContainer.innerHTML = '';
+        dataPoints.forEach(dataPoint => {
+            var candidateDiv = document.createElement('div');
+            candidateDiv.className = 'candidate-image';
+            candidateDiv.innerHTML = `
+                <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">
+                <div class="candidate-name">${dataPoint.label}</div>`;
+            imageContainer.appendChild(candidateDiv);
+        });
+
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
+            animationDuration: 3000,
+            animationEasing: "easeInOutBounce",
             title: {
                 text: "Vote Counts"
             },
-            axisY: {
-                title: "Candidates"
-            },
             axisX: {
-                title: "Vote Count",
-                includeZero: true
+                title: "",
+                includeZero: true,
+                interval: 1,
+                labelFormatter: function () {
+                    return " ";
+                }
+            },
+            axisY: {
+                title: "",
+                interval: Math.ceil(totalVotes / 10)
             },
             data: [{
                 type: "bar",
-                dataPoints: dataPoints
+                indexLabel: "{label} - {percent}%",
+                indexLabelPlacement: "inside",
+                indexLabelFontColor: "white",
+                indexLabelFontSize: 14,
+                dataPoints: dataPoints.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                }))
             }]
         });
         chart.render();
     }
 
-    // Function to fetch updated data from the server
-    function updateVoteCounts() {
-        var organization = $('#organization').val();
-        var url = organization === 'CSC' ? 'update_data_csc.php' : 'update_data.php';
-
+    function fetchAndGenerateGraphs(organization) {
         $.ajax({
-            url: url,
-            type: 'GET',
+            url: 'update_data.php',
+            method: 'GET',
             dataType: 'json',
-            data: { organization: organization },
-            success: function(response) {
-                $('#positionsContainer').empty(); // Clear previous graphs
+            success: function (response) {
+                // Clear previous results
+                $('#results-container').empty();
 
-                // Loop through each category in the response
-                for (var category in response) {
-                    var containerId = category + "Graph"; // Create container ID
-                    var categoryName = getCategoryName(category, organization);
+                // Define categories for each organization
+                var categories = {
+                    'csc': {
+                        'president': 'President',
+                        'vice president': 'Vice President',
+                        'secretary': 'Secretary',
+                        'treasurer': 'Treasurer',
+                        'auditor': 'Auditor',
+                        'p.r.o': 'P.R.O',
+                        'businessManager': 'Business Manager',
+                        'beedRep': 'BEED Representative',
+                        'bsedRep': 'BSED Representative',
+                        'bshmRep': 'BSHM Representative',
+                        'bsoadRep': 'BSOAD Representative',
+                        'bs crimRep': 'BS Crim Representative',
+                        'bsitRep': 'BSIT Representative'
+                    },
+                    'jpcs': {
+                        'jpcsPresident': 'President',
+                        'jpcsVicePresident': 'Vice President',
+                        'jpcsSecretary': 'Secretary',
+                        'jpcsTreasurer': 'Treasurer',
+                        'jpcsRep': 'Representative'
+                    },
+                    'ymf': {
+                        'ymfPresident': 'President',
+                        'ymfVicePresident': 'Vice President',
+                        'ymfSecretary': 'Secretary',
+                        'ymfTreasurer': 'Treasurer',
+                        'ymfRep': 'Representative'
+                    },
+                    'pasoa': {
+                        'pasoaPresident': 'President',
+                        'pasoaVicePresident': 'Vice President',
+                        'pasoaSecretary': 'Secretary',
+                        'pasoaTreasurer': 'Treasurer',
+                        'pasoaRep': 'Representative'
+                    },
+                    'code-tg': {
+                        'codePresident': 'President',
+                        'codeVicePresident': 'Vice President',
+                        'codeSecretary': 'Secretary',
+                        'codeTreasurer': 'Treasurer',
+                        'codeRep': 'Representative'
+                    },
+                    'hmso': {
+                        'hmsoPresident': 'President',
+                        'hmsoVicePresident': 'Vice President',
+                        'hmsoSecretary': 'Secretary',
+                        'hmsoTreasurer': 'Treasurer',
+                        'hmsoRep': 'Representative'
+                    }
+                };
 
-                    // Append new graph container
-                    $('#positionsContainer').append(`
-                        <div class='col-md-12'>
-                            <div class='box'>
-                                <div class='box-header with-border'>
-                                    <h3 class='box-title center-title'><b>${categoryName}</b></h3>
+                // Get categories for the selected organization
+                var selectedCategories = categories[organization];
+
+                // Generate graphs for the selected categories
+                Object.keys(selectedCategories).forEach(function (category) {
+                    if (response[category]) {
+                        // Create container for each category
+                        var containerHtml = `
+                            <div class='col-md-12'>
+                                <div class='box'>
+                                    <div class='box-header with-border'>
+                                        <h3 class='box-title'><b>${selectedCategories[category]}</b></h3>
+                                    </div>
+                                    <div class='box-body'>
+                                        <div class='chart-container'>
+                                            <div class='candidate-images' id='${category}Image'></div>
+                                            <div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class='box-body'>
-                                    <div id='${containerId}' style='height: 300px;'></div>
-                                </div>
-                            </div>
-                        </div>
-                    `);
+                            </div>`;
+                        $('#results-container').append(containerHtml);
 
-                    generateBarGraph(response[category], containerId); // Generate the graph
-                }
+                        // Generate the bar graph for the category
+                        generateBarGraph(response[category], category + 'Graph', category + 'Image');
+                    }
+                });
             },
-            error: function(xhr, status, error) {
-                console.error('Error fetching data: ' + error);
+            error: function (xhr, status, error) {
+                console.error("Error fetching data: ", status, error);
             }
         });
     }
 
-    // Function to get the category name from the key
-    function getCategoryName(categoryKey, organization) {
-        var categories = {};
+    $(document).ready(function () {
+        // Fetch and generate graphs for the default organization (CSC) initially
+        fetchAndGenerateGraphs('csc');
 
-        if (organization === 'CSC') {
-            categories = {
-                'president': 'President',
-                'vicePresident': 'Vice President',
-                'secretary': 'Secretary',
-                'treasurer': 'Treasurer',
-                'auditor': 'Auditor',
-                'pro': 'P.R.O',
-                'businessManager': 'Business Manager',
-                'beedRep': 'BEED Representative',
-                'bsedRep': 'BSED Representative',
-                'bshmRep': 'BSHM Representative',
-                'bsoadRep': 'BSOAD Representative',
-                'bscrimRep': 'BS Crim Representative',
-                'bsitRep': 'BSIT Representative'
-            };
-        } else {
-            categories = {
-                'president': 'President',
-                'vicePresidentInternal': 'Vice President for Internal Affairs',
-                'vicePresidentExternal': 'Vice President for External Affairs',
-                'secretary': 'Secretary',
-                'treasurer': 'Treasurer',
-                'auditor': 'Auditor',
-                'pro': 'P.R.O',
-                'dirMembership': 'Dir. for Membership',
-                'dirSpecialProject': 'Dir. for Special Project',
-                'blockA1stYearRep': 'Block A 1st Year Representative',
-                'blockB1stYearRep': 'Block B 1st Year Representative',
-                'blockA2ndYearRep': 'Block A 2nd Year Representative',
-                'blockB2ndYearRep': 'Block B 2nd Year Representative',
-                'blockA3rdYearRep': 'Block A 3rd Year Representative',
-                'blockB3rdYearRep': 'Block B 3rd Year Representative',
-                'blockA4thYearRep': 'Block A 4th Year Representative',
-                'blockB4thYearRep': 'Block B 4th Year Representative'
-            };
-        }
+        // Handle form submission
+        $('#organization-form').submit(function (event) {
+            event.preventDefault();
+            const selectedOrganization = $('#organization-select').val();
+            fetchAndGenerateGraphs(selectedOrganization);
+        });
 
-        return categories[categoryKey] || categoryKey;
-    }
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 100) {
+                $('#back-to-top').fadeIn();
+            } else {
+                $('#back-to-top').fadeOut();
+            }
+        });
 
-    $(document).ready(function() {
-        // Fetch and update vote counts
-        updateVoteCounts();
-
-        // Update vote counts every 5 seconds
-        setInterval(updateVoteCounts, 5000);
+        $('#back-to-top').click(function () {
+            $('html, body').animate({ scrollTop: 0 }, 600);
+            return false;
+        });
     });
 </script>
 </body>

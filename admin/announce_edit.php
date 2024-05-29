@@ -1,33 +1,21 @@
 <?php
 include 'includes/session.php';
 
-if(isset($_POST['edit'])){
-    $id = $_POST['id'];
-    $announcement = htmlspecialchars($_POST['announcement']);
-    $startdate = $_POST['startdate'];
-    $addedby = htmlspecialchars($_POST['addedby']);
+if (isset($_POST['editAnnouncement'])) {
+    $id = $_POST['id_announcement'];
+    $announcement = $_POST['announcement'];
 
-    // Debugging: Print out values to check
-    echo "ID: $id<br>";
-    echo "Announcement: $announcement<br>";
-    echo "Start Date: $startdate<br>";
-    echo "Added By: $addedby<br>";
+    $sql = "UPDATE announcement SET announcement = ? WHERE id_announcement = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('si', $announcement, $id);
 
-    // Prepare and execute SQL query to update announcement
-    $sql = "UPDATE announcement SET id = '$id', announcement = '$announcement', startdate = '$startdate', addedby = '$addedby' WHERE id = $id";
-
-    if($conn->query($sql)){
+    if ($stmt->execute()) {
         $_SESSION['success'] = 'Announcement updated successfully';
+    } else {
+        $_SESSION['error'] = 'Something went wrong in updating announcement';
     }
-    else{
-        // Error handling: Display detailed error information
-        $_SESSION['error'] = 'Error updating announcement: ' . $conn->error_list[0]['error'];
-    }
-}
-else{
-    $_SESSION['error'] = 'Fill up edit form first';
-}
 
-// Redirect back to announcement.php
-header('location: announcement.php');
+    $stmt->close();
+    header('location: announcement.php');
+}
 ?>
