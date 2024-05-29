@@ -146,20 +146,19 @@ $(function(){
     });
 
     function getRow(id){
-    $.ajax({
-      type: 'POST',
-      url: 'announcement_row.php',
-      data: {id:id},
-      dataType: 'json',
-      success: function(response){
-        $('.id').val(response.id);
-        $('#edit_ann.no').val(response.id);
-        $('#edit_announcement').val(response.announcement);
-        $('#edit_startdate').val(response.startdate);
-        $('#edit_addedby').val(response.addedby);
-      }
-    });
-  });
-  </script>
+        $.ajax({
+            type: 'POST',
+            url: 'announcement_row.php',
+            data: {id:id},
+            dataType: 'json',
+            success: function(response){
+                $('.id_announcement').val(response.id);
+                $('#edit_announcement').val(response.announcement);
+                // If other fields are present, set them here
+            }
+        });
+    }
+});
+</script>
 </body>
 </html>
