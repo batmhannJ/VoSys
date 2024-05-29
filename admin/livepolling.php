@@ -2,7 +2,7 @@
 <html>
 <?php
 include 'includes/session.php';
-include 'includes/header_csc.php';
+include 'includes/header.php';
 ?>
 <head>
     <style>
@@ -82,8 +82,8 @@ include 'includes/header_csc.php';
 </head>
 <body class="hold-transition skin-black sidebar-mini">
 <div class="wrapper">
-    <?php include 'includes/navbar_csc.php'; ?>
-    <?php include 'includes/menubar_csc.php'; ?>
+    <?php include 'includes/navbar.php'; ?>
+    <?php include 'includes/menubar.php'; ?>
 
     <div class="content-wrapper">
         <section class="content-header">
@@ -189,7 +189,7 @@ include 'includes/header_csc.php';
 
     function fetchAndGenerateGraphs() {
         $.ajax({
-            url: 'update_data_csc.php',
+            url: 'update_data.php',
             method: 'GET',
             dataType: 'json',
             success: function (response) {
