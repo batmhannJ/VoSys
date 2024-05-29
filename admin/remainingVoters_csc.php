@@ -64,7 +64,7 @@ include 'includes/header_csc.php';
                 <tbody>
                   <?php
                     // Query to select voters who have not voted yet
-                    $sql = "SELECT id, lastname, firstname, photo, voters_id, email, yearLvl, organization FROM voters WHERE id NOT IN (SELECT DISTINCT voters_id FROM votes_csc)";
+                    $sql = "SELECT id, lastname, firstname, photo, voters_id, email, yearLvl, organization FROM voters WHERE id NOT IN (SELECT DISTINCT voters_id FROM votes_csc) AND archived = 0";
                     $query = $conn->query($sql);
                     $i = 1;
                     if (!$query) {
