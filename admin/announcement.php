@@ -101,8 +101,8 @@
                         <tr>
                           <td class='hidden'></td>
                           <td>
-                              <button class='btn btn-primary btn-sm edit btn-flat' data-id='".$row['id_announcement']."'><i class='fa fa-edit'></i> Edit</button>
-                              <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id_announcement']."'><i class='fa fa-trash'></i> Delete</button>
+                          <button class='btn btn-primary btn-sm edit btn-flat' data-id='".$row['id_announcement']."'><i class='fa fa-edit'></i> Edit</button>
+                          <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id_announcement']."'><i class='fa fa-trash'></i> Delete</button>
                             </td>
                           <td>" . ($counter++) . "</td>
                           <td>" . $row['announcement'] . "</td>
@@ -130,19 +130,20 @@
   <?php include 'includes/scripts.php'; ?>
 
   <script>
-  $(function(){
-    $(document).on('click', '.editAnnouncement', function(e){
-      e.preventDefault();
-      $('#editAnnouncement').modal('show');
-      var id = $(this).data('id_announcement');
-      getRow(id);
+  <script>
+$(function(){
+    $(document).on('click', '.edit', function(e){
+        e.preventDefault();
+        $('#editAnnouncement').modal('show');
+        var id = $(this).data('id');
+        getRow(id);
     });
 
-    $(document).on('click', '.deleteAnnouncement', function(e){
-      e.preventDefault();
-      $('#deleteAnnouncement').modal('show');
-      var id = $(this).data('id_announcement');
-      getRow(id);
+    $(document).on('click', '.delete', function(e){
+        e.preventDefault();
+        $('#deleteAnnouncement').modal('show');
+        var id = $(this).data('id');
+        getRow(id);
     });
 
   function getRow(id){
