@@ -183,7 +183,7 @@ include 'includes/header.php';
                 // Define categories for each organization
                 var categories = {
                     'csc': {
-                        'president': 'BSIT Representative',
+                        'president': 'President',
                         'vice president': 'Vice President',
                         'secretary': 'Secretary',
                         'treasurer': 'Treasurer',
