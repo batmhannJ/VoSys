@@ -49,40 +49,36 @@
               <a href="#reset" data-toggle="modal" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-refresh"></i> Reset</a>
             </div>
             <div class="box-body">
-              <div class="table-responsive" style="overflow-x:auto;">
-                <table id="example1" class="table table-bordered">
-                  <thead>
-                    <th class="hidden"></th>
-                    <th>No.</th>
-                    <th>ID</th>
-                    <th>Position</th>
-                    <th>Candidate</th>
-                    <th>Voter</th>
-                    <th>Organization</th>
-                  </thead>
-                  <tbody>
-                    <?php
-                      $sql = "SELECT 
-                                votes_csc.id, 
-                                categories.name, 
-                                candidates.firstname AS canfirst, 
-                                candidates.lastname AS canlast, 
-                                voters1.firstname AS votfirst, 
-                                voters1.lastname AS votlast, 
-                                voters1.organization AS org 
-                              FROM votes_csc 
-                              LEFT JOIN categories ON categories.id = votes_csc.category_id 
-                              LEFT JOIN candidates ON candidates.id = votes_csc.candidate_id 
-                              LEFT JOIN voters AS voters1 ON voters1.id = votes_csc.voters_id 
-                              GROUP BY votes_csc.id 
-                              ORDER BY categories.priority ASC";
+            <div class="table-responsive" style="overflow-x:auto;">
+              <table id="example1" class="table table-bordered">
+                <thead>
+                  <th class="hidden"></th>
+                  <th>No. </th>
+                  <th>ID</th>
+                  <th>Position</th>
+                  <th>Candidate</th>
+                  <th>Voter</th>
+                  <th>Organization</th>
+                </thead>
+                <tbody>
+                <?php
+                      $sql = "SELECT *,
+                      votes_csc.id, 
+                      candidates.firstname AS canfirst, 
+                      candidates.lastname AS canlast, 
+                      voters1.firstname AS votfirst, 
+                      voters1.lastname AS votlast, 
+                      voters1.organization AS org 
+                      FROM votes_csc 
+                      LEFT JOIN categories ON categories.id=votes_csc.category_id 
+                      LEFT JOIN candidates ON candidates.id=votes_csc.candidate_id 
+                      LEFT JOIN voters AS voters1 ON voters1.id=votes_csc.voters_id 
+                      LEFT JOIN voters AS voters2 ON voters2.organization=votes_csc.organization 
+                      GROUP BY votes_csc.id
+                      ORDER BY categories.priority ASC";
                       $query = $conn->query($sql);
                       $i = 1;
                       while($row = $query->fetch_assoc()){
-                        // Handle cases where the voter has been deleted
-                        $voter_name = !empty($row['votfirst']) ? $row['votfirst'].' '.$row['votlast'] : 'Deleted Voter';
-                        $organization = !empty($row['org']) ? $row['org'] : 'Unknown';
-                        
                         echo "
                           <tr>
                             <td class='hidden'></td>
@@ -90,14 +86,14 @@
                             <td>".$row['id']."</td>
                             <td>".$row['name']."</td>
                             <td>".$row['canfirst'].' '.$row['canlast']."</td>
-                            <td>".$voter_name."</td>
-                            <td>".$organization."</td>
+                            <td>".$row['votfirst'].' '.$row['votlast']."</td>
+                            <td>".$row['org']."</td>
                           </tr>
                         ";
                       }
                     ?>
-                  </tbody>
-                </table>
+                </tbody>
+              </table>
               </div>
             </div>
           </div>
