@@ -4,7 +4,6 @@ include 'includes/header.php';
 ?>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-    
     <?php include 'includes/menubar.php'; ?>
 <head>
     <style>
@@ -128,14 +127,17 @@ include 'includes/header.php';
     function generateBarGraph(dataPoints, containerId, imageContainerId) {
         var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
-        // Update the image container
+        // Ensure images match the data points by iterating in the same order
         var imageContainer = document.getElementById(imageContainerId);
-        imageContainer.innerHTML = dataPoints.map(dataPoint =>
-            `<div class="candidate-image">
+        imageContainer.innerHTML = '';
+        dataPoints.forEach(dataPoint => {
+            var candidateDiv = document.createElement('div');
+            candidateDiv.className = 'candidate-image';
+            candidateDiv.innerHTML = `
                 <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">
-                <span class="candidate-label">${dataPoint.label}</span>
-            </div>`
-        ).join('');
+                <span class="candidate-label">${dataPoint.label}</span>`;
+            imageContainer.appendChild(candidateDiv);
+        });
 
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
