@@ -47,14 +47,14 @@ include 'includes/header.php';
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 10px;
+            margin-right: 10px;
         }
 
         .candidate-image {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         .candidate-image img {
@@ -64,10 +64,7 @@ include 'includes/header.php';
             margin-bottom: 5px;
         }
 
-        .candidate-label {
-            text-align: center;
-            font-weight: bold;
-        }
+        
 
         @media (max-width: 768px) {
             .candidate-image img {
@@ -255,7 +252,7 @@ include 'includes/header.php';
                                     <div class='box-body'>
                                         <div class='chart-container'>
                                             <div class='candidate-images' id='${category}Image'></div>
-                                            <div id='${category}Graph' style='height: 300px; width: calc(100% - 70px); margin-left: 70px;'></div>
+                                            <div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div>
                                         </div>
                                     </div>
                                 </div>
