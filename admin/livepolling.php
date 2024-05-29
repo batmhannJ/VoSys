@@ -52,7 +52,6 @@ include 'includes/header.php';
 
         .candidate-image {
             display: flex;
-            flex-direction: column;
             align-items: center;
             margin-bottom: 10px;
         }
@@ -61,10 +60,7 @@ include 'includes/header.php';
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            margin-bottom: 5px;
         }
-
-        
 
         @media (max-width: 768px) {
             .candidate-image img {
@@ -134,8 +130,7 @@ include 'includes/header.php';
             var candidateDiv = document.createElement('div');
             candidateDiv.className = 'candidate-image';
             candidateDiv.innerHTML = `
-                <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">
-                <span class="candidate-label">${dataPoint.label}</span>`;
+                <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
             imageContainer.appendChild(candidateDiv);
         });
 
@@ -297,3 +292,5 @@ include 'includes/header.php';
 </script>
 </body>
 </html>
+
+                       
