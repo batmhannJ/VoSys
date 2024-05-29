@@ -149,12 +149,12 @@ $(function(){
         $.ajax({
             type: 'POST',
             url: 'announcement_row.php',
-            data: {id:id},
+            data: {id: id},
             dataType: 'json',
             success: function(response){
-                $('.id_announcement').val(response.id);
+                $('.id_announcement').val(response.id_announcement);
                 $('#edit_announcement').val(response.announcement);
-                // If other fields are present, set them here
+                $('.fullname').text(response.announcement);
             }
         });
     }

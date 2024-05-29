@@ -1,21 +1,21 @@
 <?php
 include 'includes/session.php';
 
-if(isset($_POST['editAnnouncement'])){
+if (isset($_POST['editAnnouncement'])) {
     $id = $_POST['id_announcement'];
     $announcement = $_POST['announcement'];
 
-    $sql = "UPDATE announcement SET announcement = '$announcement' WHERE id_announcement = '$id'";
-    if($conn->query($sql)){
-        $_SESSION['success'] = 'Announcement updated successfully';
-    }
-    else{
-        $_SESSION['error'] = $conn->error;
-    }
-}
-else{
-    $_SESSION['error'] = 'Fill up edit form first';
-}
+    $sql = "UPDATE announcement SET announcement = ? WHERE id_announcement = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('si', $announcement, $id);
 
-header('location: announcement.php');
+    if ($stmt->execute()) {
+        $_SESSION['success'] = 'Announcement updated successfully';
+    } else {
+        $_SESSION['error'] = 'Something went wrong in updating announcement';
+    }
+
+    $stmt->close();
+    header('location: announcement.php');
+}
 ?>
