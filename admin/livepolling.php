@@ -57,7 +57,6 @@
         .candidate-image img {
             width: 60px;
             height: 60px;
-            border-radius: 50%;
             margin-right: -10px;
             margin-bottom: 25px;
             margin-top: 35px;
