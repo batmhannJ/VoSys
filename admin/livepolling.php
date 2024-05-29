@@ -183,8 +183,8 @@ include 'includes/header.php';
                 // Define categories for each organization
                 var categories = {
                     'csc': ['PRESIDENT', 'VICE PRESIDENT', 'SECRETARY', 'TREASURER', 'AUDITOR',
-    'P.R.O', 'BUSINESS MANAGER', 'BEED Representative', 'BSED Representative', 'BSHM REPRESENTATIVE',
-    'BSOAD REPRESENTATIVE', 'BS CRIM REPRESENTATIVE', 'BSIT REPRESENTATIVE'],
+    'P.R.O', 'BUSINESS MANAGER', 'BEED Representative', 'BSED Representative', 'BSHM Representative',
+    'BSOAD Representative', 'BS CRIM Representative', 'BSIT Representative'],
                     'jpcs': ['jpcsPresident', 'jpcsVicePresident', 'jpcsSecretary', 'jpcsTreasurer', 'jpcsRep'],
                     'ymf': ['ymfPresident', 'ymfVicePresident', 'ymfSecretary', 'ymfTreasurer', 'ymfRep'],
                     'pasoa': ['pasoaPresident', 'pasoaVicePresident', 'pasoaSecretary', 'pasoaTreasurer', 'pasoaRep'],
