@@ -2,20 +2,88 @@
 <html>
 <?php
 include 'includes/session.php';
-include 'includes/header.php';
+include 'includes/header_csc.php';
 ?>
 <head>
     <style>
-        .center-title {
+        .box-title {
             text-align: center;
             width: 100%;
+            display: inline-block;
+        }
+
+        /* Back to Top button styles */
+        #back-to-top {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            display: none;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 22px;
+            line-height: 50px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        #back-to-top:hover {
+            background-color: #555;
+        }
+
+        .chart-container {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .candidate-images {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        .candidate-image {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .candidate-image img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .candidate-label {
+            margin-left: 10px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .candidate-image img {
+                width: 75px;
+                height: 75px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .candidate-image img {
+                width: 100px;
+                height: 100px;
+            }
         }
     </style>
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-black sidebar-mini">
 <div class="wrapper">
-    <?php include 'includes/navbar.php'; ?>
-    <?php include 'includes/menubar.php'; ?>
+    <?php include 'includes/navbar_csc.php'; ?>
+    <?php include 'includes/menubar_csc.php'; ?>
 
     <div class="content-wrapper">
         <section class="content-header">
@@ -27,159 +95,142 @@ include 'includes/header.php';
         </section>
 
         <section class="content">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-body">
-                            <form method="get" action="">
-                                <div class="form-group">
-                                    <label for="organization">Select Organization:</label>
-                                    <select class="form-control" name="organization" id="organization" onchange="updateVoteCounts()">
-                                        <option value="">All Organizations</option>
-                                        <option value="CSC">CSC</option>
-                                        <?php
-                                        $organizationQuery = $conn->query("SELECT DISTINCT organization FROM voters");
-                                        while($organizationRow = $organizationQuery->fetch_assoc()){
-                                            $selected = ($_GET['organization'] ?? '') == $organizationRow['organization'] ? 'selected' : '';
-                                            echo "<option value='".$organizationRow['organization']."' $selected>".$organizationRow['organization']."</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Filter</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="row justify-content-center">
+                <?php
+                $categories = [
+                    'president' => 'President',
+                    'vice president' => 'Vice President',
+                    'secretary' => 'Secretary',
+                    'treasurer' => 'Treasurer',
+                    'auditor' => 'Auditor',
+                    'p.r.o' => 'P.R.O',
+                    'businessManager' => 'Business Manager',
+                    'beedRep' => 'BEED Rep',
+                    'bsedRep' => 'BSED Rep',
+                    'bshmRep' => 'BSHM Rep',
+                    'bsoadRep' => 'BSOAD Rep',
+                    'bs crimRep' => 'BS CRIM Rep',
+                    'bsitRep' => 'BSIT Rep'
+                ];
 
-            <div class="row" id="positionsContainer">
-                <!-- Dynamic position containers will be generated here -->
+                foreach ($categories as $categoryKey => $categoryName) {
+                    echo "
+                    <div class='col-md-12'>
+                        <div class='box'>
+                            <div class='box-header with-border'>
+                                <h3 class='box-title'><b>$categoryName</b></h3>
+                            </div>
+                            <div class='box-body'>
+                                <div class='chart-container'>
+                                    <div id='{$categoryKey}Graph' style='height: 300px; width: calc(100% - 70px); margin-left: 70px;'></div>
+                                </div>
+                                <div class='candidate-images' id='{$categoryKey}Image'></div>
+                            </div>
+                        </div>
+                    </div>";
+                }
+                ?>
             </div>
         </section>
-    </div>
 
+        <button id="back-to-top" title="Back to top">&uarr;</button>
+    </div>
     <?php include 'includes/footer.php'; ?>
-    <?php include 'includes/votes_modal.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="path/to/jquery.min.js"></script>
 <script>
-    // Function to generate bar graph
-    function generateBarGraph(dataPoints, containerId) {
+    function generateBarGraph(dataPoints, containerId, imageContainerId) {
+        var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+
+        // Update the image container
+        var imageContainer = document.getElementById(imageContainerId);
+        imageContainer.innerHTML = dataPoints.map(dataPoint =>
+            `<div class="candidate-image">
+                <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">
+                <span class="candidate-label">${dataPoint.label}</span>
+            </div>`
+        ).join('');
+
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
+            animationDuration: 3000,
+            animationEasing: "easeInOutBounce",
             title: {
                 text: "Vote Counts"
             },
-            axisY: {
-                title: "Candidates"
-            },
             axisX: {
-                title: "Vote Count",
-                includeZero: true
+                title: "",
+                includeZero: true,
+                interval: 1,
+                labelFormatter: function () {
+                    return " ";
+                }
+            },
+            axisY: {
+                title: "",
+                interval: Math.ceil(totalVotes / 10)
             },
             data: [{
                 type: "bar",
-                dataPoints: dataPoints
+                indexLabel: "{label} - {percent}%",
+                indexLabelPlacement: "inside",
+                indexLabelFontColor: "white",
+                indexLabelFontSize: 14,
+                dataPoints: dataPoints.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                }))
             }]
         });
         chart.render();
     }
 
-    // Function to fetch updated data from the server
-    function updateVoteCounts() {
-        var organization = $('#organization').val();
-        var url = organization === 'CSC' ? 'update_data_csc.php' : 'update_data.php';
-
+    function fetchAndGenerateGraphs() {
         $.ajax({
-            url: url,
-            type: 'GET',
+            url: 'update_data_csc.php',
+            method: 'GET',
             dataType: 'json',
-            data: { organization: organization },
-            success: function(response) {
-                $('#positionsContainer').empty(); // Clear previous graphs
+            success: function (response) {
+                // Generate graphs for all categories
+                var categories = [
+                    'president', 'vice president', 'secretary', 'treasurer', 'auditor',
+                    'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
+                    'bsoadRep', 'bs crimRep', 'bsitRep'
+                ];
 
-                // Loop through each category in the response
-                for (var category in response) {
-                    var containerId = category + "Graph"; // Create container ID
-                    var categoryName = getCategoryName(category, organization);
-
-                    // Append new graph container
-                    $('#positionsContainer').append(`
-                        <div class='col-md-12'>
-                            <div class='box'>
-                                <div class='box-header with-border'>
-                                    <h3 class='box-title center-title'><b>${categoryName}</b></h3>
-                                </div>
-                                <div class='box-body'>
-                                    <div id='${containerId}' style='height: 300px;'></div>
-                                </div>
-                            </div>
-                        </div>
-                    `);
-
-                    generateBarGraph(response[category], containerId); // Generate the graph
-                }
+                categories.forEach(function (category) {
+                    if (response[category]) {
+                        generateBarGraph(response[category], category + 'Graph', category + 'Image');
+                    }
+                });
             },
-            error: function(xhr, status, error) {
-                console.error('Error fetching data: ' + error);
+            error: function (xhr, status, error) {
+                console.error("Error fetching data: ", status, error);
             }
         });
     }
 
-    // Function to get the category name from the key
-    function getCategoryName(categoryKey, organization) {
-        var categories = {};
+    $(document).ready(function () {
+        // Fetch and generate graphs initially
+        fetchAndGenerateGraphs();
 
-        if (organization === 'CSC') {
-            categories = {
-                'President': 'President',
-                'Vice President': 'Vice President',
-                'Secretary': 'Secretary',
-                'Treasurer': 'Treasurer',
-                'Auditor': 'Auditor',
-                'P.R.O': 'P.R.O',
-                'Business Manager': 'Business Manager',
-                'Beed Rep': 'BEED Rep',
-                'Bsed Rep': 'BSED Rep',
-                'Bshm Rep': 'BSHM Rep',
-                'Bsoad Rep': 'BSOAD Rep',
-                'Bscrim Rep': 'BS Crim Rep',
-                'Bsit Rep': 'BSIT Rep'
-            };
-        } else {
-            categories = {
-                'president': 'President',
-                'vicePresidentInternal': 'Vice President for Internal Affairs',
-                'vicePresidentExternal': 'Vice President for External Affairs',
-                'secretary': 'Secretary',
-                'treasurer': 'Treasurer',
-                'auditor': 'Auditor',
-                'pro': 'P.R.O',
-                'dirMembership': 'Dir. for Membership',
-                'dirSpecialProject': 'Dir. for Special Project',
-                'blockA1stYearRep': 'Block A 1st Year Representative',
-                'blockB1stYearRep': 'Block B 1st Year Representative',
-                'blockA2ndYearRep': 'Block A 2nd Year Representative',
-                'blockB2ndYearRep': 'Block B 2nd Year Representative',
-                'blockA3rdYearRep': 'Block A 3rd Year Representative',
-                'blockB3rdYearRep': 'Block B 3rd Year Representative',
-                'blockA4thYearRep': 'Block A 4th Year Representative',
-                'blockB4thYearRep': 'Block B 4th Year Representative'
-            };
-        }
+        // Set interval to update graphs every 10 seconds (10000 milliseconds)
+        setInterval(fetchAndGenerateGraphs, 10000);
 
-        return categories[categoryKey] || categoryKey;
-    }
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 100) {
+                $('#back-to-top').fadeIn();
+            } else {
+                $('#back-to-top').fadeOut();
+            }
+        });
 
-    $(document).ready(function() {
-        // Fetch and update vote counts
-        updateVoteCounts();
-
-        // Update vote counts every 5 seconds
-        setInterval(updateVoteCounts, 5000);
+        $('#back-to-top').click(function () {
+            $('html, body').animate({ scrollTop: 0 }, 600);
+            return false;
+        });
     });
 </script>
 </body>
