@@ -4,7 +4,7 @@ include 'includes/header.php';
 ?>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-    <?php include 'includes/navbar.php'; ?>
+    
     <?php include 'includes/menubar.php'; ?>
 <head>
     <style>
@@ -84,7 +84,7 @@ include 'includes/header.php';
 </head>
 <body class="hold-transition skin-black sidebar-mini">
 <div class="wrapper">
-    
+    <?php include 'includes/navbar.php'; ?>
     <?php include 'includes/menubar.php'; ?>
 
     <div class="content-wrapper">
