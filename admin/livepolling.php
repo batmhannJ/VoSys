@@ -57,11 +57,13 @@ include 'includes/header.php';
     }
 
     .candidate-image img {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        margin-right: 10px;
-    }
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: -10px;
+    margin-bottom: 25px;
+    margin-top: 35px;
+}
 
     @media (max-width: 768px) {
         .candidate-image img {
@@ -77,17 +79,6 @@ include 'includes/header.php';
         }
     }
 </style>
-
-<div class="candidate-images">
-    <div class="candidate-image">
-    <img src="../images/8.png" alt="John Michael Dancel" title="John Michael Dancel">
-    </div>
-    <div class="candidate-image">
-    <img src="../images/13.png" alt="Lorenz Del Rosario" title="Lorenz Del Rosario">
-    
-    </div>
-</div>
-
 
 </head>
 <body class="hold-transition skin-black sidebar-mini">
