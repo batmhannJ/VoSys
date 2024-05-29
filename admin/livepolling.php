@@ -64,10 +64,7 @@ include 'includes/header.php';
             margin-bottom: 5px;
         }
 
-        .candidate-label {
-            text-align: center;
-            font-weight: bold;
-        }
+        
 
         @media (max-width: 768px) {
             .candidate-image img {
