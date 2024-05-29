@@ -58,7 +58,9 @@
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            margin-bottom: 10px;
+            margin-right: -10px;
+            margin-bottom: 25px;
+            margin-top: 35px;
         }
 
         @media (max-width: 768px) {
@@ -76,7 +78,7 @@
         }
     </style>
 </head>
-<body class="hold-transition skin-black sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
         <?php include 'includes/navbar.php'; ?>
         <?php include 'includes/menubar.php'; ?>
