@@ -92,17 +92,16 @@ include 'includes/header_csc.php';
                 </tbody>
               </table>
             </div>
-
-            <!-- Export Button -->
-            <div class="row">
+          </div>
+        </div>
+        <!-- Export Button -->
+        <div class="row">
                     <div class="col-xs-12">
                         <span class="pull-right">
                             <a href="export_voters_csc.php" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Export PDF</a>
                         </span>
                     </div>
                 </div>
-          </div>
-        </div>
       </div>
     </section>   
   </div>
