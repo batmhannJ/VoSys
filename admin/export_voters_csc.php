@@ -129,7 +129,7 @@ tr:nth-child(odd) {
 $i = 1;
 while ($row = $result_remaining_voters->fetch_assoc()) {
     $pdfContent .= "<tr>
-                        <td>'.$i++.'</td>
+                        <td>{$i}</td>
                         <td>{$row['firstname']} {$row['lastname']}</td>
                         <td>{$row['organization']}</td>
                         <td>{$row['yearLvl']}</td>
