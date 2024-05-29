@@ -126,11 +126,17 @@
           <!-- small box -->
           <div class="small-box">
             <div class="inner">
-              <?php
-                $sql = "SELECT * FROM votes_csc GROUP BY voters_id";
-                $query = $conn->query($sql);
+            <?php
+              $sql = "SELECT COUNT(DISTINCT vc.voters_id) AS total_voters
+              FROM votes_csc vc
+              JOIN voters v ON vc.voters_id = v.id
+              WHERE v.archived = 0";
+           
+              $query = $conn->query($sql);
+              $row = $query->fetch_assoc();
+              $totalVoters = $row['total_voters'];
 
-                echo "<h3>".$query->num_rows."</h3>";
+              echo "<h3>".$totalVoters."</h3>";
               ?>
 
               <p>Voters Voted</p>
@@ -146,17 +152,11 @@
           <!-- small box -->
           <div class="small-box">
             <div class="inner">
-              <?php
+            <?php
                 $sql = "SELECT voters.id, voters.lastname
         FROM voters
         LEFT JOIN votes_csc ON voters.id = votes_csc.voters_id
-        WHERE votes_csc.voters_id IS NULL";
-                $query = $conn->query($sql);
-
-                $sql = "SELECT voters.id, voters.lastname
-        FROM voters
-        LEFT JOIN votes_csc ON voters.id = votes_csc.voters_id
-        WHERE votes_csc.voters_id IS NULL";
+        WHERE votes_csc.voters_id IS NULL AND archived = 0";
                 $query = $conn->query($sql);
 
                 echo "<h3>".$query->num_rows."</h3>";
