@@ -182,26 +182,70 @@ include 'includes/header.php';
 
                 // Define categories for each organization
                 var categories = {
-                    'csc': ['President', 'vice president', 'secretary', 'treasurer', 'auditor', 'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep', 'bsoadRep', 'bs crimRep', 'bsitRep'],
-                    'jpcs': ['jpcsPresident', 'jpcsVicePresident', 'jpcsSecretary', 'jpcsTreasurer', 'jpcsRep'],
-                    'ymf': ['ymfPresident', 'ymfVicePresident', 'ymfSecretary', 'ymfTreasurer', 'ymfRep'],
-                    'pasoa': ['pasoaPresident', 'pasoaVicePresident', 'pasoaSecretary', 'pasoaTreasurer', 'pasoaRep'],
-                    'code-tg': ['codePresident', 'codeVicePresident', 'codeSecretary', 'codeTreasurer', 'codeRep'],
-                    'hmso': ['hmsoPresident', 'hmsoVicePresident', 'hmsoSecretary', 'hmsoTreasurer', 'hmsoRep']
+                    'csc': {
+                        'president': 'BSIT Representative',
+                        'vice president': 'Vice President',
+                        'secretary': 'Secretary',
+                        'treasurer': 'Treasurer',
+                        'auditor': 'Auditor',
+                        'p.r.o': 'P.R.O',
+                        'businessManager': 'Business Manager',
+                        'beedRep': 'BEED Representative',
+                        'bsedRep': 'BSED Representative',
+                        'bshmRep': 'BSHM Representative',
+                        'bsoadRep': 'BSOAD Representative',
+                        'bs crimRep': 'BS Crim Representative',
+                        'bsitRep': 'BSIT Representative'
+                    },
+                    'jpcs': {
+                        'jpcsPresident': 'President',
+                        'jpcsVicePresident': 'Vice President',
+                        'jpcsSecretary': 'Secretary',
+                        'jpcsTreasurer': 'Treasurer',
+                        'jpcsRep': 'Representative'
+                    },
+                    'ymf': {
+                        'ymfPresident': 'President',
+                        'ymfVicePresident': 'Vice President',
+                        'ymfSecretary': 'Secretary',
+                        'ymfTreasurer': 'Treasurer',
+                        'ymfRep': 'Representative'
+                    },
+                    'pasoa': {
+                        'pasoaPresident': 'President',
+                        'pasoaVicePresident': 'Vice President',
+                        'pasoaSecretary': 'Secretary',
+                        'pasoaTreasurer': 'Treasurer',
+                        'pasoaRep': 'Representative'
+                    },
+                    'code-tg': {
+                        'codePresident': 'President',
+                        'codeVicePresident': 'Vice President',
+                        'codeSecretary': 'Secretary',
+                        'codeTreasurer': 'Treasurer',
+                        'codeRep': 'Representative'
+                    },
+                    'hmso': {
+                        'hmsoPresident': 'President',
+                        'hmsoVicePresident': 'Vice President',
+                        'hmsoSecretary': 'Secretary',
+                        'hmsoTreasurer': 'Treasurer',
+                        'hmsoRep': 'Representative'
+                    }
                 };
 
                 // Get categories for the selected organization
                 var selectedCategories = categories[organization];
 
                 // Generate graphs for the selected categories
-                selectedCategories.forEach(function (category) {
+                Object.keys(selectedCategories).forEach(function (category) {
                     if (response[category]) {
                         // Create container for each category
                         var containerHtml = `
                             <div class='col-md-12'>
                                 <div class='box'>
                                     <div class='box-header with-border'>
-                                        <h3 class='box-title'><b>${category}</b></h3>
+                                        <h3 class='box-title'><b>${selectedCategories[category]}</b></h3>
                                     </div>
                                     <div class='box-body'>
                                         <div class='chart-container'>
