@@ -572,7 +572,7 @@ main.sign-up-mode .carousel {
             </div>
 
                 <input type="submit" name="login" value="Login" class="sign-btn" style="font-size:15px;">
-                <p style="text-align: center;">or</p>
+                <!--<p style="text-align: center;">or</p>-->
                 <!--<input type="submit" name="signup" value="Sign Up" class="signup-btn" style="font-size:15px;" onclick="window.location.href = 'register.php';">-->
                 <input type="button" value="Back to Homepage" class="back-btn" style="font-size:15px;" onclick="window.location.href = 'index.html';">
 
