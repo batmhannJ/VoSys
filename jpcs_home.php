@@ -136,7 +136,7 @@ if(!is_active_election($conn)){
                                         <div class="box box-solid" id="'.$row['id'].'">
                                             <div class="box-header" style="background-color: darkgreen;">
                                                 <h3 class="box-title" style="color: #fff;">'.$row['name'].'</h3>
-                                                <button type="button" style="background-color: darkgreen;" class="btn btn-success btn-sm btn-flat reset" data-desc="'.slugify($row['name']).'"><i class="fa fa-refresh"></i> Reset</button>
+                                                <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="'.slugify($row['name']).'"><i class="fa fa-refresh"></i> Reset</button>
                                             </div>
                                             <div class="box-body">
                                                 <p class="instruction">You may select up to '.$row['max_vote'].' candidates</p>
@@ -172,7 +172,7 @@ if(!is_active_election($conn)){
                                                 <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
                                                 
                                             </div>
-                                            <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
+                                            <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
                                         
                                             <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
                                         </li>';
