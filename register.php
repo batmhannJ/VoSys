@@ -521,14 +521,14 @@ main.sign-up-mode .carousel {
                 </div>
                 <div class="input-wrap">
                     <select class="input-field" name="yearLvl" style="font-size: 15px;" required>
-                        <option value="" disabled selected></option>
+                        <option value="" disabled selected>Select Year Level</option>
                         <option value="1">1st Year</option>
                         <option value="2">2nd Year</option>
                         <option value="3">3rd Year</option>
                         <option value="4">4th Year</option>
                     </select>
                     <span class="form-control-feedback"></span>
-                    <label style="font-size:15px;">Year Level</label>
+                    <label style="font-size:15px;"></label>
                 </div>
 
 
