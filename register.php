@@ -614,21 +614,6 @@ main.sign-up-mode .carousel {
                   <i class="fa fa-fw fa-eye togglePassword" id="togglePassword1"></i>
                   <span class="form-control-feedback"></span>
                 </div>
-
-                <!--<div class="input-wrap" style="display: flex;">
-                  <input
-                    type="number"
-                    minlength="6"
-                    class="input-field"
-                    id="otp"
-                    name="otp"
-                    placeholder="Enter OTP" style="font-size: 15px; flex-grow: 1;"
-                    required
-                  />
-                    <span class="form-control-feedback"></span>
-                  <label style="font-size:15px;"></label>
-                  <input type="button" name="sendOTP" id="sendOTP" value="Send OTP" class="sign-btn" style="width: 100px; font-size:15px; background-color: grey;">
-                </div>-->
             </div>
 
                 <!--<input type="submit" name="sendOTP" id="sendOTP" value="Send OTP" class="sign-btn" style="font-size:15px; background-color: grey;">-->
@@ -668,62 +653,7 @@ main.sign-up-mode .carousel {
         </div>
     </div>
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('sendOTP').addEventListener('click', function() {
-            var email = document.querySelector('input[name="email"]').value; // Get email value from input field
-            sendOTP(email);
-        });
-
-        // Handle form submission
-        document.getElementById('forgotPasswordForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the default form submission behavior
-
-            var email = document.querySelector('input[name="email"]').value;
-            var otp = document.querySelector('input[name="otp"]').value;
-            var new_password = document.querySelector('input[name="new_password"]').value;
-
-            // Validate OTP
-            validateOTP(email, otp, new_password);
-            // Change password
-            changePassword(email, new_password);
-        });
-    });
-
-    function sendOTP(email) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'send_otp.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                var response = xhr.responseText;
-                alert(response); // Show response message (e.g., "OTP sent successfully")
-            }
-        };
-        xhr.send('email=' + encodeURIComponent(email));
-    }
-
-    function validateOTP(email, otp, new_password) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'validate_otp.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4) {
-            if (xhr.status == 200) {
-                var response = JSON.parse(xhr.responseText);
-                if (response.status === 'success') {
-                    // Send the new password to change_pass.php
-                    changePassword(email, new_password);
-                } else {
-                    alert(response.message);
-                }
-            } else {
-                alert('Error occurred. Please try again.');
-            }
-        }
-    };
-    xhr.send('email=' + encodeURIComponent(email) + '&otp=' + encodeURIComponent(otp));
-}
-
+    
 // Inside the changePassword function
 function changePassword(email, new_password) {
 var xhr = new XMLHttpRequest();
