@@ -524,6 +524,30 @@ main.sign-up-mode .carousel {
               <div class="actual-form has-feedback">
               <div class="input-wrap">
                   <input
+                    type="text"
+                    minlength="4"
+                    class="input-field"
+                    name="fname"
+                    placeholder="First Name" style="font-size: 15px;"
+                    required
+                  />
+                    <span class="form-control-feedback"></span>
+                  <label style="font-size:15px;"></label>
+                </div>
+                <div class="input-wrap">
+                  <input
+                    type="text"
+                    minlength="4"
+                    class="input-field"
+                    name="lname"
+                    placeholder="Last Name" style="font-size: 15px;"
+                    required
+                  />
+                    <span class="form-control-feedback"></span>
+                  <label style="font-size:15px;"></label>
+                </div>
+              <div class="input-wrap">
+                  <input
                     type="email"
                     minlength="4"
                     class="input-field"
@@ -546,6 +570,18 @@ main.sign-up-mode .carousel {
                     <label style="font-size:15px;"></label>
                 </div>
 
+                <div class="input-wrap">
+                    <select class="input-field" name="organization" style="font-size: 15px; color: gray; padding: 0;" required>
+                        <option value="" disabled selected>Select Organization</option>
+                        <option value="JPCS">JPCS</option>
+                        <option value="YMF">YMF</option>
+                        <option value="CODE-TG">CODE-TG</option>
+                        <option value="PASOA">PASOA</option>
+                        <option value="HMSO">HMSO</option>
+                    </select>
+                    <span class="form-control-feedback"></span>
+                    <label style="font-size:15px;"></label>
+                </div>
 
                 <div class="input-wrap">
                   <input
