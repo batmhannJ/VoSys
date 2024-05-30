@@ -189,14 +189,14 @@ label {
 .sign-btn {
   display: inline-block;
   width: 100%;
-  height: 30px;
+  height: 35px;
   background-color: #1357a6;
   color: #fff;
   border: none;
   cursor: pointer;
   border-radius: 0.8rem;
   font-size: 0.8rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   transition: 0.3s;
 }
 
@@ -207,7 +207,7 @@ label {
 .back-btn {
   display: inline-block;
   width: 100%;
-  height: 43px;
+  height: 30px;
   background-color: maroon;
   color: #fff;
   border: none;
