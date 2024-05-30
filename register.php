@@ -169,6 +169,21 @@ form.sign-up-form {
   flex-grow: 1; 
 }
 
+select .input-field {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: none;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #bbb;
+  padding: 0;
+  font-size: 0.95rem;
+  color: #151111;
+  transition: 0.4s;
+  flex-grow: 1; 
+}
+
 .togglePassword {
             position: absolute;
             top: 50%;
