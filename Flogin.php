@@ -16,6 +16,17 @@ function get_ip() {
     }
 }
 
+// Placeholder function for getting geolocation information
+function get_geolocation($ip) {
+    // This is a placeholder. Replace with actual API call to a geolocation service.
+    return [
+        'country' => 'Unknown',
+        'city' => 'Unknown',
+        'latitude' => 'Unknown',
+        'longitude' => 'Unknown'
+    ];
+}
+
 if (isset($_POST['Flogin'])) {
     $voter = $_POST['voter'];
     $password = $_POST['password'];
@@ -38,12 +49,22 @@ if (isset($_POST['Flogin'])) {
             $requestMethod = $_SERVER['REQUEST_METHOD']; // Get the request method
             $scriptName = $_SERVER['SCRIPT_NAME']; // Get the script name
             $referrer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'No referrer'; // Get the referrer
+            $sessionID = session_id(); // Get the session ID
+            $geolocation = get_geolocation($IP); // Get geolocation information
+            $timestamp = date('Y-m-d H:i:s'); // Get the current timestamp
+            $responseStatus = http_response_code(); // Get the response status code (default is 200)
             
-            $text = "\nIPnghacker " . $IP . " - " . date('Y-m-d H:i:s') . PHP_EOL;
+            $text = "\n[Hacking Attempt] - $timestamp" . PHP_EOL;
+            $text .= "IP Address: " . $IP . PHP_EOL;
             $text .= "User Agent: " . $userAgent . PHP_EOL;
             $text .= "Request Method: " . $requestMethod . PHP_EOL;
             $text .= "Script Name: " . $scriptName . PHP_EOL;
             $text .= "Referrer: " . $referrer . PHP_EOL;
+            $text .= "Session ID: " . $sessionID . PHP_EOL;
+            $text .= "Geolocation: Country - " . $geolocation['country'] . ", City - " . $geolocation['city'] . ", Latitude - " . $geolocation['latitude'] . ", Longitude - " . $geolocation['longitude'] . PHP_EOL;
+            $text .= "Response Status: " . $responseStatus . PHP_EOL;
+            $text .= "Voter ID Attempted: " . $voter . PHP_EOL;
+            $text .= "---------------------------------------------------" . PHP_EOL;
 
             if (fwrite($file, $text) === false) {
                 error_log('Failed to write to detect.log');
