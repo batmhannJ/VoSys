@@ -535,7 +535,7 @@ main.sign-up-mode .carousel {
                   <label style="font-size:15px;"></label>
                 </div>
                 <div class="input-wrap">
-                    <select class="input-field" name="yearLvl" style="font-size: 15px; color: gray;" required>
+                    <select class="input-field" name="yearLvl" style="font-size: 15px; color: gray; padding-left: 0;" required>
                         <option value="" disabled selected>Select Year Level</option>
                         <option value="1">1st Year</option>
                         <option value="2">2nd Year</option>
