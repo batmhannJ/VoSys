@@ -615,7 +615,7 @@ main.sign-up-mode .carousel {
                   <span class="form-control-feedback"></span>
                 </div>
 
-                <div class="input-wrap" style="display: flex;">
+                <!--<div class="input-wrap" style="display: flex;">
                   <input
                     type="number"
                     minlength="6"
@@ -628,7 +628,7 @@ main.sign-up-mode .carousel {
                     <span class="form-control-feedback"></span>
                   <label style="font-size:15px;"></label>
                   <input type="button" name="sendOTP" id="sendOTP" value="Send OTP" class="sign-btn" style="width: 100px; font-size:15px; background-color: grey;">
-                </div>
+                </div>-->
             </div>
 
                 <!--<input type="submit" name="sendOTP" id="sendOTP" value="Send OTP" class="sign-btn" style="font-size:15px; background-color: grey;">-->
