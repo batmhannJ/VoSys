@@ -150,6 +150,8 @@ form.sign-up-form {
   position: relative;
   height: 37px;
   margin-bottom: 2rem;
+  display: flex;
+  align-items: center; 
 }
 
 .input-field {
@@ -164,6 +166,26 @@ form.sign-up-form {
   font-size: 0.95rem;
   color: #151111;
   transition: 0.4s;
+  flex-grow: 1; 
+}
+
+.togglePassword {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 18px;
+            color: #aaa;
+        }
+
+        .togglePassword:hover {
+            color: #333;
+        }
+
+#sendOTP {
+  min-width: 100px; /* Set a minimum width for the button */
+  margin-left: 200px; /* Add a small margin between the input field and the button */
 }
 
 label {
@@ -189,7 +211,7 @@ label {
 .sign-btn {
   display: inline-block;
   width: 100%;
-  height: 35px;
+  height: 43px;
   background-color: #1357a6;
   color: #fff;
   border: none;
@@ -204,35 +226,17 @@ label {
   background-color: gray;
 }
 
-.signup-btn {
-  display: inline-block;
-  width: 100%;
-  height: 35px;
-  background-color: darkgreen;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  border-radius: 0.8rem;
-  font-size: 0.8rem;
-  margin-bottom: 1rem;
-  transition: 0.3s;
-}
-
-.signup-btn:hover {
-  background-color: gray;
-}
-
 .back-btn {
   display: inline-block;
   width: 100%;
-  height: 35px;
+  height: 43px;
   background-color: maroon;
   color: #fff;
   border: none;
   cursor: pointer;
   border-radius: 0.8rem;
   font-size: 0.8rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   transition: 0.3s;
 }
 
@@ -484,36 +488,6 @@ main.sign-up-mode .carousel {
     padding: 1rem 1rem 1.5rem;
   }
 }
-.input-wrap {
-
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-            margin-top: -5px;
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 10px; /* Adjust the padding to make space for the icon */
-            font-size: 15px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .togglePassword {
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-            cursor: pointer;
-            font-size: 18px;
-            color: #aaa;
-        }
-
-        .togglePassword:hover {
-            color: #333;
-        }
 </style>
 
 <body>
