@@ -204,10 +204,28 @@ label {
   background-color: gray;
 }
 
+.signup-btn {
+  display: inline-block;
+  width: 100%;
+  height: 35px;
+  background-color: darkgreen;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.8rem;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+  transition: 0.3s;
+}
+
+.signup-btn:hover {
+  background-color: gray;
+}
+
 .back-btn {
   display: inline-block;
   width: 100%;
-  height: 30px;
+  height: 35px;
   background-color: maroon;
   color: #fff;
   border: none;
@@ -555,7 +573,7 @@ main.sign-up-mode .carousel {
 
                 <input type="submit" name="login" value="Sign In" class="sign-btn" style="font-size:15px;">
                 <p style="text-align: center;">or</p>
-                <input type="submit" name="signup" value="Sign Up" class="sign-btn" style="font-size:15px;">
+                <input type="submit" name="signup" value="Sign Up" class="signup-btn" style="font-size:15px;">
                 <input type="button" value="Back to Homepage" class="back-btn" style="font-size:15px;" onclick="window.location.href = 'index.html';">
 
                         <?php
