@@ -521,7 +521,7 @@ main.sign-up-mode .carousel {
                 </div>
                 <div class="input-wrap">
                     <select class="input-field" name="yearLvl" style="font-size: 15px;" required>
-                        <option value="" disabled selected>Select Year Level</option>
+                        <option value="" disabled selected></option>
                         <option value="1">1st Year</option>
                         <option value="2">2nd Year</option>
                         <option value="3">3rd Year</option>
