@@ -28,7 +28,7 @@ $sql = "SELECT
         INNER JOIN 
             voters ON votes.voters_id = voters.id
         WHERE
-            votese.election_id = ?
+            votes.election_id = ?
         GROUP BY 
             categories.name, candidates.id
         ORDER BY 
