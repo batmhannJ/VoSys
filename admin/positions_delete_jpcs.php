@@ -3,7 +3,7 @@
 
 	if(isset($_POST['delete'])){
 		$id = $_POST['id'];
-		$sql = "DELETE FROM positions WHERE id = '$id'";
+		$sql = "DELETE FROM categories WHERE id = '$id'";
 		if($conn->query($sql)){
 			$_SESSION['success'] = 'Position deleted successfully';
 		}
