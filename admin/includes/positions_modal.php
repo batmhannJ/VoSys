@@ -79,7 +79,7 @@
               <h4 class="modal-title"><b>Deleting...</b></h4>
             </div>
             <div class="modal-body">
-              <form class="form-horizontal" method="POST" action="positions_delete_jpcss.php">
+              <form class="form-horizontal" method="POST" action="positions_delete_jpcs.php">
                 <input type="hidden" class="id" name="id">
                 <div class="text-center">
                     <p>DELETE POSITION</p>
