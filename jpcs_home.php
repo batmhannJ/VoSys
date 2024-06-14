@@ -134,8 +134,8 @@ if(!is_active_election($conn)){
                                       echo '
                                     <div class="position-container">
                                         <div class="box box-solid" id="'.$row['id'].'">
-                                            <div class="box-header">
-                                                <h3 class="box-title">'.$row['name'].'</h3>
+                                            <div class="box-header" style="background-color: darkgreen;">
+                                                <h3 class="box-title" style="color: #fff;">'.$row['name'].'</h3>
                                                 <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="'.slugify($row['name']).'"><i class="fa fa-refresh"></i> Reset</button>
                                             </div>
                                             <div class="box-body">
@@ -172,7 +172,7 @@ if(!is_active_election($conn)){
                                                 <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
                                                 
                                             </div>
-                                            <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
+                                            <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
                                         
                                             <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
                                         </li>';
@@ -185,7 +185,7 @@ if(!is_active_election($conn)){
             }
             ?>
                                 <div class="text-center">
-                                    <button type="button" class="btn btn-primary btn-flat" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
+                                    <button type="button" class="btn btn-primary btn-flat" style="background-color: darkgreen;" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
                                 </div>
 
                                 <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
