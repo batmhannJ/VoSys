@@ -1,3 +1,6 @@
+To get the results where the organization is "JPCS", you need to adjust the SQL queries to include this condition. Specifically, modify the `WHERE` clause in the main query to filter voters based on their organization. Here's the updated code:
+
+```php
 <?php
 // Enable error reporting for debugging
 ini_set('display_errors', 1);
@@ -28,7 +31,7 @@ $sql = "SELECT
         INNER JOIN 
             voters ON votes.voters_id = voters.id
         WHERE
-            votes.election_id = ?
+            votes.election_id = ? AND voters.organization = 'JPCS'
         GROUP BY 
             categories.name, candidates.id
         ORDER BY 
@@ -46,17 +49,17 @@ if (!$result) {
     die("Query failed: " . $conn->error);
 }
 
-// Count total voters
-$sql_total_voters = "SELECT COUNT(*) AS total_voters FROM voters";
+// Count total voters in JPCS organization
+$sql_total_voters = "SELECT COUNT(*) AS total_voters FROM voters WHERE organization = 'JPCS'";
 $result_total_voters = $conn->query($sql_total_voters);
 $total_voters_row = $result_total_voters->fetch_assoc();
 $total_voters = $total_voters_row['total_voters'];
 
-// Count voters who voted
+// Count voters who voted in JPCS organization
 $sql_voted_voters = "SELECT COUNT(DISTINCT vc.voters_id) AS voted_voters
 FROM votes vc
 JOIN voters v ON vc.voters_id = v.id
-WHERE v.archived = 0 AND election_id = ?";
+WHERE v.archived = 0 AND v.organization = 'JPCS' AND election_id = ?";
 $stmt_voted_voters = $conn->prepare($sql_voted_voters);
 $stmt_voted_voters->bind_param("i", $election_id);
 $stmt_voted_voters->execute();
@@ -221,7 +224,6 @@ $pdfContent .= "
   <span class='role'>Student Affair Officer</span>
 </div>
 ";
-
 
 // Create PDF using mPDF library
 $mpdf = new \Mpdf\Mpdf();
