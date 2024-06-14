@@ -115,7 +115,7 @@ if(!is_active_election($conn)){
 				    		?>
 				    		<div class="text-center">
 					    		<h3>You have already voted for this election.</h3>
-					    		<a href="#view" data-toggle="modal" class="btn btn-flat btn-primary btn-lg">View Ballot</a>
+					    		<a href="#preview_jpcs" data-toggle="modal" class="btn btn-flat btn-primary btn-lg">View Ballot</a>
 					    	</div>
 				    		<?php
 				    	}
