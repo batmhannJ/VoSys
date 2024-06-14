@@ -40,8 +40,8 @@
 				$csrow = $csquery->fetch_assoc();
 				$output['list'] .= "
 					<div class='row votelist'>
-                      	<span class='col-sm-4'><span class='pull-right'><b>".$row['name']." :</b></span></span> 
-                      	<span class='col-sm-8'>".$csrow['firstname']." ".$csrow['lastname']."</span>
+                      	<span class='col-sm-5'><span class='pull-right'><b>".$row['name']." :</b></span></span> 
+                      	<span class='col-sm-7'>".$csrow['firstname']." ".$csrow['lastname']."</span>
                     </div>
 				";
 			}
