@@ -66,7 +66,7 @@
         <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
+                  </button>
               <h4 class="modal-title">Your Votes</h4>
             </div>
             <div class="modal-body">
@@ -77,8 +77,8 @@
                 while($row = $query->fetch_assoc()){
                   echo "
                     <div class='row votelist'>
-                      <span class='col-sm-4'><span class='pull-right'><b>".$row['name']." :</b></span></span> 
-                      <span class='col-sm-8'>".$row['canfirst']." ".$row['canlast']."</span>
+                      <span class='col-sm-5'><span class='pull-right'><b>".$row['name']." :</b></span></span> 
+                      <span class='col-sm-7'>".$row['canfirst']." ".$row['canlast']."</span>
                     </div>
                   ";
                 }
