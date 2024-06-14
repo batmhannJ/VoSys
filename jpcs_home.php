@@ -382,7 +382,7 @@ if (isset($voter['id'])) {
         $('#preview_jpcs').click(function(e){
             e.preventDefault();
             var form = $('#ballotForm').serialize();
-            if(form == ''){
+            /*if(form == ''){
                 $('.message').html('You must vote at least one candidate');
                 $('#alert').show();
 
@@ -391,7 +391,7 @@ if (isset($voter['id'])) {
                     $('#alert').hide();
                 }, 3000); // 3 seconds
             }
-            else{
+            else{*/
                 $.ajax({
                     type: 'POST',
                     url: 'preview_jpcs.php',
@@ -419,7 +419,6 @@ if (isset($voter['id'])) {
                         }
                     }
                 });
-            }
             
         });
 
