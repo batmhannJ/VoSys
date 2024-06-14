@@ -124,13 +124,81 @@ if(!is_active_election($conn)){
 
 			    			<!-- Voting Ballot -->
 						    <form method="POST" id="ballotForm" action="submit_ballot_jpcs.php">
-                                <?php
+                            <?php
+session_start();
+
+// Verify the database connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+// Fetch the user's ID from session
+if (isset($voter['id'])) {
+    $userId = $voter['id'];
+
+    // Fetch the user's organization and set it in the session (if not already set)
+    if (!isset($_SESSION['yearLvl'])) {
+        $userQuery = "SELECT yearLvl FROM voters WHERE id = '$userId'";
+        $userResult = $conn->query($userQuery);
+        if ($userResult) {
+            if ($userResult->num_rows > 0) {
+                $userRow = $userResult->fetch_assoc();
+                $_SESSION['yearLvl'] = $userRow['yearLvl'];
+            } else {
+                echo "No yearLvl found for user ID: $userId";
+            }
+        } else {
+            echo "Error in query: " . $conn->error;
+        }
+    }
+} else {
+    echo "User ID not set in session.";
+}
+
                                 include 'includes/slugify.php';
+
+                                $positions = [
+                                    'President',
+                                    'VP for Internal Affairs',
+                                    'VP for External Affairs',
+                                    'Secretary',
+                                    'Treasurer',
+                                    'Auditor',
+                                    'P.R.O',
+                                    'Dir. for Membership',
+                                    'Dir. for Special Project',
+                                ];
+
+                                if (isset($_SESSION['yearLvl'])) {
+                                    switch ($_SESSION['yearLvl']) {
+                                        case '1-A':
+                                            $positions[] = '2-A Rep';
+                                            break;
+                                        case '1-B':
+                                            $positions[] = '2-B Rep';
+                                            break;
+                                        case '2-A':
+                                            $positions[] = '3-A Rep';
+                                            break;
+                                        case '2-B':
+                                            $positions[] = '3-B Rep';
+                                            break;
+                                        case '3-A':
+                                            $positions[] = '4-A Rep';
+                                            break;
+                                        case '3-B':
+                                            $positions[] = '4-B Rep';
+                                            break;
+                                    }
+                                }
 
                                 $candidate = '';
                                 $sql = "SELECT * FROM categories WHERE election_id = 1 ORDER BY priority ASC";
                                 $query = $conn->query($sql);
                                 while($row = $query->fetch_assoc()){
+                                    if (!in_array($row['name'], $positions)) {
+                                        continue; // Skip positions not in the list
+                                    }
                                       echo '
                                     <div class="position-container">
                                         <div class="box box-solid" id="'.$row['id'].'">
