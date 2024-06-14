@@ -24,7 +24,7 @@
 						$cmrow = $cmquery->fetch_assoc();
 						$output['list'] .= "
 							<div class='row votelist'>
-		                      	<span class='col-sm-5'><span class='pull-left'><b>".$row['name']." :</b></span></span> 
+		                      	<span class='col-sm-5'><span class='pull-right'><b>".$row['name']." :</b></span></span> 
 		                      	<span class='col-sm-7'>".$cmrow['firstname']." ".$cmrow['lastname']."</span>
 		                    </div>
 						";
