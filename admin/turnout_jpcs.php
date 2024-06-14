@@ -3,7 +3,7 @@ include 'includes/session.php';
 include 'includes/header_jpcs.php';
 ?>
 
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-green sidebar-mini">
 <div class="wrapper">
 
   <?php include 'includes/navbar_jpcs.php'; ?>
