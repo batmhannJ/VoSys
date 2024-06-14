@@ -394,7 +394,7 @@ if (isset($voter['id'])) {
             else{
                 $.ajax({
                     type: 'POST',
-                    url: 'preview_jpcs',
+                    url: 'preview_jpcs.php',
                     data: form,
                     dataType: 'json',
                     success: function(response){
