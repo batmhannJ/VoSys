@@ -1,13 +1,12 @@
 <?php
-// Include necessary files and initialize database connection
 include 'includes/session.php';
 
-// Initialize array to store updated data
 $organizationFilter = "";
 if (!empty($_GET['organization'])) {
     $organizationFilter = " AND voters1.organization = '" . $conn->real_escape_string($_GET['organization']) . "'";
 }
-// Prepare SQL query with organization filter
+
+// Function to fetch votes data with candidate images
 function fetchVotes($conn, $category, $organizationFilter) {
     $data = array();
     $sql = "SELECT CONCAT(candidates.firstname, ' ', candidates.lastname) AS candidate_name, 
@@ -51,16 +50,16 @@ function fetchVotes($conn, $category, $organizationFilter) {
 
 $response = array();
 $categories = [
-    'president', 'vice president', 'secretary', 'treasurer', 'auditor',
-    'p.r.o', 'dirForMembership', 'dirForSpecialProject', '2-ARep', '2-BRep', '3-ARep',
+    'president', 'vp for internal affairs', 'vp for external affairs', 'secretary', 'treasurer', 'auditor',
+    'p.r.o', 'dir. for membership','dir. for special project', '2-ARep', '2-BRep', '3-ARep',
     '3-BRep', '4-ARep', '4-BRep'
 ];
 
 foreach ($categories as $category) {
-    $response[$category] = fetchVotes($conn, ucfirst(str_replace(['Rep', 'Manager', 'P.R.O'], [' Rep', ' Manager', ' P.R.O'], $category)), $organizationFilter);
+    $response[$category] = fetchVotes($conn, ucfirst(str_replace(['Internal Affairs', 'External Affairs', 'Rep', 'Manager', 'P.R.O'], ['Internal Affairs', 'External Affairs', ' Rep', ' Manager', ' P.R.O'], $category)), $organizationFilter);
 }
 
-
+// Debugging: Log the final response
 error_log(json_encode($response));
 
 header('Content-Type: application/json');

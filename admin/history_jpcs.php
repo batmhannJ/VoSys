@@ -85,8 +85,8 @@ include 'includes/header_jpcs.php';
                                 <table class='table table-bordered'>
                                     <thead>
                                     <tr>
-                                        <th>Rank</th>
-                                        <th>Candidate</th>
+                                        <th style='width: 300px;'>Rank</th>
+                                        <th style='width: 800px;'>Candidate</th>
                                         <th>Vote Count</th>
                                     </tr>
                                     </thead>
