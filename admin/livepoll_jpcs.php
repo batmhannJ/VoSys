@@ -1,191 +1,238 @@
+<!DOCTYPE html>
+<html>
 <?php
 include 'includes/session.php';
 include 'includes/header_jpcs.php';
 ?>
+<head>
+    <style>
+        .box-title {
+            text-align: center;
+            width: 100%;
+            display: inline-block;
+        }
+
+        /* Back to Top button styles */
+        #back-to-top {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            display: none;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 22px;
+            line-height: 50px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        #back-to-top:hover {
+            background-color: #555;
+        }
+
+        .chart-container {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .candidate-images {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        .candidate-image {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .candidate-image img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .candidate-label {
+            margin-left: 10px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .candidate-image img {
+                width: 75px;
+                height: 75px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .candidate-image img {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    </style>
+</head>
 <body class="hold-transition skin-green sidebar-mini">
 <div class="wrapper">
     <?php include 'includes/navbar_jpcs.php'; ?>
     <?php include 'includes/menubar_jpcs.php'; ?>
 
-    <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>
-                Election Results
-            </h1>
+            <h1>Election Results</h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                 <li class="active">Results</li>
             </ol>
         </section>
-        <!-- Main content -->
+
         <section class="content">
-            <!-- Organization Filter -->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="box">
-                        <div class="box-body">
-                            <form method="get" action="">
-                                <div class="form-group">
-                                    <label for="organization">Select Organization:</label>
-                                    <select class="form-control" name="organization" id="organization">
-                                        <option value="">All Organizations</option>
-                                        <?php
-                                        // Fetch and display organizations
-                                        $organizationQuery = $conn->query("SELECT DISTINCT organization FROM voters");
-                                        while($organizationRow = $organizationQuery->fetch_assoc()){
-                                            $selected = ($_GET['organization'] ?? '') == $organizationRow['organization'] ? 'selected' : '';
-                                            echo "<option value='".$organizationRow['organization']."' $selected>".$organizationRow['organization']."</option>";
-                                        }
-                                        ?>
-                                    </select>
+            <div class="row justify-content-center">
+                <?php
+                $categories = [
+                    'president' => 'President',
+                    'vice president' => 'Vice President',
+                    'secretary' => 'Secretary',
+                    'treasurer' => 'Treasurer',
+                    'auditor' => 'Auditor',
+                    'p.r.o' => 'P.R.O',
+                    'dirForMembership' => 'Dir. for Membership',
+                    'dirForSpecialProject' => 'Dir. for Special Project',
+                    '2-ARep' => '2-A Rep',
+                    '2-BRep' => '2-B Rep',
+                    '3-ARep' => '3-A Rep',
+                    '3-BRep' => '3-B Rep',
+                    '4-ARep' => '4-A Rep',
+                    '4-BRep' => '4-B Rep'
+                ];
+
+                foreach ($categories as $categoryKey => $categoryName) {
+                    echo "
+                    <div class='col-md-12'>
+                        <div class='box'>
+                            <div class='box-header with-border'>
+                                <h3 class='box-title'><b>$categoryName</b></h3>
+                            </div>
+                            <div class='box-body'>
+                                <div class='chart-container'>
+                                    <div id='{$categoryKey}Graph' style='height: 300px; width: calc(100% - 70px); margin-left: 70px;'></div>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Filter</button>
-                            </form>
+                                <div class='candidate-images' id='{$categoryKey}Image'></div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    </div>";
+                }
+                ?>
             </div>
-
-            <!-- Bar Graphs for President and Vice President -->
-            <div class="row">
-                <!-- President Bar Graph Box -->
-                <div class="col-md-6">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">President Candidates Vote Count</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <!-- President Bar Graph Container -->
-                            <div id="presidentGraph" style="height: 300px;"></div>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                    <!-- /.box -->
-                </div>
-                <!-- /.col -->
-
-                <!-- Vice President Bar Graph Box -->
-                <div class="col-md-6">
-                    <div class="box">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">Vice President Candidates Vote Count</h3>
-                        </div>
-                        <!-- /.box-header -->
-                        <div class="box-body">
-                            <!-- Vice President Bar Graph Container -->
-                            <div id="vicePresidentGraph" style="height: 300px;"></div>
-                        </div>
-                        <!-- /.box-body -->
-                    </div>
-                    <!-- /.box -->
-                </div>
-                <!-- /.col -->
-            </div>
-            <!-- /.row -->
         </section>
-        <!-- /.content -->
-    </div>
 
-    <!-- /.content-wrapper -->
+        <button id="back-to-top" title="Back to top">&uarr;</button>
+    </div>
     <?php include 'includes/footer.php'; ?>
-    <?php include 'includes/votes_modal.php'; ?>
 </div>
-<!-- ./wrapper -->
 <?php include 'includes/scripts.php'; ?>
-<!-- Bar Graph Script -->
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-<!-- jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="path/to/jquery.min.js"></script>
 <script>
-    // Function to generate bar graph
-    function generateBarGraph(dataPoints, containerId) {
+    function generateBarGraph(dataPoints, containerId, imageContainerId) {
+        var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+
+        // Update the image container
+        var imageContainer = document.getElementById(imageContainerId);
+        imageContainer.innerHTML = dataPoints.map(dataPoint =>
+            `<div class="candidate-image">
+                <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">
+                <span class="candidate-label">${dataPoint.label}</span>
+            </div>`
+        ).join('');
+
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
-            title:{
+            animationDuration: 3000,
+            animationEasing: "easeInOutBounce",
+            title: {
                 text: "Vote Counts"
             },
-            axisY: {
-                title: "Candidates"
-            },
             axisX: {
-                title: "Vote Count",
-                includeZero: true
+                title: "",
+                includeZero: true,
+                interval: 1,
+                labelFormatter: function () {
+                    return " ";
+                }
+            },
+            axisY: {
+                title: "",
+                interval: Math.ceil(totalVotes / 10)
             },
             data: [{
-                type: "bar", // Change type to "bar"
-                dataPoints: dataPoints
+                type: "bar",
+                indexLabel: "{label} - {percent}%",
+                indexLabelPlacement: "inside",
+                indexLabelFontColor: "white",
+                indexLabelFontSize: 14,
+                dataPoints: dataPoints.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                }))
             }]
         });
         chart.render();
-        return chart;
     }
 
-    // Initialize charts
-    var presidentChart;
-    var vicePresidentChart;
-
-    // Function to fetch updated data from the server
-    function updateData() {
+    function fetchAndGenerateGraphs() {
         $.ajax({
-            url: 'update_data.php', // Change this to the URL of your update data script
-            type: 'GET',
+            url: 'update_csc_jpcs.php',
+            method: 'GET',
             dataType: 'json',
-            data: {organization: $('#organization').val()}, // Pass the selected organization to the server
-            success: function(response) {
-                // Update president bar graph
-                if (!presidentChart) {
-                    presidentChart = generateBarGraph(response.presidentData, "presidentGraph");
-                } else {
-                    updateBarGraph(response.presidentData, presidentChart);
-                }
+            success: function (response) {
+                // Generate graphs for all categories
+                var categories = [
+                    'president', 'vice president', 'secretary', 'treasurer', 'auditor',
+                    'p.r.o', 'dirForMembership', 'dirForSpecialProject', '2-ARep', '2-BRep', '3-ARep',
+                    '3-BRep', '4-ARep', '4-BRep'
+                ];
 
-                // Update vice president bar graph
-                if (!vicePresidentChart) {
-                    vicePresidentChart = generateBarGraph(response.vicePresidentData, "vicePresidentGraph");
-                } else {
-                    updateBarGraph(response.vicePresidentData, vicePresidentChart);
-                }
+                categories.forEach(function (category) {
+                    if (response[category]) {
+                        generateBarGraph(response[category], category + 'Graph', category + 'Image');
+                    }
+                });
             },
-            error: function(xhr, status, error) {
-                console.error('Error fetching data: ' + error);
+            error: function (xhr, status, error) {
+                console.error("Error fetching data: ", status, error);
             }
         });
     }
 
-    // Function to update bar graph with animation
-    function updateBarGraph(newDataPoints, chart) {
-        var oldDataPoints = chart.options.data[0].dataPoints;
-        for (var i = 0; i < newDataPoints.length; i++) {
-            var oldVotes = oldDataPoints[i].y;
-            var newVotes = newDataPoints[i].y;
-            var diffVotes = newVotes - oldVotes;
-            animateBar(i, diffVotes, chart);
-        }
-    }
+    $(document).ready(function () {
+        // Fetch and generate graphs initially
+        fetchAndGenerateGraphs();
 
-    // Function to animate individual bar
-    function animateBar(index, diffVotes, chart) {
-        var count = 0;
-        var interval = setInterval(function() {
-            if (count < Math.abs(diffVotes)) {
-                var step = diffVotes > 0 ? 1 : -1;
-                chart.options.data[0].dataPoints[index].y += step;
-                chart.render();
-                count++;
+        // Set interval to update graphs every 10 seconds (10000 milliseconds)
+        setInterval(fetchAndGenerateGraphs, 10000);
+
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 100) {
+                $('#back-to-top').fadeIn();
             } else {
-                clearInterval(interval);
+                $('#back-to-top').fadeOut();
             }
-        }, 10); // Animation speed
-    }
+        });
 
-    // Call the updateData function initially
-    updateData();
-
-    // Call the updateData function every 60 seconds (adjust as needed)
-    setInterval(updateData, 3000); // 60000 milliseconds = 60 seconds
+        $('#back-to-top').click(function () {
+            $('html, body').animate({ scrollTop: 0 }, 600);
+            return false;
+        });
+    });
 </script>
 </body>
 </html>
