@@ -124,18 +124,86 @@ if(!is_active_election($conn)){
 
 			    			<!-- Voting Ballot -->
 						    <form method="POST" id="ballotForm" action="submit_ballot_jpcs.php">
-                                <?php
+                            <?php
+session_start();
+
+// Verify the database connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+// Fetch the user's ID from session
+if (isset($voter['id'])) {
+    $userId = $voter['id'];
+
+    // Fetch the user's organization and set it in the session (if not already set)
+    if (!isset($_SESSION['yearLvl'])) {
+        $userQuery = "SELECT yearLvl FROM voters WHERE id = '$userId'";
+        $userResult = $conn->query($userQuery);
+        if ($userResult) {
+            if ($userResult->num_rows > 0) {
+                $userRow = $userResult->fetch_assoc();
+                $_SESSION['yearLvl'] = $userRow['yearLvl'];
+            } else {
+                echo "No yearLvl found for user ID: $userId";
+            }
+        } else {
+            echo "Error in query: " . $conn->error;
+        }
+    }
+} else {
+    echo "User ID not set in session.";
+}
+
                                 include 'includes/slugify.php';
+
+                                $positions = [
+                                    'President',
+                                    'VP for Internal Affairs',
+                                    'VP for External Affairs',
+                                    'Secretary',
+                                    'Treasurer',
+                                    'Auditor',
+                                    'P.R.O',
+                                    'Dir. for Membership',
+                                    'Dir. for Special Project',
+                                ];
+
+                                if (isset($_SESSION['yearLvl'])) {
+                                    switch ($_SESSION['yearLvl']) {
+                                        case '1-A':
+                                            $positions[] = '2-A Rep';
+                                            break;
+                                        case '1-B':
+                                            $positions[] = '2-B Rep';
+                                            break;
+                                        case '2-A':
+                                            $positions[] = '3-A Rep';
+                                            break;
+                                        case '2-B':
+                                            $positions[] = '3-B Rep';
+                                            break;
+                                        case '3-A':
+                                            $positions[] = '4-A Rep';
+                                            break;
+                                        case '3-B':
+                                            $positions[] = '4-B Rep';
+                                            break;
+                                    }
+                                }
 
                                 $candidate = '';
                                 $sql = "SELECT * FROM categories WHERE election_id = 1 ORDER BY priority ASC";
                                 $query = $conn->query($sql);
                                 while($row = $query->fetch_assoc()){
+                                    if (!in_array($row['name'], $positions)) {
+                                        continue; // Skip positions not in the list
+                                    }
                                       echo '
                                     <div class="position-container">
                                         <div class="box box-solid" id="'.$row['id'].'">
-                                            <div class="box-header">
-                                                <h3 class="box-title">'.$row['name'].'</h3>
+                                            <div class="box-header" style="background-color: darkgreen;">
+                                                <h3 class="box-title" style="color: #fff;">'.$row['name'].'</h3>
                                                 <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="'.slugify($row['name']).'"><i class="fa fa-refresh"></i> Reset</button>
                                             </div>
                                             <div class="box-body">
@@ -172,7 +240,7 @@ if(!is_active_election($conn)){
                                                 <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
                                                 
                                             </div>
-                                            <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
+                                            <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
                                         
                                             <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
                                         </li>';
@@ -185,7 +253,7 @@ if(!is_active_election($conn)){
             }
             ?>
                                 <div class="text-center">
-                                    <button type="button" class="btn btn-primary btn-flat" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
+                                    <button type="button" class="btn btn-primary btn-flat" style="background-color: darkgreen;" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
                                 </div>
 
                                 <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
@@ -311,7 +379,7 @@ if(!is_active_election($conn)){
 
 
 
-        $('#preview').click(function(e){
+        $('#preview_jpcs').click(function(e){
             e.preventDefault();
             var form = $('#ballotForm').serialize();
             if(form == ''){
@@ -326,7 +394,7 @@ if(!is_active_election($conn)){
             else{
                 $.ajax({
                     type: 'POST',
-                    url: 'preview_jpcs',
+                    url: 'preview_jpcs.php',
                     data: form,
                     dataType: 'json',
                     success: function(response){

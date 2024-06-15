@@ -104,10 +104,12 @@
                 <label for="edit_yearlvl" class="col-sm-3 control-label">Year Level</label>
                     <div class="col-sm-9">
                         <select id="edit_yearlvl" name="yearLvl" class="form-control">
-                            <option value="1">1st Year</option>
-                            <option value="2">2nd Year</option>
-                            <option value="3">3rd Year</option>
-                            <option value="4">4th Year</option>
+                            <option value="1-A">1-A</option>
+                            <option value="1-B">1-B</option>
+                            <option value="2-A">2-A</option>
+                            <option value="2-B">2-B</option>
+                            <option value="3-A">3-A</option>
+                            <option value="3-B">3-B</option>
                         </select>
                     </div>
                 </div>

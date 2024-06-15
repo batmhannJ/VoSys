@@ -4,7 +4,7 @@
         <div class="modal-content">
           	<div class="modal-header">
             	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              		<span aria-hidden="true">&times;</span></button>
+              		</button>
             	<h4 class="modal-title"><b>User Profile</b></h4>
           	</div>
           	<div class="modal-body">
@@ -71,9 +71,21 @@
                 <div class="form-group">
                     <label for="photo" class="col-sm-3 control-label">Photo:</label>
                     <div class="col-sm-9">
-                        <input type="file" id="photo" name="photo" accept=".png, .jpg, .jpeg, .csv">
+                        <input type="file" id="photo" name="photo" accept=".png, .jpg, .jpeg" onchange="validateFileType(this)">
                     </div>
                 </div>
+                <script>
+                    function validateFileType(input) {
+                        const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+                        const filePath = input.value;
+                        if (!allowedExtensions.exec(filePath)) {
+                            alert('Please upload a file with a .png, .jpg, or .jpeg extension.');
+                            input.value = '';
+                            return false;
+                        }
+                        return true;
+                    }
+                </script>
                 <hr>
                 <div class="form-group">
                     <label for="password" class="col-sm-3 control-label">New Password</label>

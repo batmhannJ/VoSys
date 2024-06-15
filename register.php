@@ -150,6 +150,8 @@ form.sign-up-form {
   position: relative;
   height: 37px;
   margin-bottom: 2rem;
+  display: flex;
+  align-items: center; 
 }
 
 .input-field {
@@ -164,6 +166,41 @@ form.sign-up-form {
   font-size: 0.95rem;
   color: #151111;
   transition: 0.4s;
+  flex-grow: 1; 
+}
+
+select .input-field {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: none;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #bbb;
+  padding: 0;
+  font-size: 0.95rem;
+  color: #151111;
+  transition: 0.4s;
+  flex-grow: 1; 
+}
+
+.togglePassword {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 18px;
+            color: #aaa;
+        }
+
+        .togglePassword:hover {
+            color: #333;
+        }
+
+#sendOTP {
+  min-width: 100px; /* Set a minimum width for the button */
+  margin-left: 200px; /* Add a small margin between the input field and the button */
 }
 
 label {
@@ -189,7 +226,7 @@ label {
 .sign-btn {
   display: inline-block;
   width: 100%;
-  height: 35px;
+  height: 43px;
   background-color: #1357a6;
   color: #fff;
   border: none;
@@ -204,35 +241,17 @@ label {
   background-color: gray;
 }
 
-.signup-btn {
-  display: inline-block;
-  width: 100%;
-  height: 35px;
-  background-color: darkgreen;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  border-radius: 0.8rem;
-  font-size: 0.8rem;
-  margin-bottom: 1rem;
-  transition: 0.3s;
-}
-
-.signup-btn:hover {
-  background-color: gray;
-}
-
 .back-btn {
   display: inline-block;
   width: 100%;
-  height: 35px;
+  height: 43px;
   background-color: maroon;
   color: #fff;
   border: none;
   cursor: pointer;
   border-radius: 0.8rem;
   font-size: 0.8rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   transition: 0.3s;
 }
 
@@ -484,36 +503,6 @@ main.sign-up-mode .carousel {
     padding: 1rem 1rem 1.5rem;
   }
 }
-.input-wrap {
-
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-            margin-top: -5px;
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 10px; /* Adjust the padding to make space for the icon */
-            font-size: 15px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .togglePassword {
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-            cursor: pointer;
-            font-size: 18px;
-            color: #aaa;
-        }
-
-        .togglePassword:hover {
-            color: #333;
-        }
 </style>
 
 <body>
@@ -521,60 +510,115 @@ main.sign-up-mode .carousel {
       <div class="box">
         <div class="inner-box">
           <div class="forms-wrap">
-            <form action="login.php" method="post" autocomplete="off" class="sign-in-form">
+            <form id="forgotPasswordForm" autocomplete="off" class="sign-in-form">
               <div class="logo">
                 <img src="./images/olshco.png" alt="easyclass" />
                 <h4 style="font-size:28px; color: maroon;"><b>VOSYS - OLSHCO</b></h4>
               </div>
 
               <div class="heading">
-                <center><h2>Voters Login Page</h2></center>
+                <center><h2>Register</h2></center>
                 <hr>
               </div>
 
               <div class="actual-form has-feedback">
-                 <div class="input-wrap">
+              <div class="input-wrap">
                   <input
                     type="text"
                     minlength="4"
                     class="input-field"
-                    name="voter"
-                    placeholder="Voter's ID" style="font-size: 15px;"
+                    name="fname"
+                    placeholder="First Name" style="font-size: 15px;"
                     required
                   />
                     <span class="form-control-feedback"></span>
                   <label style="font-size:15px;"></label>
                 </div>
-
-                <div class="input-wrap has-feedback">
+                <div class="input-wrap">
                   <input
-                      id="current-password"
-                      type="password"
-                      minlength="8"
-                      class="input-field"
-                      name="password"
-                      placeholder="Password"
-                      autocomplete="off"
-                      required
+                    type="text"
+                    minlength="4"
+                    class="input-field"
+                    name="lname"
+                    placeholder="Last Name" style="font-size: 15px;"
+                    required
                   />
+                    <span class="form-control-feedback"></span>
+                  <label style="font-size:15px;"></label>
+                </div>
+              <div class="input-wrap">
+                  <input
+                    type="email"
+                    minlength="4"
+                    class="input-field"
+                    name="email"
+                    placeholder="Email" style="font-size: 15px;"
+                    required
+                  />
+                    <span class="form-control-feedback"></span>
+                  <label style="font-size:15px;"></label>
+                </div>
+                <div class="input-wrap">
+                    <select class="input-field" name="yearLvl" style="font-size: 15px; color: gray; padding: 0;" required>
+                        <option value="" disabled selected>Select Year Level</option>
+                        <option value="1">1st Year</option>
+                        <option value="2">2nd Year</option>
+                        <option value="3">3rd Year</option>
+                        <option value="4">4th Year</option>
+                    </select>
+                    <span class="form-control-feedback"></span>
+                    <label style="font-size:15px;"></label>
+                </div>
+
+                <div class="input-wrap">
+                    <select class="input-field" name="organization" style="font-size: 15px; color: gray; padding: 0;" required>
+                        <option value="" disabled selected>Select Organization</option>
+                        <option value="JPCS">JPCS</option>
+                        <option value="YMF">YMF</option>
+                        <option value="CODE-TG">CODE-TG</option>
+                        <option value="PASOA">PASOA</option>
+                        <option value="HMSO">HMSO</option>
+                    </select>
+                    <span class="form-control-feedback"></span>
+                    <label style="font-size:15px;"></label>
+                </div>
+
+                <div class="input-wrap">
+                  <input
+                    type="password"
+                    minlength="8"
+                    class="input-field"
+                    id="new_password"
+                    name="new_password"
+                    placeholder="New Password" style="font-size: 15px;"
+                    required
+                  />
+                    <span class="form-control-feedback"></span>
                   <label style="font-size:15px;"></label>
                   <i class="fa fa-fw fa-eye togglePassword" id="togglePassword"></i>
                   <span class="form-control-feedback"></span>
                 </div>
 
-                <div style="text-align: right; margin-bottom: 10px;">
-                    <a href="forgot_pass.php" style="font-size: 15px;">Forgot Password?</a>
-                </div>
-
-                <div class="form-group has-feedback">
-                    <div class="g-recaptcha" data-sitekey="6LddHcIpAAAAAJS6Wnenkllxyr3tWUSlSCu8o9eO">
+                <div class="input-wrap">
+                  <input
+                    type="password"
+                    minlength="8"
+                    class="input-field"
+                    id="confirm_password"
+                    name="confirm_password"
+                    placeholder="Confirm Password" style="font-size: 15px;"
+                    required
+                  />
+                    <span class="form-control-feedback"></span>
+                  <label style="font-size:15px;"></label>
+                  <i class="fa fa-fw fa-eye togglePassword" id="togglePassword1"></i>
+                  <span class="form-control-feedback"></span>
                 </div>
             </div>
 
-                <input type="submit" name="login" value="Login" class="sign-btn" style="font-size:15px;">
-                <!--<p style="text-align: center;">or</p>-->
-                <!--<input type="submit" name="signup" value="Sign Up" class="signup-btn" style="font-size:15px;" onclick="window.location.href = 'register.php';">-->
-                <input type="button" value="Back to Homepage" class="back-btn" style="font-size:15px;" onclick="window.location.href = 'index.html';">
+                <!--<input type="submit" name="sendOTP" id="sendOTP" value="Send OTP" class="sign-btn" style="font-size:15px; background-color: grey;">-->
+                <input type="submit" name="register" value="Register" class="sign-btn" style="font-size:15px;">
+                <input type="button" value="Back to Login" class="back-btn" style="font-size:15px;" onclick="window.location.href = 'voters_login.php';">
 
                         <?php
                 if (isset($_SESSION['error'])) {
@@ -608,6 +652,27 @@ main.sign-up-mode .carousel {
 
         </div>
     </div>
+    <script>
+    
+// Inside the changePassword function
+function changePassword(email, new_password) {
+var xhr = new XMLHttpRequest();
+xhr.open('POST', 'update_password.php', true);
+xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+        var response = JSON.parse(xhr.responseText);
+        alert(response.message); // You can handle success or error messages here
+        if (response.status === 'success') {
+            // Redirect to voters_login.php
+            window.location.href = 'voters_login.php';
+        }
+    }
+};
+xhr.send('email=' + encodeURIComponent(email) + '&new_password=' + encodeURIComponent(new_password));
+}
+
+</script>
 <script>
   const images = document.querySelectorAll('.image');
   let currentIndex = 0;
@@ -627,12 +692,25 @@ main.sign-up-mode .carousel {
   setInterval(nextImage, 3000); // Change image every 3 seconds
 </script>
 
-    <script src="app.js"></script>
+<script src="app.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             var togglePassword = document.getElementById('togglePassword');
             togglePassword.addEventListener('click', function () {
-                var input = document.getElementById('current-password');
+                var input = document.getElementById('new_password');
+                if (input.getAttribute('type') === 'password') {
+                    input.setAttribute('type', 'text');
+                    this.classList.remove('fa-eye');
+                    this.classList.add('fa-eye-slash');
+                } else {
+                    input.setAttribute('type', 'password');
+                    this.classList.remove('fa-eye-slash');
+                    this.classList.add('fa-eye');
+                }
+            });
+            var togglePassword1 = document.getElementById('togglePassword1');
+            togglePassword1.addEventListener('click', function () {
+                var input = document.getElementById('confirm_password');
                 if (input.getAttribute('type') === 'password') {
                     input.setAttribute('type', 'text');
                     this.classList.remove('fa-eye');
@@ -647,5 +725,4 @@ main.sign-up-mode .carousel {
     </script>
     <?php include 'includes/scripts.php' ?>
 </body>
-
 </html>

@@ -33,7 +33,7 @@
 								$sql_array[] = "INSERT INTO votes (voters_id, election_id, candidate_id, category_id, organization) VALUES ('".$voter['id']."', '1', '$values', '$pos_id', 'JPCS')";
 								// Append vote information to $votes_info
 								$votes_info .= "Position: ".$row['name']."\n";
-								$votes_info .= "Candidate: $candidate_name (ID: $values)\n\n";
+								$votes_info .= "Candidate: $candidate_name \n\n";
 							}
 						}
 					}
@@ -48,7 +48,7 @@
 						$sql_array[] = "INSERT INTO votes (voters_id, election_id, candidate_id, category_id, organization) VALUES ('".$voter['id']."', '1', '$candidate', '$pos_id', 'JPCS')";
 						// Append vote information to $votes_info
 						$votes_info .= "Position: ".$row['name']."\n";
-						$votes_info .= "Candidate: $candidate_name (ID: $candidate)\n\n";
+						$votes_info .= "Candidate: $candidate_name \n\n";
 					}
 				}
 			}
