@@ -14,8 +14,6 @@
           <?php
             if(isset($_GET['type']) && $_GET['type'] === 'voters'){
               echo "Voter Archived";
-            } elseif(isset($_GET['type']) && $_GET['type'] === 'admin'){
-              echo "Admin Archived";
             } elseif(isset($_GET['type']) && $_GET['type'] === 'election'){
               echo "Election Archived";
             } else {
@@ -29,8 +27,6 @@
             <?php
               if(isset($_GET['type']) && $_GET['type'] === 'voters'){
                 echo "Voter Archived";
-              } elseif(isset($_GET['type']) && $_GET['type'] === 'admin'){
-                echo "Admin Archived";
               } elseif(isset($_GET['type']) && $_GET['type'] === 'election'){
                 echo "Election Archived";
               } else {
@@ -74,7 +70,6 @@
             </button>
             <ul class="dropdown-menu" aria-labelledby="archiveDropdown">
                 <li><a href="?type=voters" class="archive-type">Voters Archived</a></li>
-                <li><a href="?type=admin" class="archive-type">Admin Archived</a></li>
                 <li><a href="?type=election" class="archive-type">Election Archived</a></li>
             </ul>
         </div>
