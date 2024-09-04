@@ -92,14 +92,6 @@
                 <th>Email</th>
                 <th>Year Level</th>
                 <th>Organization</th>
-                <?php elseif(isset($_GET['type']) && $_GET['type'] === 'admin'): ?>
-                <th>ID Number</th>
-                <th>Organization</th>
-                <th>Last Name</th>
-                <th>First Name</th>
-                <th>Photo</th>
-                <th>Username</th>
-                <th>Email</th>
                 <?php elseif(isset($_GET['type']) && $_GET['type'] === 'election'): ?>
                 <th>#</th>
                 <th>ID</th>
@@ -113,8 +105,6 @@
               <?php
                 if(isset($_GET['type']) && $_GET['type'] === 'voters') {
                   $sql = "SELECT * FROM voters WHERE archived = TRUE";
-                } elseif(isset($_GET['type']) && $_GET['type'] === 'admin') {
-                  $sql = "SELECT * FROM admin WHERE archived = TRUE";
                 } elseif(isset($_GET['type']) && $_GET['type'] === 'election') {
                   $sql = "SELECT * FROM election WHERE archived = TRUE";
                 }
@@ -138,25 +128,6 @@
                         <td>
                           <button class='btn btn-warning btn-sm restore btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#confirmationModal'><i class='fa fa-reply'></i> Restore</button>
                           <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."' data-user='voters'><i class='fa fa-trash'></i> Delete</button>
-                        </td>
-                      </tr>
-                    ";
-                  } elseif(isset($_GET['type']) && $_GET['type'] === 'admin') {
-                    $adminImage = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
-                    echo "
-                      <tr>
-                        <td>".$row['id']."</td>
-                        <td>".$row['organization']."</td>
-                        <td>".$row['lastname']."</td>
-                        <td>".$row['firstname']."</td>
-                        <td>
-                          <img src='".$adminImage."' width='30px' height='30px'>
-                        </td>
-                        <td>".$row['username']."</td>
-                        <td>".$row['email']."</td>
-                        <td>
-                          <button class='btn btn-warning btn-sm restore-admin btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#adminConfirmationModal'><i class='fa fa-reply'></i> Restore</button>
-                          <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."' data-user='admin'><i class='fa fa-trash'></i> Delete</button>
                         </td>
                       </tr>
                     ";
