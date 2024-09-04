@@ -524,7 +524,7 @@ main.sign-up-mode .carousel {
             <form action="Flogin.php" method="post" autocomplete="off" class="sign-in-form">
               <div class="logo">
                 <img src="./images/olshco.png" alt="easyclass" />
-                <h4 style="font-size:28px; color: maroon;"><b>VOSYS - OLSHCO </b></h4>
+                <h4 style="font-size:28px; color: maroon;"><b>VOSYS - OLSHCO</b></h4>
               </div>
 
               <div class="heading">
