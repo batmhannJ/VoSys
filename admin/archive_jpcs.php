@@ -156,7 +156,6 @@
 </section>
 
     </div>
-      
     <?php include 'includes/footer.php'; ?>
     <?php include 'includes/voters_modal.php'; ?>
     <?php include 'includes/restore_modal.php'; ?>
