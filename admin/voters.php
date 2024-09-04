@@ -43,65 +43,60 @@
         }
       ?>
       <div class="row">
-  <div class="col-xs-12">
-    <div class="box">
-      <div class="box-header with-border">
-        <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
-        <button class="btn btn-warning btn-sm btn-flat" id="batchArchiveBtn"><i class="fa fa-archive"></i> Batch Archive</button>
-      </div>
-      <div class="box-body">
-        <div class="table-responsive">
-          <table id="example1" class="table table-bordered">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>No.</th>
-                <th>Full Name</th>
-                <th>Photo</th>
-                <th>Voters ID</th>
-                <th>Email</th>
-                <th>Year Level</th>
-                <th>Organization</th>
-                <th>Tools</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php
-                $sql = "SELECT * FROM voters WHERE archived = FALSE";
-                $query = $conn->query($sql);
-                $i = 1;
-                while($row = $query->fetch_assoc()){
-                  $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
-                  $fullname = $row['lastname'] . ', ' . $row['firstname'];
-                  echo "
-                    <tr>
-                      <td><input type='checkbox' class='selectItem' value='".$row['id']."'></td>
-                      <td>".$i++."</td>
-                      <td>".$fullname."</td>
-                      <td>
-                        <img src='".$image."' width='30px' height='30px'>
-                        <a href='#edit_photo' data-toggle='modal' class='pull-right photo' data-id='".$row['id']."'></a>
-                      </td>
-                      <td>".$row['voters_id']."</td>
-                      <td>".$row['email']."</td>
-                      <td>".$row['yearLvl']."</td>
-                      <td>".$row['organization']."</td>
-                      <td>
-                        <button class='btn btn-primary btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
-                        <button class='btn btn-warning btn-sm archive btn-flat' data-id='".$row['id']."'><i class='fa fa-archive'></i> Archive</button>
-                      </td>
-                    </tr>
-                  ";
-                }
-              ?>
-            </tbody>
-          </table>
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header with-border">
+              <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
+              <button class="btn btn-warning btn-sm btn-flat" id="batchArchiveBtn"><i class="fa fa-archive"></i> Batch Archive</button>
+            </div>
+            <div class="box-body">
+              <table id="example1" class="table table-bordered">
+                <thead>
+                  <th>#</th>
+                  <th>No.</th>
+                  <th>Full Name</th>
+                  <th>Photo</th>
+                  <th>Voters ID</th>
+                  <th>Email</th>
+                  <th>Year Level</th>
+                  <th>Organization</th>
+                  <th>Tools</th>
+                </thead>
+                <tbody>
+                  <?php
+                    $sql = "SELECT * FROM voters WHERE archived = FALSE";
+                    $query = $conn->query($sql);
+                    $i = 1;
+                    while($row = $query->fetch_assoc()){
+                      $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
+                      $fullname = $row['lastname'] . ', ' . $row['firstname'];
+                      echo "
+                        <tr>
+                          <td><input type='checkbox' class='selectItem' value='".$row['id']."'></td>
+                          <td>".$i++."</td>
+                          <td>".$fullname."</td>
+                          <td>
+                            <img src='".$image."' width='30px' height='30px'>
+                            <a href='#edit_photo' data-toggle='modal' class='pull-right photo' data-id='".$row['id']."'></a>
+                          </td>
+                          <td>".$row['voters_id']."</td>
+                          <td>".$row['email']."</td>
+                          <td>".$row['yearLvl']."</td>
+                          <td>".$row['organization']."</td>
+                          <td>
+                            <button class='btn btn-primary btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
+                            <button class='btn btn-warning btn-sm archive btn-flat' data-id='".$row['id']."'><i class='fa fa-archive'></i> Archive</button>
+                          </td>
+                        </tr>
+                      ";
+                    }
+                  ?>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
-
       <div class="row">
         <div class="col-xs-12">
           <?php
