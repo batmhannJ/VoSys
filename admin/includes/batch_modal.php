@@ -9,7 +9,7 @@
         </button>
       </div>
       <div class="modal-body">
-        Are you sure you want to restore the selected voters?
+        Are you sure you want to restore the selected items?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
