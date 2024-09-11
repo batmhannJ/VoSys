@@ -126,7 +126,7 @@
                         <td>".$row['yearLvl']."</td>
                         <td>".$row['organization']."</td>
                         <td>
-                          <button class='btn btn-warning btn-sm restore btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#confirmationModal'><i class='fa fa-reply'></i> Restore</button>
+                          <button class='btn btn-warning btn-sm restore btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#confirmationModalrestore'><i class='fa fa-reply'></i> Restore</button>
                           <button class='btn btn-danger btn-sm delete btn-flat' data-id='".$row['id']."' data-user='voters'><i class='fa fa-trash'></i> Delete</button>
                         </td>
                       </tr>
@@ -154,12 +154,11 @@
     </div>
   </div>
 </section>
+</div>
 
-    </div>
     <?php include 'includes/footer.php'; ?>
     <?php include 'includes/voters_modal.php'; ?>
     <?php include 'includes/restore_modal.php'; ?>
-    <?php include 'includes/restore_admin_modal.php'; ?>
     <?php include 'includes/batch_modal.php'; ?>
 
 <?php include 'includes/scripts.php'; ?>
