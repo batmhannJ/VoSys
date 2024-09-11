@@ -55,7 +55,6 @@
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>No.</th>
                         <th>Full Name</th>
                         <th>Photo</th>
                         <th>Voters ID</th>
@@ -76,7 +75,6 @@
                           echo "
                             <tr>
                               <td><input type='checkbox' class='selectItem' value='".$row['id']."'></td>
-                              <td>".$i++."</td>
                               <td>".$fullname."</td>
                               <td>
                                 <img src='".$image."' width='30px' height='30px'>
