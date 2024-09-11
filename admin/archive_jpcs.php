@@ -104,9 +104,9 @@
             <tbody>
               <?php
                 if(isset($_GET['type']) && $_GET['type'] === 'voters') {
-                  $sql = "SELECT * FROM voters WHERE archived = TRUE";
+                  $sql = "SELECT * FROM voters WHERE archived = TRUE AND organization = 'JPCS'";
                 } elseif(isset($_GET['type']) && $_GET['type'] === 'election') {
-                  $sql = "SELECT * FROM election WHERE archived = TRUE";
+                  $sql = "SELECT * FROM election WHERE archived = TRUE AND organization = 'JPCS'";
                 }
                 $query = $conn->query($sql);
                 while($row = $query->fetch_assoc()){
