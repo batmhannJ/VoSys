@@ -130,12 +130,12 @@
         </div>
         </div>
       </div>
-
     </section>   
   </div>
     
   <?php include 'includes/footer.php'; ?>
   <?php include 'includes/voters_jpcs_modal.php'; ?>
+  <?php include 'includes/batch_modal.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
 <script>
@@ -147,20 +147,76 @@ $(function(){
     getRow(id);
   });
 
-  $(document).on('click', '.delete', function(e){
-    e.preventDefault();
-    $('#delete').modal('show');
-    var id = $(this).data('id');
-    getRow(id);
-  });
-
   $(document).on('click', '.photo', function(e){
     e.preventDefault();
     var id = $(this).data('id');
     getRow(id);
   });
 
+  $(document).on('click', '.archive', function(e){
+    e.preventDefault();
+    var id = $(this).data('id');
+    archiveVoter(id);
+  });
+
+  $('#batchArchiveBtn').click(function() {
+    var selected = [];
+    $('.selectItem:checked').each(function() {
+      selected.push($(this).val());
+    });
+
+    if(selected.length > 0) {
+      $('#batchConfirmationModal').modal('show');
+      $('#submitBatchBtn').on('click', function() {
+        $.ajax({
+          type: 'POST',
+          url: 'batch_archive_voter.php',
+          data: { ids: selected },
+          success: function(response) {
+            location.reload();
+          },
+          error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+          }
+        });
+      });
+    } else {
+      alert('No voters selected.');
+    }
+  });
+
+  $('#selectAll').click(function() {
+    if (this.checked) {
+      $('.selectItem').each(function() {
+        this.checked = true;
+      });
+    } else {
+      $('.selectItem').each(function() {
+        this.checked = false;
+      });
+    }
+  });
+
 });
+
+function archiveVoter(id) {
+  $('#confirmationModal').modal('show'); // Show the confirmation modal
+
+  $('#submitBtn').on('click', function() {
+    $.ajax({
+      type: "POST",
+      url: "archive_voter.php",
+      data: { id: id },
+      success: function(response) {
+        // Refresh the page or update the table as needed
+        location.reload();
+      },
+      error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+      }
+    });
+  });
+}
 
 function getRow(id){
   $.ajax({
