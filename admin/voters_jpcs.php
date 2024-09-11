@@ -64,7 +64,7 @@
                 </thead>
                 <tbody>
                   <?php
-                    $sql = "SELECT * FROM voters WHERE organization = 'JPCS'";
+                    $sql = "SELECT * FROM voters WHERE archived = FALSE AND organization = 'JPCS'";
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
                       $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
