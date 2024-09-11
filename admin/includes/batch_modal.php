@@ -9,7 +9,7 @@
         </button>
       </div>
       <div class="modal-body">
-        Are you sure you want to restore the selected items?
+        Are you sure you want to restore the selected voters?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -40,7 +40,7 @@
   </div>
 </div>
 
-<!-- Batch Confirmation Modal -->
+<!-- Batch Confirmation Modal
 <div class="modal fade" id="batchConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="batchConfirmationModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -59,4 +59,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
