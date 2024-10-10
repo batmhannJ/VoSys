@@ -150,6 +150,8 @@ form.sign-up-form {
   position: relative;
   height: 37px;
   margin-bottom: 2rem;
+  display: flex;
+  align-items: center; 
 }
 
 .input-field {
@@ -164,6 +166,26 @@ form.sign-up-form {
   font-size: 0.95rem;
   color: #151111;
   transition: 0.4s;
+  flex-grow: 1; 
+}
+
+.togglePassword {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 18px;
+            color: #aaa;
+        }
+
+        .togglePassword:hover {
+            color: #333;
+        }
+
+#sendOTP {
+  min-width: 100px; /* Set a minimum width for the button */
+  margin-left: 200px; /* Add a small margin between the input field and the button */
 }
 
 label {
@@ -189,7 +211,7 @@ label {
 .sign-btn {
   display: inline-block;
   width: 100%;
-  height: 35px;
+  height: 43px;
   background-color: #1357a6;
   color: #fff;
   border: none;
@@ -204,35 +226,17 @@ label {
   background-color: gray;
 }
 
-.signup-btn {
-  display: inline-block;
-  width: 100%;
-  height: 35px;
-  background-color: darkgreen;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  border-radius: 0.8rem;
-  font-size: 0.8rem;
-  margin-bottom: 1rem;
-  transition: 0.3s;
-}
-
-.signup-btn:hover {
-  background-color: gray;
-}
-
 .back-btn {
   display: inline-block;
   width: 100%;
-  height: 35px;
+  height: 43px;
   background-color: maroon;
   color: #fff;
   border: none;
   cursor: pointer;
   border-radius: 0.8rem;
   font-size: 0.8rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   transition: 0.3s;
 }
 
@@ -483,135 +487,176 @@ main.sign-up-mode .carousel {
   form {
     padding: 1rem 1rem 1.5rem;
   }
+
+  .face-scan-box {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .face-scan-frame {
+      border: 2px dashed #333;
+      width: 300px;
+      height: 300px;
+      margin: 10px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .scan-image {
+      width: 150px;
+      height: 150px;
+      opacity: 0.5;
+    }
+
+    .back-btn {
+      background-color: maroon;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .back-btn:hover {
+      background-color: darkred;
+    }
 }
-.input-wrap {
-
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-            margin-top: -5px;
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 10px; /* Adjust the padding to make space for the icon */
-            font-size: 15px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .togglePassword {
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-            cursor: pointer;
-            font-size: 18px;
-            color: #aaa;
-        }
-
-        .togglePassword:hover {
-            color: #333;
-        }
 </style>
 
 <body>
-    <main>
-      <div class="box">
-        <div class="inner-box">
-          <div class="forms-wrap">
-            <form action="login.php" method="post" autocomplete="off" class="sign-in-form">
-              <div class="logo">
-                <img src="./images/olshco.png" alt="easyclass" />
-                <h4 style="font-size:28px; color: maroon;"><b>VOSYS - OLSHCO</b></h4>
-              </div>
-
-              <div class="heading">
-                <center><h2>Voters Login Page</h2></center>
-                <hr>
-              </div>
-
-              <div class="actual-form has-feedback">
-                 <div class="input-wrap">
-                  <input
-                    type="text"
-                    minlength="4"
-                    class="input-field"
-                    name="voter"
-                    placeholder="Voter's ID" style="font-size: 15px;"
-                    required
-                  />
-                    <span class="form-control-feedback"></span>
-                  <label style="font-size:15px;"></label>
-                </div>
-
-                <div class="input-wrap has-feedback">
-                  <input
-                      id="current-password"
-                      type="password"
-                      minlength="8"
-                      class="input-field"
-                      name="password"
-                      placeholder="Password"
-                      autocomplete="off"
-                      required
-                  />
-                  <label style="font-size:15px;"></label>
-                  <i class="fa fa-fw fa-eye togglePassword" id="togglePassword"></i>
-                  <span class="form-control-feedback"></span>
-                </div>
-
-                <div style="text-align: center; margin-bottom: 10px;">
-                    <a href="#facerecog.php" style="font-size: 15px;">Use Face ID</a>
-                </div>
-
-                <div style="text-align: right; margin-bottom: 10px;">
-                    <a href="forgot_pass.php" style="font-size: 15px;">Forgot Password?</a>
-                </div>
-
-                <div class="form-group has-feedback">
-                    <div class="g-recaptcha" data-sitekey="6LddHcIpAAAAAJS6Wnenkllxyr3tWUSlSCu8o9eO">
-                </div>
+  <main>
+    <div class="box">
+      <div class="inner-box">
+        <div class="forms-wrap">
+          <form id="forgotPasswordForm" autocomplete="off" class="sign-in-form">
+            <div class="logo">
+              <img src="./images/olshco.png" alt="easyclass" />
+              <h4 style="font-size:28px; color: maroon;"><b>VOSYS - OLSHCO</b></h4>
             </div>
 
-                <input type="submit" name="login" value="Login" class="sign-btn" style="font-size:15px;">
-                <!--<p style="text-align: center;">or</p>-->
-                <!--<input type="submit" name="signup" value="Sign Up" class="signup-btn" style="font-size:15px;" onclick="window.location.href = 'register.php';">-->
-                <input type="button" value="Back to Homepage" class="back-btn" style="font-size:15px;" onclick="window.location.href = 'index.html';">
+            <div class="heading">
+              <center><h2>Face ID Authentication</h2></center>
+              <hr>
+            </div>
 
-                        <?php
-                if (isset($_SESSION['error'])) {
-                    echo "
-                        <div class='callout callout-danger text-center mt20' style='width: 300px; margin: 0 auto;'>
-                            <p>" . $_SESSION['error'] . "</p> 
-                        </div>
-                    ";
-                    unset($_SESSION['error']);
-                }
-                ?>
-                
+            <!-- BOX FOR FACE SCAN -->
+            <div class="face-scan-box">
+              <p>Place your face within the frame to scan</p>
+              <!-- This is where the face scanner would be integrated -->
+              <div class="face-scan-frame">
+                <!-- The scanner image or interface would be added here -->
+                <img src="./images/face-scan-placeholder.png" alt="Face Scan" class="scan-image" />
               </div>
-            </form>
+            </div>
+
+            <input type="button" value="Back to Login" class="back-btn" style="font-size:15px;" onclick="window.location.href = 'voters_login.php';">
+
+            <?php
+            if (isset($_SESSION['error'])) {
+              echo "
+                  <div class='callout callout-danger text-center mt20' style='width: 300px; margin: 0 auto;'>
+                      <p>" . $_SESSION['error'] . "</p> 
+                  </div>
+              ";
+              unset($_SESSION['error']);
+            }
+            ?>
+          </form>
+        </div>
+
+        <div class="carousel">
+          <div class="images-wrapper">
+            <img src="./images/c.png" class="image img-1 show" alt="" />
+            <img src="./images/j.png" class="image img-2 show" alt="" />
+            <img src="./images/y.png" class="image img-3 show" alt="" />
+            <img src="./images/ct.png" class="image img-4 show" alt="" />
+            <img src="./images/p.png" class="image img-5 show" alt="" />
+            <img src="./images/h.png" class="image img-6 show" alt="" />
           </div>
-
-          
-
-          <div class="carousel">
-            <div class="images-wrapper">
-              <img src="./images/c.png" class="image img-1 show" alt="" />
-              <img src="./images/j.png" class="image img-2 show" alt="" />
-              <img src="./images/y.png" class="image img-3 show" alt="" />
-              <img src="./images/ct.png" class="image img-4 show" alt="" />
-              <img src="./images/p.png" class="image img-5 shozw" alt="" />
-              <img src="./images/h.png" class="image img-6 show" alt="" />
-            </div>
         </div>
       </div>
-    </main>
+    </div>
+  </main>
 
         </div>
     </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('sendOTP').addEventListener('click', function() {
+            var email = document.querySelector('input[name="email"]').value; // Get email value from input field
+            sendOTP(email);
+        });
+
+        // Handle form submission
+        document.getElementById('forgotPasswordForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission behavior
+
+            var email = document.querySelector('input[name="email"]').value;
+            var otp = document.querySelector('input[name="otp"]').value;
+            var new_password = document.querySelector('input[name="new_password"]').value;
+
+            // Validate OTP
+            validateOTP(email, otp, new_password);
+            // Change password
+            changePassword(email, new_password);
+        });
+    });
+
+    function sendOTP(email) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'send_otp.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                var response = xhr.responseText;
+                alert(response); // Show response message (e.g., "OTP sent successfully")
+            }
+        };
+        xhr.send('email=' + encodeURIComponent(email));
+    }
+
+    function validateOTP(email, otp, new_password) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'validate_otp.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                var response = JSON.parse(xhr.responseText);
+                if (response.status === 'success') {
+                    // Send the new password to change_pass.php
+                    changePassword(email, new_password);
+                } else {
+                    alert(response.message);
+                }
+            } else {
+                alert('Error occurred. Please try again.');
+            }
+        }
+    };
+    xhr.send('email=' + encodeURIComponent(email) + '&otp=' + encodeURIComponent(otp));
+}
+
+// Inside the changePassword function
+function changePassword(email, new_password) {
+var xhr = new XMLHttpRequest();
+xhr.open('POST', 'update_password.php', true);
+xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+        var response = JSON.parse(xhr.responseText);
+        alert(response.message); // You can handle success or error messages here
+        if (response.status === 'success') {
+            // Redirect to voters_login.php
+            window.location.href = 'voters_login.php';
+        }
+    }
+};
+xhr.send('email=' + encodeURIComponent(email) + '&new_password=' + encodeURIComponent(new_password));
+}
+
+</script>
 <script>
   const images = document.querySelectorAll('.image');
   let currentIndex = 0;
@@ -631,12 +676,25 @@ main.sign-up-mode .carousel {
   setInterval(nextImage, 3000); // Change image every 3 seconds
 </script>
 
-    <script src="app.js"></script>
+<script src="app.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             var togglePassword = document.getElementById('togglePassword');
             togglePassword.addEventListener('click', function () {
-                var input = document.getElementById('current-password');
+                var input = document.getElementById('new_password');
+                if (input.getAttribute('type') === 'password') {
+                    input.setAttribute('type', 'text');
+                    this.classList.remove('fa-eye');
+                    this.classList.add('fa-eye-slash');
+                } else {
+                    input.setAttribute('type', 'password');
+                    this.classList.remove('fa-eye-slash');
+                    this.classList.add('fa-eye');
+                }
+            });
+            var togglePassword1 = document.getElementById('togglePassword1');
+            togglePassword1.addEventListener('click', function () {
+                var input = document.getElementById('confirm_password');
                 if (input.getAttribute('type') === 'password') {
                     input.setAttribute('type', 'text');
                     this.classList.remove('fa-eye');
