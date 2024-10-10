@@ -545,7 +545,7 @@ main.sign-up-mode .carousel {
               <div class="face-scan-frame">
                 <video id="video" width="300" height="300" autoplay muted></video>
               </div>
-              <button id="scanButton" class="back-btn" style="font-size: 15px;">Start Face Scan</button>
+              <button id="scanButton" class="sign-btn" style="font-size: 15px;">Start Face Scan</button>
             </div>
 
             <input type="button" value="Back to Login" class="back-btn" style="font-size:15px;" onclick="window.location.href = 'voters_login.php';">
@@ -580,46 +580,49 @@ main.sign-up-mode .carousel {
         </div>
     </div>
 
-    <script defer src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
     <script>
-    // Load the face-api.js models
-    Promise.all([
-      faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
-      faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
-      faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
-      faceapi.nets.faceExpressionNet.loadFromUri('/models')
-    ]).then(startVideo);
+    const video = document.getElementById('video');
+    const scanButton = document.getElementById('scanButton');
 
-    // Access webcam
-    function startVideo() {
-      navigator.mediaDevices.getUserMedia({ video: {} })
+    // Access the webcam
+    navigator.mediaDevices.getUserMedia({ video: true })
         .then(stream => {
-          document.getElementById('video').srcObject = stream;
+        video.srcObject = stream;
         })
-        .catch(err => console.error("Error accessing webcam: " + err));
-    }
+        .catch(err => console.error('Error accessing the camera: ' + err));
 
-    // Face detection and authentication
-    document.getElementById('scanButton').addEventListener('click', async () => {
-      const video = document.getElementById('video');
-      const canvas = faceapi.createCanvasFromMedia(video);
-      document.body.append(canvas);
+    // Capture a frame and send it to the backend for face recognition
+    scanButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        const canvas = document.createElement('canvas');
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        const context = canvas.getContext('2d');
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-      const displaySize = { width: video.width, height: video.height };
-      faceapi.matchDimensions(canvas, displaySize);
+        // Convert captured image to base64
+        const dataUrl = canvas.toDataURL('image/jpeg');
 
-      setInterval(async () => {
-        const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
-          .withFaceLandmarks().withFaceExpressions();
-        const resizedDetections = faceapi.resizeResults(detections, displaySize);
-        canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-        faceapi.draw.drawDetections(canvas, resizedDetections);
-        faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
-        faceapi.draw.drawFaceExpressions(canvas, resizedDetections);
-
-      }, 100);
+        // Send captured image to PHP for further processing
+        fetch('facerecog_process.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ image: dataUrl }),
+        })
+        .then(response => response.json())
+        .then(data => {
+        if (data.success) {
+            alert('Face recognized!');
+        } else {
+            alert('Face not recognized!');
+        }
+        })
+        .catch(err => console.error('Error: ' + err));
     });
-  </script>
+    </script>
+
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
