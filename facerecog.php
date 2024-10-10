@@ -503,10 +503,9 @@ main.sign-up-mode .carousel {
       align-items: center;
     }
 
-    .scan-image {
-      width: 150px;
-      height: 150px;
-      opacity: 0.5;
+    video {
+      width: 100%;
+      height: 100%;
     }
 
     .back-btn {
@@ -543,11 +542,10 @@ main.sign-up-mode .carousel {
             <!-- BOX FOR FACE SCAN -->
             <div class="face-scan-box">
               <p>Place your face within the frame to scan</p>
-              <!-- This is where the face scanner would be integrated -->
               <div class="face-scan-frame">
-                <!-- The scanner image or interface would be added here -->
-                <img src="./images/face-scan-placeholder.png" alt="Face Scan" class="scan-image" />
+                <video id="video" width="300" height="300" autoplay muted></video>
               </div>
+              <button id="scanButton" class="back-btn" style="font-size: 15px;">Start Face Scan</button>
             </div>
 
             <input type="button" value="Back to Login" class="back-btn" style="font-size:15px;" onclick="window.location.href = 'voters_login.php';">
@@ -581,6 +579,48 @@ main.sign-up-mode .carousel {
 
         </div>
     </div>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
+    <script>
+    // Load the face-api.js models
+    Promise.all([
+      faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
+      faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
+      faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
+      faceapi.nets.faceExpressionNet.loadFromUri('/models')
+    ]).then(startVideo);
+
+    // Access webcam
+    function startVideo() {
+      navigator.mediaDevices.getUserMedia({ video: {} })
+        .then(stream => {
+          document.getElementById('video').srcObject = stream;
+        })
+        .catch(err => console.error("Error accessing webcam: " + err));
+    }
+
+    // Face detection and authentication
+    document.getElementById('scanButton').addEventListener('click', async () => {
+      const video = document.getElementById('video');
+      const canvas = faceapi.createCanvasFromMedia(video);
+      document.body.append(canvas);
+
+      const displaySize = { width: video.width, height: video.height };
+      faceapi.matchDimensions(canvas, displaySize);
+
+      setInterval(async () => {
+        const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
+          .withFaceLandmarks().withFaceExpressions();
+        const resizedDetections = faceapi.resizeResults(detections, displaySize);
+        canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+        faceapi.draw.drawDetections(canvas, resizedDetections);
+        faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
+        faceapi.draw.drawFaceExpressions(canvas, resizedDetections);
+
+      }, 100);
+    });
+  </script>
+
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('sendOTP').addEventListener('click', function() {
