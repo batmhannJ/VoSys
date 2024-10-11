@@ -562,9 +562,9 @@ main.sign-up-mode .carousel {
                   <span class="form-control-feedback"></span>
                 </div>
 
-                <!-- <div style="text-align: center; margin-bottom: 10px;">
+                <div style="text-align: center; margin-bottom: 10px;">
                     <a href="facerecog.php" style="font-size: 15px;">Use Face ID</a>
-                </div> -->
+                </div>
 
                 <div style="text-align: right; margin-bottom: 10px;">
                     <a href="forgot_pass.php" style="font-size: 15px;">Forgot Password?</a>
