@@ -8,7 +8,6 @@ error_reporting(E_ALL);
 require_once __DIR__ . '/vendor/autoload.php';
 
 // Set up election positions
-
 $positions = [
     'President',
     'VP for Internal Affairs',
@@ -75,6 +74,7 @@ $pdfContent = "
         border: 2px solid black;
         border-radius: 50%;
         display: inline-block;
+        margin: 0 5px; /* Add space between circles */
     }
     .shading-instructions {
         font-style: italic;
@@ -85,7 +85,7 @@ $pdfContent = "
 </style>
 
 <h2 style='text-align: center;'>Election Ballot Form</h2>
-<p class='shading-instructions'>Please shade the circle next to the candidate's name of your choice.</p>
+<p class='shading-instructions'>Please shade one or more circles next to the candidate's name of your choice.</p>
 
 <table>
     <thead>
@@ -110,7 +110,11 @@ foreach ($positions as $position) {
         <tr>
             <td></td>
             <td class='candidate-name'>$candidate</td>
-            <td class='shading-area'><span class='circle'></span></td>
+            <td class='shading-area'>
+                <span class='circle'></span>
+                <span class='circle'></span>
+                <span class='circle'></span>
+            </td>
         </tr>";
     }
 }
