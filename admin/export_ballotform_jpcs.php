@@ -61,12 +61,10 @@ $pdfContent = "
         font-size: 16px;
         background-color: #eee;
     }
-    .candidate-name {
+    .candidate-entry {
         font-size: 14px;
         padding: 5px;
-    }
-    .shading-area {
-        text-align: center;
+        text-align: left;
     }
     .circle {
         height: 15px;
@@ -74,6 +72,7 @@ $pdfContent = "
         border: 2px solid black;
         border-radius: 50%;
         display: inline-block;
+        margin-right: 10px;
     }
     .shading-instructions {
         font-style: italic;
@@ -91,7 +90,6 @@ $pdfContent = "
         <tr>
             <th>Position</th>
             <th>Candidate</th>
-            <th>Shading Area</th>
         </tr>
     </thead>
     <tbody>";
@@ -100,16 +98,14 @@ $pdfContent = "
 foreach ($positions as $position) {
     $pdfContent .= "
     <tr>
-        <td colspan='3' class='position-title'>$position</td>
+        <td class='position-title' colspan='2'>$position</td>
     </tr>";
 
-    // Add candidates for each position
+    // Add candidates with shading circles
     foreach ($candidates as $candidate) {
         $pdfContent .= "
         <tr>
-            <td></td>
-            <td class='candidate-name'>$candidate</td>
-            <td class='shading-area'><span class='circle'></span></td>
+            <td colspan='2' class='candidate-entry'><span class='circle'></span>$candidate</td>
         </tr>";
     }
 }
