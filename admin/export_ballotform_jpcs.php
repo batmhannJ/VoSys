@@ -1,5 +1,4 @@
 <?php
-
 // Enable error reporting for debugging
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -9,6 +8,7 @@ error_reporting(E_ALL);
 require_once __DIR__ . '/vendor/autoload.php';
 
 // Set up election positions
+
 $positions = [
     'President',
     'VP for Internal Affairs',
@@ -35,9 +35,6 @@ $candidates = [
     'Candidate 4',
     'Candidate 5'
 ];
-
-// Current date
-$currentDate = date('F j, Y');
 
 // Create ballot content
 $pdfContent = "
@@ -73,12 +70,11 @@ $pdfContent = "
         text-align: center;
     }
     .circle {
-        height: 20px;
-        width: 20px;
+        height: 15px;
+        width: 15px;
         border: 2px solid black;
         border-radius: 50%;
         display: inline-block;
-        margin: 5px; /* Adjust margin for spacing */
     }
     .shading-instructions {
         font-style: italic;
@@ -86,35 +82,10 @@ $pdfContent = "
         color: #555;
         text-align: center;
     }
-    .header-container {
-        text-align: center;
-        margin-bottom: 10px;
-        margin: 0;
-        padding: 0;
-    }
-    .header-container img {
-        height: 100px;
-        width: 100px;
-    }
-    .header-container .school-name {
-        font-size: 18px;
-        font-weight: bold;
-    }
-    .header-container .report-title {
-        font-size: 16px;
-        margin-top: 5px;
-    }
 </style>
 
-<div class='header-container'>
-    <img src='images/logo.png' alt='School Logo' style='float: left;'>
-    <img src='images/j.png' alt='JPCS Logo' style='float: right;'>
-    <p class='school-name'>
-        Our Lady of the Sacred Heart College of Guimba, Inc.<br>Guimba, Nueva Ecija
-    </p>
-    <p class='report-title'>Election Ballot Form</p>
-    <p class='shading-instructions'>Please shade the circle next to the candidate's name of your choice.<br>As of $currentDate</p>
-</div>
+<h2 style='text-align: center;'>Election Ballot Form</h2>
+<p class='shading-instructions'>Please shade the circle next to the candidate's name of your choice.</p>
 
 <table>
     <thead>
