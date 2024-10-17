@@ -1,11 +1,11 @@
 <?php
 include 'includes/session.php';
-include 'includes/header_jpcs.php';
+include 'includes/header_code.php';
 ?>
 <body class="hold-transition skin-green sidebar-mini">
 <div class="wrapper">
-    <?php include 'includes/navbar_jpcs.php'; ?>
-    <?php include 'includes/menubar_jpcs.php'; ?>
+    <?php include 'includes/navbar_code.php'; ?>
+    <?php include 'includes/menubar_code.php'; ?>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <?php include 'includes/session.php'; ?>
-    <?php include 'includes/header_jpcs.php'; ?>
+    <?php include 'includes/header_code.php'; ?>
     <style>
         .box-title {
             text-align: center;
