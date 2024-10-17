@@ -62,6 +62,9 @@ if (isset($_POST['login'])) {
                             case 'CSCadmin':
                                 header('location: home_csc.php');
                                 exit();
+                            case 'CODEadmin':
+                                header('location: home_code.php');
+                                exit();
                             default:
                                 // Redirect to a default landing page if no specific page is defined for the admin
                                 header('location: index.php');
