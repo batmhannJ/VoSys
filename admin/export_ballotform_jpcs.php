@@ -7,7 +7,10 @@ error_reporting(E_ALL);
 // Include Composer autoload if using mPDF
 require_once __DIR__ . '/vendor/autoload.php';
 
-// Set up election positions
+// Include session and database connection
+include 'includes/session.php';
+
+// Set up election positions (from your database logic, similar to the HTML page)
 $positions = [
     'President',
     'VP for Internal Affairs',
@@ -26,16 +29,7 @@ $positions = [
     '4-B Rep'
 ];
 
-// Dummy candidate names (replace with dynamic content if needed)
-$candidates = [
-    'Candidate 1',
-    'Candidate 2',
-    'Candidate 3',
-    'Candidate 4',
-    'Candidate 5'
-];
-
-// Create ballot content
+// Create PDF content
 $pdfContent = "
 <style>
     table {
@@ -74,7 +68,7 @@ $pdfContent = "
         border: 2px solid black;
         border-radius: 50%;
         display: inline-block;
-        margin: 0 5px; /* Add space between circles */
+        margin: 0 5px;
     }
     .shading-instructions {
         font-style: italic;
@@ -85,7 +79,7 @@ $pdfContent = "
 </style>
 
 <h2 style='text-align: center;'>Election Ballot Form</h2>
-<p class='shading-instructions'>Please shade one or more circles next to the candidate's name of your choice.</p>
+<p class='shading-instructions'>Please shade the circle next to the candidate's name of your choice.</p>
 
 <table>
     <thead>
@@ -97,24 +91,41 @@ $pdfContent = "
     </thead>
     <tbody>";
 
-// Iterate through positions and add 5 candidates for each
+// Iterate through positions
 foreach ($positions as $position) {
     $pdfContent .= "
     <tr>
         <td colspan='3' class='position-title'>$position</td>
     </tr>";
 
-    // Add candidates for each position
-    foreach ($candidates as $candidate) {
+    // Fetch candidates for each position
+    $sql = "SELECT * FROM candidates 
+            LEFT JOIN categories ON categories.id = candidates.category_id 
+            WHERE categories.name = '$position'
+            ORDER BY candidates.lastname ASC";
+    
+    $query = $conn->query($sql);
+
+    // Check if candidates exist for this position
+    if ($query->num_rows > 0) {
+        while ($row = $query->fetch_assoc()) {
+            $candidate_name = $row['firstname'] . ' ' . $row['lastname'];
+            $pdfContent .= "
+            <tr>
+                <td></td>
+                <td class='candidate-name'>$candidate_name</td>
+                <td class='shading-area'>
+                    <span class='circle'></span>
+                </td>
+            </tr>";
+        }
+    } else {
+        // If no candidates, show "No candidates"
         $pdfContent .= "
         <tr>
             <td></td>
-            <td class='candidate-name'>$candidate</td>
-            <td class='shading-area'>
-                <span class='circle'></span>
-                <span class='circle'></span>
-                <span class='circle'></span>
-            </td>
+            <td class='candidate-name'>No candidates</td>
+            <td class='shading-area'></td>
         </tr>";
     }
 }
