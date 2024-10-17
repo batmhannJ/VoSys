@@ -29,7 +29,7 @@ $positions = [
     '4-B Rep'
 ];
 
-// Create PDF content without the shading area column
+// Create PDF content with circles next to the candidates
 $pdfContent = "
 <style>
     table {
@@ -59,6 +59,14 @@ $pdfContent = "
         font-size: 14px;
         padding: 5px;
     }
+    .circle {
+        height: 15px;
+        width: 15px;
+        border: 2px solid black;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 10px;
+    }
     .shading-instructions {
         font-style: italic;
         font-size: 12px;
@@ -68,7 +76,7 @@ $pdfContent = "
 </style>
 
 <h2 style='text-align: center;'>Election Ballot Form</h2>
-<p class='shading-instructions'>Please select your candidate of choice by shading the circle on your ballot.</p>
+<p class='shading-instructions'>Please shade the circle next to the candidate's name of your choice.</p>
 
 <table>
     <thead>
@@ -101,7 +109,9 @@ foreach ($positions as $position) {
             $pdfContent .= "
             <tr>
                 <td></td>
-                <td class='candidate-name'>$candidate_name</td>
+                <td class='candidate-name'>
+                    <span class='circle'></span>$candidate_name
+                </td>
             </tr>";
         }
     } else {
@@ -109,7 +119,9 @@ foreach ($positions as $position) {
         $pdfContent .= "
         <tr>
             <td></td>
-            <td class='candidate-name'>No candidates</td>
+            <td class='candidate-name'>
+                <span class='circle'></span>No candidates
+            </td>
         </tr>";
     }
 }
