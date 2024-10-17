@@ -67,15 +67,7 @@ $pdfContent = "
     }
 </style>
 
-<div class='header-container'>
-    <img src='images/logo.png' alt='School Logo' style='float: left;'>
-    <img src='images/j.png' alt='JPCS Logo' style='float: right;'>
-    <p class='school-name'>
-        Our Lady of the Sacred Heart College of Guimba, Inc.<br>Guimba, Nueva Ecija
-    </p>
-    <p class='report-title'>Election Ballot Form</p>
-    <p class='shading-instructions'>Please shade the circle next to the candidate's name of your choice.<br>As of $currentDate</p>
-</div>
+
 
 <table>
     <thead>
