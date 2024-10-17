@@ -10,7 +10,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 // Include session and database connection
 include 'includes/session.php';
 
-// Set up election positions (from your database logic, similar to the HTML page)
+// Set up election positions
 $positions = [
     'President',
     'VP for Internal Affairs',
@@ -29,7 +29,10 @@ $positions = [
     '4-B Rep'
 ];
 
-// Create PDF content with circles next to the candidates
+// Get current date
+$currentDate = date('F j, Y');
+
+// Create PDF content with header, logo, and school name
 $pdfContent = "
 <style>
     table {
@@ -65,9 +68,42 @@ $pdfContent = "
         color: #555;
         text-align: center;
     }
+    .header-container {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .header-container img {
+        height: 70px;
+        width: 70px;
+        margin: 0 20px;
+    }
+    .header-container .school-name {
+        font-size: 16px;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+    .signature-block {
+        text-align: center;
+        margin-top: 30px;
+    }
+    .signature-block .name {
+        border-bottom: 1px solid #000;
+        display: inline-block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    .signature-block .role {
+        display: block;
+    }
 </style>
 
-<h2 style='text-align: center;'>Election Ballot Form</h2>
+<div class='header-container'>
+    <img src='images/logo.png' alt='Logo' style='float: left;'>
+    <img src='images/j.png' alt='Logo' style='float: right;'>
+    <p class='school-name'>Our Lady of the Sacred Heart College of Guimba, Inc.<br>Guimba, Nueva Ecija</p>
+    <p class='report-title'>2024 Election Ballot Form</p>
+</div>
+<p style='text-align: right;'>As of {$currentDate}</p>
 <p class='shading-instructions'>Please shade the circle next to the candidate's name of your choice.</p>
 
 <table>
@@ -94,7 +130,6 @@ foreach ($positions as $position) {
     
     $query = $conn->query($sql);
 
-    // Check if candidates exist for this position
     if ($query->num_rows > 0) {
         while ($row = $query->fetch_assoc()) {
             $candidate_name = $row['firstname'] . ' ' . $row['lastname'];
@@ -107,7 +142,6 @@ foreach ($positions as $position) {
             </tr>";
         }
     } else {
-        // If no candidates, show "No candidates"
         $pdfContent .= "
         <tr>
             <td></td>
@@ -120,14 +154,44 @@ foreach ($positions as $position) {
 
 $pdfContent .= "
     </tbody>
-</table>";
+</table>
+<br><br>
+<p><b>Signatures:</b></p>
+<div class='signature-block'>
+  <span class='name'>HANNAH JOY REYES</span><br>
+  <span class='role'>Tabulator</span>
+</div>
+<div class='signature-block'>
+  <span class='name'>CHARMAINE JOYCE COLOMA</span><br>
+  <span class='role'>Tabulator</span>
+</div>
+<div class='signature-block'>
+  <span class='name'>LYKA REFUGIA</span><br>
+  <span class='role'>Tabulator</span>
+</div>
+<div class='signature-block'>
+  <span class='name'>MARIE LORAIN PERONA</span><br>
+  <span class='role'>Tabulator</span>
+</div>
+<div class='signature-block'>
+  <span class='name'>SANTY P. BALMORES</span><br>
+  <span class='role'>Tabulator</span>
+</div>
+<div class='signature-block'>
+  <span class='name'>ELIZOR M. VILLANUEVA</span><br>
+  <span class='role'>JPCS Adviser</span>
+</div>
+<div class='signature-block'>
+  <span class='name'>JESSICA MAE C. SALAZAR</span><br>
+  <span class='role'>Student Affair Officer</span>
+</div>";
 
 // Create PDF using mPDF library
 $mpdf = new \Mpdf\Mpdf();
 $mpdf->WriteHTML($pdfContent);
 
 // Output PDF to browser
-$mpdf->Output('ballot_form.pdf', 'D'); // 'D' for download, 'I' for inline display
+$mpdf->Output('ballot_form_with_header.pdf', 'D'); // 'D' for download
 
 exit;
 ?>
