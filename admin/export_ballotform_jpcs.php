@@ -26,7 +26,16 @@ $positions = [
     '4-B Rep'
 ];
 
-// Create PDF content with circles next to the candidates
+// Dummy candidate names (replace with dynamic content if needed)
+$candidates = [
+    'Candidate 1',
+    'Candidate 2',
+    'Candidate 3',
+    'Candidate 4',
+    'Candidate 5'
+];
+
+// Create ballot content
 $pdfContent = "
 <style>
     table {
@@ -56,14 +65,6 @@ $pdfContent = "
         font-size: 14px;
         padding: 5px;
     }
-    .circle {
-        height: 15px;
-        width: 15px;
-        border: 2px solid black;
-        border-radius: 50%;
-        display: inline-block;
-        margin-right: 10px;
-    }
     .shading-instructions {
         font-style: italic;
         font-size: 12px;
@@ -84,41 +85,18 @@ $pdfContent = "
     </thead>
     <tbody>";
 
-// Iterate through positions
+// Iterate through positions and add 5 candidates for each
 foreach ($positions as $position) {
     $pdfContent .= "
     <tr>
         <td colspan='2' class='position-title'>$position</td>
     </tr>";
 
-    // Fetch candidates for each position
-    $sql = "SELECT * FROM candidates 
-            LEFT JOIN categories ON categories.id = candidates.category_id 
-            WHERE categories.name = '$position'
-            ORDER BY candidates.lastname ASC";
-    
-    $query = $conn->query($sql);
-
-    // Check if candidates exist for this position
-    if ($query->num_rows > 0) {
-        while ($row = $query->fetch_assoc()) {
-            $candidate_name = $row['firstname'] . ' ' . $row['lastname'];
-            $pdfContent .= "
-            <tr>
-                <td></td>
-                <td class='candidate-name'>
-                    <span class='circle'></span>$candidate_name
-                </td>
-            </tr>";
-        }
-    } else {
-        // If no candidates, show "No candidates"
+    // Add candidates for each position
+    foreach ($candidates as $candidate) {
         $pdfContent .= "
         <tr>
-            <td></td>
-            <td class='candidate-name'>
-                <span class='circle'></span>No candidates
-            </td>
+            <td class='candidate-name'>&#9675; $candidate</td>
         </tr>";
     }
 }
