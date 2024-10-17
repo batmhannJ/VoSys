@@ -1,6 +1,6 @@
 <?php include 'includes/session.php'; ?>
 <?php include 'includes/header_ymf.php'; ?>
-<body class="hold-transition skin-green sidebar-mini">
+<body class="hold-transition skin-darkblue sidebar-mini">
 <div class="wrapper">
 
   <?php include 'includes/navbar_ymf.php'; ?>

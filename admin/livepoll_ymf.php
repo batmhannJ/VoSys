@@ -77,7 +77,7 @@
         }
     </style>
 </head>
-<body class="hold-transition skin-green sidebar-mini">
+<body class="hold-transition skin-darkblue sidebar-mini">
     <div class="wrapper">
         <?php include 'includes/navbar_ymf.php'; ?>
         <?php include 'includes/menubar_ymf.php'; ?>
