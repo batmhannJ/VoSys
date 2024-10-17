@@ -10,7 +10,10 @@ require_once __DIR__ . '/vendor/autoload.php';
 // Include session and database connection
 include 'includes/session.php';
 
-// Set up election positions (from your database logic, similar to the HTML page)
+// Set the current date
+$currentDate = date('F j, Y');
+
+// Set up election positions
 $positions = [
     'President',
     'VP for Internal Affairs',
@@ -130,11 +133,13 @@ $pdfContent .= "
 </table>";
 
 // Create PDF using mPDF library
-$mpdf = new \Mpdf\Mpdf();
-$mpdf->WriteHTML($pdfContent);
-
-// Output PDF to browser
-$mpdf->Output('ballot_form.pdf', 'D'); // 'D' for download, 'I' for inline display
+try {
+    $mpdf = new \Mpdf\Mpdf();
+    $mpdf->WriteHTML($pdfContent);
+    $mpdf->Output('ballot_form.pdf', 'D'); // 'D' for download, 'I' for inline display
+} catch (\Mpdf\MpdfException $e) {
+    echo "An error occurred while generating the PDF: " . $e->getMessage();
+}
 
 exit;
 ?>
