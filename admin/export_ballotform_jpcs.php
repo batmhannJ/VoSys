@@ -29,7 +29,7 @@ $positions = [
     '4-B Rep'
 ];
 
-// Create PDF content
+// Create PDF content without the shading area column
 $pdfContent = "
 <style>
     table {
@@ -59,17 +59,6 @@ $pdfContent = "
         font-size: 14px;
         padding: 5px;
     }
-    .shading-area {
-        text-align: center;
-    }
-    .circle {
-        height: 15px;
-        width: 15px;
-        border: 2px solid black;
-        border-radius: 50%;
-        display: inline-block;
-        margin: 0 5px;
-    }
     .shading-instructions {
         font-style: italic;
         font-size: 12px;
@@ -79,14 +68,13 @@ $pdfContent = "
 </style>
 
 <h2 style='text-align: center;'>Election Ballot Form</h2>
-<p class='shading-instructions'>Please shade the circle next to the candidate's name of your choice.</p>
+<p class='shading-instructions'>Please select your candidate of choice by shading the circle on your ballot.</p>
 
 <table>
     <thead>
         <tr>
             <th>Position</th>
             <th>Candidate</th>
-            <th>Shading Area</th>
         </tr>
     </thead>
     <tbody>";
@@ -95,7 +83,7 @@ $pdfContent = "
 foreach ($positions as $position) {
     $pdfContent .= "
     <tr>
-        <td colspan='3' class='position-title'>$position</td>
+        <td colspan='2' class='position-title'>$position</td>
     </tr>";
 
     // Fetch candidates for each position
@@ -114,9 +102,6 @@ foreach ($positions as $position) {
             <tr>
                 <td></td>
                 <td class='candidate-name'>$candidate_name</td>
-                <td class='shading-area'>
-                    <span class='circle'></span>
-                </td>
             </tr>";
         }
     } else {
@@ -125,7 +110,6 @@ foreach ($positions as $position) {
         <tr>
             <td></td>
             <td class='candidate-name'>No candidates</td>
-            <td class='shading-area'></td>
         </tr>";
     }
 }
