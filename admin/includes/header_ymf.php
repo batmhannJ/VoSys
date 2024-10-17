@@ -38,41 +38,41 @@
   	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
   	<style>
-      .skin-green .wrapper{
+      .skin-darkblue .wrapper{
         background-color: #fff;
       }
-      .skin-green .main-header .navbar {
-        background-color: darkgreen;
+      .skin-darkblue .main-header .navbar {
+        background-color: darkblue;
       }
-      .skin-green .main-header .logo {
-          background-color: darkgreen;
+      .skin-darkblue .main-header .logo {
+          background-color: darkblue;
           color: #fff;
           border-bottom: 0 solid transparent;
       }
-      .skin-green .main-sidebar {
+      .skin-darkblue .main-sidebar {
         background-color: #fff;
       }
-      .skin-green .sidebar-menu>li.header {
+      .skin-darkblue .sidebar-menu>li.header {
           color: #000;
           background: #fff;
       }
-      .skin-green .user-panel>.info,
-      .skin-green .user-panel>.info>a{
+      .skin-darkblue .user-panel>.info,
+      .skin-darkblue .user-panel>.info>a{
         color: #000;
       }
-      .skin-green .sidebar-menu>li.active>a{
+      .skin-darkblue .sidebar-menu>li.active>a{
         color: #fff;
-        background-color: darkgreen;
+        background-color: darkblue;
       }
-      .skin-green .sidebar-menu>li:hover>a,
-      .skin-green .sidebar-menu>li.active>a,
-      .skin-green .sidebar-menu>li.menu-open>a {
+      .skin-darkblue .sidebar-menu>li:hover>a,
+      .skin-darkblue .sidebar-menu>li.active>a,
+      .skin-darkblue .sidebar-menu>li.menu-open>a {
         margin: 1px;
         color:#fff;
-        background:darkgreen;
+        background:darkblue;
         border-radius: 5px;
       }
-      .skin-green .sidebar a {
+      .skin-darkblue .sidebar a {
           color: #000;
       }
       .bold{
