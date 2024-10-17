@@ -119,7 +119,7 @@ foreach ($positions as $position) {
             <td class='candidate-name'>
                 <span class='circle'></span>No candidates
             </td>
-        </tr>";
+        </tr>"
     }
 }
 
