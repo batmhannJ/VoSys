@@ -10,10 +10,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 // Include session and database connection
 include 'includes/session.php';
 
-// Set the current date
-$currentDate = date('F j, Y');
-
-// Set up election positions
+// Set up election positions (from your database logic, similar to the HTML page)
 $positions = [
     'President',
     'VP for Internal Affairs',
@@ -69,16 +66,13 @@ $pdfContent = "
         text-align: center;
     }
 </style>
-
-<div class='header-container'>
-    <img src='images/logo.png' alt='School Logo' style='float: left;'>
+<img src='images/logo.png' alt='School Logo' style='float: left;'>
     <img src='images/j.png' alt='JPCS Logo' style='float: right;'>
     <p class='school-name'>
         Our Lady of the Sacred Heart College of Guimba, Inc.<br>Guimba, Nueva Ecija
     </p>
     <p class='report-title'>Election Ballot Form</p>
     <p class='shading-instructions'>Please shade the circle next to the candidate's name of your choice.<br>As of $currentDate</p>
-</div>
 
 <table>
     <thead>
@@ -112,7 +106,7 @@ foreach ($positions as $position) {
             <tr>
                 <td></td>
                 <td class='candidate-name'>
-                    &#x25CB; $candidate_name <!-- Unicode for circle (⚪) -->
+                    <span style='display:inline-block;width:15px;height:15px;border:2px solid black;border-radius:50%;margin-right:10px;'></span>$candidate_name
                 </td>
             </tr>";
         }
@@ -122,7 +116,7 @@ foreach ($positions as $position) {
         <tr>
             <td></td>
             <td class='candidate-name'>
-                &#x25CB; No candidates <!-- Unicode for circle (⚪) -->
+                <span style='display:inline-block;width:15px;height:15px;border:2px solid black;border-radius:50%;margin-right:10px;'></span>No candidates
             </td>
         </tr>";
     }
@@ -133,13 +127,11 @@ $pdfContent .= "
 </table>";
 
 // Create PDF using mPDF library
-try {
-    $mpdf = new \Mpdf\Mpdf();
-    $mpdf->WriteHTML($pdfContent);
-    $mpdf->Output('ballot_form.pdf', 'D'); // 'D' for download, 'I' for inline display
-} catch (\Mpdf\MpdfException $e) {
-    echo "An error occurred while generating the PDF: " . $e->getMessage();
-}
+$mpdf = new \Mpdf\Mpdf();
+$mpdf->WriteHTML($pdfContent);
+
+// Output PDF to browser
+$mpdf->Output('ballot_form.pdf', 'D'); // 'D' for download, 'I' for inline display
 
 exit;
 ?>
