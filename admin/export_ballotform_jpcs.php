@@ -59,14 +59,6 @@ $pdfContent = "
         font-size: 14px;
         padding: 5px;
     }
-    .circle {
-        height: 15px;
-        width: 15px;
-        border: 2px solid black;
-        border-radius: 50%;
-        display: inline-block;
-        margin-right: 10px;
-    }
     .shading-instructions {
         font-style: italic;
         font-size: 12px;
@@ -110,7 +102,7 @@ foreach ($positions as $position) {
             <tr>
                 <td></td>
                 <td class='candidate-name'>
-                    <span class='circle'></span>$candidate_name
+                    <span style='display:inline-block;width:15px;height:15px;border:2px solid black;border-radius:50%;margin-right:10px;'></span>$candidate_name
                 </td>
             </tr>";
         }
@@ -120,7 +112,7 @@ foreach ($positions as $position) {
         <tr>
             <td></td>
             <td class='candidate-name'>
-                <span class='circle'></span>No candidates
+                <span style='display:inline-block;width:15px;height:15px;border:2px solid black;border-radius:50%;margin-right:10px;'></span>No candidates
             </td>
         </tr>";
     }
