@@ -29,10 +29,7 @@ $positions = [
     '4-B Rep'
 ];
 
-// Get current date
-$currentDate = date('F j, Y');
-
-// Create PDF content with circles next to the candidates and header
+// Create PDF content with circles next to the candidates
 $pdfContent = "
 <style>
     table {
@@ -68,34 +65,17 @@ $pdfContent = "
         color: #555;
         text-align: center;
     }
-    .header-container {
-        text-align: center;
-        margin-bottom: 10px;
-    }
-    .header-container img {
-        height: 70px;
-        width: 70px;
-    }
-    .school-name {
-        font-size: 16px;
-        font-weight: bold;
-    }
-    .report-title {
-        font-size: 16px;
-        margin-top: 20px;
-        margin-bottom: 10px;
-    }
 </style>
 
 <div class='header-container'>
-    <img src='images/logo.png' alt='Logo' style='float: left;'>
-    <img src='images/j.png' alt='Logo' style='float: right;'>
-    <p class='school-name'>Our Lady of the Sacred Heart College of Guimba, Inc.<br>Guimba, Nueva Ecija</p>
+    <img src='images/logo.png' alt='School Logo' style='float: left;'>
+    <img src='images/j.png' alt='JPCS Logo' style='float: right;'>
+    <p class='school-name'>
+        Our Lady of the Sacred Heart College of Guimba, Inc.<br>Guimba, Nueva Ecija
+    </p>
     <p class='report-title'>Election Ballot Form</p>
+    <p class='shading-instructions'>Please shade the circle next to the candidate's name of your choice.<br>As of $currentDate</p>
 </div>
-<p style='text-align: right; padding-top: 0;'>As of {$currentDate}</p>
-
-<p class='shading-instructions'>Please shade the circle next to the candidate's name of your choice.</p>
 
 <table>
     <thead>
