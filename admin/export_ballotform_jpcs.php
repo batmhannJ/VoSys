@@ -1,13 +1,4 @@
-
 <?php
-.circle {
-    height: 15px;
-    width: 15px;
-    border: 2px solid black;
-    border-radius: 50%;
-    display: inline-block;
-}
-
 
 // Enable error reporting for debugging
 ini_set('display_errors', 1);
@@ -16,7 +7,6 @@ error_reporting(E_ALL);
 
 // Include Composer autoload if using mPDF
 require_once __DIR__ . '/vendor/autoload.php';
-
 
 // Set up election positions
 
@@ -122,7 +112,6 @@ foreach ($positions as $position) {
             <td></td>
             <td class='candidate-name'>$candidate</td>
             <td class='shading-area'><span class='circle'></span></td>
-                
         </tr>";
     }
 }
