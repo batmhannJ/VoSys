@@ -7,7 +7,10 @@ error_reporting(E_ALL);
 // Include Composer autoload if using mPDF
 require_once __DIR__ . '/vendor/autoload.php';
 
-// Set up election positions
+// Include session and database connection
+include 'includes/session.php';
+
+// Set up election positions (from your database logic, similar to the HTML page)
 $positions = [
     'President',
     'VP for Internal Affairs',
@@ -26,16 +29,7 @@ $positions = [
     '4-B Rep'
 ];
 
-// Dummy candidate names (replace with dynamic content if needed)
-$candidates = [
-    'Candidate 1',
-    'Candidate 2',
-    'Candidate 3',
-    'Candidate 4',
-    'Candidate 5'
-];
-
-// Create ballot content
+// Create PDF content with circles next to the candidates
 $pdfContent = "
 <style>
     table {
@@ -65,6 +59,14 @@ $pdfContent = "
         font-size: 14px;
         padding: 5px;
     }
+    .circle {
+        height: 15px;
+        width: 15px;
+        border: 2px solid black;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 10px;
+    }
     .shading-instructions {
         font-style: italic;
         font-size: 12px;
@@ -85,18 +87,41 @@ $pdfContent = "
     </thead>
     <tbody>";
 
-// Iterate through positions and add 5 candidates for each
+// Iterate through positions
 foreach ($positions as $position) {
     $pdfContent .= "
     <tr>
         <td colspan='2' class='position-title'>$position</td>
     </tr>";
 
-    // Add candidates for each position
-    foreach ($candidates as $candidate) {
+    // Fetch candidates for each position
+    $sql = "SELECT * FROM candidates 
+            LEFT JOIN categories ON categories.id = candidates.category_id 
+            WHERE categories.name = '$position'
+            ORDER BY candidates.lastname ASC";
+    
+    $query = $conn->query($sql);
+
+    // Check if candidates exist for this position
+    if ($query->num_rows > 0) {
+        while ($row = $query->fetch_assoc()) {
+            $candidate_name = $row['firstname'] . ' ' . $row['lastname'];
+            $pdfContent .= "
+            <tr>
+                <td></td>
+                <td class='candidate-name'>
+                    <span class='circle'></span>$candidate_name
+                </td>
+            </tr>";
+        }
+    } else {
+        // If no candidates, show "No candidates"
         $pdfContent .= "
         <tr>
-            <td class='candidate-name'>&#9675; $candidate</td>
+            <td></td>
+            <td class='candidate-name'>
+                <span class='circle'></span>No candidates
+            </td>
         </tr>";
     }
 }
