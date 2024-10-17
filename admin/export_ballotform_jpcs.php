@@ -26,12 +26,22 @@ $positions = [
     '4-B Rep'
 ];
 
+// Dummy candidate names (replace with dynamic content if needed)
+$candidates = [
+    'Candidate 1',
+    'Candidate 2',
+    'Candidate 3',
+    'Candidate 4',
+    'Candidate 5'
+];
+
 // Create ballot content
 $pdfContent = "
 <style>
     table {
         width: 100%;
         border-collapse: collapse;
+        margin-top: 10px;
     }
     th, td {
         padding: 10px;
@@ -41,6 +51,7 @@ $pdfContent = "
         background-color: maroon;
         color: white;
         font-weight: bold;
+        text-align: left;
     }
     tr:nth-child(even) {
         background-color: #f2f2f2;
@@ -48,16 +59,32 @@ $pdfContent = "
     .position-title {
         font-weight: bold;
         font-size: 16px;
+        background-color: #eee;
+    }
+    .candidate-name {
+        font-size: 14px;
+        padding: 5px;
+    }
+    .shading-area {
+        text-align: center;
+    }
+    .circle {
+        height: 15px;
+        width: 15px;
+        border: 2px solid black;
+        border-radius: 50%;
+        display: inline-block;
     }
     .shading-instructions {
         font-style: italic;
         font-size: 12px;
         color: #555;
+        text-align: center;
     }
 </style>
 
 <h2 style='text-align: center;'>Election Ballot Form</h2>
-<p class='shading-instructions' style='text-align: center;'>Please shade the box next to the candidate's name of your choice.</p>
+<p class='shading-instructions'>Please shade the circle next to the candidate's name of your choice.</p>
 
 <table>
     <thead>
@@ -69,14 +96,22 @@ $pdfContent = "
     </thead>
     <tbody>";
 
-// Iterate through positions and add them to the ballot
+// Iterate through positions and add 5 candidates for each
 foreach ($positions as $position) {
     $pdfContent .= "
     <tr>
-        <td class='position-title'>$position</td>
-        <td>Candidate Name</td>
-        <td>[ ]</td>
+        <td colspan='3' class='position-title'>$position</td>
     </tr>";
+
+    // Add candidates for each position
+    foreach ($candidates as $candidate) {
+        $pdfContent .= "
+        <tr>
+            <td></td>
+            <td class='candidate-name'>$candidate</td>
+            <td class='shading-area'><span class='circle'></span></td>
+        </tr>";
+    }
 }
 
 $pdfContent .= "
