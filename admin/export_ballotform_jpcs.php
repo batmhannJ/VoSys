@@ -65,9 +65,29 @@ $pdfContent = "
         color: #555;
         text-align: center;
     }
+    .header-container {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .school-name {
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .report-title {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
 </style>
 
-
+<div class='header-container'>
+    <img src='images/logo.png' alt='School Logo' style='width: 80px; float: left;'>
+    <img src='images/j.png' alt='JPCS Logo' style='width: 80px; float: right;'>
+    <p class='school-name'>
+        Our Lady of the Sacred Heart College of Guimba, Inc.<br>Guimba, Nueva Ecija
+    </p>
+    <p class='report-title'>Election Ballot Form</p>
+</div>
 
 <table>
     <thead>
