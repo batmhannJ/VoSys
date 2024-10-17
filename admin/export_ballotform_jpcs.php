@@ -102,7 +102,7 @@ foreach ($positions as $position) {
             <tr>
                 <td></td>
                 <td class='candidate-name'>
-                    <span style='display:inline-block;width:15px;height:15px;border:2px solid black;border-radius:50%;margin-right:10px;'></span>$candidate_name
+                    &#x25CB; $candidate_name <!-- Unicode for circle (⚪) -->
                 </td>
             </tr>";
         }
@@ -112,7 +112,7 @@ foreach ($positions as $position) {
         <tr>
             <td></td>
             <td class='candidate-name'>
-                <span style='display:inline-block;width:15px;height:15px;border:2px solid black;border-radius:50%;margin-right:10px;'></span>No candidates
+                &#x25CB; No candidates <!-- Unicode for circle (⚪) -->
             </td>
         </tr>";
     }
