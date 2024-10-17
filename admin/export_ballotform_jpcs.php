@@ -1,12 +1,3 @@
-<?php
-// Enable error reporting for debugging
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-// Include Composer autoload if using mPDF
-require_once __DIR__ . '/vendor/autoload.php';
-
 // Set up election positions
 $positions = [
     'President',
@@ -24,15 +15,6 @@ $positions = [
     '3-B Rep',
     '4-A Rep',
     '4-B Rep'
-];
-
-// Dummy candidate names (replace with dynamic content if needed)
-$candidates = [
-    'Candidate 1',
-    'Candidate 2',
-    'Candidate 3',
-    'Candidate 4',
-    'Candidate 5'
 ];
 
 // Create ballot content
@@ -85,18 +67,27 @@ $pdfContent = "
     </thead>
     <tbody>";
 
-// Iterate through positions and add 5 candidates for each
+// Loop through each position
 foreach ($positions as $position) {
     $pdfContent .= "
     <tr>
         <td colspan='2' class='position-title'>$position</td>
     </tr>";
 
-    // Add candidates for each position
-    foreach ($candidates as $candidate) {
+    // Fetch candidates for the current position
+    $sql = "SELECT firstname, lastname 
+            FROM candidates 
+            LEFT JOIN categories ON categories.id = candidates.category_id 
+            WHERE categories.name = '$position' AND candidates.election_id = 1 
+            ORDER BY candidates.id ASC";
+    $query = $conn->query($sql);
+
+    // Loop through each candidate and add to the PDF content
+    while($row = $query->fetch_assoc()) {
+        $candidate_name = $row['firstname'] . ' ' . $row['lastname'];
         $pdfContent .= "
         <tr>
-            <td class='candidate-name'>&#9675; $candidate</td>
+            <td class='candidate-name'>&#9675; $candidate_name</td>
         </tr>";
     }
 }
@@ -105,12 +96,9 @@ $pdfContent .= "
     </tbody>
 </table>";
 
-// Create PDF using mPDF library
-$mpdf = new \Mpdf\Mpdf();
+// Generate PDF
 $mpdf->WriteHTML($pdfContent);
-
-// Output PDF to browser
-$mpdf->Output('ballot_form.pdf', 'D'); // 'D' for download, 'I' for inline display
+$mpdf->Output('ballot_form.pdf', 'D');
 
 exit;
 ?>
