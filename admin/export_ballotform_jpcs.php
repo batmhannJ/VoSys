@@ -7,10 +7,7 @@ error_reporting(E_ALL);
 // Include Composer autoload if using mPDF
 require_once __DIR__ . '/vendor/autoload.php';
 
-// Include session and database connection
-include 'includes/session.php';
-
-// Set up election positions (from your database logic, similar to the HTML page)
+// Set up election positions
 $positions = [
     'President',
     'VP for Internal Affairs',
