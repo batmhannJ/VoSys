@@ -9,7 +9,7 @@
         </button>
       </div>
       <div class="modal-body">
-        Are you sure you want to restore the selected items?
+        Are you sure you want to restore the selected voters?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -30,7 +30,7 @@
         </button>
       </div>
       <div class="modal-body">
-        Are you sure you want to delete the selected items? This action cannot be undone.
+        Are you sure you want to delete the selected voters? This action cannot be undone.
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -51,7 +51,7 @@
         </button>
       </div>
       <div class="modal-body">
-        Are you sure you want to archive the selected items?
+        Are you sure you want to archive the selected voters?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

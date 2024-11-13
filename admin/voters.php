@@ -168,12 +168,10 @@ $(function(){
     archiveVoter(id);
   });
 
-  // Select all checkboxes
   $('#selectAll').click(function() {
     $('.selectItem').prop('checked', this.checked);
   });
 
-  // Batch Archive button click event
   $('#batchArchiveBtn').click(function() {
     var selected = [];
     $('.selectItem:checked').each(function() {
@@ -181,27 +179,25 @@ $(function(){
     });
 
     if(selected.length > 0) {
-      $('#batchArchiveModal').modal('show'); // Show batch archive confirmation modal
+      $('#batchArchiveModal').modal('show');
     } else {
       alert('No voters selected.');
     }
   });
 
-  // Confirm button in batch archive modal
   $('#confirmBatchArchive').on('click', function() {
     var selected = [];
     $('.selectItem:checked').each(function() {
       selected.push($(this).val());
     });
 
-    // Perform batch archive AJAX request
     $.ajax({
       type: 'POST',
       url: 'batch_archive_voter.php',
       data: { ids: selected },
       success: function(response) {
         console.log('Batch archive successful:', response);
-        location.reload(); // Reload page after successful archive
+        location.reload();
       },
       error: function(xhr, status, error) {
         console.error('Batch archive error:', xhr.responseText);
@@ -210,7 +206,6 @@ $(function(){
   });
 });
 
-// Function to archive a single voter
 function archiveVoter(id) {
   $('#confirmationModal').modal('show'); // Show individual archive confirmation modal
 
