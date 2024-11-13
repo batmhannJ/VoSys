@@ -40,23 +40,23 @@
   </div>
 </div>
 
-<!-- Batch Confirmation Modal
-<div class="modal fade" id="batchConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="batchConfirmationModalLabel" aria-hidden="true">
+<!-- Batch Archive Confirmation Modal -->
+<div class="modal fade" id="batchArchiveModal" tabindex="-1" role="dialog" aria-labelledby="batchArchiveModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="batchConfirmationModalLabel">Confirmation</h5>
+        <h5 class="modal-title" id="batchArchiveModalLabel">Batch Archive Confirmation</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <p>Are you sure you want to archive the selected voters?</p>
+        Are you sure you want to archive the selected items?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="submitBatchBtn">Archive</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-warning" id="confirmBatchArchive">Archive</button>
       </div>
     </div>
   </div>
-</div> -->
+</div>
