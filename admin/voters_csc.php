@@ -47,49 +47,50 @@
           <div class="box">
             <div class="box-header with-border">
               <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
+              <button class="btn btn-warning btn-sm btn-flat" id="batchArchiveBtn"><i class="fa fa-archive"></i> Batch Archive</button>
             </div>
             <div class="box-body">
               <div class="table-responsive">
                 <table id="example1" class="table table-bordered table-striped">
-                  <thead>
-                    <th>No.</th>
-                    <th>Full Name</th>
-                    <th>Photo</th>
-                    <th>Voters ID</th>
-                    <th>Email</th>
-                    <th>Year Level</th>
-                    <th>Organization</th>
-                    <th>Tools</th>
-                  </thead>
-                  <tbody>
-                    <?php
-                      $sql = "SELECT * FROM voters WHERE archived = FALSE";
-                      $query = $conn->query($sql);
-                      $i = 1;
-                      while($row = $query->fetch_assoc()){
-                        $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
-                        $fullname = $row['lastname'] . ', ' . $row['firstname'];
-                        echo "
-                          <tr>
-                            <td>".$i++."</td>
-                            <td>".$fullname."</td>
-                            <td>
-                              <img src='".$image."' width='30px' height='30px'>
-                              <a href='#edit_photo' data-toggle='modal' class='pull-right photo' data-id='".$row['id']."'></a>
-                            </td>
-                            <td>".$row['voters_id']."</td>
-                            <td>".$row['email']."</td>
-                            <td>".$row['yearLvl']."</td>
-                            <td>".$row['organization']."</td>
-                            <td>
-                              <button class='btn btn-primary btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
-                              <button class='btn btn-warning btn-sm archive btn-flat' data-id='".$row['id']."'><i class='fa fa-archive'></i> Archive</button>
-                            </td>
-                          </tr>
-                        ";
-                      }
-                    ?>
-                  </tbody>
+                <thead>
+                <th><input type="checkbox" id="selectAll"></th> <!-- Select All Checkbox -->
+                <th>Full Name</th>
+                <th>Photo</th>
+                <th>Voters ID</th>
+                <th>Email</th>
+                <th>Year Level</th>
+                <th>Organization</th>
+                <th>Tools</th>
+              </thead>
+              <tbody>
+                <?php
+                  $sql = "SELECT * FROM voters WHERE archived = FALSE";
+                  $query = $conn->query($sql);
+                  $i = 1;
+                  while($row = $query->fetch_assoc()){
+                    $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
+                    $fullname = $row['lastname'] . ', ' . $row['firstname'];
+                    echo "
+                      <tr>
+                        <td><input type='checkbox' class='selectItem' value='".$row['id']."'></td> <!-- Individual Checkbox -->
+                        <td>".$fullname."</td>
+                        <td>
+                          <img src='".$image."' width='30px' height='30px'>
+                          <a href='#edit_photo' data-toggle='modal' class='pull-right photo' data-id='".$row['id']."'></a>
+                        </td>
+                        <td>".$row['voters_id']."</td>
+                        <td>".$row['email']."</td>
+                        <td>".$row['yearLvl']."</td>
+                        <td>".$row['organization']."</td>
+                        <td>
+                          <button class='btn btn-primary btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
+                          <button class='btn btn-warning btn-sm archive btn-flat' data-id='".$row['id']."'><i class='fa fa-archive'></i> Archive</button>
+                        </td>
+                      </tr>
+                    ";
+                  }
+                ?>
+              </tbody>
                 </table>
               </div>
             </div>
@@ -160,33 +161,70 @@ $(function(){
     archiveVoter(id);
   });
 
+  // Batch Archive Button Click
+  $('#batchArchiveBtn').click(function() {
+    var selected = [];
+    $('.selectItem:checked').each(function() {
+      selected.push($(this).val());
+    });
+
+    if(selected.length > 0) {
+      $('#batchArchiveModal').modal('show'); // Show the batch archive confirmation modal
+    } else {
+      alert('No voters selected.');
+    }
+  });
+
+  // Confirm Batch Archive
+  $('#confirmBatchArchive').on('click', function() {
+    var selected = [];
+    $('.selectItem:checked').each(function() {
+      selected.push($(this).val());
+    });
+
+    $.ajax({
+      type: 'POST',
+      url: 'batch_archive_voter.php',
+      data: { ids: selected },
+      success: function(response) {
+        console.log('Batch archive successful:', response);
+        location.reload(); // Reload the page after successful archive
+      },
+      error: function(xhr, status, error) {
+        console.error('Batch archive error:', xhr.responseText);
+      }
+    });
+  });
+
+  // Select all checkboxes
+  $('#selectAll').click(function() {
+    $('.selectItem').prop('checked', this.checked);
+  });
 });
 
 function archiveVoter(id) {
-    $('#confirmationModal').modal('show'); // Show the confirmation modal
+  $('#confirmationModal').modal('show'); // Show the confirmation modal
 
-    $('#submitBtn').on('click', function() {
-        $.ajax({
-            type: "POST",
-            url: "archive_voter.php",
-            data: { id: id },
-            success: function(response) {
-                // Refresh the page or update the table as needed
-                location.reload();
-            },
-            error: function(xhr, status, error)
-            {
-                console.error(xhr.responseText);
-            }
-        });
+  $('#submitBtn').on('click', function() {
+    $.ajax({
+      type: "POST",
+      url: "archive_voter.php",
+      data: { id: id },
+      success: function(response) {
+        location.reload(); // Refresh the page after archiving
+      },
+      error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+      }
     });
+  });
 }
 
 function getRow(id){
   $.ajax({
     type: 'POST',
     url: 'voters_row.php',
-    data: {id:id},
+    data: { id: id },
     dataType: 'json',
     success: function(response){
       $('.id').val(response.id);
@@ -195,7 +233,10 @@ function getRow(id){
       $('#edit_email').val(response.email);
       $('#edit_yearlvl').val(response.yearLvl);
       $('#edit_password').val(response.password);
-      $('.fullname').html(response.firstname+' '+response.lastname);
+      $('.fullname').html(response.firstname + ' ' + response.lastname);
+    },
+    error: function(xhr, status, error) {
+      console.error('Get row error:', xhr.responseText);
     }
   });
 }
@@ -204,10 +245,10 @@ function getRow(id){
 setTimeout(function() {
   var successAlert = document.querySelector('.alert-success');
   if (successAlert) {
-      successAlert.style.display = 'none';
+    successAlert.style.display = 'none';
   }
 }, 3000);
-
 </script>
+
 </body>
 </html>

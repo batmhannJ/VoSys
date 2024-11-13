@@ -159,7 +159,6 @@ $(function(){
     archiveVoter(id);
   });
 
-  // Batch Archive Button Click
   $('#batchArchiveBtn').click(function() {
     var selected = [];
     $('.selectItem:checked').each(function() {
@@ -167,13 +166,12 @@ $(function(){
     });
 
     if(selected.length > 0) {
-      $('#batchArchiveModal').modal('show'); // Show the batch archive confirmation modal
+      $('#batchArchiveModal').modal('show');
     } else {
       alert('No voters selected.');
     }
   });
 
-  // Confirm Batch Archive
   $('#confirmBatchArchive').on('click', function() {
     var selected = [];
     $('.selectItem:checked').each(function() {
@@ -186,7 +184,7 @@ $(function(){
       data: { ids: selected },
       success: function(response) {
         console.log('Batch archive successful:', response);
-        location.reload(); // Reload the page after successful archive
+        location.reload();
       },
       error: function(xhr, status, error) {
         console.error('Batch archive error:', xhr.responseText);
@@ -194,14 +192,13 @@ $(function(){
     });
   });
 
-  // Select all checkboxes
   $('#selectAll').click(function() {
     $('.selectItem').prop('checked', this.checked);
   });
 });
 
 function archiveVoter(id) {
-  $('#confirmationModal').modal('show'); // Show the confirmation modal
+  $('#confirmationModal').modal('show');
 
   $('#submitBtn').on('click', function() {
     $.ajax({
@@ -209,7 +206,7 @@ function archiveVoter(id) {
       url: "archive_voter.php",
       data: { id: id },
       success: function(response) {
-        location.reload(); // Refresh the page after archiving
+        location.reload();
       },
       error: function(xhr, status, error) {
         console.error(xhr.responseText);
