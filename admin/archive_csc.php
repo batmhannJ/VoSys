@@ -78,11 +78,16 @@
             </div>
           </div>
           <div class="box">
+          <div class="box-header with-border">
+          <button class="btn btn-primary btn-sm btn-flat" id="batchRestoreBtn" data-target='#batchRestoreModal'><i class="fa fa-reply"></i> Batch Restore</button>
+          <button class="btn btn-danger btn-sm btn-flat" id="batchDeleteBtn" data-target='#batchDeleteModal'><i class="fa fa-trash"></i> Batch Delete</button>
+          </div>
             <div class="box-body">
               <div class="table-responsive">
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                     <?php if(isset($_GET['type']) && $_GET['type'] === 'voters'): ?>
+                    <th>#</th>
                     <th>Last Name</th>
                     <th>First Name</th>
                     <th>Photo</th>
@@ -91,6 +96,7 @@
                     <th>Year Level</th>
                     <th>Organization</th>
                     <?php elseif(isset($_GET['type']) && $_GET['type'] === 'election'): ?>
+                    <th>#</th>
                     <th>ID</th>
                     <th>Title</th>
                     <th>Voters</th>
@@ -123,6 +129,7 @@
                               $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
                               echo "
                                   <tr>
+                                      <td><input type='checkbox' class='selectItem' value='".$row['id']."'></td>
                                       <td>".$row['lastname']."</td>
                                       <td>".$row['firstname']."</td>
                                       <td>
@@ -142,6 +149,7 @@
                           } elseif(isset($_GET['type']) && $_GET['type'] === 'election') {
                               echo "
                                   <tr>
+                                      <td><input type='checkbox' class='selectItem' value='".$row['id']."'></td>
                                       <td>".$row['id']."</td>
                                       <td>".$row['title']."</td>
                                       <td>".$row['voters']."</td>
@@ -185,6 +193,7 @@
   <?php include 'includes/footer.php'; ?>
   <?php include 'includes/voters_modal_csc.php'; ?>
   <?php include 'includes/restore_modal.php'; ?>
+  <?php include 'includes/batch_modal.php'; ?>
 
 <?php include 'includes/scripts.php'; ?>
 
