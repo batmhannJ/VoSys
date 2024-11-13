@@ -79,7 +79,7 @@
           </div>
           <div class="box">
           <div class="box-header with-border">
-          <button class="btn btn-primary btn-sm btn-flat" id="batchRestoreBtn" data-target='#batchRestoreModal'><i class="fa fa-reply"></i> Batch Restore</button>
+          <<button class="btn btn-primary btn-sm btn-flat" id="batchRestoreBtn" data-target='#batchRestoreModal'><i class="fa fa-reply"></i> Batch Restore</button>
           <button class="btn btn-danger btn-sm btn-flat" id="batchDeleteBtn" data-target='#batchDeleteModal'><i class="fa fa-trash"></i> Batch Delete</button>
           </div>
             <div class="box-body">
