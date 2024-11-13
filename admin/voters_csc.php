@@ -138,6 +138,7 @@
     
   <?php include 'includes/footer.php'; ?>
   <?php include 'includes/voters_csc_modal.php'; ?>
+  <?php include 'includes/batch_modal.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
 <script>
