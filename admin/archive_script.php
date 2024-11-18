@@ -143,6 +143,7 @@ $(function(){
   // Batch Restore and Delete Handlers
   $('#batchRestoreBtn').click(function() {
     var selectedIds = [];
+    var type = getArchiveType(); // Get the selected archive type (voters, election, or candidates)
     $('.selectItem:checked').each(function() {
       selectedIds.push($(this).val());
     });
@@ -156,15 +157,17 @@ $(function(){
 
   $('#confirmBatchRestore').click(function() {
     var selectedIds = [];
+    var type = getArchiveType(); // Get the selected archive type (voters, election, or candidates)
     $('.selectItem:checked').each(function() {
       selectedIds.push($(this).val());
     });
 
-    batchRestore(selectedIds);
+    batchRestore(selectedIds, type);
   });
 
   $('#batchDeleteBtn').click(function() {
     var selectedIds = [];
+    var type = getArchiveType(); // Get the selected archive type (voters, election, or candidates)
     $('.selectItem:checked').each(function() {
       selectedIds.push($(this).val());
     });
@@ -178,17 +181,23 @@ $(function(){
 
   $('#confirmBatchDelete').click(function() {
     var selectedIds = [];
+    var type = getArchiveType(); // Get the selected archive type (voters, election, or candidates)
     $('.selectItem:checked').each(function() {
       selectedIds.push($(this).val());
     });
 
-    batchDelete(selectedIds);
+    batchDelete(selectedIds, type);
   });
 
-  function batchRestore(ids) {
+  function getArchiveType() {
+    var urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('type') || 'voters'; // Default to 'voters' if no type is specified
+  }
+
+  function batchRestore(ids, type) {
     $.ajax({
       type: "POST",
-      url: "batch_restore.php?type=voters", // Specify type as voters
+      url: "batch_restore.php?type=" + type, // Dynamically use the selected archive type
       data: { ids: ids },
       success: function(response) {
         location.reload();
@@ -199,10 +208,10 @@ $(function(){
     });
   }
 
-  function batchDelete(ids) {
+  function batchDelete(ids, type) {
     $.ajax({
       type: "POST",
-      url: "batch_delete.php?type=voters", // Specify type as voters
+      url: "batch_delete.php?type=" + type, // Dynamically use the selected archive type
       data: { ids: ids },
       success: function(response) {
         location.reload();

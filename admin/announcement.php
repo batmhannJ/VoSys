@@ -46,28 +46,30 @@ include 'includes/session.php';
             <div class="row">
                 <div class="col-xs-12">
                     <div class="box">
-                        <div class="box-header with-border" style="font-size: 20px;"><i class="fa fa-bullhorn"></i> Announcement Form</div>
-                        <div class="box-body">
-                            <div class="row">
-                                <div class="col">
-                                    <form method="POST" action="create_announce.php">
+                        <div class="table-responsive">
+                            <div class="box-header with-border" style="font-size: 20px;"><i class="fa fa-bullhorn"></i> Announcement Form</div>
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="col">
+                                        <form method="POST" action="create_announce.php">
                                         <textarea style="width: 95%; margin-left: 20px;" name="announcement" class="form-control" rows="6" placeholder="Enter Message Here"></textarea>
+                                    </div>
                                 </div>
+                                    <?php
+                                    // Set the timezone to Asia/Singapore
+                                    date_default_timezone_set('Asia/Singapore');
+                                    // Get the current date in the desired format
+                                    $cdate = date('Y-m-d H:i:s'); // Adjust the format as needed
+                                    ?>
+                                    <div class="row">
+                                        <div class="col">
+                                            <input type="hidden" name="startdate" value="<?= $cdate ?>">
+                                            <input type="hidden" name="addedby" value="<?= $user['lastname'] ?>, <?= $user['firstname'] ?>">
+                                            <button type="submit" class="btn btn-warning" style="margin-left: 89%; font-size: 15px;">Announce</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                            <?php
-                            // Set the timezone to Asia/Singapore
-                            date_default_timezone_set('Asia/Singapore');
-                            // Get the current date in the desired format
-                            $cdate = date('Y-m-d H:i:s'); // Adjust the format as needed
-                            ?>
-                            <div class="row">
-                                <div class="col">
-                                    <input type="hidden" name="startdate" value="<?= $cdate ?>">
-                                    <input type="hidden" name="addedby" value="<?= $user['lastname'] ?>, <?= $user['firstname'] ?>">
-                                    <button type="submit" class="btn btn-warning" style="margin-left: 89%; font-size: 15px;">Announce</button>
-                                </div>
-                            </div>
-                            </form>
                         </div>
                     </div>
                 </div>

@@ -49,46 +49,48 @@
               <a href="#addnew" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
             </div>
             <div class="box-body">
-              <table id="example1" class="table table-bordered">
-                <thead>
-                  <th>No.</th>
-                  <th>Organization</th>
-                  <th>Last Name</th>
-                  <th>First Name</th>
-                  <th>Photo</th>
-                  <th>Username</th>
-                  <th>Email</th>
-                  <th>Tools</th>
-                </thead>
-                <tbody>
-                  <?php
-                    $sql = "SELECT * FROM admin WHERE archived = FALSE AND organization != 'OSA'";
-                    $query = $conn->query($sql);
-                    $i = 1;
-                    while($row = $query->fetch_assoc()){
-                      $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
-                      echo "
-                        <tr>
-                        <td>".$i++."</td>
-                        <td>".$row['organization']."</td>
-                          <td>".$row['lastname']."</td>
-                          <td>".$row['firstname']."</td>
-                          <td>
-                            <img src='".$image."' width='30px' height='30px'>
-                            <a href='#edit_photo' data-toggle='modal' class='pull-right photo' data-id='".$row['id']."'><span class='fa fa-edit'></span></a>
-                          </td>
-                          <td>".$row['username']."</td>
-                          <td>".$row['email']."</td>
-                          <td>
-                            <button class='btn btn-primary btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
-                            <button class='btn btn-warning btn-sm archive btn-flat' data-id='".$row['id']."'><i class='fa fa-archive'></i> Archive</button>
-                          </td>
-                        </tr>
-                      ";
-                    }
-                  ?>
-                </tbody>
-              </table>
+              <div class="table-responsive">
+                <table id="example1" class="table table-bordered">
+                  <thead>
+                    <th>No.</th>
+                    <th>Organization</th>
+                    <th>Last Name</th>
+                    <th>First Name</th>
+                    <th>Photo</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Tools</th>
+                  </thead>
+                  <tbody>
+                    <?php
+                      $sql = "SELECT * FROM admin WHERE archived = FALSE AND organization != 'OSA'";
+                      $query = $conn->query($sql);
+                      $i = 1;
+                      while($row = $query->fetch_assoc()){
+                        $image = (!empty($row['photo'])) ? '../images/'.$row['photo'] : '../images/profile.jpg';
+                        echo "
+                          <tr>
+                          <td>".$i++."</td>
+                          <td>".$row['organization']."</td>
+                            <td>".$row['lastname']."</td>
+                            <td>".$row['firstname']."</td>
+                            <td>
+                              <img src='".$image."' width='30px' height='30px'>
+                              <a href='#edit_photo' data-toggle='modal' class='pull-right photo' data-id='".$row['id']."'><span class='fa fa-edit'></span></a>
+                            </td>
+                            <td>".$row['username']."</td>
+                            <td>".$row['email']."</td>
+                            <td>
+                              <button class='btn btn-primary btn-sm edit btn-flat' data-id='".$row['id']."'><i class='fa fa-edit'></i> Edit</button>
+                              <button class='btn btn-warning btn-sm archive btn-flat' data-id='".$row['id']."'><i class='fa fa-archive'></i> Archive</button>
+                            </td>
+                          </tr>
+                        ";
+                      }
+                    ?>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>

@@ -59,7 +59,6 @@ include 'includes/header_jpcs.php';
                   <th>Email</th>
                   <th>Year Level</th>
                   <th>Organization</th>
-                  <!--<th>Tools</th>-->
                 </thead>
                 <tbody>
                   <?php
@@ -95,11 +94,16 @@ include 'includes/header_jpcs.php';
           </div>
         </div>
       </div>
-      <!-- Export Button -->
+
+      <!-- Export Buttons -->
       <div class="row">
         <div class="col-xs-12">
           <span class="pull-right">
-            <a href="export_voters_csc.php" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Export PDF</a>
+            <!-- Export Voters PDF -->
+            <a href="export_voters_csc.php" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Export Remaining Voters (PDF)</a>
+
+            <!-- Print Ballot Form Button -->
+            <a href="export_ballotform_jpcs.php" class="btn btn-primary btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Print Ballot Form (PDF)</a>
           </span>
         </div>
       </div>
