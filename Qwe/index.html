@@ -282,6 +282,25 @@
       font-weight: bold;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
     }
+
+    .balloon {
+    position: absolute;
+    width: 50px;
+    height: 70px;
+    background-color: #ff6f61;
+    border-radius: 50%;
+    animation: pop 1s forwards;
+  }
+
+  @keyframes pop {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0) translateY(-1000px);
+      opacity: 0;
+    }
+  }
   </style>
 </head>
 
@@ -305,12 +324,15 @@
 
   </div>
   <script src="./confetti.js"></script>
-<script>
-    var name = "Santy";  // Directly setting the name
+  <script>
+    var name = "Santy";
     document.querySelector("#add").innerText = "BLOW OUT THE CANDLES ON YOUR CAKE!";
     let candlesBlownOut = false;
+    let musicPlayed = false; // Flag to check if the music has already played
 
     function main() {
+      if (candlesBlownOut) return;
+
       document.querySelector(".candel1").classList.add("flame");
       document.querySelector(".candel2").classList.add("flame2");
       document.querySelector(".candel3").classList.add("flame3");
@@ -332,7 +354,7 @@
             const array = new Uint8Array(analyser.frequencyBinCount);
             analyser.getByteFrequencyData(array);
             const average = array.reduce((a, b) => a + b) / array.length;
-            
+
             if (average > 50) {
               blowOutCandles();
 
@@ -358,8 +380,11 @@
 
       console.log("Candles blown out!");
 
-      document.getElementById("wish").innerText = "Happy Birthday to you, " + name;  // Name is set here
-      document.getElementById("footer-message").innerText = "The candles have been blown out!";  // Footer message update
+      // Update wish text and footer message
+      document.getElementById("wish").innerText = "Happy Birthday to you, " + name;
+      document.getElementById("footer-message").innerText = "The candles have been blown out!";
+      
+      // Set a delay to avoid calling main repeatedly
       setInterval(main, 3000);
     }
 
@@ -374,15 +399,21 @@
     }
 
     function wish() {
-      var audio1 = new Audio("song.mp3");
-      audio1.volume = 1;
-      audio1.play();
+      if (!musicPlayed) { // Check if the music has already been played
+        var audio1 = new Audio("song.mp3");
+        audio1.volume = 1;
+        audio1.play();
+        musicPlayed = true; // Set flag to true after playing the music
+      }
     }
 
     document.querySelector("#birthday-cake").addEventListener('click', function () {
-      main();
-      wish();
+      if (!candlesBlownOut) {
+        main();
+        wish();
+      }
     });
-</script>
+  </script>
 </body>
+
 </html>
