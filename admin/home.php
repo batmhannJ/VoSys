@@ -206,18 +206,28 @@
         <a href="turnout.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
     </div>
 </div>
+
+<!-- Voters Username Request -->
+<div class="col-lg-3 col-xs-6">
+  <!-- small box -->
+  <div class="small-box">
+    <div class="inner">
+      <?php
+        // Query to count the total number of voter requests
+        $sql = "SELECT * FROM voter_requests"; // Adjust the query to match your table name
+        $query = $conn->query($sql);
+        echo "<h3>".$query->num_rows."</h3>";
+      ?>
+      <p>Voter Requests</p>
+    </div>
+    <div class="icon">
+      <i class="fa fa-envelope"></i> <!-- You can change the icon to fit your theme -->
+    </div>
+    <a href="voter_requests.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+  </div>
 </div>
 
-      <!--<div class="row">
-        <div class="col-xs-12">
-          <h3>Votes Tally
-            <span class="pull-right">
-              <a href="print.php" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Print</a>
-            </span>
-          </h3>
-        </div>
-      </div>
-
+</div>
       <?php
         $sql = "SELECT * FROM positions ORDER BY priority ASC";
         $query = $conn->query($sql);
@@ -245,7 +255,6 @@
       ?>
 
       </section>
-      right col -->
     </div>
   	<?php include 'includes/footer.php'; ?>
 
