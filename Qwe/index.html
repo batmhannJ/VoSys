@@ -239,17 +239,33 @@
     }
 
     .birthday-text {
-      position: absolute;
-      top: 5px;
-      left: 1.6rem;
-      text-align: center;
-      font-size: 2rem;
-      font-family: "Comic Sans MS", "Arial", sans-serif;
-      font-weight: bold;
-      margin-left: 25%;
-      color: rgb(113, 31, 31);
-      text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7);
-    }
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 2rem;
+  font-family: "Comic Sans MS", "Arial", sans-serif;
+  font-weight: bold;
+  color: rgb(113, 31, 31);
+  text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7);
+  z-index: 10;  /* Ensure it's on top */
+  width: 100%;  /* Makes sure the text can expand and stay centered */
+  white-space: nowrap;  /* Prevents line breaks in the wish text */
+}
+
+@media (max-width: 768px) {
+  .birthday-text {
+    font-size: 1.5rem;  /* Adjust font size for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .birthday-text {
+    font-size: 1rem;  /* Further adjust font size for very small screens */
+  }
+}
+
 
     .textb {
       position: absolute;
@@ -337,7 +353,6 @@
       
                   if (!candlesBlownOut) {
                     blast();
-                    // wish();
                     candlesBlownOut = true;
                   }
       
@@ -363,7 +378,7 @@
           // Play the song only once
           if (!songPlayed) {
             wish();
-            songPlayed = true;
+            songPlayed = true;  // Set the flag to true after the song is played
           }
       
           setInterval(main, 3000);
@@ -380,18 +395,23 @@
         }
       
         function wish() {
-          var audio1 = new Audio("song.mp3");
-          audio1.volume = 1;
-          audio1.play();
+          // Play the song only once
+          if (!songPlayed) {
+            var audio1 = new Audio("song.mp3");
+            audio1.volume = 1;
+            audio1.play();
+            songPlayed = true;  // Mark the song as played
+          }
         }
       
-        // Event listener for microphone input
+        // Event listener for candle clicks
         document.querySelector("#birthday-cake").addEventListener('click', function () {
-          main();
-          // Ensure the song is only played once
+          // Only call main() and wish() once when the candles are clicked
           if (!songPlayed) {
-            wish(); 
+            main();
+            wish();  // Play the song only if it hasn't been played yet
           }
         });
       </script>
+</body>
 </html>
