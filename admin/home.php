@@ -206,37 +206,18 @@
         <a href="turnout.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
     </div>
 </div>
-
-<!-- Voters Username Request -->
-<div class="col-lg-3 col-xs-6">
-  <!-- small box -->
-  <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
-          <div class="small-box">
-            <div class="inner">
-            <?php
-              $sql = "SELECT COUNT(DISTINCT vc.voters_id) AS total_voters
-              FROM votes_csc vc
-              JOIN voters v ON vc.voters_id = v.id
-              WHERE v.archived = 0";
-           
-              $query = $conn->query($sql);
-              $row = $query->fetch_assoc();
-              $totalVoters = $row['total_voters'];
-
-              echo "<h3>".$totalVoters."</h3>";
-              ?>
-
-              <p>Voter Request</p>
-            </div>
-            <div class="icon">
-              <i class="fa fa-edit"></i>
-            </div>
-            <a href="request.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-
 </div>
+
+      <!--<div class="row">
+        <div class="col-xs-12">
+          <h3>Votes Tally
+            <span class="pull-right">
+              <a href="print.php" class="btn btn-success btn-sm btn-flat"><span class="glyphicon glyphicon-print"></span> Print</a>
+            </span>
+          </h3>
+        </div>
+      </div>
+
       <?php
         $sql = "SELECT * FROM positions ORDER BY priority ASC";
         $query = $conn->query($sql);
@@ -264,6 +245,7 @@
       ?>
 
       </section>
+      right col -->
     </div>
   	<?php include 'includes/footer.php'; ?>
 
