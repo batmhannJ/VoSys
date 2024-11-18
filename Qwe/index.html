@@ -252,6 +252,7 @@
   z-index: 10;  /* Ensure it's on top */
   width: 100%;  /* Makes sure the text can expand and stay centered */
   white-space: nowrap;  /* Prevents line breaks in the wish text */
+  transition: top 1s ease;  /* Smooth transition when repositioned */
 }
 
 @media (max-width: 768px) {
@@ -366,23 +367,27 @@
             });
         }
       
-        // Function to simulate blowing out candles
         function blowOutCandles() {
-          document.querySelector(".candel1").classList.remove("flame");
-          document.querySelector(".candel2").classList.remove("flame2");
-          document.querySelector(".candel3").classList.remove("flame3");
-      
-          console.log("Candles blown out!");
-          document.getElementById("wish").innerText = "Happy Birthday to you " + name;
-      
-          // Play the song only once
-          if (!songPlayed) {
-            wish();
-            songPlayed = true;  // Set the flag to true after the song is played
-          }
-      
-          setInterval(main, 3000);
-        }
+  document.querySelector(".candel1").classList.remove("flame");
+  document.querySelector(".candel2").classList.remove("flame2");
+  document.querySelector(".candel3").classList.remove("flame3");
+
+  console.log("Candles blown out!");
+  document.getElementById("wish").innerText = "Happy Birthday to you " + name;
+
+  // Move the birthday wish above the cake
+  document.querySelector("#wish").style.top = "50%";  // Adjust this value to position above the cake
+  document.querySelector("#wish").style.transform = "translateX(-50%) translateY(-50%)";  // Center it properly
+  
+  // Play the song only once
+  if (!songPlayed) {
+    wish();
+    songPlayed = true;  // Set the flag to true after the song is played
+  }
+
+  setInterval(main, 3000);
+}
+
       
         function repositionCake() {
           document.getElementById("birthday-cake").style.left = "60%";
