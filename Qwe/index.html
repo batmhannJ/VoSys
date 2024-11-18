@@ -282,25 +282,6 @@
       font-weight: bold;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
     }
-
-    .balloon {
-    position: absolute;
-    width: 50px;
-    height: 70px;
-    background-color: #ff6f61;
-    border-radius: 50%;
-    animation: pop 1s forwards;
-  }
-
-  @keyframes pop {
-    0% {
-      transform: scale(1);
-    }
-    100% {
-      transform: scale(0) translateY(-1000px);
-      opacity: 0;
-    }
-  }
   </style>
 </head>
 
@@ -308,7 +289,6 @@
   <p class="textb" id="add"></p>
   <p class="birthday-text" id="wish"></p>
   <div id="birthday-cake">
-
     <div class="cake">
       <div class="middle"></div>
       <div class="chocs"></div>
@@ -321,8 +301,10 @@
       <div class="text">Happy Birthday! </div>
       <div class="shadows"></div>
     </div>
-
   </div>
+  <!-- Balloon container -->
+  <div class="balloon" id="balloon"></div>
+
   <script src="./confetti.js"></script>
   <script>
     var name = "Santy";
@@ -360,6 +342,7 @@
 
               if (!candlesBlownOut) {
                 blast();
+                popBalloon(); // Trigger the balloon pop effect
                 candlesBlownOut = true;
               }
 
@@ -383,7 +366,7 @@
       // Update wish text and footer message
       document.getElementById("wish").innerText = "Happy Birthday to you, " + name;
       document.getElementById("footer-message").innerText = "The candles have been blown out!";
-      
+
       // Set a delay to avoid calling main repeatedly
       setInterval(main, 3000);
     }
@@ -399,12 +382,18 @@
     }
 
     function wish() {
-      if (!musicPlayed) { // Check if the music has already been played
+      if (!musicPlayed) {
         var audio1 = new Audio("song.mp3");
         audio1.volume = 1;
         audio1.play();
-        musicPlayed = true; // Set flag to true after playing the music
+        musicPlayed = true;
       }
+    }
+
+    // Function to animate the balloon popping
+    function popBalloon() {
+      let balloon = document.getElementById('balloon');
+      balloon.style.animation = 'pop 1s forwards'; // Trigger the pop animation
     }
 
     document.querySelector("#birthday-cake").addEventListener('click', function () {
@@ -414,6 +403,30 @@
       }
     });
   </script>
+  <style>
+    /* Balloon Style */
+    .balloon {
+      position: absolute;
+      width: 50px;
+      height: 70px;
+      background-color: #ff6f61;
+      border-radius: 50%;
+      bottom: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: none;
+    }
+
+    @keyframes pop {
+      0% {
+        transform: scale(1);
+      }
+      100% {
+        transform: scale(0) translateY(-1000px);
+        opacity: 0;
+      }
+    }
+  </style>
 </body>
 
 </html>
