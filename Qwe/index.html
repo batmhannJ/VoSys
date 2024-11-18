@@ -286,147 +286,156 @@
 </head>
 
 <body>
-  <p class="textb" id="add"></p>
-  <p class="birthday-text" id="wish"></p>
-  <div id="birthday-cake">
-    <div class="cake">
-      <div class="middle"></div>
-      <div class="chocs"></div>
-      <div class="top"></div>
+    <p class="textb" id="add"></p>
+    <p class="birthday-text" id="wish"></p>
+    <div id="birthday-cake">
+      <div class="cake">
+        <div class="middle"></div>
+        <div class="chocs"></div>
+        <div class="top"></div>
+      </div>
+      <div class="candles">
+        <div class="candel1 "></div>
+        <div class="candel2 "></div>
+        <div class="candel3 "></div>
+        <div class="text">Happy Birthday! </div>
+        <div class="shadows"></div>
+      </div>
     </div>
-    <div class="candles">
-      <div class="candel1 "></div>
-      <div class="candel2 "></div>
-      <div class="candel3 "></div>
-      <div class="text">Happy Birthday! </div>
-      <div class="shadows"></div>
-    </div>
-  </div>
-  <!-- Balloon container -->
-  <div class="balloon" id="balloon"></div>
-
-  <script src="./confetti.js"></script>
-  <script>
-    var name = "Santy";
-    document.querySelector("#add").innerText = "BLOW OUT THE CANDLES ON YOUR CAKE!";
-    let candlesBlownOut = false;
-    let musicPlayed = false; // Flag to check if the music has already played
-
-    function main() {
-      if (candlesBlownOut) return;
-
-      document.querySelector(".candel1").classList.add("flame");
-      document.querySelector(".candel2").classList.add("flame2");
-      document.querySelector(".candel3").classList.add("flame3");
-
-      navigator.mediaDevices.getUserMedia({ audio: true })
-        .then(function (stream) {
-          const audioContext = new AudioContext();
-          const analyser = audioContext.createAnalyser();
-          const microphone = audioContext.createMediaStreamSource(stream);
-          const scriptProcessor = audioContext.createScriptProcessor(2048, 1, 1);
-
-          analyser.smoothingTimeConstant = 0.8;
-          analyser.fftSize = 1024;
-
-          microphone.connect(analyser);
-          analyser.connect(scriptProcessor);
-          scriptProcessor.connect(audioContext.destination);
-          scriptProcessor.onaudioprocess = function () {
-            const array = new Uint8Array(analyser.frequencyBinCount);
-            analyser.getByteFrequencyData(array);
-            const average = array.reduce((a, b) => a + b) / array.length;
-
-            if (average > 50) {
-              blowOutCandles();
-
-              if (!candlesBlownOut) {
-                blast();
-                popBalloon(); // Trigger the balloon pop effect
-                candlesBlownOut = true;
+  
+    <!-- Balloon container -->
+    <div class="balloon" id="balloon"></div>
+  
+    <script src="./confetti.js"></script>
+    <script>
+      var name = "Santy";
+      document.querySelector("#add").innerText = "BLOW OUT THE CANDLES ON YOUR CAKE!";
+      let candlesBlownOut = false;
+      let musicPlayed = false; // Flag to check if the music has already played
+  
+      function main() {
+        if (candlesBlownOut) return;
+  
+        document.querySelector(".candel1").classList.add("flame");
+        document.querySelector(".candel2").classList.add("flame2");
+        document.querySelector(".candel3").classList.add("flame3");
+  
+        navigator.mediaDevices.getUserMedia({ audio: true })
+          .then(function (stream) {
+            const audioContext = new AudioContext();
+            const analyser = audioContext.createAnalyser();
+            const microphone = audioContext.createMediaStreamSource(stream);
+            const scriptProcessor = audioContext.createScriptProcessor(2048, 1, 1);
+  
+            analyser.smoothingTimeConstant = 0.8;
+            analyser.fftSize = 1024;
+  
+            microphone.connect(analyser);
+            analyser.connect(scriptProcessor);
+            scriptProcessor.connect(audioContext.destination);
+            scriptProcessor.onaudioprocess = function () {
+              const array = new Uint8Array(analyser.frequencyBinCount);
+              analyser.getByteFrequencyData(array);
+              const average = array.reduce((a, b) => a + b) / array.length;
+  
+              if (average > 50) {
+                blowOutCandles();
+  
+                if (!candlesBlownOut) {
+                  blast();
+                  popBalloon(); // Trigger the balloon pop effect
+                  candlesBlownOut = true;
+                }
+  
+                startConfetti();
+                repositionCake();
               }
-
-              startConfetti();
-              repositionCake();
-            }
-          };
-        })
-        .catch(function (err) {
-          console.error('Error accessing microphone: ', err);
-        });
-    }
-
-    function blowOutCandles() {
-      document.querySelector(".candel1").classList.remove("flame");
-      document.querySelector(".candel2").classList.remove("flame2");
-      document.querySelector(".candel3").classList.remove("flame3");
-
-      console.log("Candles blown out!");
-
-      // Update wish text and footer message
-      document.getElementById("wish").innerText = "Happy Birthday to you, " + name;
-      document.getElementById("footer-message").innerText = "The candles have been blown out!";
-
-      // Set a delay to avoid calling main repeatedly
-      setInterval(main, 3000);
-    }
-
-    function repositionCake() {
-      document.getElementById("birthday-cake").style.left = "60%";
-    }
-
-    function blast() {
-      var audio = new Audio("balloonpop-83760.mp3");
-      audio.volume = 1;
-      audio.play();
-    }
-
-    function wish() {
-      if (!musicPlayed) {
-        var audio1 = new Audio("song.mp3");
-        audio1.volume = 1;
-        audio1.play();
-        musicPlayed = true;
+            };
+          })
+          .catch(function (err) {
+            console.error('Error accessing microphone: ', err);
+          });
       }
-    }
-
-    // Function to animate the balloon popping
-    function popBalloon() {
-      let balloon = document.getElementById('balloon');
-      balloon.style.animation = 'pop 1s forwards'; // Trigger the pop animation
-    }
-
-    document.querySelector("#birthday-cake").addEventListener('click', function () {
-      if (!candlesBlownOut) {
-        main();
-        wish();
+  
+      function blowOutCandles() {
+        document.querySelector(".candel1").classList.remove("flame");
+        document.querySelector(".candel2").classList.remove("flame2");
+        document.querySelector(".candel3").classList.remove("flame3");
+  
+        console.log("Candles blown out!");
+  
+        // Update wish text and footer message
+        document.getElementById("wish").innerText = "Happy Birthday to you, " + name;
+        document.getElementById("footer-message").innerText = "The candles have been blown out!";
+  
+        // Set a delay to avoid calling main repeatedly
+        setInterval(main, 3000);
       }
-    });
-  </script>
-  <style>
-    /* Balloon Style */
-    .balloon {
-      position: absolute;
-      width: 50px;
-      height: 70px;
-      background-color: #ff6f61;
-      border-radius: 50%;
-      bottom: 10%;
-      left: 50%;
-      transform: translateX(-50%);
-      animation: none;
-    }
-
-    @keyframes pop {
-      0% {
-        transform: scale(1);
+  
+      function repositionCake() {
+        document.getElementById("birthday-cake").style.left = "60%";
       }
-      100% {
-        transform: scale(0) translateY(-1000px);
-        opacity: 0;
+  
+      function blast() {
+        var audio = new Audio("balloonpop-83760.mp3");
+        audio.volume = 1;
+        audio.play();
       }
-    }
-  </style>
-</body>
+  
+      function wish() {
+        if (!musicPlayed) {
+          var audio1 = new Audio("song.mp3");
+          audio1.volume = 1;
+          audio1.play();
+          musicPlayed = true;
+        }
+      }
+  
+      // Function to animate the balloon popping
+      function popBalloon() {
+        let balloon = document.getElementById('balloon');
+        balloon.style.animation = 'pop 1s forwards'; // Trigger the pop animation
+      }
+  
+      document.querySelector("#birthday-cake").addEventListener('click', function () {
+        if (!candlesBlownOut) {
+          main();
+          wish();
+        }
+      });
+    </script>
+  
+    <style>
+      /* Balloon pop animation */
+      @keyframes pop {
+        0% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(1.5);
+          opacity: 0.5;
+        }
+        100% {
+          transform: scale(0);
+          opacity: 0;
+        }
+      }
+  
+      /* Balloon styling */
+      #balloon {
+        width: 100px;
+        height: 150px;
+        background-color: red;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: all 0.3s ease;
+      }
+    </style>
+  </body>
+  
 
 </html>
