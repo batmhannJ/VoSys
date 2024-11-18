@@ -568,10 +568,6 @@ main.sign-up-mode .carousel {
                 </div>
             </div>
 
-            <div style="text-align: right; margin-bottom: 10px;">
-                    <a href="voter_request.php" style="font-size: 15px;">Forgot Voters ID?</a>
-                </div>
-
                 <!--<input type="submit" name="sendOTP" id="sendOTP" value="Send OTP" class="sign-btn" style="font-size:15px; background-color: grey;">-->
                 <input type="submit" name="login" value="Change Password" class="sign-btn" style="font-size:15px;">
                 <input type="button" value="Back to Login" class="back-btn" style="font-size:15px;" onclick="window.location.href = 'voters_login.php';">
