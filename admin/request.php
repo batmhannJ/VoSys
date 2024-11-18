@@ -11,11 +11,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Admins List
+        Voter Request
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Sub Admins</li>
+        <li class="active">Request</li>
       </ol>
     </section>
     <!-- Main content -->
