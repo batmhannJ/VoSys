@@ -10,7 +10,7 @@ var removeConfetti; //call to stop the confetti animation and remove all confett
 	stopConfetti = stopConfettiInner;
 	toggleConfetti = toggleConfettiInner;
 	removeConfetti = removeConfettiInner;
-	var colors = ["DodgerBlue", "OliveDrab", "Gold", "Pink", "SlateBlue", "LightBlue", "Violet", "PaleGreen", "SteelBlue", "SandyBrown", "Chocolate", "Crimson"]
+	var colors = ["DodgerBlue", "OliveDrab", "Gold", "Pink", "SlateBlue", "LightBlue", "Violet", "PaleGreen", "SteelBlue", "SandyBrown", "Chocolate", "Crimson"];
 	var streamingConfetti = false;
 	var animationTimer = null;
 	var particles = [];
@@ -30,21 +30,13 @@ var removeConfetti; //call to stop the confetti animation and remove all confett
 	function startConfettiInner() {
 		var width = window.innerWidth;
 		var height = window.innerHeight;
-		window.requestAnimFrame = (function() {
-			return window.requestAnimationFrame ||
-				window.webkitRequestAnimationFrame ||
-				window.mozRequestAnimationFrame ||
-				window.oRequestAnimationFrame ||
-				window.msRequestAnimationFrame ||
-				function (callback) {
-					return window.setTimeout(callback, 16.6666667);
-				};
-		})();
+		
+		// Adjust canvas size and position for centering
 		var canvas = document.getElementById("confetti-canvas");
 		if (canvas === null) {
 			canvas = document.createElement("canvas");
 			canvas.setAttribute("id", "confetti-canvas");
-			canvas.setAttribute("style", "display:block;z-index:999999;pointer-events:none");
+			canvas.setAttribute("style", "display:block; z-index:999999; pointer-events:none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);");
 			document.body.appendChild(canvas);
 			canvas.width = width;
 			canvas.height = height;
@@ -53,6 +45,7 @@ var removeConfetti; //call to stop the confetti animation and remove all confett
 				canvas.height = window.innerHeight;
 			}, true);
 		}
+
 		var context = canvas.getContext("2d");
 		while (particles.length < maxParticleCount)
 			particles.push(resetParticle({}, width, height));
@@ -65,7 +58,7 @@ var removeConfetti; //call to stop the confetti animation and remove all confett
 				else {
 					updateParticles();
 					drawParticles(context);
-					animationTimer = requestAnimFrame(runAnimation);
+					animationTimer = requestAnimationFrame(runAnimation);
 				}
 			})();
 		}
