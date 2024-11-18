@@ -502,7 +502,7 @@ main.sign-up-mode .carousel {
               </div>
 
               <div class="heading">
-                <center><h2>Forgot Password</h2></center>
+                <center><h2>Request Voters ID</h2></center>
                 <hr>
               </div>
 
@@ -518,38 +518,6 @@ main.sign-up-mode .carousel {
                   />
                     <span class="form-control-feedback"></span>
                   <label style="font-size:15px;"></label>
-                </div>
-
-                <div class="input-wrap">
-                  <input
-                    type="password"
-                    minlength="8"
-                    class="input-field"
-                    id="new_password"
-                    name="new_password"
-                    placeholder="New Password" style="font-size: 15px;"
-                    required
-                  />
-                    <span class="form-control-feedback"></span>
-                  <label style="font-size:15px;"></label>
-                  <i class="fa fa-fw fa-eye togglePassword" id="togglePassword"></i>
-                  <span class="form-control-feedback"></span>
-                </div>
-
-                <div class="input-wrap">
-                  <input
-                    type="password"
-                    minlength="8"
-                    class="input-field"
-                    id="confirm_password"
-                    name="confirm_password"
-                    placeholder="Confirm Password" style="font-size: 15px;"
-                    required
-                  />
-                    <span class="form-control-feedback"></span>
-                  <label style="font-size:15px;"></label>
-                  <i class="fa fa-fw fa-eye togglePassword" id="togglePassword1"></i>
-                  <span class="form-control-feedback"></span>
                 </div>
 
                 <div class="input-wrap" style="display: flex;">
@@ -573,7 +541,7 @@ main.sign-up-mode .carousel {
                 </div>
 
                 <!--<input type="submit" name="sendOTP" id="sendOTP" value="Send OTP" class="sign-btn" style="font-size:15px; background-color: grey;">-->
-                <input type="submit" name="login" value="Change Password" class="sign-btn" style="font-size:15px;">
+                <input type="submit" name="login" value="Request" class="sign-btn" style="font-size:15px;">
                 <input type="button" value="Back to Login" class="back-btn" style="font-size:15px;" onclick="window.location.href = 'voters_login.php';">
 
                         <?php
