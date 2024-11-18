@@ -302,20 +302,14 @@
         <div class="shadows"></div>
       </div>
     </div>
-  
-    <!-- Balloon container -->
-    <div class="balloon" id="balloon"></div>
-  
     <script src="./confetti.js"></script>
     <script>
-      var name = "Santy";
-      document.querySelector("#add").innerText = "BLOW OUT THE CANDLES ON YOUR CAKE!";
+      var name = prompt("Enter the birthday Boy/Girl name and make sure the volume is atleast 30%-40%");
+      document.querySelector("#add").innerText = "Copyright (c) 2024 Developed by Aurosish Rout";
       let candlesBlownOut = false;
-      let musicPlayed = false; // Flag to check if the music has already played
+      let songPlayed = false; // Flag to check if song has played
   
       function main() {
-        if (candlesBlownOut) return;
-  
         document.querySelector(".candel1").classList.add("flame");
         document.querySelector(".candel2").classList.add("flame2");
         document.querySelector(".candel3").classList.add("flame3");
@@ -337,13 +331,13 @@
               const array = new Uint8Array(analyser.frequencyBinCount);
               analyser.getByteFrequencyData(array);
               const average = array.reduce((a, b) => a + b) / array.length;
-  
+              
               if (average > 50) {
                 blowOutCandles();
   
                 if (!candlesBlownOut) {
                   blast();
-                  popBalloon(); // Trigger the balloon pop effect
+                  // wish();
                   candlesBlownOut = true;
                 }
   
@@ -357,18 +351,20 @@
           });
       }
   
+      // Function to simulate blowing out candles
       function blowOutCandles() {
         document.querySelector(".candel1").classList.remove("flame");
         document.querySelector(".candel2").classList.remove("flame2");
         document.querySelector(".candel3").classList.remove("flame3");
   
         console.log("Candles blown out!");
+        document.getElementById("wish").innerText = "Happy Birthday to you " + name;
   
-        // Update wish text and footer message
-        document.getElementById("wish").innerText = "Happy Birthday to you, " + name;
-        document.getElementById("footer-message").innerText = "The candles have been blown out!";
+        if (!songPlayed) { // Play the song only once
+          wish();
+          songPlayed = true;
+        }
   
-        // Set a delay to avoid calling main repeatedly
         setInterval(main, 3000);
       }
   
@@ -383,59 +379,18 @@
       }
   
       function wish() {
-        if (!musicPlayed) {
-          var audio1 = new Audio("song.mp3");
-          audio1.volume = 1;
-          audio1.play();
-          musicPlayed = true;
-        }
+        var audio1 = new Audio("song.mp3");
+        audio1.volume = 1;
+        audio1.play();
       }
   
-      // Function to animate the balloon popping
-      function popBalloon() {
-        let balloon = document.getElementById('balloon');
-        balloon.style.animation = 'pop 1s forwards'; // Trigger the pop animation
-      }
-  
+      // Event listener for microphone input
       document.querySelector("#birthday-cake").addEventListener('click', function () {
-        if (!candlesBlownOut) {
-          main();
-          wish();
-        }
+        main();
+        wish(); // Make sure the song doesn't repeat
       });
     </script>
-  
-    <style>
-      /* Balloon pop animation */
-      @keyframes pop {
-        0% {
-          transform: scale(1);
-          opacity: 1;
-        }
-        50% {
-          transform: scale(1.5);
-          opacity: 0.5;
-        }
-        100% {
-          transform: scale(0);
-          opacity: 0;
-        }
-      }
-  
-      /* Balloon styling */
-      #balloon {
-        width: 100px;
-        height: 150px;
-        background-color: red;
-        border-radius: 50%;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        transition: all 0.3s ease;
-      }
-    </style>
-  </body>
+  </body>  
   
 
 </html>
