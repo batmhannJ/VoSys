@@ -210,39 +210,31 @@
 <!-- Voters Username Request -->
 <div class="col-lg-3 col-xs-6">
   <!-- small box -->
-  <div class="small-box">
-    <div class="inner">
-    <?php
-                  // Query to count the total number of voters who have voted
-                  $sql_voters_voted = "SELECT COUNT(DISTINCT voters_id) AS voters_voted FROM votes_csc";
-                  $result_voters_voted = $conn->query($sql_voters_voted);
-                  $row_voters_voted = $result_voters_voted->fetch_assoc();
-                  $votersVoted = $row_voters_voted['voters_voted'];
+  <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box">
+            <div class="inner">
+            <?php
+              $sql = "SELECT COUNT(DISTINCT vc.voters_id) AS total_voters
+              FROM votes_csc vc
+              JOIN voters v ON vc.voters_id = v.id
+              WHERE v.archived = 0";
+           
+              $query = $conn->query($sql);
+              $row = $query->fetch_assoc();
+              $totalVoters = $row['total_voters'];
 
-                  // Query to count the total number of voters
-                  $sql_total_voters = "SELECT COUNT(*) AS total_voters FROM voters";
-                  $result_total_voters = $conn->query($sql_total_voters);
-                  $row_total_voters = $result_total_voters->fetch_assoc();
-                  $totalNumberOfVoters = $row_total_voters['total_voters'];
-
-                  // Calculate and display the percentage
-                  if ($totalNumberOfVoters > 0) {
-                      $percentage = ($votersVoted / $totalNumberOfVoters) * 100;
-                      $percentage = number_format($percentage, 1);
-                      echo "<h3>" . $percentage . "%" . "</h3>";
-                  } else {
-                      echo "<h3>0%</h3>";
-                      echo "<p>Total number of voters is 0. Cannot calculate percentage.</p>";
-                  }
+              echo "<h3>".$totalVoters."</h3>";
               ?>
-      <p>Voter Requests</p>
-    </div>
-    <div class="icon">
-      <i class="fa fa-envelope"></i> <!-- You can change the icon to fit your theme -->
-    </div>
-    <a href="requests.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-  </div>
-</div>
+
+              <p>Voter Request</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-edit"></i>
+            </div>
+            <a href="request.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
 
 </div>
       <?php
