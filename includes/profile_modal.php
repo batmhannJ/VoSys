@@ -49,12 +49,12 @@
                     </div>
 
                     <!-- Photo Upload -->
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <label for="photo" class="col-sm-3 control-label">Photo:</label>
                         <div class="col-sm-9">
                             <input type="file" id="photo" name="photo" accept=".png, .jpg, .jpeg" onchange="validateFileType(this)">
                         </div>
-                    </div>
+                    </div>-->
                     <script>
                         function validateFileType(input) {
                             const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
@@ -81,9 +81,9 @@
                 <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
                 <button type="submit" class="btn btn-success btn-flat" name="save"><i class="fa fa-check-square-o"></i> Save</button>
                 <!-- New Button for Registering Face -->
-                <button type="button" class="btn btn-primary btn-flat" data-toggle="modal" data-target="#registerFaceModal">
+                <!--<button type="button" class="btn btn-primary btn-flat" data-toggle="modal" data-target="#registerFaceModal">
                     <i class="fa fa-camera"></i> Register Face
-                </button>
+                </button>-->
             </div>
         </div>
     </div>
