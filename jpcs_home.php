@@ -219,16 +219,16 @@ if (isset($voter['id'])) {
                                         echo '
                                         <li onclick="selectCandidate(\'' . $crow['id'] . '\', \'' . $slug . '\')" class="' . $slug . '">
                                             <div class="candidate-info">
-                                                <div class="candidate-content">
+                                                <div class="image-container">
                                                     <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="clist">
-                                                    <div class="candidate-details">
-                                                        <span class="cname">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span>
-                                                        <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" 
-                                                            data-platform="' . $crow['platform'] . '" 
-                                                            data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">
-                                                            PLATFORM
-                                                        </button>
-                                                    </div>
+                                                </div>
+                                                <div class="candidate-details">
+                                                    <span class="cname">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span>
+                                                    <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" 
+                                                        data-platform="' . $crow['platform'] . '" 
+                                                        data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">
+                                                        PLATFORM
+                                                    </button>
                                                 </div>
                                             </div>
                                         </li>';
@@ -550,12 +550,27 @@ function submitVotes() {
     transform: scale(1.05);
 }
 
-.candidate-list li img {
-    width: 120px; /* Adjust image size */
-    height: 120px; /* Adjust image size */
-    object-fit: cover;
-    border-radius: 50%;
+.candidate-list li .image-container {
+    width: 120px; /* Adjust image container size */
+    height: 120px; /* Adjust image container size */
+    overflow: hidden;
+    border-radius: 50%; /* Circular image container */
     margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.candidate-list li img {
+    width: 100%; /* Ensure image fills container */
+    height: 100%; /* Ensure image fills container */
+    object-fit: cover; /* Ensure the image maintains aspect ratio and fills the container */
+}
+
+.candidate-list li .candidate-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .candidate-list li .cname {
@@ -568,6 +583,7 @@ function submitVotes() {
     margin-top: 10px;
     background-color: darkgreen;
 }
+
 
 .candidate-list li .platform:hover {
     background-color: #0056b3; /* Darker blue on hover */
