@@ -212,34 +212,45 @@ if (isset($voter['id'])) {
                                                     <ul>';
                                     $sql = "SELECT * FROM candidates WHERE category_id='".$row['id']."'";
                                     $cquery = $conn->query($sql);
-                                    while ($crow = $cquery->fetch_assoc()) {
+                                    while($crow = $cquery->fetch_assoc()){
                                         $slug = slugify($row['name']);
-                                        $image = (!empty($crow['photo'])) ? 'images/' . $crow['photo'] : 'images/profile.jpg';
-                                
+                                        $checked = '';
+                                        if(isset($_SESSION['post'][$slug])){
+                                            $value = $_SESSION['post'][$slug];
+
+                                            if(is_array($value)){
+                                                foreach($value as $val){
+                                                    if($val == $crow['id']){
+                                                        $checked = 'checked';
+                                                    }
+                                                }
+                                            }
+                                            else{
+                                                if($value == $crow['id']){
+                                                    $checked = 'checked';
+                                                }
+                                            }
+                                        }
+                                        $input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : '<input type="radio" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
+                                        $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
                                         echo '
-                                        <li onclick="selectCandidate(\'' . $crow['id'] . '\', \'' . $slug . '\')" class="' . $slug . '">
+                                        <li>
                                             <div class="candidate-info">
-                                                <div class="image-container">
-                                                    <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="clist">
-                                                </div>
-                                                <div class="candidate-details">
-                                                    <span class="cname">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span>
-                                                    <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" 
-                                                        data-platform="' . $crow['platform'] . '" 
-                                                        data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">
-                                                        PLATFORM
-                                                    </button>
-                                                </div>
+                                                '.$input.'
+                                                <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
+                                                
                                             </div>
+                                            <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
+                                        
+                                            <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
                                         </li>';
-                                    
                                     }
-                                
-                                    echo '</ul>
-                                            </div>
-                                        </div>
-                                    </div>';
-                                }
+                                echo '</ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>';
+            }
             ?>
                                 <div class="text-center">
                                     <button type="button" class="btn btn-primary btn-flat" style="background-color: darkgreen;" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
@@ -285,53 +296,6 @@ if (isset($voter['id'])) {
 </div>
 
 <?php include 'includes/scripts.php'; ?>
-
-<script>
-    let selectedCandidates = {};
-
-function selectCandidate(candidateId, positionSlug) {
-    if (!selectedCandidates[positionSlug]) {
-        selectedCandidates[positionSlug] = [];
-    }
-
-    const index = selectedCandidates[positionSlug].indexOf(candidateId);
-    if (index === -1) {
-        selectedCandidates[positionSlug].push(candidateId); // Add candidate
-    } else {
-        selectedCandidates[positionSlug].splice(index, 1); // Remove candidate
-    }
-
-    // Update UI to highlight selected candidate
-    const candidates = document.querySelectorAll(`.${positionSlug}`);
-    candidates.forEach(candidate => candidate.classList.remove('selected'));
-
-    selectedCandidates[positionSlug].forEach(id => {
-        const candidateElement = document.querySelector(`li[onclick="selectCandidate('${id}', '${positionSlug}')"]`);
-        if (candidateElement) {
-            candidateElement.classList.add('selected');
-        }
-    });
-    console.log('Selected Candidates:', selectedCandidates);
-}
-
-function submitVotes() {
-    fetch('submit_votes.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(selectedCandidates),
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'success') {
-            alert('Your votes have been submitted successfully!');
-        } else {
-            alert('Failed to submit votes.');
-        }
-    })
-    .catch(error => console.error('Error:', error));
-}
-
-</script>
 <script>
     function updateCountdown(endTime) {
         var now = new Date();
@@ -515,80 +479,31 @@ function submitVotes() {
     margin-bottom: 10px;
 }
 
+/* Style for the candidate list */
 .candidate-list ul {
     list-style-type: none;
     padding: 0;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Two columns */
-    gap: 20px;
-    justify-content: center;
 }
 
+/* Bagong istilo para sa mga item sa listahan ng mga kandidato */
 .candidate-list li {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 180px; /* Adjust width for two columns */
-    background-color: #f9f9f9;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    text-align: center;
+    display: flex; /* Baguhin ang display sa flex */
+    flex-wrap: wrap; /* Pahintulutan ang pag-wrap ng mga item sa loob ng flex container */
+    justify-content: space-between; /* I-set ang mga item na sa layong pare-pareho */
+    align-items: center; /* I-align ang mga item sa gitna */
+    border-radius: 10px; /* Radius ng border */
+    padding: 10px; /* Padding para sa mga item */
+    margin-bottom: 10px; /* Espasyo sa pagitan ng mga item */
+    background-color: #f9f9f9; /* Kulay ng background */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Shadow para sa depth */
+    border: 2px solid #ccc; /* Add border */
 }
-
-.candidate-list li:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-}
-
-.candidate-list li.selected {
-    border: 3px solid #007bff;
-    box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
-    transform: scale(1.05);
-}
-
-.candidate-list li .image-container {
-    width: 120px; /* Adjust image container size */
-    height: 120px; /* Adjust image container size */
-    overflow: hidden;
-    border-radius: 50%; /* Circular image container */
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .candidate-list li img {
-    width: 100%; /* Ensure image fills container */
-    height: 100%; /* Ensure image fills container */
-    object-fit: cover; /* Ensure the image maintains aspect ratio and fills the container */
+        width: 100px; /* I-adjust ang lapad ng mga larawan para sa mas maliit na screen */
+        height: 100px; /* I-adjust ang taas ng mga larawan para sa mas maliit na screen */
+        border-radius: 8px; /* Rounded corners for images */
+        transition: transform 0.3s; /* Add transition effect */
 }
-
-.candidate-list li .candidate-details {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.candidate-list li .cname {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.candidate-list li .platform {
-    margin-top: 10px;
-    background-color: darkgreen;
-}
-
-
-.candidate-list li .platform:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-}
-
 
 .candidate-list li:hover img {
     transform: scale(1.1); /* Make the image slightly larger on hover */
