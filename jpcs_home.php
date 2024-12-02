@@ -234,21 +234,22 @@ if (isset($voter['id'])) {
                                     
                                         $inputId = $slug.'_'.$crow['id']; // Generate a unique ID for the input
                                         $input = ($row['max_vote'] > 1) ? 
-                                            '<input type="checkbox" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : 
-                                            '<input type="radio" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
+                                            '<input type="checkbox" id="'.$inputId.'" class="candidate-input '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : 
+                                            '<input type="radio" id="'.$inputId.'" class="candidate-input '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
                                     
                                         $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
                                     
                                         echo '
                                         <li>
-                                            <label for="'.$inputId.'" style="cursor: pointer;">
-                                                '.$input.'
+                                            '.$input.'
+                                            <label for="'.$inputId.'" class="candidate-label">
                                                 <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
                                                 <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
                                             </label>
                                             <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
                                         </li>';
-                                    }                                    
+                                    }
+                                                            
                                     
                                 echo '</ul>
                             </div>
@@ -603,21 +604,36 @@ if (isset($voter['id'])) {
     }
 }
 
-/* Style for the image to make it visually interactive */
+/* Hide the radio button or checkbox */
+.candidate-input {
+    display: none;
+}
+
+/* Style for the image */
 .clist {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     object-fit: cover;
-    border-radius: 50%; /* Circular image */
-    border: 2px solid transparent;
+    border-radius: 10px; /* Slightly rounded corners */
+    border: 3px solid transparent; /* Default border */
     transition: border-color 0.3s, transform 0.3s;
     cursor: pointer;
 }
 
-input[type="radio"]:checked + .clist,
-input[type="checkbox"]:checked + .clist {
-    border-color: green; /* Highlight the selected image */
-    transform: scale(1.1); /* Slightly enlarge the selected image */
+/* Highlight the selected image */
+.candidate-input:checked + .candidate-label .clist {
+    border-color: green; /* Green border for selected image */
+    transform: scale(1.05); /* Slightly enlarge the selected image */
+}
+
+/* Style the candidate name */
+.cname {
+    display: block;
+    text-align: center;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
 }
 
 
