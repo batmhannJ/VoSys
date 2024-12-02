@@ -251,6 +251,12 @@ if (isset($voter['id'])) {
                                         </li>';
                                     }
                                     
+                                echo '</ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>';
+            }
             ?>
                                 <div class="text-center">
                                     <button type="button" class="btn btn-primary btn-flat" style="background-color: darkgreen;" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
@@ -598,6 +604,7 @@ if (isset($voter['id'])) {
     }
 }
 
+/* Updated styles for candidate image */
 /* Style for the image as a clickable radio button */
 .clist {
     cursor: pointer;
