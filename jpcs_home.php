@@ -212,41 +212,43 @@ if (isset($voter['id'])) {
                                                     <ul>';
                                     $sql = "SELECT * FROM candidates WHERE category_id='".$row['id']."'";
                                     $cquery = $conn->query($sql);
-                                    while ($crow = $cquery->fetch_assoc()) {
+                                    while($crow = $cquery->fetch_assoc()){
                                         $slug = slugify($row['name']);
                                         $checked = '';
-                                        if (isset($_SESSION['post'][$slug])) {
+                                        if(isset($_SESSION['post'][$slug])){
                                             $value = $_SESSION['post'][$slug];
                                     
-                                            if (is_array($value)) {
-                                                foreach ($value as $val) {
-                                                    if ($val == $crow['id']) {
+                                            if(is_array($value)){
+                                                foreach($value as $val){
+                                                    if($val == $crow['id']){
                                                         $checked = 'checked';
                                                     }
                                                 }
-                                            } else {
-                                                if ($value == $crow['id']) {
+                                            }
+                                            else{
+                                                if($value == $crow['id']){
                                                     $checked = 'checked';
                                                 }
                                             }
                                         }
                                     
-                                        $inputId = $slug . '_' . $crow['id']; // Generate a unique ID for the input
-                                        $input = '<input type="radio" id="' . $inputId . '" class="candidate-input ' . $slug . '" name="' . slugify($row['name']) . '" value="' . $crow['id'] . '" ' . $checked . '>';
-                                        $image = (!empty($crow['photo'])) ? 'images/' . $crow['photo'] : 'images/profile.jpg';
+                                        $inputId = $slug.'_'.$crow['id']; // Generate a unique ID for the input
+                                        $input = ($row['max_vote'] > 1) ? 
+                                            '<input type="checkbox" id="'.$inputId.'" class="candidate-input '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : 
+                                            '<input type="radio" id="'.$inputId.'" class="candidate-input '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
+                                    
+                                        $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
                                     
                                         echo '
-                                        <li class="candidate-container">
-                                            ' . $input . '
-                                            <label for="' . $inputId . '" class="candidate-label">
-                                                <div class="candidate-box">
-                                                    <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="clist">
-                                                    <span class="cname">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span>
-                                                </div>
+                                        <li>
+                                            '.$input.'
+                                            <label for="'.$inputId.'" class="candidate-label">
+                                                <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
+                                                <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
                                             </label>
+                                            <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
                                         </li>';
                                     }
-                                    
                                                             
                                     
                                 echo '</ul>
@@ -607,43 +609,32 @@ if (isset($voter['id'])) {
     display: none;
 }
 
-//* Hide the radio button completely */
-.candidate-input {
-    display: none;
-}
-
-/* Style for the container of the candidate */
-.candidate-container {
-    display: inline-block;
-    margin: 10px;
-}
-
-.candidate-box {
-    width: 150px;
-    height: 200px;
-    text-align: center;
-    border: 2px solid transparent; /* Default transparent border */
-    border-radius: 10px;
-    padding: 10px;
-    cursor: pointer;
-    transition: border-color 0.3s, background-color 0.3s;
-}
-
 /* Style for the image */
 .clist {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     object-fit: cover;
-    border-radius: 50%;
-    margin-bottom: 10px;
+    border-radius: 10px; /* Slightly rounded corners */
+    border: 3px solid transparent; /* Default border */
+    transition: border-color 0.3s, transform 0.3s;
+    cursor: pointer;
 }
 
-/* Highlight the selected container */
-.candidate-input:checked + .candidate-label .candidate-box {
-    border-color: green;
-    background-color: rgba(0, 255, 0, 0.1); /* Light green background */
+/* Highlight the selected image */
+.candidate-input:checked + .candidate-label .clist {
+    border-color: green; /* Green border for selected image */
+    transform: scale(1.05); /* Slightly enlarge the selected image */
 }
 
+/* Style the candidate name */
+.cname {
+    display: block;
+    text-align: center;
+    margin-top: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
 
 
 /* Media query for smaller screens */
