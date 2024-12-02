@@ -280,6 +280,53 @@ if (isset($voter['id'])) {
 </div>
 
 <?php include 'includes/scripts.php'; ?>
+
+<script>
+    let selectedCandidates = {};
+
+function selectCandidate(candidateId, positionSlug) {
+    if (!selectedCandidates[positionSlug]) {
+        selectedCandidates[positionSlug] = [];
+    }
+
+    const index = selectedCandidates[positionSlug].indexOf(candidateId);
+    if (index === -1) {
+        selectedCandidates[positionSlug].push(candidateId); // Add candidate
+    } else {
+        selectedCandidates[positionSlug].splice(index, 1); // Remove candidate
+    }
+
+    // Update UI to highlight selected candidate
+    const candidates = document.querySelectorAll(`.${positionSlug}`);
+    candidates.forEach(candidate => candidate.classList.remove('selected'));
+
+    selectedCandidates[positionSlug].forEach(id => {
+        const candidateElement = document.querySelector(`li[onclick="selectCandidate('${id}', '${positionSlug}')"]`);
+        if (candidateElement) {
+            candidateElement.classList.add('selected');
+        }
+    });
+    console.log('Selected Candidates:', selectedCandidates);
+}
+
+function submitVotes() {
+    fetch('submit_votes.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(selectedCandidates),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            alert('Your votes have been submitted successfully!');
+        } else {
+            alert('Failed to submit votes.');
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+</script>
 <script>
     function updateCountdown(endTime) {
         var now = new Date();
@@ -463,59 +510,54 @@ if (isset($voter['id'])) {
     margin-bottom: 10px;
 }
 
-/* Style for the candidate list */
 .candidate-list ul {
     list-style-type: none;
     padding: 0;
-}
-
-/* Style for the candidate list */
-.candidate-list {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    justify-content: center; /* Center the candidates horizontally */
-    padding: 10px;
-    list-style-type: none;
-    margin: 0;
+    justify-content: center;
 }
 
-/* Style for each candidate */
 .candidate-list li {
     display: flex;
-    flex-direction: column; /* Stack items vertically */
-    align-items: center; /* Center items horizontally */
-    width: 200px; /* Set a fixed width for consistency */
-    background-color: #f9f9f9; /* Background color */
-    border: 2px solid #ccc; /* Border for visual separation */
-    border-radius: 10px; /* Rounded corners */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow for depth */
-    padding: 15px; /* Add padding around the content */
-    cursor: pointer; /* Make it look clickable */
+    flex-direction: column;
+    align-items: center;
+    width: 200px;
+    background-color: #f9f9f9;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .candidate-list li:hover {
-    transform: scale(1.05); /* Slightly enlarge on hover */
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Style for candidate image */
+.candidate-list li.selected {
+    border: 3px solid #007bff;
+    box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+    transform: scale(1.05);
+}
+
 .candidate-list li img {
-    width: 150px; /* Adjust the image size */
-    height: 150px; /* Ensure the image is square */
-    object-fit: cover; /* Maintain aspect ratio and crop */
-    border-radius: 50%; /* Make the image circular */
-    margin-bottom: 10px; /* Space between image and text */
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 10px;
 }
 
-/* Style for candidate name */
 .candidate-list li .cname {
-    font-size: 18px; /* Larger font size */
+    font-size: 18px;
     font-weight: bold;
-    text-align: center; /* Center align the text */
-    margin-bottom: 8px; /* Add space between name and platform */
+    text-align: center;
 }
+
 
 /* Style for platform button */
 .candidate-list li .platform {
