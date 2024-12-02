@@ -231,25 +231,24 @@ if (isset($voter['id'])) {
                                                 }
                                             }
                                         }
+                                    
+                                        $inputId = $slug.'_'.$crow['id']; // Generate a unique ID for the input
                                         $input = ($row['max_vote'] > 1) ? 
-                                            '<input type="checkbox" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : 
-                                            '<input type="radio" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
+                                            '<input type="checkbox" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : 
+                                            '<input type="radio" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
                                     
                                         $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
                                     
                                         echo '
                                         <li>
-                                            <div class="candidate-info">
-                                                <label for="'.$slug.'_'.$crow['id'] .'">
-                                                    '.$input.'
-                                                    <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
-                                                </label>
-                                                <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
-                                            
-                                                <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist" id="'.$slug.'_'.$crow['id'].'">
-                                            </div>
+                                            <label for="'.$inputId.'" style="cursor: pointer;">
+                                                '.$input.'
+                                                <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
+                                                <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
+                                            </label>
+                                            <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
                                         </li>';
-                                    }
+                                    }                                    
                                     
                                 echo '</ul>
                             </div>
@@ -604,26 +603,21 @@ if (isset($voter['id'])) {
     }
 }
 
-/* Updated styles for candidate image */
-/* Style for the image as a clickable radio button */
+/* Style for the image to make it visually interactive */
 .clist {
-    cursor: pointer;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%; /* Circular image */
     border: 2px solid transparent;
-    border-radius: 50%;
-    padding: 5px;
+    transition: border-color 0.3s, transform 0.3s;
+    cursor: pointer;
 }
 
 input[type="radio"]:checked + .clist,
 input[type="checkbox"]:checked + .clist {
-    border-color: green;
-}
-
-input[type="radio"]:checked + .clist {
-    background-color: lightgreen;
-}
-
-input[type="checkbox"]:checked + .clist {
-    background-color: lightblue;
+    border-color: green; /* Highlight the selected image */
+    transform: scale(1.1); /* Slightly enlarge the selected image */
 }
 
 
