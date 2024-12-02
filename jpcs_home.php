@@ -447,7 +447,7 @@ if (isset($voter['id'])) {
     justify-content: space-between;
     align-items: center;
     background-color: black;
-    color: ##013220;
+    color: #013220;
     padding: 10px;
 }
 
@@ -485,25 +485,71 @@ if (isset($voter['id'])) {
     padding: 0;
 }
 
-/* Bagong istilo para sa mga item sa listahan ng mga kandidato */
+/* Style for the candidate list */
+.candidate-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center; /* Center the candidates horizontally */
+    padding: 10px;
+    list-style-type: none;
+    margin: 0;
+}
+
+/* Style for each candidate */
 .candidate-list li {
-    display: flex; /* Baguhin ang display sa flex */
-    flex-wrap: wrap; /* Pahintulutan ang pag-wrap ng mga item sa loob ng flex container */
-    justify-content: space-between; /* I-set ang mga item na sa layong pare-pareho */
-    align-items: center; /* I-align ang mga item sa gitna */
-    border-radius: 10px; /* Radius ng border */
-    padding: 10px; /* Padding para sa mga item */
-    margin-bottom: 10px; /* Espasyo sa pagitan ng mga item */
-    background-color: #f9f9f9; /* Kulay ng background */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Shadow para sa depth */
-    border: 2px solid #ccc; /* Add border */
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    width: 200px; /* Set a fixed width for consistency */
+    background-color: #f9f9f9; /* Background color */
+    border: 2px solid #ccc; /* Border for visual separation */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+    padding: 15px; /* Add padding around the content */
+    cursor: pointer; /* Make it look clickable */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+.candidate-list li:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+}
+
+/* Style for candidate image */
 .candidate-list li img {
-        width: 100px; /* I-adjust ang lapad ng mga larawan para sa mas maliit na screen */
-        height: 100px; /* I-adjust ang taas ng mga larawan para sa mas maliit na screen */
-        border-radius: 8px; /* Rounded corners for images */
-        transition: transform 0.3s; /* Add transition effect */
+    width: 150px; /* Adjust the image size */
+    height: 150px; /* Ensure the image is square */
+    object-fit: cover; /* Maintain aspect ratio and crop */
+    border-radius: 50%; /* Make the image circular */
+    margin-bottom: 10px; /* Space between image and text */
 }
+
+/* Style for candidate name */
+.candidate-list li .cname {
+    font-size: 18px; /* Larger font size */
+    font-weight: bold;
+    text-align: center; /* Center align the text */
+    margin-bottom: 8px; /* Add space between name and platform */
+}
+
+/* Style for platform button */
+.candidate-list li .platform {
+    background-color: #007bff; /* Blue color */
+    color: #fff; /* White text */
+    border: none;
+    border-radius: 20px; /* Rounded button */
+    padding: 8px 16px; /* Add padding */
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.candidate-list li .platform:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
 
 .candidate-list li:hover img {
     transform: scale(1.1); /* Make the image slightly larger on hover */
