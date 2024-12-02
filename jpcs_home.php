@@ -217,7 +217,7 @@ if (isset($voter['id'])) {
                                         $checked = '';
                                         if(isset($_SESSION['post'][$slug])){
                                             $value = $_SESSION['post'][$slug];
-
+                                    
                                             if(is_array($value)){
                                                 foreach($value as $val){
                                                     if($val == $crow['id']){
@@ -231,26 +231,26 @@ if (isset($voter['id'])) {
                                                 }
                                             }
                                         }
-                                        $input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : '<input type="radio" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
+                                        $input = ($row['max_vote'] > 1) ? 
+                                            '<input type="checkbox" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : 
+                                            '<input type="radio" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
+                                    
                                         $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
+                                    
                                         echo '
                                         <li>
                                             <div class="candidate-info">
-                                                '.$input.'
-                                                <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
-                                                
+                                                <label for="'.$slug.'_'.$crow['id'] .'">
+                                                    '.$input.'
+                                                    <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
+                                                </label>
+                                                <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
+                                            
+                                                <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist" id="'.$slug.'_'.$crow['id'].'">
                                             </div>
-                                            <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
-                                        
-                                            <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
                                         </li>';
                                     }
-                                echo '</ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>';
-            }
+                                    
             ?>
                                 <div class="text-center">
                                     <button type="button" class="btn btn-primary btn-flat" style="background-color: darkgreen;" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
@@ -598,15 +598,27 @@ if (isset($voter['id'])) {
     }
 }
 
-/* Updated styles for candidate image */
+/* Style for the image as a clickable radio button */
 .clist {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid transparent;
     border-radius: 50%;
-    margin-right: 10px;
-    grid-column: span 1;
+    padding: 5px;
 }
+
+input[type="radio"]:checked + .clist,
+input[type="checkbox"]:checked + .clist {
+    border-color: green;
+}
+
+input[type="radio"]:checked + .clist {
+    background-color: lightgreen;
+}
+
+input[type="checkbox"]:checked + .clist {
+    background-color: lightblue;
+}
+
 
 /* Media query for smaller screens */
 @media (max-width: 768px) {
