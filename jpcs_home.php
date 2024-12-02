@@ -217,17 +217,17 @@ if (isset($voter['id'])) {
                                         $image = (!empty($crow['photo'])) ? 'images/' . $crow['photo'] : 'images/profile.jpg';
                                 
                                         echo '
-                                        <li onclick="selectCandidate(\'' . $crow['id'] . '\', \'' . $slug . '\')" class="' . $slug . '">
-                                            <div class="candidate-info">
-                                                <span class="cname">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span>
-                                            </div>
-                                            <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" 
-                                                data-platform="' . $crow['platform'] . '" 
-                                                data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">
-                                                PLATFORM
-                                            </button>
-                                            <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="clist">
-                                        </li>';
+                                        <li onclick="selectCandidate('<?php echo $crow['id']; ?>', '<?php echo $slug; ?>')" class="<?php echo $slug; ?>">
+        <div class="candidate-info">
+            <span class="cname"><?php echo $crow['firstname'] . ' ' . $crow['lastname']; ?></span>
+        </div>
+        <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" 
+            data-platform="<?php echo $crow['platform']; ?>" 
+            data-fullname="<?php echo $crow['firstname'] . ' ' . $crow['lastname']; ?>">
+            PLATFORM
+        </button>
+        <img src="<?php echo $image; ?>" alt="<?php echo $crow['firstname'] . ' ' . $crow['lastname']; ?>" class="clist">
+    </li>;
                                     }
                                 
                                     echo '</ul>
@@ -513,8 +513,8 @@ function submitVotes() {
 .candidate-list ul {
     list-style-type: none;
     padding: 0;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two columns */
     gap: 20px;
     justify-content: center;
 }
@@ -523,7 +523,7 @@ function submitVotes() {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 200px;
+    width: 180px; /* Adjust width for two columns */
     background-color: #f9f9f9;
     border: 2px solid #ccc;
     border-radius: 10px;
@@ -531,6 +531,7 @@ function submitVotes() {
     padding: 15px;
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
 }
 
 .candidate-list li:hover {
@@ -545,31 +546,22 @@ function submitVotes() {
 }
 
 .candidate-list li img {
-    width: 150px;
-    height: 150px;
+    width: 120px; /* Adjust image size */
+    height: 120px; /* Adjust image size */
     object-fit: cover;
     border-radius: 50%;
     margin-bottom: 10px;
 }
 
 .candidate-list li .cname {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
-    text-align: center;
+    margin-bottom: 10px;
 }
 
-
-/* Style for platform button */
 .candidate-list li .platform {
-    background-color: #007bff; /* Blue color */
-    color: #fff; /* White text */
-    border: none;
-    border-radius: 20px; /* Rounded button */
-    padding: 8px 16px; /* Add padding */
-    font-size: 14px;
-    cursor: pointer;
-    text-align: center;
-    transition: background-color 0.3s ease;
+    margin-top: 10px;
+    background-color: darkgreen;
 }
 
 .candidate-list li .platform:hover {
