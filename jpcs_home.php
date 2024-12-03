@@ -210,43 +210,45 @@ if (isset($voter['id'])) {
                                                 <p class="instruction">You may select up to '.$row['max_vote'].' candidates</p>
                                                 <div class="candidate-list">
                                                     <ul>';
-                                                    $sql = "SELECT * FROM candidates WHERE category_id='".$row['id']."'";
-                                                    $cquery = $conn->query($sql);
-                                                    while($crow = $cquery->fetch_assoc()){
-                                                        $slug = slugify($row['name']);
-                                                        $checked = '';
-                                                        if(isset($_SESSION['post'][$slug])){
-                                                            $value = $_SESSION['post'][$slug];
-                                                            if(is_array($value)){
-                                                                foreach($value as $val){
-                                                                    if($val == $crow['id']){
-                                                                        $checked = 'checked';
-                                                                    }
-                                                                }
-                                                            } else {
-                                                                if($value == $crow['id']){
-                                                                    $checked = 'checked';
-                                                                }
-                                                            }
-                                                        }
-                                                
-                                                        $inputId = $slug.'_'.$crow['id'];
-                                                        $input = ($row['max_vote'] > 1) ? 
-                                                            '<input type="checkbox" id="'.$inputId.'" class="flat-red '.$slug.' hidden-radio" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : 
-                                                            '<input type="radio" id="'.$inputId.'" class="flat-red '.$slug.' hidden-radio" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
-                                                
-                                                        $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
-                                                
-                                                        echo '
-                                                        <li class="candidate-item '.($checked ? 'selected' : '').'" data-id="'.$crow['id'].'">
-                                                            <label for="'.$inputId.'" class="candidate-label">
-                                                                '.$input.'
-                                                                <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="candidate-image">
-                                                                <span class="candidate-name">'.$crow['firstname'].' '.$crow['lastname'].'</span>
-                                                            </label>
-                                                            <button type="button" class="btn btn-primary btn-sm btn-flat platform-btn" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
-                                                        </li>';
-                                                    }     
+                                    $sql = "SELECT * FROM candidates WHERE category_id='".$row['id']."'";
+                                    $cquery = $conn->query($sql);
+                                    while($crow = $cquery->fetch_assoc()){
+                                        $slug = slugify($row['name']);
+                                        $checked = '';
+                                        if(isset($_SESSION['post'][$slug])){
+                                            $value = $_SESSION['post'][$slug];
+                                    
+                                            if(is_array($value)){
+                                                foreach($value as $val){
+                                                    if($val == $crow['id']){
+                                                        $checked = 'checked';
+                                                    }
+                                                }
+                                            }
+                                            else{
+                                                if($value == $crow['id']){
+                                                    $checked = 'checked';
+                                                }
+                                            }
+                                        }
+                                    
+                                        $inputId = $slug.'_'.$crow['id']; // Generate a unique ID for the input
+                                        $input = ($row['max_vote'] > 1) ? 
+                                            '<input type="checkbox" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : 
+                                            '<input type="radio" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
+                                    
+                                        $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
+                                    
+                                        echo '
+                                        <li>
+                                            <label for="'.$inputId.'" style="cursor: pointer;">
+                                                '.$input.'
+                                                <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
+                                                <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
+                                            </label>
+                                            <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
+                                        </li>';
+                                    }                                    
                                     
                                 echo '</ul>
                             </div>
@@ -299,30 +301,6 @@ if (isset($voter['id'])) {
 </div>
 
 <?php include 'includes/scripts.php'; ?>
-<script>
-   document.querySelectorAll('.candidate-label').forEach(label => {
-    label.addEventListener('click', function () {
-        const container = this.closest('.candidate-item');
-        const input = container.querySelector('.hidden-radio');
-        if (input) {
-            input.checked = true;
-        }
-
-        // Highlight the selected candidate
-        document.querySelectorAll('.candidate-item').forEach(c => c.classList.remove('selected'));
-        container.classList.add('selected');
-    });
-});
-
-document.querySelectorAll('.platform-btn').forEach(button => {
-    button.addEventListener('click', function (event) {
-        event.stopPropagation(); // Prevent the click from propagating to the parent label
-        // Handle platform button logic
-        alert(`Platform details for ${this.dataset.fullname}: ${this.dataset.platform}`);
-    });
-});
-
-</script>
 <script>
     function updateCountdown(endTime) {
         var now = new Date();
@@ -506,70 +484,34 @@ document.querySelectorAll('.platform-btn').forEach(button => {
     margin-bottom: 10px;
 }
 
-/* Candidate List Container */
-.candidate-list {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    list-style: none;
+/* Style for the candidate list */
+.candidate-list ul {
+    list-style-type: none;
     padding: 0;
 }
 
-/* Candidate Item */
-.candidate-item {
-    text-align: center;
-    border: 2px solid transparent;
-    border-radius: 10px;
-    padding: 15px;
-    background-color: #f9f9f9;
-    transition: border-color 0.3s, transform 0.3s;
-    cursor: pointer;
+/* Bagong istilo para sa mga item sa listahan ng mga kandidato */
+.candidate-list li {
+    display: flex; /* Baguhin ang display sa flex */
+    flex-wrap: wrap; /* Pahintulutan ang pag-wrap ng mga item sa loob ng flex container */
+    justify-content: space-between; /* I-set ang mga item na sa layong pare-pareho */
+    align-items: center; /* I-align ang mga item sa gitna */
+    border-radius: 10px; /* Radius ng border */
+    padding: 10px; /* Padding para sa mga item */
+    margin-bottom: 10px; /* Espasyo sa pagitan ng mga item */
+    background-color: #f9f9f9; /* Kulay ng background */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Shadow para sa depth */
+    border: 2px solid #ccc; /* Add border */
+}
+.candidate-list li img {
+        width: 100px; /* I-adjust ang lapad ng mga larawan para sa mas maliit na screen */
+        height: 100px; /* I-adjust ang taas ng mga larawan para sa mas maliit na screen */
+        border-radius: 8px; /* Rounded corners for images */
+        transition: transform 0.3s; /* Add transition effect */
 }
 
-.candidate-item.selected {
-    border-color: #4CAF50;
-    transform: scale(1.05);
-}
-
-/* Hidden Radio/Checkbox */
-.hidden-radio {
-    display: none;
-}
-
-/* Candidate Image */
-.candidate-image {
-    width: 120px;
-    height: 120px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    transition: transform 0.3s;
-}
-
-.candidate-image:hover {
-    transform: scale(1.1);
-}
-
-/* Candidate Name */
-.candidate-name {
-    display: block;
-    font-weight: bold;
-    margin: 10px 0;
-}
-
-/* Platform Button */
-.platform-btn {
-    margin-top: 10px;
-    background-color: darkgreen;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-    font-size: 0.9em;
-}
-
-.platform-btn:hover {
-    background-color: #2e7d32;
+.candidate-list li:hover img {
+    transform: scale(1.1); /* Make the image slightly larger on hover */
 }
 
 /* Media query para sa mas maliit na mga screen */
