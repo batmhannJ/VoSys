@@ -497,13 +497,8 @@ color: #333;
                 <hr>
               </div>
 
-              <div class="box">
-                <h2 style="text-align: center; color: maroon;">Reset Password</h2>
-                <form id="sendOTPForm" method="post" autocomplete="off">
-                    <button type="submit" class="sign-btn">Send Reset Password Token</button>
-                    <div id="responseMessage"></div>
-                </form>
-            </div>
+              <button type="submit" class="sign-btn">Send Reset Password Token</button>
+                <div id="responseMessage"></div>
 
                 <div class="form-group has-feedback">
                     <div class="g-recaptcha" data-sitekey="6LddHcIpAAAAAJS6Wnenkllxyr3tWUSlSCu8o9eO">
@@ -563,7 +558,7 @@ color: #333;
             xhr.send(); // Send the request
         });
     </script>
-
+    
     <script>
   const images = document.querySelectorAll('.image');
   let currentIndex = 0;
