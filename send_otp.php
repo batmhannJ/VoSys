@@ -23,17 +23,28 @@ $email = $_POST['email'];
 $subject = 'OTP Verification';
 $message = 'Your OTP is: ' . $otp;
 
-// Send email
-if (mail($email, $subject, $message)) {
-    // Store OTP in database
-    $sql = "INSERT INTO otp_verifcation (email, otp) VALUES ('$email', '$otp')";
+// Validate email
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    echo 'Invalid email format';
+    exit();
+}
 
-    if ($conn->query($sql) === TRUE) {
+// Send email (basic example, for better results consider using a library like PHPMailer)
+if (mail($email, $subject, $message)) {
+    // Store OTP in database using prepared statement
+    $stmt = $conn->prepare("INSERT INTO otp_verifcation (email, otp) VALUES (?, ?)");
+    $stmt->bind_param("ss", $email, $otp); // Bind email and OTP as strings
+
+    if ($stmt->execute()) {
+        // Store OTP in session (for validation on next step)
         $_SESSION['otp'] = $otp;
         echo 'OTP sent successfully and stored in database';
     } else {
         echo 'Failed to store OTP in database';
     }
+
+    // Close statement
+    $stmt->close();
 } else {
     echo 'Failed to send OTP';
 }
