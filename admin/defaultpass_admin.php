@@ -606,40 +606,38 @@ main.sign-up-mode .carousel {
     </div>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('sendOTP').addEventListener('click', function() {
-            var email = document.querySelector('input[name="email"]').value; // Get email value from input field
-            sendOTP(email);
-        });
-
-        // Handle form submission
-        document.getElementById('forgotPasswordForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the default form submission behavior
-
-            var email = document.querySelector('input[name="email"]').value;
-            var otp = document.querySelector('input[name="otp"]').value;
-            var new_password = document.querySelector('input[name="new_password"]').value;
-
-            // Validate OTP
-            validateOTP(email, otp, new_password);
-            // Change password
-            changePassword(email, new_password);
-        });
+    document.getElementById('sendOTP').addEventListener('click', function() {
+        var email = document.querySelector('input[name="email"]').value; // Get email value from input field
+        sendOTP(email);
     });
 
-    function sendOTP(email) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'send_otp.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                var response = xhr.responseText;
-                alert(response); // Show response message (e.g., "OTP sent successfully")
-            }
-        };
-        xhr.send('email=' + encodeURIComponent(email));
-    }
+    // Handle form submission
+    document.getElementById('forgotPasswordForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission behavior
 
-    // Function to validate OTP and proceed to password update if OTP is correct
+        var email = document.querySelector('input[name="email"]').value;
+        var otp = document.querySelector('input[name="otp"]').value;
+        var new_password = document.querySelector('input[name="new_password"]').value;
+
+        // Validate OTP before trying to change the password
+        validateOTP(email, otp, new_password);
+    });
+});
+
+function sendOTP(email) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'send_otp.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var response = xhr.responseText;
+            alert(response); // Show response message (e.g., "OTP sent successfully")
+        }
+    };
+    xhr.send('email=' + encodeURIComponent(email));
+}
+
+// Function to validate OTP and proceed to password update if OTP is correct
 function validateOTP(email, otp, new_password) {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'validate_adminOTP.php', true);
@@ -652,7 +650,7 @@ function validateOTP(email, otp, new_password) {
                     // OTP is correct, now send the new password to update_pass.php
                     changePassword(email, new_password);
                 } else {
-                    // OTP is incorrect, show the error message
+                    // OTP is incorrect, show the error message and do not change the password
                     alert(response.message);
                 }
             } else {
@@ -695,7 +693,6 @@ function changePassword(email, new_password) {
     // Sending email and new password for updating
     xhr.send('email=' + encodeURIComponent(email) + '&new_password=' + encodeURIComponent(new_password));
 }
-
 
 </script>
 <script>
