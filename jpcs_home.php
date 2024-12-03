@@ -223,29 +223,30 @@ if (isset($voter['id'])) {
                                                         $checked = 'checked';
                                                     }
                                                 }
-                                            } else {
+                                            }
+                                            else{
                                                 if($value == $crow['id']){
                                                     $checked = 'checked';
                                                 }
                                             }
                                         }
                                         $inputId = $slug.'_'.$crow['id']; // Generate a unique ID for the input
+                                        $input = ($row['max_vote'] > 1) ? 
+                                            '<input type="checkbox" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : 
+                                            '<input type="radio" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
+                                    
                                         $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
                                     
                                         echo '
-                                        <li class="candidate-item">
-                                            <input type="'.($row['max_vote'] > 1 ? 'checkbox' : 'radio').'" 
-                                                   id="'.$inputId.'" 
-                                                   class="flat-red '.$slug.'" 
-                                                   name="'.($row['max_vote'] > 1 ? $slug."[]" : $slug).'" 
-                                                   value="'.$crow['id'].'" 
-                                                   '.$checked.'>
-                                            <label for="'.$inputId.'" class="candidate-label">
+                                        <li>
+                                            <label for="'.$inputId.'" style="cursor: pointer;">
+                                                '.$input.'
                                                 <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
                                                 <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
                                             </label>
+                                            <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
                                         </li>';
-                                    }        
+                                    }                                    
                                     
                                 echo '</ul>
                             </div>
@@ -298,6 +299,17 @@ if (isset($voter['id'])) {
 </div>
 
 <?php include 'includes/scripts.php'; ?>
+<script>
+    document.querySelectorAll('.candidate-list li').forEach(item => {
+    item.addEventListener('click', () => {
+        // Remove selection from all candidates
+        document.querySelectorAll('.candidate-list li').forEach(li => li.classList.remove('selected'));
+        
+        // Add selection to the clicked candidate
+        item.classList.add('selected');
+    });
+});
+</script>
 <script>
     function updateCountdown(endTime) {
         var now = new Date();
@@ -481,7 +493,6 @@ if (isset($voter['id'])) {
     margin-bottom: 10px;
 }
 
-/* Style for the candidate list */
 /* Style for the candidate list */
 .candidate-list ul {
     list-style-type: none;
