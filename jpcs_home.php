@@ -212,40 +212,24 @@ if (isset($voter['id'])) {
                                                     <ul>';
                                     $sql = "SELECT * FROM candidates WHERE category_id='".$row['id']."'";
                                     $cquery = $conn->query($sql);
-                                    while($crow = $cquery->fetch_assoc()){
+                                    while ($crow = $cquery->fetch_assoc()) {
                                         $slug = slugify($row['name']);
                                         $checked = '';
-                                        if(isset($_SESSION['post'][$slug])){
-                                            $value = $_SESSION['post'][$slug];
-                                            if(is_array($value)){
-                                                foreach($value as $val){
-                                                    if($val == $crow['id']){
-                                                        $checked = 'checked';
-                                                    }
-                                                }
-                                            }
-                                            else{
-                                                if($value == $crow['id']){
-                                                    $checked = 'checked';
-                                                }
-                                            }
+                                        if (isset($_SESSION['post'][$slug]) && $_SESSION['post'][$slug] == $crow['id']) {
+                                            $checked = 'checked';
                                         }
-                                        $inputId = $slug.'_'.$crow['id']; // Generate a unique ID for the input
-                                        $input = ($row['max_vote'] > 1) ? 
-                                            '<input type="checkbox" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : 
-                                            '<input type="radio" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
                                     
-                                        $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
+                                        $inputId = $slug . '_' . $crow['id']; // Generate a unique ID for the input
+                                        $image = (!empty($crow['photo'])) ? 'images/' . $crow['photo'] : 'images/profile.jpg';
                                     
                                         echo '
-                                         <li>
-                                        <label for="' . $inputId . '" style="cursor: pointer;">
-                                            ' . $input . '
-                                            <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="clist candidate-image">
-                                            <span class="cname">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span>
-                                        </label>
-                                        <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" data-platform="' . $crow['platform'] . '" data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">PLATFORM</button>
-                                    </li>';
+                                        <li class="candidate-item">
+                                            <input type="radio" id="' . $inputId . '" class="candidate-radio" name="' . slugify($row['name']) . '" value="' . $crow['id'] . '" ' . $checked . ' hidden>
+                                            <label for="' . $inputId . '" class="candidate-label">
+                                                <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image">
+                                                <span class="cname">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span>
+                                            </label>
+                                        </li>';
                                     }                                    
                                     
                                 echo '</ul>
