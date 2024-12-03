@@ -639,7 +639,8 @@ main.sign-up-mode .carousel {
         xhr.send('email=' + encodeURIComponent(email));
     }
 
-    function validateOTP(email, otp, new_password) {
+    // Function to validate OTP and proceed to password update if OTP is correct
+function validateOTP(email, otp, new_password) {
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'validate_adminOTP.php', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -648,38 +649,53 @@ main.sign-up-mode .carousel {
             if (xhr.status == 200) {
                 var response = JSON.parse(xhr.responseText);
                 if (response.status === 'success') {
-                    // Send the new password to change_pass.php
+                    // OTP is correct, now send the new password to update_pass.php
                     changePassword(email, new_password);
                 } else {
+                    // OTP is incorrect, show the error message
                     alert(response.message);
                 }
             } else {
+                // Something went wrong with the request
                 alert('Error occurred. Please try again.');
             }
         }
     };
+    // Sending email and OTP for validation
     xhr.send('email=' + encodeURIComponent(email) + '&otp=' + encodeURIComponent(otp));
 }
 
-
-
-// Inside the changePassword function
+// Function to change the password after OTP is validated
 function changePassword(email, new_password) {
-var xhr = new XMLHttpRequest();
-xhr.open('POST', 'update_pass.php', true);
-xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-xhr.onreadystatechange = function() {
-    if (xhr.readyState == 4 && xhr.status == 200) {
-        var response = JSON.parse(xhr.responseText);
-        alert(response.message); // You can handle success or error messages here
-        if (response.status === 'success') {
-            // Redirect to voters_login.php
-            window.location.href = 'index.php';
-        }
+    // Check if the password is not empty before proceeding
+    if (!new_password) {
+        alert('Password cannot be empty.');
+        return;
     }
-};
-xhr.send('email=' + encodeURIComponent(email) + '&new_password=' + encodeURIComponent(new_password));
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'update_pass.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var response = JSON.parse(xhr.responseText);
+            // Handle the response from update_pass.php
+            alert(response.message); // Show the response message from the server
+
+            // If the password update is successful, redirect to the login page
+            if (response.status === 'success') {
+                window.location.href = 'index.php'; // Redirect to the desired page
+            }
+        } else if (xhr.readyState == 4) {
+            // Handle any error response from update_pass.php
+            alert('Error occurred while updating the password. Please try again.');
+        }
+    };
+
+    // Sending email and new password for updating
+    xhr.send('email=' + encodeURIComponent(email) + '&new_password=' + encodeURIComponent(new_password));
 }
+
 
 </script>
 <script>
