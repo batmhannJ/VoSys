@@ -239,13 +239,13 @@ if (isset($voter['id'])) {
                                     
                                         echo '
                                          <li>
-                                    <label for="' . $inputId . '" style="cursor: pointer;">
-                                        ' . $input . '
-                                        <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="clist candidate-image">
-                                        <span class="cname">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span>
-                                    </label>
-                                    <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" data-platform="' . $crow['platform'] . '" data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">PLATFORM</button>
-                                </li>';
+                                <label for="' . $inputId . '" style="cursor: pointer;">
+                                    ' . $input . '
+                                    <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="clist candidate-image">
+                                    <span class="cname">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span>
+                                </label>
+                                <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" data-platform="' . $crow['platform'] . '" data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">PLATFORM</button>
+                            </li>';
                                     }                                    
                                     
                                 echo '</ul>
