@@ -651,11 +651,11 @@ function validateOTP(email, otp, new_password) {
                     changePassword(email, new_password);
                 } else {
                     // OTP is incorrect, show the error message and do not change the password
-                    alert(response.message);
+                    alert(response.message); // Display the error message from the server
                 }
             } else {
-                // Something went wrong with the request
-                alert('Error occurred. Please try again.');
+                // Handle any errors in the request itself
+                alert('Error occurred while validating OTP. Please try again.');
             }
         }
     };

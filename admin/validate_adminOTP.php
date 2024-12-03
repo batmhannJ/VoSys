@@ -11,17 +11,19 @@ if (isset($_POST['email']) && isset($_POST['otp'])) {
         die("Database connection failed: " . mysqli_connect_error());
     }
 
-    // Assuming you have an OTP stored in a separate table or need to validate against the admin table
-    // Adjust query if the OTP is stored in the admin table or another table
-    $query = "SELECT * FROM otp_verifcation WHERE email = ? AND otp = ?";  // Assuming OTP is in the admin table
+    // Query to check if OTP is correct
+    $query = "SELECT * FROM otp_verifcation WHERE email = ? AND otp = ?"; // Assuming OTP is in the otp_verifcation table
     $stmt = mysqli_prepare($connection, $query);
     if (!$stmt) {
         die("Prepare statement failed: " . mysqli_error($connection));
     }
+
+    // Bind parameters and execute the statement
     mysqli_stmt_bind_param($stmt, "ss", $email, $otp);
     if (!mysqli_stmt_execute($stmt)) {
         die("Execute statement failed: " . mysqli_error($connection));
     }
+
     $result = mysqli_stmt_get_result($stmt);
 
     // Check if OTP is correct
@@ -43,6 +45,9 @@ if (isset($_POST['email']) && isset($_POST['otp'])) {
     exit(); // Make sure to exit after sending the JSON response
 } else {
     // If email or OTP parameter is missing
-    die('Missing email or OTP parameter');
+    $response = array("status" => "error", "message" => "Missing email or OTP parameter");
+    header('Content-Type: application/json');
+    echo json_encode($response);
+    exit();
 }
 ?>
