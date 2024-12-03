@@ -239,13 +239,15 @@ if (isset($voter['id'])) {
                                     
                                         echo '
                                         <li>
-                                            <label for="'.$inputId.'" style="cursor: pointer;">
-                                                '.$input.'
-                                                <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
-                                                <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
-                                            </label>
-                                            <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
-                                        </li>';
+                                        <div class="candidate-card">
+                                            <img src="path/to/image.jpg" alt="Candidate Name" class="candidate-image">
+                                            <div class="candidate-details">
+                                                <span class="cname">Candidate Name</span>
+                                                <button type="button" class="btn btn-primary btn-sm btn-flat platform" data-platform="Platform Details" data-fullname="Candidate Name">PLATFORM</button>
+                                            </div>
+                                            <input type="hidden" name="candidate" value="candidate_id"> <!-- Hidden input for selection -->
+                                        </div>
+                                    </li>';
                                     }                                    
                                     
                                 echo '</ul>
@@ -542,6 +544,58 @@ if (isset($voter['id'])) {
 .candidate-list li:hover {
     transform: scale(1.02); /* Slightly enlarge the entire container */
 }
+/* Container style for candidate */
+.candidate-card {
+    display: flex;
+    flex-direction: column; /* Arrange items vertically */
+    align-items: center; /* Center the image, name, and button */
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    cursor: pointer; /* Make the whole card clickable */
+    background-color: #f9f9f9; /* Default background */
+}
+
+/* Candidate image */
+.candidate-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    transition: transform 0.3s;
+}
+
+/* Candidate name and platform button container */
+.candidate-details {
+    text-align: center; /* Center-align name and button */
+    margin-top: 10px;
+}
+
+.cname {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Button styling */
+.platform {
+    background-color: darkgreen;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+/* Hover and selection effects */
+.candidate-card:hover {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.candidate-card.selected {
+    border-color: darkgreen; /* Highlight the selected card */
+    background-color: #eaf7ea; /* Optional: light green background */
+}
+
 
 
 /* Media query para sa mas maliit na mga screen */
