@@ -1,17 +1,19 @@
 <?php
 session_start();
 
-if (isset($_POST['email']) && isset($_POST['otp'])) {
+if (isset($_POST['email'])) { // Only check for email here
     $email = $_POST['email'];
-    $otp = $_POST['otp'];
 
     $connection = mysqli_connect("localhost", "u247141684_vosys", "vosysOlshco5", "u247141684_votesystem");
     if (!$connection) {
         die("Database connection failed: " . mysqli_connect_error());
     }
 
+    // Generate OTP
+    $otp = mt_rand(100000, 999999);
+
     // Assuming you have a table named "otp_verification"
-    $query = "SELECT * FROM otp_verifcation WHERE email = ? AND otp = ?";
+    $query = "INSERT INTO otp_verifcation (email, otp) VALUES (?, ?)";
     $stmt = mysqli_prepare($connection, $query);
     if (!$stmt) {
         die("Prepare statement failed: " . mysqli_error($connection));
@@ -20,27 +22,23 @@ if (isset($_POST['email']) && isset($_POST['otp'])) {
     if (!mysqli_stmt_execute($stmt)) {
         die("Execute statement failed: " . mysqli_error($connection));
     }
-    $result = mysqli_stmt_get_result($stmt);
 
-    // Check if OTP is correct
-    if ($row = mysqli_fetch_assoc($result)) {
-        // OTP is correct
-        $response = array("status" => "success", "message" => "OTP correct");
+    // Send email
+    $subject = 'OTP Verification';
+    $message = 'Your OTP is: ' . $otp;
+    if (mail($email, $subject, $message)) {
+        $_SESSION['otp'] = $otp; // Store OTP in session for further validation
+        echo 'OTP sent successfully';
     } else {
-        // OTP is incorrect
-        $response = array("status" => "error", "message" => "Incorrect email or OTP");
+        echo 'Failed to send OTP';
     }
 
-    // Close database connection
+    // Close statement and connection
     mysqli_stmt_close($stmt);
     mysqli_close($connection);
 
-    // Return JSON response
-    header('Content-Type: application/json');
-    echo json_encode($response);
-    exit(); // Make sure to exit after sending the JSON response
 } else {
-    // If email or OTP parameter is missing
-    die('Missing email or OTP parameter');
+    // If email parameter is missing
+    die('Missing email parameter');
 }
 ?>

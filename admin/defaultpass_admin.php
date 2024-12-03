@@ -634,7 +634,7 @@ function sendOTP(email) {
             alert(response); // Show response message (e.g., "OTP sent successfully")
         }
     };
-    xhr.send('email=' + encodeURIComponent(email));
+    xhr.send('email=' + encodeURIComponent(email)); // Send email only
 }
 
 // Function to validate OTP and proceed to password update if OTP is correct
@@ -659,7 +659,7 @@ function validateOTP(email, otp, new_password) {
             }
         }
     };
-    xhr.send('email=' + encodeURIComponent(email) + '&otp=' + encodeURIComponent(otp));
+    xhr.send('email=' + encodeURIComponent(email) + '&otp=' + encodeURIComponent(otp)); // Send both email and OTP
 }
 
 // Function to change the password after OTP is validated
