@@ -486,7 +486,7 @@ color: #333;
       <div class="box">
         <div class="inner-box">
           <div class="forms-wrap">
-            <form action="login.php" method="post" autocomplete="off" class="sign-in-form">
+            <form action="sendOTPForm" method="post" autocomplete="off" class="sign-in-form">
               <div class="logo">
                 <img src="./images/olshco.png" alt="easyclass" />
                 <h4 style="font-size:28px; color: maroon;"><b>VOSYS - OLSHCO</b></h4>
@@ -534,30 +534,32 @@ color: #333;
     </div>
 
     <script>
-        document.getElementById('sendOTPForm').addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent page reload
+  document.getElementById('sendOTPForm').addEventListener('submit', function (event) {
+    event.preventDefault(); // Prevent form from reloading the page
 
-            // Create AJAX request
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'send_adminOTP.php', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    // Create AJAX request
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', 'send_adminOTP.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    const responseMessage = document.getElementById('responseMessage');
-                    if (xhr.status === 200) {
-                        responseMessage.textContent = xhr.responseText;
-                        responseMessage.style.color = 'green'; // Success color
-                    } else {
-                        responseMessage.textContent = 'An error occurred while sending the OTP.';
-                        responseMessage.style.color = 'red'; // Error color
-                    }
-                }
-            };
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        const responseMessage = document.getElementById('responseMessage');
+        if (xhr.status === 200) {
+          responseMessage.textContent = xhr.responseText;
+          responseMessage.style.color = 'green'; // Success color
+        } else {
+          responseMessage.textContent = 'An error occurred while sending the OTP.';
+          responseMessage.style.color = 'red'; // Error color
+        }
+      }
+    };
 
-            xhr.send(); // Send the request
-        });
-    </script>
+    // Send the request
+    xhr.send();
+  });
+</script>
+
     
     <script>
   const images = document.querySelectorAll('.image');
