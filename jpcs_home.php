@@ -217,38 +217,35 @@ if (isset($voter['id'])) {
                                         $checked = '';
                                         if(isset($_SESSION['post'][$slug])){
                                             $value = $_SESSION['post'][$slug];
-                                    
                                             if(is_array($value)){
                                                 foreach($value as $val){
                                                     if($val == $crow['id']){
                                                         $checked = 'checked';
                                                     }
                                                 }
-                                            }
-                                            else{
+                                            } else {
                                                 if($value == $crow['id']){
                                                     $checked = 'checked';
                                                 }
                                             }
                                         }
-                                    
                                         $inputId = $slug.'_'.$crow['id']; // Generate a unique ID for the input
-                                        $input = ($row['max_vote'] > 1) ? 
-                                            '<input type="checkbox" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : 
-                                            '<input type="radio" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
-                                    
                                         $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
                                     
                                         echo '
-                                        <li>
-                                            <label for="'.$inputId.'" style="cursor: pointer;">
-                                                '.$input.'
+                                        <li class="candidate-item">
+                                            <input type="'.($row['max_vote'] > 1 ? 'checkbox' : 'radio').'" 
+                                                   id="'.$inputId.'" 
+                                                   class="flat-red '.$slug.'" 
+                                                   name="'.($row['max_vote'] > 1 ? $slug."[]" : $slug).'" 
+                                                   value="'.$crow['id'].'" 
+                                                   '.$checked.'>
+                                            <label for="'.$inputId.'" class="candidate-label">
                                                 <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
                                                 <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
                                             </label>
-                                            <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
                                         </li>';
-                                    }                                    
+                                    }        
                                     
                                 echo '</ul>
                             </div>
@@ -485,6 +482,7 @@ if (isset($voter['id'])) {
 }
 
 /* Style for the candidate list */
+/* Style for the candidate list */
 .candidate-list ul {
     list-style-type: none;
     padding: 0;
@@ -492,27 +490,43 @@ if (isset($voter['id'])) {
 
 /* Bagong istilo para sa mga item sa listahan ng mga kandidato */
 .candidate-list li {
-    display: flex; /* Baguhin ang display sa flex */
-    flex-wrap: wrap; /* Pahintulutan ang pag-wrap ng mga item sa loob ng flex container */
-    justify-content: space-between; /* I-set ang mga item na sa layong pare-pareho */
-    align-items: center; /* I-align ang mga item sa gitna */
-    border-radius: 10px; /* Radius ng border */
-    padding: 10px; /* Padding para sa mga item */
-    margin-bottom: 10px; /* Espasyo sa pagitan ng mga item */
-    background-color: #f9f9f9; /* Kulay ng background */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Shadow para sa depth */
-    border: 2px solid #ccc; /* Add border */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ccc;
+    cursor: pointer; /* Make the entire item clickable */
+    transition: border-color 0.3s, transform 0.3s; /* Smooth effects */
 }
+
 .candidate-list li img {
-        width: 100px; /* I-adjust ang lapad ng mga larawan para sa mas maliit na screen */
-        height: 100px; /* I-adjust ang taas ng mga larawan para sa mas maliit na screen */
-        border-radius: 8px; /* Rounded corners for images */
-        transition: transform 0.3s; /* Add transition effect */
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .candidate-list li:hover img {
-    transform: scale(1.1); /* Make the image slightly larger on hover */
+    transform: scale(1.1);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
+
+/* Add style for selected candidate */
+.candidate-list li.selected {
+    border: 2px solid darkgreen; /* Highlight with green border */
+    background-color: #eaf7ea; /* Optional: light green background */
+}
+
+/* Optional hover effect for the whole container */
+.candidate-list li:hover {
+    transform: scale(1.02); /* Slightly enlarge the entire container */
+}
+
 
 /* Media query para sa mas maliit na mga screen */
 @media (max-width: 768px) {
