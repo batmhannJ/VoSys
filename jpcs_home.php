@@ -300,16 +300,29 @@ if (isset($voter['id'])) {
 
 <?php include 'includes/scripts.php'; ?>
 <script>
-    document.querySelectorAll('.candidate-item').forEach(item => {
-    item.addEventListener('click', function () {
-        const input = this.querySelector('.hidden-radio');
-        if (input) {
-            input.checked = true;
+   document.querySelectorAll('.candidate-item').forEach(item => {
+    item.addEventListener('click', function (event) {
+        // Check if the clicked element is NOT the Platform button
+        if (!event.target.classList.contains('platform-btn')) {
+            const input = this.querySelector('.hidden-radio');
+            if (input) {
+                input.checked = true;
+            }
+            document.querySelectorAll('.candidate-item').forEach(c => c.classList.remove('selected'));
+            this.classList.add('selected');
         }
-        document.querySelectorAll('.candidate-item').forEach(c => c.classList.remove('selected'));
-        this.classList.add('selected');
     });
 });
+
+// Separate event listener for the Platform button
+document.querySelectorAll('.platform-btn').forEach(button => {
+    button.addEventListener('click', function (event) {
+        event.stopPropagation(); // Prevent the click from propagating to the parent container
+        // Handle platform button logic (e.g., show platform details)
+        alert(`Platform details for ${this.dataset.fullname}: ${this.dataset.platform}`);
+    });
+});
+
 </script>
 <script>
     function updateCountdown(endTime) {
