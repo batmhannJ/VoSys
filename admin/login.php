@@ -36,9 +36,7 @@ if (isset($_POST['login'])) {
 
             // Check if reCAPTCHA verification was successful
             if ($responseData && $responseData['success']) {
-                // reCAPTCHA verification passed, continue with login logic
 
-                // Prepare and execute a parameterized query to fetch admin information
                 $sql = "SELECT * FROM admin WHERE username = ?";
                 $stmt = $conn->prepare($sql);
                 $stmt->bind_param("s", $username);
