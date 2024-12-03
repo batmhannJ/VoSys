@@ -6,14 +6,14 @@ if (isset($_POST['email']) && isset($_POST['otp'])) {
     $otp = $_POST['otp'];
 
     // Assuming you have a database connection established
-    // Replace this with your actual database connection code
     $connection = mysqli_connect("localhost", "u247141684_vosys", "vosysOlshco5", "u247141684_votesystem");
     if (!$connection) {
         die("Database connection failed: " . mysqli_connect_error());
     }
 
-    // Assuming you have a table named "otp_verification"
-    $query = "SELECT * FROM otp_verifcation WHERE email = ? AND otp = ?";
+    // Assuming you have an OTP stored in a separate table or need to validate against the admin table
+    // Adjust query if the OTP is stored in the admin table or another table
+    $query = "SELECT * FROM admin WHERE email = ? AND otp = ?";  // Assuming OTP is in the admin table
     $stmt = mysqli_prepare($connection, $query);
     if (!$stmt) {
         die("Prepare statement failed: " . mysqli_error($connection));
