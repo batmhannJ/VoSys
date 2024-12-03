@@ -497,7 +497,7 @@ color: #333;
                 <hr>
               </div>
 
-              <button type="submit" class="sign-btn">Send Reset Password Token</button>
+              <button type="submit" class="sign-btn" style="font-size:15px;">Send Reset Password Token</button>
                 <div id="responseMessage"></div>
 
                 <div class="form-group has-feedback">
