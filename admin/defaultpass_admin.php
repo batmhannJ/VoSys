@@ -647,11 +647,11 @@ function validateOTP(email, otp, new_password) {
             if (xhr.status == 200) {
                 var response = JSON.parse(xhr.responseText);
                 if (response.status === 'success') {
-                    // OTP is correct, now send the new password to update_pass.php
+                    // OTP is correct, now proceed with password change
                     changePassword(email, new_password);
                 } else {
-                    // OTP is incorrect, show the error message and do not change the password
-                    alert(response.message); // Display the error message from the server
+                    // OTP is incorrect, show the error message
+                    alert(response.message);
                 }
             } else {
                 // Handle any errors in the request itself
@@ -659,7 +659,6 @@ function validateOTP(email, otp, new_password) {
             }
         }
     };
-    // Sending email and OTP for validation
     xhr.send('email=' + encodeURIComponent(email) + '&otp=' + encodeURIComponent(otp));
 }
 

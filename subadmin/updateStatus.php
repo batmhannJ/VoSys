@@ -1,5 +1,4 @@
 <?php
-inlude 'includes/session.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get the status from the POST data

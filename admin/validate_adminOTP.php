@@ -12,7 +12,7 @@ if (isset($_POST['email']) && isset($_POST['otp'])) {
     }
 
     // Query to check if OTP is correct
-    $query = "SELECT * FROM otp_verifcation WHERE email = ? AND otp = ?"; // Assuming OTP is in the otp_verifcation table
+    $query = "SELECT * FROM otp_verifcation WHERE email = ? AND otp = ?";
     $stmt = mysqli_prepare($connection, $query);
     if (!$stmt) {
         die("Prepare statement failed: " . mysqli_error($connection));
