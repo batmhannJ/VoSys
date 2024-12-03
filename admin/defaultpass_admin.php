@@ -626,7 +626,7 @@ main.sign-up-mode .carousel {
 
 function sendOTP(email) {
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'send_otp.php', true);
+    xhr.open('POST', 'send_adminOTP.php', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onreadystatechange = function() {
         if (xhr.readyState == 4 && xhr.status == 200) {
