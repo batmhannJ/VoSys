@@ -300,25 +300,24 @@ if (isset($voter['id'])) {
 
 <?php include 'includes/scripts.php'; ?>
 <script>
-   document.querySelectorAll('.candidate-item').forEach(item => {
-    item.addEventListener('click', function (event) {
-        // Check if the clicked element is NOT the Platform button
-        if (!event.target.classList.contains('platform-btn')) {
-            const input = this.querySelector('.hidden-radio');
-            if (input) {
-                input.checked = true;
-            }
-            document.querySelectorAll('.candidate-item').forEach(c => c.classList.remove('selected'));
-            this.classList.add('selected');
+   document.querySelectorAll('.candidate-label').forEach(label => {
+    label.addEventListener('click', function () {
+        const container = this.closest('.candidate-item');
+        const input = container.querySelector('.hidden-radio');
+        if (input) {
+            input.checked = true;
         }
+
+        // Highlight the selected candidate
+        document.querySelectorAll('.candidate-item').forEach(c => c.classList.remove('selected'));
+        container.classList.add('selected');
     });
 });
 
-// Separate event listener for the Platform button
 document.querySelectorAll('.platform-btn').forEach(button => {
     button.addEventListener('click', function (event) {
-        event.stopPropagation(); // Prevent the click from propagating to the parent container
-        // Handle platform button logic (e.g., show platform details)
+        event.stopPropagation(); // Prevent the click from propagating to the parent label
+        // Handle platform button logic
         alert(`Platform details for ${this.dataset.fullname}: ${this.dataset.platform}`);
     });
 });
