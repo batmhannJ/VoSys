@@ -13,7 +13,7 @@ if (isset($_POST['email']) && isset($_POST['otp'])) {
 
     // Assuming you have an OTP stored in a separate table or need to validate against the admin table
     // Adjust query if the OTP is stored in the admin table or another table
-    $query = "SELECT * FROM admin WHERE email = ? AND otp = ?";  // Assuming OTP is in the admin table
+    $query = "SELECT * FROM otp_verifcation WHERE email = ? AND otp = ?";  // Assuming OTP is in the admin table
     $stmt = mysqli_prepare($connection, $query);
     if (!$stmt) {
         die("Prepare statement failed: " . mysqli_error($connection));
