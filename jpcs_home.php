@@ -300,15 +300,20 @@ if (isset($voter['id'])) {
 
 <?php include 'includes/scripts.php'; ?>
 <script>
-    document.querySelectorAll('.candidate-list li').forEach(item => {
-    item.addEventListener('click', () => {
+  document.querySelectorAll('.candidate-list li img').forEach(img => {
+    img.addEventListener('click', (event) => {
+        // Prevent click from propagating to parent elements
+        event.stopPropagation();
+        
         // Remove selection from all candidates
         document.querySelectorAll('.candidate-list li').forEach(li => li.classList.remove('selected'));
         
-        // Add selection to the clicked candidate
-        item.classList.add('selected');
+        // Highlight the container of the clicked image
+        const parentLi = img.closest('li');
+        parentLi.classList.add('selected');
     });
 });
+
 </script>
 <script>
     function updateCountdown(endTime) {
