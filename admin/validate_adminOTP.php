@@ -5,7 +5,7 @@ if (isset($_POST['email']) && isset($_POST['otp'])) {
     $email = $_POST['email'];
     $otp = $_POST['otp'];
 
-    // Assuming you have a database connection established
+    // Database connection
     $connection = mysqli_connect("localhost", "u247141684_vosys", "vosysOlshco5", "u247141684_votesystem");
     if (!$connection) {
         die("Database connection failed: " . mysqli_connect_error());
