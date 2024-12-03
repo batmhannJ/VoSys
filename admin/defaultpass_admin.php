@@ -661,6 +661,8 @@ main.sign-up-mode .carousel {
     xhr.send('email=' + encodeURIComponent(email) + '&otp=' + encodeURIComponent(otp));
 }
 
+
+
 // Inside the changePassword function
 function changePassword(email, new_password) {
 var xhr = new XMLHttpRequest();
