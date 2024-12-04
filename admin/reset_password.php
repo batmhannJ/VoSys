@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute();
 
     $_SESSION['success'] = "Password successfully updated.";
-    header("Location: defaultpass_admin.php");
+    header("Location: reset_success.php");
     exit;
 }
 ?>
