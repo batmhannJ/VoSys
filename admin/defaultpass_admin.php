@@ -506,20 +506,6 @@ main.sign-up-mode .carousel {
                 <hr>
               </div>
 
-              <div class="actual-form has-feedback">
-                 <div class="input-wrap">
-                  <input
-                    type="email"
-                    minlength="4"
-                    class="input-field"
-                    name="email"
-                    placeholder="Email" style="font-size: 15px;"
-                    required
-                  />
-                    <span class="form-control-feedback"></span>
-                  <label style="font-size:15px;"></label>
-                </div>
-
                 <div class="input-wrap">
                   <input
                     type="password"
@@ -551,27 +537,11 @@ main.sign-up-mode .carousel {
                   <i class="fa fa-fw fa-eye togglePassword" id="togglePassword1"></i>
                   <span class="form-control-feedback"></span>
                 </div>
-
-                <div class="input-wrap" style="display: flex;">
-                  <input
-                    type="number"
-                    minlength="6"
-                    class="input-field"
-                    id="otp"
-                    name="otp"
-                    placeholder="Enter OTP" style="font-size: 15px; flex-grow: 1;"
-                    required
-                  />
-                    <span class="form-control-feedback"></span>
-                  <label style="font-size:15px;"></label>
-                  <input type="button" name="sendOTP" id="sendOTP" value="Send OTP" class="sign-btn" style="width: 100px; font-size:15px; background-color: grey;">
-                </div>
             </div>
 
                 <!--<input type="submit" name="sendOTP" id="sendOTP" value="Send OTP" class="sign-btn" style="font-size:15px; background-color: grey;">-->
                 <input type="submit" name="login" value="Change Password" class="sign-btn" style="font-size:15px;">
-                <input type="button" value="Back to Login" class="back-btn" style="font-size:15px;" onclick="window.location.href = 'index.php';">
-
+                
                         <?php
                 if (isset($_SESSION['error'])) {
                     echo "
@@ -604,96 +574,7 @@ main.sign-up-mode .carousel {
 
         </div>
     </div>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('sendOTP').addEventListener('click', function() {
-        var email = document.querySelector('input[name="email"]').value; // Get email value from input field
-        sendOTP(email);
-    });
-
-    // Handle form submission
-    document.getElementById('forgotPasswordForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission behavior
-
-        var email = document.querySelector('input[name="email"]').value;
-        var otp = document.querySelector('input[name="otp"]').value;
-        var new_password = document.querySelector('input[name="new_password"]').value;
-
-        // Validate OTP before trying to change the password
-        validateOTP(email, otp, new_password);
-    });
-});
-
-function sendOTP(email) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'send_adminOTP.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            var response = xhr.responseText;
-            alert(response); // Show response message (e.g., "OTP sent successfully")
-        }
-    };
-    xhr.send('email=' + encodeURIComponent(email)); // Send email only
-}
-
-// Function to validate OTP and proceed to password update if OTP is correct
-function validateOTP(email, otp, new_password) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'validate_adminOTP.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4) {
-            if (xhr.status == 200) {
-                var response = JSON.parse(xhr.responseText);
-                if (response.status === 'success') {
-                    // OTP is correct, now proceed with password change
-                    changePassword(email, new_password);
-                } else {
-                    // OTP is incorrect, show the error message
-                    alert(response.message);
-                }
-            } else {
-                // Handle any errors in the request itself
-                alert('Error occurred while validating OTP. Please try again.');
-            }
-        }
-    };
-    xhr.send('email=' + encodeURIComponent(email) + '&otp=' + encodeURIComponent(otp)); // Send both email and OTP
-}
-
-// Function to change the password after OTP is validated
-function changePassword(email, new_password) {
-    // Check if the password is not empty before proceeding
-    if (!new_password) {
-        alert('Password cannot be empty.');
-        return;
-    }
-
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'update_pass.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            var response = JSON.parse(xhr.responseText);
-            // Handle the response from update_pass.php
-            alert(response.message); // Show the response message from the server
-
-            // If the password update is successful, redirect to the login page
-            if (response.status === 'success') {
-                window.location.href = 'index.php'; // Redirect to the desired page
-            }
-        } else if (xhr.readyState == 4) {
-            // Handle any error response from update_pass.php
-            alert('Error occurred while updating the password. Please try again.');
-        }
-    };
-
-    // Sending email and new password for updating
-    xhr.send('email=' + encodeURIComponent(email) + '&new_password=' + encodeURIComponent(new_password));
-}
-
-</script>
+    
 <script>
   const images = document.querySelectorAll('.image');
   let currentIndex = 0;
