@@ -494,11 +494,31 @@ color: #333;
                     </div>
 
                     <div class="heading">
-                        <center><h2>Return to Admin Page</h2></center>
+                        <center><h2>Update Successfully</h2></center>
                         <hr>
                     </div>
-                    <input type="button" value="Back to Login" class="back-btn" style="font-size:15px;" onclick="window.location.href = 'index.php';">
+                    <input type="button" value="Back to Admins Login Page" class="back-btn" style="font-size:15px;" onclick="window.location.href = 'index.php';">
                 </form>
+
+                <!-- Display session messages -->
+                <?php
+                if (isset($_SESSION['error'])) {
+                    echo "
+                        <div class='callout callout-danger text-center mt20' style='width: 300px; margin: 0 auto;'>
+                            <p>" . $_SESSION['error'] . "</p> 
+                        </div>
+                    ";
+                    unset($_SESSION['error']);
+                }
+                if (isset($_SESSION['success'])) {
+                    echo "
+                        <div class='callout callout-success text-center mt20' style='width: 300px; margin: 0 auto;'>
+                            <p>" . $_SESSION['success'] . "</p> 
+                        </div>
+                    ";
+                    unset($_SESSION['success']);
+                }
+                ?>
             </div>
         </div>
 
