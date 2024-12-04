@@ -27,12 +27,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $row = $result->fetch_assoc();
-    $email = $row['email'];
+    $email = $row['email']; // You still need to retrieve email to check the token
 
-    // Update password in the admin table
+    // Update password in the admin table without using email
     $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
-    $stmt = $conn->prepare("UPDATE admin SET password = ? WHERE organization = 'OSAadmin' AND email = ?");
-    $stmt->bind_param("ss", $hashedPassword, $email);
+    $stmt = $conn->prepare("UPDATE admin SET password = ? WHERE organization = 'OSAadmin'");
+    $stmt->bind_param("s", $hashedPassword);
     $stmt->execute();
 
     // Delete token after resetting the password
