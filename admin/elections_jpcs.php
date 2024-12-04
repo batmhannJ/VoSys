@@ -73,9 +73,9 @@
             '</td>';
             if ($row['status'] === 0) {
               echo '<td><a href="#" name="status" class="btn badge rounded-pill btn-secondary election-status" data-id="' . $row['id'] . '" data-status="1" data-name="Activate">Not active</a></td>';
-            } else {
+          } else {
               echo '<td><a href="#" name="status" class="btn badge rounded-pill btn-success election-status" data-id="' . $row['id'] . '" data-status="0" data-name="Deactivate">Active</a></td>';
-            }
+          }
             echo '<td class="text-center">
                         <a href="#" class="btn btn-primary btn-sm edit btn-flat" data-bs-toggle="modal" data-bs-target="#editElection" data-id="' . $row['id'] . '">Edit</a>
                         <a href="#" class="btn btn-danger btn-sm delete btn-flat" data-bs-toggle="modal" data-bs-target="#deleteElection" data-id="' . $row['id'] . '" data-name="' . $row['title'] . '">Delete</a></td>
@@ -143,40 +143,71 @@ function getRow(id){
 
     var electionId = $(this).data('id');
     var status = $(this).data('status');
-    var statusName = $(this).data('name'); // Corrected attribute name
+    var statusName = $(this).data('name');
 
-    var confirmed = confirm('Are you sure you want to ' + statusName + ' this Election?');
+    $('#statusMessage').text('Do you want to ' + statusName + ' this Election?');
+    $('#election_id').val(electionId);
+    $('#status').val(status);
 
-    if (confirmed) {
-        $.ajax({
-            type: 'POST',
-            url: 'change_status.php',
-            data: {
-                election_id: electionId,
-                status: status
-            },
-            dataType: 'json',
-            beforeSend: function() {
-                showLoadingOverlay();
-            },
-            success: function(response) {
-                if (response.success) {
-                    location.reload(); // Reload page after successful update
-                } else {
-                    toastr.error('Failed to update status.');
-                }
-                hideLoadingOverlay();
-            },
-            error: function(xhr, status, error) {
-                console.error('AJAX Error:', error);
-                toastr.error('An error occurred. Please try again.');
-                hideLoadingOverlay();
-            }
-        });
-    } else {
-        toastr.info('Status change canceled.');
-    }
+    $('#statusModal').modal('show');
 });
 
+$('#statusForm').on('submit', function(e) {
+    e.preventDefault();
+
+    var formData = $(this).serialize();
+
+    $.ajax({
+        type: 'POST',
+        url: 'change_status.php',
+        data: formData,
+        dataType: 'json',
+        success: function(response) {
+            if (response.success) {
+                $('#statusModal').modal('hide');
+                location.reload(); // Reload the page after success
+            } else {
+                toastr.error('Failed to update status.');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('AJAX Error:', error);
+            toastr.error('An error occurred. Please try again.');
+        }
+    });
+});
 </script>
+
+<div class="modal fade" id="statusModal" tabindex="-1" role="dialog" aria-labelledby="statusModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="statusModalLabel">Change Election Status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="statusForm">
+                <div class="modal-body">
+                    <p id="statusMessage"></p>
+                    <div class="form-group">
+                        <label for="starttime">Start Time</label>
+                        <input type="datetime-local" class="form-control" id="starttime" name="starttime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="endtime">End Time</label>
+                        <input type="datetime-local" class="form-control" id="endtime" name="endtime" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Yes, Change Status</button>
+                </div>
+                <input type="hidden" id="election_id" name="election_id">
+                <input type="hidden" id="status" name="status">
+            </form>
+        </div>
+    </div>
+</div>
+
 </body>
