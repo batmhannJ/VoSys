@@ -1,4 +1,10 @@
 <?php include 'includes/session.php'; ?>
+<?php
+if (!isset($user) || empty($user)) {
+    die("Error: Unauthorized access. Admin session invalid.");
+}
+?>
+
   <?php include 'includes/header.php'; ?>
   <body class="hold-transition skin-blue sidebar-mini">
   <div class="wrapper">
