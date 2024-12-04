@@ -7,15 +7,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Generate token
     $token = bin2hex(random_bytes(16));
 
-    // (Optional) Add logic to save the token in the database or handle reset requests.
+    // URL for "Yes, it is me"
+    $resetLink = "http://vosys.org/admin/reset_password.php?token=$token";
+    
+    // URL for "Deny"
+    $denyLink = "http://vosys.org/admin/deny_reset.php?email=$fixedEmail";
 
-    // Send email
-    $resetLink = "http://vosys/admin/reset_password.php?token=$token";
+    // Email content
     $subject = "Reset Your Password";
-    $message = "Click the link below to reset your password:\n\n";
-    $message .= "$resetLink\n\n";
-    $message .= "If you did not request this, you can safely ignore this email.";
-    $headers = "From: no-reply@yourwebsite.com";
+    $message = "
+        <html>
+        <head>
+            <title>Reset Your Password</title>
+        </head>
+        <body>
+            <p>Someone requested a password reset for your account. If this was you, click the button below:</p>
+            <a href='$resetLink' style='
+                display: inline-block;
+                background-color: #4CAF50;
+                color: white;
+                text-decoration: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                font-size: 16px;
+            '>Yes, it is me</a>
+            <br><br>
+            <p>If you did not request this, click the button below to deny the request:</p>
+            <a href='$denyLink' style='
+                display: inline-block;
+                background-color: #f44336;
+                color: white;
+                text-decoration: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                font-size: 16px;
+            '>Deny</a>
+        </body>
+        </html>
+    ";
+
+    // Email headers
+    $headers = "MIME-Version: 1.0" . "\r\n";
+    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+    $headers .= "From: VoSysTeam";
 
     if (mail($fixedEmail, $subject, $message, $headers)) {
         $_SESSION['success'] = "A reset link has been sent to your email.";
