@@ -495,69 +495,64 @@ main.sign-up-mode .carousel {
       <div class="box">
         <div class="inner-box">
           <div class="forms-wrap">
-            <form id="forgotPasswordForm" autocomplete="off" class="sign-in-form">
-              <div class="logo">
-                <img src="./images/olshco.png" alt="easyclass" />
-                <h4 style="font-size:28px; color: maroon;"><b>VOSYS - OLSHCO</b></h4>
-              </div>
+          <form action="reset_password.php" method="post" autocomplete="off" class="sign-in-form">
+                    <div class="logo">
+                        <img src="./images/olshco.png" alt="easyclass" />
+                        <h4 style="font-size:28px; color: maroon;"><b>VOSYS - OLSHCO</b></h4>
+                    </div>
 
-              <div class="heading">
-                <center><h2>Forgot Password</h2></center>
-                <hr>
-              </div>
+                    <div class="heading">
+                        <center><h2>Reset Password</h2></center>
+                        <hr>
+                    </div>
 
-                <div class="input-wrap">
-                  <input
-                    type="password"
-                    minlength="8"
-                    class="input-field"
-                    id="new_password"
-                    name="new_password"
-                    placeholder="New Password" style="font-size: 15px;"
-                    required
-                  />
-                    <span class="form-control-feedback"></span>
-                  <label style="font-size:15px;"></label>
-                  <i class="fa fa-fw fa-eye togglePassword" id="togglePassword"></i>
-                  <span class="form-control-feedback"></span>
-                </div>
+                    <input type="hidden" name="token" value="<?php echo htmlspecialchars($_GET['token'] ?? ''); ?>">
 
-                <div class="input-wrap">
-                  <input
-                    type="password"
-                    minlength="8"
-                    class="input-field"
-                    id="confirm_password"
-                    name="confirm_password"
-                    placeholder="Confirm Password" style="font-size: 15px;"
-                    required
-                  />
-                    <span class="form-control-feedback"></span>
-                  <label style="font-size:15px;"></label>
-                  <i class="fa fa-fw fa-eye togglePassword" id="togglePassword1"></i>
-                  <span class="form-control-feedback"></span>
-                </div>
-            </div>
+                    <div class="input-wrap">
+                        <input
+                            type="password"
+                            minlength="8"
+                            class="input-field"
+                            id="new_password"
+                            name="new_password"
+                            placeholder="New Password"
+                            required
+                        />
+                        <i class="fa fa-fw fa-eye togglePassword"></i>
+                    </div>
 
-                <!--<input type="submit" name="sendOTP" id="sendOTP" value="Send OTP" class="sign-btn" style="font-size:15px; background-color: grey;">-->
-                <input type="submit" name="login" value="Change Password" class="sign-btn" style="font-size:15px;">
-                
-                        <?php
-                if (isset($_SESSION['error'])) {
-                    echo "
-                        <div class='callout callout-danger text-center mt20' style='width: 300px; margin: 0 auto;'>
-                            <p>" . $_SESSION['error'] . "</p> 
-                        </div>
-                    ";
-                    unset($_SESSION['error']);
-                }
-                ?>
-                
-              </div>
-            </form>
+                    <div class="input-wrap">
+                        <input
+                            type="password"
+                            minlength="8"
+                            class="input-field"
+                            id="confirm_password"
+                            name="confirm_password"
+                            placeholder="Confirm Password"
+                            required
+                        />
+                        <i class="fa fa-fw fa-eye togglePassword1"></i>
+                    </div>
+
+                    <input type="submit" name="change_password" value="Change Password" class="sign-btn">
+
+                    <?php
+                    if (isset($_SESSION['error'])) {
+                        echo "<div class='callout callout-danger text-center mt20'>
+                                <p>{$_SESSION['error']}</p>
+                              </div>";
+                        unset($_SESSION['error']);
+                    }
+
+                    if (isset($_SESSION['success'])) {
+                        echo "<div class='callout callout-success text-center mt20'>
+                                <p>{$_SESSION['success']}</p>
+                              </div>";
+                        unset($_SESSION['success']);
+                    }
+                    ?>
+                </form>
           </div>
-
-          
 
           <div class="carousel">
             <div class="images-wrapper">
