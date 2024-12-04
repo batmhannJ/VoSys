@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Email headers
     $headers = "MIME-Version: 1.0" . "\r\n";
     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-    $headers .= "From: VoSysTeam";
+    $headers .= "From: VoSysTeam@vosys.org";
 
     if (mail($fixedEmail, $subject, $message, $headers)) {
         $_SESSION['success'] = "A reset link has been sent to your email.";
