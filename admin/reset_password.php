@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'includes/conn.php';
+include 'includes/conn.php'; // Include your database connection
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $token = $_POST['token'];
@@ -27,12 +27,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     $row = $result->fetch_assoc();
-    $email = $row['email']; // You still need to retrieve email to check the token
+    $email = $row['email'];
 
-    // Update password in the admin table without using email
+    // Update password in the admin table
     $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
-    $stmt = $conn->prepare("UPDATE admin SET password = ? WHERE organization = 'OSAadmin'");
-    $stmt->bind_param("s", $hashedPassword);
+    $stmt = $conn->prepare("UPDATE admin SET password = ? WHERE organization = 'OSAadmin' AND email = ?");
+    $stmt->bind_param("ss", $hashedPassword, $email);
     $stmt->execute();
 
     // Delete token after resetting the password
