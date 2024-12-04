@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Update password in the admin table
     $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
-    $stmt = $conn->prepare("UPDATE admin SET password = ? WHERE organization = 'OSAadmin' AND email = ?");
+    $stmt = $conn->prepare("UPDATE admin SET password = ? WHERE organization = 'OSA' AND email = ?");
     $stmt->bind_param("ss", $hashedPassword, $email);
     $stmt->execute();
 
