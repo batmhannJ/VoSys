@@ -1,5 +1,20 @@
 <?php include 'includes/session.php'; ?>
 <?php include 'includes/header.php'; ?>
+<?php
+session_start();
+
+// Redirect users based on session
+if (isset($_SESSION['admin'])) {
+    header('location: admin/home.php');
+    exit();
+}
+
+if (isset($_SESSION['voter'])) {
+    header('location: home.php'); // Default redirect if organization is not found
+    exit();
+}
+
+?>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
