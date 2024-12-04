@@ -486,7 +486,7 @@ color: #333;
     <div class="box">
         <div class="inner-box">
             <div class="forms-wrap">
-                <!-- Update action attribute to point to send_reset_email.php -->
+                <!-- Update action to directly point to send_reset_email.php -->
                 <form action="send_reset_email.php" method="post" autocomplete="off" class="sign-in-form" id="sendOTPForm">
                     <div class="logo">
                         <img src="./images/olshco.png" alt="easyclass" />
@@ -498,12 +498,9 @@ color: #333;
                         <hr>
                     </div>
 
-                    <div class="input-group">
-                        <label for="email">Email:</label>
-                        <input type="email" name="email" id="email" placeholder="Enter your email" required>
-                    </div>
-                    
-                    <button type="submit" name="reset">Send Reset Link</button>
+                    <p>The reset link will be sent to your email.</p>
+
+                    <input type="button" name="reset" value="Send Reset Link" class="back-btn" style="font-size:15px;">
                 </form>
 
                 <!-- Display session messages -->
