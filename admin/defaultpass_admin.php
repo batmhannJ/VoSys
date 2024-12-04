@@ -509,30 +509,36 @@ main.sign-up-mode .carousel {
                     <input type="hidden" name="token" value="<?php echo htmlspecialchars($_GET['token'] ?? ''); ?>">
 
                     <div class="input-wrap">
-                        <input
-                            type="password"
-                            minlength="8"
-                            class="input-field"
-                            id="new_password"
-                            name="new_password"
-                            placeholder="New Password"
-                            required
-                        />
-                        <i class="fa fa-fw fa-eye togglePassword"></i>
-                    </div>
+                  <input
+                    type="password"
+                    minlength="8"
+                    class="input-field"
+                    id="new_password"
+                    name="new_password"
+                    placeholder="New Password" style="font-size: 15px;"
+                    required
+                  />
+                    <span class="form-control-feedback"></span>
+                  <label style="font-size:15px;"></label>
+                  <i class="fa fa-fw fa-eye togglePassword" id="togglePassword"></i>
+                  <span class="form-control-feedback"></span>
+                </div>
 
-                    <div class="input-wrap">
-                        <input
-                            type="password"
-                            minlength="8"
-                            class="input-field"
-                            id="confirm_password"
-                            name="confirm_password"
-                            placeholder="Confirm Password"
-                            required
-                        />
-                        <i class="fa fa-fw fa-eye togglePassword1"></i>
-                    </div>
+                <div class="input-wrap">
+                  <input
+                    type="password"
+                    minlength="8"
+                    class="input-field"
+                    id="confirm_password"
+                    name="confirm_password"
+                    placeholder="Confirm Password" style="font-size: 15px;"
+                    required
+                  />
+                    <span class="form-control-feedback"></span>
+                  <label style="font-size:15px;"></label>
+                  <i class="fa fa-fw fa-eye togglePassword" id="togglePassword1"></i>
+                  <span class="form-control-feedback"></span>
+                </div>
 
                     <input type="submit" name="change_password" value="Change Password" class="sign-btn">
 
