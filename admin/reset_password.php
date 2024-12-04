@@ -7,6 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $newPassword = $_POST['new_password'];
     $confirmPassword = $_POST['confirm_password'];
 
+    // Check if the passwords match
     if ($newPassword !== $confirmPassword) {
         $_SESSION['error'] = "Passwords do not match.";
         header("Location: defaultpass_admin.php?token=$token");
@@ -21,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($result->num_rows === 0) {
         $_SESSION['error'] = "Invalid token.";
-        header("Location: osa_forgotpass.php");
+        header("Location: defaultpass_admin.php?token=$token");
         exit;
     }
 
