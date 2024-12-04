@@ -497,7 +497,7 @@ color: #333;
                         <center><h2>Update Successfully</h2></center>
                         <hr>
                     </div>
-                    <input type="submit" value="Send Reset Link" class="sign-btn" style="font-size:15px;" onclick="window.location.href = 'index.php';">
+                    <input type="submit" value="Back to Admins Login Page" class="sign-btn" style="font-size:15px;" onclick="window.location.href = 'index.php';">
                 </form>
 
                 <!-- Display session messages -->
