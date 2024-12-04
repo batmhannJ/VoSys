@@ -1,5 +1,6 @@
 <?php
 session_start();
+include 'conn.php'; // Include your database connection
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fixedEmail = "reyeshannahjoy82@gmail.com";
@@ -12,6 +13,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // URL for "Deny"
     $denyLink = "http://vosys.org/admin/deny_reset.php?email=$fixedEmail";
+
+    // Add token to the database
+    $stmt = $conn->prepare("INSERT INTO password_resets (email, token) VALUES (?, ?)");
+    $stmt->bind_param("ss", $fixedEmail, $token);
+    if (!$stmt->execute()) {
+        $_SESSION['error'] = "Failed to save reset token.";
+        header("Location: osa_forgotpass.php");
+        exit;
+    }
 
     // Email content
     $subject = "Reset Your Password";

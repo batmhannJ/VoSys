@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'conn.php';
+include 'conn.php'; // Include your database connection
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $token = $_POST['token'];
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_param("ss", $hashedPassword, $email);
     $stmt->execute();
 
-    // Delete token
+    // Delete token after resetting the password
     $stmt = $conn->prepare("DELETE FROM password_resets WHERE token = ?");
     $stmt->bind_param("s", $token);
     $stmt->execute();
