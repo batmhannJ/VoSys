@@ -497,10 +497,7 @@ color: #333;
                         <center><h2>Reset Password</h2></center>
                         <hr>
                     </div>
-
-                    <p>The reset link will be sent to your email.</p>
-
-                    <input type="button" name="reset" value="Send Reset Link" class="back-btn" style="font-size:15px;">
+                    <input type="submit" name="reset" value="Send Reset Link" class="sign-btn" style="font-size:15px;">
                 </form>
 
                 <!-- Display session messages -->
@@ -537,7 +534,18 @@ color: #333;
         </div>
     </div>
 </main>
-
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        <?php if (isset($_SESSION['success'])): ?>
+            alert("<?= $_SESSION['success']; ?>");
+            <?php unset($_SESSION['success']); ?>
+        <?php endif; ?>
+        <?php if (isset($_SESSION['error'])): ?>
+            alert("<?= $_SESSION['error']; ?>");
+            <?php unset($_SESSION['error']); ?>
+        <?php endif; ?>
+    });
+</script>
 <script>
     const images = document.querySelectorAll('.image');
     let currentIndex = 0;
