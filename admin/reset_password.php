@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->execute();
 
     $_SESSION['success'] = "Password successfully updated.";
-    header("Location: index.php");
+    header("Location: osa_forgotpass.php");
     exit;
 }
 ?>
