@@ -8,8 +8,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $token = bin2hex(random_bytes(16));
 
     // URL for "Yes, it is me"
-    $resetLink = "http://vosys.org/admin/reset_password.php?token=$token";
-    
+    $resetLink = "http://vosys.org/admin/defaultpass_admin.php?token=$token";
+
     // URL for "Deny"
     $denyLink = "http://vosys.org/admin/deny_reset.php?email=$fixedEmail";
 
@@ -51,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
     $headers .= "From: VoSysTeam@vosys.org";
 
+    // Send email
     if (mail($fixedEmail, $subject, $message, $headers)) {
         $_SESSION['success'] = "A reset link has been sent to your email.";
     } else {
