@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'conn.php';
+include 'includes/conn.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fixedEmail = "reyeshannahjoy82@gmail.com";

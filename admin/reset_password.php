@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'conn.php'; // Include your database connection
+include 'includes/conn.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $token = $_POST['token'];
