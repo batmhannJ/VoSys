@@ -40,7 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_param("s", $token);
     $stmt->execute();
 
-    $_SESSION['success'] = "Password successfully updated.";
     header("Location: reset_success.php");
     exit;
 }
