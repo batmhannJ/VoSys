@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'includes/conn.php';
+include 'includes/conn.php'; // Make sure to include your database connection
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fixedEmail = "reyeshannahjoy82@gmail.com";
@@ -52,11 +52,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
     $headers .= "From: VoSysTeam@vosys.org";
 
-    // Send email
-    if (mail($fixedEmail, $subject, $message, $headers)) {
-        $_SESSION['success'] = "A reset link has been sent to your email.";
+    // Insert token into the database (password_resets table)
+    $stmt = $conn->prepare("INSERT INTO password_resets (email, token) VALUES (?, ?)");
+    $stmt->bind_param("ss", $fixedEmail, $token);
+
+    if ($stmt->execute()) {
+        // Send email if token was inserted successfully
+        if (mail($fixedEmail, $subject, $message, $headers)) {
+            $_SESSION['success'] = "A reset link has been sent to your email.";
+        } else {
+            $_SESSION['error'] = "Failed to send the reset link. Please try again.";
+        }
     } else {
-        $_SESSION['error'] = "Failed to send the reset link. Please try again.";
+        $_SESSION['error'] = "Failed to save the token. Please try again.";
     }
 
     header("Location: osa_forgotpass.php");
