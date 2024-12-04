@@ -138,21 +138,36 @@ function getRow(id){
     });
 
 
-    $(document).on('click', '.election-status', function(e) {
+    $(document).on('click', '.election-status', function (e) {
     e.preventDefault();
 
     var electionId = $(this).data('id');
     var status = $(this).data('status');
     var statusName = $(this).data('name');
 
-    $('#statusMessage').text('Do you want to ' + statusName + ' this Election?');
     $('#election_id').val(electionId);
     $('#status').val(status);
+
+    if (status === 1) { // Activate
+        $('#statusModalLabel').text('Activate Election');
+        $('#statusMessage').text('Do you want to activate this election?');
+        $('#timeFields').show(); // Show Start and End Time fields
+        $('#starttime').prop('required', true); // Make fields required
+        $('#endtime').prop('required', true);
+        $('#statusSubmitBtn').text('Activate');
+    } else { // Deactivate
+        $('#statusModalLabel').text('Deactivate Election');
+        $('#statusMessage').text('Do you want to deactivate this election?');
+        $('#timeFields').hide(); // Hide Start and End Time fields
+        $('#starttime').prop('required', false); // Remove required attribute
+        $('#endtime').prop('required', false);
+        $('#statusSubmitBtn').text('Deactivate');
+    }
 
     $('#statusModal').modal('show');
 });
 
-$('#statusForm').on('submit', function(e) {
+$('#statusForm').on('submit', function (e) {
     e.preventDefault();
 
     var formData = $(this).serialize();
@@ -162,7 +177,7 @@ $('#statusForm').on('submit', function(e) {
         url: 'change_status.php',
         data: formData,
         dataType: 'json',
-        success: function(response) {
+        success: function (response) {
             if (response.success) {
                 $('#statusModal').modal('hide');
                 location.reload(); // Reload the page after success
@@ -170,7 +185,7 @@ $('#statusForm').on('submit', function(e) {
                 toastr.error('Failed to update status.');
             }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error('AJAX Error:', error);
             toastr.error('An error occurred. Please try again.');
         }
@@ -182,7 +197,7 @@ $('#statusForm').on('submit', function(e) {
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="statusModalLabel">Change Election Status</h5>
+                <h5 class="modal-title" id="statusModalLabel"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -190,18 +205,20 @@ $('#statusForm').on('submit', function(e) {
             <form id="statusForm">
                 <div class="modal-body">
                     <p id="statusMessage"></p>
-                    <div class="form-group">
-                        <label for="starttime">Start Time</label>
-                        <input type="datetime-local" class="form-control" id="starttime" name="starttime" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="endtime">End Time</label>
-                        <input type="datetime-local" class="form-control" id="endtime" name="endtime" required>
+                    <div id="timeFields" style="display: none;">
+                        <div class="form-group">
+                            <label for="starttime">Start Time</label>
+                            <input type="datetime-local" class="form-control" id="starttime" name="starttime">
+                        </div>
+                        <div class="form-group">
+                            <label for="endtime">End Time</label>
+                            <input type="datetime-local" class="form-control" id="endtime" name="endtime">
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Yes, Change Status</button>
+                    <button type="submit" class="btn btn-primary" id="statusSubmitBtn"></button>
                 </div>
                 <input type="hidden" id="election_id" name="election_id">
                 <input type="hidden" id="status" name="status">
