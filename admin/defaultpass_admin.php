@@ -540,7 +540,7 @@ main.sign-up-mode .carousel {
                   <span class="form-control-feedback"></span>
                 </div>
 
-                    <input type="submit" name="change_password" value="Change Password" class="sign-btn">
+                    <input type="submit" name="change_password" value="Change Password" class="sign-btn" style="width: 100px; font-size:15px;">
 
                     <?php
                     if (isset($_SESSION['error'])) {
