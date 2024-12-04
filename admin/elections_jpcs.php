@@ -141,10 +141,11 @@ function getRow(id){
     $(document).on('click', '.election-status', function (e) {
     e.preventDefault();
 
-    var electionId = $(this).data('id');
-    var status = $(this).data('status');
-    var statusName = $(this).data('name');
+    const electionId = $(this).data('id');
+    const status = $(this).data('status'); // 1 = Activate, 0 = Deactivate
+    const statusName = $(this).data('name'); // Activate/Deactivate
 
+    // Populate hidden fields
     $('#election_id').val(electionId);
     $('#status').val(status);
 
@@ -152,14 +153,14 @@ function getRow(id){
         $('#statusModalLabel').text('Activate Election');
         $('#statusMessage').text('Do you want to activate this election?');
         $('#timeFields').show(); // Show Start and End Time fields
-        $('#starttime').prop('required', true); // Make fields required
+        $('#starttime').prop('required', true);
         $('#endtime').prop('required', true);
         $('#statusSubmitBtn').text('Activate');
     } else { // Deactivate
         $('#statusModalLabel').text('Deactivate Election');
         $('#statusMessage').text('Do you want to deactivate this election?');
         $('#timeFields').hide(); // Hide Start and End Time fields
-        $('#starttime').prop('required', false); // Remove required attribute
+        $('#starttime').prop('required', false);
         $('#endtime').prop('required', false);
         $('#statusSubmitBtn').text('Deactivate');
     }
@@ -170,24 +171,31 @@ function getRow(id){
 $('#statusForm').on('submit', function (e) {
     e.preventDefault();
 
-    var formData = $(this).serialize();
+    const formData = $(this).serialize();
 
     $.ajax({
         type: 'POST',
-        url: 'change_status.php',
+        url: 'change_status.php', // Server-side script
         data: formData,
         dataType: 'json',
+        beforeSend: function () {
+            $('#statusSubmitBtn').prop('disabled', true);
+        },
         success: function (response) {
             if (response.success) {
+                toastr.success(response.message);
                 $('#statusModal').modal('hide');
-                location.reload(); // Reload the page after success
+                location.reload(); // Reload the page
             } else {
-                toastr.error('Failed to update status.');
+                toastr.error(response.error || 'Failed to update status.');
             }
         },
         error: function (xhr, status, error) {
             console.error('AJAX Error:', error);
             toastr.error('An error occurred. Please try again.');
+        },
+        complete: function () {
+            $('#statusSubmitBtn').prop('disabled', false);
         }
     });
 });

@@ -1,15 +1,20 @@
 <?php
-include 'includes/session.php';
+include 'includes/conn.php'; // Include database connection
 
-if (isset($_POST['election_id'], $_POST['status'])) {
+$response = ['success' => false];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $election_id = $_POST['election_id'];
     $status = $_POST['status'];
-    $starttime = $_POST['starttime'] ?? null;
-    $endtime = $_POST['endtime'] ?? null;
 
+    // Prepare SQL query
     if ($status == 1) { // Activate
+        $starttime = $_POST['starttime'];
+        $endtime = $_POST['endtime'];
+
         if (empty($starttime) || empty($endtime)) {
-            echo json_encode(['success' => false, 'error' => 'Start Time and End Time are required for activation.']);
+            $response['error'] = 'Start and End Time are required.';
+            echo json_encode($response);
             exit;
         }
 
@@ -21,13 +26,16 @@ if (isset($_POST['election_id'], $_POST['status'])) {
     }
 
     if ($stmt->execute()) {
-        echo json_encode(['success' => true]);
+        $response['success'] = true;
+        $response['message'] = $status == 1 ? 'Election activated successfully!' : 'Election deactivated successfully!';
     } else {
-        echo json_encode(['success' => false, 'error' => $stmt->error]);
+        $response['error'] = 'Database error: ' . $stmt->error;
     }
 
     $stmt->close();
-    $conn->close();
 } else {
-    echo json_encode(['success' => false, 'error' => 'Invalid request']);
+    $response['error'] = 'Invalid request method.';
 }
+
+echo json_encode($response);
+?>
