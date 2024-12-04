@@ -138,7 +138,7 @@ function getRow(id){
     });
 
 
-  $(document).on('click', '.election-status', function(e) {
+    $(document).on('click', '.election-status', function(e) {
     e.preventDefault();
 
     var electionId = $(this).data('id');
@@ -147,11 +147,10 @@ function getRow(id){
 
     var confirmed = confirm('Are you sure you want to ' + statusName + ' this Election?');
 
-    // If the user confirms, proceed with change election status
     if (confirmed) {
         $.ajax({
             type: 'POST',
-            url: 'http://localhost/votesystem/admin/controllers/app.php?action=election_status',
+            url: 'change_status.php',
             data: {
                 election_id: electionId,
                 status: status
@@ -161,25 +160,20 @@ function getRow(id){
                 showLoadingOverlay();
             },
             success: function(response) {
-                console.log(response);
-                if (response.status === 'success') {
-                    toastr.success(response.message);
-                    setTimeout(function() {
-                        location.reload();
-                    }, 1000);
+                if (response.success) {
+                    location.reload(); // Reload page after successful update
                 } else {
-                    toastr.error(response.message);
+                    toastr.error('Failed to update status.');
                 }
+                hideLoadingOverlay();
             },
             error: function(xhr, status, error) {
-                // Handle AJAX errors, if any
-                console.error(error);
+                console.error('AJAX Error:', error);
+                toastr.error('An error occurred. Please try again.');
                 hideLoadingOverlay();
-                console.error('An error occurred during the request.', status, error);
             }
         });
     } else {
-        // User canceled to change status
         toastr.info('Status change canceled.');
     }
 });
