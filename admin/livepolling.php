@@ -9,70 +9,8 @@
             width: 100%;
             display: inline-block;
         }
-
-        #back-to-top {
-            position: fixed;
-            bottom: 40px;
-            right: 40px;
-            display: none;
-            background-color: #000;
-            color: #fff;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            text-align: center;
-            font-size: 22px;
-            line-height: 50px;
-            cursor: pointer;
-            z-index: 1000;
-        }
-
-        #back-to-top:hover {
-            background-color: #555;
-        }
-
-        .chart-container {
-            position: relative;
-            margin-bottom: 40px;
-            display: flex;
-            align-items: center;
-        }
-
-        .candidate-images {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            margin-right: 10px;
-        }
-
-        .candidate-image {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .candidate-image img {
-            width: 60px;
-            height: 60px;
-            margin-right: -10px;
-            margin-bottom: 25px;
-            margin-top: 35px;
-        }
-
-        @media (max-width: 768px) {
-            .candidate-image img {
-                width: 75px;
-                height: 75px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .candidate-image img {
-                width: 100px;
-                height: 100px;
-            }
+        #chart-type-select {
+            margin-left: 10px;
         }
     </style>
 </head>
@@ -103,8 +41,8 @@
                         <option value="hmso">HMSO</option>
                     </select>
 
-                    <label for="graph-type">Select Graph Type:</label>
-                    <select id="graph-type">
+                    <label for="chart-type-select">Select Chart Type:</label>
+                    <select id="chart-type-select" name="chartType">
                         <option value="bar">Bar Chart</option>
                         <option value="pie">Pie Chart</option>
                         <option value="line">Line Chart</option>
@@ -118,8 +56,6 @@
                     <!-- Results will be dynamically inserted here -->
                 </div>
             </section>
-
-            <button id="back-to-top" title="Back to top">&uarr;</button>
         </div>
         <?php include 'includes/footer.php'; ?>
     </div>
@@ -127,82 +63,71 @@
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="path/to/jquery.min.js"></script>
     <script>
-        function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
+        function generateChart(dataPoints, containerId, chartType) {
             var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
-            var imageContainer = document.getElementById(imageContainerId);
-            imageContainer.innerHTML = '';
-            dataPoints.forEach(dataPoint => {
-                var candidateDiv = document.createElement('div');
-                candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
-                imageContainer.appendChild(candidateDiv);
-            });
-
-            var chart = new CanvasJS.Chart(containerId, {
+            var chartOptions = {
                 animationEnabled: true,
-                title: { text: "Vote Counts" },
-                data: [{
-                    type: graphType,
-                    indexLabel: "{label} - {percent}%",
-                    indexLabelPlacement: "inside",
-                    indexLabelFontColor: "white",
-                    indexLabelFontSize: 14,
-                    dataPoints: dataPoints.map(dataPoint => ({
-                        ...dataPoint,
-                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-                    }))
-                }]
-            });
+                animationDuration: 2000,
+                title: { text: "Election Results" },
+                axisY: { title: "Votes", interval: Math.ceil(totalVotes / 10) },
+                data: []
+            };
 
-            if (graphType === 'bar') {
-                chart.options.axisX = {
-                    title: "",
-                    includeZero: true,
-                    interval: 1,
-                    labelFormatter: function () {
-                        return " ";
-                    }
-                };
-                chart.options.axisY = {
-                    title: "",
-                    interval: Math.ceil(totalVotes / 10)
-                };
+            switch (chartType) {
+                case "bar":
+                    chartOptions.data.push({
+                        type: "bar",
+                        dataPoints: dataPoints
+                    });
+                    break;
+                case "pie":
+                    chartOptions.data.push({
+                        type: "pie",
+                        showInLegend: true,
+                        legendText: "{label}",
+                        dataPoints: dataPoints
+                    });
+                    break;
+                case "line":
+                    chartOptions.data.push({
+                        type: "line",
+                        dataPoints: dataPoints
+                    });
+                    break;
+                default:
+                    chartOptions.data.push({
+                        type: "bar",
+                        dataPoints: dataPoints
+                    });
             }
 
+            var chart = new CanvasJS.Chart(containerId, chartOptions);
             chart.render();
         }
 
-        function fetchAndGenerateGraphs(organization) {
-            const graphType = $('#graph-type').val();
-
+        function fetchAndGenerateGraphs(organization, chartType) {
             $.ajax({
                 url: 'update_data.php',
                 method: 'GET',
                 dataType: 'json',
                 success: function (response) {
                     $('#results-container').empty();
-
                     var categories = {
                         'csc': {
                             'president': 'President',
                             'vice president': 'Vice President',
-                            'secretary': 'Secretary',
-                            'treasurer': 'Treasurer',
-                            'auditor': 'Auditor',
-                            'p.r.o': 'P.R.O',
-                            'businessManager': 'Business Manager',
-                            'beedRep': 'BEED Representative',
-                            'bsedRep': 'BSED Representative',
-                            'bshmRep': 'BSHM Representative',
-                            'bsoadRep': 'BSOAD Representative',
-                            'bs crimRep': 'BS Crim Representative',
-                            'bsitRep': 'BSIT Representative'
+                            // ... other positions
+                        },
+                        'jpcs': {
+                            'jpcsPresident': 'President',
+                            'jpcsVicePresident': 'Vice President',
+                            // ... other positions
                         }
+                        // ... other organizations
                     };
 
                     var selectedCategories = categories[organization];
-
                     Object.keys(selectedCategories).forEach(function (category) {
                         if (response[category]) {
                             var containerHtml = `
@@ -212,16 +137,12 @@
                                             <h3 class='box-title'><b>${selectedCategories[category]}</b></h3>
                                         </div>
                                         <div class='box-body'>
-                                            <div class='chart-container'>
-                                                <div class='candidate-images' id='${category}Image'></div>
-                                                <div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div>
-                                            </div>
+                                            <div id='${category}Graph' style='height: 300px; width: 100%;'></div>
                                         </div>
                                     </div>
                                 </div>`;
                             $('#results-container').append(containerHtml);
-
-                            generateGraph(response[category], category + 'Graph', category + 'Image', graphType);
+                            generateChart(response[category], `${category}Graph`, chartType);
                         }
                     });
                 },
@@ -232,28 +153,13 @@
         }
 
         $(document).ready(function () {
-            fetchAndGenerateGraphs('csc');
+            fetchAndGenerateGraphs('csc', 'bar');
 
             $('#organization-form').submit(function (event) {
                 event.preventDefault();
-                fetchAndGenerateGraphs($('#organization-select').val());
-            });
-
-            $('#graph-type').change(function () {
-                fetchAndGenerateGraphs($('#organization-select').val());
-            });
-
-            $(window).scroll(function () {
-                if ($(this).scrollTop() > 100) {
-                    $('#back-to-top').fadeIn();
-                } else {
-                    $('#back-to-top').fadeOut();
-                }
-            });
-
-            $('#back-to-top').click(function () {
-                $('html, body').animate({ scrollTop: 0 }, 600);
-                return false;
+                const selectedOrganization = $('#organization-select').val();
+                const selectedChartType = $('#chart-type-select').val();
+                fetchAndGenerateGraphs(selectedOrganization, selectedChartType);
             });
         });
     </script>
