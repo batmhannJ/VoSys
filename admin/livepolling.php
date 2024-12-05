@@ -9,8 +9,13 @@
             width: 100%;
             display: inline-block;
         }
+
         #chart-type-select {
             margin-left: 10px;
+        }
+
+        #results-container {
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -29,7 +34,7 @@
             </section>
 
             <section class="content">
-                <!-- Organization Selection Form -->
+                <!-- Organization and Chart Type Selection Form -->
                 <form id="organization-form">
                     <label for="organization-select">Select Organization:</label>
                     <select id="organization-select" name="organization">
@@ -63,6 +68,12 @@
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="path/to/jquery.min.js"></script>
     <script>
+        /**
+         * Generate chart with the selected type
+         * @param {Array} dataPoints - Data points for the chart
+         * @param {string} containerId - ID of the chart container
+         * @param {string} chartType - Type of chart (bar, pie, line)
+         */
         function generateChart(dataPoints, containerId, chartType) {
             var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
@@ -78,6 +89,7 @@
                 case "bar":
                     chartOptions.data.push({
                         type: "bar",
+                        indexLabel: "{y}",
                         dataPoints: dataPoints
                     });
                     break;
@@ -86,6 +98,7 @@
                         type: "pie",
                         showInLegend: true,
                         legendText: "{label}",
+                        indexLabel: "{label} - {y} votes",
                         dataPoints: dataPoints
                     });
                     break;
@@ -106,6 +119,11 @@
             chart.render();
         }
 
+        /**
+         * Fetch data and generate charts based on the selected organization and chart type
+         * @param {string} organization - Selected organization
+         * @param {string} chartType - Selected chart type
+         */
         function fetchAndGenerateGraphs(organization, chartType) {
             $.ajax({
                 url: 'update_data.php',
@@ -113,18 +131,24 @@
                 dataType: 'json',
                 success: function (response) {
                     $('#results-container').empty();
+
                     var categories = {
                         'csc': {
                             'president': 'President',
                             'vice president': 'Vice President',
-                            // ... other positions
+                            'secretary': 'Secretary',
+                            'treasurer': 'Treasurer',
+                            'auditor': 'Auditor'
+                            // Add other positions if needed
                         },
                         'jpcs': {
                             'jpcsPresident': 'President',
                             'jpcsVicePresident': 'Vice President',
-                            // ... other positions
+                            'jpcsSecretary': 'Secretary',
+                            'jpcsTreasurer': 'Treasurer',
+                            'jpcsRep': 'Representative'
                         }
-                        // ... other organizations
+                        // Add other organizations here
                     };
 
                     var selectedCategories = categories[organization];
@@ -153,8 +177,10 @@
         }
 
         $(document).ready(function () {
+            // Initial load with default organization and chart type
             fetchAndGenerateGraphs('csc', 'bar');
 
+            // Handle form submission for dynamic chart generation
             $('#organization-form').submit(function (event) {
                 event.preventDefault();
                 const selectedOrganization = $('#organization-select').val();
