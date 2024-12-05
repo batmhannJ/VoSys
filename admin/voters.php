@@ -146,6 +146,7 @@
 <?php include 'includes/scripts.php'; ?>
 <script>
 $(function(){
+  // Show edit modal and populate data when edit button is clicked
   $(document).on('click', '.edit', function(e){
     e.preventDefault();
     $('#edit').modal('show');
@@ -153,16 +154,22 @@ $(function(){
     getRow(id);
   });
 
+  // Show photo edit modal when photo is clicked
   $(document).on('click', '.photo', function(e){
     e.preventDefault();
     var id = $(this).data('id');
     getRow(id);
   });
 
+  // Show individual archive confirmation modal and archive voter
   $(document).on('click', '.archive', function(e){
     e.preventDefault();
     var id = $(this).data('id');
     archiveVoter(id);
+  });
+
+  $('#selectAll').click(function() {
+    $('.selectItem').prop('checked', this.checked);
   });
 
   $('#batchArchiveBtn').click(function() {
@@ -172,41 +179,35 @@ $(function(){
     });
 
     if(selected.length > 0) {
-      $('#batchConfirmationModal').modal('show');
-      $('#submitBatchBtn').on('click', function() {
-        $.ajax({
-          type: 'POST',
-          url: 'batch_archive_voter.php',
-          data: { ids: selected },
-          success: function(response) {
-            location.reload();
-          },
-          error: function(xhr, status, error) {
-            console.error(xhr.responseText);
-          }
-        });
-      });
+      $('#batchArchiveModal').modal('show');
     } else {
       alert('No voters selected.');
     }
   });
 
-  $('#selectAll').click(function() {
-    if (this.checked) {
-      $('.selectItem').each(function() {
-        this.checked = true;
-      });
-    } else {
-      $('.selectItem').each(function() {
-        this.checked = false;
-      });
-    }
-  });
+  $('#confirmBatchArchive').on('click', function() {
+    var selected = [];
+    $('.selectItem:checked').each(function() {
+      selected.push($(this).val());
+    });
 
+    $.ajax({
+      type: 'POST',
+      url: 'batch_archive_voter.php',
+      data: { ids: selected },
+      success: function(response) {
+        console.log('Batch archive successful:', response);
+        location.reload();
+      },
+      error: function(xhr, status, error) {
+        console.error('Batch archive error:', xhr.responseText);
+      }
+    });
+  });
 });
 
 function archiveVoter(id) {
-  $('#confirmationModal').modal('show'); // Show the confirmation modal
+  $('#confirmationModal').modal('show'); // Show individual archive confirmation modal
 
   $('#submitBtn').on('click', function() {
     $.ajax({
@@ -214,21 +215,22 @@ function archiveVoter(id) {
       url: "archive_voter.php",
       data: { id: id },
       success: function(response) {
-        // Refresh the page or update the table as needed
-        location.reload();
+        console.log('Voter archived successfully:', response);
+        location.reload(); // Refresh the page after archiving
       },
       error: function(xhr, status, error) {
-        console.error(xhr.responseText);
+        console.error('Archive voter error:', xhr.responseText);
       }
     });
   });
 }
 
+// Function to retrieve and populate row data for editing
 function getRow(id){
   $.ajax({
     type: 'POST',
     url: 'voters_row.php',
-    data: {id:id},
+    data: {id: id},
     dataType: 'json',
     success: function(response){
       $('.id').val(response.id);
@@ -237,7 +239,10 @@ function getRow(id){
       $('#edit_email').val(response.email);
       $('#edit_yearlvl').val(response.yearLvl);
       $('#edit_password').val(response.password);
-      $('.fullname').html(response.firstname+' '+response.lastname);
+      $('.fullname').html(response.firstname + ' ' + response.lastname);
+    },
+    error: function(xhr, status, error) {
+      console.error('Get row error:', xhr.responseText);
     }
   });
 }

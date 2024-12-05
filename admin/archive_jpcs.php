@@ -1,4 +1,4 @@
-<?php include 'includes/session.php'; ?>
+<?php include 'includes/session2.php'; ?>
 <?php include 'includes/header_jpcs.php'; ?>
 <body class="hold-transition skin-green sidebar-mini">
 <div class="wrapper">

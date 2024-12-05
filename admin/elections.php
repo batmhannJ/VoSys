@@ -165,7 +165,6 @@ $(function () {
     $('#endtime').datetimepicker();
 });
 
-
 $(document).on('click', '.election-status', function(e) {
     e.preventDefault();
 
@@ -175,10 +174,10 @@ $(document).on('click', '.election-status', function(e) {
 
     var confirmed = confirm('Are you sure you want to ' + statusName + ' this Election?');
 
-    // If the user confirms, proceed with change election status
     if (confirmed) {
         $.ajax({
             type: 'POST',
+            url: 'change_status.php',
             data: {
                 election_id: electionId,
                 status: status
@@ -187,18 +186,21 @@ $(document).on('click', '.election-status', function(e) {
             beforeSend: function() {
                 showLoadingOverlay();
             },
-            success: function() {
-                location.reload(); // Reload page after successful archive
+            success: function(response) {
+                if (response.success) {
+                    location.reload(); // Reload page after successful update
+                } else {
+                    toastr.error('Failed to update status.');
+                }
+                hideLoadingOverlay();
             },
             error: function(xhr, status, error) {
-                // Handle AJAX errors, if any
-                console.error(error);
+                console.error('AJAX Error:', error);
+                toastr.error('An error occurred. Please try again.');
                 hideLoadingOverlay();
-                console.error('An error occurred during the request.', status, error);
             }
         });
     } else {
-        // User canceled to change status
         toastr.info('Status change canceled.');
     }
 });

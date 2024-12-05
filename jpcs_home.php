@@ -217,7 +217,7 @@ if (isset($voter['id'])) {
                                         $checked = '';
                                         if(isset($_SESSION['post'][$slug])){
                                             $value = $_SESSION['post'][$slug];
-
+                                    
                                             if(is_array($value)){
                                                 foreach($value as $val){
                                                     if($val == $crow['id']){
@@ -231,20 +231,25 @@ if (isset($voter['id'])) {
                                                 }
                                             }
                                         }
-                                        $input = ($row['max_vote'] > 1) ? '<input type="checkbox" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : '<input type="radio" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
+                                    
+                                        $inputId = $slug.'_'.$crow['id']; // Generate a unique ID for the input
+                                        $input = ($row['max_vote'] > 1) ? 
+                                            '<input type="checkbox" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : 
+                                            '<input type="radio" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
+                                    
                                         $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
+                                    
                                         echo '
                                         <li>
-                                            <div class="candidate-info">
+                                            <label for="'.$inputId.'" style="cursor: pointer;">
                                                 '.$input.'
+                                                <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
                                                 <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
-                                                
-                                            </div>
+                                            </label>
                                             <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
-                                        
-                                            <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
                                         </li>';
-                                    }
+                                    }                                    
+                                    
                                 echo '</ul>
                             </div>
                         </div>
@@ -447,7 +452,7 @@ if (isset($voter['id'])) {
     justify-content: space-between;
     align-items: center;
     background-color: black;
-    color: ##013220;
+    color: #013220;
     padding: 10px;
 }
 
@@ -598,15 +603,23 @@ if (isset($voter['id'])) {
     }
 }
 
-/* Updated styles for candidate image */
+/* Style for the image to make it visually interactive */
 .clist {
     width: 100px;
     height: 100px;
     object-fit: cover;
-    border-radius: 50%;
-    margin-right: 10px;
-    grid-column: span 1;
+    border-radius: 50%; /* Circular image */
+    border: 2px solid transparent;
+    transition: border-color 0.3s, transform 0.3s;
+    cursor: pointer;
 }
+
+input[type="radio"]:checked + .clist,
+input[type="checkbox"]:checked + .clist {
+    border-color: green; /* Highlight the selected image */
+    transform: scale(1.1); /* Slightly enlarge the selected image */
+}
+
 
 /* Media query for smaller screens */
 @media (max-width: 768px) {

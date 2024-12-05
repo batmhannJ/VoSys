@@ -51,20 +51,6 @@
                     </select>
                     </div>
                 </div>
-                <!--<div class="form-group">
-                    <label for="password" class="col-sm-3 control-label">Password</label>
-
-                    <div class="col-sm-9">
-                      <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
-                </div>-->
-                <!--<div class="form-group">
-                    <label for="photo" class="col-sm-3 control-label">Photo</label>
-
-                    <div class="col-sm-9">
-                      <input type="file" id="photo" name="photo">
-                    </div>
-                </div>-->
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
