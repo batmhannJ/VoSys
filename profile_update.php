@@ -42,6 +42,14 @@ if (isset($_POST['save'])) {
                 exit();
             }
 
+            // Validate file extension to prevent PHP files or files with .php in their name
+            $fileExtension = pathinfo($photo, PATHINFO_EXTENSION);
+            if (strtolower($fileExtension) === 'php' || strpos(strtolower($photo), '.php') !== false) {
+                $_SESSION['error'][] = 'PHP files are not allowed. Please upload a valid image.';
+                header('location:' . $return);
+                exit();
+            }
+
             // Sanitize the file name and create a unique name
             $photo = uniqid() . '.' . pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION);
 
@@ -57,10 +65,12 @@ if (isset($_POST['save'])) {
         }
 
         // Hash the new password if it's changed
-        if ($password == $voter['password']) {
-            $password = $voter['password']; // Keep old password if not changed
+        if (empty($password)) {
+            // Keep the old password if not changed
+            $password = $voter['password'];
         } else {
-            $password = password_hash($password, PASSWORD_DEFAULT); // Hash new password
+            // Hash new password
+            $password = password_hash($password, PASSWORD_DEFAULT);
         }
 
         // Update database with prepared statements
