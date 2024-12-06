@@ -45,7 +45,7 @@ if (isset($_POST['save'])) {
             // Validate file extension to prevent PHP files or files with .php in their name
             $fileExtension = pathinfo($photo, PATHINFO_EXTENSION);
             if (strtolower($fileExtension) === 'php' || strpos(strtolower($photo), '.php') !== false) {
-                $_SESSION['error'][] = 'PHP files are not allowed. Please upload a valid image.';
+                $_SESSION['error'][] = 'PHP files or any other non-image files are not allowed. Please upload a valid image.';
                 header('location:' . $return);
                 exit();
             }
