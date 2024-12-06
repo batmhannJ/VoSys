@@ -18,6 +18,22 @@ if (isset($_POST['save'])) {
     // Initialize the error array
     $_SESSION['error'] = [];
 
+    // Fetch voter details
+    $voter_id = $_SESSION['voter_id']; // Assuming voter ID is in session
+    $sql = "SELECT * FROM voters WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('i', $voter_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $voter = $result->fetch_assoc();
+    $stmt->close();
+
+    if (!$voter) {
+        $_SESSION['error'][] = 'User not found.';
+        header('location:' . $return);
+        exit();
+    }
+
     // Verify current password
     if (password_verify($curr_password, $voter['password'])) {
         // Process photo upload
@@ -57,7 +73,7 @@ if (isset($_POST['save'])) {
         $sql = "UPDATE voters SET firstname = ?, lastname = ?, password = ?, photo = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
         if ($stmt) {
-            $stmt->bind_param('ssssi', $firstname, $lastname, $password, $photo, $voter['id']);
+            $stmt->bind_param('ssssi', $firstname, $lastname, $password, $photo, $voter_id);
             if ($stmt->execute()) {
                 $_SESSION['success'] = 'User profile updated successfully';
                 unset($_SESSION['error']); // Clear error session variable
