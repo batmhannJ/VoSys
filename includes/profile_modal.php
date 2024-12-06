@@ -49,12 +49,12 @@
                     </div>
 
                     <!-- Photo Upload -->
-                    <!--<div class="form-group">
+                    <div class="form-group">
                         <label for="photo" class="col-sm-3 control-label">Photo:</label>
                         <div class="col-sm-9">
                             <input type="file" id="photo" name="photo" accept=".png, .jpg, .jpeg" onchange="validateFileType(this)">
                         </div>
-                    </div>-->
+                    </div>
                     <script>
                         function validateFileType(input) {
                             const allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
