@@ -240,13 +240,13 @@ if (isset($voter['id'])) {
                                         $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
                                     
                                        
-                                        echo '
-                                        <div class="candidate-container" data-id="' . $crow['id'] . '" data-position="' . $slug . '">
-                                            <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image">
-                                            <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span>
-                                        </div>
-                                        <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
-                                        ';
+    echo '
+<div class="candidate-container" data-id="' . $crow['id'] . '" data-position="' . $slug . '">
+    <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image">
+    <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span>
+</div>
+<button type="button" class="btn btn-primary btn-flat platform-button" data-platform="' . $crow['platform'] . '" data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">Platform</button>
+';
 }                    
                                     
                                 echo '</ul>
@@ -592,7 +592,6 @@ if (isset($voter['id'])) {
     transition: transform 0.3s, border-color 0.3s;
     cursor: pointer;
     width: 150px;
-    position: relative;
 }
 
 .candidate-container:hover {
@@ -617,13 +616,8 @@ if (isset($voter['id'])) {
     font-weight: bold;
 }
 
-/* New styling for the platform button container */
-.platform-container {
-    margin-top: 10px;
-    text-align: center;
-}
-
 .platform-button {
+    margin-top: 5px;
     font-size: 14px;
     background-color: #28a745;
     color: #fff;
@@ -637,7 +631,6 @@ if (isset($voter['id'])) {
 .platform-button:hover {
     background-color: #218838;
 }
-
 
 .reset {
     margin-left: auto;
