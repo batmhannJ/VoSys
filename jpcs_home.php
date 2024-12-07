@@ -123,11 +123,7 @@ if(!is_active_election($conn)){
 				    		?>
 
 			    			<!-- Voting Ballot -->
-						    <<form action="submit_ballot_jpcs.php" id="ballotForm" method="POST"> 
-    <!-- Position and candidate list rendered above -->
-    <button type="submit" class="btn btn-success">Submit Vote</button>
-</form>
-
+						    <form method="POST" id="ballotForm" action="submit_ballot_jpcs.php">
                             <?php
 session_start();
 
@@ -214,39 +210,53 @@ if (isset($voter['id'])) {
                                                 <p class="instruction">You may select up to '.$row['max_vote'].' candidates</p>
                                                 <div class="candidate-list">
                                                     <ul>';
-                                                    $sql = "SELECT * FROM candidates WHERE category_id='" . $row['id'] . "'";
-                                                    $cquery = $conn->query($sql);
-                                                    
-                                                    echo '<div class="position-container">';
-                                                    echo '<div class="box-header">';
-                                                    echo '<h3 class="box-title">' . $row['name'] . '</h3>';
-                                                    echo '<button class="reset btn btn-danger btn-sm">Reset</button>';
-                                                    echo '</div>';
-                                                    echo '<div class="box-body candidate-list">';
-                                                    echo '<ul>';
-                                                    
-                                                    while ($crow = $cquery->fetch_assoc()) {
-                                                        $slug = slugify($row['name']);
-                                                        $image = (!empty($crow['photo'])) ? 'images/' . $crow['photo'] : 'images/profile.jpg';
-                                                    
-                                                        echo '
-                                                        <li id="candidate_' . $crow['id'] . '" class="candidate-item" 
-                                                            data-id="' . $crow['id'] . '" 
-                                                            data-name="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" 
-                                                            data-position="' . $row['name'] . '" 
-                                                            data-platform="' . $crow['platform'] . '">
-                                                            <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image">
-                                                            <span class="cname">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span>
-                                                        </li>';
+                                    $sql = "SELECT * FROM candidates WHERE category_id='".$row['id']."'";
+                                    $cquery = $conn->query($sql);
+                                    while($crow = $cquery->fetch_assoc()){
+                                        $slug = slugify($row['name']);
+                                        $checked = '';
+                                        if(isset($_SESSION['post'][$slug])){
+                                            $value = $_SESSION['post'][$slug];
+                                    
+                                            if(is_array($value)){
+                                                foreach($value as $val){
+                                                    if($val == $crow['id']){
+                                                        $checked = 'checked';
                                                     }
-                                                    
-                                                    echo '</ul>';
-                                                    echo '</div>';
-                                                    echo '</div>';
+                                                }
+                                            }
+                                            else{
+                                                if($value == $crow['id']){
+                                                    $checked = 'checked';
+                                                }
+                                            }
+                                        }
+                                    
+                                        $inputId = $slug.'_'.$crow['id']; // Generate a unique ID for the input
+                                        $input = ($row['max_vote'] > 1) ? 
+                                            '<input type="checkbox" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : 
+                                            '<input type="radio" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
+                                    
+                                        $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
+                                    
+                                        echo '
+                                        <li>
+                                            <label for="'.$inputId.'" style="cursor: pointer;">
+                                                '.$input.'
+                                                <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
+                                                <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
+                                            </label>
+                                            <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
+                                        </li>';
+                                    }                                    
+                                    
+                                echo '</ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>';
             }
             ?>
-            <!-- Hidden input to store the selected candidate ID -->
-<input type="hidden" name="selected_candidate" id="selected_candidate">
                                 <div class="text-center">
                                     <button type="button" class="btn btn-primary btn-flat" style="background-color: darkgreen;" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
                                 </div>
@@ -291,38 +301,6 @@ if (isset($voter['id'])) {
 </div>
 
 <?php include 'includes/scripts.php'; ?>
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-    const candidateItems = document.querySelectorAll(".candidate-item");
-    const selectedCandidateInput = document.getElementById("selected_candidate");
-
-    candidateItems.forEach(item => {
-        item.addEventListener("click", () => {
-            // Remove highlight from all candidates
-            candidateItems.forEach(candidate => {
-                candidate.classList.remove("selected");
-            });
-
-            // Highlight the selected candidate
-            item.classList.add("selected");
-
-            // Update hidden input with selected candidate ID
-            selectedCandidateInput.value = item.dataset.id;
-
-            // Optional pop-up or confirmation
-            alert(`You selected ${item.dataset.name} for ${item.dataset.position}`);
-        });
-    });
-
-    // Reset button functionality
-    document.querySelector(".reset").addEventListener("click", () => {
-        candidateItems.forEach(candidate => {
-            candidate.classList.remove("selected");
-        });
-        selectedCandidateInput.value = '';
-    });
-});
-</script>
 <script>
     function updateCountdown(endTime) {
         var now = new Date();
@@ -457,76 +435,121 @@ if (isset($voter['id'])) {
 <style>
 
 
- /* Position container */
+    /* Style for the position container */
 .position-container {
-    margin: 20px auto;
-    max-width: 800px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+    margin: 20px auto; /* Center the container horizontally and add margin on top and bottom */
+    max-width: 800px; /* Set a maximum width to make it responsive */
+    padding: 20px; /* Add padding inside the container */
+    border: 1px solid #ccc; /* Add border for visual separation */
+    border-radius: 10px; /* Add border radius for rounded corners */
+    background-color: #fff; /* Change background color */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.9); /* Add shadow for depth */
 }
 
-/* Box header */
+/* Style for the box header */
 .box-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: black;
-    color: white;
+    color: #013220;
     padding: 10px;
 }
 
-.box-header .reset {
-    margin-left: auto;
+/* Adjust space between position and reset button */
+.box-header .box-title {
+    margin-right: auto; /* Push position title to the left */
 }
 
-/* Candidate list */
+/* Style for the reset button */
+.reset {
+    margin-left: auto; /* Push reset button to the right */
+}
+
+/* Style for the box title */
+.box-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 300;
+}
+
+/* Style for the box body */
+.box-body {
+    padding: 10px;
+}
+
+/* Style for the voting instructions */
+.instruction {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+/* Style for the candidate list */
 .candidate-list ul {
     list-style-type: none;
     padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
 }
 
-/* Candidate item */
-.candidate-item {
-    cursor: pointer;
-    border: 2px solid transparent;
-    padding: 10px;
-    transition: border 0.3s, box-shadow 0.3s;
-    text-align: center;
-    width: 150px;
-    border-radius: 10px;
+/* Bagong istilo para sa mga item sa listahan ng mga kandidato */
+.candidate-list li {
+    display: flex; /* Baguhin ang display sa flex */
+    flex-wrap: wrap; /* Pahintulutan ang pag-wrap ng mga item sa loob ng flex container */
+    justify-content: space-between; /* I-set ang mga item na sa layong pare-pareho */
+    align-items: center; /* I-align ang mga item sa gitna */
+    border-radius: 10px; /* Radius ng border */
+    padding: 10px; /* Padding para sa mga item */
+    margin-bottom: 10px; /* Espasyo sa pagitan ng mga item */
+    background-color: #f9f9f9; /* Kulay ng background */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Shadow para sa depth */
+    border: 2px solid #ccc; /* Add border */
+}
+.candidate-list li img {
+        width: 100px; /* I-adjust ang lapad ng mga larawan para sa mas maliit na screen */
+        height: 100px; /* I-adjust ang taas ng mga larawan para sa mas maliit na screen */
+        border-radius: 8px; /* Rounded corners for images */
+        transition: transform 0.3s; /* Add transition effect */
 }
 
-.candidate-item.selected {
-    border-color: #4caf50;
-    box-shadow: 0 0 10px #4caf50;
+.candidate-list li:hover img {
+    transform: scale(1.1); /* Make the image slightly larger on hover */
 }
 
-/* Candidate image */
-.candidate-image {
-    width: 100px;
-    height: 100px;
-    border-radius: 10px;
-    transition: transform 0.3s;
-    display: block;
-    margin: 0 auto;
+/* Media query para sa mas maliit na mga screen */
+@media (max-width: 768px) {
+    .platform {
+        padding: 6px 16px; /* I-adjust ang padding para sa mas maliit na screen */
+        font-size: 14px; /* I-adjust ang font size */
+        width: auto; /* I-adjust ang lapad */
+        font-family: sans-serif; /* Change the font family to Arial or any desired font */
+    }
+    .candidate-list li {
+        flex-direction: column; /* Baguhin ang direksyon ng flex container sa column */
+        align-items: center; /* I-align ang mga item sa gitna */
+        padding: 15px; /* I-adjust ang padding para sa mas maliit na screen */
+        border: 2px solid #ccc; /* Add border */
+    border-radius: 10px; /* Rounded corners */
+    }
+
+    .candidate-list li img {
+        width: 100px; /* I-adjust ang lapad ng mga larawan para sa mas maliit na screen */
+        height: 100px; /* I-adjust ang taas ng mga larawan para sa mas maliit na screen */
+        margin: 0 auto; /* Ilipat ang mga larawan sa gitna */
+        display: block; /* Make the image a block element */
+        transition: transform 0.3s; /* Add transition effect */
 }
 
-.candidate-item:hover .candidate-image {
-    transform: scale(1.1);
+.candidate-list li:hover img {
+    transform: scale(1.1); /* Make the image slightly larger on hover */
+}
 }
 
-/* Candidate name */
+
+
+/* Adjusted style for candidate name */
 .cname {
-    font-size: 16px;
+    font-size: 18px; /* Default font size */
+    margin-left: auto; /* Push candidate name to the end */
     font-weight: bold;
-    margin-top: 10px;
-    display: block;
 }
 
 /* Media query for smaller screens */
