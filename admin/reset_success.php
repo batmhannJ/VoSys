@@ -150,8 +150,6 @@ form.sign-up-form {
   position: relative;
   height: 37px;
   margin-bottom: 2rem;
-  display: flex;
-  align-items: center; 
 }
 
 .input-field {
@@ -166,26 +164,6 @@ form.sign-up-form {
   font-size: 0.95rem;
   color: #151111;
   transition: 0.4s;
-  flex-grow: 1; 
-}
-
-.togglePassword {
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-            cursor: pointer;
-            font-size: 18px;
-            color: #aaa;
-        }
-
-        .togglePassword:hover {
-            color: #333;
-        }
-
-#sendOTP {
-  min-width: 100px; /* Set a minimum width for the button */
-  margin-left: 200px; /* Add a small margin between the input field and the button */
 }
 
 label {
@@ -212,35 +190,17 @@ label {
   display: inline-block;
   width: 100%;
   height: 43px;
-  background-color: #1357a6;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  border-radius: 0.8rem;
-  font-size: 0.8rem;
-  margin-bottom: 1rem;
-  transition: 0.3s;
-}
-
-.sign-btn:hover {
-  background-color: gray;
-}
-
-.back-btn {
-  display: inline-block;
-  width: 100%;
-  height: 43px;
   background-color: maroon;
   color: #fff;
   border: none;
   cursor: pointer;
   border-radius: 0.8rem;
   font-size: 0.8rem;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   transition: 0.3s;
 }
 
-.back-btn:hover {
+.sign-btn:hover {
   background-color: gray;
 }
 
@@ -488,145 +448,127 @@ main.sign-up-mode .carousel {
     padding: 1rem 1rem 1.5rem;
   }
 }
+
+.input-wrap {
+
+position: relative;
+width: 100%;
+max-width: 400px;
+margin-top: -5px;
+}
+
+.input-field {
+width: 100%;
+padding: 10px; /* Adjust the padding to make space for the icon */
+font-size: 15px;
+box-sizing: border-box;
+border: 1px solid #ccc;
+border-radius: 4px;
+}
+
+.togglePassword {
+position: absolute;
+top: 50%;
+right: 10px;
+transform: translateY(-50%);
+cursor: pointer;
+font-size: 18px;
+color: #aaa;
+}
+
+.togglePassword:hover {
+color: #333;
+}
 </style>
 
 <body>
-    <main>
-      <div class="box">
+<main>
+    <div class="box">
         <div class="inner-box">
-          <div class="forms-wrap">
-          <form action="reset_password.php" method="post" id="forgotPasswordForm" autocomplete="off" class="sign-in-form">
+            <div class="forms-wrap">
+                <!-- Update action to directly point to send_reset_email.php -->
+                <form action="#" method="post" autocomplete="off" class="sign-in-form" id="sendOTPForm">
                     <div class="logo">
                         <img src="./images/olshco.png" alt="easyclass" />
                         <h4 style="font-size:28px; color: maroon;"><b>VOSYS - OLSHCO</b></h4>
                     </div>
 
                     <div class="heading">
-                        <center><h2>Reset Password</h2></center>
+                        <center><h2>Update Successfully</h2></center>
                         <hr>
                     </div>
-
-                    <input type="hidden" name="token" value="<?php echo htmlspecialchars($_GET['token'] ?? ''); ?>">
-
-                    <div class="input-wrap">
-                  <input
-                    type="password"
-                    minlength="8"
-                    class="input-field"
-                    id="new_password"
-                    name="new_password"
-                    placeholder="New Password" style="font-size: 15px;"
-                    required
-                  />
-                    <span class="form-control-feedback"></span>
-                  <label style="font-size:15px;"></label>
-                  <i class="fa fa-fw fa-eye togglePassword" id="togglePassword"></i>
-                  <span class="form-control-feedback"></span>
-                </div>
-
-                <div class="input-wrap">
-                  <input
-                    type="password"
-                    minlength="8"
-                    class="input-field"
-                    id="confirm_password"
-                    name="confirm_password"
-                    placeholder="Confirm Password" style="font-size: 15px;"
-                    required
-                  />
-                    <span class="form-control-feedback"></span>
-                  <label style="font-size:15px;"></label>
-                  <i class="fa fa-fw fa-eye togglePassword" id="togglePassword1"></i>
-                  <span class="form-control-feedback"></span>
-                </div>
-
-                    <input type="submit" name="change_password" value="Change Password" class="sign-btn" style="font-size:15px;">
-
-                    <?php
-                    if (isset($_SESSION['error'])) {
-                        echo "<div class='callout callout-danger text-center mt20'>
-                                <p>{$_SESSION['error']}</p>
-                              </div>";
-                        unset($_SESSION['error']);
-                    }
-
-                    if (isset($_SESSION['success'])) {
-                        echo "<div class='callout callout-success text-center mt20'>
-                                <p>{$_SESSION['success']}</p>
-                              </div>";
-                        unset($_SESSION['success']);
-                    }
-                    ?>
+                    <input type="button" value="Back to Admins Login Page" class="sign-btn" style="font-size:15px;" onclick="window.location.href = 'index.php';">
                 </form>
-          </div>
 
-          <div class="carousel">
-            <div class="images-wrapper">
-              <img src="./images/c.png" class="image img-1 show" alt="" />
-              <img src="./images/j.png" class="image img-2 show" alt="" />
-              <img src="./images/y.png" class="image img-3 show" alt="" />
-              <img src="./images/ct.png" class="image img-4 show" alt="" />
-              <img src="./images/p.png" class="image img-5 shozw" alt="" />
-              <img src="./images/h.png" class="image img-6 show" alt="" />
+                <!-- Display session messages -->
+                <?php
+                if (isset($_SESSION['error'])) {
+                    echo "
+                        <div class='callout callout-danger text-center mt20' style='width: 300px; margin: 0 auto;'>
+                            <p>" . $_SESSION['error'] . "</p> 
+                        </div>
+                    ";
+                    unset($_SESSION['error']);
+                }
+                if (isset($_SESSION['success'])) {
+                    echo "
+                        <div class='callout callout-success text-center mt20' style='width: 300px; margin: 0 auto;'>
+                            <p>" . $_SESSION['success'] . "</p> 
+                        </div>
+                    ";
+                    unset($_SESSION['success']);
+                }
+                ?>
             </div>
         </div>
-      </div>
-    </main>
 
+        <div class="carousel">
+            <div class="images-wrapper">
+                <img src="./images/c.png" class="image img-1 show" alt="" />
+                <img src="./images/j.png" class="image img-2 show" alt="" />
+                <img src="./images/y.png" class="image img-3 show" alt="" />
+                <img src="./images/ct.png" class="image img-4 show" alt="" />
+                <img src="./images/p.png" class="image img-5 show" alt="" />
+                <img src="./images/h.png" class="image img-6 show" alt="" />
+            </div>
         </div>
     </div>
-    
+</main>
 <script>
-  const images = document.querySelectorAll('.image');
-  let currentIndex = 0;
-  function nextImage() {
-    currentIndex = (currentIndex + 1) % images.length;
-    updateSlider();
-  }
-  function updateSlider() {
-  const offset = -currentIndex * images[0].offsetWidth || 0;
-  document.querySelector('.images-wrapper').style.transform = `translateX(${offset}px)`;
-  // Flash effect
-  images.forEach(image => {
-    image.style.opacity = 0; // Hide all images
-  });
-  images[currentIndex].style.opacity = 1; // Show the current image
-}
-  setInterval(nextImage, 3000); // Change image every 3 seconds
+    document.addEventListener("DOMContentLoaded", function () {
+        <?php if (isset($_SESSION['success'])): ?>
+            alert("<?= $_SESSION['success']; ?>");
+            <?php unset($_SESSION['success']); ?>
+        <?php endif; ?>
+        <?php if (isset($_SESSION['error'])): ?>
+            alert("<?= $_SESSION['error']; ?>");
+            <?php unset($_SESSION['error']); ?>
+        <?php endif; ?>
+    });
+</script>
+<script>
+    const images = document.querySelectorAll('.image');
+    let currentIndex = 0;
+
+    function nextImage() {
+        currentIndex = (currentIndex + 1) % images.length;
+        updateSlider();
+    }
+
+    function updateSlider() {
+        const offset = -currentIndex * images[0].offsetWidth || 0;
+        document.querySelector('.images-wrapper').style.transform = `translateX(${offset}px)`;
+
+        // Flash effect
+        images.forEach(image => {
+            image.style.opacity = 0; // Hide all images
+        });
+        images[currentIndex].style.opacity = 1; // Show the current image
+    }
+
+    setInterval(nextImage, 3000); // Change image every 3 seconds
 </script>
 
-<script src="app.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var togglePassword = document.getElementById('togglePassword');
-            togglePassword.addEventListener('click', function () {
-                var input = document.getElementById('new_password');
-                if (input.getAttribute('type') === 'password') {
-                    input.setAttribute('type', 'text');
-                    this.classList.remove('fa-eye');
-                    this.classList.add('fa-eye-slash');
-                } else {
-                    input.setAttribute('type', 'password');
-                    this.classList.remove('fa-eye-slash');
-                    this.classList.add('fa-eye');
-                }
-            });
-            var togglePassword1 = document.getElementById('togglePassword1');
-            togglePassword1.addEventListener('click', function () {
-                var input = document.getElementById('confirm_password');
-                if (input.getAttribute('type') === 'password') {
-                    input.setAttribute('type', 'text');
-                    this.classList.remove('fa-eye');
-                    this.classList.add('fa-eye-slash');
-                } else {
-                    input.setAttribute('type', 'password');
-                    this.classList.remove('fa-eye-slash');
-                    this.classList.add('fa-eye');
-                }
-            });
-        });
-    </script>
-    <?php include 'includes/scripts.php' ?>
+<?php include 'includes/scripts.php' ?>
 </body>
-
 </html>

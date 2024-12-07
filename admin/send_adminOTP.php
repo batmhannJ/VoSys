@@ -1,50 +1,46 @@
 <?php
 session_start();
 
-// Static email address (as specified)
-$email = 'reyeshannahjoy82@gmail.com';
+if (isset($_POST['email']) && isset($_POST['otp'])) {
+    $email = $_POST['email'];
+    $otp = $_POST['otp'];
 
-// Database connection
-$connection = mysqli_connect("localhost", "u247141684_vosys", "vosysOlshco5", "u247141684_votesystem");
-if (!$connection) {
-    die("Database connection failed: " . mysqli_connect_error());
-}
+    $connection = mysqli_connect("localhost", "u247141684_vosys", "vosysOlshco5", "u247141684_votesystem");
+    if (!$connection) {
+        die("Database connection failed: " . mysqli_connect_error());
+    }
 
-// Generate OTP
-$otp = mt_rand(100000, 999999);
+    // Assuming you have a table named "otp_verification"
+    $query = "SELECT * FROM otp_verifcation WHERE email = ? AND otp = ?";
+    $stmt = mysqli_prepare($connection, $query);
+    if (!$stmt) {
+        die("Prepare statement failed: " . mysqli_error($connection));
+    }
+    mysqli_stmt_bind_param($stmt, "ss", $email, $otp);
+    if (!mysqli_stmt_execute($stmt)) {
+        die("Execute statement failed: " . mysqli_error($connection));
+    }
+    $result = mysqli_stmt_get_result($stmt);
 
-// Check if email already exists in the otp_verification table
-$query_check = "SELECT * FROM otp_verifcation WHERE email = ?";
-$stmt_check = mysqli_prepare($connection, $query_check);
-mysqli_stmt_bind_param($stmt_check, "s", $email);
-mysqli_stmt_execute($stmt_check);
-$result = mysqli_stmt_get_result($stmt_check);
+    // Check if OTP is correct
+    if ($row = mysqli_fetch_assoc($result)) {
+        // OTP is correct
+        $response = array("status" => "success", "message" => "OTP correct");
+    } else {
+        // OTP is incorrect
+        $response = array("status" => "error", "message" => "Incorrect email or OTP");
+    }
 
-if (mysqli_num_rows($result) > 0) {
-    // Update existing OTP
-    $query_update = "UPDATE otp_verifcation SET otp = ?, created_at = NOW() WHERE email = ?";
-    $stmt_update = mysqli_prepare($connection, $query_update);
-    mysqli_stmt_bind_param($stmt_update, "ss", $otp, $email);
-    mysqli_stmt_execute($stmt_update);
+    // Close database connection
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+
+    // Return JSON response
+    header('Content-Type: application/json');
+    echo json_encode($response);
+    exit(); // Make sure to exit after sending the JSON response
 } else {
-    // Insert new OTP
-    $query_insert = "INSERT INTO otp_verifcation (email, otp, created_at) VALUES (?, ?, NOW())";
-    $stmt_insert = mysqli_prepare($connection, $query_insert);
-    mysqli_stmt_bind_param($stmt_insert, "ss", $email, $otp);
-    mysqli_stmt_execute($stmt_insert);
+    // If email or OTP parameter is missing
+    die('Missing email or OTP parameter');
 }
-
-// Send email
-$subject = 'Password Reset Token';
-$message = "Your OTP is: $otp\n\nIf you did not request this, please ignore this email.";
-$headers = 'From: noreply@example.com'; // Change to your system's email
-
-if (mail($email, $subject, $message, $headers)) {
-    echo "OTP sent successfully to $email.";
-} else {
-    echo "Failed to send OTP. Please check your email configuration.";
-}
-
-// Close database connections
-mysqli_close($connection);
 ?>

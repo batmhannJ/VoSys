@@ -482,29 +482,26 @@ color: #333;
 </style>
 
 <body>
-    <main>
-      <div class="box">
+<main>
+    <div class="box">
         <div class="inner-box">
-          <div class="forms-wrap">
-            <form action="#" method="post" autocomplete="off" class="sign-in-form" id="sendOTPForm">
-              <div class="logo">
-                <img src="./images/olshco.png" alt="easyclass" />
-                <h4 style="font-size:28px; color: maroon;"><b>VOSYS - OLSHCO</b></h4>
-              </div>
+            <div class="forms-wrap">
+                <!-- Update action to directly point to send_reset_email.php -->
+                <form action="send_reset_email.php" method="post" autocomplete="off" class="sign-in-form" id="sendOTPForm">
+                    <div class="logo">
+                        <img src="./images/olshco.png" alt="easyclass" />
+                        <h4 style="font-size:28px; color: maroon;"><b>VOSYS - OLSHCO</b></h4>
+                    </div>
 
-              <div class="heading">
-                <center><h2>Reset Password</h2></center>
-                <hr>
-              </div>
+                    <div class="heading">
+                        <center><h2>Reset Password</h2></center>
+                        <hr>
+                    </div>
+                    <input type="submit" name="reset" value="Send Reset Link" class="sign-btn" style="font-size:15px;">
+                </form>
 
-              <button type="submit" class="sign-btn" style="font-size:15px;">Send Reset Password Token</button>
-                <div id="responseMessage"></div>
-
-                <div class="form-group has-feedback">
-                    <div class="g-recaptcha" data-sitekey="6LddHcIpAAAAAJS6Wnenkllxyr3tWUSlSCu8o9eO">
-                </div>
-            </div>
-                        <?php
+                <!-- Display session messages -->
+                <?php
                 if (isset($_SESSION['error'])) {
                     echo "
                         <div class='callout callout-danger text-center mt20' style='width: 300px; margin: 0 auto;'>
@@ -513,85 +510,69 @@ color: #333;
                     ";
                     unset($_SESSION['error']);
                 }
+                if (isset($_SESSION['success'])) {
+                    echo "
+                        <div class='callout callout-success text-center mt20' style='width: 300px; margin: 0 auto;'>
+                            <p>" . $_SESSION['success'] . "</p> 
+                        </div>
+                    ";
+                    unset($_SESSION['success']);
+                }
                 ?>
-              </div>
-            </form>
-          </div>
-
-          <div class="carousel">
-            <div class="images-wrapper">
-              <img src="./images/c.png" class="image img-1 show" alt="" />
-              <img src="./images/j.png" class="image img-2 show" alt="" />
-              <img src="./images/y.png" class="image img-3 show" alt="" />
-              <img src="./images/ct.png" class="image img-4 show" alt="" />
-              <img src="./images/p.png" class="image img-5 shozw" alt="" />
-              <img src="./images/h.png" class="image img-6 show" alt="" />
             </div>
         </div>
-      </div>
-    </main>
+
+        <div class="carousel">
+            <div class="images-wrapper">
+                <img src="./images/c.png" class="image img-1 show" alt="" />
+                <img src="./images/j.png" class="image img-2 show" alt="" />
+                <img src="./images/y.png" class="image img-3 show" alt="" />
+                <img src="./images/ct.png" class="image img-4 show" alt="" />
+                <img src="./images/p.png" class="image img-5 show" alt="" />
+                <img src="./images/h.png" class="image img-6 show" alt="" />
+            </div>
         </div>
     </div>
+</main>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        <?php if (isset($_SESSION['success'])): ?>
+            alert("<?= $_SESSION['success']; ?>");
+            <?php unset($_SESSION['success']); ?>
+        <?php endif; ?>
+        <?php if (isset($_SESSION['error'])): ?>
+            alert("<?= $_SESSION['error']; ?>");
+            <?php unset($_SESSION['error']); ?>
+        <?php endif; ?>
+    });
+</script>
+<script>
+    const images = document.querySelectorAll('.image');
+    let currentIndex = 0;
 
-    <script>
-  document.getElementById('sendOTPForm').addEventListener('submit', function (event) {
-    event.preventDefault(); // Prevent form from reloading the page
+    function nextImage() {
+        currentIndex = (currentIndex + 1) % images.length;
+        updateSlider();
+    }
 
-    // Create AJAX request
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'send_adminOTP.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    function updateSlider() {
+        const offset = -currentIndex * images[0].offsetWidth || 0;
+        document.querySelector('.images-wrapper').style.transform = `translateX(${offset}px)`;
 
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4) {
-        const responseMessage = document.getElementById('responseMessage');
-        if (xhr.status === 200) {
-          responseMessage.textContent = xhr.responseText;
-          responseMessage.style.color = 'green'; // Success color
-        } else {
-          responseMessage.textContent = 'An error occurred while sending the OTP.';
-          responseMessage.style.color = 'red'; // Error color
-        }
-      }
-    };
+        // Flash effect
+        images.forEach(image => {
+            image.style.opacity = 0; // Hide all images
+        });
+        images[currentIndex].style.opacity = 1; // Show the current image
+    }
 
-    // Send the request
-    xhr.send();
-  });
+    setInterval(nextImage, 3000); // Change image every 3 seconds
 </script>
 
-    
-    <script>
-  const images = document.querySelectorAll('.image');
-  let currentIndex = 0;
-
-  function nextImage() {
-    currentIndex = (currentIndex + 1) % images.length;
-    updateSlider();
-  }
-
-  function updateSlider() {
-  const offset = -currentIndex * images[0].offsetWidth || 0;
-  document.querySelector('.images-wrapper').style.transform = `translateX(${offset}px)`;
-
-  // Flash effect
-  images.forEach(image => {
-    image.style.opacity = 0; // Hide all images
-  });
-  images[currentIndex].style.opacity = 1; // Show the current image
-}
-
-
-  setInterval(nextImage, 3000); // Change image every 3 seconds
-</script>
-
-
-
-    <script src="app.js"></script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var togglePassword = document.getElementById('togglePassword');
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var togglePassword = document.getElementById('togglePassword');
+        if (togglePassword) {
             togglePassword.addEventListener('click', function () {
                 var input = document.getElementById('current-password');
                 if (input.getAttribute('type') === 'password') {
@@ -604,9 +585,10 @@ color: #333;
                     this.classList.add('fa-eye');
                 }
             });
-        });
-    </script>
-    <?php include 'includes/scripts.php' ?>
-</body>
+        }
+    });
+</script>
 
+<?php include 'includes/scripts.php' ?>
+</body>
 </html>
