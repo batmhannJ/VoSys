@@ -240,12 +240,12 @@ if (isset($voter['id'])) {
                                         $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
                                     
                                        
-                                        echo '<div class="candidate-container" data-id="' . $crow['id'] . '" data-position="' . $slug . '">
-                                        <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image"> <br>
-                                        <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span> <br>
-                                      </div>
-                                      <button type="button" class="btn btn-primary btn-flat platform-button" data-platform="' . $crow['platform'] . '" data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">Platform</button>';
-                                    
+    echo '<div class="candidate-container" data-id="' . $crow['id'] . '" data-position="' . $slug . '">
+    <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image"> <br>
+    <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span> <br>
+  </div>
+  <button type="button" class="btn btn-primary btn-flat platform-button" data-platform="' . $crow['platform'] . '" data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">Platform</button>';
+
 }                    
                                     
                                 echo '</ul>
@@ -315,12 +315,12 @@ if (isset($voter['id'])) {
             // Deselect previously selected candidate for this position
             document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
                 candidate.classList.remove('selected');
-                candidate.classList.add('unselected');
+                candidate.classList.add('unselected'); // Add unselected class for candidates that are not selected
             });
 
             // Select this candidate
             this.classList.add('selected');
-            this.classList.remove('unselected');
+            this.classList.remove('unselected'); // Remove unselected class from the selected candidate
 
             // Update hidden input for the form submission
             let selectedInput = document.querySelector(`input[name='${position}']`);
@@ -342,7 +342,7 @@ if (isset($voter['id'])) {
             // Deselect all candidates for this position
             document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
                 candidate.classList.remove('selected');
-                candidate.classList.remove('unselected');
+                candidate.classList.remove('unselected'); // Ensure unselected class is removed when reset
             });
 
             // Remove hidden input
@@ -356,8 +356,8 @@ if (isset($voter['id'])) {
     // Platform button functionality
     platformButtons.forEach(button => {
         button.addEventListener('click', function (e) {
-            e.stopPropagation(); // Stop the event from propagating to the candidate selection logic
-            e.preventDefault(); // Prevent the default behavior of the button (if any)
+            e.stopPropagation(); // Prevent triggering candidate selection
+            e.preventDefault(); // Ensure the default action is not triggered
 
             const platform = this.getAttribute('data-platform');
             const fullname = this.getAttribute('data-fullname');
@@ -371,7 +371,6 @@ if (isset($voter['id'])) {
         });
     });
 });
-
 
 </script>
 <script>
@@ -508,7 +507,7 @@ if (isset($voter['id'])) {
 <style>
 
 
- /* Style for the position container */
+  /* Style for the position container */
 .position-container {
     margin: 20px auto; /* Center the container horizontally and add margin on top and bottom */
     max-width: 1000px; /* Set a maximum width to make it responsive */
@@ -626,7 +625,6 @@ if (isset($voter['id'])) {
     transition: transform 0.3s, border-color 0.3s, opacity 0.3s;
     cursor: pointer;
     width: 200px;
-    position: relative; /* Ensure proper placement of the platform button */
 }
 
 /* Hover effect for candidate container */
@@ -663,10 +661,7 @@ if (isset($voter['id'])) {
 
 /* Style for the platform button */
 .platform-button {
-    position: absolute;
-    bottom: 10px; /* Position it at the bottom of the candidate container */
-    left: 50%;
-    transform: translateX(-50%); /* Center the button horizontally */
+    margin-top: 5px;
     font-size: 14px;
     background-color: #28a745;
     color: #fff;
@@ -675,7 +670,6 @@ if (isset($voter['id'])) {
     padding: 5px 10px;
     cursor: pointer;
     transition: background-color 0.3s;
-    width: 100%; /* Make the button take up the full width */
 }
 
 /* Hover effect for platform button */
