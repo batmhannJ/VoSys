@@ -310,9 +310,11 @@ if (isset($voter['id'])) {
     candidateContainers.forEach(container => {
         container.addEventListener('click', function (e) {
             // If the click target is a platform button, stop the selection logic
-            if (e.target.closest('platform')) {
-                return; // Just exit the function if a platform button was clicked
-            }
+            if (e.target.closest('.platform')) {
+    console.log("Platform button clicked; candidate selection blocked.");
+    return; // Just exit the function if a platform button was clicked
+}
+
 
             const position = this.getAttribute('data-position');
 
