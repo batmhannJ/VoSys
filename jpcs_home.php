@@ -301,14 +301,19 @@ if (isset($voter['id'])) {
 
 <?php include 'includes/scripts.php'; ?>
 <script>
-   document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function () {
     const candidateContainers = document.querySelectorAll('.candidate-container');
     const resetButtons = document.querySelectorAll('.reset');
     const platformButtons = document.querySelectorAll('.platform');
 
     // Candidate selection logic
     candidateContainers.forEach(container => {
-        container.addEventListener('click', function () {
+        container.addEventListener('click', function (e) {
+            // Prevent selection if platform button is clicked
+            if (e.target.classList.contains('platform')) {
+                return; // Do nothing if platform button was clicked
+            }
+
             const position = this.getAttribute('data-position');
 
             // Deselect previously selected candidate for this position
@@ -355,7 +360,7 @@ if (isset($voter['id'])) {
     // Platform button functionality
     platformButtons.forEach(button => {
         button.addEventListener('click', function (e) {
-            e.stopPropagation(); // Prevent triggering candidate selection
+            e.stopPropagation(); // Prevent triggering candidate selection on clicking platform button
             e.preventDefault(); // Ensure the default action is not triggered
 
             const platform = this.getAttribute('data-platform');
@@ -370,6 +375,7 @@ if (isset($voter['id'])) {
         });
     });
 });
+
 
 </script>
 <script>
