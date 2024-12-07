@@ -617,7 +617,7 @@ if (isset($voter['id'])) {
     border-radius: 10px;
     background-color: #f9f9f9;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, border-color 0.3s;
+    transition: transform 0.3s, border-color 0.3s, opacity 0.3s;
     cursor: pointer;
     width: 200px;
 }
@@ -631,6 +631,12 @@ if (isset($voter['id'])) {
 .candidate-container.selected {
     border-color: #28a745;
     transform: scale(1.1);
+}
+
+/* Unselected candidate style */
+.candidate-container.unselected {
+    opacity: 0.5; /* Reduced opacity for unselected candidates */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Stronger shadow for unselected */
 }
 
 /* Candidate image style */
@@ -681,7 +687,6 @@ if (isset($voter['id'])) {
 .reset:hover {
     background-color: #c82333;
 }
-
 
 /* Media query para sa mas maliit na mga screen */
 @media (max-width: 768px) {
