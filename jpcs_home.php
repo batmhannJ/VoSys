@@ -644,7 +644,7 @@ if (isset($voter['id'])) {
 /* Candidate name style */
 .candidate-name {
     margin-top: 10px;
-    font-size: 16px;
+    font-size: 10px;
     font-weight: bold;
 }
 
