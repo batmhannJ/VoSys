@@ -243,9 +243,8 @@ if (isset($voter['id'])) {
     echo '<div class="candidate-container" data-id="' . $crow['id'] . '" data-position="' . $slug . '">
     <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image"> <br>
     <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span> <br>
-  </div>
-  <button type="button" class="btn btn-primary btn-flat platform-button" data-platform="' . $crow['platform'] . '" data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">Platform</button>';
-
+    <button type="button" class="btn btn-primary btn-flat platform-button" data-platform="' . $crow['platform'] . '" data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">Platform</button>
+  </div>';
 }                    
                                     
                                 echo '</ul>
