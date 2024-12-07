@@ -662,7 +662,8 @@ if (isset($voter['id'])) {
 
 /* Style for the platform button */
 .platform-button {
-    margin-top: 10px; /* Space between the candidate's name and the button */
+    margin-top: 5px; /* Space between the candidate's name and the button */
+    margin-bottom: 8px;
     font-size: 14px;
     background-color: #28a745;
     color: #fff;
