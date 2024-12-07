@@ -502,7 +502,7 @@ if (isset($voter['id'])) {
 <style>
 
 
-    /* Style for the position container */
+  /* Style for the position container */
 .position-container {
     margin: 20px auto; /* Center the container horizontally and add margin on top and bottom */
     max-width: 800px; /* Set a maximum width to make it responsive */
@@ -530,7 +530,18 @@ if (isset($voter['id'])) {
 
 /* Style for the reset button */
 .reset {
-    margin-left: auto; /* Push reset button to the right */
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: auto; /* Align reset button to the right */
+}
+
+.reset:hover {
+    background-color: #c82333;
 }
 
 /* Style for the box title */
@@ -543,6 +554,9 @@ if (isset($voter['id'])) {
 /* Style for the box body */
 .box-body {
     padding: 10px;
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center align all the children */
 }
 
 /* Style for the voting instructions */
@@ -555,32 +569,45 @@ if (isset($voter['id'])) {
 .candidate-list ul {
     list-style-type: none;
     padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping of candidates */
+    justify-content: center; /* Center align candidate items */
 }
 
-/* Bagong istilo para sa mga item sa listahan ng mga kandidato */
 .candidate-list li {
-    display: flex; /* Baguhin ang display sa flex */
-    flex-wrap: wrap; /* Pahintulutan ang pag-wrap ng mga item sa loob ng flex container */
-    justify-content: space-between; /* I-set ang mga item na sa layong pare-pareho */
-    align-items: center; /* I-align ang mga item sa gitna */
-    border-radius: 10px; /* Radius ng border */
-    padding: 10px; /* Padding para sa mga item */
-    margin-bottom: 10px; /* Espasyo sa pagitan ng mga item */
-    background-color: #f9f9f9; /* Kulay ng background */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Shadow para sa depth */
-    border: 2px solid #ccc; /* Add border */
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    justify-content: center;
+    align-items: center; /* Center content inside each list item */
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ccc;
+    transition: transform 0.3s;
+    width: 200px; /* Set a fixed width for each candidate item */
 }
+
+/* Hover effect for candidate list item */
+.candidate-list li:hover {
+    transform: scale(1.05); /* Slight zoom effect */
+}
+
 .candidate-list li img {
-        width: 100px; /* I-adjust ang lapad ng mga larawan para sa mas maliit na screen */
-        height: 100px; /* I-adjust ang taas ng mga larawan para sa mas maliit na screen */
-        border-radius: 8px; /* Rounded corners for images */
-        transition: transform 0.3s; /* Add transition effect */
+    width: 100px; /* Adjust width for smaller screens */
+    height: 100px; /* Adjust height */
+    border-radius: 8px;
+    transition: transform 0.3s;
 }
 
+/* Hover effect for candidate images */
 .candidate-list li:hover img {
-    transform: scale(1.1); /* Make the image slightly larger on hover */
+    transform: scale(1.1); /* Slightly enlarge image on hover */
 }
 
+/* Style for candidate container */
 .candidate-container {
     display: inline-block;
     text-align: center;
@@ -595,15 +622,18 @@ if (isset($voter['id'])) {
     width: 200px;
 }
 
+/* Hover effect for candidate container */
 .candidate-container:hover {
     transform: scale(1.05);
 }
 
+/* Selected candidate container style */
 .candidate-container.selected {
     border-color: #28a745;
     transform: scale(1.1);
 }
 
+/* Candidate image style */
 .candidate-image {
     width: 120px;
     height: 120px;
@@ -611,12 +641,14 @@ if (isset($voter['id'])) {
     transition: transform 0.3s;
 }
 
+/* Candidate name style */
 .candidate-name {
     margin-top: 10px;
     font-size: 16px;
     font-weight: bold;
 }
 
+/* Style for the platform button */
 .platform-button {
     margin-top: 5px;
     font-size: 14px;
@@ -629,12 +661,13 @@ if (isset($voter['id'])) {
     transition: background-color 0.3s;
 }
 
+/* Hover effect for platform button */
 .platform-button:hover {
     background-color: #218838;
 }
 
+/* Consolidated reset button styles */
 .reset {
-    margin-left: auto;
     background-color: #dc3545;
     color: #fff;
     border: none;
@@ -642,6 +675,7 @@ if (isset($voter['id'])) {
     padding: 5px 10px;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-left: auto; /* Align to the right */
 }
 
 .reset:hover {
