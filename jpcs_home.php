@@ -240,11 +240,12 @@ if (isset($voter['id'])) {
                                         $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
                                     
                                        
-    echo '<div class="candidate-container" data-id="' . $crow['id'] . '" data-position="' . $slug . '">
-    <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image"> <br>
-    <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span> <br>
-    <button type="button" class="btn btn-primary btn-flat platform-button" data-platform="' . $crow['platform'] . '" data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">Platform</button>
-  </div>';
+                                        echo '<div class="candidate-container" data-id="' . $crow['id'] . '" data-position="' . $slug . '">
+                                        <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image"> <br>
+                                        <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span> <br>
+                                      </div>
+                                      <button type="button" class="btn btn-primary btn-flat platform-button" data-platform="' . $crow['platform'] . '" data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">Platform</button>';
+                                    
 }                    
                                     
                                 echo '</ul>
@@ -314,12 +315,12 @@ if (isset($voter['id'])) {
             // Deselect previously selected candidate for this position
             document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
                 candidate.classList.remove('selected');
-                candidate.classList.add('unselected'); // Add unselected class for candidates that are not selected
+                candidate.classList.add('unselected');
             });
 
             // Select this candidate
             this.classList.add('selected');
-            this.classList.remove('unselected'); // Remove unselected class from the selected candidate
+            this.classList.remove('unselected');
 
             // Update hidden input for the form submission
             let selectedInput = document.querySelector(`input[name='${position}']`);
@@ -341,7 +342,7 @@ if (isset($voter['id'])) {
             // Deselect all candidates for this position
             document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
                 candidate.classList.remove('selected');
-                candidate.classList.remove('unselected'); // Ensure unselected class is removed when reset
+                candidate.classList.remove('unselected');
             });
 
             // Remove hidden input
@@ -355,8 +356,8 @@ if (isset($voter['id'])) {
     // Platform button functionality
     platformButtons.forEach(button => {
         button.addEventListener('click', function (e) {
-            e.stopPropagation(); // Prevent triggering candidate selection
-            e.preventDefault(); // Ensure the default action is not triggered
+            e.stopPropagation(); // Stop the event from propagating to the candidate selection logic
+            e.preventDefault(); // Prevent the default behavior of the button (if any)
 
             const platform = this.getAttribute('data-platform');
             const fullname = this.getAttribute('data-fullname');
@@ -370,6 +371,7 @@ if (isset($voter['id'])) {
         });
     });
 });
+
 
 </script>
 <script>
