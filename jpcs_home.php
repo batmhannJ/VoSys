@@ -245,7 +245,7 @@ if (isset($voter['id'])) {
                                             <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image">
                                             <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span>
                                         </div>
-                                        <button type="button" class="btn btn-primary btn-flat platform-button" data-platform="' . $crow['platform'] . '" data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">Platform</button>
+                                        <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
                                         ';
 }                    
                                     
