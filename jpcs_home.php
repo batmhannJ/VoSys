@@ -509,7 +509,7 @@ if (isset($voter['id'])) {
   /* Style for the position container */
 .position-container {
     margin: 20px auto; /* Center the container horizontally and add margin on top and bottom */
-    max-width: 800px; /* Set a maximum width to make it responsive */
+    max-width: 1000px; /* Set a maximum width to make it responsive */
     padding: 20px; /* Add padding inside the container */
     border: 1px solid #ccc; /* Add border for visual separation */
     border-radius: 10px; /* Add border radius for rounded corners */
