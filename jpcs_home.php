@@ -309,10 +309,9 @@ if (isset($voter['id'])) {
     // Candidate selection logic
     candidateContainers.forEach(container => {
         container.addEventListener('click', function (e) {
-            // Check if the target element is a platform button and stop the selection logic if true
+            // If the click target is a platform button, stop the selection logic
             if (e.target.closest('.platform')) {
-                e.stopImmediatePropagation(); // Stop further event propagation to avoid selecting the candidate
-                return;
+                return; // Just exit the function if a platform button was clicked
             }
 
             const position = this.getAttribute('data-position');
@@ -361,8 +360,8 @@ if (isset($voter['id'])) {
     // Platform button functionality
     platformButtons.forEach(button => {
         button.addEventListener('click', function (e) {
-            e.stopPropagation(); // Prevent triggering candidate selection on clicking platform button
-            e.preventDefault(); // Ensure the default action is not triggered
+            e.stopPropagation(); // Stop the event from propagating to the candidate selection logic
+            e.preventDefault(); // Prevent the default behavior of the button (if any)
 
             const platform = this.getAttribute('data-platform');
             const fullname = this.getAttribute('data-fullname');
