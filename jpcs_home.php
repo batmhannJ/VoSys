@@ -254,6 +254,22 @@ if (isset($voter['id'])) {
                 </div>';
             }
             ?>
+            <div class="modal fade" id="platformModal" tabindex="-1" role="dialog" aria-labelledby="platformModalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="platformModalTitle"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="platformModalContent"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
                                 <div class="text-center">
                                     <button type="button" class="btn btn-primary btn-flat" style="background-color: darkgreen;" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
                                 </div>
@@ -344,22 +360,6 @@ if (isset($voter['id'])) {
             if (selectedInput) {
                 selectedInput.remove();
             }
-        });
-    });
-
-    // Platform button modal functionality
-    platformButtons.forEach(button => {
-        button.addEventListener('click', function (e) {
-            e.stopPropagation(); // Prevent triggering candidate selection
-            const platform = this.getAttribute('data-platform');
-            const fullname = this.getAttribute('data-fullname');
-
-            // Update modal content
-            document.getElementById('platformModalTitle').innerText = fullname + "'s Platform";
-            document.getElementById('platformModalContent').innerText = platform;
-
-            // Show modal
-            $('#platformModal').modal('show');
         });
     });
 });
