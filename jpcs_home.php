@@ -592,6 +592,7 @@ if (isset($voter['id'])) {
     transition: transform 0.3s, border-color 0.3s;
     cursor: pointer;
     width: 150px;
+    position: relative;
 }
 
 .candidate-container:hover {
@@ -616,8 +617,13 @@ if (isset($voter['id'])) {
     font-weight: bold;
 }
 
+/* New styling for the platform button container */
+.platform-container {
+    margin-top: 10px;
+    text-align: center;
+}
+
 .platform-button {
-    margin-top: 5px;
     font-size: 14px;
     background-color: #28a745;
     color: #fff;
@@ -631,6 +637,7 @@ if (isset($voter['id'])) {
 .platform-button:hover {
     background-color: #218838;
 }
+
 
 .reset {
     margin-left: auto;
