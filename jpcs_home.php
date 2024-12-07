@@ -299,14 +299,17 @@ if (isset($voter['id'])) {
 
 <?php include 'includes/scripts.php'; ?>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+   document.addEventListener('DOMContentLoaded', function () {
     const candidateContainers = document.querySelectorAll('.candidate-container');
+    const resetButtons = document.querySelectorAll('.reset');
+    const platformButtons = document.querySelectorAll('.platform');
 
+    // Candidate selection logic
     candidateContainers.forEach(container => {
         container.addEventListener('click', function () {
             const position = this.getAttribute('data-position');
 
-            // Deselect any previously selected candidate for this position
+            // Deselect previously selected candidate for this position
             document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
                 candidate.classList.remove('selected');
             });
@@ -314,17 +317,49 @@ if (isset($voter['id'])) {
             // Select this candidate
             this.classList.add('selected');
 
-            // Optionally, store the selection in a hidden input or session
+            // Update hidden input for the form submission
+            let selectedInput = document.querySelector(`input[name='${position}']`);
+            if (!selectedInput) {
+                selectedInput = document.createElement('input');
+                selectedInput.type = 'hidden';
+                selectedInput.name = position;
+                document.getElementById('ballotForm').appendChild(selectedInput);
+            }
+            selectedInput.value = this.getAttribute('data-id');
+        });
+    });
+
+    // Reset button functionality
+    resetButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const position = this.getAttribute('data-desc');
+
+            // Deselect all candidates for this position
+            document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
+                candidate.classList.remove('selected');
+            });
+
+            // Remove hidden input
             const selectedInput = document.querySelector(`input[name='${position}']`);
             if (selectedInput) {
-                selectedInput.value = this.getAttribute('data-id');
-            } else {
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = position;
-                input.value = this.getAttribute('data-id');
-                document.getElementById('ballotForm').appendChild(input);
+                selectedInput.remove();
             }
+        });
+    });
+
+    // Platform button modal functionality
+    platformButtons.forEach(button => {
+        button.addEventListener('click', function (e) {
+            e.stopPropagation(); // Prevent triggering candidate selection
+            const platform = this.getAttribute('data-platform');
+            const fullname = this.getAttribute('data-fullname');
+
+            // Update modal content
+            document.getElementById('platformModalTitle').innerText = fullname + "'s Platform";
+            document.getElementById('platformModalContent').innerText = platform;
+
+            // Show modal
+            $('#platformModal').modal('show');
         });
     });
 });
@@ -587,6 +622,27 @@ if (isset($voter['id'])) {
     border: none;
     border-radius: 5px;
     padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.platform-button:hover {
+    background-color: #218838;
+}
+
+.reset {
+    margin-left: auto;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.reset:hover {
+    background-color: #c82333;
 }
 
 
