@@ -210,11 +210,11 @@ if (isset($voter['id'])) {
                                                 <p class="instruction">You may select up to '.$row['max_vote'].' candidates</p>
                                                 <div class="candidate-list">
                                                     <ul>';
-                                    $sql = "SELECT * FROM candidates WHERE category_id='".$row['id']."'";
-                                    $cquery = $conn->query($sql);
-                                    while($crow = $cquery->fetch_assoc()){
-                                        $slug = slugify($row['name']);
-                                        $checked = '';
+                                                    $sql = "SELECT * FROM candidates WHERE category_id='" . $row['id'] . "'";
+                                                    $cquery = $conn->query($sql);
+                                                    while ($crow = $cquery->fetch_assoc()) {
+                                                        $slug = slugify($row['name']);
+                                                        $image = (!empty($crow['photo'])) ? 'images/' . $crow['photo'] : 'images/profile.jpg';
                                         if(isset($_SESSION['post'][$slug])){
                                             $value = $_SESSION['post'][$slug];
                                     
@@ -239,16 +239,13 @@ if (isset($voter['id'])) {
                                     
                                         $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
                                     
-                                        echo '
-                                        <li>
-                                            <label for="'.$inputId.'" style="cursor: pointer;">
-                                                '.$input.'
-                                                <img src="'.$image.'" alt="'.$crow['firstname'].' '.$crow['lastname'].'" class="clist">
-                                                <span class="cname">'.$crow['firstname'].' '.$crow['lastname'].'</span>
-                                            </label>
-                                            <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
-                                        </li>';
-                                    }                                    
+                                       
+    echo '<div class="candidate-container" data-id="' . $crow['id'] . '" data-position="' . $slug . '">
+    <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image">
+    <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span>
+    <button type="button" class="btn btn-primary btn-flat platform-button" data-platform="' . $crow['platform'] . '" data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">Platform</button>
+  </div>';
+}                    
                                     
                                 echo '</ul>
                             </div>
@@ -301,6 +298,38 @@ if (isset($voter['id'])) {
 </div>
 
 <?php include 'includes/scripts.php'; ?>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const candidateContainers = document.querySelectorAll('.candidate-container');
+
+    candidateContainers.forEach(container => {
+        container.addEventListener('click', function () {
+            const position = this.getAttribute('data-position');
+
+            // Deselect any previously selected candidate for this position
+            document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
+                candidate.classList.remove('selected');
+            });
+
+            // Select this candidate
+            this.classList.add('selected');
+
+            // Optionally, store the selection in a hidden input or session
+            const selectedInput = document.querySelector(`input[name='${position}']`);
+            if (selectedInput) {
+                selectedInput.value = this.getAttribute('data-id');
+            } else {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = position;
+                input.value = this.getAttribute('data-id');
+                document.getElementById('ballotForm').appendChild(input);
+            }
+        });
+    });
+});
+
+</script>
 <script>
     function updateCountdown(endTime) {
         var now = new Date();
@@ -513,6 +542,53 @@ if (isset($voter['id'])) {
 .candidate-list li:hover img {
     transform: scale(1.1); /* Make the image slightly larger on hover */
 }
+
+.candidate-container {
+    display: inline-block;
+    text-align: center;
+    padding: 10px;
+    margin: 10px;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, border-color 0.3s;
+    cursor: pointer;
+    width: 150px;
+}
+
+.candidate-container:hover {
+    transform: scale(1.05);
+}
+
+.candidate-container.selected {
+    border-color: #28a745;
+    transform: scale(1.1);
+}
+
+.candidate-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 10px;
+    transition: transform 0.3s;
+}
+
+.candidate-name {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.platform-button {
+    margin-top: 5px;
+    font-size: 14px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
 
 /* Media query para sa mas maliit na mga screen */
 @media (max-width: 768px) {
