@@ -592,7 +592,7 @@ if (isset($voter['id'])) {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, border-color 0.3s;
     cursor: pointer;
-    width: 150px;
+    width: 200px;
 }
 
 .candidate-container:hover {
