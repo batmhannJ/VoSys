@@ -255,27 +255,7 @@ if (isset($voter['id'])) {
                 
             }
             ?>
-
-            <!-- Modal -->
-<div class="modal fade" id="platformModal" tabindex="-1" role="dialog" aria-labelledby="platformModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="platformModalTitle">Platform</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="platformModalContent">
-                <!-- Platform content will be injected here -->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
+            
                                 <div class="text-center">
                                     <button type="button" class="btn btn-primary btn-flat" style="background-color: darkgreen;" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
                                 </div>
@@ -848,7 +828,7 @@ input[type="checkbox"]:checked + .clist {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: black;
+    background-color: darkgreen;
     color: #fff;
 }
 
