@@ -614,7 +614,8 @@ if (isset($voter['id'])) {
 
 /* Style for candidate container */
 .candidate-container {
-    display: inline-block;
+    display: flex; /* Make the container a flexbox */
+    flex-direction: column; /* Ensure the elements inside are stacked vertically */
     text-align: center;
     padding: 10px;
     margin: 10px;
@@ -625,7 +626,7 @@ if (isset($voter['id'])) {
     transition: transform 0.3s, border-color 0.3s, opacity 0.3s;
     cursor: pointer;
     width: 200px;
-    position: relative; /* Make sure the platform button stays inside the candidate container */
+    position: relative; /* Allow for absolute positioning of the button if needed */
 }
 
 /* Hover effect for candidate container */
@@ -662,8 +663,7 @@ if (isset($voter['id'])) {
 
 /* Style for the platform button */
 .platform-button {
-    margin-top: 5px; /* Space between the candidate's name and the button */
-    margin-bottom: 8px;
+    margin-top: 10px; /* Space between the candidate's name and the button */
     font-size: 14px;
     background-color: #28a745;
     color: #fff;
@@ -695,15 +695,17 @@ if (isset($voter['id'])) {
     background-color: #c82333;
 }
 
-
-/* Media query para sa mas maliit na mga screen */
-@media (max-width: 768px) {
-    .platform {
-        padding: 6px 16px; /* I-adjust ang padding para sa mas maliit na screen */
-        font-size: 14px; /* I-adjust ang font size */
-        width: auto; /* I-adjust ang lapad */
-        font-family: sans-serif; /* Change the font family to Arial or any desired font */
+/* Media query to ensure proper layout on larger screens */
+@media (min-width: 768px) {
+    .candidate-container {
+        flex-direction: column; /* Ensure flex direction stays as column for larger screens */
     }
+
+    /* Adjust the platform button to stay below the candidate's name */
+    .platform-button {
+        margin-top: 10px; /* Ensure it's spaced properly below the name */
+    }
+
     .candidate-list li {
         flex-direction: column; /* Baguhin ang direksyon ng flex container sa column */
         align-items: center; /* I-align ang mga item sa gitna */
