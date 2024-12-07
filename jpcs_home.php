@@ -240,12 +240,11 @@ if (isset($voter['id'])) {
                                         $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
                                     
                                        
-                                        echo '<div class="candidate-container" data-id="' . $crow['id'] . '" data-position="' . $slug . '">
-                                        <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image"> <br>
-                                        <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span> <br>
-                                      </div>
-                                      <button type="button" class="btn btn-primary btn-flat platform-button" data-platform="' . $crow['platform'] . '" data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">Platform</button>';
-                                    
+    echo '<div class="candidate-container" data-id="' . $crow['id'] . '" data-position="' . $slug . '">
+    <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image"> <br>
+    <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span> <br>
+    <button type="button" class="btn btn-primary btn-flat platform-button" data-platform="' . $crow['platform'] . '" data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">Platform</button>
+  </div>';
 }                    
                                     
                                 echo '</ul>
@@ -614,8 +613,7 @@ if (isset($voter['id'])) {
 
 /* Style for candidate container */
 .candidate-container {
-    display: flex; /* Make the container a flexbox */
-    flex-direction: column; /* Ensure the elements inside are stacked vertically */
+    display: inline-block;
     text-align: center;
     padding: 10px;
     margin: 10px;
@@ -626,7 +624,7 @@ if (isset($voter['id'])) {
     transition: transform 0.3s, border-color 0.3s, opacity 0.3s;
     cursor: pointer;
     width: 200px;
-    position: relative; /* Allow for absolute positioning of the button if needed */
+    position: relative; /* Make sure the platform button stays inside the candidate container */
 }
 
 /* Hover effect for candidate container */
@@ -695,17 +693,15 @@ if (isset($voter['id'])) {
     background-color: #c82333;
 }
 
-/* Media query to ensure proper layout on larger screens */
-@media (min-width: 768px) {
-    .candidate-container {
-        flex-direction: column; /* Ensure flex direction stays as column for larger screens */
-    }
 
-    /* Adjust the platform button to stay below the candidate's name */
-    .platform-button {
-        margin-top: 10px; /* Ensure it's spaced properly below the name */
+/* Media query para sa mas maliit na mga screen */
+@media (max-width: 768px) {
+    .platform {
+        padding: 6px 16px; /* I-adjust ang padding para sa mas maliit na screen */
+        font-size: 14px; /* I-adjust ang font size */
+        width: auto; /* I-adjust ang lapad */
+        font-family: sans-serif; /* Change the font family to Arial or any desired font */
     }
-
     .candidate-list li {
         flex-direction: column; /* Baguhin ang direksyon ng flex container sa column */
         align-items: center; /* I-align ang mga item sa gitna */
