@@ -314,10 +314,12 @@ if (isset($voter['id'])) {
             // Deselect previously selected candidate for this position
             document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
                 candidate.classList.remove('selected');
+                candidate.classList.add('unselected'); // Add unselected class for candidates that are not selected
             });
 
             // Select this candidate
             this.classList.add('selected');
+            this.classList.remove('unselected'); // Remove unselected class from the selected candidate
 
             // Update hidden input for the form submission
             let selectedInput = document.querySelector(`input[name='${position}']`);
@@ -339,6 +341,7 @@ if (isset($voter['id'])) {
             // Deselect all candidates for this position
             document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
                 candidate.classList.remove('selected');
+                candidate.classList.remove('unselected'); // Ensure unselected class is removed when reset
             });
 
             // Remove hidden input
@@ -349,22 +352,23 @@ if (isset($voter['id'])) {
         });
     });
 
+    // Platform button functionality
     platformButtons.forEach(button => {
-    button.addEventListener('click', function (e) {
-        e.stopPropagation(); // Prevent triggering candidate selection
-        e.preventDefault(); // Ensure the default action is not triggered
+        button.addEventListener('click', function (e) {
+            e.stopPropagation(); // Prevent triggering candidate selection
+            e.preventDefault(); // Ensure the default action is not triggered
 
-        const platform = this.getAttribute('data-platform');
-        const fullname = this.getAttribute('data-fullname');
+            const platform = this.getAttribute('data-platform');
+            const fullname = this.getAttribute('data-fullname');
 
-        // Update modal content
-        document.getElementById('platformModalTitle').innerText = fullname + "'s Platform";
-        document.getElementById('platformModalContent').innerText = platform;
+            // Update modal content
+            document.getElementById('platformModalTitle').innerText = fullname + "'s Platform";
+            document.getElementById('platformModalContent').innerText = platform;
 
-        // Show modal
-        $('#platformModal').modal('show');
+            // Show modal
+            $('#platformModal').modal('show');
+        });
     });
-});
 });
 
 </script>
