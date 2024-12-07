@@ -508,7 +508,7 @@ if (isset($voter['id'])) {
 <style>
 
 
-  /* Style for the position container */
+ /* Style for the position container */
 .position-container {
     margin: 20px auto; /* Center the container horizontally and add margin on top and bottom */
     max-width: 1000px; /* Set a maximum width to make it responsive */
@@ -626,6 +626,7 @@ if (isset($voter['id'])) {
     transition: transform 0.3s, border-color 0.3s, opacity 0.3s;
     cursor: pointer;
     width: 200px;
+    position: relative; /* Ensure proper placement of the platform button */
 }
 
 /* Hover effect for candidate container */
@@ -662,7 +663,10 @@ if (isset($voter['id'])) {
 
 /* Style for the platform button */
 .platform-button {
-    margin-top: 5px;
+    position: absolute;
+    bottom: 10px; /* Position it at the bottom of the candidate container */
+    left: 50%;
+    transform: translateX(-50%); /* Center the button horizontally */
     font-size: 14px;
     background-color: #28a745;
     color: #fff;
@@ -671,6 +675,7 @@ if (isset($voter['id'])) {
     padding: 5px 10px;
     cursor: pointer;
     transition: background-color 0.3s;
+    width: 100%; /* Make the button take up the full width */
 }
 
 /* Hover effect for platform button */
