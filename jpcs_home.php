@@ -506,7 +506,7 @@ if (isset($voter['id'])) {
 <style>
 
 
-  /* Style for the position container */
+ /* Style for the position container */
 .position-container {
     margin: 20px auto; /* Center the container horizontally and add margin on top and bottom */
     max-width: 1000px; /* Set a maximum width to make it responsive */
@@ -624,6 +624,7 @@ if (isset($voter['id'])) {
     transition: transform 0.3s, border-color 0.3s, opacity 0.3s;
     cursor: pointer;
     width: 200px;
+    position: relative; /* Make sure the platform button stays inside the candidate container */
 }
 
 /* Hover effect for candidate container */
@@ -660,7 +661,7 @@ if (isset($voter['id'])) {
 
 /* Style for the platform button */
 .platform-button {
-    margin-top: 5px;
+    margin-top: 10px; /* Space between the candidate's name and the button */
     font-size: 14px;
     background-color: #28a745;
     color: #fff;
@@ -691,6 +692,7 @@ if (isset($voter['id'])) {
 .reset:hover {
     background-color: #c82333;
 }
+
 
 /* Media query para sa mas maliit na mga screen */
 @media (max-width: 768px) {
