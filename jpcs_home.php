@@ -313,7 +313,7 @@ if (isset($voter['id'])) {
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const candidateContainers = document.querySelectorAll('.candidate-container');
-    const resetButtons = document.querySelectorAll('.reset'); // Updated selector to match your HTML
+    const resetButtons = document.querySelectorAll('.reset');
 
     // Candidate selection logic
     candidateContainers.forEach(container => {
@@ -325,18 +325,15 @@ if (isset($voter['id'])) {
             // If candidate is already selected, deselect it
             if (this.classList.contains('selected')) {
                 this.classList.remove('selected');
-                this.classList.add('unselected');
             } else {
                 // If max votes are reached, deselect the first selected candidate to allow reselection
                 if (selectedCandidates.length >= maxVotes) {
                     const earliestSelected = selectedCandidates[0];
                     earliestSelected.classList.remove('selected');
-                    earliestSelected.classList.add('unselected');
                 }
 
                 // Select the current candidate
                 this.classList.add('selected');
-                this.classList.remove('unselected');
             }
 
             // Update hidden inputs for form submission
@@ -362,12 +359,11 @@ if (isset($voter['id'])) {
     // Reset button logic
     resetButtons.forEach(button => {
         button.addEventListener('click', function () {
-            const position = this.getAttribute('data-desc'); // Updated to use 'data-desc' from your structure
+            const position = this.getAttribute('data-desc'); // Get the position from 'data-desc'
 
             // Deselect all candidates for the position
             document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
                 candidate.classList.remove('selected');
-                candidate.classList.add('unselected');
             });
 
             // Clear hidden inputs for the position
