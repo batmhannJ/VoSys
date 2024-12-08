@@ -388,10 +388,14 @@ if (isset($voter['id'])) {
             // Prevent the candidate container from being selected when clicking on the platform button
             const candidateContainer = this.closest('.candidate-container');
 
-            // Deselect and darken the candidate if it was selected
+            // Do not deselect the candidate if it is already selected
+            // We check if the candidate is selected and do nothing (just show the platform modal)
             if (candidateContainer.classList.contains('selected')) {
-                candidateContainer.classList.remove('selected');
-                candidateContainer.classList.add('unselected'); // Deselect and darken the candidate
+                // Just stop event propagation, do not deselect or change classes
+                event.stopPropagation();
+            } else {
+                // If not selected, darken it
+                candidateContainer.classList.add('unselected');
             }
 
             // Prevent event propagation to avoid candidate selection
