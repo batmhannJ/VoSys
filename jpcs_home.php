@@ -249,12 +249,13 @@ if (isset($voter['id'])) {
                                                                 <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span> <br>
                                                             
                                                             </div>
-                                                            <div>
+                                                           <div class="platform-button-container">
                                                             <button type="button" class="btn btn-primary btn-flat platform-button" 
-                                                                        data-platform="' . $crow['platform'] . '" 
-                                                                        data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">
-                                                                    Platform
-                                                                </button></div>';
+                                                                data-platform="' . $crow['platform'] . '" 
+                                                                data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">
+                                                                Platform
+                                                            </button>
+                                                        </div>';
                                                     
                                                     
 }                    
@@ -673,6 +674,13 @@ body {
     width: 200px;
 }
 
+/* Button container ensures button is aligned below the candidate container */
+.platform-button-container {
+    text-align: center;
+    margin-top: -10px; /* Adjust spacing between container and button */
+    margin-bottom: 20px; /* Add spacing between button and other content */
+}
+
 /* Hover effect for candidate container */
 .candidate-container:hover {
     transform: scale(1.05);
@@ -707,7 +715,6 @@ body {
 
 /* Style for the platform button */
 .platform-button {
-    margin-top: 10px;
     font-size: 14px;
     background-color: #28a745;
     color: #fff;
@@ -716,8 +723,6 @@ body {
     padding: 5px 10px;
     cursor: pointer;
     transition: background-color 0.3s;
-    display: block; /* Ensure button is on its own line */
-    text-align: center; /* Center align button */
 }
 
 /* Hover effect for platform button */
@@ -725,10 +730,6 @@ body {
     background-color: #218838;
 }
 
-/* Add spacing between button and candidate container */
-.platform-button + .candidate-container {
-    margin-top: 20px;
-}
 
 /* Consolidated reset button styles */
 .reset {
