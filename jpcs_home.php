@@ -316,77 +316,75 @@ if (isset($voter['id'])) {
     const resetButtons = document.querySelectorAll('.reset');
     const platformButtons = document.querySelectorAll('.platform');
 
-   // Candidate selection logic
-candidateContainers.forEach(container => {
-    container.addEventListener('click', function () {
-        const position = this.getAttribute('data-position'); // Get the position of the candidate
-        const maxVotes = parseInt(this.getAttribute('data-max-vote'), 10); // Get max vote for this position
-        const candidateName = this.querySelector('.candidate-name').textContent; // Get candidate's name from the selected element
-        
-        const selectedCandidates = document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`);
+    // Candidate selection logic
+    candidateContainers.forEach(container => {
+        container.addEventListener('click', function () {
+            const position = this.getAttribute('data-position'); // Get the position of the candidate
+            const maxVotes = parseInt(this.getAttribute('data-max-vote'), 10); // Get max vote for this position
 
-        // If more candidates are selected than the max allowed, show an alert
-        if (selectedCandidates.length >= maxVotes && !this.classList.contains('selected')) {
-            alert(`You can only select up to ${maxVotes} candidate(s) for ${position}.`);
-            return;
-        }
+            const selectedCandidates = document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`);
 
-        // Toggle selection of candidate
-        if (this.classList.contains('selected')) {
-            this.classList.remove('selected');
-            this.classList.add('unselected');
-        } else {
-            // If it's a single vote, remove selection from other candidates first
-            if (maxVotes === 1) {
-                document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
-                    candidate.classList.remove('selected');
-                    candidate.classList.add('unselected');
-                });
+            // If more candidates are selected than the max allowed, show an alert
+            if (selectedCandidates.length >= maxVotes && !this.classList.contains('selected')) {
+                alert(`You can only select up to ${maxVotes} candidate(s) for ${position}.`);
+                return;
             }
-            this.classList.add('selected');
-            this.classList.remove('unselected');
-        }
 
-        // Update hidden inputs for form submission
-        let selectedInputs = document.querySelectorAll(`input[name='${position}[]']`);
-        selectedInputs.forEach(input => input.remove()); // Clear previous inputs
-
-        // Create new hidden inputs for selected candidates
-        document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`).forEach(candidate => {
-            let selectedInput = document.createElement('input');
-            selectedInput.type = 'hidden';
-            selectedInput.name = `${position}[]`;
-            selectedInput.value = candidate.getAttribute('data-id');
-            document.getElementById('ballotForm').appendChild(selectedInput);
-        });
-
-        // Update the preview section with the candidate's name and position
-        const previewElement = document.getElementById('preview_' + position);
-
-        if (maxVotes === 1) {
-            // Hanapin ang napiling kandidato
-            const selectedCandidate = document.querySelector(`.candidate-container[data-position='${position}'].selected`);
-            
-            if (selectedCandidate) {
-                // Kunin ang pangalan ng kandidato
-                const candidateName = selectedCandidate.querySelector('.candidate-name').textContent;
-                // I-update ang preview
-                previewElement.innerHTML = `${position}: <strong>${candidateName}</strong>`;
+            // Toggle selection of candidate
+            if (this.classList.contains('selected')) {
+                this.classList.remove('selected');
+                this.classList.add('unselected');
             } else {
-                // Kung walang napili, clear ang preview
-                previewElement.innerHTML = `${position}: <em>No selection</em>`;
+                // If it's a single vote, remove selection from other candidates first
+                if (maxVotes === 1) {
+                    document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
+                        candidate.classList.remove('selected');
+                        candidate.classList.add('unselected');
+                    });
+                }
+                this.classList.add('selected');
+                this.classList.remove('unselected');
             }
-        } else {
-            // For multiple votes, show all selected names
-            let selectedNames = [];
-            document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`).forEach(candidate => {
-                selectedNames.push(candidate.querySelector('.candidate-name').textContent);
-            });
-            previewElement.innerHTML = `${position}: <strong>${selectedNames.join(', ')}</strong>`;
-        }
-    });
-});
 
+            // Update hidden inputs for form submission
+            let selectedInputs = document.querySelectorAll(`input[name='${position}[]']`);
+            selectedInputs.forEach(input => input.remove()); // Clear previous inputs
+
+            // Create new hidden inputs for selected candidates
+            document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`).forEach(candidate => {
+                let selectedInput = document.createElement('input');
+                selectedInput.type = 'hidden';
+                selectedInput.name = `${position}[]`;
+                selectedInput.value = candidate.getAttribute('data-id');
+                document.getElementById('ballotForm').appendChild(selectedInput);
+            });
+
+            // Update the preview section with the candidate's name and position
+            const previewElement = document.getElementById('preview_' + position);
+
+            if (maxVotes === 1) {
+                // Hanapin ang napiling kandidato
+                const selectedCandidate = document.querySelector(`.candidate-container[data-position='${position}'].selected`);
+
+                if (selectedCandidate) {
+                    // Kunin ang pangalan ng kandidato
+                    const candidateName = selectedCandidate.querySelector('.candidate-name').textContent;
+                    // I-update ang preview
+                    previewElement.innerHTML = `${position}: <strong>${candidateName}</strong>`;
+                } else {
+                    // Kung walang napili, clear ang preview
+                    previewElement.innerHTML = `${position}: <em>No selection</em>`;
+                }
+            } else {
+                // For multiple votes, show all selected names
+                let selectedNames = [];
+                document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`).forEach(candidate => {
+                    selectedNames.push(candidate.querySelector('.candidate-name').textContent);
+                });
+                previewElement.innerHTML = `${position}: <strong>${selectedNames.join(', ')}</strong>`;
+            }
+        });
+    });
 
     // Reset button functionality
     resetButtons.forEach(button => {
@@ -403,7 +401,7 @@ candidateContainers.forEach(container => {
             const selectedInputs = document.querySelectorAll(`input[name='${position}[]']`);
             selectedInputs.forEach(input => input.remove());
 
-            // Clear preview
+            // Clear preview section
             const previewElement = document.getElementById('preview_' + position);
             previewElement.innerHTML = `${position}: <em>No selection</em>`;
         });
