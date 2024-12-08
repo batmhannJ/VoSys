@@ -315,6 +315,9 @@ if (isset($voter['id'])) {
 
     // Candidate selection logic
     candidateContainers.forEach(container => {
+        // Initially, set opacity for unselected candidates
+        container.classList.add('unselected'); // Add unselected class for opacity
+
         container.addEventListener('click', function () {
             // Prevent candidate selection if the platform button is clicked
             if (this.classList.contains('platform-clicked')) return; // Ignore if platform button was clicked
@@ -326,18 +329,18 @@ if (isset($voter['id'])) {
             // If candidate is already selected, deselect it
             if (this.classList.contains('selected')) {
                 this.classList.remove('selected');
-                this.classList.add('unselected'); // Make it appear unselected
+                this.classList.add('unselected'); // Add unselected opacity back
             } else {
                 // If max votes are reached, deselect the first selected candidate to allow reselection
                 if (selectedCandidates.length >= maxVotes) {
                     const earliestSelected = selectedCandidates[0];
                     earliestSelected.classList.remove('selected');
-                    earliestSelected.classList.add('unselected'); // Make it appear unselected
+                    earliestSelected.classList.add('unselected'); // Add unselected opacity back
                 }
 
                 // Select the current candidate
                 this.classList.add('selected');
-                this.classList.remove('unselected'); // Make it appear selected
+                this.classList.remove('unselected'); // Make it fully visible
             }
 
             // Update hidden inputs for form submission
@@ -368,7 +371,7 @@ if (isset($voter['id'])) {
             // Deselect all candidates for the position
             document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
                 candidate.classList.remove('selected');
-                candidate.classList.add('unselected'); // Ensure opacity is lowered when deselected
+                candidate.classList.add('unselected'); // Ensure opacity remains as unselected
             });
 
             // Clear hidden inputs for the position
@@ -409,7 +412,6 @@ if (isset($voter['id'])) {
         }
     });
 });
-
 
 </script>
 <script>
