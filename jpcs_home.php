@@ -732,12 +732,12 @@ body {
     transform: scale(1.1);
 }
 
-/* Unselected candidate style */
-.candidate-container.unselected {
+.candidate-container.darkened {
     opacity: 0.6; /* Lower opacity */
     filter: brightness(0.7); /* Darken the unselected candidates */
     pointer-events: none; /* Prevent interaction with unselected candidates */
 }
+
 
 /* Candidate image style */
 .candidate-image {
