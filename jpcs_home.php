@@ -364,12 +364,18 @@ candidateContainers.forEach(container => {
         const previewElement = document.getElementById('preview_' + position);
 
         if (maxVotes === 1) {
-            let selectedNames = [];
-            document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`).forEach(name => {
-                selectedNames.push(name.querySelector('.candidate-name').textContent);
-            });
-            // For single vote, show name and position
-            previewElement.innerHTML = `${position}: <strong>${selectedNames.join(', ')}</strong>`;
+            // Hanapin ang napiling kandidato
+            const selectedCandidate = document.querySelector(`.candidate-container[data-position='${position}'].selected`);
+            
+            if (selectedCandidate) {
+                // Kunin ang pangalan ng kandidato
+                const candidateName = selectedCandidate.querySelector('.candidate-name').textContent;
+                // I-update ang preview
+                previewElement.innerHTML = `${position}: <strong>${candidateName}</strong>`;
+            } else {
+                // Kung walang napili, clear ang preview
+                previewElement.innerHTML = `${position}: <em>No selection</em>`;
+            }
         } else {
             // For multiple votes, show all selected names
             let selectedNames = [];
@@ -396,6 +402,10 @@ candidateContainers.forEach(container => {
             // Remove hidden inputs
             const selectedInputs = document.querySelectorAll(`input[name='${position}[]']`);
             selectedInputs.forEach(input => input.remove());
+
+            // Clear preview
+            const previewElement = document.getElementById('preview_' + position);
+            previewElement.innerHTML = `${position}: <em>No selection</em>`;
         });
     });
 
