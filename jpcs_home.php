@@ -596,7 +596,7 @@ body {
 /* Style for the box title */
 .box-title {
     margin: 0;
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 300;
 }
 
