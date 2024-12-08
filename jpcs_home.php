@@ -241,18 +241,16 @@ if (isset($voter['id'])) {
                                                             '<input type="radio" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
                                                     
                                                         // Generate candidate container
-                                                        echo '<div class="candidate-container" 
-                                                                    data-id="' . $crow['id'] . '" 
-                                                                    data-position="' . $slug . '" 
-                                                                    data-max-vote="' . $maxVote . '">
-                                                                <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image"> <br>
-                                                                <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span> <br>
-                                                                <button type="button" class="btn btn-primary btn-flat platform-button" 
-                                                                        data-platform="' . $crow['platform'] . '" 
-                                                                        data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">
-                                                                    Platform
-                                                                </button>
-                                                            </div>';
+                                                        echo '<div class="candidate-card" data-id="' . $crow['id'] . '" data-position="' . $slug . '" data-max-vote="' . $maxVote . '">
+                        <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-photo">
+                        <div class="candidate-info">
+                            <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span>
+                            ' . $input . '
+                            <button class="platform-button" data-platform="' . $crow['platform'] . '" data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">
+                                View Platform
+                            </button>
+                        </div>
+                  </div>';
                                                     
                                                     
 }                    
@@ -512,230 +510,116 @@ if (isset($voter['id'])) {
 <style>
 
 
-body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-        }
-
-        .position-container {
-            max-width: 1500px;
-            margin: 20px auto;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .box {
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            background: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        .box-header {
-            background-color: darkgreen;
-            color: #fff;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .box-header h3 {
-            margin: 0;
-            font-size: 1.25rem;
-        }
-
-        .box-header button {
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .box-header button:hover {
-            background-color: #218838;
-        }
-
-        .box-body {
-            padding: 20px;
-            background-color: #f9f9f9;
-        }
-
-        .instruction {
-            font-size: 1rem;
-            margin-bottom: 15px;
-            color: #555;
-        }
-
-/* Style for the reset button */
-.reset {
-    background-color: #dc3545;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-left: auto; /* Align reset button to the right */
+.container {
+    width: 90%;
+    margin: auto;
+    padding: 20px;
+    background-color: #f4f4f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.reset:hover {
-    background-color: #c82333;
+.position-card {
+    margin-bottom: 20px;
+    border-radius: 10px;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
 
-/* Style for the box title */
-.box-title {
-    margin: 0;
-    font-size: 20px;
-    font-weight: 300;
-}
-
-/* Style for the box body */
-.box-body {
-    padding: 10px;
+.position-header {
+    background-color: #004d40;
+    color: #ffffff;
+    padding: 15px 20px;
     display: flex;
-    flex-direction: column; /* Stack elements vertically */
-    align-items: center; /* Center align all the children */
+    justify-content: space-between;
+    align-items: center;
 }
 
-/* Style for the voting instructions */
-.instruction {
-    font-size: 16px;
+.position-header h3 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.reset {
+    background-color: #ff5722;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.position-body {
+    padding: 20px;
+}
+
+.candidate-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.candidate-card {
+    width: 200px;
+    padding: 15px;
+    text-align: center;
+    background-color: #fafafa;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.candidate-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.candidate-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
     margin-bottom: 10px;
 }
 
-/* Style for the candidate list */
-.candidate-list ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+.candidate-info {
     display: flex;
-    flex-wrap: wrap; /* Allow wrapping of candidates */
-    justify-content: center; /* Center align candidate items */
+    flex-direction: column;
+    align-items: center;
 }
 
-.candidate-list li {
-    display: flex;
-    flex-direction: column; /* Stack elements vertically */
-    justify-content: center;
-    align-items: center; /* Center content inside each list item */
-    border-radius: 10px;
-    padding: 10px;
-    margin: 10px;
-    background-color: #f9f9f9;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    border: 2px solid #ccc;
-    transition: transform 0.3s;
-    width: 200px; /* Set a fixed width for each candidate item */
-}
-
-/* Hover effect for candidate list item */
-.candidate-list li:hover {
-    transform: scale(1.05); /* Slight zoom effect */
-}
-
-.candidate-list li img {
-    width: 100px; /* Adjust width for smaller screens */
-    height: 100px; /* Adjust height */
-    border-radius: 8px;
-    transition: transform 0.3s;
-}
-
-/* Hover effect for candidate images */
-.candidate-list li:hover img {
-    transform: scale(1.1); /* Slightly enlarge image on hover */
-}
-
-/* Style for candidate container */
-.candidate-container {
-    display: inline-block;
-    text-align: center;
-    padding: 10px;
-    margin: 10px;
-    border: 2px solid transparent;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, border-color 0.3s, opacity 0.3s;
-    cursor: pointer;
-    width: 200px;
-    position: relative; /* Make sure the platform button stays inside the candidate container */
-}
-
-/* Hover effect for candidate container */
-.candidate-container:hover {
-    transform: scale(1.05);
-}
-
-/* Selected candidate container style */
-.candidate-container.selected {
-    border-color: #28a745;
-    transform: scale(1.1);
-}
-
-/* Unselected candidate style */
-.candidate-container.unselected {
-    opacity: 0.5; /* Reduced opacity for unselected candidates */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Stronger shadow for unselected */
-}
-
-/* Candidate image style */
-.candidate-image {
-    width: 120px;
-    height: 120px;
-    border-radius: 10px;
-    transition: transform 0.3s;
-}
-
-/* Candidate name style */
 .candidate-name {
-    margin-top: 10px;
-    font-size: 14px;
+    font-size: 1rem;
     font-weight: bold;
+    margin-bottom: 10px;
 }
 
-/* Style for the platform button */
 .platform-button {
-    margin-top: 10px; /* Space between the candidate's name and the button */
-    font-size: 14px;
-    background-color: #28a745;
-    color: #fff;
+    background-color: #004d40;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.submit-button {
+    background-color: #004d40;
+    color: white;
+    padding: 15px 20px;
     border: none;
     border-radius: 5px;
-    padding: 5px 10px;
+    font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s ease;
 }
 
-/* Hover effect for platform button */
-.platform-button:hover {
-    background-color: #218838;
+.submit-button:hover {
+    background-color: #00332b;
 }
 
-/* Consolidated reset button styles */
-.reset {
-    background-color: #dc3545;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-left: auto; /* Align to the right */
-}
-
-.reset:hover {
-    background-color: #c82333;
-}
 
 
 /* Media query para sa mas maliit na mga screen */
