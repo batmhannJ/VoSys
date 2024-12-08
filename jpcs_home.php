@@ -304,31 +304,48 @@ if (isset($voter['id'])) {
    document.addEventListener('DOMContentLoaded', function () {
     const candidateContainers = document.querySelectorAll('.candidate-container');
     const resetButtons = document.querySelectorAll('.reset');
+    const platformButtons = document.querySelectorAll('.platform');
+
+    // Example: Define max votes per position (replace with dynamic value from your database)
+    const maxVotesPerPosition = {
+        president: 1,
+        vice_president: 2,
+        secretary: 1,
+    };
 
     // Candidate selection logic
     candidateContainers.forEach(container => {
         container.addEventListener('click', function () {
             const position = this.getAttribute('data-position');
+            const maxVotes = maxVotesPerPosition[position];
+            const selectedCandidates = document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`);
 
-            // Deselect previously selected candidate for this position
-            document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
-                candidate.classList.remove('selected');
-                candidate.classList.add('unselected'); // Add unselected class for candidates that are not selected
-            });
-
-            // Select this candidate
-            this.classList.add('selected');
-            this.classList.remove('unselected'); // Remove unselected class from the selected candidate
-
-            // Update hidden input for the form submission
-            let selectedInput = document.querySelector(`input[name='${position}']`);
-            if (!selectedInput) {
-                selectedInput = document.createElement('input');
-                selectedInput.type = 'hidden';
-                selectedInput.name = position;
-                document.getElementById('ballotForm').appendChild(selectedInput);
+            if (selectedCandidates.length >= maxVotes && !this.classList.contains('selected')) {
+                alert(`You can only select up to ${maxVotes} candidate(s) for ${position}.`);
+                return;
             }
-            selectedInput.value = this.getAttribute('data-id');
+
+            // Toggle selection
+            if (this.classList.contains('selected')) {
+                this.classList.remove('selected');
+                this.classList.add('unselected');
+            } else {
+                this.classList.add('selected');
+                this.classList.remove('unselected');
+            }
+
+            // Update hidden inputs for form submission
+            let selectedInputs = document.querySelectorAll(`input[name='${position}[]']`);
+            selectedInputs.forEach(input => input.remove()); // Clear previous inputs
+
+            // Create new hidden inputs for selected candidates
+            document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`).forEach(candidate => {
+                let selectedInput = document.createElement('input');
+                selectedInput.type = 'hidden';
+                selectedInput.name = `${position}[]`;
+                selectedInput.value = candidate.getAttribute('data-id');
+                document.getElementById('ballotForm').appendChild(selectedInput);
+            });
         });
     });
 
@@ -343,11 +360,9 @@ if (isset($voter['id'])) {
                 candidate.classList.remove('unselected'); // Ensure unselected class is removed when reset
             });
 
-            // Remove hidden input
-            const selectedInput = document.querySelector(`input[name='${position}']`);
-            if (selectedInput) {
-                selectedInput.remove();
-            }
+            // Remove hidden inputs
+            const selectedInputs = document.querySelectorAll(`input[name='${position}[]']`);
+            selectedInputs.forEach(input => input.remove());
         });
     });
 
@@ -369,7 +384,6 @@ if (isset($voter['id'])) {
         });
     });
 });
-
 </script>
 <script>
     function updateCountdown(endTime) {
