@@ -311,7 +311,7 @@ if (isset($voter['id'])) {
 
 <?php include 'includes/scripts.php'; ?>
 <script>
-   document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function () {
     const candidateContainers = document.querySelectorAll('.candidate-container');
     const resetButtons = document.querySelectorAll('.reset');
     const platformButtons = document.querySelectorAll('.platform');
@@ -324,23 +324,28 @@ if (isset($voter['id'])) {
             const selectedCandidates = document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`);
 
             // If more candidates are selected than the max allowed, show an alert
-            if (selectedCandidates.length >= maxVotes && !this.classList.contains('selected')) {
-                alert(`You can only select up to ${maxVotes} candidate(s) for ${position}.`);
-                return;
-            }
-
-            // Toggle selection
-            if (this.classList.contains('selected')) {
-                this.classList.remove('selected');
-                this.classList.add('unselected');
-            } else {
-                // If it's single vote, remove selection from other candidates first
-                if (maxVotes === 1) {
-                    document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
-                        candidate.classList.remove('selected');
-                        candidate.classList.add('unselected');
-                    });
+            if (maxVotes > 1) {
+                // For maxVote > 1, allow multiple selections
+                if (this.classList.contains('selected')) {
+                    this.classList.remove('selected');
+                    this.classList.add('unselected');
+                } else {
+                    this.classList.add('selected');
+                    this.classList.remove('unselected');
                 }
+            } else {
+                // For maxVote == 1, only allow 1 selection
+                if (selectedCandidates.length >= 1 && !this.classList.contains('selected')) {
+                    alert(`You can only select up to 1 candidate for ${position}.`);
+                    return;
+                }
+
+                // Toggle selection (unselect others if maxVote == 1)
+                document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
+                    candidate.classList.remove('selected');
+                    candidate.classList.add('unselected');
+                });
+
                 this.classList.add('selected');
                 this.classList.remove('unselected');
             }
@@ -356,9 +361,26 @@ if (isset($voter['id'])) {
                 selectedInput.name = `${position}[]`;
                 selectedInput.value = candidate.getAttribute('data-id');
                 document.getElementById('ballotForm').appendChild(selectedInput);
+
+                // Update preview
+                updatePreview(position, candidate); // Add the candidate's name and position to the preview
             });
         });
     });
+
+    // Update preview section
+    function updatePreview(position, candidate) {
+        const previewContainer = document.getElementById('previewContainer');
+        let previewContent = '';
+
+        // Add candidate to the preview
+        previewContent = `<div class="preview-item">
+                            <span class="preview-name">${candidate.querySelector('.candidate-name').textContent}</span> - 
+                            <span class="preview-position">${position}</span>
+                          </div>`;
+
+        previewContainer.innerHTML += previewContent;
+    }
 
     // Reset button functionality
     resetButtons.forEach(button => {
@@ -374,6 +396,10 @@ if (isset($voter['id'])) {
             // Remove hidden inputs
             const selectedInputs = document.querySelectorAll(`input[name='${position}[]']`);
             selectedInputs.forEach(input => input.remove());
+
+            // Clear the preview
+            const previewContainer = document.getElementById('previewContainer');
+            previewContainer.innerHTML = ''; // Clear preview container
         });
     });
 
