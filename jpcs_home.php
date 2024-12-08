@@ -313,7 +313,9 @@ if (isset($voter['id'])) {
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const candidateContainers = document.querySelectorAll('.candidate-container');
+    const resetButtons = document.querySelectorAll('.reset-button'); // Assume reset buttons have a class '.reset-button'
 
+    // Candidate selection logic
     candidateContainers.forEach(container => {
         container.addEventListener('click', function () {
             const position = this.getAttribute('data-position'); // Get position of candidate
@@ -356,8 +358,27 @@ if (isset($voter['id'])) {
             previewElement.innerHTML = `${position}: <strong>${selectedNames.join(', ') || '<em>No selection</em>'}</strong>`;
         });
     });
-});
 
+    // Reset button logic
+    resetButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const position = this.getAttribute('data-position'); // Assume reset buttons have a 'data-position' attribute
+
+            // Deselect all candidates for the position
+            document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
+                candidate.classList.remove('selected');
+                candidate.classList.add('unselected');
+            });
+
+            // Clear hidden inputs for the position
+            document.querySelectorAll(`input[name='${position}[]']`).forEach(input => input.remove());
+
+            // Clear the preview section
+            const previewElement = document.getElementById('preview_' + position);
+            previewElement.innerHTML = `${position}: <em>No selection</em>`;
+        });
+    });
+});
 
 </script>
 <script>
