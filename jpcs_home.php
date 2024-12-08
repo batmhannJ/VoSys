@@ -241,21 +241,23 @@ if (isset($voter['id'])) {
                                                             '<input type="radio" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
                                                     
                                                        // Generate candidate container
-echo '<div class="candidate-container" 
-data-id="' . $crow['id'] . '" 
-data-position="' . $slug . '" 
-data-max-vote="' . $maxVote . '">
-<img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image"> <br>
-<span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span>
-<button type="button" class="btn btn-primary btn-flat platform-button" 
-    data-platform="' . $crow['platform'] . '" 
-    data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">
-Platform
-</button>
-</div>';
+                                                        echo '<div class="candidate-container" 
+                                                        data-id="' . $crow['id'] . '" 
+                                                        data-position="' . $slug . '" 
+                                                        data-max-vote="' . $maxVote . '">
+                                                        <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image"> <br>
+                                                        <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span>
+                                                        
+                                                        </div>
+                                                        <div>
+                                                        <button type="button" class="btn btn-primary btn-flat platform-button" 
+                                                            data-platform="' . $crow['platform'] . '" 
+                                                            data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">
+                                                        Platform
+                                                        </button></div>';
 
-                                                    
-}                    
+                                                                                                            
+                                                        }                    
                                     
                                 echo '</ul>
                             </div>
