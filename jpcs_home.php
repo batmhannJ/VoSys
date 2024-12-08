@@ -399,7 +399,6 @@ function updatePreview(position, maxVotes, candidateName) {
     }
 }
 
-
     // Reset button functionality
     resetButtons.forEach(button => {
         button.addEventListener('click', function () {
