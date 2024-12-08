@@ -720,7 +720,7 @@ body {
 .candidate-container.selected {
     border: 5px solid darkgreen;  /* Border color for selected */
     opacity: 1;  /* Ensure the selected one remains fully visible */
-    transform: scale(2.00);  /* Make the selected candidate "pop" slightly */
+    transform: scale(1.15);  /* Make the selected candidate "pop" slightly */
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Optional shadow for selected candidates */
 }
 
