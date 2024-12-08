@@ -387,6 +387,8 @@ if (isset($voter['id'])) {
         button.addEventListener('click', function (event) {
             // Prevent the candidate container from being selected when clicking on the platform button
             const candidateContainer = this.closest('.candidate-container');
+
+            // Deselect and darken the candidate if it was selected
             if (candidateContainer.classList.contains('selected')) {
                 candidateContainer.classList.remove('selected');
                 candidateContainer.classList.add('unselected'); // Deselect and darken the candidate
