@@ -326,15 +326,18 @@ if (isset($voter['id'])) {
             // If candidate is already selected, deselect it
             if (this.classList.contains('selected')) {
                 this.classList.remove('selected');
+                this.classList.add('unselected'); // Make it appear unselected
             } else {
                 // If max votes are reached, deselect the first selected candidate to allow reselection
                 if (selectedCandidates.length >= maxVotes) {
                     const earliestSelected = selectedCandidates[0];
                     earliestSelected.classList.remove('selected');
+                    earliestSelected.classList.add('unselected'); // Make it appear unselected
                 }
 
                 // Select the current candidate
                 this.classList.add('selected');
+                this.classList.remove('unselected'); // Make it appear selected
             }
 
             // Update hidden inputs for form submission
@@ -365,6 +368,7 @@ if (isset($voter['id'])) {
             // Deselect all candidates for the position
             document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
                 candidate.classList.remove('selected');
+                candidate.classList.add('unselected'); // Ensure opacity is lowered when deselected
             });
 
             // Clear hidden inputs for the position
@@ -405,6 +409,7 @@ if (isset($voter['id'])) {
         }
     });
 });
+
 
 </script>
 <script>
