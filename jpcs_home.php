@@ -232,23 +232,19 @@ if (isset($voter['id'])) {
                                             }
                                         }
                                     
-                                        $inputId = $slug . '_' . $crow['id']; // Generate a unique ID for the input
-                                            $inputType = ($row['max_vote'] > 1) ? 'checkbox' : 'radio'; // Determine input type based on max_vote
-                                            $inputName = ($row['max_vote'] > 1) ? $slug . '[]' : slugify($row['name']); // Use array for checkboxes
-                                            $image = (!empty($crow['photo'])) ? 'images/' . $crow['photo'] : 'images/profile.jpg';
-
-                                            echo '<div class="candidate-container" data-id="' . $crow['id'] . '" data-position="' . $slug . '">
-                                                <input type="' . $inputType . '" id="' . $inputId . '" class="flat-red ' . $slug . '" name="' . $inputName . '" value="' . $crow['id'] . '" ' . $checked . '>
-                                                <label for="' . $inputId . '">
-                                                    <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image">
-                                                    <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span>
-                                                </label>
-                                                <button type="button" class="btn btn-primary btn-flat platform-button" 
-                                                    data-platform="' . $crow['platform'] . '" 
-                                                    data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">
-                                                    Platform
-                                                </button>
-                                            </div>';
+                                        $inputId = $slug.'_'.$crow['id']; // Generate a unique ID for the input
+                                        $input = ($row['max_vote'] > 1) ? 
+                                            '<input type="checkbox" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : 
+                                            '<input type="radio" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
+                                    
+                                        $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
+                                    
+                                       
+    echo '<div class="candidate-container" data-id="' . $crow['id'] . '" data-position="' . $slug . '">
+    <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image"> <br>
+    <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span> <br>
+    <button type="button" class="btn btn-primary btn-flat platform-button" data-platform="' . $crow['platform'] . '" data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">Platform</button>
+  </div>';
 }                    
                                     
                                 echo '</ul>
@@ -314,26 +310,34 @@ if (isset($voter['id'])) {
     candidateContainers.forEach(container => {
         container.addEventListener('click', function () {
             const position = this.getAttribute('data-position');
+            const maxVote = parseInt(this.getAttribute('data-max-vote'), 10);
 
-            // Deselect previously selected candidate for this position
-            document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
-                candidate.classList.remove('selected');
-                candidate.classList.add('unselected'); // Add unselected class for candidates that are not selected
-            });
+            if (!this.classList.contains('selected')) {
+                // Check if maxVote is reached
+                const selectedCount = document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`).length;
+                if (selectedCount < maxVote) {
+                    this.classList.add('selected');
+                    this.classList.remove('unselected');
 
-            // Select this candidate
-            this.classList.add('selected');
-            this.classList.remove('unselected'); // Remove unselected class from the selected candidate
+                    // Update hidden input for the form submission
+                    let selectedInput = document.createElement('input');
+                    selectedInput.type = 'hidden';
+                    selectedInput.name = `${position}[]`;
+                    selectedInput.value = this.getAttribute('data-id');
+                    selectedInput.setAttribute('data-id', this.getAttribute('data-id'));
+                    document.getElementById('ballotForm').appendChild(selectedInput);
+                }
+            } else {
+                // Deselect this candidate
+                this.classList.remove('selected');
+                this.classList.add('unselected');
 
-            // Update hidden input for the form submission
-            let selectedInput = document.querySelector(`input[name='${position}']`);
-            if (!selectedInput) {
-                selectedInput = document.createElement('input');
-                selectedInput.type = 'hidden';
-                selectedInput.name = position;
-                document.getElementById('ballotForm').appendChild(selectedInput);
+                // Remove hidden input
+                const selectedInput = document.querySelector(`input[name='${position}[]'][data-id='${this.getAttribute('data-id')}']`);
+                if (selectedInput) {
+                    selectedInput.remove();
+                }
             }
-            selectedInput.value = this.getAttribute('data-id');
         });
     });
 
@@ -345,14 +349,13 @@ if (isset($voter['id'])) {
             // Deselect all candidates for this position
             document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
                 candidate.classList.remove('selected');
-                candidate.classList.remove('unselected'); // Ensure unselected class is removed when reset
+                candidate.classList.remove('unselected');
             });
 
-            // Remove hidden input
-            const selectedInput = document.querySelector(`input[name='${position}']`);
-            if (selectedInput) {
-                selectedInput.remove();
-            }
+            // Remove all hidden inputs for this position
+            document.querySelectorAll(`input[name='${position}[]']`).forEach(input => {
+                input.remove();
+            });
         });
     });
 
@@ -374,6 +377,7 @@ if (isset($voter['id'])) {
         });
     });
 });
+
 
 </script>
 <script>
@@ -636,16 +640,14 @@ if (isset($voter['id'])) {
     transform: scale(1.05);
 }
 
-/* Selected candidate container style */
 .candidate-container.selected {
-    border-color: #28a745;
-    transform: scale(1.1);
+    border: 2px solid #4CAF50;
+    background-color: #e8f5e9;
 }
 
-/* Unselected candidate style */
 .candidate-container.unselected {
-    opacity: 0.5; /* Reduced opacity for unselected candidates */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Stronger shadow for unselected */
+    opacity: 0.6;
+    pointer-events: none;
 }
 
 /* Candidate image style */
