@@ -241,16 +241,18 @@ if (isset($voter['id'])) {
                                                             '<input type="radio" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
                                                     
                                                         // Generate candidate container
-                                                        echo '<div class="candidate-card" data-id="' . $crow['id'] . '" data-position="' . $slug . '" data-max-vote="' . $maxVote . '">
-                        <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-photo">
-                        <div class="candidate-info">
-                            <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span>
-                            ' . $input . '
-                            <button class="platform-button" data-platform="' . $crow['platform'] . '" data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">
-                                View Platform
-                            </button>
-                        </div>
-                  </div>';
+                                                        echo '<div class="candidate-container" 
+                                                                    data-id="' . $crow['id'] . '" 
+                                                                    data-position="' . $slug . '" 
+                                                                    data-max-vote="' . $maxVote . '">
+                                                                <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image"> <br>
+                                                                <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span> <br>
+                                                                <button type="button" class="btn btn-primary btn-flat platform-button" 
+                                                                        data-platform="' . $crow['platform'] . '" 
+                                                                        data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">
+                                                                    Platform
+                                                                </button>
+                                                            </div>';
                                                     
                                                     
 }                    
