@@ -322,7 +322,7 @@ candidateContainers.forEach(container => {
         const position = this.getAttribute('data-position');
         const maxVotes = parseInt(this.getAttribute('data-max-vote'), 10); // Get max vote for this position
         const selectedCandidates = document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`);
-        
+
         // If more candidates are selected than the max allowed, show an alert
         if (selectedCandidates.length >= maxVotes && !this.classList.contains('selected')) {
             alert(`You can only select up to ${maxVotes} candidate(s) for ${position}.`);
@@ -380,9 +380,17 @@ function updatePreview(position, maxVotes) {
     }
 
     // Update the preview with the selected candidates' names
-    const selectedNames = Array.from(selectedCandidates).map(candidate => candidate.querySelector(".candidate-name").innerText);
+    const selectedNames = Array.from(selectedCandidates).map(candidate => {
+        // Get the candidate name from the candidate-name element
+        return candidate.querySelector(".candidate-name").innerText;
+    });
 
-    positionPreview.innerHTML = `<strong>${positionName}:</strong> ${selectedNames.join(", ")}`;
+    // If no candidate is selected, display a message like "No candidate selected"
+    if (selectedNames.length === 0) {
+        positionPreview.innerHTML = `<strong>${positionName}:</strong> No candidate selected`;
+    } else {
+        positionPreview.innerHTML = `<strong>${positionName}:</strong> ${selectedNames.join(", ")}`;
+    }
 }
 
 
