@@ -200,17 +200,17 @@ while($row = $query->fetch_assoc()){
         continue; // Skip positions not in the list
     }
     echo '
-    <div class="position-container" style="margin-bottom: 30px; padding: 20px; border-radius: 12px; background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);">
-        <div class="box box-solid" id="'.$row['id'].'" style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
-            <div class="box-header" style="background-color: #007bff; padding: 15px; border-radius: 12px 12px 0 0;">
-                <h3 class="box-title" style="color: #fff;">'.$row['name'].'</h3>
-                <button type="button" class="btn btn-warning btn-sm btn-flat reset" data-desc="'.slugify($row['name']).'" style="border-radius: 20px; font-size: 14px; padding: 8px 15px; transition: background-color 0.3s;">
+    <div class="position-container" style="margin-bottom: 30px; padding: 20px; border-radius: 12px; background-color: #f4f4f9; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);">
+        <div class="box box-solid" id="'.$row['id'].'" style="background-color: #fff; border-radius: 12px; overflow: hidden;">
+            <div class="box-header" style="background-color: #6200ea; padding: 20px; border-radius: 12px 12px 0 0;">
+                <h3 class="box-title" style="color: #fff; ">'.$row['name'].'</h3>
+                <button type="button" class="btn btn-danger btn-sm btn-flat reset" data-desc="'.slugify($row['name']).'" style="border-radius: 50px; font-size: 14px; padding: 10px 20px; background-color: #ff4081; transition: background-color 0.3s;">
                     <i class="fa fa-refresh"></i> Reset
                 </button>
             </div>
             <div class="box-body" style="padding: 30px;">
                 <p class="instruction" style="font-size: 18px; color: #333;">You may select up to '.$row['max_vote'].' candidates</p>
-                <div class="candidate-list" style="display: flex; flex-wrap: wrap; gap: 25px; justify-content: space-evenly;">';
+                <div class="candidate-list" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-evenly;">';
 
                 $sql = "SELECT * FROM candidates WHERE category_id='" . $row['id'] . "'";
                 $cquery = $conn->query($sql);
@@ -242,24 +242,24 @@ while($row = $query->fetch_assoc()){
                         '<input type="checkbox" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : 
                         '<input type="radio" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
 
-                    // Candidate container with modern design elements
+                    // Candidate container with minimalist design
                     echo '
                         <div class="candidate-container" 
                             data-id="' . $crow['id'] . '" 
                             data-position="' . $slug . '" 
                             data-max-vote="' . $maxVote . '"
-                            style="background-color: #fff; border-radius: 16px; padding: 20px; text-align: center; width: 200px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; overflow: hidden;">
+                            style="background-color: #fff; border-radius: 12px; padding: 20px; text-align: center; width: 180px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;">
                             
-                            <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image" style="width: 120px; height: 120px; object-fit: cover; border-radius: 50%; margin-bottom: 15px; transition: transform 0.3s ease;">
+                            <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image" style="width: 100%; height: 120px; object-fit: cover; border-radius: 12px; margin-bottom: 15px; transition: transform 0.3s ease;">
                             
-                            <span class="candidate-name" style="font-size: 18px; font-weight: 700; color: #333; display: block; margin-bottom: 10px; text-transform: uppercase;">
+                            <span class="candidate-name" style="font-size: 16px; font-weight: 600; color: #333; display: block; margin-bottom: 10px; text-transform: capitalize;">
                                 ' . $crow['firstname'] . ' ' . $crow['lastname'] . '
                             </span>
                             
                             <button type="button" class="btn btn-info btn-flat platform-button" 
                                 data-platform="' . $crow['platform'] . '" 
                                 data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '"
-                                style="background-color: #28a745; border-radius: 20px; padding: 8px 20px; font-size: 14px; border: none; transition: background-color 0.3s ease;">
+                                style="background-color: #6200ea; border-radius: 50px; padding: 8px 20px; font-size: 14px; border: none; transition: background-color 0.3s;">
                                 View Platform
                             </button>
                         </div>';
