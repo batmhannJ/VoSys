@@ -211,50 +211,50 @@ if (isset($voter['id'])) {
                                                 <div class="candidate-list">
                                                     <ul>';
                                                     $sql = "SELECT * FROM candidates WHERE category_id='" . $row['id'] . "'";
-                                        $cquery = $conn->query($sql);
-
-                                        while ($crow = $cquery->fetch_assoc()) {
-                                            $slug = slugify($row['name']);
-                                            $image = (!empty($crow['photo'])) ? 'images/' . $crow['photo'] : 'images/profile.jpg';
-                                            $maxVote = $row['max_vote']; // Fetch max vote per position
-                                        if(isset($_SESSION['post'][$slug])){
-                                            $value = $_SESSION['post'][$slug];
-                                    
-                                            if(is_array($value)){
-                                                foreach($value as $val){
-                                                    if($val == $crow['id']){
-                                                        $checked = 'checked';
-                                                    }
-                                                }
-                                            }
-                                            else{
-                                                if($value == $crow['id']){
-                                                    $checked = 'checked';
-                                                }
-                                            }
-                                        }
-                                    
-                                        $inputId = $slug.'_'.$crow['id']; // Generate a unique ID for the input
-                                        $input = ($row['max_vote'] > 1) ? 
-                                            '<input type="checkbox" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : 
-                                            '<input type="radio" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
-                                    
-                                        $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
-                                    
-                                       
-    // Generate candidate container
-    echo '<div class="candidate-container" 
-                data-id="' . $crow['id'] . '" 
-                data-position="' . $slug . '" 
-                data-max-vote="' . $maxVote . '">
-            <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image"> <br>
-            <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span> <br>
-            <button type="button" class="btn btn-primary btn-flat platform-button" 
-                    data-platform="' . $crow['platform'] . '" 
-                    data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">
-                Platform
-            </button>
-        </div>';
+                                                    $cquery = $conn->query($sql);
+                                                    
+                                                    while ($crow = $cquery->fetch_assoc()) {
+                                                        $slug = slugify($row['name']);
+                                                        $image = (!empty($crow['photo'])) ? 'images/' . $crow['photo'] : 'images/profile.jpg';
+                                                        $maxVote = $row['max_vote']; // Fetch max vote per position
+                                                        
+                                                        if(isset($_SESSION['post'][$slug])){
+                                                            $value = $_SESSION['post'][$slug];
+                                                        
+                                                            if(is_array($value)){
+                                                                foreach($value as $val){
+                                                                    if($val == $crow['id']){
+                                                                        $checked = 'checked';
+                                                                    }
+                                                                }
+                                                            }
+                                                            else{
+                                                                if($value == $crow['id']){
+                                                                    $checked = 'checked';
+                                                                }
+                                                            }
+                                                        }
+                                                    
+                                                        $inputId = $slug.'_'.$crow['id']; // Generate a unique ID for the input
+                                                        $input = ($maxVote > 1) ? 
+                                                            '<input type="checkbox" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : 
+                                                            '<input type="radio" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
+                                                    
+                                                        // Generate candidate container
+                                                        echo '<div class="candidate-container" 
+                                                                    data-id="' . $crow['id'] . '" 
+                                                                    data-position="' . $slug . '" 
+                                                                    data-max-vote="' . $maxVote . '">
+                                                                <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image"> <br>
+                                                                <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span> <br>
+                                                                <button type="button" class="btn btn-primary btn-flat platform-button" 
+                                                                        data-platform="' . $crow['platform'] . '" 
+                                                                        data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">
+                                                                    Platform
+                                                                </button>
+                                                            </div>';
+                                                    
+                                                    
 }                    
                                     
                                 echo '</ul>
