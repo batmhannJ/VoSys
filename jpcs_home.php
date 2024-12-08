@@ -571,7 +571,6 @@ body {
         .box-body {
             padding: 20px;
             background-color: #f9f9f9;
-            margin-bottom: 50px;
         }
 
         .instruction {
