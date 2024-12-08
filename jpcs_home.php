@@ -706,16 +706,17 @@ body {
     transform: scale(1.05);
 }
 
-/* Selected candidate container style */
-.candidate-container.selected {
-    border-color: #28a745;
-    transform: scale(1.1);
+/* When a candidate is not selected, darken it */
+.candidate-container:not(.selected) {
+    opacity: 0.5; /* Darkens the unselected candidates */
+    cursor: not-allowed; /* Change cursor to indicate that it's unselectable */
 }
 
-/* Unselected candidate style */
-.candidate-container.unselected {
-    opacity: 0.5; /* Reduced opacity for unselected candidates */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Stronger shadow for unselected */
+/* Highlight selected candidates */
+.candidate-container.selected {
+    opacity: 1;
+    background-color: #ffcc00; /* Highlight selected candidates with color */
+    cursor: pointer; /* Keep the cursor as pointer to show it's clickable */
 }
 
 /* Candidate image style */
