@@ -322,6 +322,7 @@ candidateContainers.forEach(container => {
         const position = this.getAttribute('data-position');
         const maxVotes = parseInt(this.getAttribute('data-max-vote'), 10); // Get max vote for this position
         const selectedCandidates = document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`);
+        const candidateName = this.querySelector(".candidate-name").innerText;
 
         // If more candidates are selected than the max allowed, show an alert
         if (selectedCandidates.length >= maxVotes && !this.classList.contains('selected')) {
@@ -359,15 +360,14 @@ candidateContainers.forEach(container => {
         });
 
         // Update the preview for this position
-        updatePreview(position, maxVotes);
+        updatePreview(position, maxVotes, candidateName);
     });
 });
 
 // Function to update preview with selected candidates' names
-function updatePreview(position, maxVotes) {
+function updatePreview(position, maxVotes, candidateName) {
     const previewContainer = document.getElementById("previewSelections");
     const positionPreview = previewContainer.querySelector(`.preview-position[data-position='${position}']`);
-    const selectedCandidates = document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`);
     const positionName = document.querySelector(`.box-title[data-position='${position}']`).innerText;
 
     // If no position preview exists yet, create it
@@ -379,17 +379,23 @@ function updatePreview(position, maxVotes) {
         previewContainer.appendChild(newPreview);
     }
 
-    // Update the preview with the selected candidates' names
-    const selectedNames = Array.from(selectedCandidates).map(candidate => {
-        // Get the candidate name from the candidate-name element
-        return candidate.querySelector(".candidate-name").innerText;
-    });
-
-    // If no candidate is selected, display a message like "No candidate selected"
-    if (selectedNames.length === 0) {
-        positionPreview.innerHTML = `<strong>${positionName}:</strong> No candidate selected`;
+    // For single vote positions (maxVotes === 1), immediately update the preview
+    if (maxVotes === 1) {
+        const previewElement = document.getElementById('preview_' + position);
+        previewElement.innerHTML = `<strong>${positionName}:</strong> You selected: ${candidateName}`;
     } else {
-        positionPreview.innerHTML = `<strong>${positionName}:</strong> ${selectedNames.join(", ")}`;
+        // Update the preview with all selected candidates' names for positions with multiple votes allowed
+        const selectedCandidates = document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`);
+        const selectedNames = Array.from(selectedCandidates).map(candidate => {
+            return candidate.querySelector(".candidate-name").innerText;
+        });
+
+        // If no candidate is selected, display a message like "No candidate selected"
+        if (selectedNames.length === 0) {
+            positionPreview.innerHTML = `<strong>${positionName}:</strong> No candidate selected`;
+        } else {
+            positionPreview.innerHTML = `<strong>${positionName}:</strong> ${selectedNames.join(", ")}`;
+        }
     }
 }
 
