@@ -640,14 +640,16 @@ if (isset($voter['id'])) {
     transform: scale(1.05);
 }
 
+/* Selected candidate container style */
 .candidate-container.selected {
-    border: 2px solid #4CAF50;
-    background-color: #e8f5e9;
+    border-color: #28a745;
+    transform: scale(1.1);
 }
 
+/* Unselected candidate style */
 .candidate-container.unselected {
-    opacity: 0.6;
-    pointer-events: none;
+    opacity: 0.5; /* Reduced opacity for unselected candidates */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Stronger shadow for unselected */
 }
 
 /* Candidate image style */
