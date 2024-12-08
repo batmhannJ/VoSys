@@ -734,9 +734,9 @@ body {
 
 .candidate-container.darkened {
     opacity: 0.6; /* Lower opacity */
-    filter: brightness(0.7); /* Darken the unselected candidates */
-    pointer-events: none; /* Prevent interaction with unselected candidates */
+    filter: brightness(0.5); /* Darken the element */
 }
+
 
 
 /* Candidate image style */
