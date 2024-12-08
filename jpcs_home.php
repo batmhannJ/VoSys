@@ -249,13 +249,12 @@ if (isset($voter['id'])) {
                                                                 <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span> <br>
                                                             
                                                             </div>
-                                                           <div class="platform-button-container">
+                                                            <div>
                                                             <button type="button" class="btn btn-primary btn-flat platform-button" 
-                                                                data-platform="' . $crow['platform'] . '" 
-                                                                data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">
-                                                                Platform
-                                                            </button>
-                                                        </div>';
+                                                                        data-platform="' . $crow['platform'] . '" 
+                                                                        data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">
+                                                                    Platform
+                                                                </button></div>';
                                                     
                                                     
 }                    
@@ -672,13 +671,7 @@ body {
     transition: transform 0.3s, border-color 0.3s, opacity 0.3s;
     cursor: pointer;
     width: 200px;
-}
-
-/* Button container ensures button is aligned below the candidate container */
-.platform-button-container {
-    text-align: center;
-    margin-top: -10px; /* Adjust spacing between container and button */
-    margin-bottom: 20px; /* Add spacing between button and other content */
+    position: relative; /* Make sure the platform button stays inside the candidate container */
 }
 
 /* Hover effect for candidate container */
@@ -694,8 +687,8 @@ body {
 
 /* Unselected candidate style */
 .candidate-container.unselected {
-    opacity: 0.5;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    opacity: 0.5; /* Reduced opacity for unselected candidates */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Stronger shadow for unselected */
 }
 
 /* Candidate image style */
@@ -715,6 +708,7 @@ body {
 
 /* Style for the platform button */
 .platform-button {
+    margin-top: 10px; /* Space between the candidate's name and the button */
     font-size: 14px;
     background-color: #28a745;
     color: #fff;
@@ -729,7 +723,6 @@ body {
 .platform-button:hover {
     background-color: #218838;
 }
-
 
 /* Consolidated reset button styles */
 .reset {
