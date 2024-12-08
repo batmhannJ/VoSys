@@ -43,17 +43,17 @@
 </div>
 <!-- Platform Modal -->
 <div class="modal fade" id="platform" tabindex="-1" aria-labelledby="platformLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content shadow-lg rounded-3">
-            <div class="modal-header border-0 bg-primary text-white">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content shadow-lg rounded-4">
+            <div class="modal-header bg-gradient-to-r from-blue-500 to-purple-600 text-white">
                 <h4 class="modal-title w-100 text-center" id="platformLabel"><b><span class="candidate"></span></b></h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body p-4">
-                <p id="plat_view" class="lead text-muted"></p>
+            <div class="modal-body p-5">
+                <p id="plat_view" class="lead text-dark"></p>
             </div>
-            <div class="modal-footer border-0 justify-content-center">
-                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+            <div class="modal-footer bg-light justify-content-center">
+                <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal"><i class="fa fa-close"></i> Close</button>
             </div>
         </div>
     </div>
@@ -62,9 +62,70 @@
 <!-- Custom CSS -->
 <style>
     .modal-content {
-        background-color: #f8f9fa;  
+        background-color: #ffffff;  /* White background */
+        border-radius: 15px;         /* Rounded corners */
+        border: none;
     }
-    </style>
+
+    .modal-header {
+        background: linear-gradient(90deg, #4e73df, #1cc88a);  /* Gradient background */
+        color: white;
+    }
+
+    .modal-title {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 700;
+    }
+
+    .modal-body {
+        font-family: 'Arial', sans-serif;
+        font-size: 1.1rem;
+        color: #333;  /* Dark text */
+    }
+
+    .modal-footer {
+        background-color: #f1f1f1; /* Light gray footer */
+        border-top: none;
+    }
+
+    .btn-close {
+        background-color: transparent;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+    }
+
+    .btn-danger {
+        background-color: #e74a3b;  /* Red button */
+        color: white;
+        border-radius: 20px;
+        padding: 8px 20px;
+        font-size: 1rem;
+    }
+
+    .btn-danger:hover {
+        background-color: #c0392b;  /* Darker red on hover */
+    }
+
+    /* Modal transition effect */
+    .modal.fade .modal-dialog {
+        transform: translate(0, -50px);
+        transition: transform 0.3s ease-out;
+    }
+
+    .modal.show .modal-dialog {
+        transform: translate(0, 0);
+    }
+
+    .modal-content {
+        transition: box-shadow 0.3s ease-in-out;
+    }
+
+    .modal-content:hover {
+        box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.1); /* Shadow on hover */
+    }
+</style>
+
 
 <!-- View Ballot -->
 <div class="modal fade" id="view">
