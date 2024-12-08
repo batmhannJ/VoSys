@@ -308,9 +308,8 @@ if (isset($voter['id'])) {
 
 <?php include 'includes/scripts.php'; ?>
 <script>
- document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
     const candidateContainers = document.querySelectorAll('.candidate-container');
-    const resetButtons = document.querySelectorAll('.reset');
     const platformButtons = document.querySelectorAll('.platform-button'); // Platform button selector
 
     // Candidate selection logic
@@ -340,27 +339,6 @@ if (isset($voter['id'])) {
             // Update the preview section and form input
             updatePreviewAndForm(position);
             adjustCandidateDarkening(); // Adjust darkening effect on unselected candidates
-        });
-    });
-
-    // Reset button logic
-    resetButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            const position = this.getAttribute('data-desc'); // Get the position from 'data-desc'
-
-            // Deselect all candidates for the position
-            document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
-                candidate.classList.remove('selected');
-            });
-
-            // Clear hidden inputs for the position
-            document.querySelectorAll(`input[name='${position}[]']`).forEach(input => input.remove());
-
-            // Clear the preview section
-            const previewElement = document.getElementById('preview_' + position);
-            previewElement.innerHTML = `${position}: <em>No selection</em>`;
-
-            adjustCandidateDarkening(); // Reapply darkening effect after reset
         });
     });
 
@@ -416,15 +394,23 @@ if (isset($voter['id'])) {
 
     // Function to adjust darkening effect on unselected candidates
     function adjustCandidateDarkening() {
-        document.querySelectorAll('.candidate-container').forEach(candidate => {
-            if (!candidate.classList.contains('selected')) {
-                candidate.classList.add('darkened'); // Add darkening class to unselected candidates
+        const candidateContainers = document.querySelectorAll('.candidate-container');
+        
+        candidateContainers.forEach(candidate => {
+            const position = candidate.getAttribute('data-position'); // Get candidate's position
+            const selectedCandidates = document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`);
+            const maxVotes = parseInt(candidate.getAttribute('data-max-vote'), 10); // Max votes for the position
+            
+            // Add darkened class to unselected candidates if max votes reached
+            if (selectedCandidates.length >= maxVotes && !candidate.classList.contains('selected')) {
+                candidate.classList.add('darkened');
             } else {
-                candidate.classList.remove('darkened'); // Remove darkening effect from selected candidates
+                candidate.classList.remove('darkened'); // Remove darkened if less than max votes
             }
         });
     }
 });
+
 
 </script>
 <script>
@@ -731,12 +717,11 @@ body {
     border-color: #28a745;
     transform: scale(1.1);
 }
-
 .candidate-container.darkened {
-    opacity: 0.6; /* Lower opacity */
-    filter: brightness(0.5); /* Darken the element */
+    opacity: 0.5; /* Dim the appearance */
+    pointer-events: none; /* Optional: make it unclickable */
+    transition: opacity 0.3s ease; /* Smooth transition */
 }
-
 
 
 /* Candidate image style */
