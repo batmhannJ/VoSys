@@ -37,9 +37,9 @@
             else {
                 $candidate = $_POST[$position]; // Since max_vote = 1, it will be a single candidate ID
                 $sql = "SELECT * FROM candidates WHERE id = '$candidate'";
-                $csquery = $conn->query($sql);
-                if ($csquery) {
-                    $csrow = $csquery->fetch_assoc();
+                $cmquery = $conn->query($sql);
+                if ($cmquery) {
+                    $cmrow = $cmquery->fetch_assoc();
                     // Display the candidate name in the preview list for single vote
                     $output['list'] .= "
                         <div class='row votelist'>
