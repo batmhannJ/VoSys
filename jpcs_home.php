@@ -319,23 +319,24 @@ if (isset($voter['id'])) {
    // Candidate selection logic
 candidateContainers.forEach(container => {
     container.addEventListener('click', function () {
-        const position = this.getAttribute('data-position');
+        const position = this.getAttribute('data-position'); // Get the position of the candidate
         const maxVotes = parseInt(this.getAttribute('data-max-vote'), 10); // Get max vote for this position
-        const selectedCandidates = document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`);
-        const candidateName = this.querySelector('.candidate-name').textContent; // Assuming the name is inside .candidate-name element
+        const candidateName = this.querySelector('.candidate-name').textContent; // Get candidate's name from the selected element
         
+        const selectedCandidates = document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`);
+
         // If more candidates are selected than the max allowed, show an alert
         if (selectedCandidates.length >= maxVotes && !this.classList.contains('selected')) {
             alert(`You can only select up to ${maxVotes} candidate(s) for ${position}.`);
             return;
         }
 
-        // Toggle selection
+        // Toggle selection of candidate
         if (this.classList.contains('selected')) {
             this.classList.remove('selected');
             this.classList.add('unselected');
         } else {
-            // If it's single vote, remove selection from other candidates first
+            // If it's a single vote, remove selection from other candidates first
             if (maxVotes === 1) {
                 document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
                     candidate.classList.remove('selected');
@@ -359,17 +360,19 @@ candidateContainers.forEach(container => {
             document.getElementById('ballotForm').appendChild(selectedInput);
         });
 
-        // Update the preview section
+        // Update the preview section with the candidate's name and position
         const previewElement = document.getElementById('preview_' + position);
 
         if (maxVotes === 1) {
-            previewElement.innerHTML = `You selected: <strong>${candidateName}</strong>`;
+            // For single vote, show name and position
+            previewElement.innerHTML = `${position}: <strong>${candidateName}</strong>`;
         } else {
+            // For multiple votes, show all selected names
             let selectedNames = [];
             document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`).forEach(candidate => {
                 selectedNames.push(candidate.querySelector('.candidate-name').textContent);
             });
-            previewElement.innerHTML = `You selected: <strong>${selectedNames.join(', ')}</strong>`;
+            previewElement.innerHTML = `${position}: <strong>${selectedNames.join(', ')}</strong>`;
         }
     });
 });
