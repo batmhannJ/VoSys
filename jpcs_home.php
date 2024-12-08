@@ -265,6 +265,12 @@ if (isset($voter['id'])) {
                 
             }
             ?>
+
+<div id="customAlert" class="custom-alert hidden">
+    <span id="alertMessage"></span>
+    <button id="closeAlert" class="close-btn">×</button>
+</div>
+
             
                                 <div class="text-center">
                                     <button type="button" class="btn btn-primary btn-flat" style="background-color: darkgreen;" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
@@ -735,6 +741,51 @@ candidateContainers.forEach(container => {
 .reset:hover {
     background-color: #c82333;
 }
+
+/* Custom alert container */
+.custom-alert {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f44336;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 16px;
+    z-index: 9999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: auto;
+    max-width: 80%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+/* Show the alert */
+.custom-alert.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Close button style */
+.close-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Optional: hidden class to hide the alert */
+.hidden {
+    display: none;
+}
+
 
 
 /* Media query para sa mas maliit na mga screen */
