@@ -240,22 +240,21 @@ if (isset($voter['id'])) {
                                                             '<input type="checkbox" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : 
                                                             '<input type="radio" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
                                                     
-                                                        // Generate candidate container
-                                                        echo '<div class="candidate-container" 
-                                                                    data-id="' . $crow['id'] . '" 
-                                                                    data-position="' . $slug . '" 
-                                                                    data-max-vote="' . $maxVote . '">
-                                                                <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image"> <br>
-                                                                <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span> <br>
-                                                            
-                                                            </div>
-                                                           <div class="platform-button-container">
-                                                            <button type="button" class="btn btn-primary btn-flat platform-button" 
-                                                                data-platform="' . $crow['platform'] . '" 
-                                                                data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">
-                                                                Platform
-                                                            </button>
-                                                        </div>';
+                                                            echo '<div class="candidate-container" 
+                                                            data-id="' . htmlspecialchars($crow['id']) . '" 
+                                                            data-position="' . htmlspecialchars($slug) . '" 
+                                                            data-max-vote="' . htmlspecialchars($maxVote) . '">
+                                                        <img src="' . htmlspecialchars($image) . '" alt="' . htmlspecialchars($crow['firstname'] . ' ' . $crow['lastname']) . '" class="candidate-image"> <br>
+                                                        <span class="candidate-name">' . htmlspecialchars($crow['firstname'] . ' ' . $crow['lastname']) . '</span> <br>
+                                                    </div>
+                                                
+                                                    <div class="platform-button-container">
+                                                        <button type="button" class="btn btn-primary btn-flat platform-button" 
+                                                            data-platform="' . htmlspecialchars($crow['platform']) . '" 
+                                                            data-fullname="' . htmlspecialchars($crow['firstname'] . ' ' . $crow['lastname']) . '">
+                                                            Platform
+                                                        </button>
+                                                    </div>';
                                                     
                                                     
 }                    
@@ -673,13 +672,15 @@ body {
     transition: transform 0.3s, border-color 0.3s, opacity 0.3s;
     cursor: pointer;
     width: 200px;
+    vertical-align: top; /* Align candidate containers properly */
 }
 
 /* Button container ensures button is aligned below the candidate container */
 .platform-button-container {
     text-align: center;
-    margin-top: -10px; /* Adjust spacing between container and button */
+    margin-top: 10px; /* Adjust spacing between container and button */
     margin-bottom: 20px; /* Add spacing between button and other content */
+    width: 200px; /* Ensure the button has the same width as the candidate container */
 }
 
 /* Hover effect for candidate container */
@@ -730,6 +731,7 @@ body {
 .platform-button:hover {
     background-color: #218838;
 }
+
 
 
 /* Consolidated reset button styles */
