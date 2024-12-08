@@ -232,19 +232,23 @@ if (isset($voter['id'])) {
                                             }
                                         }
                                     
-                                        $inputId = $slug.'_'.$crow['id']; // Generate a unique ID for the input
-                                        $input = ($row['max_vote'] > 1) ? 
-                                            '<input type="checkbox" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : 
-                                            '<input type="radio" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
-                                    
-                                        $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
-                                    
-                                       
-    echo '<div class="candidate-container" data-id="' . $crow['id'] . '" data-position="' . $slug . '">
-    <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image"> <br>
-    <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span> <br>
-    <button type="button" class="btn btn-primary btn-flat platform-button" data-platform="' . $crow['platform'] . '" data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">Platform</button>
-  </div>';
+                                        $inputId = $slug . '_' . $crow['id']; // Generate a unique ID for the input
+                                            $inputType = ($row['max_vote'] > 1) ? 'checkbox' : 'radio'; // Determine input type based on max_vote
+                                            $inputName = ($row['max_vote'] > 1) ? $slug . '[]' : slugify($row['name']); // Use array for checkboxes
+                                            $image = (!empty($crow['photo'])) ? 'images/' . $crow['photo'] : 'images/profile.jpg';
+
+                                            echo '<div class="candidate-container" data-id="' . $crow['id'] . '" data-position="' . $slug . '">
+                                                <input type="' . $inputType . '" id="' . $inputId . '" class="flat-red ' . $slug . '" name="' . $inputName . '" value="' . $crow['id'] . '" ' . $checked . '>
+                                                <label for="' . $inputId . '">
+                                                    <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image">
+                                                    <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span>
+                                                </label>
+                                                <button type="button" class="btn btn-primary btn-flat platform-button" 
+                                                    data-platform="' . $crow['platform'] . '" 
+                                                    data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">
+                                                    Platform
+                                                </button>
+                                            </div>';
 }                    
                                     
                                 echo '</ul>
