@@ -529,6 +529,7 @@ body {
             display: flex;
             flex-direction: column;
             gap: 5px;
+            margin-bottom: 15px;
         }
 
         .box {
