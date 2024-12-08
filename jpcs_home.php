@@ -381,7 +381,7 @@ function updatePreview(position, maxVotes, candidateName) {
 
     // For single vote positions (maxVotes === 1), immediately update the preview
     if (maxVotes === 1) {
-        const previewElement = document.getElementById('preview_' + position);
+        const previewElement = document.getElementById('.candidate-name' + position);
         
         // Find the specific preview section by position
         let selectedCandidate = document.querySelector(`.candidate-container[data-position='${position}'].selected`);
