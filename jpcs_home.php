@@ -316,49 +316,75 @@ if (isset($voter['id'])) {
     const resetButtons = document.querySelectorAll('.reset');
     const platformButtons = document.querySelectorAll('.platform');
 
-    // Candidate selection logic
-    candidateContainers.forEach(container => {
-        container.addEventListener('click', function () {
-            const position = this.getAttribute('data-position');
-            const maxVotes = parseInt(this.getAttribute('data-max-vote'), 10); // Get max vote for this position
-            const selectedCandidates = document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`);
+   // Candidate selection logic
+candidateContainers.forEach(container => {
+    container.addEventListener('click', function () {
+        const position = this.getAttribute('data-position');
+        const maxVotes = parseInt(this.getAttribute('data-max-vote'), 10); // Get max vote for this position
+        const selectedCandidates = document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`);
+        
+        // If more candidates are selected than the max allowed, show an alert
+        if (selectedCandidates.length >= maxVotes && !this.classList.contains('selected')) {
+            alert(`You can only select up to ${maxVotes} candidate(s) for ${position}.`);
+            return;
+        }
 
-            // If more candidates are selected than the max allowed, show an alert
-            if (selectedCandidates.length >= maxVotes && !this.classList.contains('selected')) {
-                alert(`You can only select up to ${maxVotes} candidate(s) for ${position}.`);
-                return;
+        // Toggle selection
+        if (this.classList.contains('selected')) {
+            this.classList.remove('selected');
+            this.classList.add('unselected');
+        } else {
+            // If it's single vote, remove selection from other candidates first
+            if (maxVotes === 1) {
+                document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
+                    candidate.classList.remove('selected');
+                    candidate.classList.add('unselected');
+                });
             }
+            this.classList.add('selected');
+            this.classList.remove('unselected');
+        }
 
-            // Toggle selection
-            if (this.classList.contains('selected')) {
-                this.classList.remove('selected');
-                this.classList.add('unselected');
-            } else {
-                // If it's single vote, remove selection from other candidates first
-                if (maxVotes === 1) {
-                    document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
-                        candidate.classList.remove('selected');
-                        candidate.classList.add('unselected');
-                    });
-                }
-                this.classList.add('selected');
-                this.classList.remove('unselected');
-            }
+        // Update hidden inputs for form submission
+        let selectedInputs = document.querySelectorAll(`input[name='${position}[]']`);
+        selectedInputs.forEach(input => input.remove()); // Clear previous inputs
 
-            // Update hidden inputs for form submission
-            let selectedInputs = document.querySelectorAll(`input[name='${position}[]']`);
-            selectedInputs.forEach(input => input.remove()); // Clear previous inputs
-
-            // Create new hidden inputs for selected candidates
-            document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`).forEach(candidate => {
-                let selectedInput = document.createElement('input');
-                selectedInput.type = 'hidden';
-                selectedInput.name = `${position}[]`;
-                selectedInput.value = candidate.getAttribute('data-id');
-                document.getElementById('ballotForm').appendChild(selectedInput);
-            });
+        // Create new hidden inputs for selected candidates
+        document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`).forEach(candidate => {
+            let selectedInput = document.createElement('input');
+            selectedInput.type = 'hidden';
+            selectedInput.name = `${position}[]`;
+            selectedInput.value = candidate.getAttribute('data-id');
+            document.getElementById('ballotForm').appendChild(selectedInput);
         });
+
+        // Update the preview for this position
+        updatePreview(position, maxVotes);
     });
+});
+
+// Function to update preview with selected candidates' names
+function updatePreview(position, maxVotes) {
+    const previewContainer = document.getElementById("previewSelections");
+    const positionPreview = previewContainer.querySelector(`.preview-position[data-position='${position}']`);
+    const selectedCandidates = document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`);
+    const positionName = document.querySelector(`.box-title[data-position='${position}']`).innerText;
+
+    // If no position preview exists yet, create it
+    if (!positionPreview) {
+        const newPreview = document.createElement("div");
+        newPreview.classList.add("preview-position");
+        newPreview.setAttribute("data-position", position);
+        newPreview.innerHTML = `<strong>${positionName}:</strong> `;
+        previewContainer.appendChild(newPreview);
+    }
+
+    // Update the preview with the selected candidates' names
+    const selectedNames = Array.from(selectedCandidates).map(candidate => candidate.querySelector(".candidate-name").innerText);
+
+    positionPreview.innerHTML = `<strong>${positionName}:</strong> ${selectedNames.join(", ")}`;
+}
+
 
     // Reset button functionality
     resetButtons.forEach(button => {
