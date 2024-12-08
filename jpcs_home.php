@@ -240,24 +240,24 @@ if (isset($voter['id'])) {
                                                             '<input type="checkbox" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : 
                                                             '<input type="radio" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
                                                     
-                                                       // Generate candidate container
+                                                        // Generate candidate container
                                                         echo '<div class="candidate-container" 
-                                                        data-id="' . $crow['id'] . '" 
-                                                        data-position="' . $slug . '" 
-                                                        data-max-vote="' . $maxVote . '">
-                                                        <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image"> <br>
-                                                        <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span>
-                                                        
-                                                        </div>
-                                                        <div>
-                                                        <button type="button" class="btn btn-primary btn-flat platform-button" 
-                                                            data-platform="' . $crow['platform'] . '" 
-                                                            data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">
-                                                        Platform
-                                                        </button></div>';
-
-                                                                                                            
-                                                        }                    
+                                                                    data-id="' . $crow['id'] . '" 
+                                                                    data-position="' . $slug . '" 
+                                                                    data-max-vote="' . $maxVote . '">
+                                                                <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image"> <br>
+                                                                <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span> <br>
+                                                            
+                                                            </div>
+                                                            <div>
+                                                            <button type="button" class="btn btn-primary btn-flat platform-button" 
+                                                                        data-platform="' . $crow['platform'] . '" 
+                                                                        data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">
+                                                                    Platform
+                                                                </button></div>';
+                                                    
+                                                    
+}                    
                                     
                                 echo '</ul>
                             </div>
@@ -662,7 +662,7 @@ body {
 .candidate-container {
     display: inline-block;
     text-align: center;
-    padding: 20px; /* Added padding for spacing */
+    padding: 10px;
     margin: 10px;
     border: 2px solid transparent;
     border-radius: 10px;
@@ -671,7 +671,7 @@ body {
     transition: transform 0.3s, border-color 0.3s, opacity 0.3s;
     cursor: pointer;
     width: 200px;
-    position: relative;
+    position: relative; /* Make sure the platform button stays inside the candidate container */
 }
 
 /* Hover effect for candidate container */
@@ -679,31 +679,42 @@ body {
     transform: scale(1.05);
 }
 
+/* Selected candidate container style */
+.candidate-container.selected {
+    border-color: #28a745;
+    transform: scale(1.1);
+}
+
+/* Unselected candidate style */
+.candidate-container.unselected {
+    opacity: 0.5; /* Reduced opacity for unselected candidates */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Stronger shadow for unselected */
+}
+
 /* Candidate image style */
 .candidate-image {
     width: 120px;
     height: 120px;
     border-radius: 10px;
-    margin-bottom: 10px; /* Space between image and name */
     transition: transform 0.3s;
 }
 
 /* Candidate name style */
 .candidate-name {
-    margin-bottom: 10px; /* Space between name and button */
-    font-size: 16px; /* Increased font size */
+    margin-top: 10px;
+    font-size: 14px;
     font-weight: bold;
 }
 
 /* Style for the platform button */
 .platform-button {
-    margin-top: auto; /* Ensure button stays at the bottom */
-    font-size: 16px; /* Slightly larger text */
+    margin-top: 10px; /* Space between the candidate's name and the button */
+    font-size: 14px;
     background-color: #28a745;
     color: #fff;
     border: none;
     border-radius: 5px;
-    padding: 10px 15px; /* Larger button size */
+    padding: 5px 10px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
@@ -712,7 +723,6 @@ body {
 .platform-button:hover {
     background-color: #218838;
 }
-
 
 /* Consolidated reset button styles */
 .reset {
