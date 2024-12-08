@@ -361,11 +361,11 @@ candidateContainers.forEach(container => {
         });
 
         // Update the preview section with the candidate's name and position
-        const previewElement = document.getElementById('preview_jpcs' + position);
+        const previewElement = document.getElementById('preview_' + position);
 
         if (maxVotes === 1) {
             // For single vote, show name and position
-            previewElement.innerHTML = `${position}: <strong>${candidateName}</strong>`;
+            previewElement.innerHTML = `${position}: <strong>${selectedNames.join(', ')}</strong>`;
         } else {
             // For multiple votes, show all selected names
             let selectedNames = [];
