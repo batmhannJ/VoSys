@@ -716,6 +716,7 @@ body {
 
 /* Style for the platform button */
 .platform-button {
+    margin-top: 100px;
     font-size: 14px;
     background-color: #28a745;
     color: #fff;
