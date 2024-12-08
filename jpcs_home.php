@@ -201,14 +201,21 @@ if (isset($voter['id'])) {
                                     }
                                       echo '
                                     <div class="position-container">
-                                        <div class="box box-solid" id="'.$row['id'].'">
-                                            <div class="box-header" style="background-color: darkgreen;">
-                                                <h3 class="box-title" style="color: #fff;">'.$row['name'].'</h3>
-                                                <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="'.slugify($row['name']).'"><i class="fa fa-refresh"></i> Reset</button>
-                                            </div>
-                                            <div class="box-body">
-                                                <p class="instruction">You may select up to '.$row['max_vote'].' candidates</p>
-                                                <div class="candidate-list">
+    <div class="box box-solid" id="'.$row['id'].'" style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+        <div class="box-header" style="background-color: darkgreen; padding: 16px; display: flex; justify-content: space-between; align-items: center;">
+            <h3 class="box-title" style="color: #fff; margin: 0; font-size: 1.25rem;">'.$row['name'].'</h3>
+            <button type="button" class="btn btn-success btn-sm btn-flat reset" style="background-color: #4caf50; border: none; color: #fff; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 0.875rem;" data-desc="'.slugify($row['name']).'"><i class="fa fa-refresh" style="margin-right: 4px;"></i> Reset</button>
+        </div>
+        <div class="box-body" style="padding: 16px; background-color: #f9f9f9;">
+            <p class="instruction" style="margin-bottom: 16px; font-size: 1rem; color: #555;">
+                You may select up to '.$row['max_vote'].' candidates
+            </p>
+            <div class="candidate-list" style="display: flex; flex-wrap: wrap; gap: 12px;">
+                <!-- Candidate cards or items will go here -->
+            </div>
+        </div>
+    </div>
+</div>
                                                     <ul>';
                                                     $sql = "SELECT * FROM candidates WHERE category_id='" . $row['id'] . "'";
                                                     $cquery = $conn->query($sql);
