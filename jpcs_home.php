@@ -714,17 +714,18 @@ body {
     font-weight: bold;
 }
 
-/* Style for the platform button */
-.platform-button {
-    margin-top: 100px;
-    font-size: 14px;
-    background-color: #28a745;
+/* Adjusted style for platform button */
+.platform {
+    background-color: #007bff;
     color: #fff;
     border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
+    border-radius: 20px; /* Make it pill-shaped */
+    padding: 8px 20px; /* Add padding */
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s ease;
+    margin-left: auto; /* Push platform button to the end */
+    display: flex; /* Use flexbox to align icon and text */
+    align-items: center; /* Center items vertically */
 }
 
 /* Hover effect for platform button */
