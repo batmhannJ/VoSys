@@ -247,10 +247,7 @@ if (isset($voter['id'])) {
                                                                     data-max-vote="' . $maxVote . '">
                                                                 <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image"> <br>
                                                                 <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span> <br>
-                                                                <button type="button" class="btn btn-primary btn-flat platform-button" 
-                                                                        data-platform="' . $crow['platform'] . '" 
-                                                                        data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">
-                                                                    Platform
+                                                                 <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
                                                                 </button>
                                                             </div>';
                                                     
