@@ -364,6 +364,10 @@ candidateContainers.forEach(container => {
         const previewElement = document.getElementById('preview_' + position);
 
         if (maxVotes === 1) {
+            let selectedNames = [];
+            document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`).forEach(candidate => {
+                selectedNames.push(candidate.querySelector('.candidate-name').textContent);
+            });
             // For single vote, show name and position
             previewElement.innerHTML = `${position}: <strong>${selectedNames.join(', ')}</strong>`;
         } else {
