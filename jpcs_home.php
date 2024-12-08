@@ -310,34 +310,26 @@ if (isset($voter['id'])) {
     candidateContainers.forEach(container => {
         container.addEventListener('click', function () {
             const position = this.getAttribute('data-position');
-            const maxVote = parseInt(this.getAttribute('data-max-vote'), 10);
 
-            if (!this.classList.contains('selected')) {
-                // Check if maxVote is reached
-                const selectedCount = document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`).length;
-                if (selectedCount < max_vote) {
-                    this.classList.add('selected');
-                    this.classList.remove('unselected');
+            // Deselect previously selected candidate for this position
+            document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
+                candidate.classList.remove('selected');
+                candidate.classList.add('unselected'); // Add unselected class for candidates that are not selected
+            });
 
-                    // Update hidden input for the form submission
-                    let selectedInput = document.createElement('input');
-                    selectedInput.type = 'hidden';
-                    selectedInput.name = `${position}[]`;
-                    selectedInput.value = this.getAttribute('data-id');
-                    selectedInput.setAttribute('data-id', this.getAttribute('data-id'));
-                    document.getElementById('ballotForm').appendChild(selectedInput);
-                }
-            } else {
-                // Deselect this candidate
-                this.classList.remove('selected');
-                this.classList.add('unselected');
+            // Select this candidate
+            this.classList.add('selected');
+            this.classList.remove('unselected'); // Remove unselected class from the selected candidate
 
-                // Remove hidden input
-                const selectedInput = document.querySelector(`input[name='${position}[]'][data-id='${this.getAttribute('data-id')}']`);
-                if (selectedInput) {
-                    selectedInput.remove();
-                }
+            // Update hidden input for the form submission
+            let selectedInput = document.querySelector(`input[name='${position}']`);
+            if (!selectedInput) {
+                selectedInput = document.createElement('input');
+                selectedInput.type = 'hidden';
+                selectedInput.name = position;
+                document.getElementById('ballotForm').appendChild(selectedInput);
             }
+            selectedInput.value = this.getAttribute('data-id');
         });
     });
 
@@ -349,13 +341,14 @@ if (isset($voter['id'])) {
             // Deselect all candidates for this position
             document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
                 candidate.classList.remove('selected');
-                candidate.classList.remove('unselected');
+                candidate.classList.remove('unselected'); // Ensure unselected class is removed when reset
             });
 
-            // Remove all hidden inputs for this position
-            document.querySelectorAll(`input[name='${position}[]']`).forEach(input => {
-                input.remove();
-            });
+            // Remove hidden input
+            const selectedInput = document.querySelector(`input[name='${position}']`);
+            if (selectedInput) {
+                selectedInput.remove();
+            }
         });
     });
 
@@ -377,7 +370,6 @@ if (isset($voter['id'])) {
         });
     });
 });
-
 
 </script>
 <script>
