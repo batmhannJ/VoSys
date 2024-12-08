@@ -357,25 +357,25 @@ if (isset($voter['id'])) {
         });
     });
 
-    // Reset button logic
     resetButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            const position = this.getAttribute('data-desc'); // Get the position from 'data-desc'
+    button.addEventListener('click', function () {
+        const position = this.getAttribute('data-desc'); // Get the position from 'data-desc'
 
-            // Deselect all candidates for the position
-            document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
-                candidate.classList.remove('selected');
-                candidate.classList.add('unselected'); // Mark as unselected
-            });
-
-            // Clear hidden inputs for the position
-            document.querySelectorAll(`input[name='${position}[]']`).forEach(input => input.remove());
-
-            // Clear the preview section
-            const previewElement = document.getElementById('preview_' + position);
-            previewElement.innerHTML = `${position}: <em>No selection</em>`;
+        // Deselect all candidates for the position
+        document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
+            candidate.classList.remove('selected');
+            candidate.classList.remove('unselected'); // Remove the unselected class to restore opacity
         });
+
+        // Clear hidden inputs for the position
+        document.querySelectorAll(`input[name='${position}[]']`).forEach(input => input.remove());
+
+        // Clear the preview section
+        const previewElement = document.getElementById('preview_' + position);
+        previewElement.innerHTML = `${position}: <em>No selection</em>`;
     });
+});
+
 
     // Platform button click logic
     platformButtons.forEach(button => {
@@ -718,9 +718,9 @@ body {
 
 /* Highlight the selected candidate with border and scale effect */
 .candidate-container.selected {
-    border: 5px solid darkgreen;  /* Border color for selected */
+    border: 4px solid darkgreen;  /* Border color for selected */
     opacity: 1;  /* Ensure the selected one remains fully visible */
-    transform: scale(1.15);  /* Make the selected candidate "pop" slightly */
+    transform: scale(1.10);  /* Make the selected candidate "pop" slightly */
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Optional shadow for selected candidates */
 }
 
@@ -728,7 +728,7 @@ body {
 .candidate-container.unselected:hover {
     opacity: 0.7;
     transform: scale(1.02);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4); /* Stronger shadow on hover */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.9); /* Stronger shadow on hover */
 }
 
 /* Candidate image style */
