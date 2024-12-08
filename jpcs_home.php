@@ -313,17 +313,9 @@ if (isset($voter['id'])) {
     const resetButtons = document.querySelectorAll('.reset');
     const platformButtons = document.querySelectorAll('.platform-button'); // Platform button selector
 
-    // Initialize candidates as unselected (darken unselected initially)
-    candidateContainers.forEach(container => {
-        container.classList.add('unselected');
-    });
-
     // Candidate selection logic
     candidateContainers.forEach(container => {
         container.addEventListener('click', function () {
-            // Prevent candidate selection if the platform button is clicked
-            if (this.classList.contains('platform-clicked')) return; // Ignore if platform button was clicked
-
             const position = this.getAttribute('data-position'); // Get position of candidate
             const maxVotes = parseInt(this.getAttribute('data-max-vote'), 10); // Get max vote allowed for position
             const selectedCandidates = document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`);
@@ -709,6 +701,8 @@ body {
     cursor: pointer;
     width: 200px;
     position: relative; /* Make sure the platform button stays inside the candidate container */
+    opacity: 1;  /* Full opacity by default */
+    transform: scale(1);  /* Default scale */
 }
 
 /* Hover effect for candidate container */
@@ -719,7 +713,6 @@ body {
 /* When no candidate is selected, darken the unselected ones */
 .candidate-container.unselected {
     opacity: 0.5; /* Darken the unselected candidates */
-    cursor: pointer;
 }
 
 /* Highlight the selected candidate with border and scale effect */
