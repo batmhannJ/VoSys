@@ -200,17 +200,17 @@ while($row = $query->fetch_assoc()){
         continue; // Skip positions not in the list
     }
     echo '
-    <div class="position-container" style="margin-bottom: 30px; padding: 20px; border-radius: 12px; background-color: #f4f4f9; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);">
-        <div class="box box-solid" id="'.$row['id'].'" style="background-color: #fff; border-radius: 12px; overflow: hidden;">
-            <div class="box-header" style="background-color: #6200ea; padding: 20px; border-radius: 12px 12px 0 0;">
+    <div class="position-container" style="margin-bottom: 40px; padding: 25px; border-radius: 10px; background-color: #f8f9fa; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
+        <div class="box box-solid" id="'.$row['id'].'" style="background-color: #ffffff; border-radius: 10px; overflow: hidden;">
+            <div class="box-header" style="background-color: #007bff; padding: 20px; border-radius: 10px 10px 0 0;">
                 <h3 class="box-title" style="color: #fff; ">'.$row['name'].'</h3>
-                <button type="button" class="btn btn-danger btn-sm btn-flat reset" data-desc="'.slugify($row['name']).'" style="border-radius: 50px; font-size: 14px; padding: 10px 20px; background-color: #ff4081; transition: background-color 0.3s;">
+                <button type="button" class="btn btn-light btn-sm btn-flat reset" data-desc="'.slugify($row['name']).'" style="font-size: 14px; padding: 8px 16px; background-color: #f1f1f1; color: #333; border-radius: 20px; transition: background-color 0.3s ease;">
                     <i class="fa fa-refresh"></i> Reset
                 </button>
             </div>
-            <div class="box-body" style="padding: 30px;">
-                <p class="instruction" style="font-size: 18px; color: #333;">You may select up to '.$row['max_vote'].' candidates</p>
-                <div class="candidate-list" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-evenly;">';
+            <div class="box-body" style="padding: 30px 25px;">
+                <p class="instruction" style="font-size: 16px; color: #333; line-height: 1.6;">You may select up to '.$row['max_vote'].' candidates</p>
+                <div class="candidate-list" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; margin-top: 20px;">';
 
                 $sql = "SELECT * FROM candidates WHERE category_id='" . $row['id'] . "'";
                 $cquery = $conn->query($sql);
@@ -218,7 +218,7 @@ while($row = $query->fetch_assoc()){
                 while ($crow = $cquery->fetch_assoc()) {
                     $slug = slugify($row['name']);
                     $image = (!empty($crow['photo'])) ? 'images/' . $crow['photo'] : 'images/profile.jpg';
-                    $maxVote = $row['max_vote']; // Fetch max vote per position
+                    $maxVote = $row['max_vote'];
 
                     if(isset($_SESSION['post'][$slug])){
                         $value = $_SESSION['post'][$slug];
@@ -239,8 +239,8 @@ while($row = $query->fetch_assoc()){
 
                     $inputId = $slug.'_'.$crow['id']; // Generate a unique ID for the input
                     $input = ($maxVote > 1) ? 
-                        '<input type="checkbox" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : 
-                        '<input type="radio" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
+                        '<input type="checkbox" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.' style="display: none;">' : 
+                        '<input type="radio" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.' style="display: none;">';
 
                     // Candidate container with minimalist design
                     echo '
@@ -248,18 +248,18 @@ while($row = $query->fetch_assoc()){
                             data-id="' . $crow['id'] . '" 
                             data-position="' . $slug . '" 
                             data-max-vote="' . $maxVote . '"
-                            style="background-color: #fff; border-radius: 12px; padding: 20px; text-align: center; width: 180px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;">
+                            style="background-color: #ffffff; border-radius: 10px; padding: 15px; width: 160px; text-align: center; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease;">
                             
-                            <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image" style="width: 100%; height: 120px; object-fit: cover; border-radius: 12px; margin-bottom: 15px; transition: transform 0.3s ease;">
+                            <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image" style="width: 100%; height: 100px; object-fit: cover; border-radius: 8px; margin-bottom: 12px;">
                             
-                            <span class="candidate-name" style="font-size: 16px; font-weight: 600; color: #333; display: block; margin-bottom: 10px; text-transform: capitalize;">
+                            <span class="candidate-name" style="font-size: 14px; font-weight: 600; color: #333; display: block; margin-bottom: 10px;">
                                 ' . $crow['firstname'] . ' ' . $crow['lastname'] . '
                             </span>
                             
-                            <button type="button" class="btn btn-info btn-flat platform-button" 
+                            <button type="button" class="btn btn-outline-primary btn-sm platform-button" 
                                 data-platform="' . $crow['platform'] . '" 
                                 data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '"
-                                style="background-color: #6200ea; border-radius: 50px; padding: 8px 20px; font-size: 14px; border: none; transition: background-color 0.3s;">
+                                style="padding: 6px 12px; font-size: 12px; border-radius: 20px; border: 1px solid #007bff; color: #007bff; transition: background-color 0.3s ease, color 0.3s ease;">
                                 View Platform
                             </button>
                         </div>';
