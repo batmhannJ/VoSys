@@ -520,12 +520,12 @@ body {
         }
 
         .position-container {
-            max-width: 900px;
+            max-width: 1500px;
             margin: 20px auto;
             padding: 20px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 5px;
         }
 
         .box {
