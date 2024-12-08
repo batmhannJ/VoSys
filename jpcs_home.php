@@ -313,6 +313,11 @@ if (isset($voter['id'])) {
     const resetButtons = document.querySelectorAll('.reset');
     const platformButtons = document.querySelectorAll('.platform-button'); // Platform button selector
 
+    // Initialize candidates as unselected (darken unselected initially)
+    candidateContainers.forEach(container => {
+        container.classList.add('unselected');
+    });
+
     // Candidate selection logic
     candidateContainers.forEach(container => {
         container.addEventListener('click', function () {
@@ -326,15 +331,18 @@ if (isset($voter['id'])) {
             // If candidate is already selected, deselect it
             if (this.classList.contains('selected')) {
                 this.classList.remove('selected');
+                this.classList.add('unselected'); // Mark as unselected
             } else {
                 // If max votes are reached, deselect the first selected candidate to allow reselection
                 if (selectedCandidates.length >= maxVotes) {
                     const earliestSelected = selectedCandidates[0];
                     earliestSelected.classList.remove('selected');
+                    earliestSelected.classList.add('unselected'); // Mark as unselected
                 }
 
                 // Select the current candidate
                 this.classList.add('selected');
+                this.classList.remove('unselected'); // Remove unselected class
             }
 
             // Update hidden inputs for form submission
@@ -365,6 +373,7 @@ if (isset($voter['id'])) {
             // Deselect all candidates for the position
             document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
                 candidate.classList.remove('selected');
+                candidate.classList.add('unselected'); // Mark as unselected
             });
 
             // Clear hidden inputs for the position
@@ -405,6 +414,7 @@ if (isset($voter['id'])) {
         }
     });
 });
+
 
 </script>
 <script>
@@ -706,17 +716,23 @@ body {
     transform: scale(1.05);
 }
 
-/* When a candidate is not selected, darken it */
-.candidate-container:not(.selected) {
-    opacity: 0.5; /* Darkens the unselected candidates */
-    cursor: not-allowed; /* Change cursor to indicate that it's unselectable */
+/* When no candidate is selected, darken the unselected ones */
+.candidate-container.unselected {
+    opacity: 0.5; /* Darken the unselected candidates */
+    cursor: pointer;
 }
 
-/* Highlight selected candidates */
+/* Highlight the selected candidate with border and scale effect */
 .candidate-container.selected {
-    opacity: 1;
-    background-color: #ffcc00; /* Highlight selected candidates with color */
-    cursor: pointer; /* Keep the cursor as pointer to show it's clickable */
+    border: 2px solid #ff6f61;  /* Border color for selected */
+    opacity: 1;  /* Ensure the selected one remains fully visible */
+    transform: scale(1.05);  /* Make the selected candidate "pop" slightly */
+}
+
+/* Optional: Add a hover effect for unselected candidates */
+.candidate-container.unselected:hover {
+    opacity: 0.7;
+    transform: scale(1.02);
 }
 
 /* Candidate image style */
