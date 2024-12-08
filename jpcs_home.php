@@ -703,6 +703,7 @@ body {
     position: relative; /* Make sure the platform button stays inside the candidate container */
     opacity: 1;  /* Full opacity by default */
     transform: scale(1);  /* Default scale */
+    box-shadow: none;  /* No shadow initially */
 }
 
 /* Hover effect for candidate container */
@@ -717,15 +718,17 @@ body {
 
 /* Highlight the selected candidate with border and scale effect */
 .candidate-container.selected {
-    border: 2px solid #ff6f61;  /* Border color for selected */
+    border: 5px solid darkgreen;  /* Border color for selected */
     opacity: 1;  /* Ensure the selected one remains fully visible */
-    transform: scale(1.05);  /* Make the selected candidate "pop" slightly */
+    transform: scale(2.00);  /* Make the selected candidate "pop" slightly */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Optional shadow for selected candidates */
 }
 
 /* Optional: Add a hover effect for unselected candidates */
 .candidate-container.unselected:hover {
     opacity: 0.7;
     transform: scale(1.02);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4); /* Stronger shadow on hover */
 }
 
 /* Candidate image style */
