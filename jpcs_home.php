@@ -576,13 +576,14 @@ body {
             color: #555;
         }
 
-/* Style for the reset button */
 .reset {
     background-color: #dc3545;
     color: #fff;
     border: none;
     border-radius: 5px;
     padding: 10px 15px;
+    font-size: 14px; /* Increased font size */
+    font-weight: bold; /* Make text bold */
     cursor: pointer;
     transition: background-color 0.3s;
     margin-left: auto; /* Align reset button to the right */
