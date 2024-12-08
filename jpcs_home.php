@@ -315,7 +315,7 @@ if (isset($voter['id'])) {
             if (!this.classList.contains('selected')) {
                 // Check if maxVote is reached
                 const selectedCount = document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`).length;
-                if (selectedCount < maxVote) {
+                if (selectedCount < max_vote) {
                     this.classList.add('selected');
                     this.classList.remove('unselected');
 
