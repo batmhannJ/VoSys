@@ -210,9 +210,6 @@ if (isset($voter['id'])) {
             <p class="instruction" style="margin-bottom: 16px; font-size: 1rem; color: #555;">
                 You may select up to '.$row['max_vote'].' candidates
             </p>
-            <div class="candidate-list" style="display: flex; flex-wrap: wrap; gap: 12px;">
-                <!-- Candidate cards or items will go here -->
-            </div>
         </div>
     </div>
 </div>
