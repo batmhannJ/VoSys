@@ -53,9 +53,7 @@
                 <p id="plat_view" class="text-dark" style="font-size: 1.1rem;"></p>
             </div>
             <div class="modal-footer" style="border: none; justify-content: center;">
-                <button type="button" class="btn btn-danger btn-sm px-4 py-2" data-bs-dismiss="modal">
-                    <i class="fa fa-times"></i> Close
-                </button>
+            <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
             </div>
         </div>
     </div>
