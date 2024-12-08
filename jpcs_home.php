@@ -211,10 +211,12 @@ if (isset($voter['id'])) {
                                                 <div class="candidate-list">
                                                     <ul>';
                                                     $sql = "SELECT * FROM candidates WHERE category_id='" . $row['id'] . "'";
-                                                    $cquery = $conn->query($sql);
-                                                    while ($crow = $cquery->fetch_assoc()) {
-                                                        $slug = slugify($row['name']);
-                                                        $image = (!empty($crow['photo'])) ? 'images/' . $crow['photo'] : 'images/profile.jpg';
+                                        $cquery = $conn->query($sql);
+
+                                        while ($crow = $cquery->fetch_assoc()) {
+                                            $slug = slugify($row['name']);
+                                            $image = (!empty($crow['photo'])) ? 'images/' . $crow['photo'] : 'images/profile.jpg';
+                                            $maxVote = $row['max_vote']; // Fetch max vote per position
                                         if(isset($_SESSION['post'][$slug])){
                                             $value = $_SESSION['post'][$slug];
                                     
@@ -240,11 +242,19 @@ if (isset($voter['id'])) {
                                         $image = (!empty($crow['photo'])) ? 'images/'.$crow['photo'] : 'images/profile.jpg';
                                     
                                        
-    echo '<div class="candidate-container" data-id="' . $crow['id'] . '" data-position="' . $slug . '">
-    <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image"> <br>
-    <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span> <br>
-    <button type="button" class="btn btn-primary btn-flat platform-button" data-platform="' . $crow['platform'] . '" data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">Platform</button>
-  </div>';
+    // Generate candidate container
+    echo '<div class="candidate-container" 
+                data-id="' . $crow['id'] . '" 
+                data-position="' . $slug . '" 
+                data-max-vote="' . $maxVote . '">
+            <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image"> <br>
+            <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span> <br>
+            <button type="button" class="btn btn-primary btn-flat platform-button" 
+                    data-platform="' . $crow['platform'] . '" 
+                    data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '">
+                Platform
+            </button>
+        </div>';
 }                    
                                     
                                 echo '</ul>
@@ -306,18 +316,11 @@ if (isset($voter['id'])) {
     const resetButtons = document.querySelectorAll('.reset');
     const platformButtons = document.querySelectorAll('.platform');
 
-    // Example: Define max votes per position (replace with dynamic value from your database)
-    const maxVotesPerPosition = {
-        president: 1,
-        vice_president: 2,
-        secretary: 1,
-    };
-
     // Candidate selection logic
     candidateContainers.forEach(container => {
         container.addEventListener('click', function () {
             const position = this.getAttribute('data-position');
-            const maxVotes = maxVotesPerPosition[position];
+            const maxVotes = parseInt(this.getAttribute('data-max-vote'), 10); // Get max vote for this position
             const selectedCandidates = document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`);
 
             if (selectedCandidates.length >= maxVotes && !this.classList.contains('selected')) {
@@ -384,6 +387,7 @@ if (isset($voter['id'])) {
         });
     });
 });
+
 </script>
 <script>
     function updateCountdown(endTime) {
