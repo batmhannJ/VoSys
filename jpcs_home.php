@@ -360,6 +360,40 @@ if (isset($voter['id'])) {
 
 
 </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const previewButton = document.getElementById('previewButton'); // Button for triggering preview
+    const previewContainer = document.getElementById('previewModalContent'); // Modal or section for displaying the preview
+
+    // Handle Preview button click
+    previewButton.addEventListener('click', function () {
+        // Gather all form data to send to the PHP script
+        const formData = new FormData(document.getElementById('ballotForm'));
+
+        // Send AJAX request
+        fetch('preview_jpcs.php', {
+            method: 'POST',
+            body: formData,
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    // Display errors if any
+                    previewContainer.innerHTML = `<ul class="error-list">${data.message.join('')}</ul>`;
+                } else {
+                    // Display the list of selected candidates
+                    previewContainer.innerHTML = data.list;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                previewContainer.innerHTML = '<div class="alert alert-danger">An error occurred while generating the preview.</div>';
+            });
+    });
+});
+
+</script>
 <script>
     function updateCountdown(endTime) {
         var now = new Date();
