@@ -304,7 +304,6 @@ if (isset($voter['id'])) {
    document.addEventListener('DOMContentLoaded', function () {
     const candidateContainers = document.querySelectorAll('.candidate-container');
     const resetButtons = document.querySelectorAll('.reset');
-    const platformButtons = document.querySelectorAll('.platform');
 
     // Candidate selection logic
     candidateContainers.forEach(container => {
