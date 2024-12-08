@@ -582,7 +582,7 @@ body {
     color: #fff;
     border: none;
     border-radius: 5px;
-    padding: 5px 10px;
+    padding: 10px 15px;
     cursor: pointer;
     transition: background-color 0.3s;
     margin-left: auto; /* Align reset button to the right */
