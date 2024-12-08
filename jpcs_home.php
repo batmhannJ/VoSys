@@ -733,8 +733,8 @@ body {
 /* Optional: Add a hover effect for unselected candidates */
 .candidate-container.unselected:hover {
     opacity: 0.9;
-    transform: scale(1.02);
-    box-shadow: 0 15px 15px rgba(0, 0, 0, 0.9); /* Stronger shadow on hover */
+    transform: scale(1.10);
+    box-shadow: 0 15px 15px rgba(0.1, 0.1, 0.1, 0.7); /* Stronger shadow on hover */
 }
 
 /* Candidate image style */
