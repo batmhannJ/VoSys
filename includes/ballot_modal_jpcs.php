@@ -43,17 +43,17 @@
 </div>
 <!-- Platform Modal -->
 <div class="modal fade" id="platform" tabindex="-1" aria-labelledby="platformLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content shadow-lg rounded-4">
-            <div class="modal-header bg-gradient-to-r from-blue-500 to-purple-600 text-white">
-                <h4 class="modal-title w-100 text-center" id="platformLabel"><b><span class="candidate"></span></b></h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-3">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title w-100 text-center" id="platformLabel"><b><span class="candidate"></span></b></h5>
+                <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body p-5">
-                <p id="plat_view" class="lead text-dark"></p>
+            <div class="modal-body px-4 py-3">
+                <p id="plat_view" class="text-muted"></p>
             </div>
-            <div class="modal-footer bg-light justify-content-center">
-                <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+            <div class="modal-footer border-0 justify-content-center">
+                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal"><i class="fa fa-close"></i> Close</button>
             </div>
         </div>
     </div>
@@ -62,30 +62,32 @@
 <!-- Custom CSS -->
 <style>
     .modal-content {
-        background-color: #ffffff;  /* White background */
+        background-color: #f1f3f5;  /* Light gray background */
         border-radius: 15px;         /* Rounded corners */
         border: none;
     }
 
     .modal-header {
-        background: linear-gradient(90deg, #4e73df, #1cc88a);  /* Gradient background */
+        background-color: #343a40;  /* Dark background */
         color: white;
+        padding: 20px;
     }
 
     .modal-title {
-        font-family: 'Roboto', sans-serif;
-        font-weight: 700;
+        font-family: 'Arial', sans-serif;
+        font-weight: 600;
     }
 
     .modal-body {
-        font-family: 'Arial', sans-serif;
+        font-family: 'Verdana', sans-serif;
         font-size: 1.1rem;
-        color: #333;  /* Dark text */
+        color: #495057;  /* Dark gray text */
+        padding: 15px;
     }
 
     .modal-footer {
-        background-color: #f1f1f1; /* Light gray footer */
-        border-top: none;
+        padding: 15px;
+        background-color: transparent;
     }
 
     .btn-close {
@@ -95,19 +97,21 @@
         font-size: 1.5rem;
     }
 
-    .btn-danger {
-        background-color: #e74a3b;  /* Red button */
-        color: white;
-        border-radius: 20px;
+    .btn-outline-dark {
+        background-color: transparent;
+        border: 2px solid #343a40;
+        color: #343a40;
+        border-radius: 30px;
         padding: 8px 20px;
         font-size: 1rem;
     }
 
-    .btn-danger:hover {
-        background-color: #c0392b;  /* Darker red on hover */
+    .btn-outline-dark:hover {
+        background-color: #343a40;
+        color: white;
     }
 
-    /* Modal transition effect */
+    /* Animation for modal */
     .modal.fade .modal-dialog {
         transform: translate(0, -50px);
         transition: transform 0.3s ease-out;
@@ -115,14 +119,6 @@
 
     .modal.show .modal-dialog {
         transform: translate(0, 0);
-    }
-
-    .modal-content {
-        transition: box-shadow 0.3s ease-in-out;
-    }
-
-    .modal-content:hover {
-        box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.1); /* Shadow on hover */
     }
 </style>
 
