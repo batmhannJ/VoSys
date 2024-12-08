@@ -194,86 +194,83 @@ if (isset($voter['id'])) {
 
                                 $candidate = '';
                                 $sql = "SELECT * FROM categories WHERE election_id = 1 ORDER BY priority ASC";
-                                $query = $conn->query($sql);
-                                while($row = $query->fetch_assoc()){
-                                    if (!in_array($row['name'], $positions)) {
-                                        continue; // Skip positions not in the list
-                                    }
-                                    echo '
-                                    <div class="position-container">
-                                        <div class="box box-solid" id="'.$row['id'].'" style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                                            <div class="box-header" style="background-color: darkgreen; border-radius: 8px 8px 0 0;">
-                                                <h3 class="box-title" style="color: #fff; font-family: Arial, sans-serif; font-size: 18px; font-weight: 600;">'.$row['name'].'</h3>
-                                                <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="'.slugify($row['name']).'" style="border-radius: 20px; font-size: 14px;">
-                                                    <i class="fa fa-refresh"></i> Reset
-                                                </button>
-                                            </div>
-                                            <div class="box-body" style="padding: 20px; font-family: Arial, sans-serif;">
-                                                <p class="instruction" style="font-size: 16px; color: #333;">You may select up to '.$row['max_vote'].' candidates</p>
-                                                <div class="candidate-list" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">';
-                                
-                                                $sql = "SELECT * FROM candidates WHERE category_id='" . $row['id'] . "'";
-                                                $cquery = $conn->query($sql);
-                                
-                                                while ($crow = $cquery->fetch_assoc()) {
-                                                    $slug = slugify($row['name']);
-                                                    $image = (!empty($crow['photo'])) ? 'images/' . $crow['photo'] : 'images/profile.jpg';
-                                                    $maxVote = $row['max_vote']; // Fetch max vote per position
-                                
-                                                    if(isset($_SESSION['post'][$slug])){
-                                                        $value = $_SESSION['post'][$slug];
-                                
-                                                        if(is_array($value)){
-                                                            foreach($value as $val){
-                                                                if($val == $crow['id']){
-                                                                    $checked = 'checked';
-                                                                }
-                                                            }
-                                                        }
-                                                        else{
-                                                            if($value == $crow['id']){
-                                                                $checked = 'checked';
-                                                            }
-                                                        }
-                                                    }
-                                
-                                                    $inputId = $slug.'_'.$crow['id']; // Generate a unique ID for the input
-                                                    $input = ($maxVote > 1) ? 
-                                                        '<input type="checkbox" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : 
-                                                        '<input type="radio" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
-                                
-                                                    // Generate candidate container
-                                                    echo '
-                                                        <div class="candidate-container" 
-                                                            data-id="' . $crow['id'] . '" 
-                                                            data-position="' . $slug . '" 
-                                                            data-max-vote="' . $maxVote . '"
-                                                            style="background-color: #f9f9f9; border-radius: 10px; padding: 15px; text-align: center; width: 150px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease; cursor: pointer;">
-                                                            
-                                                            <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image" style="width: 100%; border-radius: 50%; margin-bottom: 10px;">
-                                                            
-                                                            <span class="candidate-name" style="font-size: 16px; font-weight: 600; color: #333; display: block; margin-bottom: 10px;">
-                                                                ' . $crow['firstname'] . ' ' . $crow['lastname'] . '
-                                                            </span>
-                                                            
-                                                            <button type="button" class="btn btn-primary btn-flat platform-button" 
-                                                                data-platform="' . $crow['platform'] . '" 
-                                                                data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '"
-                                                                style="background-color: #007bff; border-radius: 20px; padding: 5px 15px; font-size: 14px; border: none;">
-                                                                Platform
-                                                            </button>
-                                                        </div>';
-                                                }
-                                
-                                                echo '      </div>
-                                            </div>
-                                        </div>
-                                    </div>';
-                                
-                                
-                                                    
-}                    
-                
+$query = $conn->query($sql);
+while($row = $query->fetch_assoc()){
+    if (!in_array($row['name'], $positions)) {
+        continue; // Skip positions not in the list
+    }
+    echo '
+    <div class="position-container" style="margin-bottom: 30px; padding: 20px; border-radius: 12px; background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);">
+        <div class="box box-solid" id="'.$row['id'].'" style="background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+            <div class="box-header" style="background-color: #007bff; padding: 15px; border-radius: 12px 12px 0 0;">
+                <h3 class="box-title" style="color: #fff;">'.$row['name'].'</h3>
+                <button type="button" class="btn btn-warning btn-sm btn-flat reset" data-desc="'.slugify($row['name']).'" style="border-radius: 20px; font-size: 14px; padding: 8px 15px; transition: background-color 0.3s;">
+                    <i class="fa fa-refresh"></i> Reset
+                </button>
+            </div>
+            <div class="box-body" style="padding: 30px;">
+                <p class="instruction" style="font-size: 18px; color: #333;">You may select up to '.$row['max_vote'].' candidates</p>
+                <div class="candidate-list" style="display: flex; flex-wrap: wrap; gap: 25px; justify-content: space-evenly;">';
+
+                $sql = "SELECT * FROM candidates WHERE category_id='" . $row['id'] . "'";
+                $cquery = $conn->query($sql);
+
+                while ($crow = $cquery->fetch_assoc()) {
+                    $slug = slugify($row['name']);
+                    $image = (!empty($crow['photo'])) ? 'images/' . $crow['photo'] : 'images/profile.jpg';
+                    $maxVote = $row['max_vote']; // Fetch max vote per position
+
+                    if(isset($_SESSION['post'][$slug])){
+                        $value = $_SESSION['post'][$slug];
+
+                        if(is_array($value)){
+                            foreach($value as $val){
+                                if($val == $crow['id']){
+                                    $checked = 'checked';
+                                }
+                            }
+                        }
+                        else{
+                            if($value == $crow['id']){
+                                $checked = 'checked';
+                            }
+                        }
+                    }
+
+                    $inputId = $slug.'_'.$crow['id']; // Generate a unique ID for the input
+                    $input = ($maxVote > 1) ? 
+                        '<input type="checkbox" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : 
+                        '<input type="radio" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
+
+                    // Candidate container with modern design elements
+                    echo '
+                        <div class="candidate-container" 
+                            data-id="' . $crow['id'] . '" 
+                            data-position="' . $slug . '" 
+                            data-max-vote="' . $maxVote . '"
+                            style="background-color: #fff; border-radius: 16px; padding: 20px; text-align: center; width: 200px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer; overflow: hidden;">
+                            
+                            <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image" style="width: 120px; height: 120px; object-fit: cover; border-radius: 50%; margin-bottom: 15px; transition: transform 0.3s ease;">
+                            
+                            <span class="candidate-name" style="font-size: 18px; font-weight: 700; color: #333; display: block; margin-bottom: 10px; text-transform: uppercase;">
+                                ' . $crow['firstname'] . ' ' . $crow['lastname'] . '
+                            </span>
+                            
+                            <button type="button" class="btn btn-info btn-flat platform-button" 
+                                data-platform="' . $crow['platform'] . '" 
+                                data-fullname="' . $crow['firstname'] . ' ' . $crow['lastname'] . '"
+                                style="background-color: #28a745; border-radius: 20px; padding: 8px 20px; font-size: 14px; border: none; transition: background-color 0.3s ease;">
+                                View Platform
+                            </button>
+                        </div>';
+                }
+
+                echo '      </div>
+            </div>
+        </div>
+    </div>';
+}
+
             ?>
             
                                 <div class="text-center">
