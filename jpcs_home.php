@@ -385,21 +385,14 @@ if (isset($voter['id'])) {
     // Platform button click logic
     platformButtons.forEach(button => {
         button.addEventListener('click', function (event) {
-            // Prevent the candidate container from being selected when clicking on the platform button
+            // Prevent candidate selection when clicking the platform button
             const candidateContainer = this.closest('.candidate-container');
 
-            // Do not deselect the candidate if it is already selected
-            // We check if the candidate is selected and do nothing (just show the platform modal)
+            // If the candidate is already selected, don't change its state.
             if (candidateContainer.classList.contains('selected')) {
-                // Just stop event propagation, do not deselect or change classes
+                // Prevent platform button from triggering deselection
                 event.stopPropagation();
-            } else {
-                // If not selected, darken it
-                candidateContainer.classList.add('unselected');
             }
-
-            // Prevent event propagation to avoid candidate selection
-            event.stopPropagation();
 
             // Show the platform modal (replace with your actual modal logic)
             const platformContent = this.getAttribute('data-platform');
@@ -409,6 +402,9 @@ if (isset($voter['id'])) {
 
             // Display the modal
             modal.style.display = 'block'; // Replace with your modal display logic
+
+            // Prevent event propagation to avoid candidate selection
+            event.stopPropagation();
         });
     });
 
