@@ -44,16 +44,18 @@
 <!-- Platform Modal -->
 <div class="modal fade" id="platform" tabindex="-1" aria-labelledby="platformLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content rounded-5" style="background-color: #ffffff;">
-            <div class="modal-header" style="background-color: #FF7043; color: white; border-radius: 5px 5px 0 0;">
+        <div class="modal-content rounded-4" style="background-color: #f5f5f5;">
+            <div class="modal-header" style="background-color: #1e1e2f; color: white; border-radius: 8px 8px 0 0;">
                 <h5 class="modal-title w-100 text-center" id="platformLabel"><b><span class="candidate"></span></b></h5>
                 <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body p-4">
-                <p id="plat_view" class="text-dark" style="font-size: 1.1rem;"></p>
+                <p id="plat_view" style="font-size: 1.1rem; color: #333333;"></p>
             </div>
-            <div class="modal-footer" style="border: none; justify-content: center;">
-            <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+            <div class="modal-footer justify-content-center" style="background-color: #e2e2e2; border-radius: 0 0 8px 8px;">
+                <button type="button" class="btn btn-danger btn-lg px-5 py-3" data-bs-dismiss="modal">
+                    <i class="fa fa-times"></i> Close
+                </button>
             </div>
         </div>
     </div>
@@ -61,21 +63,19 @@
 
 <!-- Custom CSS -->
 <style>
-    /* Overall Modal Content */
     .modal-content {
-        background-color: #ffffff;
-        border-radius: 8px; /* Rounded corners for a soft appearance */
-        border: none;
-        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+        background-color: #f5f5f5; /* Light gray background */
+        border-radius: 8px; /* Smooth rounded corners */
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
     }
 
     .modal-header {
-        background-color: #FF7043;  /* Bold coral color */
+        background-color: #1e1e2f; /* Dark color for the header */
         color: white;
         font-family: 'Helvetica Neue', sans-serif;
-        font-weight: 600;
-        padding: 20px 30px;
+        font-weight: 700;
         text-align: center;
+        padding: 20px;
         border-radius: 8px 8px 0 0;
     }
 
@@ -84,44 +84,51 @@
     }
 
     .modal-body {
-        padding: 30px;
+        padding: 20px 30px;
         font-family: 'Arial', sans-serif;
-        color: #333;  /* Dark text */
+        color: #333;
         line-height: 1.6;
         font-size: 1rem;
         text-align: left;
     }
 
     .modal-footer {
-        background-color: #f7f7f7;
+        padding: 15px 0;
+        background-color: #e2e2e2;
         border-radius: 0 0 8px 8px;
     }
 
+    /* Custom close button design */
     .btn-close {
         background-color: transparent;
         border: none;
         color: white;
-        font-size: 1.5rem;
+        font-size: 1.6rem;
+        padding: 5px 10px;
+        cursor: pointer;
     }
 
+    /* Close Button Styling */
     .btn-danger {
-        background-color: #FF7043; /* Same as header color */
+        background-color: #ff6f61;  /* Warm coral color */
         border: none;
         color: white;
-        border-radius: 25px;
-        font-size: 1rem;
-        padding: 10px 30px;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        padding: 12px 25px;
+        transition: background-color 0.3s ease-in-out;
     }
 
     .btn-danger:hover {
-        background-color: #FF5722;  /* Slightly darker on hover */
-        color: white;
+        background-color: #e25849;  /* Darker coral on hover */
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); /* Shadow effect on hover */
     }
 
-    /* Modal Animation */
+    /* Modal transition */
     .modal.fade .modal-dialog {
-        transform: translate(0, -30px);
-        transition: transform 0.3s ease-in-out;
+        transform: translate(0, -50px);
+        transition: transform 0.3s ease-out;
     }
 
     .modal.show .modal-dialog {
