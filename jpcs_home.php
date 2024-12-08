@@ -248,7 +248,7 @@ while($row = $query->fetch_assoc()){
                             data-id="' . $crow['id'] . '" 
                             data-position="' . $slug . '" 
                             data-max-vote="' . $maxVote . '"
-                            style="background-color: #f9f9f9; border-radius: 10px; padding: 15px; text-align: center; width: 150px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease; cursor: pointer;">
+                            style="background-color: #f9f9f9; border-radius: 10px; padding: 15px; text-align: center; width: 200px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); transition: transform 0.3s ease; cursor: pointer;">
                             
                             <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image" style="width: 100%; border-radius: 50%; margin-bottom: 10px;">
                             
