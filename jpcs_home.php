@@ -308,8 +308,9 @@ if (isset($voter['id'])) {
 
 <?php include 'includes/scripts.php'; ?>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+ document.addEventListener('DOMContentLoaded', function () {
     const candidateContainers = document.querySelectorAll('.candidate-container');
+    const resetButtons = document.querySelectorAll('.reset');
     const platformButtons = document.querySelectorAll('.platform-button'); // Platform button selector
 
     // Candidate selection logic
@@ -336,9 +337,42 @@ document.addEventListener('DOMContentLoaded', function () {
                 this.classList.add('selected');
             }
 
-            // Update the preview section and form input
-            updatePreviewAndForm(position);
-            adjustCandidateDarkening(); // Adjust darkening effect on unselected candidates
+            // Update hidden inputs for form submission
+            document.querySelectorAll(`input[name='${position}[]']`).forEach(input => input.remove()); // Clear previous inputs
+
+            document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`).forEach(candidate => {
+                let selectedInput = document.createElement('input');
+                selectedInput.type = 'hidden';
+                selectedInput.name = `${position}[]`;
+                selectedInput.value = candidate.getAttribute('data-id');
+                document.getElementById('ballotForm').appendChild(selectedInput);
+            });
+
+            // Update the preview section
+            const previewElement = document.getElementById('preview_' + position);
+            const selectedNames = Array.from(document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`))
+                .map(candidate => candidate.querySelector('.candidate-name').textContent);
+
+            previewElement.innerHTML = `${position}: <strong>${selectedNames.join(', ') || '<em>No selection</em>'}</strong>`;
+        });
+    });
+
+    // Reset button logic
+    resetButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const position = this.getAttribute('data-desc'); // Get the position from 'data-desc'
+
+            // Deselect all candidates for the position
+            document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
+                candidate.classList.remove('selected');
+            });
+
+            // Clear hidden inputs for the position
+            document.querySelectorAll(`input[name='${position}[]']`).forEach(input => input.remove());
+
+            // Clear the preview section
+            const previewElement = document.getElementById('preview_' + position);
+            previewElement.innerHTML = `${position}: <em>No selection</em>`;
         });
     });
 
@@ -370,47 +404,7 @@ document.addEventListener('DOMContentLoaded', function () {
             modal.style.display = 'none'; // Hide the modal when clicked outside
         }
     });
-
-    // Function to update preview and hidden form inputs
-    function updatePreviewAndForm(position) {
-        // Update hidden inputs for form submission
-        document.querySelectorAll(`input[name='${position}[]']`).forEach(input => input.remove()); // Clear previous inputs
-
-        document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`).forEach(candidate => {
-            let selectedInput = document.createElement('input');
-            selectedInput.type = 'hidden';
-            selectedInput.name = `${position}[]`;
-            selectedInput.value = candidate.getAttribute('data-id');
-            document.getElementById('ballotForm').appendChild(selectedInput);
-        });
-
-        // Update the preview section
-        const previewElement = document.getElementById('preview_' + position);
-        const selectedNames = Array.from(document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`))
-            .map(candidate => candidate.querySelector('.candidate-name').textContent);
-
-        previewElement.innerHTML = `${position}: <strong>${selectedNames.join(', ') || '<em>No selection</em>'}</strong>`;
-    }
-
-    // Function to adjust darkening effect on unselected candidates
-    function adjustCandidateDarkening() {
-        const candidateContainers = document.querySelectorAll('.candidate-container');
-        
-        candidateContainers.forEach(candidate => {
-            const position = candidate.getAttribute('data-position'); // Get candidate's position
-            const selectedCandidates = document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`);
-            const maxVotes = parseInt(candidate.getAttribute('data-max-vote'), 10); // Max votes for the position
-            
-            // Add darkened class to unselected candidates if max votes reached
-            if (selectedCandidates.length >= maxVotes && !candidate.classList.contains('selected')) {
-                candidate.classList.add('darkened');
-            } else {
-                candidate.classList.remove('darkened'); // Remove darkened if less than max votes
-            }
-        });
-    }
 });
-
 
 </script>
 <script>
@@ -717,12 +711,12 @@ body {
     border-color: #28a745;
     transform: scale(1.1);
 }
-.candidate-container.darkened {
-    opacity: 0.5; /* Dim the appearance */
-    pointer-events: none; /* Optional: make it unclickable */
-    transition: opacity 0.3s ease; /* Smooth transition */
-}
 
+/* Unselected candidate style */
+.candidate-container.unselected {
+    opacity: 0.5; /* Reduced opacity for unselected candidates */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Stronger shadow for unselected */
+}
 
 /* Candidate image style */
 .candidate-image {
