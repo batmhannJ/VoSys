@@ -337,23 +337,9 @@ if (isset($voter['id'])) {
                 this.classList.add('selected');
             }
 
-            // Update hidden inputs for form submission
-            document.querySelectorAll(`input[name='${position}[]']`).forEach(input => input.remove()); // Clear previous inputs
-
-            document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`).forEach(candidate => {
-                let selectedInput = document.createElement('input');
-                selectedInput.type = 'hidden';
-                selectedInput.name = `${position}[]`;
-                selectedInput.value = candidate.getAttribute('data-id');
-                document.getElementById('ballotForm').appendChild(selectedInput);
-            });
-
-            // Update the preview section
-            const previewElement = document.getElementById('preview_' + position);
-            const selectedNames = Array.from(document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`))
-                .map(candidate => candidate.querySelector('.candidate-name').textContent);
-
-            previewElement.innerHTML = `${position}: <strong>${selectedNames.join(', ') || '<em>No selection</em>'}</strong>`;
+            // Update the preview section and form input
+            updatePreviewAndForm(position);
+            adjustCandidateDarkening(); // Adjust darkening effect on unselected candidates
         });
     });
 
@@ -373,6 +359,8 @@ if (isset($voter['id'])) {
             // Clear the preview section
             const previewElement = document.getElementById('preview_' + position);
             previewElement.innerHTML = `${position}: <em>No selection</em>`;
+
+            adjustCandidateDarkening(); // Reapply darkening effect after reset
         });
     });
 
@@ -404,6 +392,38 @@ if (isset($voter['id'])) {
             modal.style.display = 'none'; // Hide the modal when clicked outside
         }
     });
+
+    // Function to update preview and hidden form inputs
+    function updatePreviewAndForm(position) {
+        // Update hidden inputs for form submission
+        document.querySelectorAll(`input[name='${position}[]']`).forEach(input => input.remove()); // Clear previous inputs
+
+        document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`).forEach(candidate => {
+            let selectedInput = document.createElement('input');
+            selectedInput.type = 'hidden';
+            selectedInput.name = `${position}[]`;
+            selectedInput.value = candidate.getAttribute('data-id');
+            document.getElementById('ballotForm').appendChild(selectedInput);
+        });
+
+        // Update the preview section
+        const previewElement = document.getElementById('preview_' + position);
+        const selectedNames = Array.from(document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`))
+            .map(candidate => candidate.querySelector('.candidate-name').textContent);
+
+        previewElement.innerHTML = `${position}: <strong>${selectedNames.join(', ') || '<em>No selection</em>'}</strong>`;
+    }
+
+    // Function to adjust darkening effect on unselected candidates
+    function adjustCandidateDarkening() {
+        document.querySelectorAll('.candidate-container').forEach(candidate => {
+            if (!candidate.classList.contains('selected')) {
+                candidate.classList.add('darkened'); // Add darkening class to unselected candidates
+            } else {
+                candidate.classList.remove('darkened'); // Remove darkening effect from selected candidates
+            }
+        });
+    }
 });
 
 </script>
@@ -714,8 +734,9 @@ body {
 
 /* Unselected candidate style */
 .candidate-container.unselected {
-    opacity: 0.5; /* Reduced opacity for unselected candidates */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Stronger shadow for unselected */
+    opacity: 0.6; /* Lower opacity */
+    filter: brightness(0.7); /* Darken the unselected candidates */
+    pointer-events: none; /* Prevent interaction with unselected candidates */
 }
 
 /* Candidate image style */
