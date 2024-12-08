@@ -201,18 +201,14 @@ if (isset($voter['id'])) {
                                     }
                                       echo '
                                     <div class="position-container">
-    <div class="box box-solid" id="'.$row['id'].'" style="border: 1px solid #ddd; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-        <div class="box-header" style="background-color: darkgreen; padding: 16px; display: flex; justify-content: space-between; align-items: center;">
-            <h3 class="box-title" style="color: #fff; margin: 0; font-size: 1.25rem;">'.$row['name'].'</h3>
-            <button type="button" class="btn btn-success btn-sm btn-flat reset" style="background-color: #4caf50; border: none; color: #fff; padding: 8px 12px; border-radius: 4px; cursor: pointer; font-size: 0.875rem;" data-desc="'.slugify($row['name']).'"><i class="fa fa-refresh" style="margin-right: 4px;"></i> Reset</button>
-        </div>
-        <div class="box-body" style="padding: 16px; background-color: #f9f9f9;">
-            <p class="instruction" style="margin-bottom: 16px; font-size: 1rem; color: #555;">
-                You may select up to '.$row['max_vote'].' candidates
-            </p>
-        </div>
-    </div>
-</div>
+                                        <div class="box box-solid" id="'.$row['id'].'">
+                                            <div class="box-header" style="background-color: darkgreen;">
+                                                <h3 class="box-title" style="color: #fff;">'.$row['name'].'</h3>
+                                                <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="'.slugify($row['name']).'"><i class="fa fa-refresh"></i> Reset</button>
+                                            </div>
+                                            <div class="box-body">
+                                                <p class="instruction">You may select up to '.$row['max_vote'].' candidates</p>
+                                                <div class="candidate-list">
                                                     <ul>';
                                                     $sql = "SELECT * FROM candidates WHERE category_id='" . $row['id'] . "'";
                                                     $cquery = $conn->query($sql);
@@ -498,31 +494,69 @@ if (isset($voter['id'])) {
 <style>
 
 
- /* Style for the position container */
-.position-container {
-    margin: 20px auto; /* Center the container horizontally and add margin on top and bottom */
-    max-width: 1000px; /* Set a maximum width to make it responsive */
-    padding: 20px; /* Add padding inside the container */
-    border: 1px solid #ccc; /* Add border for visual separation */
-    border-radius: 10px; /* Add border radius for rounded corners */
-    background-color: #fff; /* Change background color */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.9); /* Add shadow for depth */
-}
+body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
 
-/* Style for the box header */
-.box-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: black;
-    color: #013220;
-    padding: 10px;
-}
+        .position-container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
 
-/* Adjust space between position and reset button */
-.box-header .box-title {
-    margin-right: auto; /* Push position title to the left */
-}
+        .box {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .box-header {
+            background-color: darkgreen;
+            color: #fff;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .box-header h3 {
+            margin: 0;
+            font-size: 1.25rem;
+        }
+
+        .box-header button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .box-header button:hover {
+            background-color: #218838;
+        }
+
+        .box-body {
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        .instruction {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            color: #555;
+        }
 
 /* Style for the reset button */
 .reset {
