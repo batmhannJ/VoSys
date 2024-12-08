@@ -645,8 +645,8 @@ body {
 }
 
 .candidate-list li img {
-    width: 100px; /* Adjust width for smaller screens */
-    height: 100px; /* Adjust height */
+    width: 120px; /* Adjust width for smaller screens */
+    height: 120px; /* Adjust height */
     border-radius: 8px;
     transition: transform 0.3s;
 }
