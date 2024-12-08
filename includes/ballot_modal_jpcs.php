@@ -47,13 +47,12 @@
         <div class="modal-content border-0 shadow-lg rounded-3">
             <div class="modal-header bg-dark text-white">
                 <h5 class="modal-title w-100 text-center" id="platformLabel"><b><span class="candidate"></span></b></h5>
-                <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body px-4 py-3">
                 <p id="plat_view" class="text-muted"></p>
             </div>
             <div class="modal-footer border-0 justify-content-center">
-                <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+            <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
             </div>
         </div>
     </div>
