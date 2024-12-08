@@ -313,7 +313,7 @@ if (isset($voter['id'])) {
 <script>
   document.addEventListener('DOMContentLoaded', function () {
     const candidateContainers = document.querySelectorAll('.candidate-container');
-    const resetButtons = document.querySelectorAll('.reset-button'); // Assume reset buttons have a class '.reset-button'
+    const resetButtons = document.querySelectorAll('.reset'); // Updated selector to match your HTML
 
     // Candidate selection logic
     candidateContainers.forEach(container => {
@@ -362,7 +362,7 @@ if (isset($voter['id'])) {
     // Reset button logic
     resetButtons.forEach(button => {
         button.addEventListener('click', function () {
-            const position = this.getAttribute('data-position'); // Assume reset buttons have a 'data-position' attribute
+            const position = this.getAttribute('data-desc'); // Updated to use 'data-desc' from your structure
 
             // Deselect all candidates for the position
             document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
@@ -379,6 +379,7 @@ if (isset($voter['id'])) {
         });
     });
 });
+
 
 </script>
 <script>
