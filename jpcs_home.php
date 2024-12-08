@@ -671,7 +671,6 @@ body {
     transition: transform 0.3s, border-color 0.3s, opacity 0.3s;
     cursor: pointer;
     width: 200px;
-    position: relative; /* Make sure the platform button stays inside the candidate container */
 }
 
 /* Hover effect for candidate container */
@@ -687,8 +686,8 @@ body {
 
 /* Unselected candidate style */
 .candidate-container.unselected {
-    opacity: 0.5; /* Reduced opacity for unselected candidates */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Stronger shadow for unselected */
+    opacity: 0.5;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Candidate image style */
@@ -708,7 +707,7 @@ body {
 
 /* Style for the platform button */
 .platform-button {
-    margin-top: 10px; /* Space between the candidate's name and the button */
+    margin-top: 10px;
     font-size: 14px;
     background-color: #28a745;
     color: #fff;
@@ -717,11 +716,18 @@ body {
     padding: 5px 10px;
     cursor: pointer;
     transition: background-color 0.3s;
+    display: block; /* Ensure button is on its own line */
+    text-align: center; /* Center align button */
 }
 
 /* Hover effect for platform button */
 .platform-button:hover {
     background-color: #218838;
+}
+
+/* Add spacing between button and candidate container */
+.platform-button + .candidate-container {
+    margin-top: 20px;
 }
 
 /* Consolidated reset button styles */
