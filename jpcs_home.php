@@ -323,6 +323,7 @@ if (isset($voter['id'])) {
             const maxVotes = parseInt(this.getAttribute('data-max-vote'), 10); // Get max vote for this position
             const selectedCandidates = document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`);
 
+            // If more candidates are selected than the max allowed, show an alert
             if (selectedCandidates.length >= maxVotes && !this.classList.contains('selected')) {
                 alert(`You can only select up to ${maxVotes} candidate(s) for ${position}.`);
                 return;
@@ -333,6 +334,13 @@ if (isset($voter['id'])) {
                 this.classList.remove('selected');
                 this.classList.add('unselected');
             } else {
+                // If it's single vote, remove selection from other candidates first
+                if (maxVotes === 1) {
+                    document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
+                        candidate.classList.remove('selected');
+                        candidate.classList.add('unselected');
+                    });
+                }
                 this.classList.add('selected');
                 this.classList.remove('unselected');
             }
