@@ -311,13 +311,17 @@ if (isset($voter['id'])) {
 
 <?php include 'includes/scripts.php'; ?>
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
+ document.addEventListener('DOMContentLoaded', function () {
     const candidateContainers = document.querySelectorAll('.candidate-container');
     const resetButtons = document.querySelectorAll('.reset');
+    const platformButtons = document.querySelectorAll('.platform-button'); // Platform button selector
 
     // Candidate selection logic
     candidateContainers.forEach(container => {
         container.addEventListener('click', function () {
+            // Prevent candidate selection if the platform button is clicked
+            if (this.classList.contains('platform-clicked')) return; // Ignore if platform button was clicked
+
             const position = this.getAttribute('data-position'); // Get position of candidate
             const maxVotes = parseInt(this.getAttribute('data-max-vote'), 10); // Get max vote allowed for position
             const selectedCandidates = document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`);
@@ -374,8 +378,36 @@ if (isset($voter['id'])) {
             previewElement.innerHTML = `${position}: <em>No selection</em>`;
         });
     });
-});
 
+    // Platform button click logic
+    platformButtons.forEach(button => {
+        button.addEventListener('click', function (event) {
+            // Prevent the candidate container from being selected when clicking on the platform button
+            const candidateContainer = this.closest('.candidate-container');
+            candidateContainer.classList.add('platform-clicked'); // Mark candidate container as clicked by the platform button
+
+            // Show the platform modal (replace with your actual modal logic)
+            const platformContent = this.getAttribute('data-platform');
+            const modal = document.getElementById('platformModal'); // Assuming you have a modal with this ID
+            const modalBody = modal.querySelector('.modal-body');
+            modalBody.innerHTML = platformContent;
+
+            // Display the modal
+            modal.style.display = 'block'; // Replace with your modal display logic
+
+            // Prevent event propagation to avoid candidate selection
+            event.stopPropagation();
+        });
+    });
+
+    // Close modal when clicked outside (if you want this behavior)
+    document.addEventListener('click', function (event) {
+        const modal = document.getElementById('platformModal');
+        if (modal && !modal.contains(event.target)) {
+            modal.style.display = 'none'; // Hide the modal when clicked outside
+        }
+    });
+});
 
 </script>
 <script>
