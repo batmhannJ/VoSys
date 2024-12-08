@@ -529,7 +529,6 @@ body {
             display: flex;
             flex-direction: column;
             gap: 5px;
-            margin-bottom: 15px;
         }
 
         .box {
@@ -538,7 +537,6 @@ body {
             background: #fff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            margin-bottom: 15px;
         }
 
         .box-header {
@@ -573,6 +571,7 @@ body {
         .box-body {
             padding: 20px;
             background-color: #f9f9f9;
+            margin-bottom: 15px;
         }
 
         .instruction {
