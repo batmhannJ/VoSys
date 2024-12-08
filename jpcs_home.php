@@ -528,13 +528,7 @@ body {
             gap: 5px;
         }
 
-        .box {
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            background: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
+       
 
         .box-header {
             background-color: darkgreen;
