@@ -53,9 +53,7 @@
                 <p id="plat_view" style="font-size: 1.1rem; color: #333333;"></p>
             </div>
             <div class="modal-footer justify-content-center" style="background-color: #e2e2e2; border-radius: 0 0 8px 8px;">
-                <button type="button" class="btn btn-danger btn-lg px-5 py-3" data-bs-dismiss="modal">
-                    <i class="fa fa-times"></i> Close
-                </button>
+            <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
             </div>
         </div>
     </div>
@@ -99,7 +97,7 @@
     }
 
     /* Custom close button design */
-    .btn-close {
+    .btn {
         background-color: transparent;
         border: none;
         color: white;
