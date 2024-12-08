@@ -320,6 +320,11 @@ if (isset($voter['id'])) {
             const maxVotes = parseInt(this.getAttribute('data-max-vote'), 10); // Get max vote allowed for position
             const selectedCandidates = document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`);
 
+            // Darken the candidate that is clicked on first
+            if (!this.classList.contains('selected') && !this.classList.contains('unselected')) {
+                this.classList.add('unselected'); // Darken the candidate on first click
+            }
+
             // If candidate is already selected, deselect it
             if (this.classList.contains('selected')) {
                 this.classList.remove('selected');
@@ -334,7 +339,7 @@ if (isset($voter['id'])) {
 
                 // Select the current candidate
                 this.classList.add('selected');
-                this.classList.remove('unselected'); // Remove unselected class
+                this.classList.remove('unselected'); // Remove unselected class to restore opacity
             }
 
             // Update hidden inputs for form submission
@@ -357,32 +362,38 @@ if (isset($voter['id'])) {
         });
     });
 
+    // Reset button logic
     resetButtons.forEach(button => {
-    button.addEventListener('click', function () {
-        const position = this.getAttribute('data-desc'); // Get the position from 'data-desc'
+        button.addEventListener('click', function () {
+            const position = this.getAttribute('data-desc'); // Get the position from 'data-desc'
 
-        // Deselect all candidates for the position
-        document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
-            candidate.classList.remove('selected');
-            candidate.classList.remove('unselected'); // Remove the unselected class to restore opacity
+            // Deselect all candidates for the position and restore opacity
+            document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
+                candidate.classList.remove('selected');
+                candidate.classList.remove('unselected'); // Remove the unselected class to restore opacity
+            });
+
+            // Clear hidden inputs for the position
+            document.querySelectorAll(`input[name='${position}[]']`).forEach(input => input.remove());
+
+            // Clear the preview section
+            const previewElement = document.getElementById('preview_' + position);
+            previewElement.innerHTML = `${position}: <em>No selection</em>`;
         });
-
-        // Clear hidden inputs for the position
-        document.querySelectorAll(`input[name='${position}[]']`).forEach(input => input.remove());
-
-        // Clear the preview section
-        const previewElement = document.getElementById('preview_' + position);
-        previewElement.innerHTML = `${position}: <em>No selection</em>`;
     });
-});
-
 
     // Platform button click logic
     platformButtons.forEach(button => {
         button.addEventListener('click', function (event) {
             // Prevent the candidate container from being selected when clicking on the platform button
             const candidateContainer = this.closest('.candidate-container');
-            candidateContainer.classList.add('platform-clicked'); // Mark candidate container as clicked by the platform button
+            if (candidateContainer.classList.contains('selected')) {
+                candidateContainer.classList.remove('selected');
+                candidateContainer.classList.add('unselected'); // Deselect and darken the candidate
+            }
+
+            // Prevent event propagation to avoid candidate selection
+            event.stopPropagation();
 
             // Show the platform modal (replace with your actual modal logic)
             const platformContent = this.getAttribute('data-platform');
@@ -392,9 +403,6 @@ if (isset($voter['id'])) {
 
             // Display the modal
             modal.style.display = 'block'; // Replace with your modal display logic
-
-            // Prevent event propagation to avoid candidate selection
-            event.stopPropagation();
         });
     });
 
@@ -406,7 +414,6 @@ if (isset($voter['id'])) {
         }
     });
 });
-
 
 </script>
 <script>
@@ -703,7 +710,6 @@ body {
     position: relative; /* Make sure the platform button stays inside the candidate container */
     opacity: 1;  /* Full opacity by default */
     transform: scale(1);  /* Default scale */
-    box-shadow: none;  /* No shadow initially */
 }
 
 /* Hover effect for candidate container */
@@ -721,14 +727,14 @@ body {
     border: 4px solid darkgreen;  /* Border color for selected */
     opacity: 1;  /* Ensure the selected one remains fully visible */
     transform: scale(1.10);  /* Make the selected candidate "pop" slightly */
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Optional shadow for selected candidates */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.9); /* Optional shadow for selected candidates */
 }
 
 /* Optional: Add a hover effect for unselected candidates */
 .candidate-container.unselected:hover {
-    opacity: 0.7;
+    opacity: 0.9;
     transform: scale(1.02);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.9); /* Stronger shadow on hover */
+    box-shadow: 0 15px 15px rgba(0, 0, 0, 0.9); /* Stronger shadow on hover */
 }
 
 /* Candidate image style */
