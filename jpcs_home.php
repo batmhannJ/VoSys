@@ -361,23 +361,25 @@ candidateContainers.forEach(container => {
         });
 
         // Update the preview section with the candidate's name and position
-        const previewElement = document.getElementById('preview_' + position);
+const previewElement = document.getElementById('preview_' + position);
 
-        if (maxVotes === 1) {
-            let selectedNames = [];
-            document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`).forEach(candidate => {
-                selectedNames.push(candidate.querySelector('.candidate-name').textContent);
-            });
-            // For single vote, show name and position
-            previewElement.innerHTML = `${position}: <strong>${selectedNames.join(', ')}</strong>`;
-        } else {
-            // For multiple votes, show all selected names
-            let selectedNames = [];
-            document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`).forEach(candidate => {
-                selectedNames.push(candidate.querySelector('.candidate-name').textContent);
-            });
-            previewElement.innerHTML = `${position}: <strong>${selectedNames.join(', ')}</strong>`;
-        }
+if (maxVotes === 1) {
+    let selectedNames = [];
+    let selectedPosition = position;  // Store the position to display it
+    document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`).forEach(candidate => {
+        selectedNames.push(candidate.querySelector('.candidate-name').textContent);
+    });
+    // For single vote, show name and position
+    previewElement.innerHTML = `${selectedPosition}: <strong>${selectedNames.join(', ')}</strong>`;
+} else {
+    // For multiple votes, show all selected names
+    let selectedNames = [];
+    document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`).forEach(candidate => {
+        selectedNames.push(candidate.querySelector('.candidate-name').textContent);
+    });
+    previewElement.innerHTML = `${position}: <strong>${selectedNames.join(', ')}</strong>`;
+}
+
     });
 });
 
