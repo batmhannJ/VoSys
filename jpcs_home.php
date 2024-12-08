@@ -521,14 +521,20 @@ body {
 
         .position-container {
             max-width: 1500px;
-            margin: 20px auto;
-            padding: 20px;
+            margin: 5px auto;
+            padding: 5px;
             display: flex;
             flex-direction: column;
             gap: 5px;
         }
 
-       
+        .box {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
 
         .box-header {
             background-color: darkgreen;
