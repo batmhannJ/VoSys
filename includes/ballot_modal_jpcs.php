@@ -44,15 +44,18 @@
 <!-- Platform Modal -->
 <div class="modal fade" id="platform" tabindex="-1" aria-labelledby="platformLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow-lg rounded-3">
-            <div class="modal-header bg-dark text-white">
+        <div class="modal-content rounded-5" style="background-color: #ffffff;">
+            <div class="modal-header" style="background-color: #FF7043; color: white; border-radius: 5px 5px 0 0;">
                 <h5 class="modal-title w-100 text-center" id="platformLabel"><b><span class="candidate"></span></b></h5>
+                <button type="button" class="btn-close text-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body px-4 py-3">
-                <p id="plat_view" class="text-muted"></p>
+            <div class="modal-body p-4">
+                <p id="plat_view" class="text-dark" style="font-size: 1.1rem;"></p>
             </div>
-            <div class="modal-footer border-0 justify-content-center">
-            <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+            <div class="modal-footer" style="border: none; justify-content: center;">
+                <button type="button" class="btn btn-danger btn-sm px-4 py-2" data-bs-dismiss="modal">
+                    <i class="fa fa-times"></i> Close
+                </button>
             </div>
         </div>
     </div>
@@ -60,33 +63,40 @@
 
 <!-- Custom CSS -->
 <style>
+    /* Overall Modal Content */
     .modal-content {
-        background-color: #f1f3f5;  /* Light gray background */
-        border-radius: 15px;         /* Rounded corners */
+        background-color: #ffffff;
+        border-radius: 8px; /* Rounded corners for a soft appearance */
         border: none;
+        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
     }
 
     .modal-header {
-        background-color: #343a40;  /* Dark background */
+        background-color: #FF7043;  /* Bold coral color */
         color: white;
-        padding: 20px;
+        font-family: 'Helvetica Neue', sans-serif;
+        font-weight: 600;
+        padding: 20px 30px;
+        text-align: center;
+        border-radius: 8px 8px 0 0;
     }
 
     .modal-title {
-        font-family: 'Arial', sans-serif;
-        font-weight: 600;
+        font-size: 1.3rem;
     }
 
     .modal-body {
-        font-family: 'Verdana', sans-serif;
-        font-size: 1.1rem;
-        color: #495057;  /* Dark gray text */
-        padding: 15px;
+        padding: 30px;
+        font-family: 'Arial', sans-serif;
+        color: #333;  /* Dark text */
+        line-height: 1.6;
+        font-size: 1rem;
+        text-align: left;
     }
 
     .modal-footer {
-        padding: 15px;
-        background-color: transparent;
+        background-color: #f7f7f7;
+        border-radius: 0 0 8px 8px;
     }
 
     .btn-close {
@@ -96,24 +106,24 @@
         font-size: 1.5rem;
     }
 
-    .btn-outline-dark {
-        background-color: transparent;
-        border: 2px solid #343a40;
-        color: #343a40;
-        border-radius: 30px;
-        padding: 8px 20px;
+    .btn-danger {
+        background-color: #FF7043; /* Same as header color */
+        border: none;
+        color: white;
+        border-radius: 25px;
         font-size: 1rem;
+        padding: 10px 30px;
     }
 
-    .btn-outline-dark:hover {
-        background-color: #343a40;
+    .btn-danger:hover {
+        background-color: #FF5722;  /* Slightly darker on hover */
         color: white;
     }
 
-    /* Animation for modal */
+    /* Modal Animation */
     .modal.fade .modal-dialog {
-        transform: translate(0, -50px);
-        transition: transform 0.3s ease-out;
+        transform: translate(0, -30px);
+        transition: transform 0.3s ease-in-out;
     }
 
     .modal.show .modal-dialog {
