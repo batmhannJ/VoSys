@@ -221,7 +221,7 @@
                 labelBullet.label.fontSize = 12;  // Adjust font size as needed
                 labelBullet.label.horizontalCenter = "middle";  // Center the text horizontally
                 labelBullet.label.verticalCenter = "middle";    // Center the text vertically
-                labelBullet.label.padding(0, 0, 0, 0);           // Optional: Remove extra padding
+                labelBullet.label.padding(0, 0, 12, 10);           // Optional: Remove extra padding
 
                 chart.cursor = new am4charts.XYCursor();
                 chart.cursor.snapToSeries = series;
@@ -255,7 +255,7 @@
                     Object.keys(selectedCategories).forEach(function (category) {
                         if (response[category]) {
                             var containerHtml = ` 
-                                <div class='col-md-10'>
+                                <div class='col-md-12'>
                                     <div class='box'>
                                         <div class='box-header with-border'>
                                             <h3 class='box-title'><b>${selectedCategories[category]}</b></h3>
