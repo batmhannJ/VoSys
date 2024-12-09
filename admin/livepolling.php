@@ -1,133 +1,101 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <?php include 'includes/session.php'; ?>
-        <?php include 'includes/header.php'; ?>
-        <style>
-    .modern-wrapper {
-        font-family: 'Arial', sans-serif;
-        padding: 20px;
-        background-color: #f9f9f9;
-    }
-
-    .modern-header h1 {
-        color: #333;
-        font-weight: bold;
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    .breadcrumb {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 20px;
-    }
-
-    .breadcrumb li {
-        margin: 0 5px;
-        color: #007bff;
-    }
-
-    .breadcrumb li a {
-        text-decoration: none;
-        color: #007bff;
-    }
-
-    .form-container {
-        display: flex;
-        justify-content: center;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        margin-bottom: 20px;
-    }
-
-    .modern-form {
-        width: 100%;
-        max-width: 500px;
-    }
-
-    .form-group {
-        margin-bottom: 15px;
-    }
-
-    label {
-        display: block;
-        margin-bottom: 5px;
-        color: #555;
-        font-weight: bold;
-    }
-
-    .modern-select {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        background-color: #fff;
-        font-size: 16px;
-        color: #333;
-    }
-
-    .modern-button {
-        display: block;
-        width: 100%;
-        padding: 10px;
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-        text-align: center;
-    }
-
-    .modern-button:hover {
-        background-color: #0056b3;
-    }
-
-    #results-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        padding: 20px;
-    }
-
-    /* Responsive design */
-    @media (max-width: 768px) {
-        .modern-form {
-            padding: 10px;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <?php include 'includes/session.php'; ?>
+    <?php include 'includes/header.php'; ?>
+    <style>
+        .box-title {
+            text-align: center;
+            width: 100%;
+            display: inline-block;
         }
 
-        .modern-select,
-        .modern-button {
-            font-size: 14px;
+        /* Back to Top button styles */
+        #back-to-top {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            display: none;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 22px;
+            line-height: 50px;
+            cursor: pointer;
+            z-index: 1000;
         }
-    }
-</style>
-    </head>
-    <body class="hold-transition skin-blue sidebar-mini">
-        <div class="wrapper">
-            <?php include 'includes/navbar.php'; ?>
-            <?php include 'includes/menubar.php'; ?>
 
-            <div class="content-wrapper modern-wrapper">
-    <section class="content-header modern-header">
-        <h1>Election Results</h1>
-        <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
-            <li class="active">Results</li>
-        </ol>
-    </section>
+        #back-to-top:hover {
+            background-color: #555;
+        }
 
-    <section class="content">
-        <!-- Organization Selection Form -->
-        <div class="form-container">
-            <form id="organization-form" class="modern-form">
-                <div class="form-group">
+        .chart-container {
+            position: relative;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        .candidate-images {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin-right: 10px;
+        }
+
+        .candidate-image {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .candidate-image img {
+            width: 60px;
+            height: 60px;
+            margin-right: -10px;
+            margin-bottom: 25px;
+            margin-top: 35px;
+        }
+
+        @media (max-width: 768px) {
+            .candidate-image img {
+                width: 75px;
+                height: 75px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .candidate-image img {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        <?php include 'includes/navbar.php'; ?>
+        <?php include 'includes/menubar.php'; ?>
+
+        <div class="content-wrapper">
+            <section class="content-header">
+                <h1>Election Results</h1>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                    <li class="active">Results</li>
+                </ol>
+            </section>
+
+            <section class="content">
+                <!-- Organization Selection Form -->
+                <form id="organization-form">
                     <label for="organization-select">Select Organization:</label>
-                    <select id="organization-select" name="organization" class="modern-select">
+                    <select id="organization-select" name="organization">
                         <option value="csc">CSC</option>
                         <option value="jpcs">JPCS</option>
                         <option value="ymf">YMF</option>
@@ -135,163 +103,197 @@
                         <option value="code-tg">CODE-TG</option>
                         <option value="hmso">HMSO</option>
                     </select>
+                    <button type="submit">Show Results</button>
+                </form>
+                <br>
+
+                <div class="row justify-content-center" id="results-container">
+                    <!-- Results will be dynamically inserted here -->
                 </div>
+            </section>
 
-                <div class="form-group">
-                    <label for="graph-type">Select Graph Type:</label>
-                    <select id="graph-type" class="modern-select">
-                        <option value="bar">Bar Chart</option>
-                        <option value="pie">Pie Chart</option>
-                        <option value="line">Line Chart</option>
-                    </select>
-                </div>
-
-                <button type="submit" class="modern-button">Show Results</button>
-            </form>
+            <button id="back-to-top" title="Back to top">&uarr;</button>
         </div>
+        <?php include 'includes/footer.php'; ?>
+    </div>
+    <?php include 'includes/scripts.php'; ?>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="path/to/jquery.min.js"></script>
+    <script>
+        function generateBarGraph(dataPoints, containerId, imageContainerId) {
+            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
-        <div class="row justify-content-center" id="results-container">
-            <!-- Results will be dynamically inserted here -->
-        </div>
-    </section>
+            // Ensure images match the data points by iterating in the same order
+            var imageContainer = document.getElementById(imageContainerId);
+            imageContainer.innerHTML = '';
+            // Swap positions of the first two images for demonstration
+            if (dataPoints.length > 1) {
+                var temp = dataPoints[0].image;
+                dataPoints[0].image = dataPoints[1].image;
+                dataPoints[1].image = temp;
+            }
+            dataPoints.forEach(dataPoint => {
+                var candidateDiv = document.createElement('div');
+                candidateDiv.className = 'candidate-image';
+                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
+                imageContainer.appendChild(candidateDiv);
+            });
 
-                <button id="back-to-top" title="Back to top">&uarr;</button>
-            </div>
-            <?php include 'includes/footer.php'; ?>
-        </div>
-        <?php include 'includes/scripts.php'; ?>
-        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-        <script src="path/to/jquery.min.js"></script>
-        <script>
-            function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
-                var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+            var chart = new CanvasJS.Chart(containerId, {
+                animationEnabled: true,
+                animationDuration: 3000,
+                animationEasing: "easeInOutBounce",
+                title: {
+                    text: "Vote Counts"
+                },
+                axisX: {
+                    title: "",
+                    includeZero: true,
+                    interval: 1,
+                    labelFormatter: function () {
+                        return " ";
+                    }
+                },
+                axisY: {
+                    title: "",
+                    interval: Math.ceil(totalVotes / 10)
+                },
+                data: [{
+                    type: "bar",
+                    indexLabel: "{label} - {percent}%",
+                    indexLabelPlacement: "inside",
+                    indexLabelFontColor: "white",
+                    indexLabelFontSize: 14,
+                    dataPoints: dataPoints.map(dataPoint => ({
+                        ...dataPoint,
+                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                    }))
+                }]
+            });
+            chart.render();
+        }
 
-                var imageContainer = document.getElementById(imageContainerId);
-                imageContainer.innerHTML = '';
-                dataPoints.forEach(dataPoint => {
-                    var candidateDiv = document.createElement('div');
-                    candidateDiv.className = 'candidate-image';
-                    candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
-                    imageContainer.appendChild(candidateDiv);
-                });
+        function fetchAndGenerateGraphs(organization) {
+            $.ajax({
+                url: 'update_data.php',
+                method: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    // Clear previous results
+                    $('#results-container').empty();
 
-                var chart = new CanvasJS.Chart(containerId, {
-                    animationEnabled: true,
-                    title: { text: "Vote Counts" },
-                    data: [{
-                        type: graphType,
-                        indexLabel: "{label} - {percent}%",
-                        indexLabelPlacement: "inside",
-                        indexLabelFontColor: "white",
-                        indexLabelFontSize: 14,
-                        dataPoints: dataPoints.map(dataPoint => ({
-                            ...dataPoint,
-                            percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-                        }))
-                    }]
-                });
-
-                if (graphType === 'bar') {
-                    chart.options.axisX = {
-                        title: "",
-                        includeZero: true,
-                        interval: 1,
-                        labelFormatter: function () {
-                            return " ";
+                    // Define categories for each organization
+                    var categories = {
+                        'csc': {
+                            'president': 'President',
+                            'vice president': 'Vice President',
+                            'secretary': 'Secretary',
+                            'treasurer': 'Treasurer',
+                            'auditor': 'Auditor',
+                            'p.r.o': 'P.R.O',
+                            'businessManager': 'Business Manager',
+                            'beedRep': 'BEED Representative',
+                            'bsedRep': 'BSED Representative',
+                            'bshmRep': 'BSHM Representative',
+                            'bsoadRep': 'BSOAD Representative',
+                            'bs crimRep': 'BS Crim Representative',
+                            'bsitRep': 'BSIT Representative'
+                        },
+                        'jpcs': {
+                            'jpcsPresident': 'President',
+                            'jpcsVicePresident': 'Vice President',
+                            'jpcsSecretary': 'Secretary',
+                            'jpcsTreasurer': 'Treasurer',
+                            'jpcsRep': 'Representative'
+                        },
+                        'ymf': {
+                            'ymfPresident': 'President',
+                            'ymfVicePresident': 'Vice President',
+                            'ymfSecretary': 'Secretary',
+                            'ymfTreasurer': 'Treasurer',
+                            'ymfRep': 'Representative'
+                        },
+                        'pasoa': {
+                            'pasoaPresident': 'President',
+                            'pasoaVicePresident': 'Vice President',
+                            'pasoaSecretary': 'Secretary',
+                            'pasoaTreasurer': 'Treasurer',
+                            'pasoaRep': 'Representative'
+                        },
+                        'code-tg': {
+                            'codePresident': 'President',
+                            'codeVicePresident': 'Vice President',
+                            'codeSecretary': 'Secretary',
+                            'codeTreasurer': 'Treasurer',
+                            'codeRep': 'Representative'
+                        },
+                        'hmso': {
+                            'hmsoPresident': 'President',
+                            'hmsoVicePresident': 'Vice President',
+                            'hmsoSecretary': 'Secretary',
+                            'hmsoTreasurer': 'Treasurer',
+                            'hmsoRep': 'Representative'
                         }
                     };
-                    chart.options.axisY = {
-                        title: "",
-                        interval: Math.ceil(totalVotes / 10)
-                    };
-                }
 
-                chart.render();
-            }
+                    // Get categories for the selected organization
+                    var selectedCategories = categories[organization];
 
-            function fetchAndGenerateGraphs(organization) {
-                const graphType = $('#graph-type').val();
-
-                $.ajax({
-                    url: 'update_data.php',
-                    method: 'GET',
-                    dataType: 'json',
-                    success: function (response) {
-                        $('#results-container').empty();
-
-                        var categories = {
-                            'csc': {
-                                'president': 'President',
-                                'vice president': 'Vice President',
-                                'secretary': 'Secretary',
-                                'treasurer': 'Treasurer',
-                                'auditor': 'Auditor',
-                                'p.r.o': 'P.R.O',
-                                'businessManager': 'Business Manager',
-                                'beedRep': 'BEED Representative',
-                                'bsedRep': 'BSED Representative',
-                                'bshmRep': 'BSHM Representative',
-                                'bsoadRep': 'BSOAD Representative',
-                                'bs crimRep': 'BS Crim Representative',
-                                'bsitRep': 'BSIT Representative'
-                            }
-                        };
-
-                        var selectedCategories = categories[organization];
-
-                        Object.keys(selectedCategories).forEach(function (category) {
-                            if (response[category]) {
-                                var containerHtml = `
-                                    <div class='col-md-12'>
-                                        <div class='box'>
-                                            <div class='box-header with-border'>
-                                                <h3 class='box-title'><b>${selectedCategories[category]}</b></h3>
-                                            </div>
-                                            <div class='box-body'>
-                                                <div class='chart-container'>
-                                                    <div class='candidate-images' id='${category}Image'></div>
-                                                    <div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div>
-                                                </div>
+                    // Generate graphs for the selected categories
+                    Object.keys(selectedCategories).forEach(function (category) {
+                        if (response[category]) {
+                            // Create container for each category
+                            var containerHtml = `
+                                <div class='col-md-12'>
+                                    <div class='box'>
+                                        <div class='box-header with-border'>
+                                            <h3 class='box-title'><b>${selectedCategories[category]}</b></h3>
+                                        </div>
+                                        <div class='box-body'>
+                                            <div class='chart-container'>
+                                                <div class='candidate-images' id='${category}Image'></div>
+                                                <div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div>
                                             </div>
                                         </div>
-                                    </div>`;
-                                $('#results-container').append(containerHtml);
+                                    </div>
+                                </div>`;
+                            $('#results-container').append(containerHtml);
 
-                                generateGraph(response[category], category + 'Graph', category + 'Image', graphType);
-                            }
-                        });
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("Error fetching data: ", status, error);
-                    }
-                });
-            }
-
-            $(document).ready(function () {
-                fetchAndGenerateGraphs('csc');
-
-                $('#organization-form').submit(function (event) {
-                    event.preventDefault();
-                    fetchAndGenerateGraphs($('#organization-select').val());
-                });
-
-                $('#graph-type').change(function () {
-                    fetchAndGenerateGraphs($('#organization-select').val());
-                });
-
-                $(window).scroll(function () {
-                    if ($(this).scrollTop() > 100) {
-                        $('#back-to-top').fadeIn();
-                    } else {
-                        $('#back-to-top').fadeOut();
-                    }
-                });
-
-                $('#back-to-top').click(function () {
-                    $('html, body').animate({ scrollTop: 0 }, 600);
-                    return false;
-                });
+                            // Generate the bar graph for the category
+                            generateBarGraph(response[category], category + 'Graph', category + 'Image');
+                        }
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching data: ", status, error);
+                }
             });
-        </script>
-    </body>
-    </html>
+        }
+
+        $(document).ready(function () {
+            // Fetch and generate graphs for the default organization (CSC) initially
+            fetchAndGenerateGraphs('csc');
+
+            // Handle form submission
+            $('#organization-form').submit(function (event) {
+                event.preventDefault();
+                const selectedOrganization = $('#organization-select').val();
+                fetchAndGenerateGraphs(selectedOrganization);
+            });
+
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 100) {
+                    $('#back-to-top').fadeIn();
+                } else {
+                    $('#back-to-top').fadeOut();
+                }
+            });
+
+            $('#back-to-top').click(function () {
+                $('html, body').animate({ scrollTop: 0 }, 600);
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>
