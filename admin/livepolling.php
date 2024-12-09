@@ -37,6 +37,7 @@
             margin-bottom: 40px;
             display: flex;
             align-items: center;
+            justify-content: space-between; /* Ensures the chart and images are spaced out */
         }
 
         .candidate-images {
@@ -61,10 +62,18 @@
             margin-top: 35px;
         }
 
+        .chart-container > div {
+            flex-grow: 1; /* Makes the chart section grow to take up available space */
+        }
+
         @media (max-width: 768px) {
             .candidate-image img {
                 width: 75px;
                 height: 75px;
+            }
+
+            .chart-container > div {
+                flex-grow: 1;
             }
         }
 
@@ -72,6 +81,10 @@
             .candidate-image img {
                 width: 100px;
                 height: 100px;
+            }
+
+            .chart-container > div {
+                flex-grow: 1;
             }
         }
     </style>
