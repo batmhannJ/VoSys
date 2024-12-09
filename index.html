@@ -621,6 +621,12 @@ body {
   color: var(--text-dark);
 }
 
+
+
+.dropdown {
+  position: relative;
+}
+
 .dropbtn {
   font-size: 18px;
   color: #fff;
@@ -631,48 +637,61 @@ body {
   text-transform: uppercase;
   font-weight: bold;
   letter-spacing: 1px;
-  transition: color 0.3s ease, border-color 0.3s ease;
+  position: relative;
+  transition: color 0.3s ease;
 }
 
-/* Hover effect on the dropdown button */
+/* Border animation on hover */
 .dropbtn:hover {
-  color: #4CAF50; /* Greenish color when hovered */
-  border-bottom: 2px solid #4CAF50; /* Border underline on hover */
+  color: #ff5722; /* Orange color when hovered */
 }
 
-/* Dropdown content (initially hidden) */
+/* Add animated border */
+.dropdown:hover .dropbtn {
+  animation: borderAnimation 0.5s forwards;
+}
+
+/* Keyframe for border animation */
+@keyframes borderAnimation {
+  0% {
+    border-bottom: 2px solid transparent;
+  }
+  100% {
+    border-bottom: 2px solid #ff5722; /* Orange border */
+  }
+}
+
+/* Dropdown content */
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #f4f4f4;
+  background-color: #222;
   min-width: 200px;
   border-radius: 4px;
   top: 100%;
   left: 0;
   z-index: 1;
-  padding: 0;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+  transition: all 0.3s ease;
 }
 
-/* Show dropdown when hovering over the dropdown button */
+/* Display dropdown when hovered */
 .dropdown:hover .dropdown-content {
   display: block;
   opacity: 1;
   visibility: visible;
-  transition: opacity 0.3s ease;
 }
 
 /* Dropdown links */
 .dropdown-content a {
-  color: #333;
+  color: #fff;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
   font-size: 16px;
+  border-bottom: 1px solid #444;
   transition: background-color 0.3s ease;
-  border-bottom: 1px solid #ddd;
 }
 
 /* Remove border from the last link */
@@ -680,10 +699,10 @@ body {
   border-bottom: none;
 }
 
-/* Hover effect on the links */
+/* Hover effect on links */
 .dropdown-content a:hover {
-  background-color: #e9f0e5;
-  color: #4CAF50;
+  background-color: #ff5722;
+  color: #fff;
 }
 
 
