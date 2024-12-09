@@ -1,36 +1,28 @@
 <?php
-	include 'includes/session.php';
+session_start();
+include 'includes/conn.php';
 
-	if(isset($_POST['save'])){
-		$title = $_POST['title'];
-		$voters = $_POST['voters'];
-		$start = $_POST['starttime'];
-		$end = $_POST['endtime'];
-		$status = $_POST['status'];
+if (isset($_POST['title'], $_POST['academic_yr'])) {
+    $title = $_POST['title'];
+    $organization = "JPCS"; // Default value
+    $voters = "JPCS Students"; // Default value
+    $academic_yr = $_POST['academic_yr']; // Academic Year from the dropdown
 
-		if ($status === 'Active') {
-    		$statusValue = 1;
-		} elseif ($status === 'Not Active') {
-    		$statusValue = 0;
-		}
+    // Prepared statement para maiwasan ang SQL injection
+    $stmt = $conn->prepare("INSERT INTO election (title, voters, status, organization, academic_yr) VALUES (?, ?, 0, ?, ?)");
+    $stmt->bind_param("ssss", $title, $voters, $organization, $academic_yr);
 
-    // Use prepared statement to prevent SQL injection
-     $stmt = $conn->prepare("INSERT INTO election (title, voters, starttime, endtime, status) VALUES (?, ?, ?, ?, ?)");
-    
-    // Bind parameters
-    $stmt->bind_param('sssss', $title, $voters, $start, $end, $statusValue);
-
-    // Execute the statement
     if ($stmt->execute()) {
-        $_SESSION['success'] = 'New election added successfully';
+        $_SESSION['success'] = "Election added successfully!";
     } else {
-        $_SESSION['error'] = $stmt->error;
+        $_SESSION['error'] = "Failed to add election!";
     }
 
-    // Close the statement
     $stmt->close();
 } else {
-    $_SESSION['error'] = 'Fill up add form first';
+    $_SESSION['error'] = "Invalid input data!";
 }
-	header('location: elections_jpcs.php');
-?>
+
+$conn->close();
+header('Location: elections_jpcs.php');
+exit();
