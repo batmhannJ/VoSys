@@ -65,7 +65,7 @@
             flex-grow: 1; /* Makes the chart section grow to take up available space */
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1000px) {
             .candidate-image img {
                 width: 75px;
                 height: 75px;
