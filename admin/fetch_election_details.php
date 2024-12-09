@@ -9,60 +9,72 @@ if (isset($_POST['election_id'])) {
     $query = $conn->query($sql);
 
     $output = '';
-    $candidate = '';
 
     while ($row = $query->fetch_assoc()) {
         $max_vote = $row['max_vote'];  // Fetch max_vote for the category
-        
-        $input = ($max_vote > 1) 
-            ? '<input type="checkbox" class="flat-red '.slugify($row['name']).'" name="'.slugify($row['name'])."[]".'">' 
-            : '<input type="radio" class="flat-red '.slugify($row['name']).'" name="'.slugify($row['name']).'">';
 
-        // Query to fetch candidates and total votes for each
-        $sql = "
-            SELECT c.*, COUNT(v.candidate_id) AS total_votes 
-            FROM candidates c
-            LEFT JOIN votes v ON v.candidate_id = c.id AND v.category_id = '".$row['id']."'
-            WHERE c.category_id = '".$row['id']."'
-            GROUP BY c.id
-            ORDER BY total_votes DESC
-        ";
+        $sql = "SELECT * FROM candidates WHERE category_id='" . $row['id'] . "'";
         $cquery = $conn->query($sql);
         
+        $candidates = [];
         while ($crow = $cquery->fetch_assoc()) {
-            $image = (!empty($crow['photo'])) ? '../images/'.$crow['photo'] : '../images/profile.jpg';
-            $candidate .= '
+            // Count total votes for each candidate
+            $votes_sql = "SELECT COUNT(*) AS total_votes FROM votes WHERE candidate_id='" . $crow['id'] . "'";
+            $votes_query = $conn->query($votes_sql);
+            $votes_row = $votes_query->fetch_assoc();
+            $total_votes = $votes_row['total_votes'];
+
+            $image = (!empty($crow['photo'])) ? '../images/' . $crow['photo'] : '../images/profile.jpg';
+
+            // Store candidate data for sorting
+            $candidates[] = [
+                'id' => $crow['id'],
+                'name' => $crow['firstname'] . ' ' . $crow['lastname'],
+                'photo' => $image,
+                'votes' => $total_votes
+            ];
+        }
+
+        // Sort candidates by total votes in descending order
+        usort($candidates, function ($a, $b) {
+            return $b['votes'] - $a['votes'];
+        });
+
+        $candidate_list = '';
+        $is_winner_marked = 0;  // Track the number of winners marked
+        foreach ($candidates as $candidate) {
+            // Mark the top `max_vote` candidates as winners
+            $winner_label = ($is_winner_marked < $max_vote) ? '<span class="label label-success">Winner</span>' : '';
+            if ($is_winner_marked < $max_vote) {
+                $is_winner_marked++;  // Increment winner count for each winner marked
+            }
+
+            $candidate_list .= '
                 <li>
-                    '.$input.'<button class="btn btn-primary btn-sm btn-flat clist"><i class="fa fa-search"></i> Platform</button><img src="'.$image.'" height="100px" width="100px" class="clist"><span class="cname clist">'.$crow['firstname'].' '.$crow['lastname'].'</span>
-                    <span class="total-votes">Total Votes: '.$crow['total_votes'].'</span>
-                    '.($crow['total_votes'] == max($crow['total_votes']) ? '<span class="winner">Winner</span>' : '').'
+                    <img src="' . $candidate['photo'] . '" height="100px" width="100px" class="clist">
+                    <span class="cname clist">' . $candidate['name'] . '</span>
+                    <span class="votes clist">Votes: ' . $candidate['votes'] . '</span>
+                    ' . $winner_label . '
                 </li>
             ';
         }
 
-        $instruct = ($max_vote > 1) 
-            ? 'You may select up to '.$max_vote.' candidates' 
-            : 'Select only one candidate';
-
         $output .= '
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="box box-solid" id="'.$row['id'].'">
+                    <div class="box box-solid" id="' . $row['id'] . '">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><b>'.$row['name'].'</b></h3>
+                            <h3 class="box-title"><b>' . $row['name'] . '</b></h3>
                         </div>
                         <div class="box-body">
-                            <p>'.$instruct.'</p>
                             <div id="candidate_list">
-                                <ul>'.$candidate.'</ul>
+                                <ul>' . $candidate_list . '</ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         ';
-
-        $candidate = '';
     }
 
     echo json_encode($output);
