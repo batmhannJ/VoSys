@@ -157,7 +157,7 @@
   <h1 style="text-align: center;">
     <b>JUNIOR PHILIPPINE COMPUTER SOCIETY<br> ELECTIONS</b>
   </h1>
-  <div class="box-body" id="ballotContent">
+  <div class="box-body" id="ballotContent" style="margin-right: -15px; margin-left: -15px;">
     <!-- Ballot content will be loaded here -->
   </div>
 </div>
