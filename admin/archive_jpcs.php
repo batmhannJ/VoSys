@@ -218,12 +218,14 @@ $(document).ready(function() {
                     $('#electionTitle').text(response.title);
                     $('#electionTitle').after('<p style="text-align: center;">Academic Year: ' + response.academic_yr + '</p>');
                     
-                    // Display total voters
-                    $('#totalVoters').text('Total Voters: ' + response.total_voters);
-
                     // Update the ballot content and show the container
                     $('#ballotContent').html(response.content);
                     $('#ballotContainer').show();
+
+                    // Display Voter Stats
+                    $('#totalVoters').text(response.total_voters);
+                    $('#votersVoted').text(response.voters_voted);
+                    $('#remainingVoters').text(response.remaining_voters);
                 } else {
                     // Handle case if the response is empty or invalid
                     alert('Error: Could not fetch election details.');
