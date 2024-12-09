@@ -37,6 +37,7 @@
             margin-bottom: 40px;
             display: flex;
             align-items: center;
+            width: 100%;
         }
 
         .candidate-images {
@@ -127,7 +128,7 @@
 
     <script src="path/to/jquery.min.js"></script>
     <script>
-        // Generate amCharts Horizontal Bar Chart
+        // Generate amCharts Horizontal Bar Chart with wider bars
         function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
             var chart = am4core.create(containerId, am4charts.XYChart);
 
@@ -157,6 +158,10 @@
             series.columns.template.tooltipText = "{categoryY}: [bold]{valueX}[/] votes";
             series.columns.template.fillOpacity = 0.8;
 
+            // Increase the bar width (more space for the bars)
+            series.columns.template.width = am4core.percent(80);  // Adjust percentage for width of the bars
+
+            // Bullet to show candidate image
             var bullet = series.bullets.push(new am4charts.Bullet());
             var image = bullet.createChild(am4core.Image);
             image.horizontalCenter = "middle";
@@ -164,9 +169,11 @@
             image.dy = 30;
             image.propertyFields.href = "image";
 
+            // Round the corners of the bars
             series.columns.template.column.cornerRadiusTopLeft = 10;
             series.columns.template.column.cornerRadiusTopRight = 10;
 
+            // Add some padding for visual spacing
             categoryAxis.renderer.cellStartLocation = 0.1;
             categoryAxis.renderer.cellEndLocation = 0.9;
         }
