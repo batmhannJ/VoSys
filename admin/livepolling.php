@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <?php include 'includes/session.php'; ?>
     <?php include 'includes/header.php'; ?>
+
     <style>
         .box-title {
             text-align: center;
@@ -75,7 +77,14 @@
             }
         }
     </style>
+
+    <!-- amCharts Scripts -->
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
 </head>
+
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
         <?php include 'includes/navbar.php'; ?>
@@ -118,60 +127,136 @@
 
             <button id="back-to-top" title="Back to top">&uarr;</button>
         </div>
+
         <?php include 'includes/footer.php'; ?>
     </div>
+
     <?php include 'includes/scripts.php'; ?>
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-    <script src="path/to/jquery.min.js"></script>
+
     <script>
         function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
-            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
-
-            var imageContainer = document.getElementById(imageContainerId);
-            imageContainer.innerHTML = '';
-            dataPoints.forEach(dataPoint => {
-                var candidateDiv = document.createElement('div');
-                candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
-                imageContainer.appendChild(candidateDiv);
+            // Dispose of existing amCharts instances
+            am5.array.each(am5.registry.rootElements, function (root) {
+                if (root.dom.id === containerId) {
+                    root.dispose();
+                }
             });
 
-            var chart = new CanvasJS.Chart(containerId, {
-                animationEnabled: true,
-                title: { text: "Vote Counts" },
-                data: [{
-                    type: graphType,
-                    indexLabel: "{label} - {percent}%",
-                    indexLabelPlacement: "inside",
-                    indexLabelFontColor: "white",
-                    indexLabelFontSize: 14,
-                    dataPoints: dataPoints.map(dataPoint => ({
-                        ...dataPoint,
-                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-                    }))
-                }]
-            });
+            // Create amCharts root
+            var root = am5.Root.new(containerId);
 
-            if (graphType === 'bar') {
-                chart.options.axisX = {
-                    title: "",
-                    includeZero: true,
-                    interval: 1,
-                    labelFormatter: function () {
-                        return " ";
-                    }
-                };
+            // Apply amCharts Animated theme
+            root.setThemes([am5themes_Animated.new(root)]);
 
-                chart.options.axisY = {
-                    title: "",
-                    interval: Math.ceil(totalVotes / 10)
-                };
+            // Add chart container
+            var chart;
 
-                // ** Rounded Corners for Bar Graphs **
-                chart.options.data[0].cornerRadius = 10; // Rounded corners for the bar (Change 10 to the desired radius)
+            if (graphType === "bar") {
+                // Bar Chart
+                chart = root.container.children.push(
+                    am5xy.XYChart.new(root, {
+                        panX: true,
+                        panY: true,
+                        wheelX: "panX",
+                        wheelY: "zoomX",
+                        pinchZoomX: true
+                    })
+                );
+
+                // Create axes
+                var yAxis = chart.yAxes.push(
+                    am5xy.CategoryAxis.new(root, {
+                        categoryField: "label",
+                        renderer: am5xy.AxisRendererY.new(root, {})
+                    })
+                );
+
+                var xAxis = chart.xAxes.push(
+                    am5xy.ValueAxis.new(root, {
+                        min: 0,
+                        renderer: am5xy.AxisRendererX.new(root, {})
+                    })
+                );
+
+                // Add series
+                var series = chart.series.push(
+                    am5xy.ColumnSeries.new(root, {
+                        name: "Votes",
+                        xAxis: xAxis,
+                        yAxis: yAxis,
+                        valueXField: "y",
+                        categoryYField: "label",
+                        tooltip: am5.Tooltip.new(root, {
+                            labelText: "{label}: {valueX}"
+                        })
+                    })
+                );
+
+                yAxis.data.setAll(dataPoints);
+                series.data.setAll(dataPoints);
+            } else if (graphType === "pie") {
+                // Pie Chart
+                chart = root.container.children.push(
+                    am5percent.PieChart.new(root, {
+                        layout: root.verticalLayout
+                    })
+                );
+
+                var series = chart.series.push(
+                    am5percent.PieSeries.new(root, {
+                        valueField: "y",
+                        categoryField: "label",
+                        tooltip: am5.Tooltip.new(root, {
+                            labelText: "{label}: {value} ({percent.formatNumber('#.0')}%)"
+                        })
+                    })
+                );
+
+                series.data.setAll(dataPoints);
+            } else if (graphType === "line") {
+                // Line Chart
+                chart = root.container.children.push(
+                    am5xy.XYChart.new(root, {
+                        panX: true,
+                        panY: true,
+                        wheelX: "panX",
+                        wheelY: "zoomX",
+                        pinchZoomX: true
+                    })
+                );
+
+                var xAxis = chart.xAxes.push(
+                    am5xy.CategoryAxis.new(root, {
+                        categoryField: "label",
+                        renderer: am5xy.AxisRendererX.new(root, {})
+                    })
+                );
+
+                var yAxis = chart.yAxes.push(
+                    am5xy.ValueAxis.new(root, {
+                        min: 0,
+                        renderer: am5xy.AxisRendererY.new(root, {})
+                    })
+                );
+
+                var series = chart.series.push(
+                    am5xy.LineSeries.new(root, {
+                        name: "Votes",
+                        xAxis: xAxis,
+                        yAxis: yAxis,
+                        valueYField: "y",
+                        categoryXField: "label",
+                        tooltip: am5.Tooltip.new(root, {
+                            labelText: "{label}: {valueY}"
+                        })
+                    })
+                );
+
+                xAxis.data.setAll(dataPoints);
+                series.data.setAll(dataPoints);
             }
 
-            chart.render();
+            chart.appear(1000, 100);
         }
 
         function fetchAndGenerateGraphs(organization) {
@@ -184,7 +269,7 @@
                 success: function (response) {
                     $('#results-container').empty();
 
-                    var categories = {
+                    const categories = {
                         'csc': {
                             'president': 'President',
                             'vice president': 'Vice President',
@@ -196,11 +281,11 @@
                         }
                     };
 
-                    var selectedCategories = categories[organization];
+                    const selectedCategories = categories[organization];
 
                     Object.keys(selectedCategories).forEach(function (category) {
                         if (response[category]) {
-                            var containerHtml = `
+                            const containerHtml = `
                                 <div class='col-md-12'>
                                     <div class='box'>
                                         <div class='box-header with-border'>
@@ -253,4 +338,5 @@
         });
     </script>
 </body>
+
 </html>
