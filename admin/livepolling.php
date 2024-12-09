@@ -8,6 +8,7 @@
             text-align: center;
             width: 100%;
             display: inline-block;
+            font-family: 'Poppins', sans-serif;
         }
 
         #back-to-top {
@@ -46,16 +47,11 @@
             margin-right: 10px;
         }
 
-        .candidate-image {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
         .candidate-image img {
             width: 60px;
             height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
             margin-right: -10px;
             margin-bottom: 25px;
             margin-top: 35px;
@@ -84,14 +80,9 @@
         <div class="content-wrapper">
             <section class="content-header">
                 <h1>Election Results</h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                    <li class="active">Results</li>
-                </ol>
             </section>
 
             <section class="content">
-                <!-- Organization Selection Form -->
                 <form id="organization-form">
                     <label for="organization-select">Select Organization:</label>
                     <select id="organization-select" name="organization">
@@ -112,63 +103,42 @@
 
                     <button type="submit">Show Results</button>
                 </form>
-                <br>
 
-                <div class="row justify-content-center" id="results-container">
-                    <!-- Results will be dynamically inserted here -->
-                </div>
+                <div class="row justify-content-center" id="results-container"></div>
             </section>
 
             <button id="back-to-top" title="Back to top">&uarr;</button>
         </div>
         <?php include 'includes/footer.php'; ?>
     </div>
+
     <?php include 'includes/scripts.php'; ?>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-    <script src="path/to/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script>
         function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
             var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
-            var imageContainer = document.getElementById(imageContainerId);
-            imageContainer.innerHTML = '';
-            dataPoints.forEach(dataPoint => {
-                var candidateDiv = document.createElement('div');
-                candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
-                imageContainer.appendChild(candidateDiv);
-            });
-
             var chart = new CanvasJS.Chart(containerId, {
                 animationEnabled: true,
-                title: { text: "Vote Counts" },
+                animationDuration: 1500,
+                backgroundColor: "transparent",
+                title: { 
+                    text: "Vote Counts", 
+                    fontFamily: 'Poppins', 
+                    fontColor: "#333" 
+                },
                 data: [{
-                    type: graphType,
+                    type: "bar",
                     indexLabel: "{label} - {percent}%",
-                    indexLabelPlacement: "inside",
-                    indexLabelFontColor: "white",
-                    indexLabelFontSize: 14,
+                    indexLabelFontColor: "#ffffff",
                     dataPoints: dataPoints.map(dataPoint => ({
                         ...dataPoint,
-                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                        color: dataPoint.color || getRandomGradient()
                     }))
                 }]
             });
-
-            if (graphType === 'bar') {
-                chart.options.axisX = {
-                    title: "",
-                    includeZero: true,
-                    interval: 1,
-                    labelFormatter: function () {
-                        return " ";
-                    }
-                };
-                chart.options.axisY = {
-                    title: "",
-                    interval: Math.ceil(totalVotes / 10)
-                };
-            }
 
             chart.render();
         }
@@ -182,53 +152,39 @@
                 dataType: 'json',
                 success: function (response) {
                     $('#results-container').empty();
-
-                    var categories = {
-                        'csc': {
-                            'president': 'President',
-                            'vice president': 'Vice President',
-                            'secretary': 'Secretary',
-                            'treasurer': 'Treasurer',
-                            'auditor': 'Auditor',
-                            'p.r.o': 'P.R.O',
-                            'businessManager': 'Business Manager',
-                            'beedRep': 'BEED Representative',
-                            'bsedRep': 'BSED Representative',
-                            'bshmRep': 'BSHM Representative',
-                            'bsoadRep': 'BSOAD Representative',
-                            'bs crimRep': 'BS Crim Representative',
-                            'bsitRep': 'BSIT Representative'
-                        }
-                    };
-
-                    var selectedCategories = categories[organization];
-
-                    Object.keys(selectedCategories).forEach(function (category) {
-                        if (response[category]) {
-                            var containerHtml = `
-                                <div class='col-md-12'>
-                                    <div class='box'>
-                                        <div class='box-header with-border'>
-                                            <h3 class='box-title'><b>${selectedCategories[category]}</b></h3>
-                                        </div>
-                                        <div class='box-body'>
-                                            <div class='chart-container'>
-                                                <div class='candidate-images' id='${category}Image'></div>
-                                                <div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div>
-                                            </div>
+                    Object.keys(response).forEach(function (category) {
+                        var containerHtml = `
+                            <div class='col-md-12'>
+                                <div class='box'>
+                                    <div class='box-header with-border'>
+                                        <h3 class='box-title'><b>${category}</b></h3>
+                                    </div>
+                                    <div class='box-body'>
+                                        <div class='chart-container'>
+                                            <div id='${category}Graph' style='height: 300px; width: 100%;'></div>
                                         </div>
                                     </div>
-                                </div>`;
-                            $('#results-container').append(containerHtml);
-
-                            generateGraph(response[category], category + 'Graph', category + 'Image', graphType);
-                        }
+                                </div>
+                            </div>`;
+                        $('#results-container').append(containerHtml);
+                        generateGraph(response[category], `${category}Graph`, null, graphType);
                     });
                 },
                 error: function (xhr, status, error) {
                     console.error("Error fetching data: ", status, error);
                 }
             });
+        }
+
+        function getRandomGradient() {
+            const colors = [
+                "#FF5733", "#33FF57", "#3357FF", 
+                "#F39C12", "#8E44AD", "#2ECC71", 
+                "#E74C3C", "#1ABC9C", "#3498DB"
+            ];
+            const randomColor1 = colors[Math.floor(Math.random() * colors.length)];
+            const randomColor2 = colors[Math.floor(Math.random() * colors.length)];
+            return `linear-gradient(90deg, ${randomColor1}, ${randomColor2})`;
         }
 
         $(document).ready(function () {
