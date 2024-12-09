@@ -154,9 +154,9 @@
     </div>
   </div>
   <div class="box" id="ballotContainer" style="display: none;">
-  <div class="box-header with-border">
-    <h3 class="box-title">Election Ballot</h3>
-  </div>
+  <h1 class="page-header text-center title">
+	  <b>JUNIOR PHILIPPINE COMPUTER SOCIETY<br> ELECTIONS</b>
+  </h1>
   <div class="box-body" id="ballotContent">
     <!-- Ballot content will be loaded here -->
   </div>
