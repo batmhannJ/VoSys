@@ -8,7 +8,8 @@
             text-align: center;
             width: 100%;
             display: inline-block;
-            font-family: 'Poppins', sans-serif;
+            font-weight: bold;
+            font-size: 24px;
         }
 
         #back-to-top {
@@ -37,37 +38,46 @@
             position: relative;
             margin-bottom: 40px;
             display: flex;
+            justify-content: center;
             align-items: center;
         }
 
-        .candidate-images {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            margin-right: 10px;
+        .candidate-image {
+            position: absolute;
+            bottom: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            object-fit: cover;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .candidate-image img {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-right: -10px;
-            margin-bottom: 25px;
-            margin-top: 35px;
+        .chart-container canvas {
+            width: 100% !important;
+            height: auto !important;
+        }
+
+        .modern-bar-chart .canvasjs-chart-container {
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .modern-bar-chart .canvasjs-chart-credit {
+            display: none;
         }
 
         @media (max-width: 768px) {
-            .candidate-image img {
-                width: 75px;
-                height: 75px;
+            .candidate-image {
+                width: 30px;
+                height: 30px;
             }
         }
 
         @media (max-width: 480px) {
-            .candidate-image img {
-                width: 100px;
-                height: 100px;
+            .candidate-image {
+                width: 25px;
+                height: 25px;
             }
         }
     </style>
@@ -80,9 +90,14 @@
         <div class="content-wrapper">
             <section class="content-header">
                 <h1>Election Results</h1>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                    <li class="active">Results</li>
+                </ol>
             </section>
 
             <section class="content">
+                <!-- Organization Selection Form -->
                 <form id="organization-form">
                     <label for="organization-select">Select Organization:</label>
                     <select id="organization-select" name="organization">
@@ -103,8 +118,11 @@
 
                     <button type="submit">Show Results</button>
                 </form>
+                <br>
 
-                <div class="row justify-content-center" id="results-container"></div>
+                <div class="row justify-content-center" id="results-container">
+                    <!-- Results will be dynamically inserted here -->
+                </div>
             </section>
 
             <button id="back-to-top" title="Back to top">&uarr;</button>
@@ -114,61 +132,71 @@
 
     <?php include 'includes/scripts.php'; ?>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    <script src="path/to/jquery.min.js"></script>
     <script>
-        function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
-            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
-
+        function generateGraph(dataPoints, containerId) {
             var chart = new CanvasJS.Chart(containerId, {
                 animationEnabled: true,
-                animationDuration: 1500,
-                backgroundColor: "transparent",
-                title: { 
-                    text: "Vote Counts", 
-                    fontFamily: 'Poppins', 
-                    fontColor: "#333" 
+                backgroundColor: "#f4f6f9",
+                title: { text: "Vote Counts" },
+                axisY: {
+                    labelFontSize: 14,
+                    labelFontColor: "#666",
+                    gridThickness: 0,
                 },
                 data: [{
                     type: "bar",
-                    indexLabel: "{label} - {percent}%",
-                    indexLabelFontColor: "#ffffff",
-                    dataPoints: dataPoints.map(dataPoint => ({
-                        ...dataPoint,
-                        color: dataPoint.color || getRandomGradient()
+                    indexLabelFontColor: "#fff",
+                    indexLabelPlacement: "inside",
+                    dataPoints: dataPoints.map((dataPoint, index) => ({
+                        y: dataPoint.y,
+                        label: dataPoint.label,
+                        color: dataPoint.color || `hsl(${index * 45}, 70%, 50%)`, // Dynamic color
+                        image: dataPoint.image
                     }))
                 }]
             });
 
             chart.render();
+
+            // Add candidate images inside the bars
+            var canvas = document.querySelector(`#${containerId} .canvasjs-chart-canvas`);
+            dataPoints.forEach((dataPoint, index) => {
+                var barRect = canvas.getBoundingClientRect();
+                var candidateImage = document.createElement('img');
+                candidateImage.src = dataPoint.image;
+                candidateImage.className = 'candidate-image';
+                candidateImage.style.left = `${barRect.left + (index * 70)}px`; // Position image at the start of each bar
+                candidateImage.style.top = `${barRect.top + 10}px`;
+                document.body.appendChild(candidateImage);
+            });
         }
 
         function fetchAndGenerateGraphs(organization) {
-            const graphType = $('#graph-type').val();
-
             $.ajax({
                 url: 'update_data.php',
                 method: 'GET',
                 dataType: 'json',
                 success: function (response) {
                     $('#results-container').empty();
-                    Object.keys(response).forEach(function (category) {
-                        var containerHtml = `
-                            <div class='col-md-12'>
-                                <div class='box'>
-                                    <div class='box-header with-border'>
-                                        <h3 class='box-title'><b>${category}</b></h3>
-                                    </div>
-                                    <div class='box-body'>
-                                        <div class='chart-container'>
-                                            <div id='${category}Graph' style='height: 300px; width: 100%;'></div>
-                                        </div>
-                                    </div>
+
+                    var containerId = 'results-container';
+                    var containerHtml = `<div class='col-md-12'>
+                        <div class='box'>
+                            <div class='box-header with-border'>
+                                <h3 class='box-title'><b>Election Results</b></h3>
+                            </div>
+                            <div class='box-body'>
+                                <div class='chart-container modern-bar-chart'>
+                                    <div id='${containerId}' style='height: 400px;'></div>
                                 </div>
-                            </div>`;
-                        $('#results-container').append(containerHtml);
-                        generateGraph(response[category], `${category}Graph`, null, graphType);
-                    });
+                            </div>
+                        </div>
+                    </div>`;
+                    
+                    $('#results-container').append(containerHtml);
+
+                    generateGraph(response[organization], containerId);
                 },
                 error: function (xhr, status, error) {
                     console.error("Error fetching data: ", status, error);
@@ -176,26 +204,11 @@
             });
         }
 
-        function getRandomGradient() {
-            const colors = [
-                "#FF5733", "#33FF57", "#3357FF", 
-                "#F39C12", "#8E44AD", "#2ECC71", 
-                "#E74C3C", "#1ABC9C", "#3498DB"
-            ];
-            const randomColor1 = colors[Math.floor(Math.random() * colors.length)];
-            const randomColor2 = colors[Math.floor(Math.random() * colors.length)];
-            return `linear-gradient(90deg, ${randomColor1}, ${randomColor2})`;
-        }
-
         $(document).ready(function () {
             fetchAndGenerateGraphs('csc');
 
             $('#organization-form').submit(function (event) {
                 event.preventDefault();
-                fetchAndGenerateGraphs($('#organization-select').val());
-            });
-
-            $('#graph-type').change(function () {
                 fetchAndGenerateGraphs($('#organization-select').val());
             });
 
