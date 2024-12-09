@@ -154,14 +154,42 @@
     </div>
   </div>
   <div class="row" style="margin-right: -15px; margin-left: -15px;">
-  <div id="ballotContainer" style="display: none;">
-    <h1 style="text-align: center;">
-      <b id="electionTitle"> <!--ELECTION TITLE will be inserted here--> </b>
-    </h1>
-    <div class="box-body" id="ballotContent">
-      <!-- Ballot content will be loaded here -->
+    <div id="ballotContainer" style="display: none;">
+        <h1 style="text-align: center;">
+            <b id="electionTitle"> <!--ELECTION TITLE will be inserted here--> </b>
+        </h1>
+        <div class="box-body" id="ballotContent">
+            <!-- Ballot content will be loaded here -->
+        </div>
+        
+        <!-- New Table for Voter Stats -->
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title text-center">Voter Statistics</h3>
+                </div>
+                <div class="box-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Total Voters</th>
+                                <th>Voters Voted</th>
+                                <th>Remaining Voters</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td id="totalVoters"> <!-- Total voters count here --> </td>
+                                <td id="votersVoted"> <!-- Voters voted count here --> </td>
+                                <td id="remainingVoters"> <!-- Remaining voters count here --> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- End of Voter Stats Table -->
     </div>
-  </div>
 </div>
 </section>
 </div>
@@ -190,8 +218,28 @@ $(document).ready(function() {
         // Display academic year below the title
         $('#electionTitle').after('<p style="text-align: center;">Academic Year: ' + response.academic_yr + '</p>');
 
-        // Update the ballot content and show the container
-        $('#ballotContent').html(response.content);
+        // Display Total Voters, Voters Voted, and Remaining Voters
+        var voterStatsHTML = `
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Total Voters</th>
+                <th>Voters Voted</th>
+                <th>Remaining Voters</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>${response.total_voters}</td>
+                <td>${response.voters_voted}</td>
+                <td>${response.remaining_voters}</td>
+              </tr>
+            </tbody>
+          </table>
+        `;
+        $('#ballotContent').html(voterStatsHTML + response.content);
+
+        // Show the ballot container
         $('#ballotContainer').show();
       },
       error: function(xhr, status, error) {
