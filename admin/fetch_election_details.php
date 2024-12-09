@@ -5,14 +5,15 @@ include 'includes/slugify.php';
 if (isset($_POST['election_id'])) {
     $election_id = $_POST['election_id'];
     
-    // Fetch the election title
-    $sql = "SELECT title FROM election WHERE id = '$election_id'";
+    // Fetch the election title and academic year
+    $sql = "SELECT title, academic_yr FROM election WHERE id = '$election_id'";
     $result = $conn->query($sql);
     
     // Check if election exists
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $election_title = $row['title']; // Store election title
+        $academic_yr = $row['academic_yr']; // Store academic year
     } else {
         echo json_encode('Election not found');
         exit;
@@ -91,9 +92,10 @@ if (isset($_POST['election_id'])) {
         ';
     }
 
-    // Include the election title in the response
+    // Include the election title, academic year, and content in the response
     $response = [
         'title' => $election_title,
+        'academic_yr' => $academic_yr,
         'content' => $output
     ];
 

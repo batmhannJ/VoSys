@@ -77,7 +77,7 @@
       <div class="box">
         <div class="box-header with-border">
           <button class="btn btn-primary btn-sm btn-flat" id="batchRestoreBtn" data-target='#batchRestoreModal'><i class="fa fa-reply"></i> Batch Restore</button>
-          <button class="btn btn-danger btn-sm btn-flat" id="batchDeleteBtn" data-target='#batchDeleteModal'><i class="fa fa-trash"></i> Batch Delete</button>
+          <!-- <button class="btn btn-danger btn-sm btn-flat" id="batchDeleteBtn" data-target='#batchDeleteModal'><i class="fa fa-trash"></i> Batch Delete</button> -->
         </div>
         <div class="box-body">
           <table id="example1" class="table table-bordered">
@@ -185,7 +185,10 @@ $(document).ready(function() {
       dataType: 'json',
       success: function(response) {
         // Display election title
-        $('h1 b').text(response.title);
+        $('#electionTitle').text(response.title);
+        
+        // Display academic year below the title
+        $('#electionTitle').after('<p style="text-align: center;">Academic Year: ' + response.academic_yr + '</p>');
 
         // Update the ballot content and show the container
         $('#ballotContent').html(response.content);
