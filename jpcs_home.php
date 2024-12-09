@@ -342,17 +342,7 @@ if (isset($voter['id'])) {
                 this.classList.remove('unselected'); // Remove unselected class to restore opacity
             }
 
-            if (maxVotes === 1) {
-                selectedCandidates.forEach(candidate => candidate.classList.remove('selected'));
-                this.classList.add('selected');
-            } else if (maxVotes > 1) {
-                if (this.classList.contains('selected')) {
-                    this.classList.remove('selected');
-                } else if (selectedCandidates.length < maxVotes) {
-                    this.classList.add('selected');
-                }
-            }
-
+            // Update hidden inputs for form submission
             document.querySelectorAll(`input[name='${position}[]']`).forEach(input => input.remove()); // Clear previous inputs
 
             document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`).forEach(candidate => {
