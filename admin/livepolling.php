@@ -46,9 +46,19 @@
             margin-right: 10px;
         }
 
+        .candidate-image {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
         .candidate-image img {
             width: 60px;
             height: 60px;
+            margin-right: -10px;
+            margin-bottom: 25px;
+            margin-top: 35px;
         }
 
         @media (max-width: 768px) {
@@ -110,15 +120,16 @@
         </div>
         <?php include 'includes/footer.php'; ?>
     </div>
-
+    <?php include 'includes/scripts.php'; ?>
+    
     <!-- amCharts -->
     <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
     <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
     <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
-
+    
     <script src="path/to/jquery.min.js"></script>
     <script>
-        function generateGraph(dataPoints, containerId, imageContainerId) {
+        function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
             var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
             var imageContainer = document.getElementById(imageContainerId);
@@ -130,43 +141,48 @@
                 imageContainer.appendChild(candidateDiv);
             });
 
+            // Create chart with amCharts
             am4core.useTheme(am4themes_animated);
             var chart = am4core.create(containerId, am4charts.XYChart);
-            
-            // Map data to calculate percentage
             chart.data = dataPoints.map(dataPoint => ({
                 category: dataPoint.label,
-                value: dataPoint.y,
-                percent: ((dataPoint.y / totalVotes) * 100).toFixed(2) + '%'
+                value: dataPoint.y
             }));
 
-            var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+            var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis()); // Change this to y-axis for horizontal chart
             categoryAxis.dataFields.category = "category";
             categoryAxis.renderer.grid.template.location = 0;
             categoryAxis.renderer.minGridDistance = 30;
 
-            var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
+            var valueAxis = chart.xAxes.push(new am4charts.ValueAxis()); // Change this to x-axis for horizontal chart
             valueAxis.renderer.minGridDistance = 30;
 
             var series = chart.series.push(new am4charts.ColumnSeries());
-            series.dataFields.valueX = "value";
-            series.dataFields.categoryY = "category";
+            series.dataFields.valueX = "value"; // Change to valueX for horizontal chart
+            series.dataFields.categoryY = "category"; // Change to categoryY for horizontal chart
             series.columns.template.tooltipText = "{category}: [bold]{valueX}[/]";
             series.columns.template.fill = am4core.color("#104E8B");
 
-            // **Add percentage label inside the bar**
-            var labelBullet = series.bullets.push(new am4charts.LabelBullet());
-            labelBullet.label.text = "{percent}";
-            labelBullet.label.fill = am4core.color("#fff"); // White text
-            labelBullet.label.truncate = false;
-            labelBullet.label.fontSize = 12;
-            labelBullet.locationX = 0.5; // Position at the center of the bar
+            // Add moving bullets (animation effect)
+            var bullet = series.bullets.push(new am4charts.CircleBullet());
+            bullet.circle.fill = am4core.color("#fff");
+            bullet.circle.strokeWidth = 2;
+            bullet.circle.stroke = am4core.color("#104E8B");
+            bullet.circle.radius = 3;
+
+            // Animation for moving bullets
+            bullet.events.on("ready", function(event) {
+                var bullet = event.target;
+                bullet.animate({ property: "dy", to: bullet.pixelY }, 3000, am4core.ease.sinOut);
+            });
 
             chart.cursor = new am4charts.XYCursor();
             chart.cursor.snapToSeries = series;
         }
 
         function fetchAndGenerateGraphs(organization) {
+            const graphType = $('#graph-type').val();
+
             $.ajax({
                 url: 'update_data.php',
                 method: 'GET',
@@ -178,7 +194,11 @@
                         'csc': {
                             'president': 'President',
                             'vice president': 'Vice President',
-                            'secretary': 'Secretary'
+                            'secretary': 'Secretary',
+                            'treasurer': 'Treasurer',
+                            'auditor': 'Auditor',
+                            'p.r.o': 'P.R.O',
+                            'businessManager': 'Business Manager'
                         }
                     };
 
@@ -186,7 +206,7 @@
 
                     Object.keys(selectedCategories).forEach(function (category) {
                         if (response[category]) {
-                            var containerHtml = `
+                            var containerHtml = ` 
                                 <div class='col-md-12'>
                                     <div class='box'>
                                         <div class='box-header with-border'>
@@ -201,7 +221,8 @@
                                     </div>
                                 </div>`;
                             $('#results-container').append(containerHtml);
-                            generateGraph(response[category], category + 'Graph', category + 'Image');
+
+                            generateGraph(response[category], category + 'Graph', category + 'Image', graphType);
                         }
                     });
                 },
@@ -217,6 +238,18 @@
             $('#organization-form').submit(function (event) {
                 event.preventDefault();
                 fetchAndGenerateGraphs($('#organization-select').val());
+            });
+
+            $('#graph-type').change(function () {
+                fetchAndGenerateGraphs($('#organization-select').val());
+            });
+
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 100) {
+                    $('#back-to-top').fadeIn();
+                } else {
+                    $('#back-to-top').fadeOut();
+                }
             });
 
             $('#back-to-top').click(function () {
