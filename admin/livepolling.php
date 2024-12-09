@@ -10,7 +10,6 @@
             display: inline-block;
         }
 
-        /* Back to Top button styles */
         #back-to-top {
             position: fixed;
             bottom: 40px;
@@ -103,6 +102,14 @@
                         <option value="code-tg">CODE-TG</option>
                         <option value="hmso">HMSO</option>
                     </select>
+
+                    <label for="graph-type">Select Graph Type:</label>
+                    <select id="graph-type">
+                        <option value="bar">Bar Chart</option>
+                        <option value="pie">Pie Chart</option>
+                        <option value="line">Line Chart</option>
+                    </select>
+
                     <button type="submit">Show Results</button>
                 </form>
                 <br>
@@ -120,18 +127,11 @@
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="path/to/jquery.min.js"></script>
     <script>
-        function generateBarGraph(dataPoints, containerId, imageContainerId) {
+        function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
             var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
-            // Ensure images match the data points by iterating in the same order
             var imageContainer = document.getElementById(imageContainerId);
             imageContainer.innerHTML = '';
-            // Swap positions of the first two images for demonstration
-            if (dataPoints.length > 1) {
-                var temp = dataPoints[0].image;
-                dataPoints[0].image = dataPoints[1].image;
-                dataPoints[1].image = temp;
-            }
             dataPoints.forEach(dataPoint => {
                 var candidateDiv = document.createElement('div');
                 candidateDiv.className = 'candidate-image';
@@ -141,25 +141,9 @@
 
             var chart = new CanvasJS.Chart(containerId, {
                 animationEnabled: true,
-                animationDuration: 3000,
-                animationEasing: "easeInOutBounce",
-                title: {
-                    text: "Vote Counts"
-                },
-                axisX: {
-                    title: "",
-                    includeZero: true,
-                    interval: 1,
-                    labelFormatter: function () {
-                        return " ";
-                    }
-                },
-                axisY: {
-                    title: "",
-                    interval: Math.ceil(totalVotes / 10)
-                },
+                title: { text: "Vote Counts" },
                 data: [{
-                    type: "bar",
+                    type: graphType,
                     indexLabel: "{label} - {percent}%",
                     indexLabelPlacement: "inside",
                     indexLabelFontColor: "white",
@@ -170,19 +154,35 @@
                     }))
                 }]
             });
+
+            if (graphType === 'bar') {
+                chart.options.axisX = {
+                    title: "",
+                    includeZero: true,
+                    interval: 1,
+                    labelFormatter: function () {
+                        return " ";
+                    }
+                };
+                chart.options.axisY = {
+                    title: "",
+                    interval: Math.ceil(totalVotes / 10)
+                };
+            }
+
             chart.render();
         }
 
         function fetchAndGenerateGraphs(organization) {
+            const graphType = $('#graph-type').val();
+
             $.ajax({
                 url: 'update_data.php',
                 method: 'GET',
                 dataType: 'json',
                 success: function (response) {
-                    // Clear previous results
                     $('#results-container').empty();
 
-                    // Define categories for each organization
                     var categories = {
                         'csc': {
                             'president': 'President',
@@ -198,51 +198,13 @@
                             'bsoadRep': 'BSOAD Representative',
                             'bs crimRep': 'BS Crim Representative',
                             'bsitRep': 'BSIT Representative'
-                        },
-                        'jpcs': {
-                            'jpcsPresident': 'President',
-                            'jpcsVicePresident': 'Vice President',
-                            'jpcsSecretary': 'Secretary',
-                            'jpcsTreasurer': 'Treasurer',
-                            'jpcsRep': 'Representative'
-                        },
-                        'ymf': {
-                            'ymfPresident': 'President',
-                            'ymfVicePresident': 'Vice President',
-                            'ymfSecretary': 'Secretary',
-                            'ymfTreasurer': 'Treasurer',
-                            'ymfRep': 'Representative'
-                        },
-                        'pasoa': {
-                            'pasoaPresident': 'President',
-                            'pasoaVicePresident': 'Vice President',
-                            'pasoaSecretary': 'Secretary',
-                            'pasoaTreasurer': 'Treasurer',
-                            'pasoaRep': 'Representative'
-                        },
-                        'code-tg': {
-                            'codePresident': 'President',
-                            'codeVicePresident': 'Vice President',
-                            'codeSecretary': 'Secretary',
-                            'codeTreasurer': 'Treasurer',
-                            'codeRep': 'Representative'
-                        },
-                        'hmso': {
-                            'hmsoPresident': 'President',
-                            'hmsoVicePresident': 'Vice President',
-                            'hmsoSecretary': 'Secretary',
-                            'hmsoTreasurer': 'Treasurer',
-                            'hmsoRep': 'Representative'
                         }
                     };
 
-                    // Get categories for the selected organization
                     var selectedCategories = categories[organization];
 
-                    // Generate graphs for the selected categories
                     Object.keys(selectedCategories).forEach(function (category) {
                         if (response[category]) {
-                            // Create container for each category
                             var containerHtml = 
                                 <div class='col-md-12'>
                                     <div class='box'>
@@ -259,8 +221,7 @@
                                 </div>;
                             $('#results-container').append(containerHtml);
 
-                            // Generate the bar graph for the category
-                            generateBarGraph(response[category], category + 'Graph', category + 'Image');
+                            generateGraph(response[category], category + 'Graph', category + 'Image', graphType);
                         }
                     });
                 },
@@ -271,14 +232,15 @@
         }
 
         $(document).ready(function () {
-            // Fetch and generate graphs for the default organization (CSC) initially
             fetchAndGenerateGraphs('csc');
 
-            // Handle form submission
             $('#organization-form').submit(function (event) {
                 event.preventDefault();
-                const selectedOrganization = $('#organization-select').val();
-                fetchAndGenerateGraphs(selectedOrganization);
+                fetchAndGenerateGraphs($('#organization-select').val());
+            });
+
+            $('#graph-type').change(function () {
+                fetchAndGenerateGraphs($('#organization-select').val());
             });
 
             $(window).scroll(function () {
@@ -296,4 +258,4 @@
         });
     </script>
 </body>
-</html>
+</html> 
