@@ -118,6 +118,16 @@
         </footer>
   </body>
   <script>
+    // Get the elements
+const menuBtn = document.getElementById("menu-btn");
+const navMenu = document.getElementById("nav-menu");
+
+// Toggle the "active" class on the menu when the button is clicked
+menuBtn.addEventListener("click", function () {
+  navMenu.classList.toggle("active"); // This will show or hide the menu
+});
+    </script>
+  <script>
     // Get the dropdown elements
     const dropdown = document.querySelector(".dropdown");
     const dropdownContent = document.querySelector(".dropdown-content");
