@@ -19,13 +19,13 @@
 </div>
 
 
-
 <style>
-/* Formal Design for Preview Modal */
+/* Formal and Responsive Design for Preview Modal */
 .custom-formal-preview-modal {
     background-color: #f9f9f9;  /* Light gray background for a professional feel */
     border-radius: 8px;  /* Slight rounding for a modern, but formal look */
     border: 1px solid #ddd;  /* Light border for definition */
+    overflow: hidden;  /* Prevents overflow of content */
 }
 
 .custom-formal-preview-header {
@@ -50,6 +50,8 @@
     color: #333;
     line-height: 1.6;
     text-align: left;
+    max-height: 400px; /* Ensures the body is scrollable if the content is too long */
+    overflow-y: auto; /* Adds scrolling if content exceeds max height */
 }
 
 .custom-formal-preview-footer {
@@ -95,6 +97,40 @@
     opacity: 0.7;
 }
 
+/* Responsive Design for Modal */
+@media (max-width: 768px) {
+    .custom-formal-preview-title {
+        font-size: 1.1rem;  /* Slightly smaller title on mobile */
+    }
+
+    .modal-body {
+        padding: 15px;  /* Reduces padding for smaller screens */
+    }
+
+    .custom-formal-preview-footer .btn {
+        padding: 8px 16px;  /* Smaller button size for mobile */
+        font-size: 0.9rem;  /* Smaller font size for the button */
+    }
+
+    .modal-dialog {
+        max-width: 100%;  /* Ensures modal takes up full width on smaller screens */
+        margin: 10px;  /* Adds margin to prevent modal from touching the edges */
+    }
+}
+
+@media (max-width: 480px) {
+    .custom-formal-preview-header {
+        padding: 15px 20px;  /* Smaller padding for mobile */
+    }
+
+    .modal-body {
+        padding: 10px;  /* Further reduces padding on very small screens */
+    }
+
+    .custom-formal-preview-footer {
+        padding: 10px 15px;  /* Further reduces footer padding on mobile */
+    }
+}
 
 </style>
 
