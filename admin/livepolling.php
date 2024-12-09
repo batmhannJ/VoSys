@@ -55,7 +55,7 @@
 
         .chart-container > div {
             flex-grow: 1; /* Make the graph section take up available space */
-            margin-right: 1100px;
+            margin-right: 100px;
         }
 
         @media (max-width: 1000px) {
