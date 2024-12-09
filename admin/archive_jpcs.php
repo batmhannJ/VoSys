@@ -211,12 +211,6 @@ $(document).ready(function() {
         // Update the ballot content and show the container
         $('#ballotContent').html(response.content);
         $('#ballotContainer').show();
-
-        if (response.total_voters && response.voters_voted !== undefined && response.remaining_voters !== undefined) {
-          $('#totalVoters').text(response.total_voters);
-          $('#votersVoted').text(response.voters_voted);
-          $('#remainingVoters').text(response.remaining_voters);
-        }
       },
       error: function(xhr, status, error) {
         alert('Error: ' + error);
