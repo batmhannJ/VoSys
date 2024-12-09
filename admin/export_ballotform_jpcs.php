@@ -117,7 +117,7 @@ foreach ($positions as $position) {
     $sql = "SELECT * FROM candidates 
             LEFT JOIN categories ON categories.id = candidates.category_id 
             WHERE categories.name = '$position'
-              AND candidates.election_id = 20
+              AND candidates.election_id = 1
             ORDER BY candidates.lastname ASC";
 
     $query = $conn->query($sql);
