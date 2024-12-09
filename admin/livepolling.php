@@ -161,14 +161,27 @@
                         return " ";
                     }
                 };
-
                 chart.options.axisY = {
                     title: "",
                     interval: Math.ceil(totalVotes / 10)
                 };
 
-                // ** Rounded Corners for Bar Graphs **
-                chart.options.data[0].cornerRadius = 10; // Rounded corners for the bar (Change 10 to the desired radius)
+                chart.options.data[0].cornerRadius = 5; // Rounded bar corners
+                chart.options.data[0].bevelEnabled = true; // Bevel 3D effect
+                chart.options.data[0].indexLabelFontWeight = "bold";
+                chart.options.data[0].indexLabelFontColor = "#ffffff";
+
+                chart.options.data[0].dataPoints = dataPoints.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / totalVotes) * 100).toFixed(2),
+                    color: dataPoint.color || "#4F81BC", // Default color
+                    shadow: {
+                        color: 'rgba(0, 0, 0, 0.3)', 
+                        blur: 10, 
+                        offsetX: 4, 
+                        offsetY: 4  
+                    }
+                }));
             }
 
             chart.render();
@@ -192,7 +205,7 @@
                             'treasurer': 'Treasurer',
                             'auditor': 'Auditor',
                             'p.r.o': 'P.R.O',
-                            'businessManager': 'Business Manager'
+                            'businessManager': 'Business Manager',
                         }
                     };
 
