@@ -162,9 +162,9 @@
     <div class="box-body" id="ballotContent">
       <!-- Ballot content will be loaded here -->
 
-      <div id="voterStats" style="text-align: center; margin-top: 20px;">
-      <!-- Voter stats will be inserted here -->
-    </div>
+      <h1 style="text-align: center;">
+      <b id="voterStats"> </b>
+    </h1>
     </div>
   </div>
 </div>
