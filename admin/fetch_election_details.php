@@ -15,24 +15,9 @@ if (isset($_POST['election_id'])) {
         $election_title = $row['title']; // Store election title
         $academic_yr = $row['academic_yr']; // Store academic year
     } else {
-        echo json_encode(['error' => 'Election not found']);
+        echo json_encode('Election not found');
         exit;
     }
-
-    // Fetch total number of voters for the election
-    $sql = "SELECT COUNT(*) AS total_voters FROM voters WHERE election_id = '$election_id'";
-    $total_voters_query = $conn->query($sql);
-    $total_voters_row = $total_voters_query->fetch_assoc();
-    $total_voters = $total_voters_row['total_voters'];
-
-    // Fetch total number of voted voters
-    $sql = "SELECT COUNT(DISTINCT voters_id) AS voted_voters FROM votes WHERE election_id = '$election_id'";
-    $voted_voters_query = $conn->query($sql);
-    $voted_voters_row = $voted_voters_query->fetch_assoc();
-    $voted_voters = $voted_voters_row['voted_voters'];
-
-    // Calculate remaining voters
-    $remaining_voters = $total_voters - $voted_voters;
 
     // Fetch categories associated with the election
     $sql = "SELECT * FROM categories WHERE election_id = '$election_id' ORDER BY priority ASC";
@@ -111,14 +96,11 @@ if (isset($_POST['election_id'])) {
     $response = [
         'title' => $election_title,
         'academic_yr' => $academic_yr,
-        'content' => $output,
-        'total_voters' => $total_voters,
-        'voted_voters' => $voted_voters,
-        'remaining_voters' => $remaining_voters
+        'content' => $output
     ];
 
     echo json_encode($response);
 } else {
-    echo json_encode(['error' => 'Invalid Request']);
+    echo json_encode('Invalid Request');
 }
 ?>
