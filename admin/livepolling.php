@@ -255,7 +255,7 @@
                     Object.keys(selectedCategories).forEach(function (category) {
                         if (response[category]) {
                             var containerHtml = ` 
-                                <div class='col-md-12'>
+                                <div class='col-md-10'>
                                     <div class='box'>
                                         <div class='box-header with-border'>
                                             <h3 class='box-title'><b>${selectedCategories[category]}</b></h3>
