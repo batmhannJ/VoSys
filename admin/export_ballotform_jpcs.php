@@ -29,7 +29,7 @@ $positions = [
     '4-B Rep'
 ];
 
-// Create PDF content with circles next to the candidates
+// Create PDF content
 $pdfContent = "
 <style>
     table {
@@ -78,6 +78,10 @@ $pdfContent = "
         font-weight: bold;
         margin-bottom: 10px;
     }
+    .voter-id-container {
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
 </style>
 
 <div class='header-container'>
@@ -87,6 +91,10 @@ $pdfContent = "
         Our Lady of the Sacred Heart College of Guimba, Inc.<br>Guimba, Nueva Ecija
     </p>
     <p class='report-title'>Election Ballot Form</p>
+</div>
+
+<div class='voter-id-container'>
+    <strong>Voter ID:</strong> _____________________________
 </div>
 
 <table>
@@ -105,12 +113,14 @@ foreach ($positions as $position) {
         <td colspan='2' class='position-title'>$position</td>
     </tr>";
 
-    // Fetch candidates for each position
+    // Fetch candidates for each position from JPCS and Election ID 20
     $sql = "SELECT * FROM candidates 
             LEFT JOIN categories ON categories.id = candidates.category_id 
-            WHERE categories.name = '$position'
+            WHERE categories.name = '$position' 
+              AND candidates.organization = 'JPCS' 
+              AND candidates.election_id = 20
             ORDER BY candidates.lastname ASC";
-    
+
     $query = $conn->query($sql);
 
     // Check if candidates exist for this position
