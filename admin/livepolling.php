@@ -153,7 +153,37 @@
             }]
         });
 
-        
+        if (graphType === 'bar') {
+            chart.options.axisX = {
+                title: "",
+                includeZero: true,
+                interval: 1,
+                labelFormatter: function () {
+                    return " ";
+                }
+            };
+            chart.options.axisY = {
+                title: "",
+                interval: Math.ceil(totalVotes / 10)
+            };
+
+            chart.options.data[0].cornerRadius = 15; // More rounded bar corners
+            chart.options.data[0].bevelEnabled = false; // 3D effect for better appearance
+            chart.options.data[0].indexLabelFontWeight = "bold";
+            chart.options.data[0].indexLabelFontColor = "#ffffff";
+
+            chart.options.data[0].dataPoints = dataPoints.map(dataPoint => ({
+                ...dataPoint,
+                percent: ((dataPoint.y / totalVotes) * 100).toFixed(2),
+                color: dataPoint.color || "#4F81BC", // Default color
+                shadow: {
+                    color: 'rgba(0, 0, 0, 0.3)', 
+                    blur: 10, 
+                    offsetX: 4, 
+                    offsetY: 4  
+                }
+            }));
+        }
 
         chart.render();
     }
