@@ -118,7 +118,5 @@ if (isset($_POST['election_id'])) {
     ];
 
     echo json_encode($response);
-} else {
-    echo json_encode('Invalid Request');
 }
 ?>
