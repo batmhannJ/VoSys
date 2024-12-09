@@ -19,6 +19,21 @@ if (isset($_POST['election_id'])) {
         exit;
     }
 
+    // Fetch the total voters for the election (assuming the organization is JPCS)
+    $total_voters_sql = "SELECT COUNT(*) AS total_voters FROM voters WHERE archived = FALSE AND organization = 'JPCS'";
+    $total_voters_result = $conn->query($total_voters_sql);
+    $total_voters_row = $total_voters_result->fetch_assoc();
+    $total_voters = $total_voters_row['total_voters'];
+
+    // Fetch the voters who have voted
+    $voters_voted_sql = "SELECT COUNT(DISTINCT v.voters_id) AS voters_voted FROM votes vt INNER JOIN voters v ON v.id = vt.voters_id";
+    $voters_voted_result = $conn->query($voters_voted_sql);
+    $voters_voted_row = $voters_voted_result->fetch_assoc();
+    $voters_voted = $voters_voted_row['voters_voted'];
+
+    // Calculate remaining voters
+    $remaining_voters = $total_voters - $voters_voted;
+
     // Fetch categories associated with the election
     $sql = "SELECT * FROM categories WHERE election_id = '$election_id' ORDER BY priority ASC";
     $query = $conn->query($sql);
@@ -92,10 +107,13 @@ if (isset($_POST['election_id'])) {
         ';
     }
 
-    // Include the election title, academic year, and content in the response
+    // Include the election title, academic year, voter statistics, and content in the response
     $response = [
         'title' => $election_title,
         'academic_yr' => $academic_yr,
+        'total_voters' => $total_voters,
+        'voters_voted' => $voters_voted,
+        'remaining_voters' => $remaining_voters,
         'content' => $output
     ];
 
