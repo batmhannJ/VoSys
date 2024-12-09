@@ -153,12 +153,14 @@
       </div>
     </div>
   </div>
+  <div id="ballotContainer" style="display: none;">
   <h1 style="text-align: center;">
-	  <b>JUNIOR PHILIPPINE COMPUTER SOCIETY<br> ELECTIONS</b>
+    <b>JUNIOR PHILIPPINE COMPUTER SOCIETY<br> ELECTIONS</b>
   </h1>
   <div class="box-body" id="ballotContent">
     <!-- Ballot content will be loaded here -->
   </div>
+</div>
 </section>
 </div>
 
@@ -171,7 +173,7 @@
 <?php include 'archive_script.php'; ?>
 
 <script>
-  $(document).ready(function() {
+$(document).ready(function() {
   $('.view-election').click(function() {
     var electionId = $(this).data('id');
     $.ajax({
@@ -180,6 +182,7 @@
       data: { election_id: electionId },
       dataType: 'json',
       success: function(response) {
+        // I-update ang ballot content at ipakita ang container
         $('#ballotContent').html(response);
         $('#ballotContainer').show();
       },
@@ -189,7 +192,6 @@
     });
   });
 });
-
 </script>
 
 </body>
