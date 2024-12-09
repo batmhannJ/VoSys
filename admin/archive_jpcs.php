@@ -155,14 +155,14 @@
   </div>
   <div class="row" style="margin-right: -15px; margin-left: -15px;">
   <div id="ballotContainer" style="display: none;">
-  <h1 style="text-align: center;">
-    <b>JUNIOR PHILIPPINE COMPUTER SOCIETY<br> ELECTIONS</b>
-  </h1>
-  <div class="box-body" id="ballotContent">
-    <!-- Ballot content will be loaded here -->
-  </div>
+    <h1 style="text-align: center;">
+      <b id="electionTitle"> <!-- Election title will be dynamically inserted here --> </b>
+    </h1>
+    <div class="box-body" id="ballotContent">
+    </div>
   </div>
 </div>
+
 </section>
 </div>
 
@@ -194,6 +194,27 @@ $(document).ready(function() {
     });
   });
 });
+
+// This function will be triggered when the user clicks on a "View Election" button
+function viewElection(electionName) {
+  // Update the election title dynamically in the <b> tag
+  document.getElementById('electionTitle').innerText = electionName;
+
+  // Show the ballot content section
+  document.getElementById('ballotContainer').style.display = 'block';
+
+  // You can add an AJAX call to load the ballot content dynamically based on the election name
+  loadBallotContent(electionName);
+}
+
+// This section is for binding the event listener to "View Election" buttons
+document.querySelectorAll('.view-election-btn').forEach(button => {
+  button.addEventListener('click', function () {
+    const electionName = this.getAttribute('data-election-name');  // Get the election name from the button's data attribute
+    viewElection(electionName);
+  });
+});
+
 </script>
 
 </body>
