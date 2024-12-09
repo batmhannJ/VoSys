@@ -145,7 +145,6 @@
                     indexLabelPlacement: "inside",
                     indexLabelFontColor: "white",
                     indexLabelFontSize: 14,
-                    toolTipContent: "{label}: {y} votes ({percent}%)",
                     dataPoints: dataPoints.map(dataPoint => ({
                         ...dataPoint,
                         percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
@@ -154,29 +153,34 @@
             });
 
             if (graphType === 'bar') {
-                chart.options.axisX = { title: "", interval: 1, labelFormatter: () => " " };
-                chart.options.axisY = { title: "", interval: Math.ceil(totalVotes / 10) };
-                chart.options.data[0].cornerRadius = 10;
-
-                chart.options.data[0].click = function(e) {
-                    alert(`${e.dataPoint.label} received ${e.dataPoint.y} votes!`);
+                chart.options.axisX = {
+                    title: "",
+                    includeZero: true,
+                    interval: 1,
+                    labelFormatter: function () {
+                        return " ";
+                    }
+                };
+                chart.options.axisY = {
+                    title: "",
+                    interval: Math.ceil(totalVotes / 10)
                 };
 
-                chart.options.data[0].mouseover = function(e) {
-                    e.dataPoint.color = "#FF6347";
-                    chart.render();
-                };
-
-                chart.options.data[0].mouseout = function(e) {
-                    e.dataPoint.color = e.dataPoint.originalColor || "#4F81BC";
-                    chart.render();
-                };
+                chart.options.data[0].cornerRadius = 5; // Rounded bar corners
+                chart.options.data[0].bevelEnabled = true; // Bevel 3D effect
+                chart.options.data[0].indexLabelFontWeight = "bold";
+                chart.options.data[0].indexLabelFontColor = "#ffffff";
 
                 chart.options.data[0].dataPoints = dataPoints.map(dataPoint => ({
                     ...dataPoint,
                     percent: ((dataPoint.y / totalVotes) * 100).toFixed(2),
-                    color: dataPoint.color || "#4F81BC",
-                    originalColor: dataPoint.color || "#4F81BC"
+                    color: dataPoint.color || "#4F81BC", // Default color
+                    shadow: {
+                        color: 'rgba(0, 0, 0, 0.3)', 
+                        blur: 10, 
+                        offsetX: 4, 
+                        offsetY: 4  
+                    }
                 }));
             }
 
@@ -192,12 +196,24 @@
                 dataType: 'json',
                 success: function (response) {
                     $('#results-container').empty();
-                    const categories = { 'csc': { 'president': 'President', 'vice president': 'Vice President' } };
-                    const selectedCategories = categories[organization];
 
-                    Object.keys(selectedCategories).forEach(category => {
+                    var categories = {
+                        'csc': {
+                            'president': 'President',
+                            'vice president': 'Vice President',
+                            'secretary': 'Secretary',
+                            'treasurer': 'Treasurer',
+                            'auditor': 'Auditor',
+                            'p.r.o': 'P.R.O',
+                            'businessManager': 'Business Manager',
+                        }
+                    };
+
+                    var selectedCategories = categories[organization];
+
+                    Object.keys(selectedCategories).forEach(function (category) {
                         if (response[category]) {
-                            const containerHtml = `
+                            var containerHtml = `
                                 <div class='col-md-12'>
                                     <div class='box'>
                                         <div class='box-header with-border'>
@@ -212,9 +228,13 @@
                                     </div>
                                 </div>`;
                             $('#results-container').append(containerHtml);
+
                             generateGraph(response[category], category + 'Graph', category + 'Image', graphType);
                         }
                     });
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching data: ", status, error);
                 }
             });
         }
@@ -222,16 +242,27 @@
         $(document).ready(function () {
             fetchAndGenerateGraphs('csc');
 
-            $('#organization-form').submit(function (e) {
-                e.preventDefault();
+            $('#organization-form').submit(function (event) {
+                event.preventDefault();
                 fetchAndGenerateGraphs($('#organization-select').val());
             });
 
-            $('#graph-type').change(() => fetchAndGenerateGraphs($('#organization-select').val()));
+            $('#graph-type').change(function () {
+                fetchAndGenerateGraphs($('#organization-select').val());
+            });
 
-            $(window).scroll(() => $('#back-to-top').fadeIn(600));
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 100) {
+                    $('#back-to-top').fadeIn();
+                } else {
+                    $('#back-to-top').fadeOut();
+                }
+            });
 
-            $('#back-to-top').click(() => $('html, body').animate({ scrollTop: 0 }, 600));
+            $('#back-to-top').click(function () {
+                $('html, body').animate({ scrollTop: 0 }, 600);
+                return false;
+            });
         });
     </script>
 </body>
