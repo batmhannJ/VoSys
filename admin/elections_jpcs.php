@@ -132,7 +132,7 @@
                     </div>
                     <div class="form-group">
                         <label for="endtime">End Time</label>
-                        <input type="datetime-local" class="form-control" id="starttime" name="starttime" required min="<?php echo date('Y-m-d\TH:i'); ?>">
+                        <input type="datetime-local" class="form-control" id="endtime" name="endtime" required min="<?php echo date('Y-m-d\TH:i'); ?>">
                     </div>
                 </form>
             </div>
@@ -143,6 +143,7 @@
         </div>
     </div>
 </div>
+
 
 
 </div>
