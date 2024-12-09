@@ -879,6 +879,10 @@ body {
     font-size: 14px; /* I-adjust ang font size */
 }
 
+div.content-wrapper{
+    background-image: url ('images/4.png');
+}
+
 /* Media query for smaller screens */
 @media (max-width: 768px) {
   
