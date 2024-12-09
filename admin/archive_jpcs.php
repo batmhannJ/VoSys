@@ -93,7 +93,6 @@
                 <th>Year Level</th>
                 <th>Organization</th>
                 <?php elseif(isset($_GET['type']) && $_GET['type'] === 'election'): ?>
-                <th>#</th>
                 <th>ID</th>
                 <th>Title</th>
                 <th>Academic Year</th>
@@ -134,7 +133,6 @@
                   } elseif(isset($_GET['type']) && $_GET['type'] === 'election') {
                     echo "
                       <tr>
-                        <td><input type='checkbox' class='selectItem' value='".$row['id']."'></td>
                         <td>".$row['id']."</td>
                         <td>".$row['title']."</td>
                         <td>".$row['academic_yr']."</td>
