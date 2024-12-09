@@ -156,7 +156,7 @@
   <div class="row" style="margin-right: -15px; margin-left: -15px;">
     <div id="ballotContainer" style="display: none;">
         <h1 style="text-align: center;">
-            <b id="electionTitle"> <!--ELECTION TITLE will be inserted here--> </b>
+            <b id="electionTitle"> <!-- ELECTION TITLE will be inserted here --> </b>
         </h1>
         <div class="box-body" id="ballotContent">
             <!-- Ballot content will be loaded here -->
@@ -204,32 +204,38 @@
 
 <script>
 $(document).ready(function() {
-  $('.view-election').click(function() {
-    var electionId = $(this).data('id');
-    $.ajax({
-      url: 'fetch_election_details.php',
-      method: 'POST',
-      data: { election_id: electionId },
-      dataType: 'json',
-      success: function(response) {
-        // Display election title and academic year
-        $('#electionTitle').text(response.title);
-        $('#electionTitle').after('<p style="text-align: center;">Academic Year: ' + response.academic_yr + '</p>');
-        
-        // Update the ballot content and show the container
-        $('#ballotContent').html(response.content);
-        $('#ballotContainer').show();
+    $('.view-election').click(function() {
+        var electionId = $(this).data('id');
+        $.ajax({
+            url: 'fetch_election_details.php',  // Ensure this path is correct
+            method: 'POST',
+            data: { election_id: electionId },
+            dataType: 'json',
+            success: function(response) {
+                // Check if the response is valid
+                if (response) {
+                    // Display election title and academic year
+                    $('#electionTitle').text(response.title);
+                    $('#electionTitle').after('<p style="text-align: center;">Academic Year: ' + response.academic_yr + '</p>');
+                    
+                    // Update the ballot content and show the container
+                    $('#ballotContent').html(response.content);
+                    $('#ballotContainer').show();
 
-        // Display Voter Stats
-        $('#totalVoters').text(response.totalVoters);
-        $('#votersVoted').text(response.votersVoted);
-        $('#remainingVoters').text(response.remainingVoters);
-      },
-      error: function(xhr, status, error) {
-        alert('Error: ' + error);
-      }
+                    // Display Voter Stats
+                    $('#totalVoters').text(response.total_voters);
+                    $('#votersVoted').text(response.voters_voted);
+                    $('#remainingVoters').text(response.remaining_voters);
+                } else {
+                    // Handle case if the response is empty or invalid
+                    alert('Error: Could not fetch election details.');
+                }
+            },
+            error: function(xhr, status, error) {
+                alert('Error: ' + error);
+            }
+        });
     });
-  });
 });
 </script>
 
