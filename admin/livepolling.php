@@ -221,7 +221,7 @@
                 labelBullet.label.fontSize = 12;  // Adjust font size as needed
                 labelBullet.label.horizontalCenter = "middle";  // Center the text horizontally
                 labelBullet.label.verticalCenter = "middle";    // Center the text vertically
-                labelBullet.label.padding(0, 0, 50, 0);           // Optional: Remove extra padding
+                labelBullet.label.padding(50, 0, 0, 0);           // Optional: Remove extra padding
 
                 chart.cursor = new am4charts.XYCursor();
                 chart.cursor.snapToSeries = series;
