@@ -1,83 +1,82 @@
 <!-- Preview Modal -->
 <div class="modal fade" id="preview_modal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content custom-preview-modal">
-            <div class="modal-header custom-preview-header">
+        <div class="modal-content custom-formal-preview-modal">
+            <div class="modal-header custom-formal-preview-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h5 class="modal-title custom-preview-title">Vote Preview</h5>
+                <h5 class="modal-title custom-formal-preview-title">Vote Preview</h5>
             </div>
-            <div class="modal-body custom-preview-body">
+            <div class="modal-body custom-formal-preview-body">
                 <div id="preview_body"></div>
             </div>
-            <div class="modal-footer custom-preview-footer">
-                <button type="button" class="btn btn-dark btn-flat" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+            <div class="modal-footer custom-formal-preview-footer">
+                <button type="button" class="btn btn-secondary btn-flat" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
             </div>
         </div>
     </div>
 </div>
 
 
+
 <style>
- /* Alternative Modern Design for Preview Modal */
-.custom-preview-modal {
-    background: linear-gradient(135deg, #ff7e5f, #feb47b);  /* Gradient background for the modal */
-    border-radius: 20px;
-    border: 2px solid #fff;
-    overflow: hidden;
+/* Formal Design for Preview Modal */
+.custom-formal-preview-modal {
+    background-color: #f9f9f9;  /* Light gray background for a professional feel */
+    border-radius: 8px;  /* Slight rounding for a modern, but formal look */
+    border: 1px solid #ddd;  /* Light border for definition */
 }
 
-.custom-preview-header {
-    background-color: transparent;
+.custom-formal-preview-header {
+    background-color: #4e5b6e;  /* Subtle dark blue-gray background */
     color: #fff;
     padding: 20px 25px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid #ccc;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.custom-preview-title {
-    font-size: 1.5rem;
-    font-weight: bold;
+.custom-formal-preview-title {
+    font-size: 1.3rem;
+    font-weight: 600;
     letter-spacing: 1px;
 }
 
-.custom-preview-body {
-    padding: 30px;
-    font-size: 1.2rem;
-    color: #fff;
+.custom-formal-preview-body {
+    padding: 25px;
+    font-size: 1rem;
+    color: #333;
     line-height: 1.6;
-    text-align: center;
+    text-align: left;
 }
 
-.custom-preview-footer {
-    background-color: transparent;
-    padding: 20px;
+.custom-formal-preview-footer {
+    background-color: #f1f1f1;
+    padding: 15px 25px;
     display: flex;
     justify-content: center;
-    align-items: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-top: 1px solid #ddd;
 }
 
-.custom-preview-footer .btn {
-    background-color: #333;
+.custom-formal-preview-footer .btn {
+    background-color: #4e5b6e;  /* Matching dark blue-gray */
     color: #fff;
-    padding: 12px 20px;
+    padding: 10px 20px;
     font-size: 1rem;
-    border-radius: 30px;
+    border-radius: 5px;
     text-transform: uppercase;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: none;
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.custom-preview-footer .btn:hover {
-    background-color: #555;
+.custom-formal-preview-footer .btn:hover {
+    background-color: #37414c;  /* Slightly darker shade on hover */
     transform: scale(1.05);
 }
 
-.custom-preview-footer .btn:focus {
+.custom-formal-preview-footer .btn:focus {
     outline: none;
     box-shadow: none;
 }
@@ -85,7 +84,7 @@
 .close {
     color: #fff;
     font-size: 1.5rem;
-    font-weight: bold;
+    font-weight: 700;
     background: none;
     border: none;
     cursor: pointer;
@@ -95,6 +94,7 @@
 .close:hover {
     opacity: 0.7;
 }
+
 
 </style>
 
