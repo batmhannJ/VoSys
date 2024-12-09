@@ -343,11 +343,9 @@ if (isset($voter['id'])) {
             }
 
             if (maxVotes === 1) {
-                // Single selection logic
                 selectedCandidates.forEach(candidate => candidate.classList.remove('selected'));
                 this.classList.add('selected');
             } else if (maxVotes > 1) {
-                // Multi-selection logic
                 if (this.classList.contains('selected')) {
                     this.classList.remove('selected');
                 } else if (selectedCandidates.length < maxVotes) {
@@ -355,7 +353,6 @@ if (isset($voter['id'])) {
                 }
             }
 
-            // Update hidden inputs for form submission
             document.querySelectorAll(`input[name='${position}[]']`).forEach(input => input.remove()); // Clear previous inputs
 
             document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`).forEach(candidate => {
