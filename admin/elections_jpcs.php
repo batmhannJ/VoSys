@@ -125,7 +125,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="activationForm" action="activate_election.php">
+                <form id="activationForm" action="change_status.php">
                     <div class="form-group">
                         <label for="starttime">Start Time</label>
                         <input type="datetime-local" class="form-control" id="starttime" name="starttime" required min="<?php echo date('Y-m-d\TH:i'); ?>">
