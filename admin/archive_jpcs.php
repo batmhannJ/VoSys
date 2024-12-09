@@ -153,7 +153,7 @@
       </div>
     </div>
   </div>
-  <h1 class="page-header text-center title">
+  <h1 style="text-align: center;">
 	  <b>JUNIOR PHILIPPINE COMPUTER SOCIETY<br> ELECTIONS</b>
   </h1>
   <div class="box-body" id="ballotContent">
