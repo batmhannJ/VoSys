@@ -6,10 +6,11 @@
     <?php include 'includes/header.php'; ?>
 
     <style>
-        .box-title {
-            text-align: center;
-            width: 100%;
-            display: inline-block;
+        .chart-container {
+            margin: 20px auto;
+            width: 90%;
+            max-width: 1200px;
+            height: 500px;
         }
 
         #back-to-top {
@@ -33,56 +34,12 @@
         #back-to-top:hover {
             background-color: #555;
         }
-
-        .chart-container {
-            position: relative;
-            margin-bottom: 40px;
-            display: flex;
-            align-items: center;
-        }
-
-        .candidate-images {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            margin-right: 10px;
-        }
-
-        .candidate-image {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .candidate-image img {
-            width: 60px;
-            height: 60px;
-            margin-right: -10px;
-            margin-bottom: 25px;
-            margin-top: 35px;
-        }
-
-        @media (max-width: 768px) {
-            .candidate-image img {
-                width: 75px;
-                height: 75px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .candidate-image img {
-                width: 100px;
-                height: 100px;
-            }
-        }
     </style>
 
-    <!-- amCharts Scripts -->
+    <!-- amCharts -->
     <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
-    <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -100,7 +57,7 @@
             </section>
 
             <section class="content">
-                <form id="organization-form">
+                <form id="organization-form" style="text-align: center; margin-bottom: 20px;">
                     <label for="organization-select">Select Organization:</label>
                     <select id="organization-select" name="organization">
                         <option value="csc">CSC</option>
@@ -120,220 +77,131 @@
 
                     <button type="submit">Show Results</button>
                 </form>
-                <br>
 
-                <div class="row justify-content-center" id="results-container"></div>
+                <div class="chart-container" id="chartdiv"></div>
+                <button id="back-to-top" title="Back to top">&uarr;</button>
             </section>
-
-            <button id="back-to-top" title="Back to top">&uarr;</button>
         </div>
-
         <?php include 'includes/footer.php'; ?>
     </div>
 
     <?php include 'includes/scripts.php'; ?>
 
     <script>
-        function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
-            // Dispose of existing amCharts instances
+        function generateChart(dataPoints) {
+            // Dispose any previous chart
             am5.array.each(am5.registry.rootElements, function (root) {
-                if (root.dom.id === containerId) {
-                    root.dispose();
-                }
+                root.dispose();
             });
 
-            // Create amCharts root
-            var root = am5.Root.new(containerId);
+            // Create root element
+            var root = am5.Root.new("chartdiv");
 
-            // Apply amCharts Animated theme
+            // Set theme
             root.setThemes([am5themes_Animated.new(root)]);
 
-            // Add chart container
-            var chart;
+            // Create chart
+            var chart = root.container.children.push(
+                am5xy.XYChart.new(root, {
+                    panX: true,
+                    panY: true,
+                    wheelX: "panX",
+                    wheelY: "zoomX",
+                    pinchZoomX: true
+                })
+            );
 
-            if (graphType === "bar") {
-                // Bar Chart
-                chart = root.container.children.push(
-                    am5xy.XYChart.new(root, {
-                        panX: true,
-                        panY: true,
-                        wheelX: "panX",
-                        wheelY: "zoomX",
-                        pinchZoomX: true
+            // Add X-axis
+            var xAxis = chart.xAxes.push(
+                am5xy.CategoryAxis.new(root, {
+                    categoryField: "label",
+                    renderer: am5xy.AxisRendererX.new(root, {})
+                })
+            );
+
+            // Add Y-axis
+            var yAxis = chart.yAxes.push(
+                am5xy.ValueAxis.new(root, {
+                    renderer: am5xy.AxisRendererY.new(root, {})
+                })
+            );
+
+            // Add series for bars
+            var series = chart.series.push(
+                am5xy.ColumnSeries.new(root, {
+                    xAxis: xAxis,
+                    yAxis: yAxis,
+                    valueYField: "votes",
+                    categoryXField: "label",
+                    tooltip: am5.Tooltip.new(root, {
+                        labelText: "{label}: {valueY}"
                     })
-                );
+                })
+            );
 
-                // Create axes
-                var yAxis = chart.yAxes.push(
-                    am5xy.CategoryAxis.new(root, {
-                        categoryField: "label",
-                        renderer: am5xy.AxisRendererY.new(root, {})
-                    })
-                );
+            // Add moving bullets to bars
+            series.bullets.push(function () {
+                return am5.Bullet.new(root, {
+                    sprite: am5.Circle.new(root, {
+                        radius: 5,
+                        fill: series.get("fill")
+                    }),
+                    locationY: 1 // Bullet location at the top of the bar
+                });
+            });
 
-                var xAxis = chart.xAxes.push(
-                    am5xy.ValueAxis.new(root, {
-                        min: 0,
-                        renderer: am5xy.AxisRendererX.new(root, {})
-                    })
-                );
+            // Add data
+            xAxis.data.setAll(dataPoints);
+            series.data.setAll(dataPoints);
 
-                // Add series
-                var series = chart.series.push(
-                    am5xy.ColumnSeries.new(root, {
-                        name: "Votes",
-                        xAxis: xAxis,
-                        yAxis: yAxis,
-                        valueXField: "y",
-                        categoryYField: "label",
-                        tooltip: am5.Tooltip.new(root, {
-                            labelText: "{label}: {valueX}"
-                        })
-                    })
-                );
+            // Animate bars and bullets
+            series.appear(1000, 100);
 
-                yAxis.data.setAll(dataPoints);
-                series.data.setAll(dataPoints);
-            } else if (graphType === "pie") {
-                // Pie Chart
-                chart = root.container.children.push(
-                    am5percent.PieChart.new(root, {
-                        layout: root.verticalLayout
-                    })
-                );
+            // Add cursor (for interactivity)
+            chart.set("cursor", am5xy.XYCursor.new(root, {}));
 
-                var series = chart.series.push(
-                    am5percent.PieSeries.new(root, {
-                        valueField: "y",
-                        categoryField: "label",
-                        tooltip: am5.Tooltip.new(root, {
-                            labelText: "{label}: {value} ({percent.formatNumber('#.0')}%)"
-                        })
-                    })
-                );
-
-                series.data.setAll(dataPoints);
-            } else if (graphType === "line") {
-                // Line Chart
-                chart = root.container.children.push(
-                    am5xy.XYChart.new(root, {
-                        panX: true,
-                        panY: true,
-                        wheelX: "panX",
-                        wheelY: "zoomX",
-                        pinchZoomX: true
-                    })
-                );
-
-                var xAxis = chart.xAxes.push(
-                    am5xy.CategoryAxis.new(root, {
-                        categoryField: "label",
-                        renderer: am5xy.AxisRendererX.new(root, {})
-                    })
-                );
-
-                var yAxis = chart.yAxes.push(
-                    am5xy.ValueAxis.new(root, {
-                        min: 0,
-                        renderer: am5xy.AxisRendererY.new(root, {})
-                    })
-                );
-
-                var series = chart.series.push(
-                    am5xy.LineSeries.new(root, {
-                        name: "Votes",
-                        xAxis: xAxis,
-                        yAxis: yAxis,
-                        valueYField: "y",
-                        categoryXField: "label",
-                        tooltip: am5.Tooltip.new(root, {
-                            labelText: "{label}: {valueY}"
-                        })
-                    })
-                );
-
+            // Animate the bars with new data periodically (simulate real-time updates)
+            setInterval(function () {
+                dataPoints.forEach(function (dataPoint) {
+                    dataPoint.votes += Math.floor(Math.random() * 10); // Randomly increase votes
+                });
                 xAxis.data.setAll(dataPoints);
                 series.data.setAll(dataPoints);
-            }
-
-            chart.appear(1000, 100);
+            }, 2000);
         }
 
-        function fetchAndGenerateGraphs(organization) {
-            const graphType = $('#graph-type').val();
+        function fetchDataAndGenerateChart() {
+            // Mock data for testing (Replace this with actual AJAX call)
+            const mockData = [
+                { label: "Candidate A", votes: 50 },
+                { label: "Candidate B", votes: 30 },
+                { label: "Candidate C", votes: 20 }
+            ];
 
-            $.ajax({
-                url: 'update_data.php',
-                method: 'GET',
-                dataType: 'json',
-                success: function (response) {
-                    $('#results-container').empty();
-
-                    const categories = {
-                        'csc': {
-                            'president': 'President',
-                            'vice president': 'Vice President',
-                            'secretary': 'Secretary',
-                            'treasurer': 'Treasurer',
-                            'auditor': 'Auditor',
-                            'p.r.o': 'P.R.O',
-                            'businessManager': 'Business Manager'
-                        }
-                    };
-
-                    const selectedCategories = categories[organization];
-
-                    Object.keys(selectedCategories).forEach(function (category) {
-                        if (response[category]) {
-                            const containerHtml = `
-                                <div class='col-md-12'>
-                                    <div class='box'>
-                                        <div class='box-header with-border'>
-                                            <h3 class='box-title'><b>${selectedCategories[category]}</b></h3>
-                                        </div>
-                                        <div class='box-body'>
-                                            <div class='chart-container'>
-                                                <div class='candidate-images' id='${category}Image'></div>
-                                                <div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>`;
-                            $('#results-container').append(containerHtml);
-
-                            generateGraph(response[category], category + 'Graph', category + 'Image', graphType);
-                        }
-                    });
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error fetching data: ", status, error);
-                }
-            });
+            generateChart(mockData);
         }
 
-        $(document).ready(function () {
-            fetchAndGenerateGraphs('csc');
+        document.addEventListener("DOMContentLoaded", function () {
+            fetchDataAndGenerateChart();
 
-            $('#organization-form').submit(function (event) {
+            // On form submit (to change organization or chart type)
+            document.getElementById("organization-form").addEventListener("submit", function (event) {
                 event.preventDefault();
-                fetchAndGenerateGraphs($('#organization-select').val());
+                fetchDataAndGenerateChart(); // Fetch and regenerate chart
             });
 
-            $('#graph-type').change(function () {
-                fetchAndGenerateGraphs($('#organization-select').val());
-            });
-
-            $(window).scroll(function () {
-                if ($(this).scrollTop() > 100) {
-                    $('#back-to-top').fadeIn();
+            // Scroll-to-top button functionality
+            const backToTopButton = document.getElementById("back-to-top");
+            window.addEventListener("scroll", function () {
+                if (window.scrollY > 100) {
+                    backToTopButton.style.display = "block";
                 } else {
-                    $('#back-to-top').fadeOut();
+                    backToTopButton.style.display = "none";
                 }
             });
 
-            $('#back-to-top').click(function () {
-                $('html, body').animate({ scrollTop: 0 }, 600);
-                return false;
+            backToTopButton.addEventListener("click", function () {
+                window.scrollTo({ top: 0, behavior: "smooth" });
             });
         });
     </script>
