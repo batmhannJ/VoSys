@@ -214,9 +214,9 @@
                 // Control Bar Width (narrower bars)
                 series.columns.template.width = am4core.percent(40); // Adjust the percentage for narrower bars
 
-                // Add candidate names inside the bars
+                // Add candidate names and percentages inside the bars (centered)
                 var labelBullet = series.bullets.push(new am4charts.LabelBullet());
-                labelBullet.label.text = "{category}";
+                labelBullet.label.text = "{category}: {percentage}% ({valueX} votes)";
                 labelBullet.label.fill = am4core.color("#fff");
                 labelBullet.label.fontSize = 12;  // Adjust font size as needed
                 labelBullet.label.horizontalCenter = "middle";
