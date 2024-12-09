@@ -148,28 +148,23 @@
                     dataPoints: dataPoints.map(dataPoint => ({
                         ...dataPoint,
                         percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-                    }))
-                }]
-            });
-
-            if (graphType === 'bar') {
-                chart.options.axisX = {
+                    })),
+                    // Rounded corners for bar graphs
+                    cornerRadius: graphType === 'bar' ? 10 : 0
+                }],
+                axisX: graphType === 'bar' ? {
                     title: "",
                     includeZero: true,
                     interval: 1,
                     labelFormatter: function () {
                         return " ";
                     }
-                };
-
-                chart.options.axisY = {
+                } : undefined,
+                axisY: graphType === 'bar' ? {
                     title: "",
                     interval: Math.ceil(totalVotes / 10)
-                };
-
-                // ** Rounded Corners for Bar Graphs **
-                chart.options.data[0].cornerRadius = 10; // Rounded corners for the bar (Change 10 to the desired radius)
-            }
+                } : undefined
+            });
 
             chart.render();
         }
@@ -200,7 +195,7 @@
 
                     Object.keys(selectedCategories).forEach(function (category) {
                         if (response[category]) {
-                            var containerHtml = `
+                            var containerHtml = ` 
                                 <div class='col-md-12'>
                                     <div class='box'>
                                         <div class='box-header with-border'>
