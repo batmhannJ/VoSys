@@ -19,21 +19,6 @@ if (isset($_POST['election_id'])) {
         exit;
     }
 
-    // Fetch Total Voters
-    $total_voters_sql = "SELECT COUNT(*) AS total_voters FROM voters";
-    $total_voters_query = $conn->query($total_voters_sql);
-    $total_voters_row = $total_voters_query->fetch_assoc();
-    $total_voters = $total_voters_row['total_voters'];
-
-    // Fetch Voters Voted
-    $voters_voted_sql = "SELECT COUNT(DISTINCT voters_id) AS voters_voted FROM votes WHERE election_id = '$election_id'";
-    $voters_voted_query = $conn->query($voters_voted_sql);
-    $voters_voted_row = $voters_voted_query->fetch_assoc();
-    $voters_voted = $voters_voted_row['voters_voted'];
-
-    // Calculate Remaining Voters
-    $remaining_voters = $total_voters - $voters_voted;
-
     // Fetch categories associated with the election
     $sql = "SELECT * FROM categories WHERE election_id = '$election_id' ORDER BY priority ASC";
     $query = $conn->query($sql);
@@ -107,13 +92,10 @@ if (isset($_POST['election_id'])) {
         ';
     }
 
-    // Include the election title, academic year, voter stats, and content in the response
+    // Include the election title, academic year, and content in the response
     $response = [
         'title' => $election_title,
         'academic_yr' => $academic_yr,
-        'total_voters' => $total_voters,
-        'voters_voted' => $voters_voted,
-        'remaining_voters' => $remaining_voters,
         'content' => $output
     ];
 
