@@ -4,120 +4,156 @@
         <?php include 'includes/session.php'; ?>
         <?php include 'includes/header.php'; ?>
         <style>
-            .box-title {
-                text-align: center;
-                width: 100%;
-                display: inline-block;
-            }
+    .modern-wrapper {
+        font-family: 'Arial', sans-serif;
+        padding: 20px;
+        background-color: #f9f9f9;
+    }
 
-            #back-to-top {
-                position: fixed;
-                bottom: 40px;
-                right: 40px;
-                display: none;
-                background-color: #000;
-                color: #fff;
-                border: none;
-                border-radius: 50%;
-                width: 50px;
-                height: 50px;
-                text-align: center;
-                font-size: 22px;
-                line-height: 50px;
-                cursor: pointer;
-                z-index: 1000;
-            }
+    .modern-header h1 {
+        color: #333;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 20px;
+    }
 
-            #back-to-top:hover {
-                background-color: #555;
-            }
+    .breadcrumb {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
 
-            .chart-container {
-                position: relative;
-                margin-bottom: 40px;
-                display: flex;
-                align-items: center;
-            }
+    .breadcrumb li {
+        margin: 0 5px;
+        color: #007bff;
+    }
 
-            .candidate-images {
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                margin-right: 10px;
-            }
+    .breadcrumb li a {
+        text-decoration: none;
+        color: #007bff;
+    }
 
-            .candidate-image {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                margin-bottom: 10px;
-            }
+    .form-container {
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
 
-            .candidate-image img {
-                width: 60px;
-                height: 60px;
-                margin-right: -10px;
-                margin-bottom: 25px;
-                margin-top: 35px;
-            }
+    .modern-form {
+        width: 100%;
+        max-width: 500px;
+    }
 
-            @media (max-width: 768px) {
-                .candidate-image img {
-                    width: 75px;
-                    height: 75px;
-                }
-            }
+    .form-group {
+        margin-bottom: 15px;
+    }
 
-            @media (max-width: 480px) {
-                .candidate-image img {
-                    width: 100px;
-                    height: 100px;
-                }
-            }
-        </style>
+    label {
+        display: block;
+        margin-bottom: 5px;
+        color: #555;
+        font-weight: bold;
+    }
+
+    .modern-select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background-color: #fff;
+        font-size: 16px;
+        color: #333;
+    }
+
+    .modern-button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        text-align: center;
+    }
+
+    .modern-button:hover {
+        background-color: #0056b3;
+    }
+
+    #results-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .modern-form {
+            padding: 10px;
+        }
+
+        .modern-select,
+        .modern-button {
+            font-size: 14px;
+        }
+    }
+</style>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
             <?php include 'includes/navbar.php'; ?>
             <?php include 'includes/menubar.php'; ?>
 
-            <div class="content-wrapper">
-                <section class="content-header">
-                    <h1>Election Results</h1>
-                    <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Results</li>
-                    </ol>
-                </section>
+            <div class="content-wrapper modern-wrapper">
+    <section class="content-header modern-header">
+        <h1>Election Results</h1>
+        <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+            <li class="active">Results</li>
+        </ol>
+    </section>
 
-                <section class="content">
-                    <!-- Organization Selection Form -->
-                    <form id="organization-form">
-                        <label for="organization-select">Select Organization:</label>
-                        <select id="organization-select" name="organization">
-                            <option value="csc">CSC</option>
-                            <option value="jpcs">JPCS</option>
-                            <option value="ymf">YMF</option>
-                            <option value="pasoa">PASOA</option>
-                            <option value="code-tg">CODE-TG</option>
-                            <option value="hmso">HMSO</option>
-                        </select>
+    <section class="content">
+        <!-- Organization Selection Form -->
+        <div class="form-container">
+            <form id="organization-form" class="modern-form">
+                <div class="form-group">
+                    <label for="organization-select">Select Organization:</label>
+                    <select id="organization-select" name="organization" class="modern-select">
+                        <option value="csc">CSC</option>
+                        <option value="jpcs">JPCS</option>
+                        <option value="ymf">YMF</option>
+                        <option value="pasoa">PASOA</option>
+                        <option value="code-tg">CODE-TG</option>
+                        <option value="hmso">HMSO</option>
+                    </select>
+                </div>
 
-                        <label for="graph-type">Select Graph Type:</label>
-                        <select id="graph-type">
-                            <option value="bar">Bar Chart</option>
-                            <option value="pie">Pie Chart</option>
-                            <option value="line">Line Chart</option>
-                        </select>
+                <div class="form-group">
+                    <label for="graph-type">Select Graph Type:</label>
+                    <select id="graph-type" class="modern-select">
+                        <option value="bar">Bar Chart</option>
+                        <option value="pie">Pie Chart</option>
+                        <option value="line">Line Chart</option>
+                    </select>
+                </div>
 
-                        <button type="submit">Show Results</button>
-                    </form>
-                    <br>
+                <button type="submit" class="modern-button">Show Results</button>
+            </form>
+        </div>
 
-                    <div class="row justify-content-center" id="results-container">
-                        <!-- Results will be dynamically inserted here -->
-                    </div>
-                </section>
+        <div class="row justify-content-center" id="results-container">
+            <!-- Results will be dynamically inserted here -->
+        </div>
+    </section>
 
                 <button id="back-to-top" title="Back to top">&uarr;</button>
             </div>
