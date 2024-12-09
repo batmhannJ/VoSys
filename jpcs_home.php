@@ -212,14 +212,11 @@ if (isset($voter['id'])) {
                                                     <ul>';
                                                     $sql = "SELECT * FROM candidates WHERE category_id='" . $row['id'] . "'";
                                                     $cquery = $conn->query($sql);
-                                                    echo "Category ID: " . $row['id'];
-echo "SQL Query: " . $sql;
-if ($cquery->num_rows == 0) {
-    echo "No candidates found for this category.";
-}
+                                                    if ($cquery->num_rows == 0) {
+                                                        echo "No candidates found for category ID: " . $row['id'];
+                                                    }
                                                     
                                                     while ($crow = $cquery->fetch_assoc()) {
-                                                        echo '<span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span>';
                                                         $slug = slugify($row['name']);
                                                         $image = (!empty($crow['photo'])) ? 'images/' . $crow['photo'] : 'images/profile.jpg';
                                                         $maxVote = $row['max_vote']; // Fetch max vote per position
@@ -314,7 +311,7 @@ if ($cquery->num_rows == 0) {
 
 <?php include 'includes/scripts.php'; ?>
 <script>
- document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
     const candidateContainers = document.querySelectorAll('.candidate-container');
     const resetButtons = document.querySelectorAll('.reset');
     const platformButtons = document.querySelectorAll('.platform-button'); // Platform button selector
@@ -360,18 +357,25 @@ if ($cquery->num_rows == 0) {
             });
 
             // Update the preview section
-            const previewElement = document.getElementById('firstname' + 'lastname' + position);
+            const previewElement = document.getElementById('preview_' + position);
             const selectedCandidatesList = Array.from(document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`));
             const selectedNames = selectedCandidatesList.map(candidate => candidate.querySelector('.candidate-name').textContent);
-            previewElement.innerHTML = `${position}: <strong>${selectedNames.join(', ')}</strong>`;
-            // Check if there are selected candidates and map their names
+
             if (selectedCandidatesList.length > 0) {
-                const selectedNames = selectedCandidatesList.map(candidate => candidate.querySelector('.candidate-name').textContent);
                 previewElement.innerHTML = `${position}: <strong>${selectedNames.join(', ')}</strong>`;
+
+                // ** Update the selected candidate name display for maxVotes == 1 **
+                if (maxVotes === 1) {
+                    const candidateName = selectedCandidatesList[0].querySelector('.candidate-name').textContent;
+                    document.getElementById('selectedCandidateName').innerText = candidateName;
+                }
             } else {
-                const selectedNames = selectedCandidatesList.map(candidate => candidate.querySelector('.candidate-name').textContent);
-                previewElement.innerHTML = `${position}: <strong>${selectedNames.join(', ')}</strong>`;
                 previewElement.innerHTML = `${position}: <em>No selection</em>`;
+
+                // Clear the candidate name display if nothing is selected
+                if (maxVotes === 1) {
+                    document.getElementById('selectedCandidateName').innerText = '';
+                }
             }
         });
     });
@@ -393,6 +397,9 @@ if ($cquery->num_rows == 0) {
             // Clear the preview section
             const previewElement = document.getElementById('preview_' + position);
             previewElement.innerHTML = `${position}: <em>No selection</em>`;
+
+            // Clear the candidate name display
+            document.getElementById('selectedCandidateName').innerText = '';
         });
     });
 
@@ -430,6 +437,7 @@ if ($cquery->num_rows == 0) {
         }
     });
 });
+
 
 
 </script>
