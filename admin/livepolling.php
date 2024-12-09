@@ -163,7 +163,7 @@
             series.columns.template.tooltipText = "{category}: [bold]{valueX} votes ({percentage}%)[/]";
 
             // **New Code to Control Bar Width**
-            series.columns.template.width = am4core.percent(80); // Increase bar width to 80% of available space
+            series.columns.template.width = am4core.percent(100); // Increase bar width to 80% of available space
 
             var labelBullet = series.bullets.push(new am4charts.LabelBullet());
             labelBullet.label.text = "{percentage}%";
