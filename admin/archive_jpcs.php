@@ -140,7 +140,7 @@
                         <td>".$row['voters']."</td>
                         <td>
                           <button class='btn btn-warning btn-sm restore-election btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#electionConfirmationModal'><i class='fa fa-reply'></i> Restore</button>
-                          <button class='btn btn-danger btn-sm delete-election btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#deleteConfirmationModal'><i class='fa fa-trash'></i> Delete</button>
+                          <button class='btn btn-primary btn-sm view-election btn-flat' data-id='" . $row['id'] . "'><i class='fa fa-eye'></i> View Election</button>
                         </td>
                       </tr>
                     ";
@@ -153,6 +153,16 @@
       </div>
     </div>
   </div>
+  <div class="row" style="margin-right: -15px; margin-left: -15px;">
+  <div id="ballotContainer" style="display: none;">
+  <h1 style="text-align: center;">
+    <b>JUNIOR PHILIPPINE COMPUTER SOCIETY<br> ELECTIONS</b>
+  </h1>
+  <div class="box-body" id="ballotContent">
+    <!-- Ballot content will be loaded here -->
+  </div>
+  </div>
+</div>
 </section>
 </div>
 
@@ -163,6 +173,28 @@
 
 <?php include 'includes/scripts.php'; ?>
 <?php include 'archive_script.php'; ?>
+
+<script>
+$(document).ready(function() {
+  $('.view-election').click(function() {
+    var electionId = $(this).data('id');
+    $.ajax({
+      url: 'fetch_election_details.php',
+      method: 'POST',
+      data: { election_id: electionId },
+      dataType: 'json',
+      success: function(response) {
+        // I-update ang ballot content at ipakita ang container
+        $('#ballotContent').html(response);
+        $('#ballotContainer').show();
+      },
+      error: function(xhr, status, error) {
+        alert('Error: ' + error);
+      }
+    });
+  });
+});
+</script>
 
 </body>
 </html>

@@ -37,7 +37,6 @@
             margin-bottom: 40px;
             display: flex;
             align-items: center;
-            justify-content: space-between; /* Ensures the chart and images are spaced out */
         }
 
         .candidate-images {
@@ -140,11 +139,13 @@
 
     <script src="path/to/jquery.min.js"></script>
     <script>
-        // Generate amCharts Bar Chart
+        // Generate amCharts Horizontal Bar Chart with wider bars
         function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
             var chart = am4core.create(containerId, am4charts.XYChart);
 
+            chart.paddingTop = 20;
             chart.paddingRight = 40;
+            chart.paddingBottom = 40;
 
             chart.data = dataPoints.map(dataPoint => ({
                 category: dataPoint.label,
@@ -152,21 +153,26 @@
                 image: dataPoint.image
             }));
 
-            var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+            var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
             categoryAxis.dataFields.category = "category";
+            categoryAxis.renderer.inversed = true; // Reverse category axis for horizontal bar
             categoryAxis.renderer.grid.template.location = 0;
             categoryAxis.renderer.minGridDistance = 30;
 
-            var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+            var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
             valueAxis.renderer.minGridDistance = 50;
 
             var series = chart.series.push(new am4charts.ColumnSeries());
-            series.dataFields.valueY = "value";
-            series.dataFields.categoryX = "category";
+            series.dataFields.valueX = "value";
+            series.dataFields.categoryY = "category";
             series.name = "Votes";
-            series.columns.template.tooltipText = "{categoryX}: [bold]{valueY}[/] votes";
+            series.columns.template.tooltipText = "{categoryY}: [bold]{valueX}[/] votes";
             series.columns.template.fillOpacity = 0.8;
 
+            // Increase the bar width (more space for the bars)
+            series.columns.template.width = am4core.percent(80);  // Adjust percentage for width of the bars
+
+            // Bullet to show candidate image
             var bullet = series.bullets.push(new am4charts.Bullet());
             var image = bullet.createChild(am4core.Image);
             image.horizontalCenter = "middle";
@@ -174,16 +180,13 @@
             image.dy = 30;
             image.propertyFields.href = "image";
 
+            // Round the corners of the bars
             series.columns.template.column.cornerRadiusTopLeft = 10;
             series.columns.template.column.cornerRadiusTopRight = 10;
 
+            // Add some padding for visual spacing
             categoryAxis.renderer.cellStartLocation = 0.1;
             categoryAxis.renderer.cellEndLocation = 0.9;
-
-            // Add labels inside bars
-            series.columns.template.adapter.add("fill", function (fill, target) {
-                return target.dataItem.index % 2 === 0 ? am4core.color("#3e77ff") : fill;
-            });
         }
 
         function fetchAndGenerateGraphs(organization) {
