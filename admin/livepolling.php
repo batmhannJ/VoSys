@@ -143,10 +143,11 @@
 
             am4core.useTheme(am4themes_animated);
             var chart = am4core.create(containerId, am4charts.XYChart);
-            chart.data = dataPoints.map(dataPoint => ({
+            chart.data = dataPoints.map((dataPoint, index) => ({
                 category: dataPoint.label,
                 value: dataPoint.y,
-                percentage: ((dataPoint.y / totalVotes) * 100).toFixed(2) // Calculate percentage
+                percentage: ((dataPoint.y / totalVotes) * 100).toFixed(2),
+                color: am4core.color(am4core.colors.next())
             }));
 
             var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
@@ -160,24 +161,14 @@
             var series = chart.series.push(new am4charts.ColumnSeries());
             series.dataFields.valueX = "value";
             series.dataFields.categoryY = "category";
+            series.dataFields.fill = "color";
+            series.columns.template.propertyFields.fill = "color";
             series.columns.template.tooltipText = "{category}: [bold]{valueX} votes ({percentage}%)[/]";
-            series.columns.template.fill = am4core.color("#104E8B");
 
             var labelBullet = series.bullets.push(new am4charts.LabelBullet());
             labelBullet.label.text = "{percentage}%";
             labelBullet.label.fill = am4core.color("#fff");
             labelBullet.locationX = 0.5;
-
-            var bullet = series.bullets.push(new am4charts.CircleBullet());
-            bullet.circle.fill = am4core.color("#fff");
-            bullet.circle.strokeWidth = 2;
-            bullet.circle.stroke = am4core.color("#104E8B");
-            bullet.circle.radius = 3;
-
-            bullet.events.on("ready", function(event) {
-                var bullet = event.target;
-                bullet.animate({ property: "dy", to: bullet.pixelY }, 3000, am4core.ease.sinOut);
-            });
 
             chart.cursor = new am4charts.XYCursor();
             chart.cursor.snapToSeries = series;
@@ -192,21 +183,9 @@
                 dataType: 'json',
                 success: function (response) {
                     $('#results-container').empty();
-
-                    var categories = {
-                        'csc': {
-                            'president': 'President',
-                            'vice president': 'Vice President',
-                            'secretary': 'Secretary',
-                            'treasurer': 'Treasurer',
-                            'auditor': 'Auditor',
-                            'p.r.o': 'P.R.O',
-                            'businessManager': 'Business Manager'
-                        }
-                    };
+                    var categories = { 'csc': { 'president': 'President', 'vice president': 'Vice President' } };
 
                     var selectedCategories = categories[organization];
-
                     Object.keys(selectedCategories).forEach(function (category) {
                         if (response[category]) {
                             var containerHtml = ` 
