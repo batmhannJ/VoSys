@@ -93,7 +93,6 @@
                 <th>Year Level</th>
                 <th>Organization</th>
                 <?php elseif(isset($_GET['type']) && $_GET['type'] === 'election'): ?>
-                <th>#</th>
                 <th>ID</th>
                 <th>Title</th>
                 <th>Academic Year</th>
@@ -134,7 +133,6 @@
                   } elseif(isset($_GET['type']) && $_GET['type'] === 'election') {
                     echo "
                       <tr>
-                        <td><input type='checkbox' class='selectItem' value='".$row['id']."'></td>
                         <td>".$row['id']."</td>
                         <td>".$row['title']."</td>
                         <td>".$row['academic_yr']."</td>
@@ -217,6 +215,15 @@ $(document).ready(function() {
         
         // Display academic year below the title
         $('#electionTitle').after('<p style="text-align: center;">Academic Year: ' + response.academic_yr + '</p>');
+
+        // Display the total voters, voted voters, and remaining voters
+        $('#voterStats').html(
+          '<p style="text-align: center;">' +
+          'Total JPCS Voters: ' + response.total_voters + '<br>' +
+          'Voted Voters: ' + response.voted_voters + '<br>' +
+          'Remaining Voters: ' + response.remaining_voters +
+          '</p>'
+        );
 
         // Update the ballot content and show the container
         $('#ballotContent').html(response.content);

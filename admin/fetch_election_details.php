@@ -92,10 +92,28 @@ if (isset($_POST['election_id'])) {
         ';
     }
 
-    // Include the election title, academic year, and content in the response
+    // Get the total number of JPCS voters
+    $total_voters_sql = "SELECT COUNT(*) AS total_voters FROM voters WHERE election_id = '$election_id' AND organization = 'JPCS'";
+    $total_voters_query = $conn->query($total_voters_sql);
+    $total_voters_row = $total_voters_query->fetch_assoc();
+    $total_voters = $total_voters_row['total_voters'];
+
+    // Get the number of JPCS voters who have voted
+    $voted_voters_sql = "SELECT COUNT(DISTINCT voter_id) AS voted_voters FROM votes WHERE election_id = '$election_id' AND organization = 'JPCS'";
+    $voted_voters_query = $conn->query($voted_voters_sql);
+    $voted_voters_row = $voted_voters_query->fetch_assoc();
+    $voted_voters = $voted_voters_row['voted_voters'];
+
+    // Calculate remaining voters
+    $remaining_voters = $total_voters - $voted_voters;
+
+    // Include the election title, academic year, total voters, voted voters, remaining voters, and content in the response
     $response = [
         'title' => $election_title,
         'academic_yr' => $academic_yr,
+        'total_voters' => $total_voters,
+        'voted_voters' => $voted_voters,
+        'remaining_voters' => $remaining_voters,
         'content' => $output
     ];
 
