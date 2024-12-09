@@ -158,11 +158,17 @@
     <h1 style="text-align: center;">
       <b id="electionTitle"> <!--ELECTION TITLE will be inserted here--> </b>
     </h1>
+
     <div class="box-body" id="ballotContent">
       <!-- Ballot content will be loaded here -->
+
+      <div id="voterStats" style="text-align: center; margin-top: 20px;">
+      <!-- Voter stats will be inserted here -->
+    </div>
     </div>
   </div>
 </div>
+
 </section>
 </div>
 
