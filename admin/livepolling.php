@@ -8,6 +8,8 @@
             text-align: center;
             width: 100%;
             display: inline-block;
+            font-weight: bold;
+            font-size: 24px;
         }
 
         #back-to-top {
@@ -36,42 +38,46 @@
             position: relative;
             margin-bottom: 40px;
             display: flex;
+            justify-content: center;
             align-items: center;
-        }
-
-        .candidate-images {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            margin-right: 10px;
         }
 
         .candidate-image {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 10px;
+            position: absolute;
+            bottom: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            object-fit: cover;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .candidate-image img {
-            width: 60px;
-            height: 60px;
-            margin-right: -10px;
-            margin-bottom: 25px;
-            margin-top: 35px;
+        .chart-container canvas {
+            width: 100% !important;
+            height: auto !important;
+        }
+
+        .modern-bar-chart .canvasjs-chart-container {
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .modern-bar-chart .canvasjs-chart-credit {
+            display: none;
         }
 
         @media (max-width: 768px) {
-            .candidate-image img {
-                width: 75px;
-                height: 75px;
+            .candidate-image {
+                width: 30px;
+                height: 30px;
             }
         }
 
         @media (max-width: 480px) {
-            .candidate-image img {
-                width: 100px;
-                height: 100px;
+            .candidate-image {
+                width: 25px;
+                height: 25px;
             }
         }
     </style>
@@ -123,59 +129,50 @@
         </div>
         <?php include 'includes/footer.php'; ?>
     </div>
+
     <?php include 'includes/scripts.php'; ?>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="path/to/jquery.min.js"></script>
     <script>
-        function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
-            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
-
-            var imageContainer = document.getElementById(imageContainerId);
-            imageContainer.innerHTML = '';
-            dataPoints.forEach(dataPoint => {
-                var candidateDiv = document.createElement('div');
-                candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
-                imageContainer.appendChild(candidateDiv);
-            });
-
+        function generateGraph(dataPoints, containerId) {
             var chart = new CanvasJS.Chart(containerId, {
                 animationEnabled: true,
+                backgroundColor: "#f4f6f9",
                 title: { text: "Vote Counts" },
+                axisY: {
+                    labelFontSize: 14,
+                    labelFontColor: "#666",
+                    gridThickness: 0,
+                },
                 data: [{
-                    type: graphType,
-                    indexLabel: "{label} - {percent}%",
+                    type: "bar",
+                    indexLabelFontColor: "#fff",
                     indexLabelPlacement: "inside",
-                    indexLabelFontColor: "white",
-                    indexLabelFontSize: 14,
-                    dataPoints: dataPoints.map(dataPoint => ({
-                        ...dataPoint,
-                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                    dataPoints: dataPoints.map((dataPoint, index) => ({
+                        y: dataPoint.y,
+                        label: dataPoint.label,
+                        color: dataPoint.color || `hsl(${index * 45}, 70%, 50%)`, // Dynamic color
+                        image: dataPoint.image
                     }))
                 }]
             });
 
-            if (graphType === 'bar') {
-                chart.options.axisX = {
-                    title: "",
-                    includeZero: true,
-                    interval: 1,
-                    labelFormatter: function () {
-                        return " ";
-                    }
-                };
-                chart.options.axisY = {
-                    title: "",
-                    interval: Math.ceil(totalVotes / 10)
-                };
-            }
-
             chart.render();
+
+            // Add candidate images inside the bars
+            var canvas = document.querySelector(`#${containerId} .canvasjs-chart-canvas`);
+            dataPoints.forEach((dataPoint, index) => {
+                var barRect = canvas.getBoundingClientRect();
+                var candidateImage = document.createElement('img');
+                candidateImage.src = dataPoint.image;
+                candidateImage.className = 'candidate-image';
+                candidateImage.style.left = `${barRect.left + (index * 70)}px`; // Position image at the start of each bar
+                candidateImage.style.top = `${barRect.top + 10}px`;
+                document.body.appendChild(candidateImage);
+            });
         }
 
         function fetchAndGenerateGraphs(organization) {
-            const graphType = $('#graph-type').val();
-
             $.ajax({
                 url: 'update_data.php',
                 method: 'GET',
@@ -183,47 +180,23 @@
                 success: function (response) {
                     $('#results-container').empty();
 
-                    var categories = {
-                        'csc': {
-                            'president': 'President',
-                            'vice president': 'Vice President',
-                            'secretary': 'Secretary',
-                            'treasurer': 'Treasurer',
-                            'auditor': 'Auditor',
-                            'p.r.o': 'P.R.O',
-                            'businessManager': 'Business Manager',
-                            'beedRep': 'BEED Representative',
-                            'bsedRep': 'BSED Representative',
-                            'bshmRep': 'BSHM Representative',
-                            'bsoadRep': 'BSOAD Representative',
-                            'bs crimRep': 'BS Crim Representative',
-                            'bsitRep': 'BSIT Representative'
-                        }
-                    };
+                    var containerId = 'results-container';
+                    var containerHtml = `<div class='col-md-12'>
+                        <div class='box'>
+                            <div class='box-header with-border'>
+                                <h3 class='box-title'><b>Election Results</b></h3>
+                            </div>
+                            <div class='box-body'>
+                                <div class='chart-container modern-bar-chart'>
+                                    <div id='${containerId}' style='height: 400px;'></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+                    
+                    $('#results-container').append(containerHtml);
 
-                    var selectedCategories = categories[organization];
-
-                    Object.keys(selectedCategories).forEach(function (category) {
-                        if (response[category]) {
-                            var containerHtml = `
-                                <div class='col-md-12'>
-                                    <div class='box'>
-                                        <div class='box-header with-border'>
-                                            <h3 class='box-title'><b>${selectedCategories[category]}</b></h3>
-                                        </div>
-                                        <div class='box-body'>
-                                            <div class='chart-container'>
-                                                <div class='candidate-images' id='${category}Image'></div>
-                                                <div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>`;
-                            $('#results-container').append(containerHtml);
-
-                            generateGraph(response[category], category + 'Graph', category + 'Image', graphType);
-                        }
-                    });
+                    generateGraph(response[organization], containerId);
                 },
                 error: function (xhr, status, error) {
                     console.error("Error fetching data: ", status, error);
@@ -236,10 +209,6 @@
 
             $('#organization-form').submit(function (event) {
                 event.preventDefault();
-                fetchAndGenerateGraphs($('#organization-select').val());
-            });
-
-            $('#graph-type').change(function () {
                 fetchAndGenerateGraphs($('#organization-select').val());
             });
 
