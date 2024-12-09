@@ -10,6 +10,7 @@
             display: inline-block;
         }
 
+        /* Back to Top button styles */
         #back-to-top {
             position: fixed;
             bottom: 40px;
@@ -37,28 +38,31 @@
             margin-bottom: 40px;
             display: flex;
             align-items: center;
-            flex-direction: row-reverse; /* Flip the order of elements */
         }
 
         .candidate-images {
-            margin-left: 10px; /* Add space between images and graph */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            margin-right: 10px;
+        }
+
+        .candidate-image {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 10px;
         }
 
         .candidate-image img {
             width: 60px;
             height: 60px;
-            margin-bottom: 10px;
+            margin-right: -10px;
+            margin-bottom: 25px;
+            margin-top: 35px;
         }
 
-        .chart-container > div {
-            flex-grow: 1; /* Make the graph section take up available space */
-            
-        }
-
-        @media (max-width: 1000px) {
+        @media (max-width: 768px) {
             .candidate-image img {
                 width: 75px;
                 height: 75px;
@@ -72,9 +76,6 @@
             }
         }
     </style>
-    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
-    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
-    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -91,6 +92,7 @@
             </section>
 
             <section class="content">
+                <!-- Organization Selection Form -->
                 <form id="organization-form">
                     <label for="organization-select">Select Organization:</label>
                     <select id="organization-select" name="organization">
@@ -101,19 +103,13 @@
                         <option value="code-tg">CODE-TG</option>
                         <option value="hmso">HMSO</option>
                     </select>
-
-                    <label for="graph-type">Select Graph Type:</label>
-                    <select id="graph-type">
-                        <option value="bar">Bar Chart</option>
-                        <option value="pie">Pie Chart</option>
-                        <option value="line">Line Chart</option>
-                    </select>
-
                     <button type="submit">Show Results</button>
                 </form>
                 <br>
 
-                <div class="row justify-content-center" id="results-container"></div>
+                <div class="row justify-content-center" id="results-container">
+                    <!-- Results will be dynamically inserted here -->
+                </div>
             </section>
 
             <button id="back-to-top" title="Back to top">&uarr;</button>
@@ -121,63 +117,72 @@
         <?php include 'includes/footer.php'; ?>
     </div>
     <?php include 'includes/scripts.php'; ?>
-
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="path/to/jquery.min.js"></script>
     <script>
-        function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
-            var chart = am4core.create(containerId, am4charts.XYChart);
+        function generateBarGraph(dataPoints, containerId, imageContainerId) {
+            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
-            chart.paddingTop = 20;
-            chart.paddingRight = 40;
-            chart.paddingBottom = 40;
+            // Ensure images match the data points by iterating in the same order
+            var imageContainer = document.getElementById(imageContainerId);
+            imageContainer.innerHTML = '';
+            // Swap positions of the first two images for demonstration
+            if (dataPoints.length > 1) {
+                var temp = dataPoints[0].image;
+                dataPoints[0].image = dataPoints[1].image;
+                dataPoints[1].image = temp;
+            }
+            dataPoints.forEach(dataPoint => {
+                var candidateDiv = document.createElement('div');
+                candidateDiv.className = 'candidate-image';
+                candidateDiv.innerHTML = <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">;
+                imageContainer.appendChild(candidateDiv);
+            });
 
-            chart.data = dataPoints.map(dataPoint => ({
-                category: dataPoint.label,
-                value: dataPoint.y,
-                image: dataPoint.image
-            }));
-
-            var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
-            categoryAxis.dataFields.category = "category";
-            categoryAxis.renderer.inversed = true; // Reverse category axis for horizontal bar
-            categoryAxis.renderer.grid.template.location = 0;
-            categoryAxis.renderer.minGridDistance = 30;
-
-            var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
-            valueAxis.renderer.minGridDistance = 50;
-
-            var series = chart.series.push(new am4charts.ColumnSeries());
-            series.dataFields.valueX = "value";
-            series.dataFields.categoryY = "category";
-            series.name = "Votes";
-            series.columns.template.tooltipText = "{categoryY}: [bold]{valueX}[/] votes";
-            series.columns.template.fillOpacity = 0.8;
-
-            series.columns.template.width = am4core.percent(80); // Adjust width of the bars
-            var bullet = series.bullets.push(new am4charts.Bullet());
-            var image = bullet.createChild(am4core.Image);
-            image.horizontalCenter = "middle";
-            image.verticalCenter = "bottom";
-            image.dy = 30;
-            image.propertyFields.href = "image";
-
-            series.columns.template.column.cornerRadiusTopLeft = 10;
-            series.columns.template.column.cornerRadiusTopRight = 10;
-
-            categoryAxis.renderer.cellStartLocation = 0.1;
-            categoryAxis.renderer.cellEndLocation = 0.9;
+            var chart = new CanvasJS.Chart(containerId, {
+                animationEnabled: true,
+                animationDuration: 3000,
+                animationEasing: "easeInOutBounce",
+                title: {
+                    text: "Vote Counts"
+                },
+                axisX: {
+                    title: "",
+                    includeZero: true,
+                    interval: 1,
+                    labelFormatter: function () {
+                        return " ";
+                    }
+                },
+                axisY: {
+                    title: "",
+                    interval: Math.ceil(totalVotes / 10)
+                },
+                data: [{
+                    type: "bar",
+                    indexLabel: "{label} - {percent}%",
+                    indexLabelPlacement: "inside",
+                    indexLabelFontColor: "white",
+                    indexLabelFontSize: 14,
+                    dataPoints: dataPoints.map(dataPoint => ({
+                        ...dataPoint,
+                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                    }))
+                }]
+            });
+            chart.render();
         }
 
         function fetchAndGenerateGraphs(organization) {
-            const graphType = $('#graph-type').val();
-
             $.ajax({
                 url: 'update_data.php',
                 method: 'GET',
                 dataType: 'json',
                 success: function (response) {
+                    // Clear previous results
                     $('#results-container').empty();
 
+                    // Define categories for each organization
                     var categories = {
                         'csc': {
                             'president': 'President',
@@ -187,14 +192,58 @@
                             'auditor': 'Auditor',
                             'p.r.o': 'P.R.O',
                             'businessManager': 'Business Manager',
+                            'beedRep': 'BEED Representative',
+                            'bsedRep': 'BSED Representative',
+                            'bshmRep': 'BSHM Representative',
+                            'bsoadRep': 'BSOAD Representative',
+                            'bs crimRep': 'BS Crim Representative',
+                            'bsitRep': 'BSIT Representative'
+                        },
+                        'jpcs': {
+                            'jpcsPresident': 'President',
+                            'jpcsVicePresident': 'Vice President',
+                            'jpcsSecretary': 'Secretary',
+                            'jpcsTreasurer': 'Treasurer',
+                            'jpcsRep': 'Representative'
+                        },
+                        'ymf': {
+                            'ymfPresident': 'President',
+                            'ymfVicePresident': 'Vice President',
+                            'ymfSecretary': 'Secretary',
+                            'ymfTreasurer': 'Treasurer',
+                            'ymfRep': 'Representative'
+                        },
+                        'pasoa': {
+                            'pasoaPresident': 'President',
+                            'pasoaVicePresident': 'Vice President',
+                            'pasoaSecretary': 'Secretary',
+                            'pasoaTreasurer': 'Treasurer',
+                            'pasoaRep': 'Representative'
+                        },
+                        'code-tg': {
+                            'codePresident': 'President',
+                            'codeVicePresident': 'Vice President',
+                            'codeSecretary': 'Secretary',
+                            'codeTreasurer': 'Treasurer',
+                            'codeRep': 'Representative'
+                        },
+                        'hmso': {
+                            'hmsoPresident': 'President',
+                            'hmsoVicePresident': 'Vice President',
+                            'hmsoSecretary': 'Secretary',
+                            'hmsoTreasurer': 'Treasurer',
+                            'hmsoRep': 'Representative'
                         }
                     };
 
+                    // Get categories for the selected organization
                     var selectedCategories = categories[organization];
 
+                    // Generate graphs for the selected categories
                     Object.keys(selectedCategories).forEach(function (category) {
                         if (response[category]) {
-                            var containerHtml = `
+                            // Create container for each category
+                            var containerHtml = 
                                 <div class='col-md-12'>
                                     <div class='box'>
                                         <div class='box-header with-border'>
@@ -202,15 +251,16 @@
                                         </div>
                                         <div class='box-body'>
                                             <div class='chart-container'>
-                                                <div id='${category}Graph' style='height: 300px;'></div>
                                                 <div class='candidate-images' id='${category}Image'></div>
+                                                <div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>`;
+                                </div>;
                             $('#results-container').append(containerHtml);
 
-                            generateGraph(response[category], category + 'Graph', category + 'Image', graphType);
+                            // Generate the bar graph for the category
+                            generateBarGraph(response[category], category + 'Graph', category + 'Image');
                         }
                     });
                 },
@@ -221,15 +271,14 @@
         }
 
         $(document).ready(function () {
+            // Fetch and generate graphs for the default organization (CSC) initially
             fetchAndGenerateGraphs('csc');
 
+            // Handle form submission
             $('#organization-form').submit(function (event) {
                 event.preventDefault();
-                fetchAndGenerateGraphs($('#organization-select').val());
-            });
-
-            $('#graph-type').change(function () {
-                fetchAndGenerateGraphs($('#organization-select').val());
+                const selectedOrganization = $('#organization-select').val();
+                fetchAndGenerateGraphs(selectedOrganization);
             });
 
             $(window).scroll(function () {
