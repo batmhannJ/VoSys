@@ -983,118 +983,38 @@ input[type="checkbox"]:checked + .clist {
     color: #6c757d;
     border-color: #6c757d;
 }
-/* Style for the overall modal */
-.custom-modal {
-    background-color: #f4f7fa; /* Light gray background for a clean, minimalistic look */
-    border-radius: 12px; /* Rounded corners for a modern, sleek design */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for a subtle 3D effect */
-    border: none; /* Removes the default border */
-}
 
 /* Style for the modal header */
-.custom-modal-header {
+.modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #3e5c6e; /* Dark blue-gray for a professional and calm tone */
+    background-color: darkgreen;
     color: #fff;
-    padding: 20px 25px;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
 }
 
 /* Style for the modal title */
-.custom-modal-title {
-    margin-right: auto;
-    font-weight: 600;
-    font-size: 1.4rem;
-    text-transform: uppercase; /* For a more formal, business-like feel */
+.modal-title {
+    margin-right: auto; /* Pushes the modal title to the left */
+    font-weight: bold;
 }
 
 /* Style for the close button in the modal header */
-.custom-modal-header .close {
+.modal-header .close {
+    padding-left: 20px; /* Adds space to the left of the close button */
     color: #fff;
-    font-size: 1.5rem;
-    border: none;
-    background: none;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.custom-modal-header .close:hover {
-    color: #ffd700; /* Golden color on hover to stand out */
+    opacity: 0.5;
 }
 
 /* Style for the modal body */
-.custom-modal-body {
-    padding: 25px;
-    font-size: 1rem;
-    color: #333;
-    line-height: 1.6;
-    text-align: left;
+.modal-body {
+    padding: 20px;
 }
 
 /* Style for the modal footer */
-.custom-modal-footer {
-    background-color: #f4f7fa; /* Matches the background for a seamless look */
-    padding: 20px 25px;
-    display: flex;
-    justify-content: flex-end;
-    border-bottom-left-radius: 12px;
-    border-bottom-right-radius: 12px;
-}
-
-/* Style for the footer button */
-.custom-modal-footer .btn {
-    background-color: #3e5c6e;
-    color: #fff;
-    padding: 12px 25px;
-    border-radius: 8px;
-    font-size: 1rem;
-    text-transform: uppercase;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    border: none;
-}
-
-.custom-modal-footer .btn:hover {
-    background-color: #2f4858; /* Darker shade for hover effect */
-    transform: scale(1.05); /* Slight scale effect on hover for better interactivity */
-}
-
-.custom-modal-footer .btn:focus {
-    outline: none;
-    box-shadow: none;
-}
-
-/* Responsive design for smaller screens */
-@media (max-width: 768px) {
-    .custom-modal-title {
-        font-size: 1.2rem; /* Slightly smaller title on mobile devices */
-    }
-
-    .custom-modal-body {
-        padding: 15px; /* Reduces padding for better spacing on smaller screens */
-    }
-
-    .custom-modal-footer .btn {
-        padding: 10px 20px; /* Smaller button for mobile */
-        font-size: 0.9rem;
-    }
-
-    .modal-dialog {
-        max-width: 90%; /* Allows the modal to take up most of the screen width on small devices */
-        margin: 20px; /* Ensures there's space around the modal */
-    }
-}
-
-@media (max-width: 480px) {
-    .custom-modal-title {
-        font-size: 1rem; /* Further reduces font size on very small screens */
-    }
-
-    .custom-modal-footer .btn {
-        padding: 8px 15px; /* Even smaller button for very small screens */
-    }
+.modal-footer {
+    justify-content: space-between;
+    padding: 20px;
 }
 
 /* Center the text in the text-center div */
