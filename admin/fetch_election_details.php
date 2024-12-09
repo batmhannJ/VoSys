@@ -9,47 +9,63 @@ if (isset($_POST['election_id'])) {
     $query = $conn->query($sql);
 
     $output = '';
-    $candidate = '';
 
     while ($row = $query->fetch_assoc()) {
-        $input = ($row['max_vote'] > 1) 
-            ? '<input type="checkbox" class="flat-red '.slugify($row['name']).'" name="'.slugify($row['name'])."[]".'">' 
-            : '<input type="radio" class="flat-red '.slugify($row['name']).'" name="'.slugify($row['name']).'">';
-        
-        $sql = "SELECT * FROM candidates WHERE category_id='".$row['id']."'";
+        $sql = "SELECT * FROM candidates WHERE category_id='" . $row['id'] . "'";
         $cquery = $conn->query($sql);
+        
+        $candidates = [];
         while ($crow = $cquery->fetch_assoc()) {
-            $image = (!empty($crow['photo'])) ? '../images/'.$crow['photo'] : '../images/profile.jpg';
-            $candidate .= '
+            $total_votes = $crow['votes']; // Assuming you have a 'votes' column
+            $image = (!empty($crow['photo'])) ? '../images/' . $crow['photo'] : '../images/profile.jpg';
+
+            // Store candidate data for sorting
+            $candidates[] = [
+                'id' => $crow['id'],
+                'name' => $crow['firstname'] . ' ' . $crow['lastname'],
+                'photo' => $image,
+                'votes' => $total_votes
+            ];
+        }
+
+        // Sort candidates by total votes in descending order
+        usort($candidates, function ($a, $b) {
+            return $b['votes'] - $a['votes'];
+        });
+
+        $candidate_list = '';
+        $is_winner_marked = false; // Track if the winner has been marked
+        foreach ($candidates as $candidate) {
+            $winner_label = (!$is_winner_marked) ? '<span class="label label-success">Winner</span>' : '';
+            $is_winner_marked = true; // Only the first candidate is marked as the winner
+
+            $candidate_list .= '
                 <li>
-                    '.$input.'<button class="btn btn-primary btn-sm btn-flat clist"><i class="fa fa-search"></i> Platform</button><img src="'.$image.'" height="100px" width="100px" class="clist"><span class="cname clist">'.$crow['firstname'].' '.$crow['lastname'].'</span>
+                    <img src="' . $candidate['photo'] . '" height="100px" width="100px" class="clist">
+                    <span class="cname clist">' . $candidate['name'] . '</span>
+                    <span class="votes clist">Votes: ' . $candidate['votes'] . '</span>
+                    ' . $winner_label . '
                 </li>
             ';
         }
 
-        $instruct = ($row['max_vote'] > 1) 
-            ? 'You may select up to '.$row['max_vote'].' candidates' 
-            : 'Select only one candidate';
-
         $output .= '
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="box box-solid" id="'.$row['id'].'">
+                    <div class="box box-solid" id="' . $row['id'] . '">
                         <div class="box-header with-border">
-                            <h3 class="box-title"><b>'.$row['name'].'</b></h3>
+                            <h3 class="box-title"><b>' . $row['name'] . '</b></h3>
                         </div>
                         <div class="box-body">
-                            <p>'.$instruct.'</p>
+                            <p>Select only one candidate</p>
                             <div id="candidate_list">
-                                <ul>'.$candidate.'</ul>
+                                <ul>' . $candidate_list . '</ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         ';
-
-        $candidate = '';
     }
 
     echo json_encode($output);
