@@ -346,10 +346,15 @@ const maxVotes = parseInt(this.getAttribute('data-max-vote'), 10) || 0;
             // Update the preview section
             const previewElement = document.getElementById('preview_' + position);
 if (previewElement) {
+    const selectedNames = Array.from(
+        document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`)
+    ).map(candidate => candidate.querySelector('.candidate-name').textContent);
+
     previewElement.innerHTML = `${position}: <strong>${selectedNames.join(', ') || 'No selection'}</strong>`;
 } else {
     console.error(`Preview element not found for position: ${position}`);
 }
+
 
         });
     });
