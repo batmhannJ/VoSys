@@ -308,119 +308,72 @@ if (isset($voter['id'])) {
 
 <?php include 'includes/scripts.php'; ?>
 <script>
- document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function () {
     const candidateContainers = document.querySelectorAll('.candidate-container');
     const resetButtons = document.querySelectorAll('.reset');
-    const platformButtons = document.querySelectorAll('.platform-button'); // Platform button selector
 
     // Candidate selection logic
     candidateContainers.forEach(container => {
         container.addEventListener('click', function () {
             const position = this.getAttribute('data-position'); // Get position of candidate
-            const maxVotes = parseInt(this.getAttribute('data-max-vote'), 10); // Get max vote allowed for position
+            const maxVotes = parseInt(this.getAttribute('data-max-vote'), 10); // Get max vote allowed
             const selectedCandidates = document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`);
 
-            // Darken the candidate that is clicked on first
-            if (!this.classList.contains('selected') && !this.classList.contains('unselected')) {
-                this.classList.add('unselected'); // Darken the candidate on first click
-            }
+            if (maxVotes === 1) {
+                // For single selection
+                // Deselect any previously selected candidate for the same position
+                selectedCandidates.forEach(candidate => candidate.classList.remove('selected'));
 
-            // If candidate is already selected, deselect it
-            if (this.classList.contains('selected')) {
-                this.classList.remove('selected');
-                this.classList.add('unselected'); // Mark as unselected
-            } else {
-                // If max votes are reached, deselect the first selected candidate to allow reselection
-                if (selectedCandidates.length >= maxVotes) {
-                    const earliestSelected = selectedCandidates[0];
-                    earliestSelected.classList.remove('selected');
-                    earliestSelected.classList.add('unselected'); // Mark as unselected
-                }
-
-                // Select the current candidate
+                // Select the clicked candidate
                 this.classList.add('selected');
-                this.classList.remove('unselected'); // Remove unselected class to restore opacity
+            } else {
+                // For multiple selections
+                if (this.classList.contains('selected')) {
+                    // Deselect the candidate if already selected
+                    this.classList.remove('selected');
+                } else if (selectedCandidates.length < maxVotes) {
+                    // Select the candidate if max votes are not yet reached
+                    this.classList.add('selected');
+                }
             }
 
-            // Update hidden inputs for form submission
-            document.querySelectorAll(`input[name='${position}[]']`).forEach(input => input.remove()); // Clear previous inputs
-
+            // Update hidden inputs for submission
+            const form = document.getElementById('ballotForm');
+            document.querySelectorAll(`input[name='${position}[]']`).forEach(input => input.remove());
             document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`).forEach(candidate => {
-                let selectedInput = document.createElement('input');
-                selectedInput.type = 'hidden';
-                selectedInput.name = `${position}[]`;
-                selectedInput.value = candidate.getAttribute('data-id');
-                document.getElementById('ballotForm').appendChild(selectedInput);
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = `${position}[]`;
+                input.value = candidate.getAttribute('data-id');
+                form.appendChild(input);
             });
 
             // Update the preview section
-            const previewElement = document.getElementById('firstname' + 'lastname' + position);
-            const selectedCandidatesList = Array.from(document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`));
-
-            // Check if there are selected candidates and map their names
-            if (selectedCandidatesList.length > 0) {
-                const selectedNames = selectedCandidatesList.map(candidate => candidate.querySelector('.candidate-name').textContent);
-                previewElement.innerHTML = `${position}: <strong>${selectedNames.join(', ')}</strong>`;
-            } else {
-                previewElement.innerHTML = `${position}: <em>No selection</em>`;
-            }
+            const previewElement = document.getElementById('preview_' + position);
+            const selectedNames = Array.from(document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`))
+                .map(candidate => candidate.querySelector('.candidate-name').textContent);
+            previewElement.innerHTML = `${position}: <strong>${selectedNames.join(', ') || 'No selection'}</strong>`;
         });
     });
 
     // Reset button logic
     resetButtons.forEach(button => {
         button.addEventListener('click', function () {
-            const position = this.getAttribute('data-desc'); // Get the position from 'data-desc'
+            const position = this.getAttribute('data-desc'); // Get position from 'data-desc'
 
-            // Deselect all candidates for the position and restore opacity
-            document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => {
-                candidate.classList.remove('selected');
-                candidate.classList.remove('unselected'); // Remove the unselected class to restore opacity
-            });
+            // Reset all candidates for the position
+            document.querySelectorAll(`.candidate-container[data-position='${position}']`).forEach(candidate => candidate.classList.remove('selected'));
 
             // Clear hidden inputs for the position
             document.querySelectorAll(`input[name='${position}[]']`).forEach(input => input.remove());
 
-            // Clear the preview section
+            // Update the preview
             const previewElement = document.getElementById('preview_' + position);
             previewElement.innerHTML = `${position}: <em>No selection</em>`;
         });
     });
-
-    // Platform button click logic
-    platformButtons.forEach(button => {
-        button.addEventListener('click', function (event) {
-            // Prevent candidate selection when clicking the platform button
-            const candidateContainer = this.closest('.candidate-container');
-
-            // If the candidate is already selected, don't change its state.
-            if (candidateContainer.classList.contains('selected')) {
-                // Prevent platform button from triggering deselection
-                event.stopPropagation();
-            }
-
-            // Show the platform modal (replace with your actual modal logic)
-            const platformContent = this.getAttribute('data-platform');
-            const modal = document.getElementById('platformModal'); // Assuming you have a modal with this ID
-            const modalBody = modal.querySelector('.modal-body');
-            modalBody.innerHTML = platformContent;
-
-            // Display the modal
-            modal.style.display = 'block'; // Replace with your modal display logic
-
-            // Prevent event propagation to avoid candidate selection
-            event.stopPropagation();
-        });
-    });
-
-    // Close modal when clicked outside (if you want this behavior)
-    document.addEventListener('click', function (event) {
-        const modal = document.getElementById('platformModal');
-        if (modal && !modal.contains(event.target)) {
-            modal.style.display = 'none'; // Hide the modal when clicked outside
-        }
-    });
 });
+
 
 
 </script>
