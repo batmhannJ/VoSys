@@ -175,6 +175,12 @@
                 var bullet = event.target;
                 bullet.animate({ property: "dy", to: bullet.pixelY }, 3000, am4core.ease.sinOut);
             });
+            // **Add percentage label inside the bar**
+            var labelBullet = series.bullets.push(new am4charts.LabelBullet());
+            labelBullet.label.text = "{percent}"; // Display percentage inside the bar
+            labelBullet.label.fill = am4core.color("#fff"); // White text
+            labelBullet.locationX = 0.5; // Position at the center of the bar
+            labelBullet.label.fontSize = 12; // Font size for the percentage label
 
             chart.cursor = new am4charts.XYCursor();
             chart.cursor.snapToSeries = series;
