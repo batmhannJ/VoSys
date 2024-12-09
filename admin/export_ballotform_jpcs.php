@@ -10,7 +10,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 // Include session and database connection
 include 'includes/session.php';
 
-// Set up election positions (from your database logic, similar to the HTML page)
+// Set up election positions
 $positions = [
     'President',
     'VP for Internal Affairs',
@@ -121,8 +121,7 @@ foreach ($positions as $position) {
             $candidate_name = $row['firstname'] . ' ' . $row['lastname'];
             $pdfContent .= "
             <tr>
-                <td></td>
-                <td class='candidate-name'>
+                <td colspan='2' class='candidate-name'>
                     &#x25CB; $candidate_name <!-- Unicode for circle (⚪) -->
                 </td>
             </tr>";
@@ -131,8 +130,7 @@ foreach ($positions as $position) {
         // If no candidates, show "No candidates"
         $pdfContent .= "
         <tr>
-            <td></td>
-            <td class='candidate-name'>
+            <td colspan='2' class='candidate-name'>
                 &#x25CB; No candidates <!-- Unicode for circle (⚪) -->
             </td>
         </tr>";
