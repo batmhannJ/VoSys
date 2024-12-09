@@ -160,6 +160,36 @@
                 series.slices.template.events.on("hit", function(event) {
                     event.target.fill = am4core.color("#0000FF");
                 });
+            } else if (graphType === 'line') {
+                var chart = am4core.create(containerId, am4charts.XYChart);
+                chart.data = dataPoints.map((dataPoint) => ({
+                    category: dataPoint.label,
+                    value: dataPoint.y,
+                    percentage: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                }));
+
+                var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+                categoryAxis.dataFields.category = "category";
+                categoryAxis.renderer.grid.template.location = 0;
+
+                var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+
+                var series = chart.series.push(new am4charts.LineSeries());
+                series.dataFields.valueY = "value";
+                series.dataFields.categoryX = "category";
+                series.name = "Votes";
+                series.strokeWidth = 3;
+                series.tensionX = 0.8;
+                series.tooltipText = "{category}: [bold]{valueY} votes ({percentage}%)";
+
+                var bullet = series.bullets.push(new am4charts.CircleBullet());
+                bullet.circle.fill = am4core.color("#fff");
+                bullet.circle.strokeWidth = 2;
+                bullet.circle.stroke = am4core.color("#FF0000");
+                bullet.circle.radius = 5;
+
+                chart.cursor = new am4charts.XYCursor();
+                chart.cursor.snapToSeries = series;
             } else {
                 var chart = am4core.create(containerId, am4charts.XYChart);
                 chart.data = dataPoints.map((dataPoint, index) => ({
