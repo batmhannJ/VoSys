@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
     <html lang="en">
     <head>
         <?php include 'includes/session.php'; ?>
@@ -171,7 +171,7 @@
                 dataPoints.forEach(dataPoint => {
                     var candidateDiv = document.createElement('div');
                     candidateDiv.className = 'candidate-image';
-                    candidateDiv.innerHTML = <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">;
+                    candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
                     imageContainer.appendChild(candidateDiv);
                 });
 
@@ -241,7 +241,7 @@
 
                         Object.keys(selectedCategories).forEach(function (category) {
                             if (response[category]) {
-                                var containerHtml = 
+                                var containerHtml = `
                                     <div class='col-md-12'>
                                         <div class='box'>
                                             <div class='box-header with-border'>
@@ -254,7 +254,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>;
+                                    </div>`;
                                 $('#results-container').append(containerHtml);
 
                                 generateGraph(response[category], category + 'Graph', category + 'Image', graphType);
