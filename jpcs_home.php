@@ -315,29 +315,24 @@ document.addEventListener('DOMContentLoaded', function () {
     // Candidate selection logic
     candidateContainers.forEach(container => {
         container.addEventListener('click', function () {
-            const position = this.getAttribute('data-position'); // Get position of candidate
-            const maxVotes = parseInt(this.getAttribute('data-max-vote'), 10); // Get max vote allowed
+            const position = this.getAttribute('data-position') || 'Unknown Position';
+const maxVotes = parseInt(this.getAttribute('data-max-vote'), 10) || 0;
+ // Get max vote allowed
             const selectedCandidates = document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`);
 
             if (maxVotes === 1) {
-                // For single selection
-                // Deselect any previously selected candidate for the same position
+                // Single selection logic
                 selectedCandidates.forEach(candidate => candidate.classList.remove('selected'));
-
-                // Select the clicked candidate
                 this.classList.add('selected');
-            } else {
-                // For multiple selections
+            } else if (maxVotes > 1) {
+                // Multi-selection logic
                 if (this.classList.contains('selected')) {
-                    // Deselect the candidate if already selected
                     this.classList.remove('selected');
                 } else if (selectedCandidates.length < maxVotes) {
-                    // Select the candidate if max votes are not yet reached
                     this.classList.add('selected');
                 }
             }
 
-            // Update hidden inputs for submission
             const form = document.getElementById('ballotForm');
             document.querySelectorAll(`input[name='${position}[]']`).forEach(input => input.remove());
             document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`).forEach(candidate => {
@@ -350,9 +345,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // Update the preview section
             const previewElement = document.getElementById('preview_' + position);
-            const selectedNames = Array.from(document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`))
-                .map(candidate => candidate.querySelector('.candidate-name').textContent);
-            previewElement.innerHTML = `${position}: <strong>${selectedNames.join(', ') || 'No selection'}</strong>`;
+if (previewElement) {
+    previewElement.innerHTML = `${position}: <strong>${selectedNames.join(', ') || 'No selection'}</strong>`;
+} else {
+    console.error(`Preview element not found for position: ${position}`);
+}
+
         });
     });
 
