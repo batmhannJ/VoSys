@@ -6,7 +6,7 @@
     <style>
         .box-title {
             text-align: center;
-            width: 100%;
+            width: 1000%;
             display: inline-block;
         }
 
