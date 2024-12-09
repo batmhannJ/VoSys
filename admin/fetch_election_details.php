@@ -1,63 +1,59 @@
 <?php
 include 'includes/session.php';
+include 'includes/slugify.php';
 
 if (isset($_POST['election_id'])) {
-    // Retrieve election_id from POST request
     $election_id = $_POST['election_id'];
+    
+    $sql = "SELECT * FROM categories WHERE election_id = '$election_id' ORDER BY priority ASC";
+    $query = $conn->query($sql);
 
-    // Query the election details
-    $sql = "SELECT * FROM election WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('i', $election_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $output = '';
+    $candidate = '';
 
-    if ($result->num_rows > 0) {
-        $election = $result->fetch_assoc();
-
-        // Query the candidates and calculate their votes from the 'votes' table
-        $sql_candidates = "
-            SELECT c.id, c.name, COUNT(v.id) AS total_votes
-            FROM candidates c
-            LEFT JOIN votes v ON c.id = v.candidate_id
-            WHERE c.election_id = ?
-            GROUP BY c.id, c.name
-            ORDER BY total_votes DESC
-        ";
-        $stmt_candidates = $conn->prepare($sql_candidates);
-        $stmt_candidates->bind_param('i', $election_id);
-        $stmt_candidates->execute();
-        $candidates_result = $stmt_candidates->get_result();
-
-        $candidates = [];
-        while ($row = $candidates_result->fetch_assoc()) {
-            $candidates[] = $row;
+    while ($row = $query->fetch_assoc()) {
+        $input = ($row['max_vote'] > 1) 
+            ? '<input type="checkbox" class="flat-red '.slugify($row['name']).'" name="'.slugify($row['name'])."[]".'">' 
+            : '<input type="radio" class="flat-red '.slugify($row['name']).'" name="'.slugify($row['name']).'">';
+        
+        $sql = "SELECT * FROM candidates WHERE category_id='".$row['id']."'";
+        $cquery = $conn->query($sql);
+        while ($crow = $cquery->fetch_assoc()) {
+            $image = (!empty($crow['photo'])) ? '../images/'.$crow['photo'] : '../images/profile.jpg';
+            $candidate .= '
+                <li>
+                    '.$input.'<button class="btn btn-primary btn-sm btn-flat clist"><i class="fa fa-search"></i> Platform</button><img src="'.$image.'" height="100px" width="100px" class="clist"><span class="cname clist">'.$crow['firstname'].' '.$crow['lastname'].'</span>
+                </li>
+            ';
         }
 
-        // Determine the winners (candidates with the highest votes)
-        $winners = [];
-        if (count($candidates) > 0) {
-            $max_votes = $candidates[0]['total_votes'];
-            foreach ($candidates as $candidate) {
-                if ($candidate['total_votes'] == $max_votes) {
-                    $winners[] = $candidate['name'];
-                }
-            }
-        }
+        $instruct = ($row['max_vote'] > 1) 
+            ? 'You may select up to '.$row['max_vote'].' candidates' 
+            : 'Select only one candidate';
 
-        // Prepare and return the response as JSON
-        $response = [
-            'election' => $election,
-            'candidates' => $candidates,
-            'winners' => $winners
-        ];
-        echo json_encode($response);
-    } else {
-        // If election is not found
-        echo json_encode(['error' => 'Election not found']);
+        $output .= '
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-solid" id="'.$row['id'].'">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>'.$row['name'].'</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <p>'.$instruct.'</p>
+                            <div id="candidate_list">
+                                <ul>'.$candidate.'</ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        ';
+
+        $candidate = '';
     }
+
+    echo json_encode($output);
 } else {
-    // If no election_id is provided in the POST request
-    echo json_encode(['error' => 'Invalid request']);
+    echo json_encode('Invalid Request');
 }
 ?>

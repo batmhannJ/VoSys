@@ -153,24 +153,14 @@
       </div>
     </div>
   </div>
-  <div class="row">
-				<div class="col-xs-12">
-					<div class="box box-solid" id="'.$row['id'].'">
-						<div class="box-header with-border">
-							<h3 class="box-title"><b>'.$row['name'].'</b></h3>
-						</div>
-						<div class="box-body">
-							<p>'.$instruct.'
-							</p>
-							<div id="candidate_list">
-								<ul>
-									'.$candidate.'
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+  <div class="box" id="ballotContainer" style="display: none;">
+  <div class="box-header with-border">
+    <h3 class="box-title">Election Ballot</h3>
+  </div>
+  <div class="box-body" id="ballotContent">
+    <!-- Ballot content will be loaded here -->
+  </div>
+</div>
 </section>
 </div>
 
@@ -181,6 +171,28 @@
 
 <?php include 'includes/scripts.php'; ?>
 <?php include 'archive_script.php'; ?>
+
+<script>
+  $(document).ready(function() {
+  $('.view-election').click(function() {
+    var electionId = $(this).data('id');
+    $.ajax({
+      url: 'fetch_election_details.php',
+      method: 'POST',
+      data: { election_id: electionId },
+      dataType: 'json',
+      success: function(response) {
+        $('#ballotContent').html(response);
+        $('#ballotContainer').show();
+      },
+      error: function(xhr, status, error) {
+        alert('Error: ' + error);
+      }
+    });
+  });
+});
+
+</script>
 
 </body>
 </html>
