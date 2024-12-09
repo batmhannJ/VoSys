@@ -308,68 +308,47 @@ if (isset($voter['id'])) {
 
 <?php include 'includes/scripts.php'; ?>
 <script>
- document.addEventListener('DOMContentLoaded', function () {
-    const candidateContainers = document.querySelectorAll('.candidate-container');
-    const resetButtons = document.querySelectorAll('.reset');
-    const platformButtons = document.querySelectorAll('.platform-button'); // Platform button selector
+candidateContainers.forEach(container => {
+    container.addEventListener('click', function () {
+        const position = this.getAttribute('data-position');
+        const maxVotes = parseInt(this.getAttribute('data-max-vote'), 10);
+        const selectedCandidates = document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`);
 
-    // Candidate selection logic
-    candidateContainers.forEach(container => {
-        container.addEventListener('click', function () {
-            const position = this.getAttribute('data-position'); // Get position of candidate
-            const maxVotes = parseInt(this.getAttribute('data-max-vote'), 10); // Get max vote allowed for position
-            const selectedCandidates = document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`);
+        // Logic for maxVote = 1
+        if (maxVotes === 1) {
+            selectedCandidates.forEach(selected => {
+                selected.classList.remove('selected');
+                selected.classList.add('unselected');
+            });
 
-            // Darken the candidate that is clicked on first
-            if (!this.classList.contains('selected') && !this.classList.contains('unselected')) {
-                this.classList.add('unselected'); // Darken the candidate on first click
-            }
-
-            // If candidate is already selected, deselect it
+            this.classList.add('selected');
+            this.classList.remove('unselected');
+        } else {
+            // Logic for positions with multiple votes
             if (this.classList.contains('selected')) {
                 this.classList.remove('selected');
-                this.classList.add('unselected'); // Mark as unselected
+                this.classList.add('unselected');
             } else {
-                // If max votes are reached, deselect the first selected candidate to allow reselection
                 if (selectedCandidates.length >= maxVotes) {
                     const earliestSelected = selectedCandidates[0];
                     earliestSelected.classList.remove('selected');
-                    earliestSelected.classList.add('unselected'); // Mark as unselected
+                    earliestSelected.classList.add('unselected');
                 }
-
-                // Select the current candidate
                 this.classList.add('selected');
-                this.classList.remove('unselected'); // Remove unselected class to restore opacity
+                this.classList.remove('unselected');
             }
+        }
 
-            // Update hidden inputs for form submission
-            document.querySelectorAll(`input[name='${position}[]']`).forEach(input => input.remove()); // Clear previous inputs
-
-            document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`).forEach(candidate => {
-                let selectedInput = document.createElement('input');
-                selectedInput.type = 'hidden';
-                selectedInput.name = `${position}[]`;
-                selectedInput.value = candidate.getAttribute('data-id');
-                document.getElementById('ballotForm').appendChild(selectedInput);
-            });
-
-            // Update the preview section
-            const previewElement = document.getElementById('firstname' + 'lastname' + position);
-            const selectedCandidatesList = Array.from(document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`));
-            const selectedNames = selectedCandidatesList.map(candidate => candidate.querySelector('.candidate-name').textContent);
-            previewElement.innerHTML = `${position}: <strong>${selectedNames.join(', ')}</strong>`;
-            // Check if there are selected candidates and map their names
-            if (selectedCandidatesList.length > 0) {
-                const selectedNames = selectedCandidatesList.map(candidate => candidate.querySelector('.candidate-name').textContent);
-                previewElement.innerHTML = `${position}: <strong>${selectedNames.join(', ')}</strong>`;
-            } else {
-                const selectedNames = selectedCandidatesList.map(candidate => candidate.querySelector('.candidate-name').textContent);
-                previewElement.innerHTML = `${position}: <strong>${selectedNames.join(', ')}</strong>`;
-                previewElement.innerHTML = `${position}: <em>No selection</em>`;
-            }
+        // Update hidden inputs
+        document.querySelectorAll(`input[name='${position}[]']`).forEach(input => input.remove());
+        document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`).forEach(candidate => {
+            let selectedInput = document.createElement('input');
+            selectedInput.type = 'hidden';
+            selectedInput.name = `${position}[]`;
+            selectedInput.value = candidate.getAttribute('data-id');
+            document.getElementById('ballotForm').appendChild(selectedInput);
         });
     });
-
     // Reset button logic
     resetButtons.forEach(button => {
         button.addEventListener('click', function () {
