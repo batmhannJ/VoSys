@@ -167,7 +167,7 @@
                 interval: Math.ceil(totalVotes / 10)
             };
 
-            chart.options.data[0].cornerRadius = 20; // More rounded bar corners
+            chart.options.data[0].cornerRadius = 50; // More rounded bar corners
             chart.options.data[0].bevelEnabled = true; // 3D effect for better appearance
             chart.options.data[0].indexLabelFontWeight = "bold";
             chart.options.data[0].indexLabelFontColor = "#ffffff";
