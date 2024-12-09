@@ -174,8 +174,8 @@
                         percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
                     })),
                     toolTipContent: "<b>{label}</b><br>Votes: {y}<br>Percentage: {percent}%",
-                    color: "#4caf50",
-                    cornerRadius: 10,
+                    color: "#4caf50", // Choose a color for the bars
+                    cornerRadius: 10, // Add rounded corners to bars
                     dataPoints: dataPoints
                 }],
                 theme: "light2"
