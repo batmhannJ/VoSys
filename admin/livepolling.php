@@ -124,56 +124,133 @@
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="path/to/jquery.min.js"></script>
     <script>
-    function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
-        var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+        function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
+            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
-        var imageContainer = document.getElementById(imageContainerId);
-        imageContainer.innerHTML = '';
-        dataPoints.forEach(dataPoint => {
-            var candidateDiv = document.createElement('div');
-            candidateDiv.className = 'candidate-image';
-            candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
-            imageContainer.appendChild(candidateDiv);
-        });
+            var imageContainer = document.getElementById(imageContainerId);
+            imageContainer.innerHTML = '';
+            dataPoints.forEach(dataPoint => {
+                var candidateDiv = document.createElement('div');
+                candidateDiv.className = 'candidate-image';
+                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
+                imageContainer.appendChild(candidateDiv);
+            });
 
-        var chart = new CanvasJS.Chart(containerId, {
-            animationEnabled: true,
-            title: { text: "Vote Counts" },
-            data: [{
-                type: graphType,
-                indexLabel: "{label} - {percent}%",
-                indexLabelPlacement: "inside",
-                indexLabelFontColor: "white",
-                indexLabelFontSize: 14,
-                dataPoints: dataPoints.map(dataPoint => ({
-                    ...dataPoint,
-                    percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-                }))
-            }]
-        });
+            var chart = new CanvasJS.Chart(containerId, {
+                animationEnabled: true,
+                title: { text: "Vote Counts" },
+                data: [{
+                    type: graphType,
+                    indexLabel: "{label} - {percent}%",
+                    indexLabelPlacement: "inside",
+                    indexLabelFontColor: "white",
+                    indexLabelFontSize: 14,
+                    dataPoints: dataPoints.map(dataPoint => ({
+                        ...dataPoint,
+                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                    }))
+                }]
+            });
 
-        if (graphType === 'bar') {
-            chart.options.axisX = {
-                title: "",
-                includeZero: true,
-                interval: 1,
-                labelFormatter: function () {
-                    return " ";
-                }
-            };
+            if (graphType === 'bar') {
+                chart.options.axisX = {
+                    title: "",
+                    includeZero: true,
+                    interval: 1,
+                    labelFormatter: function () {
+                        return " ";
+                    }
+                };
 
-            chart.options.axisY = {
-                title: "",
-                interval: Math.ceil(totalVotes / 10)
-            };
+                chart.options.axisY = {
+                    title: "",
+                    interval: Math.ceil(totalVotes / 10)
+                };
 
-            // ** Add rounded corners to the bar graph **
-            chart.options.data[0].cornerRadius = 10; // Set the radius for rounded corners (you can adjust this)
+                // ** Rounded Corners for Bar Graphs **
+                chart.options.data[0].cornerRadius = 10; // Rounded corners for the bar (Change 10 to the desired radius)
+            }
+
+            chart.render();
         }
 
-        chart.render();
-    }
-</script>
+        function fetchAndGenerateGraphs(organization) {
+            const graphType = $('#graph-type').val();
 
+            $.ajax({
+                url: 'update_data.php',
+                method: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    $('#results-container').empty();
+
+                    var categories = {
+                        'csc': {
+                            'president': 'President',
+                            'vice president': 'Vice President',
+                            'secretary': 'Secretary',
+                            'treasurer': 'Treasurer',
+                            'auditor': 'Auditor',
+                            'p.r.o': 'P.R.O',
+                            'businessManager': 'Business Manager'
+                        }
+                    };
+
+                    var selectedCategories = categories[organization];
+
+                    Object.keys(selectedCategories).forEach(function (category) {
+                        if (response[category]) {
+                            var containerHtml = `
+                                <div class='col-md-12'>
+                                    <div class='box'>
+                                        <div class='box-header with-border'>
+                                            <h3 class='box-title'><b>${selectedCategories[category]}</b></h3>
+                                        </div>
+                                        <div class='box-body'>
+                                            <div class='chart-container'>
+                                                <div class='candidate-images' id='${category}Image'></div>
+                                                <div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`;
+                            $('#results-container').append(containerHtml);
+
+                            generateGraph(response[category], category + 'Graph', category + 'Image', graphType);
+                        }
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching data: ", status, error);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            fetchAndGenerateGraphs('csc');
+
+            $('#organization-form').submit(function (event) {
+                event.preventDefault();
+                fetchAndGenerateGraphs($('#organization-select').val());
+            });
+
+            $('#graph-type').change(function () {
+                fetchAndGenerateGraphs($('#organization-select').val());
+            });
+
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 100) {
+                    $('#back-to-top').fadeIn();
+                } else {
+                    $('#back-to-top').fadeOut();
+                }
+            });
+
+            $('#back-to-top').click(function () {
+                $('html, body').animate({ scrollTop: 0 }, 600);
+                return false;
+            });
+        });
+    </script>
 </body>
 </html>
