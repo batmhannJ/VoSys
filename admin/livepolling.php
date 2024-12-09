@@ -91,7 +91,6 @@
             </section>
 
             <section class="content">
-                <!-- Organization Selection Form -->
                 <form id="organization-form">
                     <label for="organization-select">Select Organization:</label>
                     <select id="organization-select" name="organization">
@@ -114,9 +113,7 @@
                 </form>
                 <br>
 
-                <div class="row justify-content-center" id="results-container">
-                    <!-- Results will be dynamically inserted here -->
-                </div>
+                <div class="row justify-content-center" id="results-container"></div>
             </section>
 
             <button id="back-to-top" title="Back to top">&uarr;</button>
@@ -135,7 +132,7 @@
             dataPoints.forEach(dataPoint => {
                 var candidateDiv = document.createElement('div');
                 candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">;
+                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
                 imageContainer.appendChild(candidateDiv);
             });
 
@@ -164,10 +161,14 @@
                         return " ";
                     }
                 };
+
                 chart.options.axisY = {
                     title: "",
                     interval: Math.ceil(totalVotes / 10)
                 };
+
+                // ** Rounded Corners for Bar Graphs **
+                chart.options.data[0].cornerRadius = 10; // Rounded corners for the bar (Change 10 to the desired radius)
             }
 
             chart.render();
@@ -191,13 +192,7 @@
                             'treasurer': 'Treasurer',
                             'auditor': 'Auditor',
                             'p.r.o': 'P.R.O',
-                            'businessManager': 'Business Manager',
-                            'beedRep': 'BEED Representative',
-                            'bsedRep': 'BSED Representative',
-                            'bshmRep': 'BSHM Representative',
-                            'bsoadRep': 'BSOAD Representative',
-                            'bs crimRep': 'BS Crim Representative',
-                            'bsitRep': 'BSIT Representative'
+                            'businessManager': 'Business Manager'
                         }
                     };
 
@@ -205,7 +200,7 @@
 
                     Object.keys(selectedCategories).forEach(function (category) {
                         if (response[category]) {
-                            var containerHtml = 
+                            var containerHtml = `
                                 <div class='col-md-12'>
                                     <div class='box'>
                                         <div class='box-header with-border'>
@@ -218,7 +213,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>;
+                                </div>`;
                             $('#results-container').append(containerHtml);
 
                             generateGraph(response[category], category + 'Graph', category + 'Image', graphType);
@@ -258,4 +253,4 @@
         });
     </script>
 </body>
-</html> 
+</html>
