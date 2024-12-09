@@ -53,7 +53,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="button" id="submitBtn" class="btn btn-danger">Archive</button>
+        <button type="button" id="submitBtn" class="btn btn-warning">Archive</button>
       </div>
     </div>
   </div>
