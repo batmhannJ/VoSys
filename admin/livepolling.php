@@ -146,17 +146,13 @@
             chart.data = dataPoints.map(dataPoint => ({
                 category: dataPoint.label,
                 value: dataPoint.y,
-                percentage: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                percentage: ((dataPoint.y / totalVotes) * 100).toFixed(2) // Calculate percentage
             }));
 
             var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
             categoryAxis.dataFields.category = "category";
             categoryAxis.renderer.grid.template.location = 0;
             categoryAxis.renderer.minGridDistance = 30;
-
-            // **20-unit spacing between bars**
-            categoryAxis.renderer.cellStartLocation = 0.1; 
-            categoryAxis.renderer.cellEndLocation = 0.9;
 
             var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
             valueAxis.renderer.minGridDistance = 30;
@@ -166,10 +162,6 @@
             series.dataFields.categoryY = "category";
             series.columns.template.tooltipText = "{category}: [bold]{valueX} votes ({percentage}%)[/]";
             series.columns.template.fill = am4core.color("#104E8B");
-
-            // **Set width and spacing of the bars**
-            series.columns.template.width = am4core.percent(80);
-            series.columns.template.maxWidth = 40;
 
             var labelBullet = series.bullets.push(new am4charts.LabelBullet());
             labelBullet.label.text = "{percentage}%";
@@ -181,6 +173,11 @@
             bullet.circle.strokeWidth = 2;
             bullet.circle.stroke = am4core.color("#104E8B");
             bullet.circle.radius = 3;
+
+            bullet.events.on("ready", function(event) {
+                var bullet = event.target;
+                bullet.animate({ property: "dy", to: bullet.pixelY }, 3000, am4core.ease.sinOut);
+            });
 
             chart.cursor = new am4charts.XYCursor();
             chart.cursor.snapToSeries = series;
@@ -212,14 +209,48 @@
 
                     Object.keys(selectedCategories).forEach(function (category) {
                         if (response[category]) {
-                            var containerHtml = `<div class='col-md-12'><div class='box'><div class='box-header with-border'><h3 class='box-title'><b>${selectedCategories[category]}</b></h3></div><div class='box-body'><div class='chart-container'><div class='candidate-images' id='${category}Image'></div><div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div></div></div></div></div>`;
+                            var containerHtml = ` 
+                                <div class='col-md-12'>
+                                    <div class='box'>
+                                        <div class='box-header with-border'>
+                                            <h3 class='box-title'><b>${selectedCategories[category]}</b></h3>
+                                        </div>
+                                        <div class='box-body'>
+                                            <div class='chart-container'>
+                                                <div class='candidate-images' id='${category}Image'></div>
+                                                <div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`;
                             $('#results-container').append(containerHtml);
                             generateGraph(response[category], category + 'Graph', category + 'Image', graphType);
                         }
                     });
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching data: ", status, error);
                 }
             });
         }
+
+        $(document).ready(function () {
+            fetchAndGenerateGraphs('csc');
+
+            $('#organization-form').submit(function (event) {
+                event.preventDefault();
+                fetchAndGenerateGraphs($('#organization-select').val());
+            });
+
+            $('#graph-type').change(function () {
+                fetchAndGenerateGraphs($('#organization-select').val());
+            });
+
+            $('#back-to-top').click(function () {
+                $('html, body').animate({ scrollTop: 0 }, 600);
+                return false;
+            });
+        });
     </script>
 </body>
 </html>
