@@ -1,4 +1,12 @@
 <?php
+// Start the session
+session_start();
+
+// Include session and database connection files
+include 'includes/session.php';
+include 'includes/conn.php';
+
+// Check if necessary POST data is set
 if (isset($_POST['election_id']) && isset($_POST['start_time']) && isset($_POST['end_time'])) {
     $electionId = $_POST['election_id'];
     $startTime = $_POST['start_time'];

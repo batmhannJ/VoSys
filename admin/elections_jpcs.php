@@ -128,11 +128,11 @@
                 <form id="activationForm">
                     <div class="form-group">
                         <label for="starttime">Start Time</label>
-                        <input type="datetime-local" class="form-control" id="starttime" name="starttime" required>
+                        <input type="datetime-local" class="form-control" id="starttime" name="starttime" required min="<?php echo date('Y-m-d\TH:i'); ?>">
                     </div>
                     <div class="form-group">
                         <label for="endtime">End Time</label>
-                        <input type="datetime-local" class="form-control" id="endtime" name="endtime" required>
+                        <input type="datetime-local" class="form-control" id="starttime" name="starttime" required min="<?php echo date('Y-m-d\TH:i'); ?>">
                     </div>
                 </form>
             </div>
