@@ -1,4 +1,4 @@
-# Deny all PHP scripts from executing
+<!-- # Deny all PHP scripts from executing
 <FilesMatch "\.(php|phar|phtml|php[0-9]|pht)$">
     Deny from all
 </FilesMatch>
@@ -7,4 +7,4 @@
 <FilesMatch "\.(jpg|jpeg|png)$">
     Order Allow,Deny
     Allow from all
-</FilesMatch>
+</FilesMatch> -->
