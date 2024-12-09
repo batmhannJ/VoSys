@@ -1,21 +1,86 @@
-<!-- Preview -->
-<div class="modal fade" id="preview_modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  </button>
-              <h4 class="modal-title">Vote Preview</h4>
+<!-- Preview Modal -->
+<div class="modal fade" id="preview_modal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content custom-preview-modal">
+            <div class="modal-header custom-preview-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title custom-preview-title">Vote Preview</h5>
             </div>
-            <div class="modal-body">
-              <div id="preview_body"></div>
+            <div class="modal-body custom-preview-body">
+                <div id="preview_body"></div>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+            <div class="modal-footer custom-preview-footer">
+                <button type="button" class="btn btn-secondary btn-flat" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
             </div>
         </div>
     </div>
 </div>
+
+<style>
+  /* Custom Styles for Preview Modal */
+.custom-preview-modal {
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.custom-preview-header {
+    background-color: #1abc9c;
+    color: #fff;
+    padding: 15px 20px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.custom-preview-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.custom-preview-body {
+    padding: 20px;
+    font-size: 1.1rem;
+    color: #34495e;
+}
+
+.custom-preview-footer {
+    background-color: #f4f4f4;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.custom-preview-footer .btn {
+    background-color: #e74c3c;
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+.custom-preview-footer .btn:hover {
+    background-color: #c0392b;
+}
+
+.custom-preview-footer .btn:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.close {
+    color: #fff;
+    font-size: 1.5rem;
+    opacity: 0.7;
+}
+
+.close:hover {
+    opacity: 1;
+}
+
+</style>
 
 <!--<script>
   $('#submit').click(function() {
@@ -41,89 +106,22 @@
 </script>-->
 
 </div>
-<!-- Platform Modal -->
-<div class="modal fade" id="platform" tabindex="-1" aria-labelledby="platformModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content custom-modal">
-            <div class="modal-header custom-header">
-                <h5 class="modal-title custom-title"><b><span class="candidate">Candidate Platform</span></b></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+<!-- Platform -->
+<div class="modal fade" id="platform">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title"><b><span class="candidate"></b></h4>
             </div>
-            <div class="modal-body custom-body">
-                <p id="plat_view"></p>
+            <div class="modal-body">
+              <p id="plat_view"></p>
             </div>
-            <div class="modal-footer custom-footer">
-                <button type="button" class="btn btn-primary btn-flat" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
             </div>
         </div>
     </div>
 </div>
-
-<style>
-
-/* Custom Modal Styles */
-.custom-modal {
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    background: linear-gradient(135deg, #f0f4f7, #e8ebef);
-}
-
-.custom-header {
-    background-color: #2c3e50;
-    color: #fff;
-    border-bottom: 2px solid #2980b9;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-}
-
-.custom-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
-.custom-body {
-    font-size: 1rem;
-    color: #34495e;
-    padding: 20px;
-}
-
-.custom-footer {
-    border-top: 1px solid #ddd;
-    padding: 15px;
-    display: flex;
-    justify-content: center;
-}
-
-.custom-footer .btn {
-    background-color: #2980b9;
-    color: #fff;
-    transition: background-color 0.3s ease;
-}
-
-.custom-footer .btn:hover {
-    background-color: #3498db;
-}
-
-.custom-footer .btn:focus {
-    outline: none;
-    box-shadow: none;
-}
-
-.close {
-    color: #ecf0f1;
-    font-size: 1.5rem;
-    opacity: 0.7;
-}
-
-.close:hover {
-    opacity: 1;
-}
-
-</style>
-
 
 <!-- View Ballot -->
 <div class="modal fade" id="view">
