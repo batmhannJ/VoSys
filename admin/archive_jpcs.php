@@ -153,12 +153,27 @@
       </div>
     </div>
   </div>
-  <section class="content" id="electionDetailsSection" style="display: none;">
-          <div class="row">
-            <div class="col-xs-10 col-xs-offset-1" id="content"></div>
+  <div class="row">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-header with-border">
+              <a href="#reset" data-toggle="modal" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-refresh"></i> Reset</a>
+            </div>
+            <div class="box-body">
+              <table id="example1" class="table table-bordered">
+                <thead>
+                  <th class="hidden"></th>
+                  <th>No. </th>
+                  <th>ID. </th>
+                  <th>Position</th>
+                  <th>Candidate</th>
+                  <th>Voter</th>
+                </thead>
+              </table>
+            </div>
           </div>
-        </section>
-      </section>
+        </div>
+      </div>
 </section>
 </div>
 
