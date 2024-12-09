@@ -581,6 +581,7 @@ document.addEventListener("click", function () {
   dropdownContent.classList.add("hide");
 });
 
+
   </script>
   </body>
   <style>
@@ -621,15 +622,13 @@ body {
   color: var(--text-dark);
 }
 
-
-
 .dropdown {
   position: relative;
 }
 
 /* General styles for dropdown button */
 .dropbtn {
-  font-size: 18px;
+  font-size: 16px;
   color: #fff;
   background-color: transparent;
   border: none;
@@ -642,20 +641,14 @@ body {
   transition: color 0.3s ease;
 }
 
-/* Add animated border */
-.dropdown:hover .dropbtn {
-  animation: borderAnimation 0.5s forwards;
-}
-
-
 /* Dropdown content */
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #222;
+  background-color: maroon; /* Maroon background */
   min-width: 200px;
   border-radius: 4px;
-  top: 170%; /* Adjusted from 100% to 110% to move it downward */
+  top: 170%; /* Adjusted from 100% to 170% to move it downward */
   left: 0;
   z-index: 1;
   opacity: 0;
@@ -663,9 +656,8 @@ body {
   transition: all 0.3s ease;
 }
 
-
-/* Display dropdown when hovered */
-.dropdown:hover .dropdown-content {
+/* Show the dropdown when the button is clicked */
+.dropdown .dropdown-content {
   display: block;
   opacity: 1;
   visibility: visible;
@@ -686,12 +678,23 @@ body {
 .dropdown-content a:last-child {
   border-bottom: none;
 }
+
 /* Hide dropdown when clicking outside */
 .hide {
   display: none !important;
 }
 
-
+/* Mobile responsive dropdown */
+@media (max-width: 768px) {
+  .dropdown-content {
+    position: static;
+    min-width: 100%; /* Full width on small screens */
+  }
+  .dropdown .dropdown-content a {
+    padding: 10px 15px;
+    font-size: 14px;
+  }
+}
 
 
 .btn {
