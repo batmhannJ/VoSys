@@ -158,13 +158,8 @@
     <h1 style="text-align: center;">
       <b id="electionTitle"> <!--ELECTION TITLE will be inserted here--> </b>
     </h1>
-
     <div class="box-body" id="ballotContent">
       <!-- Ballot content will be loaded here -->
-
-      <h1 style="text-align: center;">
-      <b id="voterStats"> </b>
-    </h1>
     </div>
   </div>
 </div>
@@ -189,24 +184,18 @@ $(document).ready(function() {
       data: { election_id: electionId },
       dataType: 'json',
       success: function(response) {
-        if (response !== 'Election not found' && response !== 'Invalid Request') {
-          // Display election title and academic year
-          $('#electionTitle').text(response.title);
-          $('#electionTitle').after('<p style="text-align: center;">Academic Year: ' + response.academic_yr + '</p>');
+        // Display election title
+        $('#electionTitle').text(response.title);
+        
+        // Display academic year below the title
+        $('#electionTitle').after('<p style="text-align: center;">Academic Year: ' + response.academic_yr + '</p>');
 
-          // Display voter stats
-          $('#voterStats').html(`
-            <p>Total Voters: ${response.total_voters}</p>
-            <p>Voters Voted: ${response.voters_voted}</p>
-            <p>Remaining Voters: ${response.remaining_voters}</p>
-          `);
-
-          // Update the ballot content and show the container
-          $('#ballotContent').html(response.content);
-          $('#ballotContainer').show();
-        } else {
-          alert('Election not found or invalid request');
-        }
+        // Update the ballot content and show the container
+        $('#ballotContent').html(response.content);
+        $('#ballotContainer').show();
+      },
+      error: function(xhr, status, error) {
+        alert('Error: ' + error);
       }
     });
   });

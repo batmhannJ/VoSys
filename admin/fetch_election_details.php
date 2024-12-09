@@ -4,11 +4,11 @@ include 'includes/slugify.php';
 
 if (isset($_POST['election_id'])) {
     $election_id = $_POST['election_id'];
-
+    
     // Fetch the election title and academic year
     $sql = "SELECT title, academic_yr FROM election WHERE id = '$election_id'";
     $result = $conn->query($sql);
-
+    
     // Check if election exists
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
@@ -19,21 +19,6 @@ if (isset($_POST['election_id'])) {
         exit;
     }
 
-    // Fetch Total Voters
-    $total_voters_sql = "SELECT COUNT(*) AS total_voters FROM voters";
-    $total_voters_query = $conn->query($total_voters_sql);
-    $total_voters_row = $total_voters_query->fetch_assoc();
-    $total_voters = $total_voters_row['total_voters'];
-
-    // Fetch Voters Voted
-    $voters_voted_sql = "SELECT COUNT(DISTINCT voters_id) AS voters_voted FROM votes WHERE election_id = '$election_id'";
-    $voters_voted_query = $conn->query($voters_voted_sql);
-    $voters_voted_row = $voters_voted_query->fetch_assoc();
-    $voters_voted = $voters_voted_row['voters_voted'];
-
-    // Calculate Remaining Voters
-    $remaining_voters = $total_voters - $voters_voted;
-
     // Fetch categories associated with the election
     $sql = "SELECT * FROM categories WHERE election_id = '$election_id' ORDER BY priority ASC";
     $query = $conn->query($sql);
@@ -43,10 +28,9 @@ if (isset($_POST['election_id'])) {
     while ($row = $query->fetch_assoc()) {
         $max_vote = $row['max_vote'];  // Fetch max_vote for the category
 
-        // Fetch candidates for each category
         $sql = "SELECT * FROM candidates WHERE category_id='" . $row['id'] . "'";
         $cquery = $conn->query($sql);
-
+        
         $candidates = [];
         while ($crow = $cquery->fetch_assoc()) {
             // Count total votes for each candidate
@@ -90,11 +74,10 @@ if (isset($_POST['election_id'])) {
             ';
         }
 
-        // Append category and candidate list to output
         $output .= '
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="box box-solid" id="category_' . $row['id'] . '">
+                    <div class="box box-solid" id="' . $row['id'] . '">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>' . $row['name'] . '</b></h3>
                         </div>
@@ -109,13 +92,10 @@ if (isset($_POST['election_id'])) {
         ';
     }
 
-    // Include the election title, academic year, voter stats, and content in the response
+    // Include the election title, academic year, and content in the response
     $response = [
         'title' => $election_title,
         'academic_yr' => $academic_yr,
-        'total_voters' => $total_voters,
-        'voters_voted' => $voters_voted,
-        'remaining_voters' => $remaining_voters,
         'content' => $output
     ];
 
