@@ -3,6 +3,10 @@
 <head>
     <?php include 'includes/session.php'; ?>
     <?php include 'includes/header.php'; ?>
+    <!-- amCharts 4 -->
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
     <style>
         .box-title {
             text-align: center;
@@ -121,77 +125,72 @@
         <?php include 'includes/footer.php'; ?>
     </div>
     <?php include 'includes/scripts.php'; ?>
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-    <script src="path/to/jquery.min.js"></script>
+
     <script>
-       function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
-        var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+        function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
+            // Convert the dataPoints into the format amCharts expects
+            var chartData = dataPoints.map(function (dataPoint) {
+                return {
+                    category: dataPoint.label,
+                    value: dataPoint.y,
+                };
+            });
 
-        var imageContainer = document.getElementById(imageContainerId);
-        imageContainer.innerHTML = '';
-        dataPoints.forEach(dataPoint => {
-            var candidateDiv = document.createElement('div');
-            candidateDiv.className = 'candidate-image';
-            candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
-            imageContainer.appendChild(candidateDiv);
-        });
+            // Create chart instance
+            var chart = am4core.create(containerId, am4charts.XYChart);
+            chart.data = chartData;
 
-        var chart = new CanvasJS.Chart(containerId, {
-            animationEnabled: true,
-            animationDuration: 1000, // smoother animation
-            title: { text: "Vote Counts" },
-            data: [{
-                type: graphType,
-                indexLabel: "{label} - {percent}%",
-                indexLabelPlacement: "inside",
-                indexLabelFontColor: "white",
-                indexLabelFontSize: 14,
-                dataPoints: dataPoints.map(dataPoint => ({
-                    ...dataPoint,
-                    percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-                }))
-            }]
-        });
+            // Create axes
+            var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+            categoryAxis.dataFields.category = "category";
+            categoryAxis.renderer.grid.template.location = 0;
+            categoryAxis.renderer.minGridDistance = 30;
 
-        if (graphType === 'bar') {
-    chart.options.axisX = {
-        title: "",
-        includeZero: true,
-        interval: 1,
-        labelFormatter: function () {
-            return " ";
+            var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+            valueAxis.renderer.grid.template.strokeOpacity = 0;
+
+            // Create series (columns)
+            var series = chart.series.push(new am4charts.ColumnSeries());
+            series.dataFields.valueY = "value";
+            series.dataFields.categoryX = "category";
+            series.name = "Value";
+            series.columns.template.tooltipText = "{categoryX}: [bold]{valueY}[/]";
+            series.columns.template.fillOpacity = 0.8;
+
+            // Create moving bullets (indicators)
+            var bullet = series.bullets.push(new am4charts.Bullet());
+            var circle = bullet.createChild(am4core.Circle);
+            circle.radius = 8;
+            circle.fill = am4core.color("#ff0000");
+            circle.strokeWidth = 2;
+            circle.stroke = am4core.color("#ffffff");
+
+            // Animation of the bullets
+            bullet.animation.add({
+                property: "x",
+                from: -100,
+                to: 0,
+                duration: 1000,
+                delay: (index) => index * 100
+            });
+
+            // Add cursor interaction
+            chart.cursor = new am4charts.XYCursor();
+
+            // Add scroll bar (optional)
+            chart.scrollbarX = new am4core.Scrollbar();
+
+            // Append candidate images
+            var imageContainer = document.getElementById(imageContainerId);
+            imageContainer.innerHTML = '';
+            dataPoints.forEach(function (dataPoint) {
+                var candidateDiv = document.createElement('div');
+                candidateDiv.className = 'candidate-image';
+                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
+                imageContainer.appendChild(candidateDiv);
+            });
         }
-    };
 
-    chart.options.axisY = {
-        title: "",
-        interval: Math.ceil(totalVotes / 10)
-    };
-
-    // Main changes for rounded bar
-    chart.options.data[0].cornerRadius = 50; // Rounded bar corners, make this higher for more rounding
-    chart.options.data[0].bevelEnabled = false; // Remove 3D effect for cleaner look
-    chart.options.data[0].indexLabelFontWeight = "bold";
-    chart.options.data[0].indexLabelFontColor = "#ffffff";
-
-    // Apply changes to each bar
-    chart.options.data[0].dataPoints = dataPoints.map(dataPoint => ({
-        ...dataPoint,
-        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2),
-        color: dataPoint.color || "#4F81BC", // Default color
-        // Custom shadow effect (optional)
-        shadow: {
-            color: 'rgba(0, 0, 0, 0.2)', 
-            blur: 8, 
-            offsetX: 2, 
-            offsetY: 2  
-        }
-    }));
-}
-
-
-        chart.render();
-    }
         function fetchAndGenerateGraphs(organization) {
             const graphType = $('#graph-type').val();
 
