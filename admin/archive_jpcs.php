@@ -162,21 +162,19 @@
         <div class="box-body" id="ballotContent">
             <!-- Ballot content will be loaded here -->
         </div>
-        
-        <!-- New Table for Voter Stats -->
-        <div class="col-md-12">
-            <div class="box">
-                <div class="box-header with-border">
-                    <h3 class="box-title text-center">Voter Statistics</h3>
-                </div>
-                <div class="box-body">
-                <div class="table-responsive">
-                    <table id="example1" class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Total Voters</th>
-                                <th>Voters Voted</th>
-                                <th>Remaining Voters</th>
+        </div>
+        <!-- End of Voter Stats Table -->
+    </div>
+</div>
+<div class="row">
+  <div class="table-responsive">
+    <div class="box-body">
+      <table id="example1" class="table table-bordered">
+        <thead>
+          <tr>
+          <th>Total Voters</th>
+          <th>Voters Voted</th>
+          <th>Remaining Voters</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -189,11 +187,7 @@
                     </table>
                   </div>
                 </div>
-            </div>
-          </div>
-        </div>
-        <!-- End of Voter Stats Table -->
-    </div>
+  </div>
 </div>
 </section>
 </div>
