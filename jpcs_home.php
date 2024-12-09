@@ -438,8 +438,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-
-
 </script>
 <script>
     function updateCountdown(endTime) {
