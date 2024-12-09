@@ -24,7 +24,15 @@ if(isset($_POST['id'])){
             $stmt_candidates = $conn->prepare($sql_archive_candidates);
             $stmt_candidates->bind_param('i', $id);
             if($stmt_candidates->execute()){
-                $_SESSION['success'] = 'Election and candidates archived successfully';
+                // Archive the categories related to the election
+                $sql_archive_categories = "UPDATE categories SET archived = TRUE WHERE election_id = ?";
+                $stmt_categories = $conn->prepare($sql_archive_categories);
+                $stmt_categories->bind_param('i', $id);
+                if($stmt_categories->execute()){
+                    $_SESSION['success'] = 'Election, candidates, and categories archived successfully';
+                } else {
+                    $_SESSION['error'] = 'Something went wrong in archiving categories';
+                }
             } else {
                 $_SESSION['error'] = 'Something went wrong in archiving candidates';
             }
