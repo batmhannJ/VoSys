@@ -143,9 +143,6 @@
         </div>
     </div>
 </div>
-
-
-
 </div>
 <?php include 'includes/scripts.php'; ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
@@ -261,6 +258,7 @@ $('#submitActivationBtn').on('click', function() {
     console.log('Start Time:', startTime);
     console.log('End Time:', endTime);
 
+    // Check if both start and end times are provided
     if (startTime && endTime) {
         $.ajax({
             type: 'POST',
@@ -279,9 +277,11 @@ $('#submitActivationBtn').on('click', function() {
             },
             error: function(xhr, status, error) {
                 console.error(xhr.responseText);
+                toastr.error('An error occurred.');
             }
         });
     } else {
+        // If either start or end time is missing, show the error message
         toastr.error('Please fill in both start and end times.');
     }
 });
