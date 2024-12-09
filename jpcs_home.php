@@ -212,6 +212,9 @@ if (isset($voter['id'])) {
                                                     <ul>';
                                                     $sql = "SELECT * FROM candidates WHERE category_id='" . $row['id'] . "'";
                                                     $cquery = $conn->query($sql);
+                                                    if ($cquery->num_rows == 0) {
+                                                        echo "No candidates found for category ID: " . $row['id'];
+                                                    }
                                                     
                                                     while ($crow = $cquery->fetch_assoc()) {
                                                         $slug = slugify($row['name']);
