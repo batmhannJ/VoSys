@@ -212,6 +212,9 @@ if (isset($voter['id'])) {
                                                     <ul>';
                                                     $sql = "SELECT * FROM candidates WHERE category_id='" . $row['id'] . "'";
                                                     $cquery = $conn->query($sql);
+                                                    if ($cquery->num_rows == 0) {
+                                                        echo "No candidates found for category ID: " . $row['id'];
+                                                    }
                                                     
                                                     while ($crow = $cquery->fetch_assoc()) {
                                                         $slug = slugify($row['name']);
@@ -243,8 +246,7 @@ if (isset($voter['id'])) {
                                                         // Generate candidate container
                                                         echo '<div class="candidate-container" 
                                                                     data-id="' . $crow['id'] . '" 
-                                                                    data-position="' . $slug . '" 
-                                                                    data-max-vote="' . $maxVote . '">
+                                                                    data-position="' . $slug . '">
                                                                 <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image"> <br>
                                                                 <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span> <br>
                                                                  <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
