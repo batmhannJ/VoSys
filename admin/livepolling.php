@@ -138,7 +138,7 @@
 
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
-            animationDuration: 1000, // smoother animation
+            animationDuration: 1500, // More gradual animation for a smooth effect
             title: { text: "Vote Counts" },
             data: [{
                 type: graphType,
@@ -167,8 +167,8 @@
                 interval: Math.ceil(totalVotes / 10)
             };
 
-            chart.options.data[0].cornerRadius = 15; // More rounded bar corners
-            chart.options.data[0].bevelEnabled = false; // 3D effect for better appearance
+            chart.options.data[0].cornerRadius = 20; // More rounded corners
+            chart.options.data[0].bevelEnabled = true; // Enhanced 3D effect
             chart.options.data[0].indexLabelFontWeight = "bold";
             chart.options.data[0].indexLabelFontColor = "#ffffff";
 
