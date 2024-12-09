@@ -15,7 +15,7 @@ if (isset($_POST['election_id'])) {
         $election_title = $row['title']; // Store election title
         $academic_yr = $row['academic_yr']; // Store academic year
     } else {
-        echo json_encode('Election not found');
+        echo json_encode(['error' => 'Election not found']);
         exit;
     }
 
@@ -119,6 +119,6 @@ if (isset($_POST['election_id'])) {
 
     echo json_encode($response);
 } else {
-    echo json_encode('Invalid Request');
+    echo json_encode(['error' => 'Invalid Request']);
 }
 ?>

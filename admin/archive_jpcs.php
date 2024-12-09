@@ -210,20 +210,24 @@ $(document).ready(function() {
       data: { election_id: electionId },
       dataType: 'json',
       success: function(response) {
-        // Display election title
-        $('#electionTitle').text(response.title);
-        
-        // Display academic year below the title
-        $('#electionTitle').after('<p style="text-align: center;">Academic Year: ' + response.academic_yr + '</p>');
+        if (response.title) {
+          // Display election title
+          $('#electionTitle').text(response.title);
+          
+          // Display academic year below the title
+          $('#electionTitle').after('<p style="text-align: center;">Academic Year: ' + response.academic_yr + '</p>');
 
-        // Display voter statistics
-        $('#totalVoters').text(response.total_voters); // Total voters
-        $('#votersVoted').text(response.voted_voters); // Voters who voted
-        $('#remainingVoters').text(response.remaining_voters); // Remaining voters
+          // Display voter statistics
+          $('#totalVoters').text(response.total_voters); // Total voters
+          $('#votersVoted').text(response.voted_voters); // Voters who voted
+          $('#remainingVoters').text(response.remaining_voters); // Remaining voters
 
-        // Update the ballot content and show the container
-        $('#ballotContent').html(response.content);
-        $('#ballotContainer').show();
+          // Update the ballot content and show the container
+          $('#ballotContent').html(response.content);
+          $('#ballotContainer').show();
+        } else {
+          alert('Error: Election not found.');
+        }
       },
       error: function(xhr, status, error) {
         alert('Error: ' + error);
