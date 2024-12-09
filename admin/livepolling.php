@@ -175,6 +175,7 @@
                 var bullet = event.target;
                 bullet.animate({ property: "dy", to: bullet.pixelY }, 3000, am4core.ease.sinOut);
             });
+            
 
             chart.cursor = new am4charts.XYCursor();
             chart.cursor.snapToSeries = series;
