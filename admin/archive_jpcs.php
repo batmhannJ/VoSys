@@ -153,14 +153,12 @@
       </div>
     </div>
   </div>
-  <div class="box" id="ballotContainer" style="display: none;">
   <h1 class="page-header text-center title">
 	  <b>JUNIOR PHILIPPINE COMPUTER SOCIETY<br> ELECTIONS</b>
   </h1>
   <div class="box-body" id="ballotContent">
     <!-- Ballot content will be loaded here -->
   </div>
-</div>
 </section>
 </div>
 
