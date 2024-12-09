@@ -162,25 +162,29 @@
             return " ";
         }
     };
+
     chart.options.axisY = {
         title: "",
         interval: Math.ceil(totalVotes / 10)
     };
 
-    chart.options.data[0].cornerRadius = 25; // Increased rounded bar corners
-    chart.options.data[0].bevelEnabled = false; // Disable 3D effect for better appearance
+    // Main changes for rounded bar
+    chart.options.data[0].cornerRadius = 50; // Rounded bar corners, make this higher for more rounding
+    chart.options.data[0].bevelEnabled = false; // Remove 3D effect for cleaner look
     chart.options.data[0].indexLabelFontWeight = "bold";
     chart.options.data[0].indexLabelFontColor = "#ffffff";
 
+    // Apply changes to each bar
     chart.options.data[0].dataPoints = dataPoints.map(dataPoint => ({
         ...dataPoint,
         percent: ((dataPoint.y / totalVotes) * 100).toFixed(2),
         color: dataPoint.color || "#4F81BC", // Default color
+        // Custom shadow effect (optional)
         shadow: {
-            color: 'rgba(0, 0, 0, 0.3)', 
-            blur: 10, 
-            offsetX: 4, 
-            offsetY: 4  
+            color: 'rgba(0, 0, 0, 0.2)', 
+            blur: 8, 
+            offsetX: 2, 
+            offsetY: 2  
         }
     }));
 }
