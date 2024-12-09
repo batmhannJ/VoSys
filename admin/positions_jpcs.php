@@ -59,7 +59,7 @@
                 </thead>
                 <tbody>
                   <?php
-                    $sql = "SELECT * FROM categories WHERE election_id = 1";
+                    $sql = "SELECT * FROM categories WHERE election_id = 1 AND archived = FALSE";
                     $query = $conn->query($sql);
                     while($row = $query->fetch_assoc()){
                       echo "
