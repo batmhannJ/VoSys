@@ -5,18 +5,30 @@ include 'includes/slugify.php';
 if (isset($_POST['election_id'])) {
     $election_id = $_POST['election_id'];
     
-    // Fetch the election title
-    $sql = "SELECT title FROM election WHERE id = '$election_id'";
+    // Fetch the election title and academic year
+    $sql = "SELECT title, academic_yr FROM election WHERE id = '$election_id'";
     $result = $conn->query($sql);
     
     // Check if election exists
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $election_title = $row['title']; // Store election title
+        $academic_yr = $row['academic_yr']; // Store academic year
     } else {
         echo json_encode('Election not found');
         exit;
     }
+
+    // Calculate total voters, voters voted, and remaining voters
+    $total_voters_sql = "SELECT COUNT(*) AS total_voters FROM users WHERE election_id = '$election_id'";  // Assuming `users` table has election_id field
+    $voters_voted_sql = "SELECT COUNT(DISTINCT user_id) AS voters_voted FROM votes WHERE election_id = '$election_id'";  // Assuming `votes` table has election_id and user_id fields
+
+    $total_voters_query = $conn->query($total_voters_sql);
+    $voters_voted_query = $conn->query($voters_voted_sql);
+
+    $total_voters = $total_voters_query->fetch_assoc()['total_voters'];
+    $voters_voted = $voters_voted_query->fetch_assoc()['voters_voted'];
+    $remaining_voters = $total_voters - $voters_voted;
 
     // Fetch categories associated with the election
     $sql = "SELECT * FROM categories WHERE election_id = '$election_id' ORDER BY priority ASC";
@@ -91,9 +103,13 @@ if (isset($_POST['election_id'])) {
         ';
     }
 
-    // Include the election title in the response
+    // Include the election title, academic year, total voters, voters voted, remaining voters, and content in the response
     $response = [
         'title' => $election_title,
+        'academic_yr' => $academic_yr,
+        'total_voters' => $total_voters,
+        'voters_voted' => $voters_voted,
+        'remaining_voters' => $remaining_voters,
         'content' => $output
     ];
 

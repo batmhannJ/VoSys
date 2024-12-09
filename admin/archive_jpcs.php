@@ -77,7 +77,7 @@
       <div class="box">
         <div class="box-header with-border">
           <button class="btn btn-primary btn-sm btn-flat" id="batchRestoreBtn" data-target='#batchRestoreModal'><i class="fa fa-reply"></i> Batch Restore</button>
-          <button class="btn btn-danger btn-sm btn-flat" id="batchDeleteBtn" data-target='#batchDeleteModal'><i class="fa fa-trash"></i> Batch Delete</button>
+          <!-- <button class="btn btn-danger btn-sm btn-flat" id="batchDeleteBtn" data-target='#batchDeleteModal'><i class="fa fa-trash"></i> Batch Delete</button> -->
         </div>
         <div class="box-body">
           <table id="example1" class="table table-bordered">
@@ -96,7 +96,7 @@
                 <th>#</th>
                 <th>ID</th>
                 <th>Title</th>
-                <th>Voters</th>
+                <th>Academic Year</th>
                 <?php endif; ?>
                 <th>Tools</th>
               </tr>
@@ -137,7 +137,7 @@
                         <td><input type='checkbox' class='selectItem' value='".$row['id']."'></td>
                         <td>".$row['id']."</td>
                         <td>".$row['title']."</td>
-                        <td>".$row['voters']."</td>
+                        <td>".$row['academic_yr']."</td>
                         <td>
                           <button class='btn btn-warning btn-sm restore-election btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#electionConfirmationModal'><i class='fa fa-reply'></i> Restore</button>
                           <button class='btn btn-primary btn-sm view-election btn-flat' data-id='" . $row['id'] . "'><i class='fa fa-eye'></i> View Election</button>
@@ -185,7 +185,10 @@ $(document).ready(function() {
       dataType: 'json',
       success: function(response) {
         // Display election title
-        $('h1 b').text(response.title);
+        $('#electionTitle').text(response.title);
+        
+        // Display academic year below the title
+        $('#electionTitle').after('<p style="text-align: center;">Academic Year: ' + response.academic_yr + '</p>');
 
         // Update the ballot content and show the container
         $('#ballotContent').html(response.content);
