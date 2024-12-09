@@ -54,7 +54,7 @@
         }
 
         .chart-container > div {
-            flex-grow: 10; /* Make the graph section take up available space */
+            flex-grow: 100; /* Make the graph section take up available space */
             
         }
 
