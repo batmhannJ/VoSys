@@ -11,6 +11,8 @@ if (isset($_POST['election_id'])) {
     $output = '';
 
     while ($row = $query->fetch_assoc()) {
+        $max_vote = $row['max_vote'];  // Fetch max_vote for the category
+
         $sql = "SELECT * FROM candidates WHERE category_id='" . $row['id'] . "'";
         $cquery = $conn->query($sql);
         
@@ -39,10 +41,13 @@ if (isset($_POST['election_id'])) {
         });
 
         $candidate_list = '';
-        $is_winner_marked = false; // Track if the winner has been marked
+        $is_winner_marked = 0;  // Track the number of winners marked
         foreach ($candidates as $candidate) {
-            $winner_label = (!$is_winner_marked) ? '<span class="label label-success">Winner</span>' : '';
-            $is_winner_marked = true; // Only the first candidate is marked as the winner
+            // Mark the top `max_vote` candidates as winners
+            $winner_label = ($is_winner_marked < $max_vote) ? '<span class="label label-success">Winner</span>' : '';
+            if ($is_winner_marked < $max_vote) {
+                $is_winner_marked++;  // Increment winner count for each winner marked
+            }
 
             $candidate_list .= '
                 <li>
@@ -62,7 +67,6 @@ if (isset($_POST['election_id'])) {
                             <h3 class="box-title"><b>' . $row['name'] . '</b></h3>
                         </div>
                         <div class="box-body">
-                            <p>Select only one candidate</p>
                             <div id="candidate_list">
                                 <ul>' . $candidate_list . '</ul>
                             </div>
