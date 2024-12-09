@@ -212,7 +212,7 @@
                 series.columns.template.tooltipText = "{category}: [bold]{valueX} votes ({percentage}%)[/]";
 
                 // Control Bar Width (narrower bars)
-                series.columns.template.width = am4core.percent(40); // Adjust the percentage for narrower bars
+                series.columns.template.width = am4core.percent(20); // Adjust the percentage for narrower bars
 
                 // Add candidate names and percentages inside the bars (centered)
                 var labelBullet = series.bullets.push(new am4charts.LabelBullet());
