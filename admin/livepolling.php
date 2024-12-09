@@ -149,17 +149,18 @@
                 value: dataPoint.y
             }));
 
-            var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+            var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis()); // Change this to y-axis for horizontal chart
             categoryAxis.dataFields.category = "category";
             categoryAxis.renderer.grid.template.location = 0;
+            categoryAxis.renderer.minGridDistance = 30;
 
-            var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+            var valueAxis = chart.xAxes.push(new am4charts.ValueAxis()); // Change this to x-axis for horizontal chart
             valueAxis.renderer.minGridDistance = 30;
 
             var series = chart.series.push(new am4charts.ColumnSeries());
-            series.dataFields.valueY = "value";
-            series.dataFields.categoryX = "category";
-            series.columns.template.tooltipText = "{category}: [bold]{valueY}[/]";
+            series.dataFields.valueX = "value"; // Change to valueX for horizontal chart
+            series.dataFields.categoryY = "category"; // Change to categoryY for horizontal chart
+            series.columns.template.tooltipText = "{category}: [bold]{valueX}[/]";
             series.columns.template.fill = am4core.color("#104E8B");
 
             // Add moving bullets (animation effect)
@@ -172,7 +173,7 @@
             // Animation for moving bullets
             bullet.events.on("ready", function(event) {
                 var bullet = event.target;
-                bullet.animate({ property: "dx", to: bullet.pixelX }, 3000, am4core.ease.sinOut);
+                bullet.animate({ property: "dy", to: bullet.pixelY }, 3000, am4core.ease.sinOut);
             });
 
             chart.cursor = new am4charts.XYCursor();
