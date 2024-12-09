@@ -160,10 +160,7 @@
             series.dataFields.valueY = "value";
             series.dataFields.categoryX = "category";
             series.columns.template.tooltipText = "{category}: [bold]{valueY}[/]";
-
-            series.columns.template.adapter.add("fill", function (fill, target) {
-                return am4core.color("#104E8B"); // Change the color of the bars
-            });
+            series.columns.template.fill = am4core.color("#104E8B");
 
             // Add moving bullets (animation effect)
             var bullet = series.bullets.push(new am4charts.CircleBullet());
@@ -171,7 +168,12 @@
             bullet.circle.strokeWidth = 2;
             bullet.circle.stroke = am4core.color("#104E8B");
             bullet.circle.radius = 3;
-            bullet.animationDuration = 1000; // Animation duration for the moving effect
+
+            // Animation for moving bullets
+            bullet.events.on("ready", function(event) {
+                var bullet = event.target;
+                bullet.animate({ property: "dx", to: bullet.pixelX }, 3000, am4core.ease.sinOut);
+            });
 
             chart.cursor = new am4charts.XYCursor();
             chart.cursor.snapToSeries = series;
