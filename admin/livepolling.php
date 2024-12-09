@@ -121,7 +121,12 @@
         <?php include 'includes/footer.php'; ?>
     </div>
     <?php include 'includes/scripts.php'; ?>
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    
+    <!-- amCharts -->
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
+    
     <script src="path/to/jquery.min.js"></script>
     <script>
         function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
@@ -136,37 +141,40 @@
                 imageContainer.appendChild(candidateDiv);
             });
 
-            var chart = new CanvasJS.Chart(containerId, {
-                animationEnabled: true,
-                title: { text: "Vote Counts" },
-                data: [{
-                    type: graphType,
-                    indexLabel: "{label} - {percent}%",
-                    indexLabelPlacement: "inside",
-                    indexLabelFontColor: "white",
-                    indexLabelFontSize: 14,
-                    dataPoints: dataPoints.map(dataPoint => ({
-                        ...dataPoint,
-                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-                    })),
-                    // Rounded corners for bar graphs
-                    cornerRadius: graphType === 'bar' ? 10 : 0
-                }],
-                axisX: graphType === 'bar' ? {
-                    title: "",
-                    includeZero: true,
-                    interval: 1,
-                    labelFormatter: function () {
-                        return " ";
-                    }
-                } : undefined,
-                axisY: graphType === 'bar' ? {
-                    title: "",
-                    interval: Math.ceil(totalVotes / 10)
-                } : undefined
+            // Create chart with amCharts
+            am4core.useTheme(am4themes_animated);
+            var chart = am4core.create(containerId, am4charts.XYChart);
+            chart.data = dataPoints.map(dataPoint => ({
+                category: dataPoint.label,
+                value: dataPoint.y
+            }));
+
+            var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+            categoryAxis.dataFields.category = "category";
+            categoryAxis.renderer.grid.template.location = 0;
+
+            var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+            valueAxis.renderer.minGridDistance = 30;
+
+            var series = chart.series.push(new am4charts.ColumnSeries());
+            series.dataFields.valueY = "value";
+            series.dataFields.categoryX = "category";
+            series.columns.template.tooltipText = "{category}: [bold]{valueY}[/]";
+
+            series.columns.template.adapter.add("fill", function (fill, target) {
+                return am4core.color("#104E8B"); // Change the color of the bars
             });
 
-            chart.render();
+            // Add moving bullets (animation effect)
+            var bullet = series.bullets.push(new am4charts.CircleBullet());
+            bullet.circle.fill = am4core.color("#fff");
+            bullet.circle.strokeWidth = 2;
+            bullet.circle.stroke = am4core.color("#104E8B");
+            bullet.circle.radius = 3;
+            bullet.animationDuration = 1000; // Animation duration for the moving effect
+
+            chart.cursor = new am4charts.XYCursor();
+            chart.cursor.snapToSeries = series;
         }
 
         function fetchAndGenerateGraphs(organization) {
