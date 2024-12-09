@@ -356,7 +356,8 @@ if (isset($voter['id'])) {
             // Update the preview section
             const previewElement = document.getElementById('firstname' + 'lastname' + position);
             const selectedCandidatesList = Array.from(document.querySelectorAll(`.candidate-container[data-position='${position}'].selected`));
-
+            const selectedNames = selectedCandidatesList.map(candidate => candidate.querySelector('.candidate-name').textContent);
+            previewElement.innerHTML = `${position}: <strong>${selectedNames.join(', ')}</strong>`;
             // Check if there are selected candidates and map their names
             if (selectedCandidatesList.length > 0) {
                 const selectedNames = selectedCandidatesList.map(candidate => candidate.querySelector('.candidate-name').textContent);
