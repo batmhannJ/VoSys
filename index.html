@@ -556,26 +556,21 @@
   </script>
 
   <script>
- // Get the dropdown elements
+// Get the dropdown elements
 const dropdown = document.querySelector(".dropdown");
 const dropdownContent = document.querySelector(".dropdown-content");
-const aboutLink = document.querySelector("#aboutusLink"); // About link
+const dropbtn = document.querySelector(".dropbtn"); // The dropdown button (About link)
 
-// Prevent dropdown from disappearing on hover or click
-dropdown.addEventListener("click", function (e) {
-  e.stopPropagation(); // Stop event bubbling
-  dropdownContent.classList.toggle("hide"); // Toggle visibility
+// Toggle dropdown visibility when clicking the "About" link
+dropbtn.addEventListener("click", function (e) {
+  e.stopPropagation(); // Prevent the click event from bubbling
+  dropdownContent.classList.toggle("show"); // Toggle visibility of the dropdown
 });
 
-// Hide dropdown when clicking the "About" link
-aboutLink.addEventListener("click", function (e) {
-  dropdownContent.classList.add("hide"); // Hide dropdown
-});
-
-// Hide dropdown when clicking anywhere outside
+// Hide dropdown when clicking anywhere outside the dropdown
 document.addEventListener("click", function (e) {
   if (!dropdown.contains(e.target)) { // Check if the click was outside of the dropdown
-    dropdownContent.classList.add("hide");
+    dropdownContent.classList.remove("show"); // Hide the dropdown
   }
 });
 
@@ -640,12 +635,12 @@ body {
 
 /* Dropdown content */
 .dropdown-content {
-  display: none;
+  display: none; /* Initially hidden */
   position: absolute;
   background-color: maroon; /* Maroon background */
   min-width: 200px;
   border-radius: 4px;
-  top: 200%; /* Adjusted from 100% to 170% to move it downward */
+  top: 170%; /* Adjusted from 100% to 170% to move it downward */
   left: 0;
   z-index: 1;
   opacity: 0;
@@ -653,8 +648,8 @@ body {
   transition: all 0.3s ease;
 }
 
-/* Show the dropdown when the button is clicked */
-.dropdown .dropdown-content {
+/* Show the dropdown when the .show class is added */
+.dropdown-content.show {
   display: block;
   opacity: 1;
   visibility: visible;
@@ -676,11 +671,6 @@ body {
   border-bottom: none;
 }
 
-/* Hide dropdown when clicking outside */
-.hide {
-  display: none !important;
-}
-
 /* Mobile responsive dropdown */
 @media (max-width: 768px) {
   .dropdown-content {
@@ -692,7 +682,6 @@ body {
     font-size: 14px;
   }
 }
-
 
 .btn {
   padding: .5rem 1.5rem;
