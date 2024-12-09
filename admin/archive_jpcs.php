@@ -161,8 +161,26 @@
     <div class="box-body" id="ballotContent">
       <!-- Ballot content will be loaded here -->
     </div>
+    <div class="box-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Total Voters</th>
+                                <th>Voters Voted</th>
+                                <th>Remaining Voters</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td id="totalVoters"> <!-- Total voters count here --> </td>
+                                <td id="votersVoted"> <!-- Voters voted count here --> </td>
+                                <td id="remainingVoters"> <!-- Remaining voters count here --> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+    </div>
   </div>
-</div>
 </section>
 </div>
 
@@ -193,6 +211,12 @@ $(document).ready(function() {
         // Update the ballot content and show the container
         $('#ballotContent').html(response.content);
         $('#ballotContainer').show();
+
+        if (response.total_voters && response.voters_voted !== undefined && response.remaining_voters !== undefined) {
+          $('#totalVoters').text(response.total_voters);
+          $('#votersVoted').text(response.voters_voted);
+          $('#remainingVoters').text(response.remaining_voters);
+        }
       },
       error: function(xhr, status, error) {
         alert('Error: ' + error);
