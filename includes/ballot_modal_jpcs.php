@@ -1,135 +1,111 @@
-<!-- Preview Modal -->
-<div class="modal fade" id="preview_modal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content custom-formal-preview-modal">
-            <div class="modal-header custom-formal-preview-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h5 class="modal-title custom-formal-preview-title">Vote Preview</h5>
+<!-- Preview -->
+<div class="modal fade" id="preview_modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  </button>
+              <h4 class="modal-title">Vote Preview</h4>
             </div>
-            <div class="modal-body custom-formal-preview-body">
-                <div id="preview_body"></div>
+            <div class="modal-body">
+              <div id="preview_body"></div>
             </div>
-            <div class="modal-footer custom-formal-preview-footer">
-                <button type="button" class="btn btn-secondary btn-flat" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
             </div>
         </div>
     </div>
 </div>
 
-
 <style>
-/* Formal and Responsive Design for Preview Modal */
-.custom-formal-preview-modal {
-    background-color: #f9f9f9;  /* Light gray background for a professional feel */
-    border-radius: 8px;  /* Slight rounding for a modern, but formal look */
-    border: 1px solid #ddd;  /* Light border for definition */
-    overflow: hidden;  /* Prevents overflow of content */
+  /* Modal Container */
+.modal.fade {
+    display: block;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
 }
 
-.custom-formal-preview-header {
-    background-color: #4e5b6e;  /* Subtle dark blue-gray background */
-    color: #fff;
-    padding: 20px 25px;
-    border-bottom: 1px solid #ccc;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* Modal Dialog */
+.modal-dialog {
+    max-width: 600px;
+    margin: 1.75rem auto;
+    border-radius: 10px;
 }
 
-.custom-formal-preview-title {
-    font-size: 1.3rem;
+/* Modal Content */
+.modal-content {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Modal Header */
+.modal-header {
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #ddd;
+    padding: 15px 20px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.modal-header h4 {
+    font-size: 1.25rem;
     font-weight: 600;
-    letter-spacing: 1px;
-}
-
-.custom-formal-preview-body {
-    padding: 25px;
-    font-size: 1rem;
     color: #333;
-    line-height: 1.6;
-    text-align: left;
-    max-height: 400px; /* Ensures the body is scrollable if the content is too long */
-    overflow-y: auto; /* Adds scrolling if content exceeds max height */
+    margin: 0;
 }
 
-.custom-formal-preview-footer {
-    background-color: #f1f1f1;
-    padding: 15px 25px;
-    display: flex;
-    justify-content: center;
-    border-top: 1px solid #ddd;
-}
-
-.custom-formal-preview-footer .btn {
-    background-color: #4e5b6e;  /* Matching dark blue-gray */
-    color: #fff;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 5px;
-    text-transform: uppercase;
-    box-shadow: none;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.custom-formal-preview-footer .btn:hover {
-    background-color: #37414c;  /* Slightly darker shade on hover */
-    transform: scale(1.05);
-}
-
-.custom-formal-preview-footer .btn:focus {
-    outline: none;
-    box-shadow: none;
-}
-
-.close {
-    color: #fff;
+/* Close Button */
+.modal-header .close {
     font-size: 1.5rem;
-    font-weight: 700;
-    background: none;
+    color: #333;
+    opacity: 0.5;
+}
+
+.modal-header .close:hover {
+    opacity: 1;
+}
+
+/* Modal Body */
+.modal-body {
+    padding: 20px;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Modal Footer */
+.modal-footer {
+    background-color: #f7f7f7;
+    border-top: 1px solid #ddd;
+    padding: 10px 20px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    text-align: right;
+}
+
+/* Button */
+.modal-footer .btn {
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 8px 20px;
+    border-radius: 5px;
+}
+
+.modal-footer .btn-default {
+    background-color: #007bff;
+    color: white;
     border: none;
+}
+
+.modal-footer .btn-default:hover {
+    background-color: #0056b3;
     cursor: pointer;
-    transition: opacity 0.3s ease;
 }
 
-.close:hover {
-    opacity: 0.7;
-}
-
-/* Responsive Design for Modal */
-@media (max-width: 768px) {
-    .custom-formal-preview-title {
-        font-size: 1.1rem;  /* Slightly smaller title on mobile */
-    }
-
-    .modal-body {
-        padding: 15px;  /* Reduces padding for smaller screens */
-    }
-
-    .custom-formal-preview-footer .btn {
-        padding: 8px 16px;  /* Smaller button size for mobile */
-        font-size: 0.9rem;  /* Smaller font size for the button */
-    }
-
-    .modal-dialog {
-        max-width: 100%;  /* Ensures modal takes up full width on smaller screens */
-        margin: 10px;  /* Adds margin to prevent modal from touching the edges */
-    }
-}
-
-@media (max-width: 480px) {
-    .custom-formal-preview-header {
-        padding: 15px 20px;  /* Smaller padding for mobile */
-    }
-
-    .modal-body {
-        padding: 10px;  /* Further reduces padding on very small screens */
-    }
-
-    .custom-formal-preview-footer {
-        padding: 10px 15px;  /* Further reduces footer padding on mobile */
-    }
+/* Hover effect for button */
+.modal-footer .btn-default:focus,
+.modal-footer .btn-default:active {
+    box-shadow: none;
 }
 
 </style>
