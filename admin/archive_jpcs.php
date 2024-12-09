@@ -96,7 +96,7 @@
                 <th>#</th>
                 <th>ID</th>
                 <th>Title</th>
-                <th>Voters</th>
+                <th>Academic Year</th>
                 <?php endif; ?>
                 <th>Tools</th>
               </tr>
@@ -137,7 +137,7 @@
                         <td><input type='checkbox' class='selectItem' value='".$row['id']."'></td>
                         <td>".$row['id']."</td>
                         <td>".$row['title']."</td>
-                        <td>".$row['voters']."</td>
+                        <td>".$row['academic_yr']."</td>
                         <td>
                           <button class='btn btn-warning btn-sm restore-election btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#electionConfirmationModal'><i class='fa fa-reply'></i> Restore</button>
                           <button class='btn btn-primary btn-sm view-election btn-flat' data-id='" . $row['id'] . "'><i class='fa fa-eye'></i> View Election</button>
