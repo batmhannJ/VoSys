@@ -989,7 +989,7 @@ input[type="checkbox"]:checked + .clist {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: darkgreen;
+    background-color: red;
     color: #fff;
 }
 
