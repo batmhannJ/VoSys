@@ -153,27 +153,34 @@
       </div>
     </div>
   </div>
-  <div class="row">
-        <div class="col-xs-12">
-          <div class="box">
-            <div class="box-header with-border">
-              <a href="#reset" data-toggle="modal" class="btn btn-danger btn-sm btn-flat"><i class="fa fa-refresh"></i> Reset</a>
+  <section class="content">
+      <?php
+        if(isset($_SESSION['error'])){
+          echo "
+            <div class='alert alert-danger alert-dismissible'>
+              <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+              <h4><i class='icon fa fa-warning'></i> Error!</h4>
+              ".$_SESSION['error']."
             </div>
-            <div class="box-body">
-              <table id="example1" class="table table-bordered">
-                <thead>
-                  <th class="hidden"></th>
-                  <th>No. </th>
-                  <th>ID. </th>
-                  <th>Position</th>
-                  <th>Candidate</th>
-                  <th>Voter</th>
-                </thead>
-              </table>
+          ";
+          unset($_SESSION['error']);
+        }
+        if(isset($_SESSION['success'])){
+          echo "
+            <div class='alert alert-success alert-dismissible'>
+              <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+              <h4><i class='icon fa fa-check'></i> Success!</h4>
+              ".$_SESSION['success']."
             </div>
-          </div>
+          ";
+          unset($_SESSION['success']);
+        }
+      ?>
+      <div class="row">
+        <div class="col-xs-10 col-xs-offset-1" id="content">
         </div>
       </div>
+    </section>
 </section>
 </div>
 
