@@ -554,6 +554,33 @@
     domain="www.chatbase.co"
     defer>
   </script>
+
+  <script>
+    // Get elements for the content toggle
+const aboutusLink = document.getElementById("aboutusLink");
+const walkthroughLink = document.getElementById("walkthroughLink");
+const aboutusSection = document.getElementById("aboutus");
+const walkthroughSection = document.getElementById("walkthrough");
+
+// Initially show the "About Us" section by default
+aboutusSection.style.display = "block";
+walkthroughSection.style.display = "none";
+
+// Event listener for "About Us" link
+aboutusLink.addEventListener('click', function(e) {
+  e.preventDefault(); // Prevent default behavior
+  aboutusSection.style.display = "block"; // Show About Us
+  walkthroughSection.style.display = "none"; // Hide Walkthrough
+});
+
+// Event listener for "System Walkthrough" link
+walkthroughLink.addEventListener('click', function(e) {
+  e.preventDefault(); // Prevent default behavior
+  walkthroughSection.style.display = "block"; // Show Walkthrough
+  aboutusSection.style.display = "none"; // Hide About Us
+});
+
+  </script>
   </body>
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
@@ -592,6 +619,54 @@ body {
   font-size: 40px;
   color: var(--text-dark);
 }
+
+/* Style for the dropdown container */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown button */
+.dropbtn {
+  background-color: transparent;
+  color: white;
+  padding: 14px 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  z-index: 1;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of links on hover */
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+/* Show the dropdown content when hovering over the button */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
+}
+
 
 .btn {
   padding: .5rem 1.5rem;
