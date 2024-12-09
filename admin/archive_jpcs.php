@@ -216,14 +216,10 @@ $(document).ready(function() {
         // Display academic year below the title
         $('#electionTitle').after('<p style="text-align: center;">Academic Year: ' + response.academic_yr + '</p>');
 
-        // Display the total voters, voted voters, and remaining voters
-        $('#voterStats').html(
-          '<p style="text-align: center;">' +
-          'Total JPCS Voters: ' + response.total_voters + '<br>' +
-          'Voted Voters: ' + response.voted_voters + '<br>' +
-          'Remaining Voters: ' + response.remaining_voters +
-          '</p>'
-        );
+        // Display voter statistics
+        $('#totalVoters').text(response.total_voters); // Total voters
+        $('#votersVoted').text(response.voted_voters); // Voters who voted
+        $('#remainingVoters').text(response.remaining_voters); // Remaining voters
 
         // Update the ballot content and show the container
         $('#ballotContent').html(response.content);
