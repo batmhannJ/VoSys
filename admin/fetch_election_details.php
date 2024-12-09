@@ -20,13 +20,13 @@ if (isset($_POST['election_id'])) {
     }
 
     // Fetch total number of voters for the election
-    $sql = "SELECT COUNT(*) AS total_voters FROM voters WHERE election_id = '$election_id' AND archived = FALSE";
+    $sql = "SELECT COUNT(*) AS total_voters FROM voters WHERE election_id = '$election_id'";
     $total_voters_query = $conn->query($sql);
     $total_voters_row = $total_voters_query->fetch_assoc();
     $total_voters = $total_voters_row['total_voters'];
 
     // Fetch total number of voted voters
-    $sql = "SELECT COUNT(DISTINCT voter_id) AS voted_voters FROM votes WHERE election_id = '$election_id'";
+    $sql = "SELECT COUNT(DISTINCT voters_id) AS voted_voters FROM votes WHERE election_id = '$election_id'";
     $voted_voters_query = $conn->query($sql);
     $voted_voters_row = $voted_voters_query->fetch_assoc();
     $voted_voters = $voted_voters_row['voted_voters'];
