@@ -41,12 +41,6 @@ $pdfContent = "
         padding: 10px;
         border: 1px solid #ddd;
     }
-    th {
-        background-color: maroon;
-        color: white;
-        font-weight: bold;
-        text-align: left;
-    }
     tr:nth-child(even) {
         background-color: #f2f2f2;
     }
@@ -58,12 +52,6 @@ $pdfContent = "
     .candidate-name {
         font-size: 14px;
         padding: 5px;
-    }
-    .shading-instructions {
-        font-style: italic;
-        font-size: 12px;
-        color: #555;
-        text-align: center;
     }
     .header-container {
         text-align: center;
@@ -94,16 +82,10 @@ $pdfContent = "
 </div>
 
 <div class='voter-id-container'>
-    <strong>Voters ID:</strong> _____________________________
+    <strong>Voter ID:</strong> _____________________________
 </div>
 
 <table>
-    <thead>
-        <tr>
-            <th>Position</th>
-            <th>Candidate</th>
-        </tr>
-    </thead>
     <tbody>";
 
 // Iterate through positions
@@ -124,7 +106,7 @@ foreach ($positions as $position) {
         <td colspan='2' class='position-title'>$position - You can only vote $max_vote candidate/s for this position</td>
     </tr>";
 
-    // Fetch candidates for each position from JPCS and Election ID 20
+    // Fetch candidates for each position from JPCS and Election ID 1
     $sql = "SELECT * FROM candidates 
             LEFT JOIN categories ON categories.id = candidates.category_id 
             WHERE categories.name = '$position'
