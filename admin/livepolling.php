@@ -142,35 +142,55 @@
             });
 
             am4core.useTheme(am4themes_animated);
-            var chart = am4core.create(containerId, am4charts.XYChart);
-            chart.data = dataPoints.map((dataPoint, index) => ({
-                category: dataPoint.label,
-                value: dataPoint.y,
-                percentage: ((dataPoint.y / totalVotes) * 100).toFixed(2), 
-                color: index % 2 === 0 ? am4core.color("#FF0000") : am4core.color("#0000FF") 
-            }));
 
-            var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
-            categoryAxis.dataFields.category = "category";
-            categoryAxis.renderer.grid.template.location = 0;
+            if (graphType === 'pie') {
+                var chart = am4core.create(containerId, am4charts.PieChart);
+                chart.data = dataPoints.map((dataPoint) => ({
+                    category: dataPoint.label,
+                    value: dataPoint.y,
+                    percentage: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                }));
 
-            var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
+                var series = chart.series.push(new am4charts.PieSeries());
+                series.dataFields.value = "value";
+                series.dataFields.category = "category";
+                series.slices.template.tooltipText = "{category}: [bold]{value} votes ({percentage}%)";
+                series.slices.template.fill = am4core.color("#FF0000");
 
-            var series = chart.series.push(new am4charts.ColumnSeries());
-            series.dataFields.valueX = "value";
-            series.dataFields.categoryY = "category";
-            series.columns.template.propertyFields.fill = "color"; 
-            series.columns.template.tooltipText = "{category}: [bold]{valueX} votes ({percentage}%)[/]";
+                series.slices.template.events.on("hit", function(event) {
+                    event.target.fill = am4core.color("#0000FF");
+                });
+            } else {
+                var chart = am4core.create(containerId, am4charts.XYChart);
+                chart.data = dataPoints.map((dataPoint, index) => ({
+                    category: dataPoint.label,
+                    value: dataPoint.y,
+                    percentage: ((dataPoint.y / totalVotes) * 100).toFixed(2),
+                    color: index % 2 === 0 ? am4core.color("#FF0000") : am4core.color("#0000FF")
+                }));
 
-            // **New Code to Control Bar Width**
-            series.columns.template.width = am4core.percent(80); // Increase bar width to 80% of available space
+                var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+                categoryAxis.dataFields.category = "category";
+                categoryAxis.renderer.grid.template.location = 0;
 
-            var labelBullet = series.bullets.push(new am4charts.LabelBullet());
-            labelBullet.label.text = "{percentage}%";
-            labelBullet.label.fill = am4core.color("#fff");
+                var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
 
-            chart.cursor = new am4charts.XYCursor();
-            chart.cursor.snapToSeries = series;
+                var series = chart.series.push(new am4charts.ColumnSeries());
+                series.dataFields.valueX = "value";
+                series.dataFields.categoryY = "category";
+                series.columns.template.propertyFields.fill = "color";
+                series.columns.template.tooltipText = "{category}: [bold]{valueX} votes ({percentage}%)[/]";
+
+                // Control Bar Width
+                series.columns.template.width = am4core.percent(80);
+
+                var labelBullet = series.bullets.push(new am4charts.LabelBullet());
+                labelBullet.label.text = "{percentage}%";
+                labelBullet.label.fill = am4core.color("#fff");
+
+                chart.cursor = new am4charts.XYCursor();
+                chart.cursor.snapToSeries = series;
+            }
         }
 
         function fetchAndGenerateGraphs(organization) {
@@ -208,7 +228,7 @@
                                         <div class='box-body'>
                                             <div class='chart-container'>
                                                 <div class='candidate-images' id='${category}Image'></div>
-                                                <div id='${category}Graph' style='height: 300px; width: 1000px;'></div>
+                                                <div id='${category}Graph' style='height: 300px;'></div>
                                             </div>
                                         </div>
                                     </div>
