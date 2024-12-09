@@ -74,6 +74,16 @@
                 height: 100px;
             }
         }
+
+        /* Styling the Bar Graph */
+        .canvasjs-chart-canvas {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .canvasjs-chart-credit {
+            display: none; /* Hide canvasJS credit */
+        }
     </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -138,7 +148,21 @@
 
             var chart = new CanvasJS.Chart(containerId, {
                 animationEnabled: true,
-                title: { text: "Vote Counts" },
+                title: { text: "Vote Counts", fontSize: 20, fontWeight: "bold" },
+                axisY: {
+                    title: "Votes",
+                    gridThickness: 1,
+                    lineThickness: 2,
+                    labelFontSize: 12,
+                    labelFontFamily: "Arial",
+                    labelFontColor: "#555"
+                },
+                axisX: {
+                    title: "",
+                    interval: 1,
+                    labelFontSize: 12,
+                    labelFontColor: "#555"
+                },
                 data: [{
                     type: graphType,
                     indexLabel: "{label} - {percent}%",
@@ -148,29 +172,17 @@
                     dataPoints: dataPoints.map(dataPoint => ({
                         ...dataPoint,
                         percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-                    }))
-                }]
+                    })),
+                    toolTipContent: "<b>{label}</b><br>Votes: {y}<br>Percentage: {percent}%",
+                    color: "#4caf50",
+                    cornerRadius: 10,
+                    dataPoints: dataPoints
+                }],
+                theme: "light2"
             });
 
-            if (graphType === 'bar') {
-                chart.options.axisX = {
-                    title: "",
-                    includeZero: true,
-                    interval: 1,
-                    labelFormatter: function () {
-                        return " ";
-                    }
-                };
-
-                chart.options.axisY = {
-                    title: "",
-                    interval: Math.ceil(totalVotes / 10)
-                };
-
-                // ** Rounded Corners for Bar Graphs **
-                chart.options.data[0].cornerRadius = 10; // Rounded corners for the bar (Change 10 to the desired radius)
-            }
-
+            // Add smooth bar animation
+            chart.options.data[0].animationDuration = 2000;  // 2 seconds
             chart.render();
         }
 
