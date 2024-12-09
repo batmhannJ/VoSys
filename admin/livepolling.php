@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <?php include 'includes/session.php'; ?>
     <?php include 'includes/header.php'; ?>
-
     <style>
-        .chart-container {
-            margin: 20px auto;
-            width: 90%;
-            max-width: 1200px;
-            height: 500px;
+        .box-title {
+            text-align: center;
+            width: 100%;
+            display: inline-block;
         }
 
         #back-to-top {
@@ -34,14 +31,51 @@
         #back-to-top:hover {
             background-color: #555;
         }
+
+        .chart-container {
+            position: relative;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        .candidate-images {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin-right: 10px;
+        }
+
+        .candidate-image {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .candidate-image img {
+            width: 60px;
+            height: 60px;
+            margin-right: -10px;
+            margin-bottom: 25px;
+            margin-top: 35px;
+        }
+
+        @media (max-width: 768px) {
+            .candidate-image img {
+                width: 75px;
+                height: 75px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .candidate-image img {
+                width: 100px;
+                height: 100px;
+            }
+        }
     </style>
-
-    <!-- amCharts -->
-    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-    <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
-    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
 </head>
-
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
         <?php include 'includes/navbar.php'; ?>
@@ -57,7 +91,7 @@
             </section>
 
             <section class="content">
-                <form id="organization-form" style="text-align: center; margin-bottom: 20px;">
+                <form id="organization-form">
                     <label for="organization-select">Select Organization:</label>
                     <select id="organization-select" name="organization">
                         <option value="csc">CSC</option>
@@ -77,143 +111,146 @@
 
                     <button type="submit">Show Results</button>
                 </form>
+                <br>
 
-                <div class="chart-container" id="chartdiv"></div>
-                <button id="back-to-top" title="Back to top">&uarr;</button>
+                <div class="row justify-content-center" id="results-container"></div>
             </section>
+
+            <button id="back-to-top" title="Back to top">&uarr;</button>
         </div>
         <?php include 'includes/footer.php'; ?>
     </div>
-
     <?php include 'includes/scripts.php'; ?>
-
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="path/to/jquery.min.js"></script>
     <script>
-        function generateChart(dataPoints) {
-            // Dispose any previous chart
-            am5.array.each(am5.registry.rootElements, function (root) {
-                root.dispose();
+        function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
+            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+
+            var imageContainer = document.getElementById(imageContainerId);
+            imageContainer.innerHTML = '';
+            dataPoints.forEach(dataPoint => {
+                var candidateDiv = document.createElement('div');
+                candidateDiv.className = 'candidate-image';
+                candidateDiv.innerHTML = <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">;
+                imageContainer.appendChild(candidateDiv);
             });
 
-            // Create root element
-            var root = am5.Root.new("chartdiv");
-
-            // Set theme
-            root.setThemes([am5themes_Animated.new(root)]);
-
-            // Create chart
-            var chart = root.container.children.push(
-                am5xy.XYChart.new(root, {
-                    panX: true,
-                    panY: true,
-                    wheelX: "panX",
-                    wheelY: "zoomX",
-                    pinchZoomX: true
-                })
-            );
-
-            // Add X-axis
-            var xAxis = chart.xAxes.push(
-                am5xy.CategoryAxis.new(root, {
-                    categoryField: "label",
-                    renderer: am5xy.AxisRendererX.new(root, {})
-                })
-            );
-
-            // Add Y-axis
-            var yAxis = chart.yAxes.push(
-                am5xy.ValueAxis.new(root, {
-                    renderer: am5xy.AxisRendererY.new(root, {})
-                })
-            );
-
-            // Add series for bars with more rounded corners
-            var series = chart.series.push(
-                am5xy.ColumnSeries.new(root, {
-                    xAxis: xAxis,
-                    yAxis: yAxis,
-                    valueYField: "votes",
-                    categoryXField: "label",
-                    tooltip: am5.Tooltip.new(root, {
-                        labelText: "{label}: {valueY}"
-                    })
-                })
-            );
-
-            // Round the corners of the bars more (increased radius)
-            series.columns.template.setAll({
-                cornerRadiusTL: 15, // top-left corner
-                cornerRadiusTR: 15, // top-right corner
-                cornerRadiusBL: 15, // bottom-left corner
-                cornerRadiusBR: 15, // bottom-right corner
-                fillOpacity: 0.9 // Optional: set opacity of bars for a more subtle effect
+            var chart = new CanvasJS.Chart(containerId, {
+                animationEnabled: true,
+                title: { text: "Vote Counts" },
+                data: [{
+                    type: graphType,
+                    indexLabel: "{label} - {percent}%",
+                    indexLabelPlacement: "inside",
+                    indexLabelFontColor: "white",
+                    indexLabelFontSize: 14,
+                    dataPoints: dataPoints.map(dataPoint => ({
+                        ...dataPoint,
+                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                    }))
+                }]
             });
 
-            // Add moving bullets to bars (create circles at the top of the bar)
-            series.bullets.push(function () {
-                return am5.Bullet.new(root, {
-                    sprite: am5.Circle.new(root, {
-                        radius: 5,
-                        fill: series.get("fill")
-                    }),
-                    locationY: 1 // Bullet at the top of the bar
-                });
-            });
+            if (graphType === 'bar') {
+                chart.options.axisX = {
+                    title: "",
+                    includeZero: true,
+                    interval: 1,
+                    labelFormatter: function () {
+                        return " ";
+                    }
+                };
 
-            // Add data to chart
-            xAxis.data.setAll(dataPoints);
-            series.data.setAll(dataPoints);
+                chart.options.axisY = {
+                    title: "",
+                    interval: Math.ceil(totalVotes / 10)
+                };
 
-            // Animate bars and bullets
-            series.appear(1000, 100);
+                // ** Rounded Corners for Bar Graphs **
+                chart.options.data[0].cornerRadius = 10; // Rounded corners for the bar (Change 10 to the desired radius)
+            }
 
-            // Add cursor (for interactivity)
-            chart.set("cursor", am5xy.XYCursor.new(root, {}));
-
-            // Simulate real-time data update (add random vote increments)
-            setInterval(function () {
-                dataPoints.forEach(function (dataPoint) {
-                    dataPoint.votes += Math.floor(Math.random() * 10); // Randomly increase votes
-                });
-                xAxis.data.setAll(dataPoints);
-                series.data.setAll(dataPoints);
-            }, 2000); // Every 2 seconds
+            chart.render();
         }
 
-        function fetchDataAndGenerateChart() {
-            // Mock data for testing (Replace this with actual AJAX call)
-            const mockData = [
-                { label: "Candidate A", votes: 50 },
-                { label: "Candidate B", votes: 30 },
-                { label: "Candidate C", votes: 20 }
-            ];
+        function fetchAndGenerateGraphs(organization) {
+            const graphType = $('#graph-type').val();
 
-            generateChart(mockData);
+            $.ajax({
+                url: 'update_data.php',
+                method: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    $('#results-container').empty();
+
+                    var categories = {
+                        'csc': {
+                            'president': 'President',
+                            'vice president': 'Vice President',
+                            'secretary': 'Secretary',
+                            'treasurer': 'Treasurer',
+                            'auditor': 'Auditor',
+                            'p.r.o': 'P.R.O',
+                            'businessManager': 'Business Manager'
+                        }
+                    };
+
+                    var selectedCategories = categories[organization];
+
+                    Object.keys(selectedCategories).forEach(function (category) {
+                        if (response[category]) {
+                            var containerHtml = 
+                                <div class='col-md-12'>
+                                    <div class='box'>
+                                        <div class='box-header with-border'>
+                                            <h3 class='box-title'><b>${selectedCategories[category]}</b></h3>
+                                        </div>
+                                        <div class='box-body'>
+                                            <div class='chart-container'>
+                                                <div class='candidate-images' id='${category}Image'></div>
+                                                <div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>;
+                            $('#results-container').append(containerHtml);
+
+                            generateGraph(response[category], category + 'Graph', category + 'Image', graphType);
+                        }
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching data: ", status, error);
+                }
+            });
         }
 
-        document.addEventListener("DOMContentLoaded", function () {
-            fetchDataAndGenerateChart();
+        $(document).ready(function () {
+            fetchAndGenerateGraphs('csc');
 
-            // On form submit (to change organization or chart type)
-            document.getElementById("organization-form").addEventListener("submit", function (event) {
+            $('#organization-form').submit(function (event) {
                 event.preventDefault();
-                fetchDataAndGenerateChart(); // Fetch and regenerate chart
+                fetchAndGenerateGraphs($('#organization-select').val());
             });
 
-            // Scroll-to-top button functionality
-            const backToTopButton = document.getElementById("back-to-top");
-            window.addEventListener("scroll", function () {
-                if (window.scrollY > 100) {
-                    backToTopButton.style.display = "block";
+            $('#graph-type').change(function () {
+                fetchAndGenerateGraphs($('#organization-select').val());
+            });
+
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 100) {
+                    $('#back-to-top').fadeIn();
                 } else {
-                    backToTopButton.style.display = "none";
+                    $('#back-to-top').fadeOut();
                 }
             });
 
-            backToTopButton.addEventListener("click", function () {
-                window.scrollTo({ top: 0, behavior: "smooth" });
+            $('#back-to-top').click(function () {
+                $('html, body').animate({ scrollTop: 0 }, 600);
+                return false;
             });
         });
     </script>
 </body>
-
 </html>
