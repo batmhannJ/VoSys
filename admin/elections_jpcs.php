@@ -45,23 +45,23 @@
   <div class="row">
     <div class="col-xs-12">
     <div class="box">
-      <!--<div class="box-header with-border">
-              <a href="#addElection" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
-      </div>-->
+    <div class="box-header with-border">
+          <a href="#addElection" data-toggle="modal" class="btn btn-primary btn-sm btn-flat"><i class="fa fa-plus"></i> New</a>
+      </div>
       <!-- Table with hoverable rows -->
       <div class="box-body">
       <table id="example1" class="table table-bordered">
         <thead>
             <th scope="col">#</th>
             <th scope="col">Title</th>
-            <th scope="col">Voters</th>
+            <th scope="col">Academic Year</th>
             <th scope="col">Status</th>
             <th class="text-center" scope="col">Action</th>
         </thead>
         <tbody class="election">
           <?php
           $i = 1;
-          $election = $conn->prepare("SELECT * FROM election WHERE title = 'JPCS - Junior Philippine Computer Society Election'");
+          $election = $conn->prepare("SELECT * FROM election WHERE archived = FALSE AND organization = 'JPCS'");
           $election->execute();
           $result = $election->get_result();
           while ($row = $result->fetch_assoc()) {
@@ -69,7 +69,7 @@
             echo '<tr>
                     <th scope="row">' . $i++ . '</th>
                     <td>'.$row['title'].'</td>
-                    <td>' . $row['voters'];
+                    <td>' . $row['academic_yr'];
             '</td>';
             if ($row['status'] === 0) {
               echo '<td><a href="#" name="status" class="btn badge rounded-pill btn-secondary election-status" data-id="' . $row['id'] . '" data-status="1" data-name="Activate">Not active</a></td>';
@@ -178,39 +178,5 @@ function getRow(id){
     }
 });
 </script>
-
-<!--<div class="modal fade" id="statusModal" tabindex="-1" role="dialog" aria-labelledby="statusModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="statusModalLabel"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form id="statusForm">
-                <div class="modal-body">
-                    <p id="statusMessage"></p>
-                    <div id="timeFields" style="display: none;">
-                        <div class="form-group">
-                            <label for="starttime">Start Time</label>
-                            <input type="datetime-local" class="form-control" id="starttime" name="starttime">
-                        </div>
-                        <div class="form-group">
-                            <label for="endtime">End Time</label>
-                            <input type="datetime-local" class="form-control" id="endtime" name="endtime">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary" id="statusSubmitBtn"></button>
-                </div>
-                <input type="hidden" id="election_id" name="election_id">
-                <input type="hidden" id="status" name="status">
-            </form>
-        </div>
-    </div>
-</div>-->
 
 </body>
