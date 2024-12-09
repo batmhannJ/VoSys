@@ -131,9 +131,9 @@
                         <input type="datetime-local" class="form-control" id="starttime" name="starttime" required min="<?php echo date('Y-m-d\TH:i'); ?>">
                     </div>
                     <div class="form-group">
-                        <label for="endtime">End Time</label>
-                        <input type="datetime-local" class="form-control" id="endtime" name="endtime" required min="<?php echo date('Y-m-d\TH:i'); ?>">
-                    </div>
+                      <label for="endtime">End Time</label>
+                      <input type="datetime-local" class="form-control" id="endtime" name="endtime" required min="<?php echo date('Y-m-d\TH:i'); ?>">
+                  </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -254,15 +254,17 @@ function getRow(id){
 });
 
 $('#submitActivationBtn').on('click', function() {
-    var electionId = $(this).data('id'); // Get the election ID from data-id attribute
-    var startTime = $('#starttime').val(); // Get the start time
-    var endTime = $('#endtime').val(); // Get the end time
+    var electionId = $(this).data('id');
+    var startTime = $('#starttime').val();
+    var endTime = $('#endtime').val();
 
-    // Validate the times
+    console.log('Start Time:', startTime);
+    console.log('End Time:', endTime);
+
     if (startTime && endTime) {
         $.ajax({
             type: 'POST',
-            url: 'activate_election.php', // PHP script for activation
+            url: 'activate_election.php',
             data: {
                 election_id: electionId,
                 start_time: startTime,
@@ -270,7 +272,7 @@ $('#submitActivationBtn').on('click', function() {
             },
             success: function(response) {
                 if (response.success) {
-                    location.reload(); // Reload page after successful activation
+                    location.reload();
                 } else {
                     toastr.error('Failed to activate election.');
                 }
