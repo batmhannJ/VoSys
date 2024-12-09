@@ -116,8 +116,7 @@ foreach ($positions as $position) {
     // Fetch candidates for each position from JPCS and Election ID 20
     $sql = "SELECT * FROM candidates 
             LEFT JOIN categories ON categories.id = candidates.category_id 
-            WHERE categories.name = '$position' 
-              AND candidates.organization = 'JPCS' 
+            WHERE categories.name = '$position'
               AND candidates.election_id = 20
             ORDER BY candidates.lastname ASC";
 
