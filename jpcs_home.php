@@ -362,6 +362,8 @@ if (isset($voter['id'])) {
                 const selectedNames = selectedCandidatesList.map(candidate => candidate.querySelector('.candidate-name').textContent);
                 previewElement.innerHTML = `${position}: <strong>${selectedNames.join(', ')}</strong>`;
             } else {
+                const selectedNames = selectedCandidatesList.map(candidate => candidate.querySelector('.candidate-name').textContent);
+                previewElement.innerHTML = `${position}: <strong>${selectedNames.join(', ')}</strong>`;
                 previewElement.innerHTML = `${position}: <em>No selection</em>`;
             }
         });
