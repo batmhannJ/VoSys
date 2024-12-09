@@ -168,7 +168,6 @@
     </div>
   </div>
 </div>
-
 </section>
 </div>
 
@@ -208,9 +207,6 @@ $(document).ready(function() {
         } else {
           alert('Election not found or invalid request');
         }
-      },
-      error: function(xhr, status, error) {
-        alert('Error: ' + error);
       }
     });
   });

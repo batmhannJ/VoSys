@@ -4,11 +4,11 @@ include 'includes/slugify.php';
 
 if (isset($_POST['election_id'])) {
     $election_id = $_POST['election_id'];
-    
+
     // Fetch the election title and academic year
     $sql = "SELECT title, academic_yr FROM election WHERE id = '$election_id'";
     $result = $conn->query($sql);
-    
+
     // Check if election exists
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
@@ -43,9 +43,10 @@ if (isset($_POST['election_id'])) {
     while ($row = $query->fetch_assoc()) {
         $max_vote = $row['max_vote'];  // Fetch max_vote for the category
 
+        // Fetch candidates for each category
         $sql = "SELECT * FROM candidates WHERE category_id='" . $row['id'] . "'";
         $cquery = $conn->query($sql);
-        
+
         $candidates = [];
         while ($crow = $cquery->fetch_assoc()) {
             // Count total votes for each candidate
@@ -89,10 +90,11 @@ if (isset($_POST['election_id'])) {
             ';
         }
 
+        // Append category and candidate list to output
         $output .= '
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="box box-solid" id="' . $row['id'] . '">
+                    <div class="box box-solid" id="category_' . $row['id'] . '">
                         <div class="box-header with-border">
                             <h3 class="box-title"><b>' . $row['name'] . '</b></h3>
                         </div>
