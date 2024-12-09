@@ -36,7 +36,7 @@
             position: relative;
             margin-bottom: 40px;
             display: flex;
-            
+            align-items: center;
         }
 
         .candidate-images {
