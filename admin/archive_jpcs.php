@@ -153,8 +153,7 @@
       </div>
     </div>
   </div>
-  <div class="row">
-  <div class="table-responsive">
+  <div class="row" style="margin-right: -15px; margin-left: -15px;">
     <div id="ballotContainer" style="display: none;">
         <h1 style="text-align: center;">
             <b id="electionTitle"> <!--ELECTION TITLE will be inserted here--> </b>
@@ -170,8 +169,7 @@
                     <h3 class="box-title text-center">Voter Statistics</h3>
                 </div>
                 <div class="box-body">
-                <div class="table-responsive">
-                    <table id="example1" class="table table-bordered">
+                    <table class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>Total Voters</th>
@@ -187,10 +185,8 @@
                             </tr>
                         </tbody>
                     </table>
-                  </div>
                 </div>
             </div>
-          </div>
         </div>
         <!-- End of Voter Stats Table -->
     </div>
@@ -222,28 +218,8 @@ $(document).ready(function() {
         // Display academic year below the title
         $('#electionTitle').after('<p style="text-align: center;">Academic Year: ' + response.academic_yr + '</p>');
 
-        // Display Total Voters, Voters Voted, and Remaining Voters
-        var voterStatsHTML = `
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th>Total Voters</th>
-                <th>Voters Voted</th>
-                <th>Remaining Voters</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>${response.total_voters}</td>
-                <td>${response.voters_voted}</td>
-                <td>${response.remaining_voters}</td>
-              </tr>
-            </tbody>
-          </table>
-        `;
-        $('#ballotContent').html(voterStatsHTML + response.content);
-
-        // Show the ballot container
+        // Update the ballot content and show the container
+        $('#ballotContent').html(response.content);
         $('#ballotContainer').show();
       },
       error: function(xhr, status, error) {
