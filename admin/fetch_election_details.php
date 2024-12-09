@@ -5,6 +5,20 @@ include 'includes/slugify.php';
 if (isset($_POST['election_id'])) {
     $election_id = $_POST['election_id'];
     
+    // Fetch the election title
+    $sql = "SELECT title FROM election WHERE id = '$election_id'";
+    $result = $conn->query($sql);
+    
+    // Check if election exists
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $election_title = $row['title']; // Store election title
+    } else {
+        echo json_encode('Election not found');
+        exit;
+    }
+
+    // Fetch categories associated with the election
     $sql = "SELECT * FROM categories WHERE election_id = '$election_id' ORDER BY priority ASC";
     $query = $conn->query($sql);
 
@@ -77,7 +91,13 @@ if (isset($_POST['election_id'])) {
         ';
     }
 
-    echo json_encode($output);
+    // Include the election title in the response
+    $response = [
+        'title' => $election_title,
+        'content' => $output
+    ];
+
+    echo json_encode($response);
 } else {
     echo json_encode('Invalid Request');
 }
