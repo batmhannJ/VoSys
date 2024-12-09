@@ -143,41 +143,28 @@
 
             am4core.useTheme(am4themes_animated);
             var chart = am4core.create(containerId, am4charts.XYChart);
-            chart.data = dataPoints.map(dataPoint => ({
+            chart.data = dataPoints.map((dataPoint, index) => ({
                 category: dataPoint.label,
                 value: dataPoint.y,
-                percentage: ((dataPoint.y / totalVotes) * 100).toFixed(2) // Calculate percentage
+                percentage: ((dataPoint.y / totalVotes) * 100).toFixed(2), 
+                color: index % 2 === 0 ? am4core.color("#FF0000") : am4core.color("#0000FF") 
             }));
 
             var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
             categoryAxis.dataFields.category = "category";
             categoryAxis.renderer.grid.template.location = 0;
-            categoryAxis.renderer.minGridDistance = 30;
 
             var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
-            valueAxis.renderer.minGridDistance = 30;
 
             var series = chart.series.push(new am4charts.ColumnSeries());
             series.dataFields.valueX = "value";
             series.dataFields.categoryY = "category";
+            series.columns.template.propertyFields.fill = "color"; 
             series.columns.template.tooltipText = "{category}: [bold]{valueX} votes ({percentage}%)[/]";
-            series.columns.template.fill = am4core.color("#104E8B");
 
             var labelBullet = series.bullets.push(new am4charts.LabelBullet());
             labelBullet.label.text = "{percentage}%";
             labelBullet.label.fill = am4core.color("#fff");
-            labelBullet.locationX = 0.5;
-
-            var bullet = series.bullets.push(new am4charts.CircleBullet());
-            bullet.circle.fill = am4core.color("#fff");
-            bullet.circle.strokeWidth = 2;
-            bullet.circle.stroke = am4core.color("#104E8B");
-            bullet.circle.radius = 3;
-
-            bullet.events.on("ready", function(event) {
-                var bullet = event.target;
-                bullet.animate({ property: "dy", to: bullet.pixelY }, 3000, am4core.ease.sinOut);
-            });
 
             chart.cursor = new am4charts.XYCursor();
             chart.cursor.snapToSeries = series;
@@ -218,7 +205,7 @@
                                         <div class='box-body'>
                                             <div class='chart-container'>
                                                 <div class='candidate-images' id='${category}Image'></div>
-                                                <div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div>
+                                                <div id='${category}Graph' style='height: 300px;'></div>
                                             </div>
                                         </div>
                                     </div>
@@ -248,7 +235,6 @@
 
             $('#back-to-top').click(function () {
                 $('html, body').animate({ scrollTop: 0 }, 600);
-                return false;
             });
         });
     </script>
