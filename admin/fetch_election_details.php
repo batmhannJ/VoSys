@@ -16,7 +16,12 @@ if (isset($_POST['election_id'])) {
         
         $candidates = [];
         while ($crow = $cquery->fetch_assoc()) {
-            $total_votes = $crow['votes']; // Assuming you have a 'votes' column
+            // Count total votes for each candidate
+            $votes_sql = "SELECT COUNT(*) AS total_votes FROM votes WHERE candidate_id='" . $crow['id'] . "'";
+            $votes_query = $conn->query($votes_sql);
+            $votes_row = $votes_query->fetch_assoc();
+            $total_votes = $votes_row['total_votes'];
+
             $image = (!empty($crow['photo'])) ? '../images/' . $crow['photo'] : '../images/profile.jpg';
 
             // Store candidate data for sorting
