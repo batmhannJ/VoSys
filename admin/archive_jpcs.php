@@ -153,12 +153,14 @@
       </div>
     </div>
   </div>
-  <div id="ballotContainer" style="display: none; margin-right: -15px; margin-left: -15px;">
+  <div class="row" style="margin-right: -15px; margin-left: -15px;">
+  <div id="ballotContainer" style="display: none;">
   <h1 style="text-align: center;">
     <b>JUNIOR PHILIPPINE COMPUTER SOCIETY<br> ELECTIONS</b>
   </h1>
   <div class="box-body" id="ballotContent">
     <!-- Ballot content will be loaded here -->
+  </div>
   </div>
 </div>
 </section>
