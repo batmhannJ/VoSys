@@ -4,11 +4,11 @@ include 'includes/slugify.php';
 
 if (isset($_POST['election_id'])) {
     $election_id = $_POST['election_id'];
-    
+
     // Fetch the election title and academic year
     $sql = "SELECT title, academic_yr FROM election WHERE id = '$election_id'";
     $result = $conn->query($sql);
-    
+
     // Check if election exists
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
@@ -18,6 +18,21 @@ if (isset($_POST['election_id'])) {
         echo json_encode('Election not found');
         exit;
     }
+
+    // Get total voters (assuming there's a users table where voters are stored)
+    $sql_total_voters = "SELECT COUNT(*) AS total_voters FROM users WHERE election_id = '$election_id'";
+    $result_total_voters = $conn->query($sql_total_voters);
+    $total_voters_row = $result_total_voters->fetch_assoc();
+    $total_voters = $total_voters_row['total_voters'];
+
+    // Get the number of voters who voted
+    $sql_voters_voted = "SELECT COUNT(DISTINCT user_id) AS voters_voted FROM votes WHERE election_id = '$election_id'";
+    $result_voters_voted = $conn->query($sql_voters_voted);
+    $voters_voted_row = $result_voters_voted->fetch_assoc();
+    $voters_voted = $voters_voted_row['voters_voted'];
+
+    // Calculate remaining voters
+    $remaining_voters = $total_voters - $voters_voted;
 
     // Fetch categories associated with the election
     $sql = "SELECT * FROM categories WHERE election_id = '$election_id' ORDER BY priority ASC";
@@ -30,7 +45,7 @@ if (isset($_POST['election_id'])) {
 
         $sql = "SELECT * FROM candidates WHERE category_id='" . $row['id'] . "'";
         $cquery = $conn->query($sql);
-        
+
         $candidates = [];
         while ($crow = $cquery->fetch_assoc()) {
             // Count total votes for each candidate
@@ -96,7 +111,10 @@ if (isset($_POST['election_id'])) {
     $response = [
         'title' => $election_title,
         'academic_yr' => $academic_yr,
-        'content' => $output
+        'content' => $output,
+        'total_voters' => $total_voters,
+        'voters_voted' => $voters_voted,
+        'remaining_voters' => $remaining_voters
     ];
 
     echo json_encode($response);
