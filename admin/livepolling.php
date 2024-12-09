@@ -37,32 +37,24 @@
             margin-bottom: 40px;
             display: flex;
             align-items: center;
+            flex-direction: row-reverse; /* Flip the order of elements */
         }
 
         .candidate-images {
+            margin-left: 10px; /* Add space between images and graph */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            margin-right: 10px;
-        }
-
-        .candidate-image {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 10px;
         }
 
         .candidate-image img {
             width: 60px;
             height: 60px;
-            margin-right: -10px;
-            margin-bottom: 25px;
-            margin-top: 35px;
+            margin-bottom: 10px;
         }
 
         .chart-container > div {
-            flex-grow: 1; /* Makes the chart section grow to take up available space */
+            flex-grow: 1; /* Make the graph section take up available space */
         }
 
         @media (max-width: 1000px) {
@@ -70,20 +62,12 @@
                 width: 75px;
                 height: 75px;
             }
-
-            .chart-container > div {
-                flex-grow: 1;
-            }
         }
 
         @media (max-width: 480px) {
             .candidate-image img {
                 width: 100px;
                 height: 100px;
-            }
-
-            .chart-container > div {
-                flex-grow: 1;
             }
         }
     </style>
@@ -139,7 +123,6 @@
 
     <script src="path/to/jquery.min.js"></script>
     <script>
-        // Generate amCharts Horizontal Bar Chart with wider bars
         function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
             var chart = am4core.create(containerId, am4charts.XYChart);
 
@@ -169,10 +152,7 @@
             series.columns.template.tooltipText = "{categoryY}: [bold]{valueX}[/] votes";
             series.columns.template.fillOpacity = 0.8;
 
-            // Increase the bar width (more space for the bars)
-            series.columns.template.width = am4core.percent(80);  // Adjust percentage for width of the bars
-
-            // Bullet to show candidate image
+            series.columns.template.width = am4core.percent(80); // Adjust width of the bars
             var bullet = series.bullets.push(new am4charts.Bullet());
             var image = bullet.createChild(am4core.Image);
             image.horizontalCenter = "middle";
@@ -180,11 +160,9 @@
             image.dy = 30;
             image.propertyFields.href = "image";
 
-            // Round the corners of the bars
             series.columns.template.column.cornerRadiusTopLeft = 10;
             series.columns.template.column.cornerRadiusTopRight = 10;
 
-            // Add some padding for visual spacing
             categoryAxis.renderer.cellStartLocation = 0.1;
             categoryAxis.renderer.cellEndLocation = 0.9;
         }
@@ -223,8 +201,8 @@
                                         </div>
                                         <div class='box-body'>
                                             <div class='chart-container'>
-                                                <div class='candidate-images' id='${category}Image'></div>
                                                 <div id='${category}Graph' style='height: 300px;'></div>
+                                                <div class='candidate-images' id='${category}Image'></div>
                                             </div>
                                         </div>
                                     </div>
