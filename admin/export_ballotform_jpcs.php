@@ -108,16 +108,27 @@ $pdfContent = "
 
 // Iterate through positions
 foreach ($positions as $position) {
+    // Get the max_vote for the position from the categories table
+    $sql_max_vote = "SELECT max_vote FROM categories WHERE name = '$position' AND election_id = 20";
+    $max_vote_result = $conn->query($sql_max_vote);
+    $max_vote = 0;
+
+    if ($max_vote_result->num_rows > 0) {
+        $max_vote_row = $max_vote_result->fetch_assoc();
+        $max_vote = $max_vote_row['max_vote'];
+    }
+
+    // Display position with the max vote instruction
     $pdfContent .= "
     <tr>
-        <td colspan='2' class='position-title'>$position</td>
+        <td colspan='2' class='position-title'>$position - You can only vote for $max_vote candidates</td>
     </tr>";
 
     // Fetch candidates for each position from JPCS and Election ID 20
     $sql = "SELECT * FROM candidates 
             LEFT JOIN categories ON categories.id = candidates.category_id 
             WHERE categories.name = '$position'
-              AND candidates.election_id = 1
+              AND candidates.election_id = 20
             ORDER BY candidates.lastname ASC";
 
     $query = $conn->query($sql);

@@ -154,14 +154,21 @@
     </div>
   </div>
   <div class="row" style="margin-right: -15px; margin-left: -15px;">
-  <div id="ballotContainer" style="display: none;">
-    <h1 style="text-align: center;">
-      <b id="electionTitle"> <!--ELECTION TITLE will be inserted here--> </b>
-    </h1>
-    <div class="box-body" id="ballotContent">
-      <!-- Ballot content will be loaded here -->
-    </div>
-    <div class="box-body">
+    <div id="ballotContainer" style="display: none;">
+        <h1 style="text-align: center;">
+            <b id="electionTitle"> <!--ELECTION TITLE will be inserted here--> </b>
+        </h1>
+        <div class="box-body" id="ballotContent">
+            <!-- Ballot content will be loaded here -->
+        </div>
+        
+        <!-- New Table for Voter Stats -->
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title text-center">Voter Statistics</h3>
+                </div>
+                <div class="box-body">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -179,8 +186,11 @@
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+        <!-- End of Voter Stats Table -->
     </div>
-  </div>
+</div>
 </section>
 </div>
 
