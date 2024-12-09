@@ -258,7 +258,6 @@ $('#submitActivationBtn').on('click', function() {
     console.log('Start Time:', startTime);
     console.log('End Time:', endTime);
 
-    // Check if both start and end times are provided
     if (startTime && endTime) {
         $.ajax({
             type: 'POST',
@@ -281,7 +280,6 @@ $('#submitActivationBtn').on('click', function() {
             }
         });
     } else {
-        // If either start or end time is missing, show the error message
         toastr.error('Please fill in both start and end times.');
     }
 });
