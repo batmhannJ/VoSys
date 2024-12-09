@@ -158,151 +158,165 @@
 
 <script>
 $(function(){
+  // Generic function to handle modal show and data fetching
+  function showModal(modalId, id, action) {
+    $(modalId).modal('show');
+    $.ajax({
+      type: 'POST',
+      url: 'election_row.php',
+      data: {id: id},
+      dataType: 'json',
+      success: function(response){
+        if(action === 'edit') {
+          $('#edit_title').val(response.title);
+          $('#edit_voters').val(response.voters);
+          $('#edit_starttime').val(response.starttime);
+          $('#edit_endtime').val(response.endtime);
+          $('#edit_status').val(response.status);
+        } else if(action === 'delete') {
+          // Handle delete case if necessary
+          $('.fullname').html(response.title);
+        }
+        $('.id').val(response.id);
+      },
+      error: function(xhr, status, error) {
+        toastr.error('Error fetching data.');
+      }
+    });
+  }
+
+  // Event handler for edit button
   $(document).on('click', '.edit', function(e){
     e.preventDefault();
-    $('#edit').modal('show');
     var id = $(this).data('id');
-    getRow(id);
+    showModal('#edit', id, 'edit');
   });
 
+  // Event handler for delete button
   $(document).on('click', '.delete', function(e){
     e.preventDefault();
-    $('#delete').modal('show');
     var id = $(this).data('id');
-    getRow(id);
+    showModal('#delete', id, 'delete');
   });
 
-
-});
-function getRow(id){
-  $.ajax({
-    type: 'POST',
-    url: 'election_row.php',
-    data: {id:id},
-    dataType: 'json',
-    success: function(response){
-      $('.id').val(response.id);
-      $('#edit_title').val(response.title);
-      $('#edit_voters').val(response.voters);
-      $('#edit_starttime').val(response.starttime);
-      $('#edit_endtime').val(response.endtime);
-      $('#edit_status').val(response.status);
-      $('.fullname').html(response.title);
-    }
-  });
-}
-    $(function () {
-        $('#starttime').datetimepicker();
-        $('#endtime').datetimepicker();
-    });
-
-    $(document).on('click', '.archive', function(e){
+  // Archive election action
+  $(document).on('click', '.archive', function(e){
     e.preventDefault();
     var id = $(this).data('id');
     $('#submitBtn').attr('data-id', id); // Set data-id attribute to the button
     $('#confirmationModal').modal('show'); // Show the confirmation modal
   });
 
-  // Event handler for modal submit button
   $('#submitBtn').on('click', function() {
-    var id = $(this).data('id'); // Get the id from data-id attribute
+    var id = $(this).data('id');
     archiveElection(id);
   });
 
-
+  // Handle election status change (activation/deactivation)
   $(document).on('click', '.election-status', function(e) {
     e.preventDefault();
-
     var electionId = $(this).data('id');
     var status = $(this).data('status');
-    var statusName = $(this).data('name'); // Corrected attribute name
+    var statusName = $(this).data('name'); 
 
-    // Check the current status of the election
-    if (status === 1) {  // If the election is 'Not Active'
-        $('#activationModal').modal('show'); // Show the modal for activation
-        $('#activationModal').find('.modal-body #starttime').val(''); // Reset Start Time
-        $('#activationModal').find('.modal-body #endtime').val(''); // Reset End Time
-        $('#submitActivationBtn').attr('data-id', electionId); // Store election ID for submission
-    } else {  // If the election is 'Active'
+    if (status === 1) {  // Not Active, show activation modal
+        $('#activationModal').modal('show');
+        $('#activationModal').find('.modal-body #starttime').val('');
+        $('#activationModal').find('.modal-body #endtime').val('');
+        $('#submitActivationBtn').attr('data-id', electionId); 
+    } else {  // Active, confirm deactivation
         var confirmed = confirm('Are you sure you want to Deactivate this Election?');
-
         if (confirmed) {
-            $.ajax({
-                type: 'POST',
-                url: 'change_status.php',
-                data: {
-                    election_id: electionId,
-                    status: status
-                },
-                dataType: 'json',
-                beforeSend: function() {
-                    showLoadingOverlay();
-                },
-                success: function(response) {
-                    if (response.success) {
-                        location.reload(); // Reload page after successful update
-                    } else {
-                        toastr.error('Failed to update status.');
-                    }
-                    hideLoadingOverlay();
-                },
-                error: function(xhr, status, error) {
-                    console.error('AJAX Error:', error);
-                    toastr.error('An error occurred. Please try again.');
-                    hideLoadingOverlay();
-                }
-            });
+            changeElectionStatus(electionId, status);
         } else {
             toastr.info('Status change canceled.');
         }
     }
-});
+  });
 
-$('#submitActivationBtn').on('click', function() {
-    var electionId = $(this).data('id'); // Get the election ID from data-id attribute
-    var startTime = $('#starttime').val(); // Get the start time
-    var endTime = $('#endtime').val(); // Get the end time
+  // Submit election activation
+  $('#submitActivationBtn').on('click', function() {
+    var electionId = $(this).data('id');
+    var startTime = $('#starttime').val();
+    var endTime = $('#endtime').val();
 
-    // Validate the times
     if (startTime && endTime) {
-        $.ajax({
-            type: 'POST',
-            url: 'activate_election.php', // PHP script for activation
-            data: {
-                election_id: electionId,
-                start_time: startTime,
-                end_time: endTime
-            },
-            success: function(response) {
-                if (response.success) {
-                    location.reload(); // Reload page after successful activation
-                } else {
-                    toastr.error('Failed to activate election.');
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
+        activateElection(electionId, startTime, endTime);
     } else {
         toastr.error('Please fill in both start and end times.');
     }
-});
+  });
 
-function archiveElection(id) {
+  // Archive election function
+  function archiveElection(id) {
     $.ajax({
-        type: "POST",
-        url: "archive_election.php",
-        data: { id: id },
-        success: function(response) {
-            // Refresh the page or update the table as needed
-            location.reload();
-        },
-        error: function(xhr, status, error) {
-            console.error(xhr.responseText);
-        }
+      type: "POST",
+      url: "archive_election.php",
+      data: { id: id },
+      success: function(response) {
+        location.reload(); // Reload page after successful archive
+      },
+      error: function(xhr, status, error) {
+        toastr.error('Error archiving election.');
+      }
     });
-}
+  }
+
+  // Change election status (activation or deactivation)
+  function changeElectionStatus(electionId, status) {
+    $.ajax({
+      type: 'POST',
+      url: 'change_status.php',
+      data: {
+        election_id: electionId,
+        status: status
+      },
+      dataType: 'json',
+      beforeSend: function() {
+        showLoadingOverlay();
+      },
+      success: function(response) {
+        if (response.success) {
+          location.reload();
+        } else {
+          toastr.error('Failed to update status.');
+        }
+        hideLoadingOverlay();
+      },
+      error: function(xhr, status, error) {
+        toastr.error('An error occurred. Please try again.');
+        hideLoadingOverlay();
+      }
+    });
+  }
+
+  // Activate election function
+  function activateElection(electionId, startTime, endTime) {
+    $.ajax({
+      type: 'POST',
+      url: 'activate_election.php',
+      data: {
+        election_id: electionId,
+        start_time: startTime,
+        end_time: endTime
+      },
+      success: function(response) {
+        if (response.success) {
+          location.reload();
+        } else {
+          toastr.error('Failed to activate election.');
+        }
+      },
+      error: function(xhr, status, error) {
+        toastr.error('Error during activation.');
+      }
+    });
+  }
+
+  // Initialize datetime pickers
+  $('#starttime').datetimepicker();
+  $('#endtime').datetimepicker();
+});
 </script>
 
 </body>
