@@ -12,57 +12,69 @@
                 <div id="preview_body"></div>
             </div>
             <div class="modal-footer custom-preview-footer">
-                <button type="button" class="btn btn-secondary btn-flat" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+                <button type="button" class="btn btn-dark btn-flat" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
             </div>
         </div>
     </div>
 </div>
 
+
 <style>
-  /* Custom Styles for Preview Modal */
+ /* Alternative Modern Design for Preview Modal */
 .custom-preview-modal {
-    border-radius: 10px;
-    background: #fff;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #ff7e5f, #feb47b);  /* Gradient background for the modal */
+    border-radius: 20px;
+    border: 2px solid #fff;
+    overflow: hidden;
 }
 
 .custom-preview-header {
-    background-color: #1abc9c;
+    background-color: transparent;
     color: #fff;
-    padding: 15px 20px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    padding: 20px 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .custom-preview-title {
-    font-size: 1.3rem;
-    font-weight: 600;
-    text-transform: uppercase;
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 1px;
 }
 
 .custom-preview-body {
-    padding: 20px;
-    font-size: 1.1rem;
-    color: #34495e;
+    padding: 30px;
+    font-size: 1.2rem;
+    color: #fff;
+    line-height: 1.6;
+    text-align: center;
 }
 
 .custom-preview-footer {
-    background-color: #f4f4f4;
-    padding: 15px;
+    background-color: transparent;
+    padding: 20px;
     display: flex;
     justify-content: center;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .custom-preview-footer .btn {
-    background-color: #e74c3c;
+    background-color: #333;
     color: #fff;
-    transition: background-color 0.3s ease;
+    padding: 12px 20px;
+    font-size: 1rem;
+    border-radius: 30px;
+    text-transform: uppercase;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .custom-preview-footer .btn:hover {
-    background-color: #c0392b;
+    background-color: #555;
+    transform: scale(1.05);
 }
 
 .custom-preview-footer .btn:focus {
@@ -73,11 +85,15 @@
 .close {
     color: #fff;
     font-size: 1.5rem;
-    opacity: 0.7;
+    font-weight: bold;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
 }
 
 .close:hover {
-    opacity: 1;
+    opacity: 0.7;
 }
 
 </style>
