@@ -208,7 +208,7 @@
                                         <div class='box-body'>
                                             <div class='chart-container'>
                                                 <div class='candidate-images' id='${category}Image'></div>
-                                                <div id='${category}Graph' style='height: 300px; width: 500px;'></div>
+                                                <div id='${category}Graph' style='height: 300px; width: 1000px;'></div>
                                             </div>
                                         </div>
                                     </div>
