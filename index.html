@@ -559,9 +559,7 @@
   // Get the dropdown elements
 const dropdown = document.querySelector(".dropdown");
 const dropdownContent = document.querySelector(".dropdown-content");
-
-// Get other navigation links
-const otherNavLinks = document.querySelectorAll(".navbar li:not(.dropdown) a");
+const aboutLink = document.querySelector("#aboutusLink"); // About link
 
 // Prevent dropdown from disappearing on hover or click
 dropdown.addEventListener("click", function (e) {
@@ -569,16 +567,16 @@ dropdown.addEventListener("click", function (e) {
   dropdownContent.classList.toggle("hide"); // Toggle visibility
 });
 
-// Hide dropdown when clicking another nav item
-otherNavLinks.forEach(link => {
-  link.addEventListener("click", function () {
-    dropdownContent.classList.add("hide"); // Hide dropdown
-  });
+// Hide dropdown when clicking the "About" link
+aboutLink.addEventListener("click", function (e) {
+  dropdownContent.classList.add("hide"); // Hide dropdown
 });
 
 // Hide dropdown when clicking anywhere outside
-document.addEventListener("click", function () {
-  dropdownContent.classList.add("hide");
+document.addEventListener("click", function (e) {
+  if (!dropdown.contains(e.target)) { // Check if the click was outside of the dropdown
+    dropdownContent.classList.add("hide");
+  }
 });
 
 
