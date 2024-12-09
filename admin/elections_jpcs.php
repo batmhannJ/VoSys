@@ -201,55 +201,6 @@ function getRow(id){
     archiveElection(id);
   });
 
-
-  $(document).on('click', '.election-status', function(e) {
-    e.preventDefault();
-
-    var electionId = $(this).data('id');
-    var status = $(this).data('status');
-    var statusName = $(this).data('name'); // Corrected attribute name
-
-    // Check the current status of the election
-    if (status === 1) {  // If the election is 'Not Active'
-        $('#activationModal').modal('show'); // Show the modal for activation
-        $('#activationModal').find('.modal-body #starttime').val(''); // Reset Start Time
-        $('#activationModal').find('.modal-body #endtime').val(''); // Reset End Time
-        $('#submitActivationBtn').attr('data-id', electionId); // Store election ID for submission
-    } else {  // If the election is 'Active'
-        var confirmed = confirm('Are you sure you want to Deactivate this Election?');
-
-        if (confirmed) {
-            $.ajax({
-                type: 'POST',
-                url: 'change_status.php',
-                data: {
-                    election_id: electionId,
-                    status: status
-                },
-                dataType: 'json',
-                beforeSend: function() {
-                    showLoadingOverlay();
-                },
-                success: function(response) {
-                    if (response.success) {
-                        location.reload(); // Reload page after successful update
-                    } else {
-                        toastr.error('Failed to update status.');
-                    }
-                    hideLoadingOverlay();
-                },
-                error: function(xhr, status, error) {
-                    console.error('AJAX Error:', error);
-                    toastr.error('An error occurred. Please try again.');
-                    hideLoadingOverlay();
-                }
-            });
-        } else {
-            toastr.info('Status change canceled.');
-        }
-    }
-});
-
 $('#submitActivationBtn').on('click', function() {
     var electionId = $(this).data('id');
     var startTime = $('#starttime').val();
