@@ -154,9 +154,23 @@
     </div>
   </div>
   <div class="row">
-        <div class="col-xs-10 col-xs-offset-1" id="content">
-        </div>
-      </div>
+				<div class="col-xs-12">
+					<div class="box box-solid" id="'.$row['id'].'">
+						<div class="box-header with-border">
+							<h3 class="box-title"><b>'.$row['name'].'</b></h3>
+						</div>
+						<div class="box-body">
+							<p>'.$instruct.'
+							</p>
+							<div id="candidate_list">
+								<ul>
+									'.$candidate.'
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 </section>
 </div>
 
