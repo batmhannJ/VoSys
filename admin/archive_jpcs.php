@@ -140,7 +140,7 @@
                         <td>".$row['voters']."</td>
                         <td>
                           <button class='btn btn-warning btn-sm restore-election btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#electionConfirmationModal'><i class='fa fa-reply'></i> Restore</button>
-                          <button class='btn btn-danger btn-sm delete-election btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#deleteConfirmationModal'><i class='fa fa-trash'></i> Delete</button>
+                          <button class='btn btn-primary btn-sm view-election btn-flat' data-id='" . $row['id'] . "'><i class='fa fa-eye'></i> View Election</button>
                         </td>
                       </tr>
                     ";
@@ -153,6 +153,11 @@
       </div>
     </div>
   </div>
+  <section class="content" id="electionDetailsSection" style="display: none;">
+          <div class="row">
+            <div class="col-xs-10 col-xs-offset-1" id="content"></div>
+          </div>
+        </section>
 </section>
 </div>
 
@@ -163,6 +168,59 @@
 
 <?php include 'includes/scripts.php'; ?>
 <?php include 'archive_script.php'; ?>
+<script>
+    $(document).on('click', '.view-election', function () {
+      var election_id = $(this).data('id');
+
+      $.ajax({
+        url: 'fetch_election_details.php',
+        type: 'POST',
+        data: { election_id: election_id },
+        dataType: 'json',
+        success: function (response) {
+          if (response.error) {
+            alert(response.error);
+            return;
+          }
+
+          var election = response.election;
+          var candidates = response.candidates;
+          var winners = response.winners;
+
+          var content = `
+            <div class="box">
+              <div class="box-header with-border">
+                <h3 class="box-title">${election.title}</h3>
+              </div>
+              <div class="box-body">
+                <p><strong>Title:</strong> ${election.title}</p>
+                <p><strong>Date:</strong> ${election.date}</p>
+                <p><strong>Total Voters:</strong> ${election.voters}</p>
+                <h4>Candidates:</h4>
+                <ul>
+          `;
+
+          candidates.forEach(function (candidate) {
+            content += `<li>${candidate.name} - ${candidate.total_votes} votes</li>`;
+          });
+
+          content += `
+                </ul>
+                <h4>Winner(s):</h4>
+                <p>${winners.join(', ')}</p>
+              </div>
+            </div>
+          `;
+
+          $('#content').html(content);
+          $('#electionDetailsSection').slideDown();
+        },
+        error: function () {
+          alert('An error occurred while fetching election details.');
+        }
+      });
+    });
+  </script>
 
 </body>
 </html>
