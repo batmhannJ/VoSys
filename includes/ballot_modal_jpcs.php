@@ -17,6 +17,157 @@
     </div>
 </div>
 
+<style>
+  /* Modal Container */
+.modal.fade {
+    display: block;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Modal Dialog */
+.modal-dialog {
+    max-width: 80%;
+    margin: 1.75rem auto;
+    border-radius: 10px;
+    background-color: #fff; /* Background color of the modal */
+}
+
+/* Modal Content */
+.modal-content {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for the modal */
+}
+
+/* Modal Header */
+.modal-header {
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #ddd;
+    padding: 15px 20px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+
+/* Close Button */
+.modal-header .close {
+    font-size: 1.5rem;
+    color: #333;
+    opacity: 0.5;
+}
+
+.modal-header .close:hover {
+    opacity: 1;
+}
+
+/* Modal Body */
+.modal-body {
+    padding: 20px;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555;
+    overflow-y: auto; /* Allow scrolling for overflowing content */
+    max-height: 60vh; /* Limit height for large content */
+}
+
+/* Modal Footer */
+.modal-footer {
+    background-color: #f7f7f7;
+    border-top: 1px solid #ddd;
+    padding: 10px 20px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    text-align: right;
+}
+
+/* Button */
+.modal-footer .btn {
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 8px 20px;
+    border-radius: 5px;
+}
+
+.modal-footer .btn-default {
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+
+.modal-footer .btn-default:hover {
+    background-color: #0056b3;
+    cursor: pointer;
+}
+
+/* Hover effect for button */
+.modal-footer .btn-default:focus,
+.modal-footer .btn-default:active {
+    box-shadow: none;
+}
+
+/* Preview Body Styling */
+#preview_body {
+    font-family: Arial, sans-serif; /* Formal font */
+    font-size: 1rem; /* Default font size */
+    color: #333; /* Text color */
+    line-height: 1.6; /* Line height for readability */
+    padding: 20px; /* Padding for inner spacing */
+    background-color: #f7f7f7; /* Light background for content */
+    border-radius: 8px; /* Rounded corners for content container */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Soft shadow around the content */
+    margin-top: 15px; /* Space from top */
+}
+
+/* Responsive Styles */
+@media (max-width: 767px) {
+    .modal-dialog {
+        max-width: 95%; /* Modal takes 95% width on smaller screens */
+    }
+
+    .modal-header h4 {
+        font-size: 1.1rem;
+    }
+
+    .modal-body {
+        font-size: 0.9rem;
+        padding: 15px;
+    }
+
+    .modal-footer .btn {
+        font-size: 0.9rem;
+        padding: 6px 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .modal-dialog {
+        max-width: 100%; /* Full width on extra small devices */
+    }
+
+    .modal-header h4 {
+        font-size: 1rem;
+    }
+
+    .modal-body {
+        font-size: 0.875rem;
+    }
+
+    .modal-footer .btn {
+        font-size: 0.875rem;
+        padding: 5px 12px;
+    }
+}
+
+</style>
 
 <!--<script>
   $('#submit').click(function() {

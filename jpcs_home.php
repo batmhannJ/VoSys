@@ -1062,63 +1062,6 @@ input[type="checkbox"]:checked + .clist {
     transform: translate(-50%, -50%); /* Center the image */
 }
 
-/* Style the content inside the preview body */
-#preview_body {
-    font-family: Arial, sans-serif; /* Formal font */
-    font-size: 1rem; /* Default font size */
-    color: #333; /* Text color */
-    line-height: 1.6; /* Line height for readability */
-    padding: 20px; /* Padding for inner spacing */
-    background-color: #f7f7f7; /* Light background for content */
-    border-radius: 8px; /* Rounded corners for content container */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Soft shadow around the content */
-    margin-top: 15px; /* Space from top */
-    overflow-y: auto; /* Allows scrolling if content overflows */
-}
-
-/* Styling for headings inside #preview_body */
-#preview_body h1, #preview_body h2, #preview_body h3 {
-    font-weight: 700; /* Bold headings */
-    color: #222; /* Dark color for headings */
-    margin-bottom: 15px; /* Margin below headings */
-}
-
-/* Styling for paragraphs inside #preview_body */
-#preview_body p {
-    margin-bottom: 10px; /* Space between paragraphs */
-}
-
-/* Styling for lists inside #preview_body */
-#preview_body ul, #preview_body ol {
-    margin-left: 20px; /* Indentation for lists */
-    margin-bottom: 15px; /* Space below lists */
-}
-
-/* Styling for list items */
-#preview_body li {
-    margin-bottom: 5px; /* Space between list items */
-}
-
-/* Links inside #preview_body */
-#preview_body a {
-    color: #007bff; /* Blue color for links */
-    text-decoration: none; /* Remove underline */
-}
-
-#preview_body a:hover {
-    text-decoration: underline; /* Underline links on hover */
-}
-
-/* Styling for images inside #preview_body */
-#preview_body img {
-    max-width: 100%; /* Ensure images are responsive */
-    height: auto; /* Maintain aspect ratio */
-    border-radius: 5px; /* Rounded corners for images */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow for images */
-    margin-bottom: 15px; /* Space below images */
-}
-
-
 
 .title {
     font-size: 40px; /* Decrease font size */
