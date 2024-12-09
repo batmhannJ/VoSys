@@ -75,6 +75,9 @@
             }
         }
     </style>
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -121,72 +124,55 @@
         <?php include 'includes/footer.php'; ?>
     </div>
     <?php include 'includes/scripts.php'; ?>
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
     <script src="path/to/jquery.min.js"></script>
     <script>
-       function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
-        var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+        // Generate amCharts Bar Chart
+        function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
+            var chart = am4core.create(containerId, am4charts.XYChart);
 
-        var imageContainer = document.getElementById(imageContainerId);
-        imageContainer.innerHTML = '';
-        dataPoints.forEach(dataPoint => {
-            var candidateDiv = document.createElement('div');
-            candidateDiv.className = 'candidate-image';
-            candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
-            imageContainer.appendChild(candidateDiv);
-        });
+            chart.paddingRight = 40;
 
-        var chart = new CanvasJS.Chart(containerId, {
-            animationEnabled: true,
-            animationDuration: 1500, // More gradual animation for a smooth effect
-            title: { text: "Vote Counts" },
-            data: [{
-                type: graphType,
-                indexLabel: "{label} - {percent}%",
-                indexLabelPlacement: "inside",
-                indexLabelFontColor: "white",
-                indexLabelFontSize: 14,
-                dataPoints: dataPoints.map(dataPoint => ({
-                    ...dataPoint,
-                    percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-                }))
-            }]
-        });
-
-        if (graphType === 'bar') {
-            chart.options.axisX = {
-                title: "",
-                includeZero: true,
-                interval: 1,
-                labelFormatter: function () {
-                    return " ";
-                }
-            };
-            chart.options.axisY = {
-                title: "",
-                interval: Math.ceil(totalVotes / 10)
-            };
-
-            chart.options.data[0].cornerRadius = 20; // More rounded corners
-            chart.options.data[0].bevelEnabled = true; // Enhanced 3D effect
-            chart.options.data[0].indexLabelFontWeight = "bold";
-            chart.options.data[0].indexLabelFontColor = "#ffffff";
-
-            chart.options.data[0].dataPoints = dataPoints.map(dataPoint => ({
-                ...dataPoint,
-                percent: ((dataPoint.y / totalVotes) * 100).toFixed(2),
-                color: dataPoint.color || "#4F81BC", // Default color
-                shadow: {
-                    color: 'rgba(0, 0, 0, 0.3)', 
-                    blur: 10, 
-                    offsetX: 4, 
-                    offsetY: 4  
-                }
+            chart.data = dataPoints.map(dataPoint => ({
+                category: dataPoint.label,
+                value: dataPoint.y,
+                image: dataPoint.image
             }));
+
+            var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+            categoryAxis.dataFields.category = "category";
+            categoryAxis.renderer.grid.template.location = 0;
+            categoryAxis.renderer.minGridDistance = 30;
+
+            var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+            valueAxis.renderer.minGridDistance = 50;
+
+            var series = chart.series.push(new am4charts.ColumnSeries());
+            series.dataFields.valueY = "value";
+            series.dataFields.categoryX = "category";
+            series.name = "Votes";
+            series.columns.template.tooltipText = "{categoryX}: [bold]{valueY}[/] votes";
+            series.columns.template.fillOpacity = 0.8;
+
+            var bullet = series.bullets.push(new am4charts.Bullet());
+            var image = bullet.createChild(am4core.Image);
+            image.horizontalCenter = "middle";
+            image.verticalCenter = "bottom";
+            image.dy = 30;
+            image.propertyFields.href = "image";
+
+            series.columns.template.column.cornerRadiusTopLeft = 10;
+            series.columns.template.column.cornerRadiusTopRight = 10;
+
+            categoryAxis.renderer.cellStartLocation = 0.1;
+            categoryAxis.renderer.cellEndLocation = 0.9;
+
+            // Add labels inside bars
+            series.columns.template.adapter.add("fill", function (fill, target) {
+                return target.dataItem.index % 2 === 0 ? am4core.color("#3e77ff") : fill;
+            });
         }
 
-        chart.render();
-    }
         function fetchAndGenerateGraphs(organization) {
             const graphType = $('#graph-type').val();
 
@@ -222,7 +208,7 @@
                                         <div class='box-body'>
                                             <div class='chart-container'>
                                                 <div class='candidate-images' id='${category}Image'></div>
-                                                <div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div>
+                                                <div id='${category}Graph' style='height: 300px;'></div>
                                             </div>
                                         </div>
                                     </div>
