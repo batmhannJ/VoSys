@@ -73,9 +73,9 @@
             '</td>';
             if ($row['status'] === 0) {
               echo '<td><a href="#" name="status" class="btn badge rounded-pill btn-secondary election-status" data-id="' . $row['id'] . '" data-status="1" data-name="Activate">Not active</a></td>';
-          } else {
+            } else {
               echo '<td><a href="#" name="status" class="btn badge rounded-pill btn-success election-status" data-id="' . $row['id'] . '" data-status="0" data-name="Deactivate">Active</a></td>';
-          }          
+            }
             echo '<td class="text-center">
                         <a href="#" class="btn btn-primary btn-sm edit btn-flat" data-bs-toggle="modal" data-bs-target="#editElection" data-id="' . $row['id'] . '">Edit</a>
                         <a href="#" class="btn btn-warning btn-sm archive btn-flat" data-bs-toggle="modal" data-bs-target="#confirmationModal" data-id="' . $row['id'] . '" data-name="' . $row['title'] . '">Archive</a></td>
@@ -125,15 +125,21 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="activationForm" action="change_status.php">
-                    <div class="form-group">
-                        <label for="starttime">Start Time</label>
-                        <input type="datetime-local" class="form-control" id="starttime" name="starttime" required min="<?php echo date('Y-m-d\TH:i'); ?>">
-                    </div>
-                    <div class="form-group">
-                      <label for="endtime">End Time</label>
+                <form id="activationForm">
+                <div class="form-group">
+                  <label for="starttime" class="col-sm-3 control-label">Start Time</label>
+                  <div class="col-sm-9">
+                      <input type="datetime-local" class="form-control" id="starttime" name="starttime" required min="<?php echo date('Y-m-d\TH:i'); ?>">
+                  </div>
+              </div>
+
+              <!-- Add end time input -->
+              <div class="form-group">
+                  <label for="endtime" class="col-sm-3 control-label">End Time</label>
+                  <div class="col-sm-9">
                       <input type="datetime-local" class="form-control" id="endtime" name="endtime" required min="<?php echo date('Y-m-d\TH:i'); ?>">
                   </div>
+              </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -143,139 +149,160 @@
         </div>
     </div>
 </div>
+
+
 </div>
 <?php include 'includes/scripts.php'; ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 <script>
-$(function () {
-    // Show edit modal and fetch data
-    $(document).on('click', '.edit', function (e) {
-        e.preventDefault();
-        const id = $(this).data('id');
-        $('#edit').modal('show');
-        getRow(id);
-    });
-
-    // Show delete modal and fetch data
-    $(document).on('click', '.delete', function (e) {
-        e.preventDefault();
-        const id = $(this).data('id');
-        $('#delete').modal('show');
-        getRow(id);
-    });
-
-    $(document).on('click', '.election-status', function (e) {
+$(function(){
+  $(document).on('click', '.edit', function(e){
     e.preventDefault();
-    const electionId = $(this).data('id');
-    const currentStatus = $(this).data('status'); // 1 for activate, 0 for deactivate
-    $('#submitActivationBtn').data('id', electionId); // Bind the ID to the modal button
-    $('#activationModal').modal('show');
+    $('#edit').modal('show');
+    var id = $(this).data('id');
+    getRow(id);
+  });
+
+  $(document).on('click', '.delete', function(e){
+    e.preventDefault();
+    $('#delete').modal('show');
+    var id = $(this).data('id');
+    getRow(id);
+  });
+
+
 });
-
-    // Show archive modal
-    $(document).on('click', '.archive', function (e) {
-        e.preventDefault();
-        const id = $(this).data('id');
-        $('#submitBtn').attr('data-id', id); // Pass the ID to the button
-        $('#confirmationModal').modal('show');
+function getRow(id){
+  $.ajax({
+    type: 'POST',
+    url: 'election_row.php',
+    data: {id:id},
+    dataType: 'json',
+    success: function(response){
+      $('.id').val(response.id);
+      $('#edit_title').val(response.title);
+      $('#edit_voters').val(response.voters);
+      $('#edit_starttime').val(response.starttime);
+      $('#edit_endtime').val(response.endtime);
+      $('#edit_status').val(response.status);
+      $('.fullname').html(response.title);
+    }
+  });
+}
+    $(function () {
+        $('#starttime').datetimepicker();
+        $('#endtime').datetimepicker();
     });
 
-    // Archive election
-    $('#submitBtn').on('click', function () {
-        const id = $(this).data('id'); // Retrieve ID from button
-        archiveElection(id);
-    });
+    $(document).on('click', '.archive', function(e){
+    e.preventDefault();
+    var id = $(this).data('id');
+    $('#submitBtn').attr('data-id', id); // Set data-id attribute to the button
+    $('#confirmationModal').modal('show'); // Show the confirmation modal
+  });
 
-    // Activate election
-    $('#submitActivationBtn').on('click', function () {
-        const electionId = $(this).data('id');
-        const startTime = $('#starttime').val();
-        const endTime = $('#endtime').val();
+  // Event handler for modal submit button
+  $('#submitBtn').on('click', function() {
+    var id = $(this).data('id'); // Get the id from data-id attribute
+    archiveElection(id);
+  });
 
-        // Validate input fields
-        if (startTime && endTime) {
+
+  $(document).on('click', '.election-status', function(e) {
+    e.preventDefault();
+
+    var electionId = $(this).data('id');
+    var status = $(this).data('status');
+    var statusName = $(this).data('name'); // Corrected attribute name
+
+    // Check the current status of the election
+    if (status === 1) {  // If the election is 'Not Active'
+        $('#activationModal').modal('show'); // Show the modal for activation
+        $('#activationModal').find('.modal-body #starttime').val(''); // Reset Start Time
+        $('#activationModal').find('.modal-body #endtime').val(''); // Reset End Time
+        $('#submitActivationBtn').attr('data-id', electionId); // Store election ID for submission
+    } else {  // If the election is 'Active'
+        var confirmed = confirm('Are you sure you want to Deactivate this Election?');
+
+        if (confirmed) {
             $.ajax({
                 type: 'POST',
                 url: 'change_status.php',
                 data: {
                     election_id: electionId,
-                    start_time: startTime,
-                    end_time: endTime
+                    status: status
                 },
                 dataType: 'json',
-                success: function (response) {
-                    if (response.success) {
-                        toastr.success('Election activated successfully!');
-                        location.reload();
-                    } else {
-                        toastr.error(response.error || 'Failed to activate election.');
-                    }
+                beforeSend: function() {
+                    showLoadingOverlay();
                 },
-                error: function (xhr) {
-                    console.error(xhr.responseText);
-                    toastr.error('An error occurred while activating the election.');
+                success: function(response) {
+                    if (response.success) {
+                        location.reload(); // Reload page after successful update
+                    } else {
+                        toastr.error('Failed to update status.');
+                    }
+                    hideLoadingOverlay();
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error:', error);
+                    toastr.error('An error occurred. Please try again.');
+                    hideLoadingOverlay();
                 }
             });
         } else {
-            toastr.error('Please fill in both start and end times.');
+            toastr.info('Status change canceled.');
         }
-    });
-
-    // Initialize datetime pickers
-    $('#starttime, #endtime').datetimepicker();
-
-    // Fetch row data
-    function getRow(id) {
-        $.ajax({
-            type: 'POST',
-            url: 'election_row.php',
-            data: { id: id },
-            dataType: 'json',
-            success: function (response) {
-                if (response) {
-                    $('.id').val(response.id);
-                    $('#edit_title').val(response.title);
-                    $('#edit_voters').val(response.voters);
-                    $('#edit_starttime').val(response.starttime);
-                    $('#edit_endtime').val(response.endtime);
-                    $('#edit_status').val(response.status);
-                    $('.fullname').text(response.title);
-                } else {
-                    toastr.error('Failed to fetch election data.');
-                }
-            },
-            error: function (xhr) {
-                console.error(xhr.responseText);
-                toastr.error('An error occurred while fetching election data.');
-            }
-        });
-    }
-
-    // Archive election
-    function archiveElection(id) {
-        $.ajax({
-            type: "POST",
-            url: "archive_election.php",
-            data: { id: id },
-            dataType: 'json',
-            success: function (response) {
-                if (response.success) {
-                    toastr.success('Election archived successfully!');
-                    location.reload();
-                } else {
-                    toastr.error(response.error || 'Failed to archive election.');
-                }
-            },
-            error: function (xhr) {
-                console.error(xhr.responseText);
-                toastr.error('An error occurred while archiving the election.');
-            }
-        });
     }
 });
 
+$('#submitActivationBtn').on('click', function() {
+    var electionId = $(this).data('id'); // Get the election ID from data-id attribute
+    var startTime = $('#starttime').val(); // Get the start time
+    var endTime = $('#endtime').val(); // Get the end time
+
+    // Validate the times
+    if (startTime && endTime) {
+        $.ajax({
+            type: 'POST',
+            url: 'activate_election.php', // PHP script for activation
+            data: {
+                election_id: electionId,
+                start_time: startTime,
+                end_time: endTime
+            },
+            success: function(response) {
+                if (response.success) {
+                    location.reload(); // Reload page after successful activation
+                } else {
+                    toastr.error('Failed to activate election.');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    } else {
+        toastr.error('Please fill in both start and end times.');
+    }
+});
+
+function archiveElection(id) {
+    $.ajax({
+        type: "POST",
+        url: "archive_election.php",
+        data: { id: id },
+        success: function(response) {
+            // Refresh the page or update the table as needed
+            location.reload();
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+}
 </script>
 
 </body>
