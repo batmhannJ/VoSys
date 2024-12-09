@@ -141,41 +141,43 @@
                 imageContainer.appendChild(candidateDiv);
             });
 
-            // Create chart with amCharts
             am4core.useTheme(am4themes_animated);
             var chart = am4core.create(containerId, am4charts.XYChart);
             chart.data = dataPoints.map(dataPoint => ({
                 category: dataPoint.label,
-                value: dataPoint.y
+                value: dataPoint.y,
+                percentage: ((dataPoint.y / totalVotes) * 100).toFixed(2) // Calculate percentage
             }));
 
-            var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis()); // Change this to y-axis for horizontal chart
+            var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
             categoryAxis.dataFields.category = "category";
             categoryAxis.renderer.grid.template.location = 0;
             categoryAxis.renderer.minGridDistance = 30;
 
-            var valueAxis = chart.xAxes.push(new am4charts.ValueAxis()); // Change this to x-axis for horizontal chart
+            var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
             valueAxis.renderer.minGridDistance = 30;
 
             var series = chart.series.push(new am4charts.ColumnSeries());
-            series.dataFields.valueX = "value"; // Change to valueX for horizontal chart
-            series.dataFields.categoryY = "category"; // Change to categoryY for horizontal chart
-            series.columns.template.tooltipText = "{category}: [bold]{valueX}[/]";
+            series.dataFields.valueX = "value";
+            series.dataFields.categoryY = "category";
+            series.columns.template.tooltipText = "{category}: [bold]{valueX} votes ({percentage}%)[/]";
             series.columns.template.fill = am4core.color("#104E8B");
 
-            // Add moving bullets (animation effect)
+            var labelBullet = series.bullets.push(new am4charts.LabelBullet());
+            labelBullet.label.text = "{percentage}%";
+            labelBullet.label.fill = am4core.color("#fff");
+            labelBullet.locationX = 0.5;
+
             var bullet = series.bullets.push(new am4charts.CircleBullet());
             bullet.circle.fill = am4core.color("#fff");
             bullet.circle.strokeWidth = 2;
             bullet.circle.stroke = am4core.color("#104E8B");
             bullet.circle.radius = 3;
 
-            // Animation for moving bullets
             bullet.events.on("ready", function(event) {
                 var bullet = event.target;
                 bullet.animate({ property: "dy", to: bullet.pixelY }, 3000, am4core.ease.sinOut);
             });
-            
 
             chart.cursor = new am4charts.XYCursor();
             chart.cursor.snapToSeries = series;
@@ -222,7 +224,6 @@
                                     </div>
                                 </div>`;
                             $('#results-container').append(containerHtml);
-
                             generateGraph(response[category], category + 'Graph', category + 'Image', graphType);
                         }
                     });
@@ -243,14 +244,6 @@
 
             $('#graph-type').change(function () {
                 fetchAndGenerateGraphs($('#organization-select').val());
-            });
-
-            $(window).scroll(function () {
-                if ($(this).scrollTop() > 100) {
-                    $('#back-to-top').fadeIn();
-                } else {
-                    $('#back-to-top').fadeOut();
-                }
             });
 
             $('#back-to-top').click(function () {
