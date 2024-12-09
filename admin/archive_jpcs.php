@@ -153,7 +153,8 @@
       </div>
     </div>
   </div>
-  <div class="row" style="margin-right: -15px; margin-left: -15px;">
+  <div class="row">
+  <div class="table-responsive">
     <div id="ballotContainer" style="display: none;">
         <h1 style="text-align: center;">
             <b id="electionTitle"> <!--ELECTION TITLE will be inserted here--> </b>
@@ -169,7 +170,8 @@
                     <h3 class="box-title text-center">Voter Statistics</h3>
                 </div>
                 <div class="box-body">
-                    <table class="table table-bordered">
+                <div class="table-responsive">
+                    <table id="example1" class="table table-bordered">
                         <thead>
                             <tr>
                                 <th>Total Voters</th>
@@ -185,8 +187,10 @@
                             </tr>
                         </tbody>
                     </table>
+                  </div>
                 </div>
             </div>
+          </div>
         </div>
         <!-- End of Voter Stats Table -->
     </div>
