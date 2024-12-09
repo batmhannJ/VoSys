@@ -33,10 +33,10 @@
     <li class="dropdown">
       <a href="javascript:void(0)" class="dropbtn">About</a>
       <div class="dropdown-content">
-        <a href="#about-us" id="aboutusLink">About Us</a>
+        <a href="#about-us" id="about.html">About Us</a>
         <a href="#walkthrough" id="walkthroughLink">System Walkthrough</a>
       </div>
-    </li>    
+    </li>
     <li><a href="#services">Services</a></li>
     <li><a href="#organizations">Organizations</a></li>
     <li><a href="#location">Location</a></li>
@@ -556,30 +556,30 @@
   </script>
 
   <script>
-    // Get elements for the content toggle
-const aboutusLink = document.getElementById("aboutusLink");
-const walkthroughLink = document.getElementById("walkthroughLink");
-const aboutusSection = document.getElementById("aboutus");
-const walkthroughSection = document.getElementById("walkthrough");
+  // Get the dropdown elements
+const dropdown = document.querySelector(".dropdown");
+const dropdownContent = document.querySelector(".dropdown-content");
 
-// Initially show the "About Us" section by default
-aboutusSection.style.display = "block";
-walkthroughSection.style.display = "none";
+// Get other navigation links
+const otherNavLinks = document.querySelectorAll(".navbar li:not(.dropdown) a");
 
-// Event listener for "About Us" link
-aboutusLink.addEventListener('click', function(e) {
-  e.preventDefault(); // Prevent default behavior
-  aboutusSection.style.display = "block"; // Show About Us
-  walkthroughSection.style.display = "none"; // Hide Walkthrough
+// Prevent dropdown from disappearing on hover or click
+dropdown.addEventListener("click", function (e) {
+  e.stopPropagation(); // Stop event bubbling
+  dropdownContent.classList.toggle("hide"); // Toggle visibility
 });
 
-// Event listener for "System Walkthrough" link
-walkthroughLink.addEventListener('click', function(e) {
-  e.preventDefault(); // Prevent default behavior
-  walkthroughSection.style.display = "block"; // Show Walkthrough
-  aboutusSection.style.display = "none"; // Hide About Us
+// Hide dropdown when clicking another nav item
+otherNavLinks.forEach(link => {
+  link.addEventListener("click", function () {
+    dropdownContent.classList.add("hide"); // Hide dropdown
+  });
 });
 
+// Hide dropdown when clicking anywhere outside
+document.addEventListener("click", function () {
+  dropdownContent.classList.add("hide");
+});
 
   </script>
   </body>
@@ -685,6 +685,10 @@ body {
 /* Remove border from the last link */
 .dropdown-content a:last-child {
   border-bottom: none;
+}
+/* Hide dropdown when clicking outside */
+.hide {
+  display: none !important;
 }
 
 
