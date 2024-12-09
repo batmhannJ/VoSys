@@ -114,6 +114,37 @@
     </div>
 </div>
 
+<!-- Modal for Election Activation (for Not Active elections) -->
+<div class="modal fade" id="activationModal" tabindex="-1" role="dialog" aria-labelledby="activationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="activationModalLabel">Activate Election</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="activationForm">
+                    <div class="form-group">
+                        <label for="starttime">Start Time</label>
+                        <input type="datetime-local" class="form-control" id="starttime" name="starttime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="endtime">End Time</label>
+                        <input type="datetime-local" class="form-control" id="endtime" name="endtime" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="submitActivationBtn">Activate Election</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 </div>
 <?php include 'includes/scripts.php'; ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
@@ -173,43 +204,82 @@ function getRow(id){
   });
 
 
-    $(document).on('click', '.election-status', function(e) {
+  $(document).on('click', '.election-status', function(e) {
     e.preventDefault();
 
     var electionId = $(this).data('id');
     var status = $(this).data('status');
     var statusName = $(this).data('name'); // Corrected attribute name
 
-    var confirmed = confirm('Are you sure you want to ' + statusName + ' this Election?');
+    // Check the current status of the election
+    if (status === 1) {  // If the election is 'Not Active'
+        $('#activationModal').modal('show'); // Show the modal for activation
+        $('#activationModal').find('.modal-body #starttime').val(''); // Reset Start Time
+        $('#activationModal').find('.modal-body #endtime').val(''); // Reset End Time
+        $('#submitActivationBtn').attr('data-id', electionId); // Store election ID for submission
+    } else {  // If the election is 'Active'
+        var confirmed = confirm('Are you sure you want to Deactivate this Election?');
 
-    if (confirmed) {
+        if (confirmed) {
+            $.ajax({
+                type: 'POST',
+                url: 'change_status.php',
+                data: {
+                    election_id: electionId,
+                    status: status
+                },
+                dataType: 'json',
+                beforeSend: function() {
+                    showLoadingOverlay();
+                },
+                success: function(response) {
+                    if (response.success) {
+                        location.reload(); // Reload page after successful update
+                    } else {
+                        toastr.error('Failed to update status.');
+                    }
+                    hideLoadingOverlay();
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error:', error);
+                    toastr.error('An error occurred. Please try again.');
+                    hideLoadingOverlay();
+                }
+            });
+        } else {
+            toastr.info('Status change canceled.');
+        }
+    }
+});
+
+$('#submitActivationBtn').on('click', function() {
+    var electionId = $(this).data('id'); // Get the election ID from data-id attribute
+    var startTime = $('#starttime').val(); // Get the start time
+    var endTime = $('#endtime').val(); // Get the end time
+
+    // Validate the times
+    if (startTime && endTime) {
         $.ajax({
             type: 'POST',
-            url: 'change_status.php',
+            url: 'activate_election.php', // PHP script for activation
             data: {
                 election_id: electionId,
-                status: status
-            },
-            dataType: 'json',
-            beforeSend: function() {
-                showLoadingOverlay();
+                start_time: startTime,
+                end_time: endTime
             },
             success: function(response) {
                 if (response.success) {
-                    location.reload(); // Reload page after successful update
+                    location.reload(); // Reload page after successful activation
                 } else {
-                    toastr.error('Failed to update status.');
+                    toastr.error('Failed to activate election.');
                 }
-                hideLoadingOverlay();
             },
             error: function(xhr, status, error) {
-                console.error('AJAX Error:', error);
-                toastr.error('An error occurred. Please try again.');
-                hideLoadingOverlay();
+                console.error(xhr.responseText);
             }
         });
     } else {
-        toastr.info('Status change canceled.');
+        toastr.error('Please fill in both start and end times.');
     }
 });
 
