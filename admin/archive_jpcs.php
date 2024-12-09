@@ -93,6 +93,7 @@
                 <th>Year Level</th>
                 <th>Organization</th>
                 <?php elseif(isset($_GET['type']) && $_GET['type'] === 'election'): ?>
+                <th>#</th>
                 <th>ID</th>
                 <th>Title</th>
                 <th>Academic Year</th>
@@ -133,6 +134,7 @@
                   } elseif(isset($_GET['type']) && $_GET['type'] === 'election') {
                     echo "
                       <tr>
+                        <td><input type='checkbox' class='selectItem' value='".$row['id']."'></td>
                         <td>".$row['id']."</td>
                         <td>".$row['title']."</td>
                         <td>".$row['academic_yr']."</td>
@@ -152,42 +154,14 @@
     </div>
   </div>
   <div class="row" style="margin-right: -15px; margin-left: -15px;">
-    <div id="ballotContainer" style="display: none;">
-        <h1 style="text-align: center;">
-            <b id="electionTitle"> <!--ELECTION TITLE will be inserted here--> </b>
-        </h1>
-        <div class="box-body" id="ballotContent">
-            <!-- Ballot content will be loaded here -->
-        </div>
-        
-        <!-- New Table for Voter Stats -->
-        <div class="col-md-12">
-            <div class="box">
-                <div class="box-header with-border">
-                    <h3 class="box-title text-center">Voter Statistics</h3>
-                </div>
-                <div class="box-body">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Total Voters</th>
-                                <th>Voters Voted</th>
-                                <th>Remaining Voters</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td id="totalVoters"> <!-- Total voters count here --> </td>
-                                <td id="votersVoted"> <!-- Voters voted count here --> </td>
-                                <td id="remainingVoters"> <!-- Remaining voters count here --> </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <!-- End of Voter Stats Table -->
+  <div id="ballotContainer" style="display: none;">
+    <h1 style="text-align: center;">
+      <b id="electionTitle"> <!--ELECTION TITLE will be inserted here--> </b>
+    </h1>
+    <div class="box-body" id="ballotContent">
+      <!-- Ballot content will be loaded here -->
     </div>
+  </div>
 </div>
 </section>
 </div>
@@ -210,24 +184,15 @@ $(document).ready(function() {
       data: { election_id: electionId },
       dataType: 'json',
       success: function(response) {
-        if (response.title) {
-          // Display election title
-          $('#electionTitle').text(response.title);
-          
-          // Display academic year below the title
-          $('#electionTitle').after('<p style="text-align: center;">Academic Year: ' + response.academic_yr + '</p>');
+        // Display election title
+        $('#electionTitle').text(response.title);
+        
+        // Display academic year below the title
+        $('#electionTitle').after('<p style="text-align: center;">Academic Year: ' + response.academic_yr + '</p>');
 
-          // Display voter statistics
-          $('#totalVoters').text(response.total_voters); // Total voters
-          $('#votersVoted').text(response.voted_voters); // Voters who voted
-          $('#remainingVoters').text(response.remaining_voters); // Remaining voters
-
-          // Update the ballot content and show the container
-          $('#ballotContent').html(response.content);
-          $('#ballotContainer').show();
-        } else {
-          alert('Error: Election not found.');
-        }
+        // Update the ballot content and show the container
+        $('#ballotContent').html(response.content);
+        $('#ballotContainer').show();
       },
       error: function(xhr, status, error) {
         alert('Error: ' + error);
