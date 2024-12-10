@@ -232,14 +232,8 @@ $(function() {
       url: 'election_edit_jpcs.php',
       data: {id: id, title: title},
       success: function(response) {
-        // Close the modal after saving
         $('#editElection').modal('hide');
-        
-        // Update the content on the page dynamically
-        $('#election_title_' + id).text(title); // Assuming you're displaying titles with ids like 'election_title_1'
-        
-        // Optionally, show a success message
-        alert('Election title updated successfully');
+        location.reload();
       },
       error: function(xhr, status, error) {
         console.error(xhr.responseText);
