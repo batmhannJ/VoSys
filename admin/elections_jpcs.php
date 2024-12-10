@@ -101,7 +101,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-            </div>
+            </div> 
 
             <div class="modal-body">
                 <p>Are you sure you want to archive this Election?</p>
