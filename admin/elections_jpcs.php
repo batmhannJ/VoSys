@@ -173,20 +173,44 @@
 $(function(){
   $(document).on('click', '.edit', function(e){
     e.preventDefault();
-    $('#edit').modal('show');
     var id = $(this).data('id');
     getRow(id);
-  });
-
-  $(document).on('click', '.delete', function(e){
-    e.preventDefault();
-    $('#delete').modal('show');
-    var id = $(this).data('id');
-    getRow(id);
-  });
-
-
 });
+
+function getRow(id){
+    $.ajax({
+        type: 'POST',
+        url: 'election_row.php',  // PHP file to fetch election data by ID
+        data: {id:id},
+        dataType: 'json',
+        success: function(response){
+            $('#edit_title').val(response.title);  // Set the election title
+            $('#edit_id').val(response.id);  // Set the election ID
+        }
+    });
+  }
+});
+
+$('#editElectionForm').on('submit', function(e){
+    e.preventDefault();
+    var id = $('#edit_id').val();
+    var title = $('#edit_title').val();
+
+    $.ajax({
+        type: 'POST',
+        url: 'election_edit_jpcs.php',  // PHP file to update election title
+        data: {id: id, title: title},
+        success: function(response){
+            $('#editElection').modal('hide');
+            location.reload();  // Reload the page to reflect the changes
+        },
+        error: function(xhr, status, error){
+            console.error(xhr.responseText);
+        }
+    });
+});
+
+
 function getRow(id){
   $.ajax({
     type: 'POST',
