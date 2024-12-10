@@ -128,13 +128,13 @@
                 <div class="modal-body">
                     <input type="hidden" id="activation_id" name="id">
                     <div class="form-group">
-                        <label for="start_time">Start Time</label>
-                        <input type="datetime-local" id="start_time" name="starttime" class="form-control" required min="<?php echo date('Y-m-d\TH:i'); ?>">
-                    </div>
-                    <div class="form-group">
-                        <label for="end_time">End Time</label>
-                        <input type="datetime-local" id="end_time" name="endtime" class="form-control" required min="<?php echo date('Y-m-d\TH:i'); ?>">
-                    </div>
+                      <label for="activation_starttime">Start Time</label>
+                      <input type="datetime-local" id="activation_starttime" name="starttime" class="form-control" required min="<?php echo date('Y-m-d\TH:i'); ?>">
+                  </div>
+                  <div class="form-group">
+                      <label for="activation_endtime">End Time</label>
+                      <input type="datetime-local" id="activation_endtime" name="endtime" class="form-control" required min="<?php echo date('Y-m-d\TH:i'); ?>">
+                  </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -165,7 +165,6 @@
         </div>
     </div>
 </div>
-
 
 </div>
 <?php include 'includes/scripts.php'; ?>
@@ -241,10 +240,16 @@ function getRow(id){
 });
 
 // Event handler for activation modal submit button
-$('#activationSubmit').on('click', function() {
+$('#activationSubmit').on('click', function(e) {
+    e.preventDefault();
     var id = $(this).data('id');
     var starttime = $('#activation_starttime').val();
     var endtime = $('#activation_endtime').val();
+
+    if (!starttime || !endtime) {
+        alert('Please provide both start and end time.');
+        return;
+    }
 
     $.ajax({
         type: 'POST',
