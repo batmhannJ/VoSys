@@ -198,7 +198,7 @@ $('#editElectionForm').on('submit', function(e){
 
     $.ajax({
         type: 'POST',
-        url: 'election_edit_jpcs.php',  // PHP file to update election title
+        url: 'inlcudes/election_edit_jpcs.php',  // PHP file to update election title
         data: {id: id, title: title},
         success: function(response){
             $('#editElection').modal('hide');
