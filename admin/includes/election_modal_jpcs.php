@@ -59,7 +59,7 @@
                     <!-- Add Academic Year Dropdown -->
                     <div class="form-group">
                         <label for="academicYear">Academic Year</label>
-                        <select class="form-control" id="academicYear" name="academic_yr" required>
+                        <select class="form-control" id="academicYear" name="academic_yr">
                             <option value="" disabled selected>Select Academic Year</option>
                             <?php
                             // Generate year range starting from current year
