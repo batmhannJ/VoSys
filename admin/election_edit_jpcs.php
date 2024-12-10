@@ -13,6 +13,5 @@ if(isset($_POST['id']) && isset($_POST['title'])){
     } else {
         echo json_encode(['success' => false, 'message' => 'Failed to update election title']);
     }
-    header('location: election_jpcs.php');
 }
 ?>
