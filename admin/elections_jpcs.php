@@ -135,21 +135,6 @@
                         <label for="end_time">End Time</label>
                         <input type="datetime-local" id="end_time" name="endtime" class="form-control" required min="<?php echo date('Y-m-d\TH:i'); ?>">
                     </div>
-                    <div class="form-group">
-                      <label for="academicYear">Academic Year</label>
-                      <select class="form-control" id="academicYear" name="academic_yr" required>
-                          <option value="" disabled selected>Select Academic Year</option>
-                          <?php
-                          // Generate year range starting from current year
-                          $currentYear = date("Y");
-                          for ($i = 0; $i < 20; $i++) {
-                              $startYear = $currentYear + $i;
-                              $endYear = $startYear + 1;
-                              echo "<option value='{$startYear} - {$endYear}'>{$startYear} - {$endYear}</option>";
-                          }
-                          ?>
-                      </select>
-                  </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -197,6 +182,21 @@
                         <input type="hidden" id="edit_id" name="id">
                     </div>
                 </div>
+                <div class="form-group">
+                      <label for="academicYear">Academic Year</label>
+                      <select class="form-control" id="academicYear" name="academic_yr" required>
+                          <option value="" disabled selected>Select Academic Year</option>
+                          <?php
+                          // Generate year range starting from current year
+                          $currentYear = date("Y");
+                          for ($i = 0; $i < 20; $i++) {
+                              $startYear = $currentYear + $i;
+                              $endYear = $startYear + 1;
+                              echo "<option value='{$startYear} - {$endYear}'>{$startYear} - {$endYear}</option>";
+                          }
+                          ?>
+                      </select>
+                  </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-primary" id="editSubmit">Save Changes</button>
