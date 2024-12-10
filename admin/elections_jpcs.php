@@ -135,6 +135,21 @@
                         <label for="end_time">End Time</label>
                         <input type="datetime-local" id="end_time" name="endtime" class="form-control" required min="<?php echo date('Y-m-d\TH:i'); ?>">
                     </div>
+                    <div class="form-group">
+                      <label for="academicYear">Academic Year</label>
+                      <select class="form-control" id="academicYear" name="academic_yr" required>
+                          <option value="" disabled selected>Select Academic Year</option>
+                          <?php
+                          // Generate year range starting from current year
+                          $currentYear = date("Y");
+                          for ($i = 0; $i < 20; $i++) {
+                              $startYear = $currentYear + $i;
+                              $endYear = $startYear + 1;
+                              echo "<option value='{$startYear} - {$endYear}'>{$startYear} - {$endYear}</option>";
+                          }
+                          ?>
+                      </select>
+                  </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -226,11 +241,12 @@ $(function() {
     e.preventDefault();
     var id = $('#edit_id').val();
     var title = $('#edit_title').val();
+    var academicYear = $('#academicYear').val();
 
     $.ajax({
       type: 'POST',
       url: 'election_edit_jpcs.php',
-      data: {id: id, title: title},
+      data: {id: id, title: title, academic_yr: academicYear},
       success: function(response) {
         $('#editElection').modal('hide');
         location.reload();
