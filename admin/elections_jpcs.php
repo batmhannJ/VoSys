@@ -197,46 +197,50 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 <script>
-$(function(){
-  $(document).on('click', '.edit', function(e){
+$(function() {
+  $(document).on('click', '.edit', function(e) {
     e.preventDefault();
     var id = $(this).data('id');
-    getRow(id);
-});
+    getRow(id);  // Call to fetch election data
+  });
 
-function getRow(id){
+  function getRow(id) {
     $.ajax({
-        type: 'POST',
-        url: 'election_row.php',  // PHP file to fetch election data by ID
-        data: {id:id},
-        dataType: 'json',
-        success: function(response){
-            $('#edit_title').val(response.title);  // Set the election title
-            $('#edit_id').val(response.id);  // Set the election ID
-        }
+      type: 'POST',
+      url: 'election_row.php',  // Make sure this path is correct
+      data: {id: id},
+      dataType: 'json',
+      success: function(response) {
+        $('#edit_title').val(response.title);  // Set the election title
+        $('#edit_id').val(response.id);  // Set the election ID
+        $('#editElection').modal('show');  // Open the modal after setting the data
+      },
+      error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+      }
     });
   }
-});
 
-$('#editElectionForm').on('submit', function(e){
+  // Handle form submission
+  $('#editElectionForm').on('submit', function(e) {
     e.preventDefault();
     var id = $('#edit_id').val();
     var title = $('#edit_title').val();
 
     $.ajax({
-        type: 'POST',
-        url: 'election_edit_jpcs.php',  // PHP file to update election title
-        data: {id: id, title: title},
-        success: function(response){
-            $('#editElection').modal('hide');
-            location.reload();  // Reload the page to reflect the changes
-        },
-        error: function(xhr, status, error){
-            console.error(xhr.responseText);
-        }
+      type: 'POST',
+      url: 'election_edit_jpcs.php',  // Update path if needed
+      data: {id: id, title: title},
+      success: function(response) {
+        $('#editElection').modal('hide');
+        location.reload();  // Reload the page to reflect changes
+      },
+      error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+      }
     });
+  });
 });
-
 
 function getRow(id){
   $.ajax({
