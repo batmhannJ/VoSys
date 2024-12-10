@@ -234,6 +234,7 @@ $(function() {
       success: function(response) {
         $('#editElection').modal('hide');
         location.reload();
+        $('#title_' + id).text(title);
       },
       error: function(xhr, status, error) {
         console.error(xhr.responseText);
