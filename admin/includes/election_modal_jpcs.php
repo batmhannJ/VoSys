@@ -56,22 +56,6 @@
                         <input type="text" id="edit_title" name="title" class="form-control" required>
                         <input type="hidden" id="edit_id" name="id">
                     </div>
-                    <!-- Add Academic Year Dropdown -->
-                    <div class="form-group">
-                        <label for="academicYear">Academic Year</label>
-                        <select class="form-control" id="academicYear" name="academic_yr">
-                            <option value="" disabled selected>Select Academic Year</option>
-                            <?php
-                            // Generate year range starting from current year
-                            $currentYear = date("Y");
-                            for ($i = 0; $i < 20; $i++) {
-                                $startYear = $currentYear + $i;
-                                $endYear = $startYear + 1;
-                                echo "<option value='{$startYear} - {$endYear}'>{$startYear} - {$endYear}</option>";
-                            }
-                            ?>
-                        </select>
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
