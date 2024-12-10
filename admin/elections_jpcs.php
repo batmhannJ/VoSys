@@ -206,16 +206,17 @@ $(function() {
     var academicYear = $('#academicYear').val();
 
     $.ajax({
-      type: 'POST',
-      url: 'election_edit_jpcs.php',
-      data: {id: id, title: title, academic_yr: academicYear},
-      success: function(response) {
-        $('#editElection').modal('hide');
-        location.reload();
-      },
-      error: function(xhr, status, error) {
-        console.error(xhr.responseText);
-      }
+        type: 'POST',
+        url: 'election_edit_jpcs.php',
+        data: {id: id, title: title, academic_yr: academicYear},
+        success: function(response) {
+            console.log(response); // Check if the response is successful
+            $('#editElection').modal('hide');
+            location.reload();
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        }
     });
   });
 });

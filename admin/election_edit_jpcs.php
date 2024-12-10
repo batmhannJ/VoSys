@@ -5,7 +5,10 @@ include 'includes/conn.php';
 if(isset($_POST['id']) && isset($_POST['title']) && isset($_POST['academic_yr'])){
     $id = $_POST['id'];
     $title = $_POST['title'];
-    $academic_yr = $_POST['academic_yr'];  // Get the selected Academic Year
+    $academic_yr = $_POST['academic_yr'];
+
+    // Debugging line: Check the incoming data
+    var_dump($id, $title, $academic_yr); // Check if all data is coming through correctly
 
     // Prepare the SQL statement
     $stmt = $conn->prepare("UPDATE election SET title = ?, academic_yr = ? WHERE id = ?");
@@ -15,7 +18,7 @@ if(isset($_POST['id']) && isset($_POST['title']) && isset($_POST['academic_yr'])
         $_SESSION['success'] = 'Election Updated Successfully';
         echo json_encode(['success' => true, 'message' => 'Election title and Academic Year updated successfully']);
     } else {
-        $_SESSION['error'] = 'Failed to update election title and Academic Year';
+        $_SESSION['error'] = 'Failed to update Election';
         echo json_encode(['success' => false, 'message' => 'Failed to update election title and Academic Year']);
     }
 }
