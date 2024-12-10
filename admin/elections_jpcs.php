@@ -160,7 +160,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" id="deactivateBtn" class="btn btn-danger">Deactivate</button>
+                <button type="button" id="deactivateBtn" class="btn btn-primary">Deactivate</button>
             </div>
         </div>
     </div>
