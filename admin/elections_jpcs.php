@@ -164,6 +164,33 @@
   </div>
 </div>
 
+<!-- Edit Election Modal -->
+<div class="modal fade" id="editElection" tabindex="-1" role="dialog" aria-labelledby="editElectionLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="editElectionForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editElectionLabel">Edit Election</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="edit_title">Election Title</label>
+                        <input type="text" id="edit_title" name="title" class="form-control" required>
+                        <input type="hidden" id="edit_id" name="id">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="editSubmit">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 </div>
 <?php include 'includes/scripts.php'; ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
@@ -198,7 +225,7 @@ $('#editElectionForm').on('submit', function(e){
 
     $.ajax({
         type: 'POST',
-        url: 'inlcudes/election_edit_jpcs.php',  // PHP file to update election title
+        url: 'election_edit_jpcs.php',  // PHP file to update election title
         data: {id: id, title: title},
         success: function(response){
             $('#editElection').modal('hide');
