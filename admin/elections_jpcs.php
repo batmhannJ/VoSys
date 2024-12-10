@@ -143,7 +143,7 @@
             </form>
         </div>
     </div>
-</div>
+</div> 
 
 <!-- Deactivation Modal -->
 <div class="modal fade" id="deactivationModal" tabindex="-1" role="dialog">
