@@ -114,29 +114,26 @@
     </div>
 </div>
 
-<div class="modal fade" id="activationModal" tabindex="-1" role="dialog" aria-labelledby="activationModalLabel" aria-hidden="true">
+<div class="modal fade" id="deactivationModal" tabindex="-1" role="dialog" aria-labelledby="deactivationModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="activationModalLabel">Activate Election</h5>
+                <h5 class="modal-title" id="deactivationModalLabel">Deactivate Election</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <label for="starttime">Start Time:</label>
-                <input type="text" id="starttime" class="form-control">
-                <label for="endtime">End Time:</label>
-                <input type="text" id="endtime" class="form-control">
+                <p>Are you sure you want to deactivate this election?</p>
+                <input type="hidden" class="election-id">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="activateBtn">Activate</button>
+                <button type="button" class="btn btn-primary" id="deactivateBtn">Deactivate</button>
             </div>
         </div>
     </div>
 </div>
-
 
 </div>
 <?php include 'includes/scripts.php'; ?>
@@ -197,45 +194,84 @@ function getRow(id){
   });
 
 
-    $(document).on('click', '.election-status', function(e) {
+  $(document).on('click', '.election-status', function(e) {
     e.preventDefault();
 
     var electionId = $(this).data('id');
     var status = $(this).data('status');
-    var statusName = $(this).data('name'); // Corrected attribute name
+    var modalToShow = (status === 1) ? '#activationModal' : '#deactivationModal';
 
-    var confirmed = confirm('Are you sure you want to ' + statusName + ' this Election?');
+    // Set election ID for both modals
+    $(modalToShow).find('.election-id').val(electionId);
 
-    if (confirmed) {
+    if (status === 1) {
+        $(modalToShow).modal('show');
+    } else {
+        // Confirmation modal for deactivation
+        $('#deactivationModal').modal('show');
+    }
+});
+
+// Activation modal 'Activate' button click
+$('#activateBtn').on('click', function() {
+    var electionId = $('#activationModal').find('.election-id').val();
+    var starttime = $('#starttime').val();
+    var endtime = $('#endtime').val();
+
+    if (starttime && endtime) {
         $.ajax({
             type: 'POST',
             url: 'change_status.php',
             data: {
                 election_id: electionId,
-                status: status
+                status: 1,
+                starttime: starttime,
+                endtime: endtime
             },
             dataType: 'json',
-            beforeSend: function() {
-                showLoadingOverlay();
-            },
             success: function(response) {
                 if (response.success) {
-                    location.reload(); // Reload page after successful update
+                    location.reload(); // Reload page
                 } else {
-                    toastr.error('Failed to update status.');
+                    toastr.error('Failed to activate election.');
                 }
-                hideLoadingOverlay();
             },
             error: function(xhr, status, error) {
                 console.error('AJAX Error:', error);
-                toastr.error('An error occurred. Please try again.');
-                hideLoadingOverlay();
+                toastr.error('An error occurred.');
             }
         });
     } else {
-        toastr.info('Status change canceled.');
+        toastr.warning('Start and end time are required.');
     }
 });
+
+// Deactivation modal 'Deactivate' button click
+$('#deactivateBtn').on('click', function() {
+    var electionId = $('#deactivationModal').find('.election-id').val();
+
+    $.ajax({
+        type: 'POST',
+        url: 'change_status.php',
+        data: {
+            election_id: electionId,
+            status: 0
+        },
+        dataType: 'json',
+        success: function(response) {
+            if (response.success) {
+                location.reload(); // Reload page
+            } else {
+                toastr.error('Failed to deactivate election.');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('AJAX Error:', error);
+            toastr.error('An error occurred.');
+        }
+    });
+});
+
 
 function archiveElection(id) {
     $.ajax({
