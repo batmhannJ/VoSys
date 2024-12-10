@@ -72,14 +72,16 @@
                     <td>' . $row['academic_yr'];
             '</td>';
             if ($row['status'] === 0) {
-              echo '<td><a href="#" name="status" class="btn badge rounded-pill btn-secondary election-status" data-id="' . $row['id'] . '" data-status="1" data-name="Activate">Not active</a></td>';
-            } else {
-              echo '<td><a href="#" name="status" class="btn badge rounded-pill btn-success election-status" data-id="' . $row['id'] . '" data-status="0" data-name="Deactivate">Active</a></td>';
-            }
-            echo '<td class="text-center">
-                        <a href="#" class="btn btn-primary btn-sm edit btn-flat" data-bs-toggle="modal" data-bs-target="#editElection" data-id="' . $row['id'] . '">Edit</a>
-                        <a href="#" class="btn btn-warning btn-sm archive btn-flat" data-bs-toggle="modal" data-bs-target="#confirmationModal" data-id="' . $row['id'] . '" data-name="' . $row['title'] . '">Archive</a></td>
-                  </tr>';
+              echo '<td><a href="#" class="btn badge rounded-pill btn-secondary election-status" 
+                      data-id="' . $row['id'] . '" 
+                      data-status="1" 
+                      data-name="Activate">Not active</a></td>';
+          } else {
+              echo '<td><a href="#" class="btn badge rounded-pill btn-success election-status" 
+                      data-id="' . $row['id'] . '" 
+                      data-status="0" 
+                      data-name="Deactivate">Active</a></td>';
+          }
           } ?>
         </tbody>
       </table><!-- End Election lists Table -->
@@ -93,43 +95,44 @@
   <?php include 'includes/footer.php'; ?>
   <?php include 'includes/election_modal_jpcs.php'; ?>
 
-  <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+  <div class="modal fade" id="activationModal" tabindex="-1" role="dialog" aria-labelledby="activationModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                <h5 class="modal-title" id="activationModalLabel">Activate Election</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-            </div> 
-
+            </div>
             <div class="modal-body">
-                <p>Are you sure you want to archive this Election?</p>
+                <label for="starttime">Start Time:</label>
+                <input type="text" id="starttime" class="form-control">
+                <label for="endtime">End Time:</label>
+                <input type="text" id="endtime" class="form-control">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="submitBtn">Yes, Submit</button>
+                <button type="button" class="btn btn-primary" id="activateBtn">Activate</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="deactivationModal" tabindex="-1" role="dialog" aria-labelledby="deactivationModalLabel" aria-hidden="true">
+<div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deactivationModalLabel">Deactivate Election</h5>
+                <h5 class="modal-title" id="confirmationModalLabel">Deactivate Election</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <p>Are you sure you want to deactivate this election?</p>
-                <input type="hidden" class="election-id">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="deactivateBtn">Deactivate</button>
+                <button type="button" class="btn btn-primary" id="submitBtn">Confirm</button>
             </div>
         </div>
     </div>
@@ -199,79 +202,57 @@ function getRow(id){
 
     var electionId = $(this).data('id');
     var status = $(this).data('status');
-    var modalToShow = (status === 1) ? '#activationModal' : '#deactivationModal';
 
-    // Set election ID for both modals
-    $(modalToShow).find('.election-id').val(electionId);
-
-    if (status === 1) {
-        $(modalToShow).modal('show');
-    } else {
-        // Confirmation modal for deactivation
-        $('#deactivationModal').modal('show');
-    }
-});
-
-// Activation modal 'Activate' button click
-$('#activateBtn').on('click', function() {
-    var electionId = $('#activationModal').find('.election-id').val();
-    var starttime = $('#starttime').val();
-    var endtime = $('#endtime').val();
-
-    if (starttime && endtime) {
-        $.ajax({
-            type: 'POST',
-            url: 'change_status.php',
-            data: {
-                election_id: electionId,
-                status: 1,
-                starttime: starttime,
-                endtime: endtime
-            },
-            dataType: 'json',
-            success: function(response) {
-                if (response.success) {
-                    location.reload(); // Reload page
-                } else {
-                    toastr.error('Failed to activate election.');
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('AJAX Error:', error);
-                toastr.error('An error occurred.');
+    if (status == 1) { // For activation
+        $('#activationModal').modal('show');
+        $('#activateBtn').off('click').on('click', function() {
+            var starttime = $('#starttime').val();
+            var endtime = $('#endtime').val();
+            
+            if (starttime && endtime) {
+                updateElectionStatus(electionId, status, starttime, endtime);
+            } else {
+                alert('Please provide start and end times.');
             }
         });
-    } else {
-        toastr.warning('Start and end time are required.');
+    } else if (status == 0) { // For deactivation
+        $('#confirmationModal').modal('show');
+        $('#submitBtn').off('click').on('click', function() {
+            updateElectionStatus(electionId, status);
+        });
     }
 });
 
-// Deactivation modal 'Deactivate' button click
-$('#deactivateBtn').on('click', function() {
-    var electionId = $('#deactivationModal').find('.election-id').val();
-
+function updateElectionStatus(electionId, status, starttime = null, endtime = null) {
     $.ajax({
         type: 'POST',
         url: 'change_status.php',
         data: {
             election_id: electionId,
-            status: 0
+            status: status,
+            starttime: starttime,
+            endtime: endtime
         },
         dataType: 'json',
+        beforeSend: function() {
+            showLoadingOverlay();
+        },
         success: function(response) {
             if (response.success) {
-                location.reload(); // Reload page
+                location.reload();
             } else {
-                toastr.error('Failed to deactivate election.');
+                console.error('Error:', response.error);
+                toastr.error('An error occurred. Please try again.');
             }
+            hideLoadingOverlay();
         },
         error: function(xhr, status, error) {
             console.error('AJAX Error:', error);
-            toastr.error('An error occurred.');
+            toastr.error('An error occurred. Please try again.');
+            hideLoadingOverlay();
         }
     });
-});
-
+}
 
 function archiveElection(id) {
     $.ajax({
