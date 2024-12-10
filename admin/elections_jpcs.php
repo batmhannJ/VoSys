@@ -201,19 +201,19 @@ $(function() {
   $(document).on('click', '.edit', function(e) {
     e.preventDefault();
     var id = $(this).data('id');
-    getRow(id);  // Call to fetch election data
+    getRow(id);
   });
 
   function getRow(id) {
     $.ajax({
       type: 'POST',
-      url: 'election_row.php',  // Make sure this path is correct
+      url: 'election_row.php',
       data: {id: id},
       dataType: 'json',
       success: function(response) {
-        $('#edit_title').val(response.title);  // Set the election title
-        $('#edit_id').val(response.id);  // Set the election ID
-        $('#editElection').modal('show');  // Open the modal after setting the data
+        $('#edit_title').val(response.title);
+        $('#edit_id').val(response.id);
+        $('#editElection').modal('show');
       },
       error: function(xhr, status, error) {
         console.error(xhr.responseText);
@@ -229,11 +229,11 @@ $(function() {
 
     $.ajax({
       type: 'POST',
-      url: 'election_edit_jpcs.php',  // Update path if needed
+      url: 'election_edit_jpcs.php',
       data: {id: id, title: title},
       success: function(response) {
         $('#editElection').modal('hide');
-        location.reload();  // Reload the page to reflect changes
+        location.reload();
       },
       error: function(xhr, status, error) {
         console.error(xhr.responseText);

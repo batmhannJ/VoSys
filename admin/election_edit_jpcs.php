@@ -1,18 +1,18 @@
 <?php
-include 'includes/conn.php';
 include 'includes/session.php';
+include 'includes/conn.php';
 
-if (isset($_POST['id'])) {
+if(isset($_POST['id']) && isset($_POST['title'])){
     $id = $_POST['id'];
-    $query = $conn->prepare("SELECT * FROM election WHERE id = ?");
-    $query->bind_param("i", $id);
-    $query->execute();
-    $result = $query->get_result();
+    $title = $_POST['title'];
 
-    if ($row = $result->fetch_assoc()) {
-        echo json_encode($row);
+    $stmt = $conn->prepare("UPDATE election SET title = ? WHERE id = ?");
+    $stmt->bind_param("si", $title, $id);
+    if($stmt->execute()){
+        $_SESSION['success'] = 'Election title updated successfully';
     } else {
-        echo json_encode(['error' => 'Election not found']);
+        $_SESSION['error'] = 'Failed to update election title';
     }
+    header('location: election_jpcs.php');
 }
 ?>
