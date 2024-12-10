@@ -1,30 +1,42 @@
 <?php
 include 'includes/session.php';
 
-if (isset($_POST['election_id']) && isset($_POST['status'])) {
-    $election_id = $_POST['election_id'];
+if (isset($_POST['id']) && isset($_POST['status'])) {
+    $id = $_POST['id'];
     $status = $_POST['status'];
-    
-    if ($status == 1 && isset($_POST['starttime']) && isset($_POST['endtime'])) {
-        $starttime = $_POST['starttime'];
-        $endtime = $_POST['endtime'];
-        
-        // Update both status and start/end time when activating
-        $stmt = $conn->prepare("UPDATE election SET status = ?, starttime = ?, endtime = ? WHERE id = ?");
-        $stmt->bind_param('issi', $status, $starttime, $endtime, $election_id);
-    } else {
-        // Only update status for deactivation
-        $stmt = $conn->prepare("UPDATE election SET status = ? WHERE id = ?");
-        $stmt->bind_param('ii', $status, $election_id);
+
+    // Handle activation
+    if ($status == 1) {
+        if (isset($_POST['starttime']) && isset($_POST['endtime'])) {
+            $starttime = $_POST['starttime'];
+            $endtime = $_POST['endtime'];
+
+            $sql = "UPDATE election SET status = 1, starttime = ?, endtime = ? WHERE id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param('ssi', $starttime, $endtime, $id);
+        } else {
+            $_SESSION['error'] = 'Start and End Time are required for activation.';
+            header('location: elections_jpcs.php');
+            exit();
+        }
+    } 
+    // Handle deactivation
+    else if ($status == 0) {
+        $sql = "UPDATE election SET status = 0 WHERE id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('i', $id);
     }
 
     if ($stmt->execute()) {
-        echo json_encode(['success' => true]);
+        $_SESSION['success'] = 'Election status updated successfully';
     } else {
-        echo json_encode(['success' => false, 'error' => $stmt->error]);
+        $_SESSION['error'] = 'Error updating election status: ' . $stmt->error;
     }
+
     $stmt->close();
-    $conn->close();
 } else {
-    echo json_encode(['success' => false, 'error' => 'Invalid request']);
+    $_SESSION['error'] = 'Invalid request';
 }
+
+header('location: elections_jpcs.php');
+?>
