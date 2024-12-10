@@ -128,17 +128,17 @@
                 <div class="modal-body">
                     <input type="hidden" id="activation_id" name="id">
                     <div class="form-group">
-                      <label for="activation_starttime">Start Time</label>
-                      <input type="datetime-local" id="activation_starttime" name="starttime" class="form-control" required min="<?php echo date('Y-m-d\TH:i'); ?>">
-                  </div>
-                  <div class="form-group">
-                      <label for="activation_endtime">End Time</label>
-                      <input type="datetime-local" id="activation_endtime" name="endtime" class="form-control" required min="<?php echo date('Y-m-d\TH:i'); ?>">
-                  </div>
+                        <label for="start_time">Start Time</label>
+                        <input type="datetime-local" id="start_time" name="starttime" class="form-control" required min="<?php echo date('Y-m-d\TH:i'); ?>">
+                    </div>
+                    <div class="form-group">
+                        <label for="end_time">End Time</label>
+                        <input type="datetime-local" id="end_time" name="endtime" class="form-control" required min="<?php echo date('Y-m-d\TH:i'); ?>">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Activate</button>
+                    <button type="submit" class="btn btn-primary" id="activationSubmit">Activate</button>
                 </div>
             </form>
         </div>
@@ -240,16 +240,10 @@ function getRow(id){
 });
 
 // Event handler for activation modal submit button
-$('#activationSubmit').on('click', function(e) {
-    e.preventDefault();
+$('#activationSubmit').on('click', function() {
     var id = $(this).data('id');
-    var starttime = $('#activation_starttime').val();
-    var endtime = $('#activation_endtime').val();
-
-    if (!starttime || !endtime) {
-        alert('Please provide both start and end time.');
-        return;
-    }
+    var starttime = $('#start_time').val(); // Corrected to use the correct input ID
+    var endtime = $('#end_time').val(); // Corrected to use the correct input ID
 
     $.ajax({
         type: 'POST',
