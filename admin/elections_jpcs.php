@@ -228,6 +228,7 @@ $(function() {
       success: function(response) {
         $('#edit_title').val(response.title);
         $('#edit_id').val(response.id);
+        $('#academicYear').val(response.academic_yr); // Set the academic year value in the dropdown
         $('#editElection').modal('show');
       },
       error: function(xhr, status, error) {
