@@ -87,6 +87,7 @@
     </section>
   
     <script>
+      function fetchAnnouncement() {
       var xhr = new XMLHttpRequest();
       xhr.open('GET', 'get_announcement.php', true); // Adjust the path if necessary
       xhr.onreadystatechange = function () {
@@ -122,7 +123,9 @@
           console.error('Error making the request.');
           document.getElementById('announcement-container').innerHTML = '<p>Error loading announcement.</p>';
       };
-      xhr.send(); // Send the request
+      xhr.send();
+      }
+      fetchAnnouncement();
   </script>
 
 <section class="discover section" id="discover">        
