@@ -1696,56 +1696,102 @@ hr {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
+/* General Section Styling */
+#announcement {
+    background-color: #2a2a72;
+    color: #ffffff;
+    padding: 60px 30px;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.section__headeres {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #ffcc00;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Grid Layout */
+.register__grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.register__content {
+    width: 100%;
+    max-width: 800px;
+    background-color: #333399;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.register__content:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+}
+
 /* Announcement Container */
 #announcement-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
+    grid-template-columns: 1fr;
+    gap: 25px;
 }
 
 .announcement-container div {
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid #dee2e6;
-    transition: background-color 0.3s, box-shadow 0.3s;
+    background: linear-gradient(135deg, #ff9966, #ff5e62);
+    padding: 20px;
+    border-radius: 10px;
+    border: none;
+    color: #ffffff;
+    transition: all 0.3s ease;
+    text-align: left;
 }
 
 .announcement-container div:hover {
-    background: #e9ecef;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #ff5e62, #ff9966);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
 }
 
 /* Text Styling */
 .announcement-container div h3 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #495057;
+    font-size: 1.8rem;
+    font-weight: bold;
     margin-bottom: 10px;
 }
 
 .announcement-container div p {
     font-size: 1rem;
-    color: #6c757d;
-    line-height: 1.5;
+    line-height: 1.6;
+    color: #f1f1f1;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .register__content {
-        padding: 15px;
+    #announcement {
+        padding: 40px 20px;
+    }
+
+    .section__headeres {
+        font-size: 2rem;
     }
 
     .announcement-container div h3 {
-        font-size: 1.2rem;
+        font-size: 1.5rem;
     }
 
     .announcement-container div p {
         font-size: 0.9rem;
     }
 }
-
-
 
   </style>
 </html>
