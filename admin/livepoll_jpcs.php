@@ -3,41 +3,43 @@
 <head>
     <?php include 'includes/session.php'; ?>
     <?php include 'includes/header_jpcs.php'; ?>
+
     <style>
-        .box-title {
-            text-align: center;
-            width: 100%;
-            display: inline-block;
-        }
+    <.box-title {
+    text-align: center;
+    width: 100%;
+    display: inline-block;
+}
 
-        /* Back to Top button styles */
-        #back-to-top {
-            position: fixed;
-            bottom: 40px;
-            right: 40px;
-            display: none;
-            background-color: #000;
-            color: #fff;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            text-align: center;
-            font-size: 22px;
-            line-height: 50px;
-            cursor: pointer;
-            z-index: 1000;
-            transition: background-color 0.3s ease;
-        }
+/* Back to Top button styles */
+#back-to-top {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    display: none;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    font-size: 22px;
+    line-height: 50px;
+    cursor: pointer;
+    z-index: 1000;
+    transition: background-color 0.3s ease;
+}
 
-        #back-to-top:hover {
-            background-color: #555;
-        }
-        .chart-container {
+#back-to-top:hover {
+    background-color: #555;
+}
+
+.chart-container {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+    justify-content: flex-start; /* Align content to the start of the container */
+    align-items: center; 
+    flex-wrap: nowrap; /* Prevent wrapping to keep images on the left */
     margin-bottom: 40px;
 }
 
@@ -46,14 +48,13 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 150px; /* Set a fixed width for image container */
-    margin-right: 20px; /* Move the images to the left of the graph */
-    margin-left: 0; /* Ensure no margin on the left side */
+    width: 150px; /* Fixed width for image container */
+    margin-right: 20px; /* Gap between images and the graph */
+    margin-left: 0; /* No margin on the left */
 }
 
 .candidate-image {
-    margin-bottom: 10px;
-    margin-right: 50px;
+    margin-bottom: 10px; /* Space between the images */
 }
 
 .candidate-image img {
@@ -64,25 +65,25 @@
     transition: transform 0.3s ease-in-out;
 }
 
-.candidate-image:hover {
+.candidate-image img:hover {
     transform: scale(1.1);
 }
 
+@media (max-width: 768px) {
+    .candidate-image img {
+        width: 80px;
+        height: 80px;
+    }
+}
 
-        @media (max-width: 768px) {
-            .candidate-image img {
-                width: 80px;
-                height: 80px;
-            }
-        }
+@media (max-width: 480px) {
+    .candidate-image img {
+        width: 100px;
+        height: 100px;
+    }
+}
+</style>
 
-        @media (max-width: 480px) {
-            .candidate-image img {
-                width: 100px;
-                height: 100px;
-            }
-        }
-    </style>
 </head>
 <body class="hold-transition skin-green sidebar-mini">
     <div class="wrapper">
