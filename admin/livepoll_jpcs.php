@@ -53,6 +53,7 @@
 
 .candidate-image {
     margin-bottom: 10px;
+    margin-right: 20px;
 }
 
 .candidate-image img {
