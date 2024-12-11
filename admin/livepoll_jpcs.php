@@ -35,32 +35,24 @@
         }
 
         .chart-container {
-            position: relative;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
-            margin-bottom: 40px;
             flex-wrap: wrap;
+            margin-bottom: 40px;
         }
 
         .candidate-images {
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
             margin-right: 20px;
-            flex-basis: 20%;
+            width: 100px; /* Adjust width to fit image size */
         }
 
         .candidate-image {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 15px;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .candidate-image:hover {
-            transform: scale(1.1);
+            margin-bottom: 10px;
         }
 
         .candidate-image img {
@@ -68,7 +60,11 @@
             height: 60px;
             border-radius: 50%;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-bottom: 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .candidate-image:hover {
+            transform: scale(1.1);
         }
 
         @media (max-width: 768px) {
@@ -265,7 +261,7 @@
                                         <div class='box-body'>
                                             <div class='chart-container'>
                                                 <div class='candidate-images' id='${category}Image'></div>
-                                                <div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div>
+                                                <div id='${category}Graph' style='height: 300px; width: calc(100% - 120px);'></div>
                                             </div>
                                         </div>
                                     </div>
