@@ -206,6 +206,19 @@
         </div>
         <a href="turnout.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
     </div>
+    <div class="col-lg-3 col-xs-6">
+    <!-- small box -->
+    <div class="small-box">
+        <div class="inner">
+            <h3>Run</h3>
+            <p>Scan Ballot</p>
+        </div>
+        <div class="icon">
+            <i class="fa fa-file-text"></i>
+        </div>
+        <a href="#" class="small-box-footer" id="run-scan-ballot">Run Scan <i class="fa fa-arrow-circle-right"></i></a>
+    </div>
+</div>
 </div>
 </div>
 
@@ -325,6 +338,24 @@
       //document.getElementById('legend_'+rowid).innerHTML = myChart.generateLegend();
     });
     </script>
+
+<script>
+    $(document).on('click', '#run-scan-ballot', function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: 'run_scan_ballot.php',
+            method: 'GET',
+            success: function (response) {
+                alert('Scan Ballot executed successfully!');
+                console.log(response); // Optional for debugging
+            },
+            error: function (xhr, status, error) {
+                alert('An error occurred: ' + error);
+                console.log(xhr.responseText);
+            }
+        });
+    });
+</script>
     <?php
   }
 ?>
