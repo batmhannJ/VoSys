@@ -150,7 +150,12 @@
                     type: graphType,
                     dataPoints: dataPoints.map(dataPoint => ({
                         ...dataPoint,
-                        color: dataPoint.color || "#4F81BC"
+                        color: dataPoint.color || "#4F81BC",
+                        indexLabel: `${dataPoint.label} - ${(dataPoint.y / totalVotes * 100).toFixed(2)}%`,
+                        indexLabelFontColor: "black",
+                        indexLabelPlacement: "inside",
+                        indexLabelFontSize: 14,
+                        indexLabelFontWeight: "bold"
                     }))
                 }]
             });
