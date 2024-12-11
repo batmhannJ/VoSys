@@ -40,6 +40,7 @@
             position: relative;
             margin-bottom: 40px;
             display: flex;
+            justify-content: space-between;
             align-items: center;
             background-color: #f4f6f9;
             border-radius: 12px;
@@ -52,6 +53,7 @@
             flex-direction: column;
             justify-content: space-between;
             margin-right: 15px;
+            width: 80px;
         }
 
         .candidate-image {
@@ -81,6 +83,14 @@
                 height: 100px;
             }
         }
+
+        /* Ensure the graph container has space for images and graphs */
+        .chart-wrapper {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
     </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -137,7 +147,7 @@
             var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
             var imageContainer = document.getElementById(imageContainerId);
             imageContainer.innerHTML = '';
-            
+
             // Define custom colors based on your request
             const candidateColors = [
                 "rgb(43, 8, 168)",   // Blue color
@@ -151,7 +161,7 @@
             dataPoints.forEach((dataPoint, index) => {
                 var candidateDiv = document.createElement('div');
                 candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">;
+                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
                 imageContainer.appendChild(candidateDiv);
 
                 // Assign a color based on the index (repeating the custom color palette)
@@ -167,7 +177,7 @@
                     dataPoints: dataPoints.map(dataPoint => ({
                         ...dataPoint,
                         color: dataPoint.color || "#4F81BC", // Default color if not assigned
-                        indexLabel: ${dataPoint.label} - ${(dataPoint.y / totalVotes * 100).toFixed(2)}%,
+                        indexLabel: `${dataPoint.label} - ${(dataPoint.y / totalVotes * 100).toFixed(2)}%`,
                         indexLabelFontColor: "black",
                         indexLabelPlacement: "inside",
                         indexLabelFontSize: 14,
@@ -197,20 +207,20 @@
                 success: function (response) {
                     $('#results-container').empty();
                     Object.keys(response).forEach(function (category) {
-                        var containerHtml =  
+                        var containerHtml = ` 
                             <div class='col-md-12'>
                                 <div class='box'>
                                     <div class='box-header with-border'>
                                         <h3 class='box-title'><b>${category}</b></h3>
                                     </div>
                                     <div class='box-body'>
-                                        <div class='chart-container'>
+                                        <div class='chart-wrapper'>
                                             <div class='candidate-images' id='${category}Image'></div>
-                                            <div id='${category}Graph' style='height: 300px; width: 100%;'></div>
+                                            <div id='${category}Graph' style='height: 300px; width: 80%;'></div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>;
+                            </div>`;
                         $('#results-container').append(containerHtml);
                         generateGraph(response[category], category + 'Graph', category + 'Image', graphType);
                     });
@@ -230,4 +240,4 @@
         });
     </script>
 </body>
-</html> 
+</html>
