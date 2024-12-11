@@ -1,11 +1,12 @@
 <?php
 include 'includes/conn.php';
+include 'includes/session.php';
 
 $query = "SELECT * FROM announcement ORDER BY id_announcement DESC LIMIT 1";
 $result = $conn->query($query);
 
 if (!$result) {
-    die(json_encode(['success' => false, 'message' => 'Database query failed.']));
+    die(json_encode(['success' => false, 'message' => 'Query failed: ' . $conn->error]));
 }
 
 if ($result->num_rows > 0) {
