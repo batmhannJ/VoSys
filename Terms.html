@@ -164,9 +164,10 @@
           break;
         case 'intellectual_property':
           title.textContent = 'User Eligibility';
-          description.textContent = 'Users must be registered with OLSHCO and have an active account on vosys.org to cast votes.' <br> 
-          'Users must be registered with OLSHCO and have an active account on vosys.org to cast votes.' <br> 'Voting rights may be revoked or suspended if eligibility criteria are not met or if fraudulent activity is detected.';
-          break;
+          description.innerHTML = 'Users must be registered with OLSHCO and have an active account on vosys.org to cast votes.<br>' +
+      'Users must be registered with OLSHCO and have an active account on vosys.org to cast votes.<br>' +
+      'Voting rights may be revoked or suspended if eligibility criteria are not met or if fraudulent activity is detected.';
+    break;
         case 'prohibited_activities':
           title.textContent = 'Prohibited activities';
           description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque molestias fugiat quibusdam explicabo!';
