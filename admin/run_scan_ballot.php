@@ -1,8 +1,8 @@
 <?php
-$pythonPath = 'C:\\Users\\Almira\\AppData\\Local\\Programs\\Python\\Python313\\python.exe';
-$scriptPath = 'C:\\Users\\Almira\\Desktop\\VoSys\\admin\\scan_ballot.py';
-$command = "cmd /c \"$pythonPath\" \"$scriptPath\"";
-
-$output = shell_exec($command);
-echo json_encode(['output' => $output]);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $output = shell_exec('python3 C:/Users/Almira/Desktop/VoSys/admin/scan_ballot.py 2>&1'); // Adjust the path
+    echo json_encode(['status' => 'success', 'output' => $output]);
+} else {
+    echo json_encode(['status' => 'error', 'message' => 'Invalid request']);
+}
 ?>
