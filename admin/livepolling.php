@@ -36,16 +36,16 @@
             background-color: #0056b3;
         }
 
-       /* .chart-container {
+        .chart-container {
             position: relative;
             margin-bottom: 40px;
             display: flex;
             align-items: center;
             background-color: #f4f6f9;
             border-radius: 12px;
-            padding: 20px;
+            padding: 40px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        } */
+        }
 
         .candidate-images {
             display: flex;
