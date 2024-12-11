@@ -40,7 +40,6 @@
             position: relative;
             margin-bottom: 40px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
             background-color: #f4f6f9;
             border-radius: 12px;
@@ -48,18 +47,39 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
-        .chart-wrapper {
+        .candidate-images {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            margin: 20px 0;
-            position: relative;
+            flex-direction: column;
+            justify-content: space-between;
+            margin-right: 15px;
         }
 
-        /* Hide the candidate images */
-        .candidate-images {
-            display: none;
+        .candidate-image {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .candidate-image img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .candidate-image img {
+                width: 75px;
+                height: 75px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .candidate-image img {
+                width: 100px;
+                height: 100px;
+            }
         }
     </style>
 </head>
@@ -113,10 +133,31 @@
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="path/to/jquery.min.js"></script>
     <script>
-        function generateGraph(dataPoints, containerId, graphType) {
+        function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
             var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+            var imageContainer = document.getElementById(imageContainerId);
+            imageContainer.innerHTML = '';
+            
+            // Define custom colors based on your request
+            const candidateColors = [
+                "rgb(43, 8, 168)",   // Blue color
+                "rgb(158, 9, 29)",   // Red color
+                "rgb(43, 8, 168)",   // Blue color (repeating the color)
+                "rgb(158, 9, 29)",   // Red color (repeating the color)
+                "rgb(43, 8, 168)",   // Blue color (repeating the color)
+                "rgb(158, 9, 29)"    // Red color (repeating the color)
+            ];
+            
+            dataPoints.forEach((dataPoint, index) => {
+                var candidateDiv = document.createElement('div');
+                candidateDiv.className = 'candidate-image';
+                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
+                imageContainer.appendChild(candidateDiv);
 
-            // Define the chart options
+                // Assign a color based on the index (repeating the custom color palette)
+                dataPoint.color = candidateColors[index % candidateColors.length];
+            });
+
             var chartOptions = {
                 animationEnabled: true,
                 theme: "light2",
@@ -125,9 +166,9 @@
                     type: graphType,
                     dataPoints: dataPoints.map(dataPoint => ({
                         ...dataPoint,
-                        // Hide candidate names from the graph
-                        indexLabel: "",   // Hide the candidate names
-                        indexLabelFontColor: "transparent", // Ensures no labels are visible
+                        color: dataPoint.color || "#4F81BC", // Default color if not assigned
+                        indexLabel: `${dataPoint.label} - ${(dataPoint.y / totalVotes * 100).toFixed(2)}%`,
+                        indexLabelFontColor: "lightgray",  // Changed to light gray
                         indexLabelPlacement: "inside",
                         indexLabelFontSize: 14,
                         indexLabelFontWeight: "bold"
@@ -135,15 +176,14 @@
                 }]
             };
 
-            // Special settings for specific graph types like stackedArea and doughnut
+            // Add specific options for stacked area and donut charts
             if (graphType === "stackedArea") {
                 chartOptions.data[0].type = "stackedArea";
             } else if (graphType === "doughnut") {
                 chartOptions.data[0].type = "doughnut";
-                chartOptions.data[0].innerRadius = 70; // For donut effect
+                chartOptions.data[0].innerRadius = 70; // Create a donut effect
             }
 
-            // Create and render the chart
             var chart = new CanvasJS.Chart(containerId, chartOptions);
             chart.render();
         }
@@ -164,14 +204,15 @@
                                         <h3 class='box-title'><b>${category}</b></h3>
                                     </div>
                                     <div class='box-body'>
-                                        <div class='chart-wrapper'>
-                                            <div id='${category}Graph' style='height: 300px; width: 80%;'></div>
+                                        <div class='chart-container'>
+                                            <div class='candidate-images' id='${category}Image'></div>
+                                            <div id='${category}Graph' style='height: 300px; width: 100%;'></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>`;
                         $('#results-container').append(containerHtml);
-                        generateGraph(response[category], category + 'Graph', graphType);
+                        generateGraph(response[category], category + 'Graph', category + 'Image', graphType);
                     });
                 },
                 error: function (xhr, status, error) {
