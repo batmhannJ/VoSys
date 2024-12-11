@@ -4,14 +4,14 @@
     <?php include 'includes/session.php'; ?>
     <?php include 'includes/header.php'; ?>
     <style>
-        .box-title {
+    /* .box-title {
             text-align: center;
             width: 100%;
             display: inline-block;
             font-size: 24px;
             font-weight: bold;
             color: #333;
-        }
+        } */
 
         #back-to-top {
             position: fixed;
