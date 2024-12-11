@@ -40,7 +40,7 @@
             position: relative;
             margin-bottom: 40px;
             display: flex;
-            align-items: center;
+            
             background-color: #f4f6f9;
             border-radius: 12px;
             padding: 40px;
