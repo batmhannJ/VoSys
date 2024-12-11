@@ -33,39 +33,39 @@
         #back-to-top:hover {
             background-color: #555;
         }
-
         .chart-container {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-bottom: 40px;
-        }
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
 
-        .candidate-images {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin-right: 20px;
-            width: 100px; /* Adjust width to fit image size */
-        }
+.candidate-images {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 150px; /* Set a fixed width for image container */
+    margin-left: 20px;
+}
 
-        .candidate-image {
-            margin-bottom: 10px;
-        }
+.candidate-image {
+    margin-bottom: 10px;
+}
 
-        .candidate-image img {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease-in-out;
-        }
+.candidate-image img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
 
-        .candidate-image:hover {
-            transform: scale(1.1);
-        }
+.candidate-image:hover {
+    transform: scale(1.1);
+}
+
 
         @media (max-width: 768px) {
             .candidate-image img {
