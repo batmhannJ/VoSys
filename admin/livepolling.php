@@ -121,70 +121,71 @@
         <?php include 'includes/footer.php'; ?>
     </div>
     <?php include 'includes/scripts.php'; ?>
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
     <script src="path/to/jquery.min.js"></script>
+
     <script>
         function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
-            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+            if (graphType === 'line') {
+                // Create the chart container
+                document.getElementById(containerId).innerHTML = '';
+                
+                am5.ready(function() {
+                    var root = am5.Root.new(containerId);
+                    root.setThemes([am5themes_Animated.new(root)]);
 
-            var imageContainer = document.getElementById(imageContainerId);
-            imageContainer.innerHTML = '';
-            dataPoints.forEach(dataPoint => {
-                var candidateDiv = document.createElement('div');
-                candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
-                imageContainer.appendChild(candidateDiv);
-            });
+                    var chart = root.container.children.push(am5xy.XYChart.new(root, {
+                        layout: root.verticalLayout
+                    }));
 
-            var chart = new CanvasJS.Chart(containerId, {
-                animationEnabled: true,
-                title: { text: "Vote Counts" },
-                data: [{
-                    type: graphType,
-                    indexLabel: "{label} - {percent}%",
-                    indexLabelPlacement: "inside",
-                    indexLabelFontColor: "white",
-                    indexLabelFontSize: 14,
-                    dataPoints: dataPoints.map(dataPoint => ({
-                        ...dataPoint,
-                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-                    }))
-                }]
-            });
+                    var xAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
+                        categoryField: "category",
+                        renderer: am5xy.AxisRendererX.new(root, {})
+                    }));
 
-            if (graphType === 'bar') {
-                chart.options.axisX = {
-                    title: "",
-                    includeZero: true,
-                    interval: 1,
-                    labelFormatter: function () {
-                        return " ";
-                    }
-                };
-                chart.options.axisY = {
-                    title: "",
-                    interval: Math.ceil(totalVotes / 10)
-                };
+                    var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
+                        renderer: am5xy.AxisRendererY.new(root, {})
+                    }));
 
-                chart.options.data[0].cornerRadius = 5; // Rounded bar corners
-                chart.options.data[0].bevelEnabled = true; // Bevel 3D effect
-                chart.options.data[0].indexLabelFontWeight = "bold";
-                chart.options.data[0].indexLabelFontColor = "#ffffff";
+                    var series = chart.series.push(am5xy.LineSeries.new(root, {
+                        name: "Votes",
+                        xAxis: xAxis,
+                        yAxis: yAxis,
+                        valueYField: "value",
+                        categoryXField: "category",
+                        stroke: am5.color("#4F81BC")
+                    }));
 
-                chart.options.data[0].dataPoints = dataPoints.map(dataPoint => ({
-                    ...dataPoint,
-                    percent: ((dataPoint.y / totalVotes) * 100).toFixed(2),
-                    color: dataPoint.color || "#4F81BC", // Default color
-                    shadow: {
-                        color: 'rgba(0, 0, 0, 0.3)', 
-                        blur: 10, 
-                        offsetX: 4, 
-                        offsetY: 4  
-                    }
-                }));
+                    series.bullets.push(function() {
+                        return am5.Bullet.new(root, {
+                            sprite: am5.Circle.new(root, {
+                                radius: 5,
+                                fill: am5.color("#4F81BC")
+                            })
+                        });
+                    });
+
+                    series.data.setAll(dataPoints.map(dataPoint => ({
+                        category: dataPoint.label,
+                        value: dataPoint.y,
+                        percent: ((dataPoint.y / dataPoints.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2) + '%'
+                    })));
+
+                    series.bullets.push(function(root, series, dataItem) {
+                        return am5.Label.new(root, {
+                            text: "{category}: {value} ({percent})",
+                            fill: am5.color("#000"), // Black label
+                            centerY: am5.p50,
+                            centerX: am5.p50
+                        });
+                    });
+                });
+                return;
             }
 
-            chart.render();
+            // Original logic for Bar and Pie charts
         }
 
         function fetchAndGenerateGraphs(organization) {
@@ -194,9 +195,8 @@
                 url: 'update_data.php',
                 method: 'GET',
                 dataType: 'json',
-                success: function (response) {
+                success: function(response) {
                     $('#results-container').empty();
-
                     var categories = {
                         'csc': {
                             'president': 'President',
@@ -210,8 +210,7 @@
                     };
 
                     var selectedCategories = categories[organization];
-
-                    Object.keys(selectedCategories).forEach(function (category) {
+                    Object.keys(selectedCategories).forEach(function(category) {
                         if (response[category]) {
                             var containerHtml = `
                                 <div class='col-md-12'>
@@ -221,47 +220,32 @@
                                         </div>
                                         <div class='box-body'>
                                             <div class='chart-container'>
-                                                <div class='candidate-images' id='${category}Image'></div>
-                                                <div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div>
+                                                <div id='${category}Graph' style='height: 300px;'></div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>`;
                             $('#results-container').append(containerHtml);
-
-                            generateGraph(response[category], category + 'Graph', category + 'Image', graphType);
+                            generateGraph(response[category], category + 'Graph', null, graphType);
                         }
                     });
                 },
-                error: function (xhr, status, error) {
+                error: function(xhr, status, error) {
                     console.error("Error fetching data: ", status, error);
                 }
             });
         }
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             fetchAndGenerateGraphs('csc');
 
-            $('#organization-form').submit(function (event) {
+            $('#organization-form').submit(function(event) {
                 event.preventDefault();
                 fetchAndGenerateGraphs($('#organization-select').val());
             });
 
-            $('#graph-type').change(function () {
+            $('#graph-type').change(function() {
                 fetchAndGenerateGraphs($('#organization-select').val());
-            });
-
-            $(window).scroll(function () {
-                if ($(this).scrollTop() > 100) {
-                    $('#back-to-top').fadeIn();
-                } else {
-                    $('#back-to-top').fadeOut();
-                }
-            });
-
-            $('#back-to-top').click(function () {
-                $('html, body').animate({ scrollTop: 0 }, 600);
-                return false;
             });
         });
     </script>
