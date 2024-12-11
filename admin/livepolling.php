@@ -8,6 +8,9 @@
             text-align: center;
             width: 100%;
             display: inline-block;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
         }
 
         #back-to-top {
@@ -15,7 +18,7 @@
             bottom: 40px;
             right: 40px;
             display: none;
-            background-color: #000;
+            background-color: #007BFF;
             color: #fff;
             border: none;
             border-radius: 50%;
@@ -26,10 +29,11 @@
             line-height: 50px;
             cursor: pointer;
             z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         #back-to-top:hover {
-            background-color: #555;
+            background-color: #0056b3;
         }
 
         .chart-container {
@@ -37,28 +41,31 @@
             margin-bottom: 40px;
             display: flex;
             align-items: center;
+            background-color: #f4f6f9;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
         .candidate-images {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            margin-right: 10px;
+            margin-right: 15px;
         }
 
         .candidate-image {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
 
         .candidate-image img {
-            width: 60px;
-            height: 60px;
-            margin-right: -10px;
-            margin-bottom: 25px;
-            margin-top: 35px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         @media (max-width: 768px) {
@@ -107,6 +114,8 @@
                         <option value="bar">Bar Chart</option>
                         <option value="pie">Pie Chart</option>
                         <option value="line">Line Chart</option>
+                        <option value="stackedArea">Stacked Area Chart</option>
+                        <option value="doughnut">Donut Chart</option>
                     </select>
 
                     <button type="submit">Show Results</button>
@@ -121,156 +130,89 @@
         <?php include 'includes/footer.php'; ?>
     </div>
     <?php include 'includes/scripts.php'; ?>
-    
-    <!-- amCharts -->
-    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
-    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
-    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
-    
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="path/to/jquery.min.js"></script>
     <script>
         function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
             var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
-
             var imageContainer = document.getElementById(imageContainerId);
             imageContainer.innerHTML = '';
-            dataPoints.forEach(dataPoint => {
+            
+            // Define custom colors based on your request
+            const candidateColors = [
+                "rgb(43, 8, 168)",   // Blue color
+                "rgb(158, 9, 29)",   // Red color
+                "rgb(43, 8, 168)",   // Blue color (repeating the color)
+                "rgb(158, 9, 29)",   // Red color (repeating the color)
+                "rgb(43, 8, 168)",   // Blue color (repeating the color)
+                "rgb(158, 9, 29)"    // Red color (repeating the color)
+            ];
+            
+            dataPoints.forEach((dataPoint, index) => {
                 var candidateDiv = document.createElement('div');
                 candidateDiv.className = 'candidate-image';
                 candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
                 imageContainer.appendChild(candidateDiv);
+
+                // Assign a color based on the index (repeating the custom color palette)
+                dataPoint.color = candidateColors[index % candidateColors.length];
             });
 
-            am4core.useTheme(am4themes_animated);
+            var chartOptions = {
+                animationEnabled: true,
+                theme: "light2",
+                title: { text: "Vote Counts" },
+                data: [{
+                    type: graphType,
+                    dataPoints: dataPoints.map(dataPoint => ({
+                        ...dataPoint,
+                        color: dataPoint.color || "#4F81BC", // Default color if not assigned
+                        indexLabel: `${dataPoint.label} - ${(dataPoint.y / totalVotes * 100).toFixed(2)}%`,
+                        indexLabelFontColor: "lightgray",  // Changed to light gray
+                        indexLabelPlacement: "inside",
+                        indexLabelFontSize: 14,
+                        indexLabelFontWeight: "bold"
+                    }))
+                }]
+            };
 
-            if (graphType === 'pie') {
-                var chart = am4core.create(containerId, am4charts.PieChart);
-                chart.data = dataPoints.map((dataPoint) => ({
-                    category: dataPoint.label,
-                    value: dataPoint.y,
-                    percentage: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-                }));
-
-                var series = chart.series.push(new am4charts.PieSeries());
-                series.dataFields.value = "value";
-                series.dataFields.category = "category";
-                series.slices.template.tooltipText = "{category}: [bold]{value} votes ({percentage}%)";
-                series.slices.template.fill = am4core.color("#FF0000");
-
-                series.slices.template.events.on("hit", function(event) {
-                    event.target.fill = am4core.color("#0000FF");
-                });
-            } else if (graphType === 'line') {
-                var chart = am4core.create(containerId, am4charts.XYChart);
-                chart.data = dataPoints.map((dataPoint) => ({
-                    category: dataPoint.label,
-                    value: dataPoint.y,
-                    percentage: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-                }));
-
-                var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-                categoryAxis.dataFields.category = "category";
-                categoryAxis.renderer.grid.template.location = 0;
-
-                var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-
-                var series = chart.series.push(new am4charts.LineSeries());
-                series.dataFields.valueY = "value";
-                series.dataFields.categoryX = "category";
-                series.name = "Votes";
-                series.strokeWidth = 3;
-                series.tensionX = 0.8;
-                series.tooltipText = "{category}: [bold]{valueY} votes ({percentage}%)";
-
-                var bullet = series.bullets.push(new am4charts.CircleBullet());
-                bullet.circle.fill = am4core.color("#fff");
-                bullet.circle.strokeWidth = 2;
-                bullet.circle.stroke = am4core.color("#FF0000");
-                bullet.circle.radius = 5;
-
-                chart.cursor = new am4charts.XYCursor();
-                chart.cursor.snapToSeries = series;
-            } else {
-                var chart = am4core.create(containerId, am4charts.XYChart);
-                chart.data = dataPoints.map((dataPoint, index) => ({
-                    category: dataPoint.label,
-                    value: dataPoint.y,
-                    percentage: ((dataPoint.y / totalVotes) * 100).toFixed(2),
-                    color: index % 2 === 0 ? am4core.color("#FF0000") : am4core.color("#0000FF")
-                }));
-
-                var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
-                categoryAxis.dataFields.category = "category";
-                categoryAxis.renderer.grid.template.location = 0;
-
-                var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
-
-                var series = chart.series.push(new am4charts.ColumnSeries());
-                series.dataFields.valueX = "value";
-                series.dataFields.categoryY = "category";
-                series.columns.template.propertyFields.fill = "color";
-                series.columns.template.tooltipText = "{category}: [bold]{valueX} votes ({percentage}%)[/]";
-
-                // Control Bar Width (narrower bars)
-                series.columns.template.width = am4core.percent(20); // Adjust the percentage for narrower bars
-
-                // Add candidate names and percentages inside the bars (centered)
-                var labelBullet = series.bullets.push(new am4charts.LabelBullet());
-                labelBullet.label.text = "{category}: {percentage}% ({valueX} votes)";
-                labelBullet.label.fill = am4core.color("#fff");
-                labelBullet.label.fontSize = 12;  // Adjust font size as needed
-                labelBullet.label.horizontalCenter = "middle";  // Center the text horizontally
-                labelBullet.label.verticalCenter = "middle";    // Center the text vertically
-                labelBullet.label.padding(0, 100, 0, 0);           // Optional: Remove extra padding
-
-                chart.cursor = new am4charts.XYCursor();
-                chart.cursor.snapToSeries = series;
+            // Add specific options for stacked area and donut charts
+            if (graphType === "stackedArea") {
+                chartOptions.data[0].type = "stackedArea";
+            } else if (graphType === "doughnut") {
+                chartOptions.data[0].type = "doughnut";
+                chartOptions.data[0].innerRadius = 70; // Create a donut effect
             }
+
+            var chart = new CanvasJS.Chart(containerId, chartOptions);
+            chart.render();
         }
 
         function fetchAndGenerateGraphs(organization) {
             const graphType = $('#graph-type').val();
-
             $.ajax({
                 url: 'update_data.php',
                 method: 'GET',
                 dataType: 'json',
                 success: function (response) {
                     $('#results-container').empty();
-
-                    var categories = {
-                        'csc': {
-                            'president': 'President',
-                            'vice president': 'Vice President',
-                            'secretary': 'Secretary',
-                            'treasurer': 'Treasurer',
-                            'auditor': 'Auditor',
-                            'p.r.o': 'P.R.O',
-                            'businessManager': 'Business Manager'
-                        }
-                    };
-
-                    var selectedCategories = categories[organization];
-
-                    Object.keys(selectedCategories).forEach(function (category) {
-                        if (response[category]) {
-                            var containerHtml = ` 
-                                <div class='col-md-12'>
-                                    <div class='box'>
-                                        <div class='box-header with-border'>
-                                            <h3 class='box-title'><b>${selectedCategories[category]}</b></h3>
-                                        </div>
-                                        <div class='box-body'>
-                                            <div class='chart-container'>
-                                                <div class='candidate-images' id='${category}Image'></div>
-                                                <div id='${category}Graph' style='height: 300px; width: 1000px;'></div>
-                                            </div>
+                    Object.keys(response).forEach(function (category) {
+                        var containerHtml = ` 
+                            <div class='col-md-12'>
+                                <div class='box'>
+                                    <div class='box-header with-border'>
+                                        <h3 class='box-title'><b>${category}</b></h3>
+                                    </div>
+                                    <div class='box-body'>
+                                        <div class='chart-container'>
+                                            <div class='candidate-images' id='${category}Image'></div>
+                                            <div id='${category}Graph' style='height: 300px; width: 100%;'></div>
                                         </div>
                                     </div>
-                                </div>`;
-                            $('#results-container').append(containerHtml);
-                            generateGraph(response[category], category + 'Graph', category + 'Image', graphType);
-                        }
+                                </div>
+                            </div>`;
+                        $('#results-container').append(containerHtml);
+                        generateGraph(response[category], category + 'Graph', category + 'Image', graphType);
                     });
                 },
                 error: function (xhr, status, error) {
@@ -281,18 +223,9 @@
 
         $(document).ready(function () {
             fetchAndGenerateGraphs('csc');
-
             $('#organization-form').submit(function (event) {
                 event.preventDefault();
                 fetchAndGenerateGraphs($('#organization-select').val());
-            });
-
-            $('#graph-type').change(function () {
-                fetchAndGenerateGraphs($('#organization-select').val());
-            });
-
-            $('#back-to-top').click(function () {
-                $('html, body').animate({ scrollTop: 0 }, 600);
             });
         });
     </script>

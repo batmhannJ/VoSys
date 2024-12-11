@@ -4,14 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link
-      href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css"
-      rel="stylesheet"
-    >
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-    >
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <title>OLSHCO College Online Voting System</title>
     <link href="images/olshco.png" rel="icon">
     <link href="images/olshco.png" rel="apple-touch-icon">
@@ -19,193 +13,297 @@
   <body>
     <header class="header">
       <nav>
-  <div class="nav__header">
-    <div class="nav__logo">
-      <img src="images/logo.png" alt="" class="nav__logo-img"> 
-      <h2>VOSYS</h2>
-    </div>
-    <div class="nav__menu__btn" id="menu-btn">
-      <span><i class="ri-menu-line"></i></span>
-    </div>
-  </div>
-  <ul class="nav__links" id="nav-links">
-    <li><a href="index.html#">Home</a></li>
-    <li class="dropdown">
-      <a href="javascript:void(0)" class="dropbtn">About</a>
-      <div class="dropdown-content">
-        <a href="about.html" id="aboutusLink">About Us</a>
-        <a href="walkthrough.html" id="walkthroughLink">System Walkthrough</a>
-        <a href="Terms.html" id="termsLink">System Walkthrough</a>
-      </div>
-    </li>
-    <li><a href="index.html#services">Services</a></li>
-    <li><a href="index.html#organizations">Organizations</a></li>
-    <li><a href="index.html#location">Location</a></li>
-    <li><a href="index.html#discover">Countdown</a></li>
-    <li><a href="index.html#candidate">Candidates</a></li>
-    <li><a href="voters_login.php"><button class="btn">Login</button></a></li>
-  </ul>
-</nav>
-
-<section id="terms" class="section__container location__container">
-  <h2 class="section__header">Terms of Service</h2>
-      <div class="terms">
-          <div class="terms-container">
-              <!-- Sidebar with the tabs -->
-              <div class="sidebar">
-                  <div class="tab active" onclick="setActiveTab('terms_of_use')">Terms of use</div>
-                  <div class="tab" onclick="setActiveTab('intellectual_property')">Intellectual property rights</div>
-                  <div class="tab" onclick="setActiveTab('prohibited_activities')">Prohibited activities</div>
-                  <div class="tab" onclick="setActiveTab('termination_clause')">Termination clause</div>
-                  <div class="tab" onclick="setActiveTab('governing_law')">Governing law</div>
-              </div>
-
-              <!-- Content corresponding to the active tab -->
-              <div class="content" id="content">
-                  <h3 id="tab-title">Terms of use</h3>
-                  <p id="tab-description">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. At fugit praesentium reiciendis aut debitis minima earum fugiat quam aspernatur qui.
-                  </p>
-              </div>
+        <div class="nav__header">
+          <div class="nav__logo">
+            <img src="images/logo.png" alt="" class="nav__logo-img"> 
+            <h2>VOSYS</h2>
           </div>
-      </div>
-  </div>
-</section>
-
-    <!--==================== FOOTER ====================-->
-        <footer class="footer section">
-            <div class="footer__container container grid">
-                <div class="footer__content grid">
-                    <div class="footer__data">
-                        <h3 class="footer__title">VOTE</h3><br>
-                        <p class="footer__description">Take a decision today, <br> to ensure a better <br> tomorrow.
-                        </p>
-                      
-                    </div>
-    
-                    <div class="footer__data">
-                        <h3 class="footer__subtitle">About</h3><br>
-                        <ul>
-                            <li class="footer__item">
-                                <a href="about" class="footer__link">About</a>
-                            </li>
-                            <li class="footer__item">
-                                <a href="#service" class="footer__link">Services</a>
-                            </li>
-                            <li class="footer__item">
-                                <a href="#place" class="footer__link">Organizations</a>
-                            </li>
-                        </ul>
-                    </div>
-    
-                    <div class="footer__data">
-                        <h3 class="footer__subtitle">Socials</h3><br>
-                        <ul>
-                            <li class="footer__item">
-                                <a href="" class="footer__link">Facebook</a>
-                            </li>
-                            <li class="footer__item">
-                                <a href="" class="footer__link">Instagram</a>
-                            </li>
-                            <li class="footer__item">
-                                <a href="" class="footer__link">Twitter</a>
-                            </li>
-                        </ul>
-                    </div>
-    
-                    <div class="footer__data">
-                        <h3 class="footer__subtitle">Support</h3><br>
-                        <ul>
-                            <li class="footer__item">
-                                <a href="" class="footer__link">FAQs</a>
-                            </li>
-                            <li class="footer__item">
-                                <a href="" class="footer__link">Support Center</a>
-                            </li>
-                            <li class="footer__item">
-                                <a href="" class="footer__link">Contact Us</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div><br>
-
-                <a href="developers.html"><div class="footer__rights">
-                    <p class="footer__copy" style="color: #fff;">&#169; VOSYS DEVELOPERS 2024</p>
-                </div></a>
+          <div class="nav__menu__btn" id="menu-btn">
+            <span><i class="ri-menu-line"></i></span>
+          </div>
+        </div>
+        <ul class="nav__links" id="nav-links">
+          <li><a href="index.html#">Home</a></li>
+          <li class="dropdown">
+            <a href="javascript:void(0)" class="dropbtn">About</a>
+            <div class="dropdown-content">
+              <a href="about.html" id="aboutusLink">About Us</a>
+              <a href="walkthrough.html" id="walkthroughLink">System Walkthrough</a>
             </div>
-        </footer>
-  </body>
+          </li>
+          <li class="dropdown">
+            <a href="javascript:void(0)" class="dropbtn">Services</a>
+            <div class="dropdown-content">
+              <a href="services.html" id="services">Our Services</a>
+              <a href="Terms.html" id="termsOfServiceLink">Terms of Service</a>
+            </div>
+          </li>    
+          <li><a href="index.html#organizations">Organizations</a></li>
+          <li><a href="index.html#location">Location</a></li>
+          <li><a href="index.html#discover">Countdown</a></li>
+          <li><a href="index.html#candidate">Candidates</a></li>
+          <li><a href="voters_login.php"><button class="btn">Login</button></a></li>
+        </ul>
+      </nav>
+    </header>
 
-  <script>
-    // This script will handle switching the active tab and content
-    function setActiveTab(tabId) {
-      const tabs = document.querySelectorAll('.tab');
-      const content = document.getElementById('content');
-      const title = document.getElementById('tab-title');
-      const description = document.getElementById('tab-description');
+    <section id="terms" class="section__container location__container">
+      <h2 class="section__header">Terms of Service</h2>
+      <div class="terms">
+        <div class="terms-container">
+          <div class="sidebar">
+            <div class="tab active" onclick="setActiveTab('terms_of_use')">Terms of use</div>
+            <div class="tab" onclick="setActiveTab('user_eligibility')">User Eligibility</div>
+            <div class="tab" onclick="setActiveTab('account_security')">Account Security</div>
+            <div class="tab" onclick="setActiveTab('rights_responsibilities')">Voting Rights and Responsibilities</div>
+            <div class="tab" onclick="setActiveTab('privacy_data_protection')">Privacy and Data Protection</div>
+            <div class="tab" onclick="setActiveTab('code_of_conduct')">Code of Conduct</div>
+            <div class="tab" onclick="setActiveTab('restrictions_on_use')">Restrictions on Use</div>
+            <div class="tab" onclick="setActiveTab('liability')">Liability</div>
+            <div class="tab" onclick="setActiveTab('contact_info')">Contact Information</div>
+            <div class="tab" onclick="setActiveTab('suspension_termination')">Suspension or Termination of Accounts</div>
+          </div>
 
-      // Reset active class on all tabs
-      tabs.forEach(tab => tab.classList.remove('active'));
-      
-      // Set the active class to the clicked tab
-      const activeTab = document.querySelector(`.tab[onclick="setActiveTab('${tabId}')"]`);
-      activeTab.classList.add('active');
+          <div class="content" id="content">
+            <h3 id="tab-title">Terms of use</h3>
+            <p id="tab-description">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. At fugit praesentium reiciendis aut debitis minima earum fugiat quam aspernatur qui.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-      // Set content based on active tab
-      switch (tabId) {
-        case 'terms_of_use':
-          title.textContent = 'Terms of use';
-          description.textContent = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At fugit praesentium reiciendis aut debitis minima earum fugiat quam aspernatur qui.';
-          break;
-        case 'intellectual_property':
-          title.textContent = 'Intellectual property rights';
-          description.textContent = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit quos minima quia.';
-          break;
-        case 'prohibited_activities':
-          title.textContent = 'Prohibited activities';
-          description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque molestias fugiat quibusdam explicabo!';
-          break;
-        case 'termination_clause':
-          title.textContent = 'Termination clause';
-          description.textContent = 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Amet rem doloremque suscipit.';
-          break;
-        case 'governing_law':
-          title.textContent = 'Governing law';
-          description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem animi laborum.';
-          break;
-        default:
-          break;
+    <footer class="footer section">
+      <div class="footer__container container grid">
+        <div class="footer__content grid">
+          <div class="footer__data">
+            <h3 class="footer__title">VOTE</h3><br>
+            <p class="footer__description">Take a decision today, <br> to ensure a better <br> tomorrow.</p>
+          </div>
+          <div class="footer__data">
+            <h3 class="footer__subtitle">About</h3><br>
+            <ul>
+              <li class="footer__item">
+                <a href="about" class="footer__link">About</a>
+              </li>
+              <li class="footer__item">
+                <a href="#service" class="footer__link">Services</a>
+              </li>
+              <li class="footer__item">
+                <a href="#place" class="footer__link">Organizations</a>
+              </li>
+            </ul>
+          </div>
+          <div class="footer__data">
+            <h3 class="footer__subtitle">Socials</h3><br>
+            <ul>
+              <li class="footer__item">
+                <a href="" class="footer__link">Facebook</a>
+              </li>
+              <li class="footer__item">
+                <a href="" class="footer__link">Instagram</a>
+              </li>
+              <li class="footer__item">
+                <a href="" class="footer__link">Twitter</a>
+              </li>
+            </ul>
+          </div>
+          <div class="footer__data">
+            <h3 class="footer__subtitle">Support</h3><br>
+            <ul>
+              <li class="footer__item">
+                <a href="" class="footer__link">FAQs</a>
+              </li>
+              <li class="footer__item">
+                <a href="" class="footer__link">Support Center</a>
+              </li>
+              <li class="footer__item">
+                <a href="" class="footer__link">Contact Us</a>
+              </li>
+            </ul>
+          </div>
+        </div><br>
+        <a href="developers.html">
+          <div class="footer__rights">
+            <p class="footer__copy" style="color: #fff;">&#169; VOSYS DEVELOPERS 2024</p>
+          </div>
+        </a>
+      </div>
+    </footer>
+
+    <script>
+      function setActiveTab(tabId) {
+        const tabs = document.querySelectorAll('.tab');
+        const content = document.getElementById('content');
+        const title = document.getElementById('tab-title');
+        const description = document.getElementById('tab-description');
+
+        // Reset active class on all tabs
+        tabs.forEach(tab => tab.classList.remove('active'));
+        
+        // Set the active class to the clicked tab
+        const activeTab = document.querySelector(`.tab[onclick="setActiveTab('${tabId}')"]`);
+        activeTab.classList.add('active');
+
+        // Set content based on active tab
+        switch (tabId) {
+          case 'terms_of_use':
+            title.textContent = 'Terms of use';
+            description.textContent = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At fugit praesentium reiciendis aut debitis minima earum fugiat quam aspernatur qui.';
+            break;
+          case 'user_eligibility':
+            title.textContent = 'User Eligibility';
+            description.innerHTML = `
+              <ul style="text-align: justify; list-style-type: none; padding-left: 0;">
+                <li style="text-align: justify;"><strong>Registered Members:</strong> Only current students of OLSHCO with an active account on vosys.org are eligible to vote.</li>
+                <li style="text-align: justify;"><strong>Eligibility Verification:</strong> Users must meet specific eligibility criteria, such as enrollment status, as determined by OLSHCO.</li>
+                <li style="text-align: justify;"><strong>Active Account:</strong> Users must have a verified account with valid login credentials and email.</li>
+                <li style="text-align: justify;"><strong>Fraudulent Activities:</strong> vosys.org reserves the right to revoke or suspend voting rights for fraudulent activities, including vote manipulation or providing false information.</li>
+                <li style="text-align: justify;"><strong>Suspension of Rights:</strong> Voting rights may be suspended for misconduct such as impersonation or interfering with the voting process.</li>
+                <li style="text-align: justify;"><strong>Termination of Access:</strong> Users found ineligible may be permanently banned from voting.</li>
+                <li style="text-align: justify;"><strong>Appeals:</strong> Users can appeal eligibility suspensions or revocations within 30 days.</li>
+              </ul>
+            `;
+            break;
+            case 'account_security':
+    title.textContent = 'Account Security';
+    description.innerHTML = `
+      <ul style="text-align: justify; list-style-type: none; padding-left: 0;">
+        <li style="text-align: justify;"><strong>Account Credentials:</strong> You are responsible for maintaining the confidentiality of your account information, including your username and password. Do not share your account credentials with anyone.</li>
+        <li style="text-align: justify;"><strong>Security:</strong> You must not share your account credentials with others. Any activities occurring under your account are your responsibility. Ensure that you log out of your account when using a shared or public computer.</li>
+        <li style="text-align: justify;"><strong>One-Time Password (OTP):</strong> Users may be required to verify their identity using a one-time password (OTP) sent via email or other means. It is important to keep your email account secure to prevent unauthorized access.</li>
+        <li style="text-align: justify;"><strong>Multi-Factor Authentication:</strong> For added security, users are encouraged to enable multi-factor authentication (MFA) on their accounts, which adds an extra layer of protection when accessing your account.</li>
+        <li style="text-align: justify;"><strong>Email Verification:</strong> vosys.org will send your generated Voter ID and password to your registered email address or other means. It is important to keep your email account secure to prevent unauthorized access and ensure that you can complete the verification process.</li>
+        <li style="text-align: justify;"><strong>Password Management:</strong> Update your password it should be unique, strong, and should not be easily guessed. We recommend using a combination of uppercase and lowercase letters, numbers, and special characters. Avoid reusing passwords across different sites.</li>
+        <li style="text-align: justify;"><strong>Account Monitoring:</strong> Regularly monitor your account activity for any suspicious actions. If you notice any unusual activity, immediately change your password and report the incident to support.</li>
+        <li style="text-align: justify;"><strong>Phishing Attempts:</strong> Be cautious of phishing attempts. Do not respond to unsolicited emails or messages asking for your login credentials or personal information. Always verify the source before clicking on any links.</li>
+      </ul>
+    `;
+    break;
+
+    case 'rights_responsibilities':
+    title.textContent = 'Voting Rights and Responsibilities';
+    description.innerHTML = `
+      <ul style="text-align: justify; list-style-type: none; padding-left: 0;">
+        <li style="text-align: justify;"><strong>Voting Process:</strong> Each eligible user will be allowed to cast their vote through the vosys.org platform, where all votes will be registered securely. The platform ensures that all votes are confidential and counted accurately.</li>
+<li style="text-align: justify;"><strong>One Vote Per User:</strong> Each user is allowed only one vote per election or decision, unless otherwise specified. Multiple votes from the same user will not be counted, and any attempt to cast more than one vote may lead to disqualification.</li>
+<li style="text-align: justify;"><strong>Non-transferability:</strong> Voting rights are non-transferable. Users must cast their vote personally and are prohibited from attempting to influence or impersonate others in the voting process. Any violation of this may result in the suspension or revocation of voting rights.</li>
+<li style="text-align: justify;"><strong>Fraudulent Activity:</strong> Any attempt to manipulate, alter, or falsify voting outcomes, including but not limited to voting through multiple accounts, is considered a violation of vosys.org policies. Such activities will lead to immediate disqualification and possible legal action.</li>
+<li style="text-align: justify;"><strong>Voting Integrity:</strong> vosys.org employs security measures to ensure the integrity of the voting process, including encryption and verification techniques to prevent tampering and protect voter anonymity.</li>
+<li style="text-align: justify;"><strong>Monitoring and Audits:</strong> The vosys.org platform may conduct random audits and monitor voting activities to detect any suspicious behavior. Users who are found in violation of the voting policies may face penalties, including the suspension of voting rights.</li>
+      </ul>
+    `;
+    break;
+    case 'privacy_data_protection':
+    title.textContent = 'Privacy and Data Protection';
+    description.innerHTML = `
+      <ul style="text-align: justify; list-style-type: none; padding-left: 0;">
+        <li style="text-align: justify;"><strong>Personal Information:</strong> vosys.org collects and stores personal information necessary for authentication, account management, and voting purposes only. This includes your name, email address, student ID, and other details required for registration and identity verification. All personal data is handled with care and in compliance with relevant data protection regulations.</li>
+        <li style="text-align: justify;"><strong>Data Security:</strong> We implement reasonable security measures, such as encryption and secure servers, to protect your data from unauthorized access, alteration, and destruction. While we strive to ensure your data's security, please be aware that no data transmission over the internet is entirely secure. Thus, we cannot guarantee absolute security, and users are advised to take personal precautions when accessing the platform.</li>
+        <li style="text-align: justify;"><strong>Voting Privacy:</strong> Your voting choices are confidential and are not shared with any third parties unless required by law, for auditing purposes, or to ensure compliance with OLSHCO rules. vosys.org employs measures to safeguard voter anonymity and protect the integrity of the voting process.</li>
+        <li style="text-align: justify;"><strong>Access and Control:</strong> You have the right to access, update, or delete your personal information at any time by logging into your account. If you wish to deactivate your account or request the deletion of your data, please contact the vosys.org support team for assistance.</li>
+        <li style="text-align: justify;"><strong>Data Retention:</strong> vosys.org retains personal data only for as long as necessary to fulfill the purposes for which it was collected, such as account management, voting, and compliance with legal obligations. After this period, your data will be securely deleted or anonymized in accordance with applicable laws.</li>
+        <li style="text-align: justify;"><strong>Third-Party Services:</strong> vosys.org may engage trusted third-party services to assist with system operations, such as email verification or data storage. These third-party providers are obligated to follow strict privacy and security guidelines, ensuring your personal data is protected at all times.</li>
+        <li style="text-align: justify;"><strong>Changes to Privacy Policy:</strong> vosys.org reserves the right to update or modify this privacy policy to reflect changes in our practices or legal requirements. Any updates will be communicated to users via email or through the platform. Please review the policy regularly to stay informed about how we are protecting your data.</li>
+      </ul>
+    `;
+    break;
+    case 'code_of_conduct':
+    title.textContent = 'Code of Conduct';
+    description.innerHTML = `
+      <ul style="text-align: justify; list-style-type: none; padding-left: 0;">
+        <li style="text-align: justify;"><strong>Respectful Use:</strong> Users must use vosys.org respectfully and responsibly, ensuring that their activities do not interfere with or disrupt other users' access to the platform. Respecting other users' right to participate in a smooth and secure environment is paramount.</li>
+        <li style="text-align: justify;"><strong>Fraudulent Activities:</strong> Users must not engage in fraudulent activities, including attempting to alter, manipulate, or tamper with voting results or any other platform functionalities. Violations of this nature will result in immediate disqualification and potential legal consequences.</li>
+        <li style="text-align: justify;"><strong>Prohibited Content:</strong> The platform must not be used to distribute harmful, offensive, discriminatory, or illegal content. This includes, but is not limited to, hate speech, harassment, threats, and any material that promotes violence, discrimination, or unlawful activities. Such actions will lead to the suspension or permanent termination of the user's account.</li>
+        <li style="text-align: justify;"><strong>Compliance with Laws:</strong> Users are required to comply with all applicable laws and regulations while using the vosys.org platform. Any activities that breach legal obligations or the ethical guidelines of the platform will be subject to penalties.</li>
+        <li style="text-align: justify;"><strong>Account Security:</strong> Users must ensure the security of their account by choosing strong passwords and safeguarding their login credentials. Users should report any suspicious activity related to their account immediately to prevent unauthorized access.</li>
+        <li style="text-align: justify;"><strong>Reporting Violations:</strong> Users are encouraged to report any violations of the Code of Conduct or suspicious activities to the vosys.org support team. All reports will be handled with confidentiality, and appropriate actions will be taken to address the issue.</li>
+      </ul>
+    `;
+    break;
+    case 'restrictions_on_use':
+    title.textContent = 'Restrictions on Use';
+    description.innerHTML = `
+      <ul style="text-align: justify; list-style-type: none; padding-left: 0;">
+        <li style="text-align: justify;"><strong>Illegal Activities:</strong> You may not use vosys.org for any illegal activities or in violation of OLSHCO’s policies. Engaging in activities that are against the law or violate OLSHCO’s ethical guidelines will result in account suspension or termination and may lead to legal consequences.</li>
+        <li style="text-align: justify;"><strong>Unauthorized Access:</strong> You may not attempt to gain unauthorized access to the platform, databases, servers, or any other part of the vosys.org infrastructure. Any attempt to breach security measures or compromise the integrity of the platform will lead to immediate action, including legal prosecution if applicable.</li>
+        <li style="text-align: justify;"><strong>Interference with Service:</strong> You may not engage in any activities that disrupt, interfere with, or negatively impact the operation of vosys.org. This includes introducing malware, attempting to overload the platform, or engaging in denial-of-service attacks.</li>
+        <li style="text-align: justify;"><strong>Impersonation:</strong> You may not impersonate any person or entity, including but not limited to, vosys.org administrators or other users, in an attempt to gain unauthorized privileges or access to information.</li>
+      </ul>
+    `;
+    break;
+    case 'liability':
+    title.textContent = 'Liability';
+    description.innerHTML = `
+      <ul style="text-align: justify; list-style-type: none; padding-left: 0;">
+        <li style="text-align: justify;"><strong>Technical Failures:</strong> vosys.org is not liable for any technical failures, outages, or disruptions that may affect voting or user access to the platform. This includes, but is not limited to, server downtime, network issues, or other technical difficulties beyond our control.</li>
+        <li style="text-align: justify;"><strong>Unauthorized Access:</strong> We are not responsible for any loss or damage resulting from unauthorized access to your account or any actions taken by third parties outside of our control. It is the user's responsibility to ensure the security of their account credentials and personal information.</li>
+        <li style="text-align: justify;"><strong>Platform Availability:</strong> While vosys.org strives to maintain consistent availability and functionality, we do not guarantee uninterrupted access to the platform at all times. We are not liable for any inconvenience or damages resulting from service interruptions or downtime.</li>
+      </ul>
+    `;
+    break;
+    case 'contact_info':
+    title.textContent = 'Contact Information';
+    description.innerHTML = `
+      <ul style="text-align: justify; list-style-type: none; padding-left: 0;">
+        <li style="text-align: justify;"><strong>Email:</strong> If you have any questions or concerns about these terms or any aspect of vosys.org, please contact us at olshco.electionupdates@gmail.com. We strive to respond to all inquiries in a timely manner.</li>
+        <li style="text-align: justify;"><strong>Phone:</strong> You can also reach us via phone for urgent matters at 09952650331. Our support team is available during regular business hours to assist you.</li>
+        <li style="text-align: justify;"><strong>Physical Address:</strong> If you prefer to contact us in person or by postal mail, our physical address is Afan Salvador Street, St. John, Guimba, Nueva Ecija. Please ensure that you include adequate details for a prompt response.</li>
+        <li style="text-align: justify;"><strong>Support Hours:</strong> Our support team is available Monday through Friday from 7:00 AM to 5:30 PM (local time). We are closed on weekends and public holidays, but we will address all inquiries on the next business day.</li>
+        <li style="text-align: justify;"><strong>Social Media:</strong> Stay connected with us through our official social media channels for updates, announcements, and support.</li>
+        <li style="text-align: justify;"><strong>Feedback:</strong> We welcome feedback to help improve vosys.org. If you have suggestions or improvements to recommend, please do not hesitate to contact us using any of the methods above.</li>
+      </ul>
+    `;
+    break;
+    case 'suspension_termination':
+    title.textContent = 'Suspension or Termination of Accounts';
+    description.innerHTML = `
+      <ul style="text-align: justify; list-style-type: none; padding-left: 0;">
+        <li style="text-align: justify;"><strong>Suspension:</strong> vosys.org reserves the right to suspend or terminate user accounts if any violation of the Terms of Service occurs. Suspended accounts may be temporarily disabled, and users may be notified of the suspension. Suspended users will not be allowed to access the platform or participate in the voting process during this period.</li>
+        <li style="text-align: justify;"><strong>Termination:</strong> Accounts may be permanently terminated if users are found to be ineligible, engaged in fraudulent activities, or participating in behavior that violates the integrity of the voting process. This includes, but is not limited to, activities such as vote manipulation, impersonation, or the use of multiple accounts.</li>
+        <li style="text-align: justify;"><strong>Appeal Process:</strong> Users whose accounts have been suspended or terminated may appeal the decision. Appeals should be submitted within 30 days of the suspension or termination, and the appeal will be reviewed by the relevant authorities at vosys.org. The decision regarding the appeal will be final.</li>
+        <li style="text-align: justify;"><strong>Reinstatement of Account:</strong> In some cases, accounts may be reinstated if the suspension was due to a temporary violation or misunderstanding. Reinstatement will be subject to the approval of vosys.org and may require the user to fulfill specific requirements to ensure compliance with the platform’s rules.</li>
+        <li style="text-align: justify;"><strong>Impact on Voting Rights:</strong> Suspended or terminated users will lose their voting rights during the period of suspension or permanently upon termination. They will not be able to participate in any ongoing or future voting events.</li>
+        <li style="text-align: justify;"><strong>Consequences of False Information:</strong> Submitting false or misleading information to bypass eligibility criteria or manipulate the voting process can result in immediate termination of the user’s account and possible legal action.</li>
+      </ul>
+    `;
+    break;
+
+        }
       }
-    }
-  </script>
 
-  <script>
-    // Get the dropdown elements
-  const dropdown = document.querySelector(".dropdown");
-  const dropdownContent = document.querySelector(".dropdown-content");
-  
-  // Get other navigation links
-  const otherNavLinks = document.querySelectorAll(".navbar li:not(.dropdown) a");
-  
-  // Prevent dropdown from disappearing on hover or click
-  dropdown.addEventListener("click", function (e) {
-    e.stopPropagation(); // Stop event bubbling
-    dropdownContent.classList.toggle("hide"); // Toggle visibility
-  });
-  
-  // Hide dropdown when clicking another nav item
-  otherNavLinks.forEach(link => {
-    link.addEventListener("click", function () {
-      dropdownContent.classList.add("hide"); // Hide dropdown
+      // Set the default active tab
+      setActiveTab('terms_of_use');
+    </script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const dropdowns = document.querySelectorAll(".dropdown");
+
+    dropdowns.forEach(function (dropdown) {
+      const dropbtn = dropdown.querySelector(".dropbtn");
+      const dropdownContent = dropdown.querySelector(".dropdown-content");
+
+      // Toggle dropdown visibility when clicking the button
+      dropbtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        dropdownContent.classList.toggle("show"); // Toggle visibility of the dropdown
+      });
+    });
+
+    // Hide all dropdowns when clicking anywhere outside
+    document.addEventListener("click", function (e) {
+      dropdowns.forEach(function (dropdown) {
+        const dropdownContent = dropdown.querySelector(".dropdown-content");
+        if (!dropdown.contains(e.target)) {
+          dropdownContent.classList.remove("show"); // Hide the dropdown
+        }
+      });
     });
   });
-  
-  // Hide dropdown when clicking anywhere outside
-  document.addEventListener("click", function () {
-    dropdownContent.classList.add("hide");
-  });
-  
-    </script>
+</script>
+
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
   
@@ -407,73 +505,79 @@
 }
 
   
-  .dropdown {
-    position: relative;
-  }
-  
-  /* General styles for dropdown button */
-  .dropbtn {
-    font-size: 18px;
-    color: #fff;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 12px 16px;
-    font-weight: normal; /* Not bold */
-    text-transform: none; /* Remove uppercase */
-    letter-spacing: 1px;
-    position: relative;
-    transition: color 0.3s ease;
-  }
-  
-  /* Add animated border */
-  .dropdown:hover .dropbtn {
-    animation: borderAnimation 0.5s forwards;
-  }
-  
-  
-  /* Dropdown content */
+.dropdown {
+  position: relative;
+}
+
+/* General styles for dropdown button */
+.dropbtn {
+  font-size: 16px;
+  color: #fff;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 12px 16px;
+  font-weight: normal; /* Not bold */
+  text-transform: none; /* Remove uppercase */
+  letter-spacing: 1px;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+/* Dropdown content */
+.dropdown-content {
+  display: none; /* Initially hidden */
+  position: absolute;
+  background-color: maroon; /* Maroon background */
+  min-width: 200px;
+  border-radius: 4px;
+  top: 170%; /* Adjusted from 100% to 170% to move it downward */
+  left: 0;
+  z-index: 1;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+/* Show the dropdown when the .show class is added */
+.dropdown-content.show {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Ensure the dropdown content is correctly aligned */
+.dropdown {
+  position: relative;
+}
+
+/* Dropdown links */
+.dropdown-content a {
+  color: #fff;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-size: 16px;
+  border-bottom: 1px solid #444;
+  transition: background-color 0.3s ease;
+}
+
+/* Remove border from the last link */
+.dropdown-content a:last-child {
+  border-bottom: none;
+}
+
+/* Mobile responsive dropdown */
+@media (max-width: 768px) {
   .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #222;
-    min-width: 200px;
-    border-radius: 4px;
-    top: 170%; /* Adjusted from 100% to 110% to move it downward */
-    left: 0;
-    z-index: 1;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
+    position: static;
+    min-width: 100%; /* Full width on small screens */
   }
-  
-  
-  /* Display dropdown when hovered */
-  .dropdown:hover .dropdown-content {
-    display: block;
-    opacity: 1;
-    visibility: visible;
+  .dropdown .dropdown-content a {
+    padding: 10px 15px;
+    font-size: 14px;
   }
-  
-  /* Dropdown links */
-  .dropdown-content a {
-    color: #fff;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    font-size: 16px;
-    border-bottom: 1px solid #444;
-    transition: background-color 0.3s ease;
-  }
-  
-  /* Remove border from the last link */
-  .dropdown-content a:last-child {
-    border-bottom: none;
-  }
-  /* Hide dropdown when clicking outside */
-  .hide {
-    display: none !important;
-  }
+}
   
   
   

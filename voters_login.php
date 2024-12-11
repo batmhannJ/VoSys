@@ -569,6 +569,10 @@ main.sign-up-mode .carousel {
                 <div class="form-group has-feedback">
                     <div class="g-recaptcha" data-sitekey="6LddHcIpAAAAAJS6Wnenkllxyr3tWUSlSCu8o9eO">
                 </div>
+
+                <div style="text-align: left; margin-bottom: 10px;">
+                <input type="checkbox" name="terms" required> I agree to the <a href="Terms.html" target="_blank">Terms and Conditions</a>
+                </div>
             </div>
 
                 <input type="submit" name="login" value="Login" class="sign-btn" style="font-size:15px;">
@@ -590,8 +594,6 @@ main.sign-up-mode .carousel {
               </div>
             </form>
           </div>
-
-          
 
           <div class="carousel">
             <div class="images-wrapper">
