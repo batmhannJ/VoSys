@@ -396,7 +396,7 @@
 <script>
   function fetchAnnouncement() {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'get_announcement.php', true); // Make sure the path is correct
+    xhr.open('GET', 'get_announcement.php', true); // Ensure the path is correct
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         console.log(xhr.responseText); // Log the raw response for debugging
@@ -408,12 +408,12 @@
             var announcementHTML = `
               <div class="announcement">
                 <div class="announcement-header">
-                  <b><h3>${data.title}</h3></b>
-                  <p class="announcement-date">${new Date().toLocaleDateString()}</p>
+                  <b><h3>New Announcement</h3></b>
+                  <p class="announcement-date">${new Date(data.startdate).toLocaleDateString()}</p>
                 </div>
                 <div class="announcement-body">
                   <hr>
-                  <p class="announcement-text">${data.content}</p>
+                  <p class="announcement-text">${data.announcement}</p>
                   <p class="announcement-author">Posted by: ${data.addedby}</p>
                 </div>
               </div>
@@ -1766,6 +1766,7 @@ hr {
 /* Container for announcements */
 .announcement-container {
 margin: 20px 0;
+justify-content: center;
 }
 
 /* Individual announcement card */
@@ -1776,6 +1777,7 @@ border-radius: 20px; /* Increased border radius for a rounded look */
 padding: 20px;
 box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
 transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added transition for transform and box-shadow */
+justify-content: center;
 }
 
 .announcement:hover {
