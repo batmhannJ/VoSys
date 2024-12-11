@@ -57,12 +57,13 @@
             position: relative;
         }
 
+        /* Candidate Images next to the bars */
         .candidate-images {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            margin-right: 20px; /* Space between image and graph */
+            margin-left: 20px; /* Align the image to the left of the graph */
             width: 100px;
             position: absolute;
             top: 10px;
@@ -156,9 +157,9 @@
                 "rgb(43, 8, 168)",   // Blue color (repeating the color)
                 "rgb(158, 9, 29)"    // Red color (repeating the color)
             ];
-            
+
             dataPoints.forEach((dataPoint, index) => {
-                // Add images directly next to the bars
+                // Add images next to the bars
                 var candidateDiv = document.createElement('div');
                 candidateDiv.className = 'candidate-image';
                 candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
@@ -177,11 +178,8 @@
                     dataPoints: dataPoints.map(dataPoint => ({
                         ...dataPoint,
                         color: dataPoint.color || "#4F81BC", // Default color if not assigned
-                        indexLabel: `${dataPoint.label} - ${(dataPoint.y / totalVotes * 100).toFixed(2)}%`,
-                        indexLabelFontColor: "black",
-                        indexLabelPlacement: "inside",
-                        indexLabelFontSize: 14,
-                        indexLabelFontWeight: "bold"
+                        // Remove indexLabel so the names don't show on the bars
+                        indexLabel: "",
                     }))
                 }]
             };
