@@ -170,17 +170,19 @@
                 indexLabelPlacement: "inside",
                 indexLabelFontSize: 14,
                 indexLabelFontWeight: "bold"
-            })),
-            // Adjust bar width to create space between bars
-            barWidth: 30, // Customize the bar width (adjust this to achieve 20px apart spacing)
-            spacing: 20 // Adds space between the bars (customize this for 20px apart)
-        }]
+            }))
+        }],
+        axisX: {
+            interval: 1, // Set interval for spacing between labels (adjust this)
+            labelMaxWidth: 20, // Control the maximum width of the labels
+            labelFontSize: 12, // Font size of the x-axis labels
+            labelFontWeight: "bold"
+        }
     });
 
     chart.render();
+}
 
-
-        }
 
         function fetchAndGenerateGraphs(organization) {
             const graphType = $('#graph-type').val();
