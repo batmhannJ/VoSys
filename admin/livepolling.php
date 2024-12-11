@@ -8,6 +8,9 @@
             text-align: center;
             width: 100%;
             display: inline-block;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
         }
 
         #back-to-top {
@@ -15,7 +18,7 @@
             bottom: 40px;
             right: 40px;
             display: none;
-            background-color: #000;
+            background-color: #007BFF;
             color: #fff;
             border: none;
             border-radius: 50%;
@@ -26,10 +29,11 @@
             line-height: 50px;
             cursor: pointer;
             z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         #back-to-top:hover {
-            background-color: #555;
+            background-color: #0056b3;
         }
 
         .chart-container {
@@ -37,28 +41,31 @@
             margin-bottom: 40px;
             display: flex;
             align-items: center;
+            background-color: #f4f6f9;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
         .candidate-images {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            margin-right: 10px;
+            margin-right: 15px;
         }
 
         .candidate-image {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
 
         .candidate-image img {
-            width: 60px;
-            height: 60px;
-            margin-right: -10px;
-            margin-bottom: 25px;
-            margin-top: 35px;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         @media (max-width: 768px) {
@@ -126,7 +133,6 @@
     <script>
         function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
             var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
-
             var imageContainer = document.getElementById(imageContainerId);
             imageContainer.innerHTML = '';
             dataPoints.forEach(dataPoint => {
@@ -138,99 +144,45 @@
 
             var chart = new CanvasJS.Chart(containerId, {
                 animationEnabled: true,
+                theme: "light2",
                 title: { text: "Vote Counts" },
                 data: [{
                     type: graphType,
-                    indexLabel: "{label} - {percent}%",
-                    indexLabelPlacement: "inside",
-                    indexLabelFontColor: "black",
-                    indexLabelFontSize: 14,
                     dataPoints: dataPoints.map(dataPoint => ({
                         ...dataPoint,
-                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                        color: dataPoint.color || "#4F81BC"
                     }))
                 }]
             });
-
-            if (graphType === 'bar') {
-                chart.options.axisX = {
-                    title: "",
-                    includeZero: true,
-                    interval: 1,
-                    labelFormatter: function () {
-                        return " ";
-                    }
-                };
-                chart.options.axisY = {
-                    title: "",
-                    interval: Math.ceil(totalVotes / 10)
-                };
-
-                chart.options.data[0].cornerRadius = 5; // Rounded bar corners
-                chart.options.data[0].bevelEnabled = true; // Bevel 3D effect
-                chart.options.data[0].indexLabelFontWeight = "bold";
-                chart.options.data[0].indexLabelFontColor = "black";
-
-                chart.options.data[0].dataPoints = dataPoints.map(dataPoint => ({
-                    ...dataPoint,
-                    percent: ((dataPoint.y / totalVotes) * 100).toFixed(2),
-                    color: dataPoint.color || "#4F81BC", // Default color
-                    shadow: {
-                        color: 'rgba(0, 0, 0, 0.3)', 
-                        blur: 10, 
-                        offsetX: 4, 
-                        offsetY: 4  
-                    }
-                }));
-            }
 
             chart.render();
         }
 
         function fetchAndGenerateGraphs(organization) {
             const graphType = $('#graph-type').val();
-
             $.ajax({
                 url: 'update_data.php',
                 method: 'GET',
                 dataType: 'json',
                 success: function (response) {
                     $('#results-container').empty();
-
-                    var categories = {
-                        'csc': {
-                            'president': 'President',
-                            'vice president': 'Vice President',
-                            'secretary': 'Secretary',
-                            'treasurer': 'Treasurer',
-                            'auditor': 'Auditor',
-                            'p.r.o': 'P.R.O',
-                            'businessManager': 'Business Manager',
-                        }
-                    };
-
-                    var selectedCategories = categories[organization];
-
-                    Object.keys(selectedCategories).forEach(function (category) {
-                        if (response[category]) {
-                            var containerHtml = `
-                                <div class='col-md-12'>
-                                    <div class='box'>
-                                        <div class='box-header with-border'>
-                                            <h3 class='box-title'><b>${selectedCategories[category]}</b></h3>
-                                        </div>
-                                        <div class='box-body'>
-                                            <div class='chart-container'>
-                                                <div class='candidate-images' id='${category}Image'></div>
-                                                <div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div>
-                                            </div>
+                    Object.keys(response).forEach(function (category) {
+                        var containerHtml = `
+                            <div class='col-md-12'>
+                                <div class='box'>
+                                    <div class='box-header with-border'>
+                                        <h3 class='box-title'><b>${category}</b></h3>
+                                    </div>
+                                    <div class='box-body'>
+                                        <div class='chart-container'>
+                                            <div class='candidate-images' id='${category}Image'></div>
+                                            <div id='${category}Graph' style='height: 300px; width: 100%;'></div>
                                         </div>
                                     </div>
-                                </div>`;
-                            $('#results-container').append(containerHtml);
-
-                            generateGraph(response[category], category + 'Graph', category + 'Image', graphType);
-                        }
+                                </div>
+                            </div>`;
+                        $('#results-container').append(containerHtml);
+                        generateGraph(response[category], category + 'Graph', category + 'Image', graphType);
                     });
                 },
                 error: function (xhr, status, error) {
@@ -241,27 +193,9 @@
 
         $(document).ready(function () {
             fetchAndGenerateGraphs('csc');
-
             $('#organization-form').submit(function (event) {
                 event.preventDefault();
                 fetchAndGenerateGraphs($('#organization-select').val());
-            });
-
-            $('#graph-type').change(function () {
-                fetchAndGenerateGraphs($('#organization-select').val());
-            });
-
-            $(window).scroll(function () {
-                if ($(this).scrollTop() > 100) {
-                    $('#back-to-top').fadeIn();
-                } else {
-                    $('#back-to-top').fadeOut();
-                }
-            });
-
-            $('#back-to-top').click(function () {
-                $('html, body').animate({ scrollTop: 0 }, 600);
-                return false;
             });
         });
     </script>
