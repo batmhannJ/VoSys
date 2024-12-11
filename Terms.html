@@ -53,8 +53,8 @@
         <div class="terms-container">
           <div class="sidebar">
             <div class="tab active" onclick="setActiveTab('terms_of_use')">Terms of use</div>
-            <div class="tab" onclick="setActiveTab('user_eligibility')">Intellectual property rights</div>
-            <div class="tab" onclick="setActiveTab('prohibited_activities')">Prohibited activities</div>
+            <div class="tab" onclick="setActiveTab('user_eligibility')">User Eligibility</div>
+            <div class="tab" onclick="setActiveTab('account_security')">Account Security</div>
             <div class="tab" onclick="setActiveTab('termination_clause')">Termination clause</div>
             <div class="tab" onclick="setActiveTab('governing_law')">Governing law</div>
           </div>
@@ -151,8 +151,8 @@
             title.textContent = 'User Eligibility';
             description.innerHTML = `
               <ul style="text-align: justify; list-style-type: none; padding-left: 0;">
-                <li style="text-align: justify;"><strong>Registered Members:</strong> Only current students, faculty, and staff of OLSHCO with an active account on vosys.org are eligible to vote.</li>
-                <li style="text-align: justify;"><strong>Eligibility Verification:</strong> Users must meet specific eligibility criteria, such as enrollment or employment status, as determined by OLSHCO.</li>
+                <li style="text-align: justify;"><strong>Registered Members:</strong> Only current students of OLSHCO with an active account on vosys.org are eligible to vote.</li>
+                <li style="text-align: justify;"><strong>Eligibility Verification:</strong> Users must meet specific eligibility criteria, such as enrollment status, as determined by OLSHCO.</li>
                 <li style="text-align: justify;"><strong>Active Account:</strong> Users must have a verified account with valid login credentials and email.</li>
                 <li style="text-align: justify;"><strong>Fraudulent Activities:</strong> vosys.org reserves the right to revoke or suspend voting rights for fraudulent activities, including vote manipulation or providing false information.</li>
                 <li style="text-align: justify;"><strong>Suspension of Rights:</strong> Voting rights may be suspended for misconduct such as impersonation or interfering with the voting process.</li>
@@ -161,10 +161,22 @@
               </ul>
             `;
             break;
-          case 'prohibited_activities':
-            title.textContent = 'Prohibited Activities';
-            description.innerHTML = 'Details on prohibited activities, including vote tampering, impersonation, and misconduct.';
-            break;
+            case 'account_security':
+    title.textContent = 'Account Security';
+    description.innerHTML = `
+      <ul style="text-align: justify; list-style-type: none; padding-left: 0;">
+        <li style="text-align: justify;"><strong>Account Credentials:</strong> You are responsible for maintaining the confidentiality of your account information, including your username and password. Do not share your account credentials with anyone.</li>
+        <li style="text-align: justify;"><strong>Security:</strong> You must not share your account credentials with others. Any activities occurring under your account are your responsibility. Ensure that you log out of your account when using a shared or public computer.</li>
+        <li style="text-align: justify;"><strong>One-Time Password (OTP):</strong> Users may be required to verify their identity using a one-time password (OTP) sent via email or other means. It is important to keep your email account secure to prevent unauthorized access.</li>
+        <li style="text-align: justify;"><strong>Multi-Factor Authentication:</strong> For added security, users are encouraged to enable multi-factor authentication (MFA) on their accounts, which adds an extra layer of protection when accessing your account.</li>
+        <li style="text-align: justify;"><strong>Password Management:</strong> Your password should be unique, strong, and should not be easily guessed. We recommend using a combination of uppercase and lowercase letters, numbers, and special characters. Avoid reusing passwords across different sites.</li>
+        <li style="text-align: justify;"><strong>Account Monitoring:</strong> Regularly monitor your account activity for any suspicious actions. If you notice any unusual activity, immediately change your password and report the incident to support.</li>
+        <li style="text-align: justify;"><strong>Account Locking:</strong> After multiple failed login attempts, your account may be temporarily locked to prevent unauthorized access. You may need to follow the account recovery process to regain access.</li>
+        <li style="text-align: justify;"><strong>Phishing Attempts:</strong> Be cautious of phishing attempts. Do not respond to unsolicited emails or messages asking for your login credentials or personal information. Always verify the source before clicking on any links.</li>
+      </ul>
+    `;
+    break;
+
           case 'termination_clause':
             title.textContent = 'Termination Clause';
             description.innerHTML = 'Information regarding the termination of accounts or access under specific conditions.';
