@@ -206,7 +206,7 @@
                 data: [{
                     type: "pie",
                     indexLabel: "{label} - {percent}%",
-                    indexLabelFontColor: "white",
+                    indexLabelFontColor: "gray",
                     dataPoints: dataPoints.map(dataPoint => ({
                         ...dataPoint,
                         percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
@@ -252,7 +252,7 @@
                     type: "line",
                     indexLabel: "{label} - {percent}%",
                     indexLabelPlacement: "inside",
-                    indexLabelFontColor: "white",
+                    indexLabelFontColor: "gray",
                     indexLabelFontSize: 14,
                     dataPoints: dataPoints.map(dataPoint => ({
                         ...dataPoint,
@@ -293,7 +293,7 @@
                     type: "doughnut",
                     innerRadius: "70%", // This will create the donut shape
                     indexLabel: "{label} - {percent}%",
-                    indexLabelFontColor: "white",
+                    indexLabelFontColor: "gray",
                     dataPoints: dataPoints.map(dataPoint => ({
                         ...dataPoint,
                         percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
@@ -339,7 +339,7 @@
                     type: "stackedArea",
                     indexLabel: "{label} - {percent}%",
                     indexLabelPlacement: "inside",
-                    indexLabelFontColor: "white",
+                    indexLabelFontColor: "gray",
                     indexLabelFontSize: 14,
                     dataPoints: dataPoints.map(dataPoint => ({
                         ...dataPoint,
