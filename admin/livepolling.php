@@ -114,6 +114,8 @@
                         <option value="bar">Bar Chart</option>
                         <option value="pie">Pie Chart</option>
                         <option value="line">Line Chart</option>
+                        <option value="stackedArea">Stacked Area Chart</option>
+                        <option value="doughnut">Donut Chart</option>
                     </select>
 
                     <button type="submit">Show Results</button>
@@ -138,12 +140,12 @@
             
             // Define custom colors based on your request
             const candidateColors = [
-                "rgb(43, 8, 168)",   // Blue color (5, 3, 107)
-                "rgb(158, 9, 29)",  // Red color (133, 4, 21)
+                "rgb(43, 8, 168)",   // Blue color
+                "rgb(158, 9, 29)",   // Red color
                 "rgb(43, 8, 168)",   // Blue color (repeating the color)
-                "rgb(158, 9, 29)",  // Red color (repeating the color)
+                "rgb(158, 9, 29)",   // Red color (repeating the color)
                 "rgb(43, 8, 168)",   // Blue color (repeating the color)
-                "rgb(158, 9, 29)"   // Red color (repeating the color)
+                "rgb(158, 9, 29)"    // Red color (repeating the color)
             ];
             
             dataPoints.forEach((dataPoint, index) => {
@@ -156,7 +158,7 @@
                 dataPoint.color = candidateColors[index % candidateColors.length];
             });
 
-            var chart = new CanvasJS.Chart(containerId, {
+            var chartOptions = {
                 animationEnabled: true,
                 theme: "light2",
                 title: { text: "Vote Counts" },
@@ -172,8 +174,17 @@
                         indexLabelFontWeight: "bold"
                     }))
                 }]
-            });
+            };
 
+            // Add specific options for stacked area and donut charts
+            if (graphType === "stackedArea") {
+                chartOptions.data[0].type = "stackedArea";
+            } else if (graphType === "doughnut") {
+                chartOptions.data[0].type = "doughnut";
+                chartOptions.data[0].innerRadius = 70; // Create a donut effect
+            }
+
+            var chart = new CanvasJS.Chart(containerId, chartOptions);
             chart.render();
         }
 
