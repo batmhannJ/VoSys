@@ -51,7 +51,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            margin-right: 15px;
+            margin-left: 20px;
         }
 
         .candidate-image {
@@ -167,12 +167,7 @@
                     dataPoints: dataPoints.map(dataPoint => ({
                         ...dataPoint,
                         color: dataPoint.color || "#4F81BC", // Default color if not assigned
-                        indexLabel: `${dataPoint.label} - ${(dataPoint.y / totalVotes * 100).toFixed(2)}%`,
-                        indexLabelFontColor: "black",
-                        indexLabelPlacement: "outside",  // Move labels outside the bars
-                        indexLabelFontSize: 14,
-                        indexLabelFontWeight: "bold",
-                        indexLabelAlign: "left"  // Align labels to the left outside
+                        indexLabel: "",  // No label inside the bars
                     }))
                 }]
             };
