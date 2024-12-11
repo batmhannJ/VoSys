@@ -51,21 +51,70 @@
     <li><a href="voters_login.php"><button class="btn">Login</button></a></li>
   </ul>
 </nav>
-<section id="about" class="section__container register__container">
-    <center><h2 class="section__header">ABOUT US</h2></center><br>
-    <div class="register__grid">
-      <div class="register__content">
-        <h4>VISION</h4>
-        <h5 style="color: white;">At the College Online Voting System, our vision is to be a trailblazer in the evolution of democratic processes within academic organizations. We envision a future where every college and university operates with complete transparency, inclusivity, and security, fostering an environment of active participation, trust, and progress.</h5>
-        <br>
-        <h4>MISSION</h4>
-        <h5 style="color: white;">Our mission is to empower academic organizations to redefine the way they conduct elections and surveys, providing a cutting-edge, user-friendly, and secure online voting platform that not only meets their unique needs but also exceeds their expectations.</h5>
-      </div>
-      <div class="register__image">
-        <img src="images/logo.png" alt="register" />
+
+<section id="services" class="section__container client__container">
+    <br><br><br><h2 class="section__header">OUR SERVICES</h2>
+    <!-- Slider main container -->
+    <div class="swiper">
+      <!-- Additional required wrapper -->
+      <div class="swiper-wrapper">
+        <!-- Slides -->
+        <div class="swiper-slide">
+          <div class="client__card">
+            <p>
+              Ensuring the security and integrity of the voting process is of utmost importance. This service includes robust security measures, such as secure authentication, data encryption, and safeguards against hacking and fraud, to protect the voting process from unauthorized access and manipulation.
+            </p>
+            <div class="client__footer">
+              <div>
+                <h4>Secure and Reliable Elections</h4>
+              </div>
+              <span><i class="ri-double-quotes-r"></i></span>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="client__card">
+            <p>
+              Making the democratic process accessible to all members of the college community is crucial. This service ensures a user-friendly platform that works on a variety of devices and operating systems, allowing all eligible voters, including those with disabilities, to easily and inclusively participate in elections and surveys.
+            </p>
+            <div class="client__footer">
+              <div>
+                <h4>Accessible Voting</h4>
+              </div>
+              <span><i class="ri-double-quotes-r"></i></span>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="client__card">
+            <p>
+              Providing transparency in the election process is essential. This service offers real-time monitoring and reporting tools, allowing administrators and voters to track the progress of elections, view results, and promote accountability and trust in the system. Transparency enhances the credibility of the voting system.
+            </p>
+            <div class="client__footer">
+              <div>
+                <h4>Transparency and Accountability</h4>
+              </div>
+              <span><i class="ri-double-quotes-r"></i></span>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-slide">
+          <div class="client__card">
+            <p>
+              Our system offers real-time updates on voting outcomes, allowing stakeholders to track the election's progress instantly. Users can monitor shifts in candidate standings and voter participation as votes are cast and counted, promoting transparency and engagement throughout the electoral process.
+            </p>
+            <div class="client__footer">
+              <div>
+                <h4>Real-time Results</h4>
+              </div>
+              <span><i class="ri-double-quotes-r"></i></span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
+
     <!--==================== FOOTER ====================-->
         <footer class="footer section">
             <div class="footer__container container grid">
@@ -129,6 +178,7 @@
             </div>
         </footer>
   </body>
+
   <!-- Include the countdown timer library (if applicable) -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
   <!--<script src="path/to/countdown-library.js"></script>-->
@@ -145,7 +195,6 @@ menuBtn.addEventListener("click", function () {
   navMenu.classList.toggle("active"); // This will show or hide the menu
 });
     </script>
-
   <script>
     // Get the dropdown elements
     const dropdown = document.querySelector(".dropdown");
@@ -300,6 +349,8 @@ menuBtn.addEventListener("click", function () {
       text-decoration: none;
       transition: 0.3s;
     }
+    
+    
     
     nav {
       position: fixed;
