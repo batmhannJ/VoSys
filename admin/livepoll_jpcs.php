@@ -53,7 +53,7 @@
 
 .candidate-image {
     margin-bottom: 10px;
-    margin-right: 400px;
+    margin-right: 50px;
 }
 
 .candidate-image img {
@@ -396,7 +396,7 @@
                                         </div>
                                         <div class='box-body'>
                                             <div class='chart-container'>
-                                                <div id='${category}Graph' style='height: 300px; width: 80%; margin-left: 200px;' ></div>
+                                                <div id='${category}Graph' style='height: 400px; width: 80%;'></div>
                                                 <div id='${category}Image' class='candidate-images'></div>
                                             </div>
                                         </div>
