@@ -57,40 +57,10 @@
             position: relative;
         }
 
-        /* Candidate Images next to the bars */
+        /* Remove candidate images */
         .candidate-images {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            margin-left: 20px; /* Align the image to the left of the graph */
-            width: 100px;
-            position: absolute;
-            top: 10px;
+            display: none;
         }
-
-        .candidate-image img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Adjust for smaller screens */
-        @media (max-width: 768px) {
-            .candidate-image img {
-                width: 75px;
-                height: 75px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .candidate-image img {
-                width: 100px;
-                height: 100px;
-            }
-        }
-
     </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -143,32 +113,10 @@
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="path/to/jquery.min.js"></script>
     <script>
-        function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
+        function generateGraph(dataPoints, containerId, graphType) {
             var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
-            var imageContainer = document.getElementById(imageContainerId);
-            imageContainer.innerHTML = '';
 
-            // Define custom colors based on your request
-            const candidateColors = [
-                "rgb(43, 8, 168)",   // Blue color
-                "rgb(158, 9, 29)",   // Red color
-                "rgb(43, 8, 168)",   // Blue color (repeating the color)
-                "rgb(158, 9, 29)",   // Red color (repeating the color)
-                "rgb(43, 8, 168)",   // Blue color (repeating the color)
-                "rgb(158, 9, 29)"    // Red color (repeating the color)
-            ];
-
-            dataPoints.forEach((dataPoint, index) => {
-                // Add images next to the bars
-                var candidateDiv = document.createElement('div');
-                candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
-                imageContainer.appendChild(candidateDiv);
-
-                // Assign a color based on the index (repeating the custom color palette)
-                dataPoint.color = candidateColors[index % candidateColors.length];
-            });
-
+            // Remove the candidate images and names, and display only the graph
             var chartOptions = {
                 animationEnabled: true,
                 theme: "light2",
@@ -177,10 +125,9 @@
                     type: graphType,
                     dataPoints: dataPoints.map(dataPoint => ({
                         ...dataPoint,
-                        color: dataPoint.color || "#4F81BC", // Default color if not assigned
-                        // Remove indexLabel and title
-                        indexLabel: "",   // Removed text labels completely from the bars
-                        indexLabelFontColor: "transparent", // Ensuring no labels show
+                        // Remove the indexLabel and name, leaving only the bars
+                        indexLabel: "",   // Remove text labels from the bars
+                        indexLabelFontColor: "transparent", // Ensure no labels show
                         indexLabelPlacement: "inside",
                         indexLabelFontSize: 14,
                         indexLabelFontWeight: "bold"
@@ -217,14 +164,13 @@
                                     </div>
                                     <div class='box-body'>
                                         <div class='chart-wrapper'>
-                                            <div class='candidate-images' id='${category}Image'></div>
                                             <div id='${category}Graph' style='height: 300px; width: 80%;'></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>`;
                         $('#results-container').append(containerHtml);
-                        generateGraph(response[category], category + 'Graph', category + 'Image', graphType);
+                        generateGraph(response[category], category + 'Graph', graphType);
                     });
                 },
                 error: function (xhr, status, error) {
