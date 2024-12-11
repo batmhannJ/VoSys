@@ -33,42 +33,41 @@
         #back-to-top:hover {
             background-color: #555;
         }
+
+        /* Chart and image container styles */
         .chart-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-bottom: 40px;
-}
+            display: flex;
+            justify-content: flex-start; /* Aligns items to the left */
+            align-items: center;
+            margin-bottom: 40px;
+        }
 
-.candidate-images {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 150px; /* Set a fixed width for image container */
-    margin-right: 20px; /* Move the images to the left of the graph */
-    margin-left: 0; /* Ensure no margin on the left side */
-}
+        .candidate-images {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 150px; /* Set a fixed width for image container */
+            margin-right: 20px; /* Space between images and graph */
+        }
 
-.candidate-image {
-    margin-bottom: 10px;
-    margin-right: 50px;
-}
+        .candidate-image {
+            margin-bottom: 10px;
+        }
 
-.candidate-image img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
-}
+        .candidate-image img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
 
-.candidate-image:hover {
-    transform: scale(1.1);
-}
+        .candidate-image:hover {
+            transform: scale(1.1);
+        }
 
-
+        /* Responsive adjustments */
         @media (max-width: 768px) {
             .candidate-image img {
                 width: 80px;
@@ -356,83 +355,72 @@
                 url: 'update_jpcs_data.php',
                 method: 'GET',
                 dataType: 'json',
-                success: function (response) {
-                    // Clear previous results
-                    $('#results-container').empty();
+                success: function(response) {
+                    const categories = response.categories;
+                    const data = response.data;
 
-                    // Define categories for each organization
-                    var categories = {
-                        'jpcs': {
-                            'president': 'President',
-                            'vp for internal affairs': 'VP for Internal Affairs',
-                            'vp for external affairs': 'VP for External Affairs',
-                            'secretary': 'Secretary',
-                            'treasurer': 'Treasurer',
-                            'auditor': 'Auditor',
-                            'p.r.o': 'P.R.O',
-                            'dir. for membership': 'Dir. for Membership',
-                            'dir. for special project': 'Dir. for Special Project',
-                            '2-ARep': '2-A Rep',
-                            '2-BRep': '2-B Rep',
-                            '3-ARep': '3-A Rep',
-                            '3-BRep': '3-B Rep',
-                            '4-ARep': '4-A Rep',
-                            '4-BRep': '4-B Rep'
-                        }
-                    };
+                    // Process the categories and generate graphs
+                    categories.forEach(category => {
+                        const dataPoints = data[category].map(candidate => ({
+                            label: candidate.name,
+                            y: candidate.votes,
+                            image: candidate.image
+                        }));
 
-                    // Get categories for the selected organization
-                    var selectedCategories = categories[organization];
+                        const containerId = `${category}-graph`;
+                        const imageContainerId = `${category}-images`;
 
-                    // Generate graphs for the selected categories
-                    Object.keys(selectedCategories).forEach(function (category) {
-                        if (response[category]) {
-                            // Create container for each category
-                            var containerHtml = ` 
-                                <div class='col-md-12'>
-                                    <div class='box'>
-                                        <div class='box-header with-border'>
-                                            <h3 class='box-title'><b>${selectedCategories[category]}</b></h3>
-                                        </div>
-                                        <div class='box-body'>
-                                            <div class='chart-container'>
-                                                <div id='${category}Graph' style='height: 300px; width: 80%;'></div>
-                                                <div id='${category}Image' class='candidate-images'></div>
-                                            </div>
-                                        </div>
+                        const resultsContainer = document.getElementById('results-container');
+                        const resultCard = document.createElement('div');
+                        resultCard.className = 'col-md-12';
+                        resultCard.innerHTML = `
+                            <div class='box'>
+                                <div class='box-header with-border'>
+                                    <h3 class='box-title'><b>${category}</b></h3>
+                                </div>
+                                <div class='box-body'>
+                                    <div class='chart-container'>
+                                        <div id='${imageContainerId}' class='candidate-images'></div>
+                                        <div id='${containerId}' style='height: 300px; width: 80%;'></div>
                                     </div>
                                 </div>
-                            `;
-                            $('#results-container').append(containerHtml);
+                            </div>
+                        `;
+                        resultsContainer.appendChild(resultCard);
 
-                            // Call the respective function based on graph type
-                            if (graphType === 'bar') {
-                                generateBarGraph(response[category], category + 'Graph', category + 'Image');
-                            } else if (graphType === 'pie') {
-                                generatePieChart(response[category], category + 'Graph', category + 'Image');
-                            } else if (graphType === 'line') {
-                                generateLineChart(response[category], category + 'Graph', category + 'Image');
-                            } else if (graphType === 'donut') {
-                                generateDonutChart(response[category], category + 'Graph', category + 'Image');
-                            } else if (graphType === 'stacked') {
-                                generateStackedAreaChart(response[category], category + 'Graph', category + 'Image');
-                            }
+                        switch (graphType) {
+                            case 'bar':
+                                generateBarGraph(dataPoints, containerId, imageContainerId);
+                                break;
+                            case 'pie':
+                                generatePieChart(dataPoints, containerId, imageContainerId);
+                                break;
+                            case 'line':
+                                generateLineChart(dataPoints, containerId, imageContainerId);
+                                break;
+                            case 'donut':
+                                generateDonutChart(dataPoints, containerId, imageContainerId);
+                                break;
+                            case 'stacked':
+                                generateStackedAreaChart(dataPoints, containerId, imageContainerId);
+                                break;
                         }
                     });
                 }
             });
         }
 
-        // Event listener for form submission
-        $('#organization-form').on('submit', function (event) {
-            event.preventDefault();
-            var organization = $('#organization-select').val();
-            var graphType = $('#graph-select').val();
+        // Handle organization form submission
+        $('#organization-form').submit(function(e) {
+            e.preventDefault();
+            const organization = $('#organization-select').val();
+            const graphType = $('#graph-select').val();
+            $('#results-container').html(''); // Clear previous results
             fetchAndGenerateGraphs(organization, graphType);
         });
 
         // Back to top functionality
-        $(window).scroll(function () {
+        $(window).scroll(function() {
             if ($(this).scrollTop() > 100) {
                 $('#back-to-top').fadeIn();
             } else {
@@ -440,8 +428,8 @@
             }
         });
 
-        $('#back-to-top').click(function () {
-            $('html, body').animate({ scrollTop: 0 }, 500);
+        $('#back-to-top').click(function() {
+            $('html, body').animate({ scrollTop: 0 }, 600);
             return false;
         });
     </script>
