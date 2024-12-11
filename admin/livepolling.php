@@ -57,7 +57,7 @@
             position: relative;
         }
 
-        /* Remove candidate images */
+        /* Hide the candidate images */
         .candidate-images {
             display: none;
         }
@@ -116,7 +116,7 @@
         function generateGraph(dataPoints, containerId, graphType) {
             var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
-            // Remove the candidate images and names, and display only the graph
+            // Remove candidate names and index labels from the graphs
             var chartOptions = {
                 animationEnabled: true,
                 theme: "light2",
@@ -125,9 +125,9 @@
                     type: graphType,
                     dataPoints: dataPoints.map(dataPoint => ({
                         ...dataPoint,
-                        // Remove the indexLabel and name, leaving only the bars
-                        indexLabel: "",   // Remove text labels from the bars
-                        indexLabelFontColor: "transparent", // Ensure no labels show
+                        // Remove all candidate names and labels
+                        indexLabel: "",   // Do not show any labels
+                        indexLabelFontColor: "transparent", // Ensure no labels are visible
                         indexLabelPlacement: "inside",
                         indexLabelFontSize: 14,
                         indexLabelFontWeight: "bold"
@@ -135,12 +135,12 @@
                 }]
             };
 
-            // Add specific options for stacked area and donut charts
+            // Special settings for specific graph types like stackedArea and doughnut
             if (graphType === "stackedArea") {
                 chartOptions.data[0].type = "stackedArea";
             } else if (graphType === "doughnut") {
                 chartOptions.data[0].type = "doughnut";
-                chartOptions.data[0].innerRadius = 70; // Create a donut effect
+                chartOptions.data[0].innerRadius = 70; // For donut effect
             }
 
             var chart = new CanvasJS.Chart(containerId, chartOptions);
