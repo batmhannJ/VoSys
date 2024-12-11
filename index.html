@@ -85,48 +85,6 @@
         </div>
       </div>
     </section>
-  
-    <script>
-      function fetchAnnouncement() {
-      var xhr = new XMLHttpRequest();
-      xhr.open('GET', 'get_announcement.php', true); // Adjust the path if necessary
-      xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-        console.log(xhr.responseText); // Log the raw response
-        try {
-            var data = JSON.parse(xhr.responseText);
-            console.log(data); // Log parsed data
-            if (data.success) {
-                var announcementHTML = `
-                    <div class="announcement">
-                        <div class="announcement-header">
-                            <b><h3>${data.title}</h3></b>
-                            <p class="announcement-date">${new Date().toLocaleDateString()}</p>
-                        </div>
-                        <div class="announcement-body">
-                            <hr>
-                            <p class="announcement-text">${data.content}</p>
-                            <p class="announcement-author">Posted by: ${data.addedby}</p>
-                        </div>
-                    </div>
-                `;
-                document.getElementById('announcement-container').innerHTML = announcementHTML;
-            } else {
-                document.getElementById('announcement-container').innerHTML = '<p>No announcements found.</p>';
-            }
-        } catch (error) {
-            console.error('Error parsing JSON response:', error);
-        }
-    }
-};
-      xhr.onerror = function () {
-          console.error('Error making the request.');
-          document.getElementById('announcement-container').innerHTML = '<p>Error loading announcement.</p>';
-      };
-      xhr.send();
-      }
-      fetchAnnouncement();
-  </script>
 
 <section class="discover section" id="discover">        
     <div class="wrapper">
@@ -434,6 +392,49 @@
 <script src="https://unpkg.com/scrollreveal"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script src="main.js"></script>
+
+<script>
+  function fetchAnnouncement() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'get_announcement.php', true); // Adjust the path if necessary
+  xhr.onreadystatechange = function () {
+if (xhr.readyState === 4 && xhr.status === 200) {
+    console.log(xhr.responseText); // Log the raw response
+    try {
+        var data = JSON.parse(xhr.responseText);
+        console.log(data); // Log parsed data
+        if (data.success) {
+            var announcementHTML = `
+                <div class="announcement">
+                    <div class="announcement-header">
+                        <b><h3>${data.title}</h3></b>
+                        <p class="announcement-date">${new Date().toLocaleDateString()}</p>
+                    </div>
+                    <div class="announcement-body">
+                        <hr>
+                        <p class="announcement-text">${data.content}</p>
+                        <p class="announcement-author">Posted by: ${data.addedby}</p>
+                    </div>
+                </div>
+            `;
+            document.getElementById('announcement-container').innerHTML = announcementHTML;
+        } else {
+            document.getElementById('announcement-container').innerHTML = '<p>No announcements found.</p>';
+        }
+    } catch (error) {
+        console.error('Error parsing JSON response:', error);
+    }
+}
+};
+  xhr.onerror = function () {
+      console.error('Error making the request.');
+      document.getElementById('announcement-container').innerHTML = '<p>Error loading announcement.</p>';
+  };
+  xhr.send();
+  }
+  fetchAnnouncement();
+</script>
+
     <script>
         const organizationsData = {
             'CSC': {
