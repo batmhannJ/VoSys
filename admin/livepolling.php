@@ -178,8 +178,12 @@
                     dataPoints: dataPoints.map(dataPoint => ({
                         ...dataPoint,
                         color: dataPoint.color || "#4F81BC", // Default color if not assigned
-                        // Remove indexLabel so the names don't show on the bars
-                        indexLabel: "",   // Removed text labels completely
+                        // Remove indexLabel and title
+                        indexLabel: "",   // Removed text labels completely from the bars
+                        indexLabelFontColor: "transparent", // Ensuring no labels show
+                        indexLabelPlacement: "inside",
+                        indexLabelFontSize: 14,
+                        indexLabelFontWeight: "bold"
                     }))
                 }]
             };
