@@ -222,7 +222,7 @@
         }
 
         $(document).ready(function () {
-            fetchAndGenerateGraphs('jpcs');  // Changed 'csc' to 'jpcs'
+            fetchAndGenerateGraphs('csc');
             $('#organization-form').submit(function (event) {
                 event.preventDefault();
                 fetchAndGenerateGraphs($('#organization-select').val());
