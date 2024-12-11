@@ -60,6 +60,7 @@
             <div class="tab" onclick="setActiveTab('code_of_conduct')">Code of Conduct</div>
             <div class="tab" onclick="setActiveTab('restrictions_on_use')">Restrictions on Use</div>
             <div class="tab" onclick="setActiveTab('suspension_terminationt')">Suspension or Termination of Accounts</div>
+            <div class="tab" onclick="setActiveTab('sliability')">Liability</div>
           </div>
 
           <div class="content" id="content">
@@ -238,6 +239,16 @@
         <li style="text-align: justify;"><strong>Suspension:</strong> vosys.org reserves the right to suspend user accounts if any violation of the Terms of Service occurs. Suspension may be temporary or indefinite, depending on the severity of the violation. Users may be notified of their suspension and given an opportunity to appeal the decision if applicable.</li>
         <li style="text-align: justify;"><strong>Termination:</strong> Accounts may be permanently terminated if users are found to be ineligible, or if they engage in activities that compromise the integrity of the voting process, including fraudulent behavior, manipulation of votes, or violation of platform rules. In cases of termination, users will lose access to their account and may not be allowed to participate in future elections or activities on vosys.org.</li>
         <li style="text-align: justify;"><strong>Appeals Process:</strong> Users who believe their account suspension or termination was made in error may submit an appeal to the vosys.org support team. Appeals will be reviewed on a case-by-case basis, and users may be reinstated if their case is deemed valid.</li>
+      </ul>
+    `;
+    break;
+    case 'liability':
+    title.textContent = 'Liability';
+    description.innerHTML = `
+      <ul style="text-align: justify; list-style-type: none; padding-left: 0;">
+        <li style="text-align: justify;"><strong>Technical Failures:</strong> vosys.org is not liable for any technical failures, outages, or disruptions that may affect voting or user access to the platform. This includes, but is not limited to, server downtime, network issues, or other technical difficulties beyond our control.</li>
+        <li style="text-align: justify;"><strong>Unauthorized Access:</strong> We are not responsible for any loss or damage resulting from unauthorized access to your account or any actions taken by third parties outside of our control. It is the user's responsibility to ensure the security of their account credentials and personal information.</li>
+        <li style="text-align: justify;"><strong>Platform Availability:</strong> While vosys.org strives to maintain consistent availability and functionality, we do not guarantee uninterrupted access to the platform at all times. We are not liable for any inconvenience or damages resulting from service interruptions or downtime.</li>
       </ul>
     `;
     break;
