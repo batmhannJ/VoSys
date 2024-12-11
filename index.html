@@ -75,16 +75,18 @@
     </section>
 
     <section id="announcement" class="section__container register__container">
-      <center><h2 class="section__header">Announcement</h2></center><br>
+      <center><h2 class="section__header">📢 Announcement</h2></center>
+      <br>
       <div class="register__grid">
         <div class="register__content">
           <!-- Announcement Section -->
           <div id="announcement-container" class="announcement-container">
-            <!-- Announcement will be dynamically loaded here -->
+            <!-- Dynamically loaded announcements -->
           </div>
         </div>
       </div>
     </section>
+    
 
 <section class="discover section" id="discover">        
     <div class="wrapper">
@@ -1656,123 +1658,49 @@ hr {
 		background-color: black; /* Set the color of the line */
 		margin: 20px 0; /* Adjust margin as needed */
 	}
-/* General Section Styling */
-.section__container {
-  padding: 50px 20px;
-  background: #f1f4f8;
-  text-align: center;
-  border-top: 5px solid #4a90e2; /* Accent border at the top */
-}
 
-.announcement-header {
-  margin-bottom: 40px;
-}
-
-.section__header {
-  font-size: 2.5rem;
-  font-weight: 600;
+  .section__header {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2rem;
   color: #333;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
+  margin-bottom: 1rem;
 }
 
-/* Grid Layout for Announcement Cards */
-.announcement-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  padding: 0 20px;
-}
-
-/* Container for Announcement Cards */
-.announcement-container {
+.register__grid {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
+  margin: 0 auto;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Individual Announcement Card Styling */
-.announcement-card {
-  background: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+.register__content {
   width: 100%;
-  max-width: 400px;
-  cursor: pointer;
-  border-left: 5px solid #4a90e2; /* Accent border on left side */
+  max-width: 800px;
 }
 
-.announcement-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
-}
-
-/* Announcement Card Header */
-.announcement-card-header {
+.announcement-container {
+  padding: 1rem;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  min-height: 200px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  margin-bottom: 15px;
+  font-family: 'Roboto', sans-serif;
+  color: #666;
 }
 
-.announcement-title {
-  font-size: 1.6rem;
-  color: #333;
-  margin: 0;
-  font-weight: 600;
+.announcement-container::before {
+  content: 'No announcements to display.';
+  font-style: italic;
+  color: #999;
 }
-
-.announcement-date {
-  font-size: 0.9rem;
-  color: #888;
-  margin-top: 5px;
-}
-
-/* Announcement Body */
-.announcement-body {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  color: #555;
-  margin-bottom: 15px;
-}
-
-/* Read More Link */
-.announcement-readmore {
-  color: #4a90e2;
-  text-decoration: none;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: color 0.3s ease-in-out;
-}
-
-.announcement-readmore:hover {
-  color: #333;
-  text-decoration: underline;
-}
-
-/* Mobile Responsiveness */
-@media (max-width: 768px) {
-  .section__header {
-    font-size: 2rem;
-  }
-
-  .announcement-card {
-    padding: 15px;
-  }
-
-  .announcement-title {
-    font-size: 1.4rem;
-  }
-
-  .announcement-body {
-    font-size: 1rem;
-  }
-}
-
 
 
   </style>
