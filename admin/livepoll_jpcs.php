@@ -36,10 +36,10 @@
 
         .chart-container {
             display: flex;
-            justify-content: flex-start;
             align-items: center;
-            flex-wrap: wrap;
+            justify-content: center;
             margin-bottom: 40px;
+            position: relative;
         }
 
         .candidate-images {
@@ -47,8 +47,10 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin-right: 20px;
-            width: 100px; /* Adjust width to fit image size */
+            margin-left: 20px;
+            position: absolute;
+            left: 100%;
+            top: 0;
         }
 
         .candidate-image {
@@ -65,6 +67,18 @@
 
         .candidate-image:hover {
             transform: scale(1.1);
+        }
+
+        .arrow {
+            position: absolute;
+            top: 40%;
+            left: 100%;
+            margin-left: 10px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #000;
         }
 
         @media (max-width: 768px) {
@@ -211,7 +225,13 @@
                     }))
                 }]
             });
+
             chart.render();
+
+            // Add an arrow after rendering the pie chart
+            var arrow = document.createElement('div');
+            arrow.className = 'arrow';
+            imageContainer.appendChild(arrow);
         }
 
         // Fetch and generate graphs
