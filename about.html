@@ -140,26 +140,33 @@ menuBtn.addEventListener("click", function () {
 });
     </script>
 
-  <script>
-    // Get the dropdown elements
-    const dropdown = document.querySelector(".dropdown");
-    const dropdownContent = document.querySelector(".dropdown-content");
-    const dropbtn = document.querySelector(".dropbtn"); // The dropdown button (About link)
-    
-    // Toggle dropdown visibility when clicking the "About" link
-    dropbtn.addEventListener("click", function (e) {
-      e.stopPropagation(); // Prevent the click event from bubbling
-      dropdownContent.classList.toggle("show"); // Toggle visibility of the dropdown
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const dropdowns = document.querySelectorAll(".dropdown");
+
+    dropdowns.forEach(function (dropdown) {
+      const dropbtn = dropdown.querySelector(".dropbtn");
+      const dropdownContent = dropdown.querySelector(".dropdown-content");
+
+      // Toggle dropdown visibility when clicking the button
+      dropbtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        dropdownContent.classList.toggle("show"); // Toggle visibility of the dropdown
+      });
     });
-    
-    // Hide dropdown when clicking anywhere outside the dropdown
+
+    // Hide all dropdowns when clicking anywhere outside
     document.addEventListener("click", function (e) {
-      if (!dropdown.contains(e.target)) { // Check if the click was outside of the dropdown
-        dropdownContent.classList.remove("show"); // Hide the dropdown
-      }
+      dropdowns.forEach(function (dropdown) {
+        const dropdownContent = dropdown.querySelector(".dropdown-content");
+        if (!dropdown.contains(e.target)) {
+          dropdownContent.classList.remove("show"); // Hide the dropdown
+        }
+      });
     });
-    
-      </script>
+  });
+</script>
+
       </body>
       <style>
         @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
