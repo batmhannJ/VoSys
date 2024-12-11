@@ -75,6 +75,11 @@
             }
         }
     </style>
+
+    <!-- AmCharts Scripts -->
+    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -123,67 +128,59 @@
     <?php include 'includes/scripts.php'; ?>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="path/to/jquery.min.js"></script>
+
     <script>
         function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
+            if (graphType === 'line') {
+                // Create the chart container
+                document.getElementById(containerId).innerHTML = '';
+                
+                // Initialize amCharts
+                am4core.useTheme(am4themes_animated);
+
+                // Create the chart
+                var chart = am4core.create(containerId, am4charts.XYChart);
+                chart.data = dataPoints.map(dataPoint => ({
+                    category: dataPoint.label,
+                    value: dataPoint.y
+                }));
+
+                // Create axes
+                var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+                categoryAxis.dataFields.category = "category";
+                categoryAxis.title.text = "Candidates";
+
+                var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+                valueAxis.title.text = "Votes";
+
+                // Create series
+                var series = chart.series.push(new am4charts.LineSeries());
+                series.dataFields.valueY = "value";
+                series.dataFields.categoryX = "category";
+                series.strokeWidth = 3;
+                series.bullets.push(new am4charts.CircleBullet());
+
+                // Add cursor
+                chart.cursor = new am4charts.XYCursor();
+                chart.cursor.lineX.stroke = am4core.color("#000");
+                chart.cursor.lineY.stroke = am4core.color("#000");
+
+                return;
+            }
+
+            // Existing bar and pie chart logic
             var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
-
-            var imageContainer = document.getElementById(imageContainerId);
-            imageContainer.innerHTML = '';
-            dataPoints.forEach(dataPoint => {
-                var candidateDiv = document.createElement('div');
-                candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
-                imageContainer.appendChild(candidateDiv);
-            });
-
             var chart = new CanvasJS.Chart(containerId, {
                 animationEnabled: true,
                 title: { text: "Vote Counts" },
                 data: [{
                     type: graphType,
-                    indexLabel: "{label} - {percent}%",
-                    indexLabelPlacement: "inside",
-                    indexLabelFontColor: "white",
-                    indexLabelFontSize: 14,
                     dataPoints: dataPoints.map(dataPoint => ({
                         ...dataPoint,
                         percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
                     }))
                 }]
             });
-
-            if (graphType === 'bar') {
-                chart.options.axisX = {
-                    title: "",
-                    includeZero: true,
-                    interval: 1,
-                    labelFormatter: function () {
-                        return " ";
-                    }
-                };
-                chart.options.axisY = {
-                    title: "",
-                    interval: Math.ceil(totalVotes / 10)
-                };
-
-                chart.options.data[0].cornerRadius = 5; // Rounded bar corners
-                chart.options.data[0].bevelEnabled = true; // Bevel 3D effect
-                chart.options.data[0].indexLabelFontWeight = "bold";
-                chart.options.data[0].indexLabelFontColor = "#ffffff";
-
-                chart.options.data[0].dataPoints = dataPoints.map(dataPoint => ({
-                    ...dataPoint,
-                    percent: ((dataPoint.y / totalVotes) * 100).toFixed(2),
-                    color: dataPoint.color || "#4F81BC", // Default color
-                    shadow: {
-                        color: 'rgba(0, 0, 0, 0.3)', 
-                        blur: 10, 
-                        offsetX: 4, 
-                        offsetY: 4  
-                    }
-                }));
-            }
-
             chart.render();
         }
 
@@ -198,15 +195,7 @@
                     $('#results-container').empty();
 
                     var categories = {
-                        'csc': {
-                            'president': 'President',
-                            'vice president': 'Vice President',
-                            'secretary': 'Secretary',
-                            'treasurer': 'Treasurer',
-                            'auditor': 'Auditor',
-                            'p.r.o': 'P.R.O',
-                            'businessManager': 'Business Manager',
-                        }
+                        'csc': { 'president': 'President', 'vice president': 'Vice President' }
                     };
 
                     var selectedCategories = categories[organization];
@@ -221,15 +210,13 @@
                                         </div>
                                         <div class='box-body'>
                                             <div class='chart-container'>
-                                                <div class='candidate-images' id='${category}Image'></div>
-                                                <div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div>
+                                                <div id='${category}Graph' style='height: 300px;'></div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>`;
                             $('#results-container').append(containerHtml);
-
-                            generateGraph(response[category], category + 'Graph', category + 'Image', graphType);
+                            generateGraph(response[category], category + 'Graph', '', graphType);
                         }
                     });
                 },
