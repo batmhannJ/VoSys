@@ -1682,24 +1682,45 @@ hr {
   max-width: 800px;
 }
 
-.announcement-container {
-  padding: 1rem;
-  background: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  min-height: 200px;
+.announcement-section {
+  padding: 2rem;
+  background: linear-gradient(135deg, #f3f4f6, #ffffff);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Poppins', sans-serif;
+  margin: 2rem auto;
+  max-width: 900px;
+}
+
+.announcement-header {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.announcement-content {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Roboto', sans-serif;
-  color: #666;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  min-height: 200px;
+  color: #7f8c8d;
+  text-align: center;
+}
+
+.announcement-container {
+  font-size: 1rem;
+  color: #34495e;
 }
 
 .announcement-container::before {
-  content: 'No announcements to display.';
+  content: "No announcements available.";
   font-style: italic;
-  color: #999;
+  color: #bdc3c7;
 }
 
 
