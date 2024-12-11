@@ -2,23 +2,21 @@
 <html lang="en">
 <head>
     <?php include 'includes/session.php'; ?>
-    <?php include 'includes/header.php'; ?>
+    <?php include 'includes/header_jpcs.php'; ?>
     <style>
         .box-title {
             text-align: center;
             width: 100%;
             display: inline-block;
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
         }
 
+        /* Back to Top button styles */
         #back-to-top {
             position: fixed;
             bottom: 40px;
             right: 40px;
             display: none;
-            background-color: #007BFF;
+            background-color: #000;
             color: #fff;
             border: none;
             border-radius: 50%;
@@ -29,11 +27,10 @@
             line-height: 50px;
             cursor: pointer;
             z-index: 1000;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         #back-to-top:hover {
-            background-color: #0056b3;
+            background-color: #555;
         }
 
         .chart-container {
@@ -41,31 +38,28 @@
             margin-bottom: 40px;
             display: flex;
             align-items: center;
-            background-color: #f4f6f9;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
         .candidate-images {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            margin-right: 15px;
+            margin-right: 10px;
         }
 
         .candidate-image {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         .candidate-image img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 60px;
+            height: 60px;
+            margin-right: -10px;
+            margin-bottom: 25px;
+            margin-top: 35px;
         }
 
         @media (max-width: 768px) {
@@ -83,10 +77,10 @@
         }
     </style>
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-green sidebar-mini">
     <div class="wrapper">
-        <?php include 'includes/navbar.php'; ?>
-        <?php include 'includes/menubar.php'; ?>
+        <?php include 'includes/navbar_jpcs.php'; ?>
+        <?php include 'includes/menubar_jpcs.php'; ?>
 
         <div class="content-wrapper">
             <section class="content-header">
@@ -98,31 +92,19 @@
             </section>
 
             <section class="content">
+                <!-- Organization Selection Form -->
                 <form id="organization-form">
                     <label for="organization-select">Select Organization:</label>
                     <select id="organization-select" name="organization">
-                        <option value="csc">CSC</option>
                         <option value="jpcs">JPCS</option>
-                        <option value="ymf">YMF</option>
-                        <option value="pasoa">PASOA</option>
-                        <option value="code-tg">CODE-TG</option>
-                        <option value="hmso">HMSO</option>
                     </select>
-
-                    <label for="graph-type">Select Graph Type:</label>
-                    <select id="graph-type">
-                        <option value="bar">Bar Chart</option>
-                        <option value="pie">Pie Chart</option>
-                        <option value="line">Line Chart</option>
-                        <option value="stackedArea">Stacked Area Chart</option>
-                        <option value="doughnut">Donut Chart</option>
-                    </select>
-
                     <button type="submit">Show Results</button>
                 </form>
                 <br>
 
-                <div class="row justify-content-center" id="results-container"></div>
+                <div class="row justify-content-center" id="results-container">
+                    <!-- Results will be dynamically inserted here -->
+                </div>
             </section>
 
             <button id="back-to-top" title="Back to top">&uarr;</button>
@@ -133,86 +115,115 @@
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="path/to/jquery.min.js"></script>
     <script>
-        function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
+        function generateBarGraph(dataPoints, containerId, imageContainerId) {
             var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+
+            // Ensure images match the data points by iterating in the same order
             var imageContainer = document.getElementById(imageContainerId);
             imageContainer.innerHTML = '';
-            
-            // Define custom colors based on your request
-            const candidateColors = [
-                "rgb(43, 8, 168)",   // Blue color
-                "rgb(158, 9, 29)",   // Red color
-                "rgb(43, 8, 168)",   // Blue color (repeating the color)
-                "rgb(158, 9, 29)",   // Red color (repeating the color)
-                "rgb(43, 8, 168)",   // Blue color (repeating the color)
-                "rgb(158, 9, 29)"    // Red color (repeating the color)
-            ];
-            
-            dataPoints.forEach((dataPoint, index) => {
+            // Swap positions of the first two images for demonstration
+            if (dataPoints.length > 1) {
+                var temp = dataPoints[0].image;
+                dataPoints[0].image = dataPoints[1].image;
+                dataPoints[1].image = temp;
+            }
+            dataPoints.forEach(dataPoint => {
                 var candidateDiv = document.createElement('div');
                 candidateDiv.className = 'candidate-image';
                 candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
                 imageContainer.appendChild(candidateDiv);
-
-                // Assign a color based on the index (repeating the custom color palette)
-                dataPoint.color = candidateColors[index % candidateColors.length];
             });
 
-            var chartOptions = {
+            var chart = new CanvasJS.Chart(containerId, {
                 animationEnabled: true,
-                theme: "light2",
-                title: { text: "Vote Counts" },
+                animationDuration: 3000,
+                animationEasing: "easeInOutBounce",
+                title: {
+                    text: "Vote Counts"
+                },
+                axisX: {
+                    title: "",
+                    includeZero: true,
+                    interval: 1,
+                    labelFormatter: function () {
+                        return " ";
+                    }
+                },
+                axisY: {
+                    title: "",
+                    interval: Math.ceil(totalVotes / 10)
+                },
                 data: [{
-                    type: graphType,
+                    type: "bar",
+                    indexLabel: "{label} - {percent}%",
+                    indexLabelPlacement: "inside",
+                    indexLabelFontColor: "white",
+                    indexLabelFontSize: 14,
                     dataPoints: dataPoints.map(dataPoint => ({
                         ...dataPoint,
-                        color: dataPoint.color || "#4F81BC", // Default color if not assigned
-                        indexLabel: `${dataPoint.label} - ${(dataPoint.y / totalVotes * 100).toFixed(2)}%`,
-                        indexLabelFontColor: "lightgray",  // Changed to light gray
-                        indexLabelPlacement: "inside",
-                        indexLabelFontSize: 14,
-                        indexLabelFontWeight: "bold"
+                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
                     }))
                 }]
-            };
-
-            // Add specific options for stacked area and donut charts
-            if (graphType === "stackedArea") {
-                chartOptions.data[0].type = "stackedArea";
-            } else if (graphType === "doughnut") {
-                chartOptions.data[0].type = "doughnut";
-                chartOptions.data[0].innerRadius = 70; // Create a donut effect
-            }
-
-            var chart = new CanvasJS.Chart(containerId, chartOptions);
+            });
             chart.render();
         }
 
         function fetchAndGenerateGraphs(organization) {
-            const graphType = $('#graph-type').val();
             $.ajax({
-                url: 'update_data.php',
+                url: 'update_jpcs_data.php',
                 method: 'GET',
                 dataType: 'json',
                 success: function (response) {
+                    // Clear previous results
                     $('#results-container').empty();
-                    Object.keys(response).forEach(function (category) {
-                        var containerHtml = ` 
-                            <div class='col-md-12'>
-                                <div class='box'>
-                                    <div class='box-header with-border'>
-                                        <h3 class='box-title'><b>${category}</b></h3>
-                                    </div>
-                                    <div class='box-body'>
-                                        <div class='chart-container'>
-                                            <div class='candidate-images' id='${category}Image'></div>
-                                            <div id='${category}Graph' style='height: 300px; width: 100%;'></div>
+
+                    // Define categories for each organization
+                    var categories = {
+                        'jpcs': {
+                            'president': 'President',
+                            'vp for internal affairs': 'VP for Internal Affairs',
+                            'vp for external affairs': 'VP for External Affairs',
+                            'secretary': 'Secretary',
+                            'treasurer': 'Treasurer',
+                            'auditor': 'Auditor',
+                            'p.r.o': 'P.R.O',
+                            'dir. for membership': 'Dir. for Membership',
+                            'dir. for special project': 'Dir. for Special Project',
+                            '2-ARep': '2-A Rep',
+                            '2-BRep': '2-B Rep',
+                            '3-ARep': '3-A Rep',
+                            '3-BRep': '3-B Rep',
+                            '4-ARep': '4-A Rep',
+                            '4-BRep': '4-B Rep'
+                        }
+                    };
+
+                    // Get categories for the selected organization
+                    var selectedCategories = categories[organization];
+
+                    // Generate graphs for the selected categories
+                    Object.keys(selectedCategories).forEach(function (category) {
+                        if (response[category]) {
+                            // Create container for each category
+                            var containerHtml = `
+                                <div class='col-md-12'>
+                                    <div class='box'>
+                                        <div class='box-header with-border'>
+                                            <h3 class='box-title'><b>${selectedCategories[category]}</b></h3>
+                                        </div>
+                                        <div class='box-body'>
+                                            <div class='chart-container'>
+                                                <div class='candidate-images' id='${category}Image'></div>
+                                                <div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>`;
-                        $('#results-container').append(containerHtml);
-                        generateGraph(response[category], category + 'Graph', category + 'Image', graphType);
+                                </div>`;
+                            $('#results-container').append(containerHtml);
+
+                            // Generate the bar graph for the category
+                            generateBarGraph(response[category], category + 'Graph', category + 'Image');
+                        }
                     });
                 },
                 error: function (xhr, status, error) {
@@ -222,10 +233,27 @@
         }
 
         $(document).ready(function () {
-            fetchAndGenerateGraphs('csc');
+            // Fetch and generate graphs for the default organization (JPCS)
+            fetchAndGenerateGraphs('jpcs');
+
+            // Handle form submission
             $('#organization-form').submit(function (event) {
                 event.preventDefault();
-                fetchAndGenerateGraphs($('#organization-select').val());
+                const selectedOrganization = $('#organization-select').val();
+                fetchAndGenerateGraphs(selectedOrganization);
+            });
+
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 100) {
+                    $('#back-to-top').fadeIn();
+                } else {
+                    $('#back-to-top').fadeOut();
+                }
+            });
+
+            $('#back-to-top').click(function () {
+                $('html, body').animate({ scrollTop: 0 }, 600);
+                return false;
             });
         });
     </script>
