@@ -179,7 +179,7 @@
                         ...dataPoint,
                         color: dataPoint.color || "#4F81BC", // Default color if not assigned
                         // Remove indexLabel so the names don't show on the bars
-                        indexLabel: "",
+                        indexLabel: "",   // Remove text labels completely
                     }))
                 }]
             };
