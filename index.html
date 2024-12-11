@@ -87,40 +87,45 @@
     </section>
   
     <script>
-      // Function to fetch and display the latest announcement
-      function loadAnnouncement() {
-        fetch('get_announcement.php') // Fetch data from the PHP backend
-          .then(response => response.json()) // Parse JSON response
-          .then(data => {
-            const container = document.getElementById('announcement-container');
-            if (data.success) {
-              // If announcement data is retrieved
-              container.innerHTML = `
-                <div class="announcement">
-                  <div class="announcement-header">
-                    <b><h3>${data.title}</h3></b>
-                    <p class="announcement-date">${new Date().toLocaleDateString()}</p>
-                  </div>
-                  <div class="announcement-body">
-                    <hr>
-                    <p class="announcement-text">${data.content}</p>
-                    <p class="announcement-author">Posted by: ${data.addedby}</p>
-                  </div>
-                </div>
-              `;
-            } else {
-              // If no announcements are found
-              container.innerHTML = '<p>No announcements found.</p>';
-            }
-          })
-          .catch(error => {
-            console.error('Error fetching announcement:', error);
-          });
-      }
-  
-      // Load the announcement when the page is loaded
-      document.addEventListener('DOMContentLoaded', loadAnnouncement);
-    </script>
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', 'get_announcement.php', true); // Adjust the path if necessary
+      xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+              try {
+                  var data = JSON.parse(xhr.responseText); // Parse JSON response
+                  if (data.success) {
+                      // Create announcement HTML
+                      var announcementHTML = `
+                          <div class="announcement">
+                              <div class="announcement-header">
+                                  <b><h3>${data.title}</h3></b>
+                                  <p class="announcement-date">${new Date().toLocaleDateString()}</p>
+                              </div>
+                              <div class="announcement-body">
+                                  <hr>
+                                  <p class="announcement-text">${data.content}</p>
+                                  <p class="announcement-author">Posted by: ${data.addedby}</p>
+                              </div>
+                          </div>
+                      `;
+                      // Insert the announcement into the container
+                      document.getElementById('announcement-container').innerHTML = announcementHTML;
+                  } else {
+                      // No announcements found
+                      document.getElementById('announcement-container').innerHTML = '<p>No announcements found.</p>';
+                  }
+              } catch (error) {
+                  console.error('Error parsing JSON response:', error);
+                  document.getElementById('announcement-container').innerHTML = '<p>Error loading announcement.</p>';
+              }
+          }
+      };
+      xhr.onerror = function () {
+          console.error('Error making the request.');
+          document.getElementById('announcement-container').innerHTML = '<p>Error loading announcement.</p>';
+      };
+      xhr.send(); // Send the request
+  </script>
 
 <section class="discover section" id="discover">        
     <div class="wrapper">
