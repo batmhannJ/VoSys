@@ -166,7 +166,7 @@ canvas {
     <script src="path/to/jquery.min.js"></script>
     <script>
        // Bar Graph with Dynamic Image and Name Layout
-function generateBarGraph(dataPoints, containerId, imageContainerId) {
+       function generateBarGraph(dataPoints, containerId, imageContainerId) {
     var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
     // Clear previous images in the container
@@ -178,11 +178,14 @@ function generateBarGraph(dataPoints, containerId, imageContainerId) {
         var candidateDiv = document.createElement('div');
         candidateDiv.className = 'candidate-wrapper';
 
+        // Dynamically set the image source based on candidate's label (match the category to the image)
+        var candidateImageSrc = `images/${dataPoint.label.toLowerCase().replace(/ /g, '-')}.jpg`;  // assuming your images are named like 'president.jpg'
+
         // Create image container
         var imgContainer = document.createElement('div');
         imgContainer.className = 'image-container';
         var imgElement = document.createElement('img');
-        imgElement.src = dataPoint.image;
+        imgElement.src = candidateImageSrc;  // Set the image source dynamically
         imgElement.alt = dataPoint.label;
         imgElement.title = dataPoint.label;
         imgElement.className = 'candidate-image';
@@ -236,6 +239,7 @@ function generateBarGraph(dataPoints, containerId, imageContainerId) {
 
     chart.render();
 }
+
 
         // Pie Chart
         function generatePieChart(dataPoints, containerId, imageContainerId) {
