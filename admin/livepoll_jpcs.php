@@ -40,27 +40,48 @@
             align-items: center;
         }
 
-        .candidate-images {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            margin-right: 10px;
-        }
+        /* Card style for each candidate */
+.candidate-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;  /* Space between cards */
+    width: 120px;  /* Width of the card */
+    text-align: center;
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 10px;  /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Shadow effect */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;  /* Smooth transition */
+}
 
-        .candidate-image {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 10px;
-        }
+.candidate-card:hover {
+    transform: translateY(-10px);  /* Lift effect on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);  /* Increase shadow on hover */
+}
 
-        .candidate-image img {
-            width: 60px;
-            height: 60px;
-            margin-right: -10px;
-            margin-bottom: 25px;
-            margin-top: 35px;
-        }
+/* Image styling */
+.candidate-image {
+    width: 80px;  /* Image width */
+    height: 80px;  /* Image height */
+    border-radius: 50%;  /* Make image circular */
+    object-fit: cover;  /* Ensure image fits nicely within the circular border */
+    margin-bottom: 10px;  /* Space between image and name */
+    transition: transform 0.3s ease;  /* Smooth zoom effect on hover */
+}
+
+.candidate-image:hover {
+    transform: scale(1.1);  /* Slight zoom effect on hover */
+}
+
+/* Name styling */
+.candidate-name {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;  /* Dark color for text */
+    text-transform: capitalize;  /* Capitalize each word */
+}
 
         @media (max-width: 768px) {
             .candidate-image img {
@@ -122,8 +143,8 @@
     <?php include 'includes/scripts.php'; ?>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="path/to/jquery.min.js"></script>
-<script>
-    // Bar Graph
+    <script>
+       // Bar Graph
 function generateBarGraph(dataPoints, containerId, imageContainerId) {
     var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
@@ -131,13 +152,11 @@ function generateBarGraph(dataPoints, containerId, imageContainerId) {
     var imageContainer = document.getElementById(imageContainerId);
     imageContainer.innerHTML = '';
 
-    // Loop to create image elements next to the candidate names and align them properly
+    // Loop to create modern styled image cards for each candidate
     dataPoints.forEach(dataPoint => {
-        // Create a container for each candidate's image and name
-        var candidateDiv = document.createElement('div');
-        candidateDiv.className = 'candidate-image-container';  // Wrap both image and name
-        candidateDiv.style.display = 'flex';  // Use flex to align image and name side by side
-        candidateDiv.style.alignItems = 'center';  // Align items vertically
+        // Create a card container for each candidate's image and name
+        var candidateCard = document.createElement('div');
+        candidateCard.className = 'candidate-card';  // Assign class for styling
 
         // Create image element
         var imgElement = document.createElement('img');
@@ -145,21 +164,18 @@ function generateBarGraph(dataPoints, containerId, imageContainerId) {
         imgElement.alt = dataPoint.label;
         imgElement.title = dataPoint.label;
         imgElement.className = 'candidate-image';
-        imgElement.style.width = '50px';  // Resize the image as needed
-        imgElement.style.height = '50px';  // Same as above
-        imgElement.style.marginRight = '10px';  // Add space between image and name
         
-        // Create a name element
+        // Create name element
         var nameElement = document.createElement('span');
         nameElement.innerText = dataPoint.label;
-        nameElement.style.fontWeight = 'bold';
+        nameElement.className = 'candidate-name';
 
-        // Append both image and name to the candidate container
-        candidateDiv.appendChild(imgElement);
-        candidateDiv.appendChild(nameElement);
+        // Append the image and name to the card
+        candidateCard.appendChild(imgElement);
+        candidateCard.appendChild(nameElement);
 
-        // Append the candidate container to the image container
-        imageContainer.appendChild(candidateDiv);
+        // Append the card to the image container
+        imageContainer.appendChild(candidateCard);
     });
 
     // Create the bar graph
