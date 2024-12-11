@@ -7,7 +7,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-      </div>
+      </div> 
       <form id="addElectionForm" method="POST" action="election_add_jpcs.php">
         <div class="modal-body">
           <div class="form-group">

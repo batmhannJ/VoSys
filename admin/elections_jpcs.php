@@ -326,7 +326,7 @@ $('#deactivationSubmit').on('click', function() {
             console.error(xhr.responseText);
         }
     });
-});
+}); 
 
 function archiveElection(id) {
     $.ajax({
