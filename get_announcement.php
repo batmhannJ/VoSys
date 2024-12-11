@@ -1,7 +1,7 @@
 <?php
 include 'includes/conn.php';
 
-$query = "SELECT * FROM announcement ORDER BY id DESC LIMIT 1";
+$query = "SELECT * FROM announcement ORDER BY id_announcement DESC LIMIT 1";
 $result = $conn->query($query);
 
 if (!$result) {
