@@ -116,7 +116,7 @@
         function generateGraph(dataPoints, containerId, graphType) {
             var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
-            // Remove candidate names and index labels from the graphs
+            // Define the chart options
             var chartOptions = {
                 animationEnabled: true,
                 theme: "light2",
@@ -125,9 +125,9 @@
                     type: graphType,
                     dataPoints: dataPoints.map(dataPoint => ({
                         ...dataPoint,
-                        // Remove all candidate names and labels
-                        indexLabel: "",   // Do not show any labels
-                        indexLabelFontColor: "transparent", // Ensure no labels are visible
+                        // Hide candidate names from the graph
+                        indexLabel: "",   // Hide the candidate names
+                        indexLabelFontColor: "transparent", // Ensures no labels are visible
                         indexLabelPlacement: "inside",
                         indexLabelFontSize: 14,
                         indexLabelFontWeight: "bold"
@@ -143,6 +143,7 @@
                 chartOptions.data[0].innerRadius = 70; // For donut effect
             }
 
+            // Create and render the chart
             var chart = new CanvasJS.Chart(containerId, chartOptions);
             chart.render();
         }
