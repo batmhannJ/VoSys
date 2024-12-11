@@ -11,24 +11,20 @@ if (!$result) {
     die('Query Error: ' . $conn->error);  // Print error if query failed
 }
 
-// Check if there are rows in the result
+// Debugging: Check the number of rows returned
 if ($result->num_rows > 0) {
     // Fetch the row as an associative array
     $row = $result->fetch_assoc();
     
-    // Debugging: Check if row is not empty
-    if ($row) {
-        echo json_encode([
-            'success' => true,
-            'title' => $row['title'], // Assuming 'title' is a field in your announcement table
-            'content' => $row['content'] // Assuming 'content' is a field in your announcement table
-        ]);
-    } else {
-        echo json_encode([
-            'success' => false,
-            'message' => 'No announcement data found in the row.'
-        ]);
-    }
+    // Debugging: Dump the fetched row
+    var_dump($row); // Check the structure of the returned row
+    
+    // Return the response as JSON
+    echo json_encode([
+        'success' => true,
+        'title' => $row['title'], // Assuming 'title' is a field in your announcement table
+        'content' => $row['content'] // Assuming 'content' is a field in your announcement table
+    ]);
 } else {
     // If no rows returned, indicate no announcements
     echo json_encode([
