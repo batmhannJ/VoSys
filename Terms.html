@@ -58,6 +58,8 @@
             <div class="tab" onclick="setActiveTab('rights_responsibilities')">Voting Rights and Responsibilities</div>
             <div class="tab" onclick="setActiveTab('privacy_data_protection')">Privacy and Data Protection</div>
             <div class="tab" onclick="setActiveTab('code_of_conduct')">Code of Conduct</div>
+            <div class="tab" onclick="setActiveTab('restrictions_on_use')">Restrictions on Use</div>
+            <div class="tab" onclick="setActiveTab('suspension_terminationt')">Suspension or Termination of Accounts</div>
           </div>
 
           <div class="content" id="content">
@@ -215,6 +217,27 @@
         <li style="text-align: justify;"><strong>Compliance with Laws:</strong> Users are required to comply with all applicable laws and regulations while using the vosys.org platform. Any activities that breach legal obligations or the ethical guidelines of the platform will be subject to penalties.</li>
         <li style="text-align: justify;"><strong>Account Security:</strong> Users must ensure the security of their account by choosing strong passwords and safeguarding their login credentials. Users should report any suspicious activity related to their account immediately to prevent unauthorized access.</li>
         <li style="text-align: justify;"><strong>Reporting Violations:</strong> Users are encouraged to report any violations of the Code of Conduct or suspicious activities to the vosys.org support team. All reports will be handled with confidentiality, and appropriate actions will be taken to address the issue.</li>
+      </ul>
+    `;
+    break;
+    case 'restrictions_on_use':
+    title.textContent = 'Restrictions on Use';
+    description.innerHTML = `
+      <ul style="text-align: justify; list-style-type: none; padding-left: 0;">
+        <li style="text-align: justify;"><strong>Illegal Activities:</strong> You may not use vosys.org for any illegal activities or in violation of OLSHCO’s policies. Engaging in activities that are against the law or violate OLSHCO’s ethical guidelines will result in account suspension or termination and may lead to legal consequences.</li>
+        <li style="text-align: justify;"><strong>Unauthorized Access:</strong> You may not attempt to gain unauthorized access to the platform, databases, servers, or any other part of the vosys.org infrastructure. Any attempt to breach security measures or compromise the integrity of the platform will lead to immediate action, including legal prosecution if applicable.</li>
+        <li style="text-align: justify;"><strong>Interference with Service:</strong> You may not engage in any activities that disrupt, interfere with, or negatively impact the operation of vosys.org. This includes introducing malware, attempting to overload the platform, or engaging in denial-of-service attacks.</li>
+        <li style="text-align: justify;"><strong>Impersonation:</strong> You may not impersonate any person or entity, including but not limited to, vosys.org administrators or other users, in an attempt to gain unauthorized privileges or access to information.</li>
+      </ul>
+    `;
+    break;
+    case 'suspension_termination':
+    title.textContent = 'Suspension or Termination of Accounts';
+    description.innerHTML = `
+      <ul style="text-align: justify; list-style-type: none; padding-left: 0;">
+        <li style="text-align: justify;"><strong>Suspension:</strong> vosys.org reserves the right to suspend user accounts if any violation of the Terms of Service occurs. Suspension may be temporary or indefinite, depending on the severity of the violation. Users may be notified of their suspension and given an opportunity to appeal the decision if applicable.</li>
+        <li style="text-align: justify;"><strong>Termination:</strong> Accounts may be permanently terminated if users are found to be ineligible, or if they engage in activities that compromise the integrity of the voting process, including fraudulent behavior, manipulation of votes, or violation of platform rules. In cases of termination, users will lose access to their account and may not be allowed to participate in future elections or activities on vosys.org.</li>
+        <li style="text-align: justify;"><strong>Appeals Process:</strong> Users who believe their account suspension or termination was made in error may submit an appeal to the vosys.org support team. Appeals will be reviewed on a case-by-case basis, and users may be reinstated if their case is deemed valid.</li>
       </ul>
     `;
     break;
