@@ -74,17 +74,17 @@
       </div>
     </section>
 
-    <section id="about" class="section__container register__container">
-      <center><h2 class="section__header">Announcement</h2></center><br>
-      <div class="register__grid">
-        <div class="register__content">
-          <!-- Announcement Section -->
-          <div id="announcement-container" class="announcement-container">
-            <!-- Announcement will be dynamically loaded here -->
-          </div>
-        </div>
+    <section id="announcement" class="announcement__section">
+      <div class="announcement__header">
+        <h2 class="announcement__title">Latest Announcements</h2>
+        <p class="announcement__subheading">Stay updated with the latest news and events.</p>
+      </div>
+      
+      <div id="announcement-container" class="announcement__container">
+        <!-- Announcements will be dynamically loaded here -->
       </div>
     </section>
+    
 
 <section class="discover section" id="discover">        
     <div class="wrapper">
@@ -698,6 +698,112 @@ body {
   font-size: 40px;
   color: var(--text-dark);
 }
+
+/* Main Section Styling */
+.announcement__section {
+  padding: 40px 20px;
+  background: linear-gradient(to right, #f9f9f9, #e1e1e1);
+  text-align: center;
+}
+
+.announcement__header {
+  margin-bottom: 30px;
+}
+
+.announcement__title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.announcement__subheading {
+  font-size: 1.2rem;
+  color: #666;
+  margin-top: 5px;
+  font-style: italic;
+}
+
+/* Announcement Container */
+.announcement__container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 0 15px;
+  justify-items: center;
+}
+
+/* Announcement Cards */
+.announcement__card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 100%;
+  max-width: 350px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.announcement__card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.announcement__card .announcement__date {
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 10px;
+}
+
+.announcement__card .announcement__content {
+  font-size: 1rem;
+  color: #444;
+  line-height: 1.5;
+}
+
+.announcement__card .announcement__readmore {
+  display: inline-block;
+  margin-top: 15px;
+  font-size: 1rem;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.announcement__card .announcement__readmore:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .announcement__title {
+    font-size: 2rem;
+  }
+
+  .announcement__subheading {
+    font-size: 1rem;
+  }
+
+  .announcement__container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .announcement__title {
+    font-size: 1.8rem;
+  }
+
+  .announcement__subheading {
+    font-size: 0.9rem;
+  }
+
+  .announcement__container {
+    grid-template-columns: 1fr;
+  }
+}
+
 
 .dropdown {
   position: relative;
