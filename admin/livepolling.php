@@ -131,47 +131,51 @@
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="path/to/jquery.min.js"></script>
     <script>
-       function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
-    var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
-    var imageContainer = document.getElementById(imageContainerId);
-    imageContainer.innerHTML = '';
-    
-    // Define custom maroon and dark blue colors
-    const candidateColors = [
-        "#800000", "#9B1C1C", "#B30000", // Maroon shades
-        "#004080", "#003366", "#1D2951"  // Dark Blue shades
-    ];
-    
-    dataPoints.forEach((dataPoint, index) => {
-        var candidateDiv = document.createElement('div');
-        candidateDiv.className = 'candidate-image';
-        candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
-        imageContainer.appendChild(candidateDiv);
+        function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
+            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+            var imageContainer = document.getElementById(imageContainerId);
+            imageContainer.innerHTML = '';
+            
+            // Define custom colors based on your request
+            const candidateColors = [
+                "rgb(5, 3, 107)",   // Blue color (5, 3, 107)
+                "rgb(133, 4, 21)",  // Red color (133, 4, 21)
+                "rgb(5, 3, 107)",   // Blue color (repeating the color)
+                "rgb(133, 4, 21)",  // Red color (repeating the color)
+                "rgb(5, 3, 107)",   // Blue color (repeating the color)
+                "rgb(133, 4, 21)"   // Red color (repeating the color)
+            ];
+            
+            dataPoints.forEach((dataPoint, index) => {
+                var candidateDiv = document.createElement('div');
+                candidateDiv.className = 'candidate-image';
+                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
+                imageContainer.appendChild(candidateDiv);
 
-        // Assign a color based on the index (repeating the color palette)
-        dataPoint.color = candidateColors[index % candidateColors.length];
-    });
+                // Assign a color based on the index (repeating the custom color palette)
+                dataPoint.color = candidateColors[index % candidateColors.length];
+            });
 
-    var chart = new CanvasJS.Chart(containerId, {
-        animationEnabled: true,
-        theme: "light2",
-        title: { text: "Vote Counts" },
-        data: [{
-            type: graphType,
-            dataPoints: dataPoints.map(dataPoint => ({
-                ...dataPoint,
-                color: dataPoint.color || "#4F81BC", // Default color if not assigned
-                indexLabel: `${dataPoint.label} - ${(dataPoint.y / totalVotes * 100).toFixed(2)}%`,
-                indexLabelFontColor: "black",
-                indexLabelPlacement: "inside",
-                indexLabelFontSize: 14,
-                indexLabelFontWeight: "bold"
-            }))
-        }]
-    });
+            var chart = new CanvasJS.Chart(containerId, {
+                animationEnabled: true,
+                theme: "light2",
+                title: { text: "Vote Counts" },
+                data: [{
+                    type: graphType,
+                    dataPoints: dataPoints.map(dataPoint => ({
+                        ...dataPoint,
+                        color: dataPoint.color || "#4F81BC", // Default color if not assigned
+                        indexLabel: `${dataPoint.label} - ${(dataPoint.y / totalVotes * 100).toFixed(2)}%`,
+                        indexLabelFontColor: "black",
+                        indexLabelPlacement: "inside",
+                        indexLabelFontSize: 14,
+                        indexLabelFontWeight: "bold"
+                    }))
+                }]
+            });
 
-    chart.render();
-}
+            chart.render();
+        }
 
         function fetchAndGenerateGraphs(organization) {
             const graphType = $('#graph-type').val();
