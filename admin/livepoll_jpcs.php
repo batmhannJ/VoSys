@@ -3,93 +3,79 @@
 <head>
     <?php include 'includes/session.php'; ?>
     <?php include 'includes/header_jpcs.php'; ?>
-
     <style>
-    .box-title {
-        text-align: center;
-        width: 100%;
-        display: inline-block;
-    }
-
-    /* Back to Top button styles */
-    #back-to-top {
-        position: fixed;
-        bottom: 40px;
-        right: 40px;
-        display: none;
-        background-color: #000;
-        color: #fff;
-        border: none;
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        text-align: center;
-        font-size: 22px;
-        line-height: 50px;
-        cursor: pointer;
-        z-index: 1000;
-        transition: background-color 0.3s ease;
-    }
-
-    #back-to-top:hover {
-        background-color: #555;
-    }
-
-    .chart-container {
-        display: flex;
-        justify-content: space-between; /* Align content to the space between */
-        align-items: center; 
-        flex-wrap: nowrap; /* Prevent wrapping to keep images on the right */
-        margin-bottom: 40px;
-    }
-
-    .candidate-images {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 150px; /* Fixed width for image container */
-        margin-left: 20px; /* Gap between images and the graph */
-    }
-
-    .candidate-image {
-        margin-bottom: 10px; /* Space between the images */
-        text-align: center;
-    }
-
-    .candidate-image img {
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease-in-out;
-    }
-
-    .candidate-image img:hover {
-        transform: scale(1.1);
-    }
-
-    .candidate-name {
-        font-size: 12px;
-        margin-top: 5px;
-    }
-
-    @media (max-width: 768px) {
-        .candidate-image img {
-            width: 80px;
-            height: 80px;
+        .box-title {
+            text-align: center;
+            width: 100%;
+            display: inline-block;
         }
-    }
 
-    @media (max-width: 480px) {
-        .candidate-image img {
-            width: 100px;
-            height: 100px;
+        /* Back to Top button styles */
+        #back-to-top {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            display: none;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 22px;
+            line-height: 50px;
+            cursor: pointer;
+            z-index: 1000;
         }
-    }
+
+        #back-to-top:hover {
+            background-color: #555;
+        }
+
+        .chart-container {
+            position: relative;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        .candidate-images {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin-right: 10px;
+        }
+
+        .candidate-image {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .candidate-image img {
+            width: 60px;
+            height: 60px;
+            margin-right: -10px;
+            margin-bottom: 25px;
+            margin-top: 35px;
+        }
+
+        @media (max-width: 768px) {
+            .candidate-image img {
+                width: 75px;
+                height: 75px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .candidate-image img {
+                width: 100px;
+                height: 100px;
+            }
+        }
     </style>
-
-
 </head>
 <body class="hold-transition skin-green sidebar-mini">
     <div class="wrapper">
@@ -204,16 +190,10 @@
                 title: {
                     text: "Vote Counts"
                 },
-                toolTip: {
-                    content: "{label}: {y} Votes ({percent}%)",
-                    backgroundColor: "#F1F1F1",
-                    borderColor: "#666",
-                    borderThickness: 1
-                },
                 data: [{
                     type: "pie",
                     indexLabel: "{label} - {percent}%",
-                    indexLabelFontColor: "gray",
+                    indexLabelFontColor: "white",
                     dataPoints: dataPoints.map(dataPoint => ({
                         ...dataPoint,
                         percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
@@ -244,27 +224,14 @@
                     text: "Vote Counts"
                 },
                 axisX: {
-                    title: "",
-                    includeZero: true,
-                    interval: 1,
-                    labelFormatter: function () {
-                        return " ";
-                    }
+                    title: "Candidates"
                 },
                 axisY: {
-                    title: "",
-                    interval: Math.ceil(totalVotes / 10)
+                    title: "Votes"
                 },
                 data: [{
                     type: "line",
-                    indexLabel: "{label} - {percent}%",
-                    indexLabelPlacement: "inside",
-                    indexLabelFontColor: "gray",
-                    indexLabelFontSize: 14,
-                    dataPoints: dataPoints.map(dataPoint => ({
-                        ...dataPoint,
-                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-                    }))
+                    dataPoints: dataPoints
                 }]
             });
             chart.render();
@@ -290,17 +257,10 @@
                 title: {
                     text: "Vote Counts"
                 },
-                toolTip: {
-                    content: "{label}: {y} Votes ({percent}%)",
-                    backgroundColor: "#F1F1F1",
-                    borderColor: "#666",
-                    borderThickness: 1
-                },
                 data: [{
                     type: "doughnut",
-                    innerRadius: "70%", // This will create the donut shape
                     indexLabel: "{label} - {percent}%",
-                    indexLabelFontColor: "gray",
+                    indexLabelFontColor: "white",
                     dataPoints: dataPoints.map(dataPoint => ({
                         ...dataPoint,
                         percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
@@ -331,27 +291,14 @@
                     text: "Vote Counts"
                 },
                 axisX: {
-                    title: "",
-                    includeZero: true,
-                    interval: 1,
-                    labelFormatter: function () {
-                        return " ";
-                    }
+                    title: "Candidates"
                 },
                 axisY: {
-                    title: "",
-                    interval: Math.ceil(totalVotes / 10)
+                    title: "Votes"
                 },
                 data: [{
                     type: "stackedArea",
-                    indexLabel: "{label} - {percent}%",
-                    indexLabelPlacement: "inside",
-                    indexLabelFontColor: "gray",
-                    indexLabelFontSize: 14,
-                    dataPoints: dataPoints.map(dataPoint => ({
-                        ...dataPoint,
-                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-                    }))
+                    dataPoints: dataPoints
                 }]
             });
             chart.render();
@@ -395,7 +342,7 @@
                     Object.keys(selectedCategories).forEach(function (category) {
                         if (response[category]) {
                             // Create container for each category
-                            var containerHtml = ` 
+                            var containerHtml = `
                                 <div class='col-md-12'>
                                     <div class='box'>
                                         <div class='box-header with-border'>
@@ -403,16 +350,15 @@
                                         </div>
                                         <div class='box-body'>
                                             <div class='chart-container'>
-                                                <div id='${category}Graph' style='height: 300px; width: 80%;'></div>
-                                                <div id='${category}Image' class='candidate-images'></div>
+                                                <div class='candidate-images' id='${category}Image'></div>
+                                                <div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            `;
+                                </div>`;
                             $('#results-container').append(containerHtml);
 
-                            // Call the respective function based on graph type
+                            // Generate the selected graph type for the category
                             if (graphType === 'bar') {
                                 generateBarGraph(response[category], category + 'Graph', category + 'Image');
                             } else if (graphType === 'pie') {
@@ -426,19 +372,24 @@
                             }
                         }
                     });
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching data: ", status, error);
                 }
             });
         }
 
         // Event listener for form submission
-        $('#organization-form').on('submit', function (event) {
-            event.preventDefault();
+        $('#organization-form').on('submit', function (e) {
+            e.preventDefault();
+
             var organization = $('#organization-select').val();
             var graphType = $('#graph-select').val();
+
             fetchAndGenerateGraphs(organization, graphType);
         });
 
-        // Back to top functionality
+        // Scroll to top button
         $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
                 $('#back-to-top').fadeIn();
@@ -453,4 +404,4 @@
         });
     </script>
 </body>
-</html>
+</html>  
