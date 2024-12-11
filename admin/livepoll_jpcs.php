@@ -40,48 +40,73 @@
             align-items: center;
         }
 
-        /* Card style for each candidate */
-.candidate-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;  /* Space between cards */
-    width: 120px;  /* Width of the card */
+        /* Main container for images */
+.candidate-wrapper {
+    display: inline-block;
+    position: relative;
+    margin: 20px;
+    width: 150px;  /* Fixed size for each image container */
     text-align: center;
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 10px;  /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Shadow effect */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;  /* Smooth transition */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 50%;
 }
 
-.candidate-card:hover {
-    transform: translateY(-10px);  /* Lift effect on hover */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);  /* Increase shadow on hover */
+/* Hover effect for the entire wrapper */
+.candidate-wrapper:hover {
+    transform: translateY(-10px);  /* Pop effect when hovering over */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);  /* Subtle shadow effect */
 }
 
-/* Image styling */
+/* Style the candidate image */
+.image-container {
+    position: relative;
+    overflow: hidden;
+    height: 120px;
+    width: 120px;
+    margin: 0 auto 10px;
+    border-radius: 50%;  /* Circular image container */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);  /* Soft shadow */
+}
+
 .candidate-image {
-    width: 80px;  /* Image width */
-    height: 80px;  /* Image height */
-    border-radius: 50%;  /* Make image circular */
-    object-fit: cover;  /* Ensure image fits nicely within the circular border */
-    margin-bottom: 10px;  /* Space between image and name */
-    transition: transform 0.3s ease;  /* Smooth zoom effect on hover */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* Make sure image fits perfectly in the circle */
+    transition: transform 0.3s ease;  /* Image zoom effect */
 }
 
-.candidate-image:hover {
-    transform: scale(1.1);  /* Slight zoom effect on hover */
+/* Image zoom effect on hover */
+.candidate-wrapper:hover .candidate-image {
+    transform: scale(1.1);  /* Slight zoom-in effect */
 }
 
-/* Name styling */
-.candidate-name {
+/* Name label for the candidate */
+.name-label {
     font-size: 14px;
     font-weight: bold;
-    color: #333;  /* Dark color for text */
-    text-transform: capitalize;  /* Capitalize each word */
+    color: #333;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
+
+/* Show name label with smooth transition */
+.candidate-wrapper:hover .name-label {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Responsive: Adjust layout for smaller screens */
+@media (max-width: 768px) {
+    .candidate-wrapper {
+        width: 120px;  /* Make images slightly smaller on mobile */
+    }
+    .candidate-image {
+        width: 100%;  /* Ensure image fits well on smaller screens */
+        height: 100%;
+    }
+}
+
 
         @media (max-width: 768px) {
             .candidate-image img {
@@ -144,7 +169,7 @@
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="path/to/jquery.min.js"></script>
     <script>
-       // Bar Graph
+       // Bar Graph with Dynamic Image and Name Layout
 function generateBarGraph(dataPoints, containerId, imageContainerId) {
     var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
@@ -152,33 +177,35 @@ function generateBarGraph(dataPoints, containerId, imageContainerId) {
     var imageContainer = document.getElementById(imageContainerId);
     imageContainer.innerHTML = '';
 
-    // Loop to create modern styled image cards for each candidate
+    // Loop to create unique and dynamic display for each candidate
     dataPoints.forEach(dataPoint => {
-        // Create a card container for each candidate's image and name
-        var candidateCard = document.createElement('div');
-        candidateCard.className = 'candidate-card';  // Assign class for styling
+        var candidateDiv = document.createElement('div');
+        candidateDiv.className = 'candidate-wrapper';
 
-        // Create image element
+        // Create image container
+        var imgContainer = document.createElement('div');
+        imgContainer.className = 'image-container';
         var imgElement = document.createElement('img');
         imgElement.src = dataPoint.image;
         imgElement.alt = dataPoint.label;
         imgElement.title = dataPoint.label;
         imgElement.className = 'candidate-image';
-        
-        // Create name element
-        var nameElement = document.createElement('span');
-        nameElement.innerText = dataPoint.label;
-        nameElement.className = 'candidate-name';
 
-        // Append the image and name to the card
-        candidateCard.appendChild(imgElement);
-        candidateCard.appendChild(nameElement);
+        // Create name label that appears below the image
+        var nameLabel = document.createElement('div');
+        nameLabel.className = 'name-label';
+        nameLabel.innerText = dataPoint.label;
 
-        // Append the card to the image container
-        imageContainer.appendChild(candidateCard);
+        // Append image and name label to the wrapper
+        imgContainer.appendChild(imgElement);
+        candidateDiv.appendChild(imgContainer);
+        candidateDiv.appendChild(nameLabel);
+
+        // Append to the image container
+        imageContainer.appendChild(candidateDiv);
     });
 
-    // Create the bar graph
+    // Generate the bar graph
     var chart = new CanvasJS.Chart(containerId, {
         animationEnabled: true,
         animationDuration: 3000,
