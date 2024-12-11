@@ -122,53 +122,81 @@
     <?php include 'includes/scripts.php'; ?>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="path/to/jquery.min.js"></script>
-    <script>
-        // Bar Graph
-        function generateBarGraph(dataPoints, containerId, imageContainerId) {
-            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+<script>
+    // Bar Graph
+function generateBarGraph(dataPoints, containerId, imageContainerId) {
+    var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
-            var imageContainer = document.getElementById(imageContainerId);
-            imageContainer.innerHTML = '';
-            dataPoints.forEach(dataPoint => {
-                var candidateDiv = document.createElement('div');
-                candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
-                imageContainer.appendChild(candidateDiv);
-            });
+    // Clear previous images in the container
+    var imageContainer = document.getElementById(imageContainerId);
+    imageContainer.innerHTML = '';
 
-            var chart = new CanvasJS.Chart(containerId, {
-                animationEnabled: true,
-                animationDuration: 3000,
-                animationEasing: "easeInOutBounce",
-                title: {
-                    text: "Vote Counts"
-                },
-                axisX: {
-                    title: "",
-                    includeZero: true,
-                    interval: 1,
-                    labelFormatter: function () {
-                        return " ";
-                    }
-                },
-                axisY: {
-                    title: "",
-                    interval: Math.ceil(totalVotes / 10)
-                },
-                data: [{
-                    type: "bar",
-                    indexLabel: "{label} - {percent}%",
-                    indexLabelPlacement: "inside",
-                    indexLabelFontColor: "white",
-                    indexLabelFontSize: 14,
-                    dataPoints: dataPoints.map(dataPoint => ({
-                        ...dataPoint,
-                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-                    }))
-                }]
-            });
-            chart.render();
-        }
+    // Loop to create image elements next to the candidate names and align them properly
+    dataPoints.forEach(dataPoint => {
+        // Create a container for each candidate's image and name
+        var candidateDiv = document.createElement('div');
+        candidateDiv.className = 'candidate-image-container';  // Wrap both image and name
+        candidateDiv.style.display = 'flex';  // Use flex to align image and name side by side
+        candidateDiv.style.alignItems = 'center';  // Align items vertically
+
+        // Create image element
+        var imgElement = document.createElement('img');
+        imgElement.src = dataPoint.image;
+        imgElement.alt = dataPoint.label;
+        imgElement.title = dataPoint.label;
+        imgElement.className = 'candidate-image';
+        imgElement.style.width = '50px';  // Resize the image as needed
+        imgElement.style.height = '50px';  // Same as above
+        imgElement.style.marginRight = '10px';  // Add space between image and name
+        
+        // Create a name element
+        var nameElement = document.createElement('span');
+        nameElement.innerText = dataPoint.label;
+        nameElement.style.fontWeight = 'bold';
+
+        // Append both image and name to the candidate container
+        candidateDiv.appendChild(imgElement);
+        candidateDiv.appendChild(nameElement);
+
+        // Append the candidate container to the image container
+        imageContainer.appendChild(candidateDiv);
+    });
+
+    // Create the bar graph
+    var chart = new CanvasJS.Chart(containerId, {
+        animationEnabled: true,
+        animationDuration: 3000,
+        animationEasing: "easeInOutBounce",
+        title: {
+            text: "Vote Counts"
+        },
+        axisX: {
+            title: "",
+            includeZero: true,
+            interval: 1,
+            labelFormatter: function () {
+                return " ";
+            }
+        },
+        axisY: {
+            title: "",
+            interval: Math.ceil(totalVotes / 10)
+        },
+        data: [{
+            type: "bar",
+            indexLabel: "{label} - {percent}%",
+            indexLabelPlacement: "inside",
+            indexLabelFontColor: "white",
+            indexLabelFontSize: 14,
+            dataPoints: dataPoints.map(dataPoint => ({
+                ...dataPoint,
+                percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+            }))
+        }]
+    });
+
+    chart.render();
+}
 
         // Pie Chart
         function generatePieChart(dataPoints, containerId, imageContainerId) {
