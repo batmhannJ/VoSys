@@ -138,11 +138,11 @@
             
             // Define custom colors based on your request
             const candidateColors = [
-                "rgb(35, 2, 156)",   // Blue color (5, 3, 107)
+                "rgb(43, 8, 168)",   // Blue color (5, 3, 107)
                 "rgb(158, 9, 29)",  // Red color (133, 4, 21)
-                "rgb(35, 2, 156)",   // Blue color (repeating the color)
+                "rgb(43, 8, 168)",   // Blue color (repeating the color)
                 "rgb(158, 9, 29)",  // Red color (repeating the color)
-                "rgb(35, 2, 156)",   // Blue color (repeating the color)
+                "rgb(43, 8, 168)",   // Blue color (repeating the color)
                 "rgb(158, 9, 29)"   // Red color (repeating the color)
             ];
             
