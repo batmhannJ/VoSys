@@ -5,24 +5,18 @@ $query = "SELECT * FROM announcement ORDER BY id_announcement DESC LIMIT 1";
 $result = $conn->query($query);
 
 if (!$result) {
-    die('Query Error: ' . $conn->error);
+    die(json_encode(['success' => false, 'message' => 'Database query failed.']));
 }
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-
     echo json_encode([
         'success' => true,
         'title' => $row['title'],
-        'content' => $row['content'], 
+        'content' => $row['content'],
         'addedby' => $row['addedby']
     ]);
 } else {
-    // If no rows returned, indicate no announcements
-    echo json_encode([
-        'success' => false,
-        'message' => 'No current announcements.'
-    ]);
+    echo json_encode(['success' => false, 'message' => 'No announcements found.']);
 }
-
 ?>
