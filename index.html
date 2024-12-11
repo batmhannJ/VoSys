@@ -396,13 +396,13 @@
 <script>
   function fetchAnnouncement() {
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'get_announcement.php', true); // Adjust the path if necessary
+    xhr.open('GET', 'get_announcement.php', true); // Make sure the path is correct
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
-        console.log(xhr.responseText); // Log the raw response
+        console.log(xhr.responseText); // Log the raw response for debugging
         try {
           var data = JSON.parse(xhr.responseText); // Parse the JSON response
-          console.log(data); // Log parsed data
+          console.log(data); // Log parsed data for debugging
           if (data.success) {
             // Create announcement HTML from the received data
             var announcementHTML = `
