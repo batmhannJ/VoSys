@@ -1,474 +1,1137 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <?php include 'includes/session.php'; ?>
-    <?php include 'includes/header_jpcs.php'; ?>
-    <style>
-        .box-title {
-            text-align: center;
-            width: 100%;
-            display: inline-block;
-        }
-
-        /* Back to Top button styles */
-        #back-to-top {
-            position: fixed;
-            bottom: 40px;
-            right: 40px;
-            display: none;
-            background-color: #000;
-            color: #fff;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            text-align: center;
-            font-size: 22px;
-            line-height: 50px;
-            cursor: pointer;
-            z-index: 1000;
-        }
-
-        #back-to-top:hover {
-            background-color: #555;
-        }
-
-        .chart-container {
-            position: relative;
-            margin-bottom: 40px;
-            display: flex;
-            align-items: center;
-        }
-
-      /* Container to hold images and bar chart */
-#chartContainer {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-/* Image container styling */
-#image-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-/* Candidate image styling */
-.candidate-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-}
-
-/* Image circle styling */
-.image-container {
-    width: 80px;
-    height: 80px;
-    overflow: hidden;
-    border-radius: 50%;
-    margin-bottom: 10px;
-}
-
-/* Styling for images inside the circle */
-.candidate-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* Styling for candidate names */
-.name-label {
-    font-size: 14px;
-    font-weight: bold;
-    color: #333;
-    text-align: center;
-    margin-top: 5px;
-}
-
-/* Bar chart styles */
-canvas {
-    max-width: 100% !important;
-}
-
-/* Responsive design for smaller screens */
-@media (max-width: 768px) {
-    #barGraphContainer {
-        width: 100%;
-    }
-}
-
-
-        @media (max-width: 768px) {
-            .candidate-image img {
-                width: 75px;
-                height: 75px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .candidate-image img {
-                width: 100px;
-                height: 100px;
-            }
-        }
-    </style>
-</head>
-<body class="hold-transition skin-green sidebar-mini">
-    <div class="wrapper">
-        <?php include 'includes/navbar_jpcs.php'; ?>
-        <?php include 'includes/menubar_jpcs.php'; ?>
-
-        <div class="content-wrapper">
-            <section class="content-header">
-                <h1>Election Results</h1>
-                <ol class="breadcrumb">
-                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                    <li class="active">Results</li>
-                </ol>
-            </section>
-
-            <section class="content">
-                <!-- Organization Selection Form -->
-                <form id="organization-form">
-                    <label for="organization-select">Select Organization:</label>
-                    <select id="organization-select" name="organization">
-                        <option value="jpcs">JPCS</option>
-                    </select>
-                    <label for="graph-select">Select Graph Type:</label>
-                    <select id="graph-select" name="graph-type">
-                        <option value="bar">Bar Graph</option>
-                        <option value="pie">Pie Chart</option>
-                        <option value="line">Line Chart</option>
-                        <option value="donut">Donut Chart</option>
-                        <option value="stacked">Stacked Area Chart</option>
-                    </select>
-                    <button type="submit">Show Results</button>
-                </form>
-                <br>
-
-                <div class="row justify-content-center" id="results-container">
-                    <!-- Results will be dynamically inserted here -->
-                </div>
-            </section>
-
-            <button id="back-to-top" title="Back to top">&uarr;</button>
-        </div>
-        <?php include 'includes/footer.php'; ?>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css"
+      rel="stylesheet"
+    >
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    >
+    <title>OLSHCO College Online Voting System</title>
+    <link href="images/olshco.png" rel="icon">
+    <link href="images/olshco.png" rel="apple-touch-icon">
+  </head>
+  <body>
+    <header class="header">
+      <nav>
+  <div class="nav__header">
+    <div class="nav__logo">
+      <img src="images/logo.png" alt="" class="nav__logo-img"> 
+      <h2>VOSYS</h2>
     </div>
-    <?php include 'includes/scripts.php'; ?>
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-    <script src="path/to/jquery.min.js"></script>
-    <script>
-       // Bar Graph with Dynamic Image and Name Layout
-function generateBarGraph(dataPoints, containerId, imageContainerId) {
-    var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+    <div class="nav__menu__btn" id="menu-btn">
+      <span><i class="ri-menu-line"></i></span>
+    </div>
+  </div>
+  <ul class="nav__links" id="nav-links">
+    <li><a href="index.html#">Home</a></li>
+    <li class="dropdown">
+      <a href="javascript:void(0)" class="dropbtn">About</a>
+      <div class="dropdown-content">
+        <a href="about.html" id="aboutusLink">About Us</a>
+        <a href="walkthrough.html" id="walkthroughLink">System Walkthrough</a>
+      </div>
+    </li>
+    <li class="dropdown">
+        <a href="javascript:void(0)" class="dropbtn">Services</a>
+        <div class="dropdown-content">
+          <a href="services.html" id="services">Our Services</a>
+          <a href="Terms.html" id="termsOfServiceLink">Terms of Service</a>
+        </div>
+      </li>    
+    <li><a href="index.html#organizations">Organizations</a></li>
+    <li><a href="index.html#location">Location</a></li>
+    <li><a href="index.html#discover">Countdown</a></li>
+    <li><a href="index.html#candidate">Candidates</a></li>
+    <li><a href="voters_login.php"><button class="btn">Login</button></a></li>
+  </ul>
+</nav>
+<section id="about" class="section__container register__container">
+    <center><h2 class="section__header">ABOUT US</h2></center><br>
+    <div class="register__grid">
+      <div class="register__content">
+        <h4>VISION</h4>
+        <h5 style="color: white;">At the College Online Voting System, our vision is to be a trailblazer in the evolution of democratic processes within academic organizations. We envision a future where every college and university operates with complete transparency, inclusivity, and security, fostering an environment of active participation, trust, and progress.</h5>
+        <br>
+        <h4>MISSION</h4>
+        <h5 style="color: white;">Our mission is to empower academic organizations to redefine the way they conduct elections and surveys, providing a cutting-edge, user-friendly, and secure online voting platform that not only meets their unique needs but also exceeds their expectations.</h5>
+      </div>
+      <div class="register__image">
+        <img src="images/logo.png" alt="register" />
+      </div>
+    </div>
+  </section>
+    <!--==================== FOOTER ====================-->
+        <footer class="footer section">
+            <div class="footer__container container grid">
+                <div class="footer__content grid">
+                    <div class="footer__data">
+                        <h3 class="footer__title">VOTE</h3><br>
+                        <p class="footer__description">Take a decision today, <br> to ensure a better <br> tomorrow.
+                        </p>
+                      
+                    </div>
+    
+                    <div class="footer__data">
+                        <h3 class="footer__subtitle">About</h3><br>
+                        <ul>
+                            <li class="footer__item">
+                                <a href="about" class="footer__link">About</a>
+                            </li>
+                            <li class="footer__item">
+                                <a href="#service" class="footer__link">Services</a>
+                            </li>
+                            <li class="footer__item">
+                                <a href="#place" class="footer__link">Organizations</a>
+                            </li>
+                        </ul>
+                    </div>
+    
+                    <div class="footer__data">
+                        <h3 class="footer__subtitle">Socials</h3><br>
+                        <ul>
+                            <li class="footer__item">
+                                <a href="" class="footer__link">Facebook</a>
+                            </li>
+                            <li class="footer__item">
+                                <a href="" class="footer__link">Instagram</a>
+                            </li>
+                            <li class="footer__item">
+                                <a href="" class="footer__link">Twitter</a>
+                            </li>
+                        </ul>
+                    </div>
+    
+                    <div class="footer__data">
+                        <h3 class="footer__subtitle">Support</h3><br>
+                        <ul>
+                            <li class="footer__item">
+                                <a href="" class="footer__link">FAQs</a>
+                            </li>
+                            <li class="footer__item">
+                                <a href="" class="footer__link">Support Center</a>
+                            </li>
+                            <li class="footer__item">
+                                <a href="" class="footer__link">Contact Us</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div><br>
 
-    // Clear previous images in the container
-    var imageContainer = document.getElementById(imageContainerId);
-    imageContainer.innerHTML = '';
+                <a href="developers.html"><div class="footer__rights">
+                    <p class="footer__copy" style="color: #fff;">&#169; VOSYS DEVELOPERS 2024</p>
+                </div></a>
+            </div>
+        </footer>
+  </body>
+  <!-- Include the countdown timer library (if applicable) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+  <!--<script src="path/to/countdown-library.js"></script>-->
+  <script src="https://unpkg.com/scrollreveal"></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="main.js"></script>
+  <script>
+    // Get the elements
+const menuBtn = document.getElementById("menu-btn");
+const navMenu = document.getElementById("nav-menu");
 
-    // Loop to create unique and dynamic display for each candidate
-    dataPoints.forEach(dataPoint => {
-        var candidateDiv = document.createElement('div');
-        candidateDiv.className = 'candidate-wrapper';
+// Toggle the "active" class on the menu when the button is clicked
+menuBtn.addEventListener("click", function () {
+  navMenu.classList.toggle("active"); // This will show or hide the menu
+});
+    </script>
 
-        // Create image container
-        var imgContainer = document.createElement('div');
-        imgContainer.className = 'image-container';
-        var imgElement = document.createElement('img');
-        imgElement.src = dataPoint.image;
-        imgElement.alt = dataPoint.label;
-        imgElement.title = dataPoint.label;
-        imgElement.className = 'candidate-image';
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const dropdowns = document.querySelectorAll(".dropdown");
 
-        // Create name label that appears below the image
-        var nameLabel = document.createElement('div');
-        nameLabel.className = 'name-label';
-        nameLabel.innerText = dataPoint.label;
+    dropdowns.forEach(function (dropdown) {
+      const dropbtn = dropdown.querySelector(".dropbtn");
+      const dropdownContent = dropdown.querySelector(".dropdown-content");
 
-        // Append image and name label to the wrapper
-        imgContainer.appendChild(imgElement);
-        candidateDiv.appendChild(imgContainer);
-        candidateDiv.appendChild(nameLabel);
-
-        // Append to the image container
-        imageContainer.appendChild(candidateDiv);
+      // Toggle dropdown visibility when clicking the button
+      dropbtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        dropdownContent.classList.toggle("show"); // Toggle visibility of the dropdown
+      });
     });
 
-    // Generate the bar graph
-    var chart = new CanvasJS.Chart(containerId, {
-        animationEnabled: true,
-        animationDuration: 3000,
-        animationEasing: "easeInOutBounce",
-        title: {
-            text: "Vote Counts"
-        },
-        axisX: {
-            title: "",
-            includeZero: true,
-            interval: 1,
-            labelFormatter: function () {
-                return " ";
-            }
-        },
-        axisY: {
-            title: "",
-            interval: Math.ceil(totalVotes / 10)
-        },
-        data: [{
-            type: "bar",
-            indexLabel: "{label} - {percent}%",
-            indexLabelPlacement: "inside",
-            indexLabelFontColor: "white",
-            indexLabelFontSize: 14,
-            dataPoints: dataPoints.map(dataPoint => ({
-                ...dataPoint,
-                percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-            }))
-        }]
+    // Hide all dropdowns when clicking anywhere outside
+    document.addEventListener("click", function (e) {
+      dropdowns.forEach(function (dropdown) {
+        const dropdownContent = dropdown.querySelector(".dropdown-content");
+        if (!dropdown.contains(e.target)) {
+          dropdownContent.classList.remove("show"); // Hide the dropdown
+        }
+      });
     });
+  });
+</script>
 
-    chart.render();
+      </body>
+      <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+    
+    :root {
+      --text-dark: #0a0a0a;
+      --text-light: #737373;
+      --extra-light: #f5f5f5;
+      --white: #ffffff;
+      --max-width: 1200px;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html,
+    body {
+      scroll-behavior: smooth;
+    }
+    
+    body {
+      font-family: "Poppins", sans-serif;
+    }
+    .section__container {
+      max-width: var(--max-width);
+      margin: auto;
+      padding: 8rem 1rem;
+    }
+    
+    .section__header {
+      font-size: 2rem;
+      font-weight: 700;
+      font-size: 40px;
+      color: var(--text-dark);
+    }
+    
+    .dropdown {
+  position: relative;
 }
 
-        // Pie Chart
-        function generatePieChart(dataPoints, containerId, imageContainerId) {
-            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+/* General styles for dropdown button */
+.dropbtn {
+  font-size: 16px;
+  color: #fff;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 12px 16px;
+  font-weight: normal; /* Not bold */
+  text-transform: none; /* Remove uppercase */
+  letter-spacing: 1px;
+  position: relative;
+  transition: color 0.3s ease;
+}
 
-            var imageContainer = document.getElementById(imageContainerId);
-            imageContainer.innerHTML = '';
-            dataPoints.forEach(dataPoint => {
-                var candidateDiv = document.createElement('div');
-                candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">;
-                imageContainer.appendChild(candidateDiv);
-            });
+/* Dropdown content */
+.dropdown-content {
+  display: none; /* Initially hidden */
+  position: absolute;
+  background-color: maroon; /* Maroon background */
+  min-width: 200px;
+  border-radius: 4px;
+  top: 170%; /* Adjusted from 100% to 170% to move it downward */
+  left: 0;
+  z-index: 1;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
 
-            var chart = new CanvasJS.Chart(containerId, {
-                animationEnabled: true,
-                animationDuration: 3000,
-                animationEasing: "easeInOutBounce",
-                title: {
-                    text: "Vote Counts"
-                },
-                data: [{
-                    type: "pie",
-                    indexLabel: "{label} - {percent}%",
-                    indexLabelFontColor: "white",
-                    dataPoints: dataPoints.map(dataPoint => ({
-                        ...dataPoint,
-                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-                    }))
-                }]
-            });
-            chart.render();
-        }
+/* Show the dropdown when the .show class is added */
+.dropdown-content.show {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+}
 
-        // Line Chart
-        function generateLineChart(dataPoints, containerId, imageContainerId) {
-            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+/* Dropdown links */
+.dropdown-content a {
+  color: #fff;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-size: 16px;
+  border-bottom: 1px solid #444;
+  transition: background-color 0.3s ease;
+}
 
-            var imageContainer = document.getElementById(imageContainerId);
-            imageContainer.innerHTML = '';
-            dataPoints.forEach(dataPoint => {
-                var candidateDiv = document.createElement('div');
-                candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">;
-                imageContainer.appendChild(candidateDiv);
-            });
+/* Remove border from the last link */
+.dropdown-content a:last-child {
+  border-bottom: none;
+}
 
-            var chart = new CanvasJS.Chart(containerId, {
-                animationEnabled: true,
-                animationDuration: 3000,
-                animationEasing: "easeInOutBounce",
-                title: {
-                    text: "Vote Counts"
-                },
-                axisX: {
-                    title: "Candidates"
-                },
-                axisY: {
-                    title: "Votes"
-                },
-                data: [{
-                    type: "line",
-                    dataPoints: dataPoints
-                }]
-            });
-            chart.render();
-        }
-
-        // Donut Chart
-        function generateDonutChart(dataPoints, containerId, imageContainerId) {
-            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
-
-            var imageContainer = document.getElementById(imageContainerId);
-            imageContainer.innerHTML = '';
-            dataPoints.forEach(dataPoint => {
-                var candidateDiv = document.createElement('div');
-                candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">;
-                imageContainer.appendChild(candidateDiv);
-            });
-
-            var chart = new CanvasJS.Chart(containerId, {
-                animationEnabled: true,
-                animationDuration: 3000,
-                animationEasing: "easeInOutBounce",
-                title: {
-                    text: "Vote Counts"
-                },
-                data: [{
-                    type: "doughnut",
-                    indexLabel: "{label} - {percent}%",
-                    indexLabelFontColor: "white",
-                    dataPoints: dataPoints.map(dataPoint => ({
-                        ...dataPoint,
-                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-                    }))
-                }]
-            });
-            chart.render();
-        }
-
-        // Stacked Area Chart
-        function generateStackedAreaChart(dataPoints, containerId, imageContainerId) {
-            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
-
-            var imageContainer = document.getElementById(imageContainerId);
-            imageContainer.innerHTML = '';
-            dataPoints.forEach(dataPoint => {
-                var candidateDiv = document.createElement('div');
-                candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">;
-                imageContainer.appendChild(candidateDiv);
-            });
-
-            var chart = new CanvasJS.Chart(containerId, {
-                animationEnabled: true,
-                animationDuration: 3000,
-                animationEasing: "easeInOutBounce",
-                title: {
-                    text: "Vote Counts"
-                },
-                axisX: {
-                    title: "Candidates"
-                },
-                axisY: {
-                    title: "Votes"
-                },
-                data: [{
-                    type: "stackedArea",
-                    dataPoints: dataPoints
-                }]
-            });
-            chart.render();
-        }
-
-        // Fetch and generate graphs
-        function fetchAndGenerateGraphs(organization, graphType) {
-            $.ajax({
-                url: 'update_jpcs_data.php',
-                method: 'GET',
-                dataType: 'json',
-                success: function (response) {
-                    // Clear previous results
-                    $('#results-container').empty();
-
-                    // Define categories for each organization
-                    var categories = {
-                        'jpcs': {
-                            'president': 'President',
-                            'vp for internal affairs': 'VP for Internal Affairs',
-                            'vp for external affairs': 'VP for External Affairs',
-                            'secretary': 'Secretary',
-                            'treasurer': 'Treasurer',
-                            'auditor': 'Auditor',
-                            'p.r.o': 'P.R.O',
-                            'dir. for membership': 'Dir. for Membership',
-                            'dir. for special project': 'Dir. for Special Project',
-                            '2-ARep': '2-A Rep',
-                            '2-BRep': '2-B Rep',
-                            '3-ARep': '3-A Rep',
-                            '3-BRep': '3-B Rep',
-                            '4-ARep': '4-A Rep',
-                            '4-BRep': '4-B Rep'
-                        }
-                    };
-
-                    // Get categories for the selected organization
-                    var selectedCategories = categories[organization];
-
-                    // Generate graphs for the selected categories
-                    Object.keys(selectedCategories).forEach(function (category) {
-                        if (response[category]) {
-                            // Create container for each category
-                            var containerHtml = 
-                                <div class='col-md-12'>
-                                    <div class='box'>
-                                        <div class='box-header with-border'>
-                                            <h3 class='box-title'><b>${selectedCategories[category]}</b></h3>
-                                        </div>
-                                        <div class='box-body'>
-                                            <div class='chart-container'>
-                                                <div class='candidate-images' id='${category}Image'></div>
-                                                <div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>;
-                            $('#results-container').append(containerHtml);
-
-                            // Generate the selected graph type for the category
-                            if (graphType === 'bar') {
-                                generateBarGraph(response[category], category + 'Graph', category + 'Image');
-                            } else if (graphType === 'pie') {
-                                generatePieChart(response[category], category + 'Graph', category + 'Image');
-                            } else if (graphType === 'line') {
-                                generateLineChart(response[category], category + 'Graph', category + 'Image');
-                            } else if (graphType === 'donut') {
-                                generateDonutChart(response[category], category + 'Graph', category + 'Image');
-                            } else if (graphType === 'stacked') {
-                                generateStackedAreaChart(response[category], category + 'Graph', category + 'Image');
-                            }
-                        }
-                    });
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error fetching data: ", status, error);
-                }
-            });
-        }
-
-        // Event listener for form submission
-        $('#organization-form').on('submit', function (e) {
-            e.preventDefault();
-
-            var organization = $('#organization-select').val();
-            var graphType = $('#graph-select').val();
-
-            fetchAndGenerateGraphs(organization, graphType);
-        });
-
-        // Scroll to top button
-        $(window).scroll(function () {
-            if ($(this).scrollTop() > 100) {
-                $('#back-to-top').fadeIn();
-            } else {
-                $('#back-to-top').fadeOut();
-            }
-        });
-
-        $('#back-to-top').click(function () {
-            $('html, body').animate({ scrollTop: 0 }, 500);
-            return false;
-        });
-    </script>
-</body>
-</html>
+/* Mobile responsive dropdown */
+@media (max-width: 768px) {
+  .dropdown-content {
+    position: static;
+    min-width: 100%; /* Full width on small screens */
+  }
+  .dropdown .dropdown-content a {
+    padding: 10px 15px;
+    font-size: 14px;
+  }
+}
+    .btn {
+      padding: .5rem 1.5rem;
+      outline: none;
+      border: none;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      background-color: var(--white);
+      border-radius: 5px;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    
+    .btn:hover {
+      background-color: var(--extra-light);
+    }
+    
+    img {
+      display: flex;
+      width: 100%;
+    }
+    
+    a {
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    
+    nav {
+      position: fixed;
+      isolation: isolate;
+      width: 100%;
+      /*max-width: var(--max-width);*/
+      margin-inline: auto;
+      z-index: 9;
+      background-color: maroon;
+    }
+    
+    .nav__header {
+      padding: 1rem;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: maroon;
+    }
+    .nav__logo {
+        margin-left: 30px;
+        color: white;
+        display: flex;
+        align-items: center; /* Align items vertically */
+    }
+    
+    .nav__logo-img {
+        width: 50px; /* Adjust size as needed */
+        height: auto; /* Maintain aspect ratio */
+        margin-right: 10px; /* Adjust spacing */
+    }
+    
+    .nav__logo-text {
+        font-size: 1.2rem; /* Adjust font size */
+        color: #333; /* Adjust color */
+        text-decoration: none; /* Remove underline */
+    }
+    
+    .nav__menu__btn {
+      font-size: 1.5rem;
+      color: var(--white);
+      cursor: pointer;
+    }
+    
+    .nav__links {
+      position: absolute;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      padding: 2rem;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 2rem;
+      background-color: maroon;
+      transition: 0.5s;
+      z-index: -1;
+      transform: translateY(-100%);
+      margin-right: 30px;
+    }
+    
+    .nav__links.open {
+      transform: translateY(0);
+    }
+    
+    .nav__links a {
+      white-space: nowrap;
+      color: var(--white);
+      transition: 0.3s;
+    }
+    
+    .nav__links a:hover {
+      color: var(--text-light);
+    }
+    
+    .nav__links .btn {
+      color: var(--white);
+      background-color: transparent;
+      border: 1px solid var(--white);
+    }
+    
+    .nav__links .btn:hover {
+      color: var(--text-dark);
+      background-color: var(--white);
+      border-color: var(--white);
+    }
+    
+    .header__container {
+      padding-block: 10rem;
+    }
+    
+    .header__container h1 {
+      font-size: 39px;
+        font-weight: bold;
+        /* Set the text color */
+        color: white;
+        /* Set the text shadow */
+        text-shadow: 9px 9px 9px rgba(0, 0, 0, 0.9);
+      }
+    
+      /* Set the outline */
+      .outline-text {
+        /* For modern browsers */
+        -webkit-text-stroke-width: 10px;
+        -webkit-text-stroke-color: white;
+        /* For older browsers */
+        text-stroke-width: 2px;
+        text-stroke-color: black;
+      }
+      /* Set the outline */
+    .outline-text {
+      /* For modern browsers */
+      -webkit-text-stroke-width: 2px;
+      -webkit-text-stroke-color: white;
+      /* For older browsers */
+      text-stroke-width: 2px;
+      text-stroke-color: black;
+    }
+    
+    /* Responsive Design */
+    @media screen and (max-width: 768px) {
+      .outline-text {
+        /* Adjust the text stroke width for smaller screens */
+        -webkit-text-stroke-width: 1px;
+        text-stroke-width: 1px;
+      }
+    }
+    
+    @media screen and (max-width: 480px) {
+      .outline-text {
+        /* Adjust the text stroke width and color for even smaller screens */
+        -webkit-text-stroke-width: 0.5px;
+        text-stroke-width: 0.5px;
+        -webkit-text-stroke-color: rgba(255, 255, 255, 0.5);
+        text-stroke-color: rgba(0, 0, 0, 0.5);
+      }
+    }
+    
+    .header__container form {
+      width: 100%;
+      max-width: 400px;
+      padding: 2px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background-color: var(--white);
+      border-radius: 5px;
+    }
+    
+    .header__container form .btn {
+      padding: 10px;
+      font-size: 1.25rem;
+      background-color: transparent;
+    }
+    
+    .header__container form input {
+      width: 100%;
+      outline: none;
+      border: none;
+      font-size: 1rem;
+      color: var(--text-dark);
+    }
+    
+    .header__container p {
+      font-size: 0.9rem;
+      color: var(--white);
+    }
+    
+    .popular__grid {
+      margin-top: 2rem;
+      display: grid;
+      gap: 1rem;
+    }
+    
+    .popular__card {
+      padding: 1rem;
+      border-radius: 1rem;
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
+      transition: 0.3s;
+    }
+    
+    .popular__card:hover {
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .popular__card img {
+      margin-bottom: 1rem;
+      border-radius: 10px;
+    }
+    
+    .popular__card p {
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--text-light);
+    }
+    
+    .popular__card h4 {
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+    
+    .popular__card > div {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    
+    .popular__card .rating {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-light);
+    }
+    
+    .popular__card .rating span {
+      font-size: 1.2rem;
+      color: goldenrod;
+    }
+    
+    .popular__card .price {
+      color: var(--text-light);
+    }
+    
+    .popular__card .price span {
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+    
+    .talent__container .section__header {
+      text-align: center;
+    }
+    
+    .talent__grid {
+      margin-top: 2rem;
+      display: grid;
+      gap: 1rem;
+    }
+    
+    .talent__card {
+      padding: 2rem 1rem;
+      border-radius: 1rem;
+      border: 2px solid transparent;
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: 0.3s;
+    }
+    
+    .talent__card:hover {
+      border-color: var(--text-dark);
+    }
+    
+    .talent__card span {
+      display: inline-block;
+      margin-bottom: 1rem;
+      padding: 5px 13px;
+      font-size: 2rem;
+      color: var(--text-dark);
+      background-color: var(--extra-light);
+      border-radius: 10px;
+      transition: 0.3s;
+    }
+    
+    .talent__card:hover span {
+      color: var(--white);
+      background-color: var(--text-dark);
+    }
+    
+    .talent__card h4 {
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+    
+    .talent__card p {
+      color: var(--text-light);
+    }
+    
+    .register__grid {
+      display: grid;
+      background-color: maroon;
+      border-radius: 1rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9); /* Adjust the shadow properties as needed */
+    }
+    
+    
+    .register__content {
+      padding-block: 2rem;
+      padding-inline: 1rem;
+    }
+    
+    .register__content h4 {
+      margin-bottom: 1rem;
+      font-size: 2rem;
+      font-weight: 600;
+      line-height: 4rem;
+      color: var(--white);
+    }
+    
+    .register__content h5 {
+      font-weight: 200;
+      font-size: 15px;
+      text-align: justify;
+    }
+    
+    .register__image {
+      display: none;
+    }
+    
+    .swiper {
+      padding-block: 2rem;
+      width: 100%;
+    }
+    
+    .swiper-slide {
+      max-width: 500px;
+      padding-inline: 1rem;
+    }
+    
+    .client__card {
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
+      transition: 0.3s;
+    }
+    
+    .client__card:hover {
+      box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .client__card p {
+      margin-bottom: 2rem;
+      color: var(--text-light);
+      text-align: justify;
+    }
+    
+    .client__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    
+    .client__footer h4 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: maroon;
+    }
+    
+    .client__footer h5 {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-light);
+    }
+    
+    .client__footer span {
+      padding: 5px 11px;
+      font-size: 1.5rem;
+      color: var(--white);
+      background-color: maroon;
+      border-radius: 5px;
+    }
+    
+    /*=============== FOOTER ===============*/
+    
+    hr {
+      width: 1;
+      height: 1px; /* I-adjust ang taas ng <hr> */
+      margin: 0; /* Alisin ang default margin */
+      background-color: var(--text-color-light); /* Baguhin ang kulay ng <hr> */
+      list-style-type: none; /* Tanggalin ang bullet */
+    }
+    .footer__container {
+      padding-top: 50px;
+      padding-bottom: 20px;
+      background-color: maroon;
+      row-gap: 2rem;
+    }
+    
+    .footer__content {
+      margin-left: 160px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      column-gap: 2rem;
+      row-gap: 2rem;
+    }
+    
+    .footer__title, 
+    .footer__subtitle {
+      color: white;
+      font-size: var(--h3-font-size);
+      font-size: 20px;
+      margin-top: 20px;
+    }
+    
+    .footer__title {
+        color: white;
+      margin-bottom: var(--mb-0-5);
+      font-size: 20px;
+    }
+    
+    .footer__description {
+        color: white;
+      margin-bottom: var(--mb-2);
+    }
+    
+    .footer__social {
+        color: white;
+      font-size: 1.25rem;
+      color: var(--title-color);
+      margin-right: var(--mb-1-25);
+    }
+    
+    .footer__subtitle {
+        color: white;
+      margin-bottom: var(--mb-1);
+    }
+    
+    .footer__item {
+        color: white;
+      margin-bottom: var(--mb-0-75);
+    }
+    
+    .footer__link {
+        color: white;
+      color: var(--text-color);
+    }
+    
+    .footer__link:hover {
+      color: var(--title-color);
+    }
+    
+    .footer__rights {
+        color: white;
+      display: flex;
+      flex-direction: column;
+      row-gap: 1rem;
+      text-align: center;
+    }
+    
+    .footer__copy, .footer__terms-link {
+      font-size: var(--small-font-size);
+      color: gray;
+    }
+    
+    .footer__terms {
+        color: white;
+      display: flex;
+      column-gap: 1rem;
+      justify-content: center;
+    }
+    
+    .footer__terms-link:hover {
+      color: var(--text-color);
+    }
+    
+    /* Responsive Design */
+    
+    @media (max-width: 768px) {
+      .footer__content {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        column-gap: 1rem;
+      }
+      
+      .footer__rights {
+        row-gap: 0.5rem;
+      }
+    }
+    
+    @media (width > 768px) {
+      nav {
+        position: fixed;
+        padding: 1rem 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+        background-color: maroon;
+      }
+    
+      .nav__header {
+        padding: 0;
+        background-color: transparent;
+      }
+    
+      .nav__menu__btn {
+        display: none;
+      }
+    
+      .nav__links {
+        position: static;
+        padding: 0;
+        flex-direction: row;
+        justify-content: flex-end;
+        background-color: transparent;
+        transform: none;
+      }
+    
+      .header__container {
+        padding-block: 8rem 12rem;
+      }
+    
+      .header__container h1 {
+        font-size: 4rem;
+        line-height: 4.5rem;
+      }
+    
+      .popular__grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    
+      .talent__grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    
+      .register__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    
+      .register__content {
+        padding-block: 3rem;
+        padding-inline: 4rem 0;
+      }
+    
+      .register__image {
+        display: block;
+        position: relative;
+        isolation: isolate;
+      }
+    
+      .register__image img {
+        position: absolute;
+        max-width: 425px;
+        bottom: 45px;
+        left: 15%;
+      }
+    
+      .footer__container {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    
+    @media (width > 1024px) {
+      .talent__grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    
+      .footer__container {
+        grid-template-columns: repeat(5, 1fr);
+      }
+    }
+    /* Tanggalin ang bullet sa mga listahan */
+    .footer__item {
+      list-style-type: none;
+    }
+    
+    
+    /* College Organizations Section */
+      .place {
+        text-align: center;
+        background-color: #f3f4f6;
+        padding: 125px 0; /* Space above and below */
+      }
+    
+      .section__title {
+        font-size: 1.5em;
+        color: black;
+        margin-bottom: 20px;
+      }
+    
+      .place__container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 50px;
+        grid-row-gap: 10px;
+        flex-wrap: wrap;
+      }
+    
+      .place__card {
+        position: relative;
+        overflow: hidden;
+        width: 200px;
+        height: 200px;
+        margin: 10px;
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+      }
+    
+      .place__card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      }
+    
+      .place__img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        cursor: pointer;
+      }
+    
+      .place__content {
+        position: relative;
+        padding: 15px;
+      }
+    
+      .place__data h3 {
+        font-size: 1.2em;
+        color: #333;
+      }
+    
+      /* Description Popup Styles */
+      #descriptionPopup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+    
+      .description-container {
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 600px;
+        text-align: center;
+        position: relative;
+      }
+    
+      .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+        font-size: 1.5em;
+        color: #333;
+      }
+    
+      .organization-description {
+        color: #333;
+        margin-top: 20px;
+      }
+    
+      .home__container {
+        grid-template-rows: 2fr .5fr;
+        margin-left: -70px;
+      }
+      .location__container {
+      text-align: center;
+    }
+    
+    .location__map {
+      max-width: 100%;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+    
+    .location__map iframe {
+      width: 100%;
+      height: 500px; /* I-adjust ang taas base sa iyong pangangailangan */
+      border: 0;
+    }
+    
+    /* Styles for Countdown Timer Section */
+    
+    .discover {
+      background-color: #f3f4f6; /* Background color */
+      padding: 245px 0; /* Space above and below */
+    }
+    
+    .wrapper {
+      text-align: center; /* Center the content */
+    }
+    
+    .timer {
+      display: flex;
+      justify-content: center; /* Center the timers */
+      flex-wrap: wrap; /* Wrap timers if they exceed container width */
+      gap: 20px; /* Space between timers */
+    }
+    
+    .sub_timer {
+      flex-basis: 20%; /* Each timer takes 20% of the container */
+      max-width: 200px; /* Set max-width to control size on larger screens */
+      padding: 20px; /* Padding around each timer */
+      background-color: #fff; /* Background color of the box */
+      border-radius: 8px; /* Rounded corners */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.9); /* Box shadow */
+    }
+    
+    .digit {
+      font-size: 5rem; /* Size of the digits */
+    }
+    
+    .digit_name {
+      font-size: 1rem; /* Size of the digit_name */
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .sub_timer {
+        flex-basis: 40%; /* Each timer takes 40% of the container on smaller screens */
+      }
+    
+      .digit {
+        font-size: 4rem; /* Reduce digit size on smaller screens */
+      }
+    }
+    .section__containerrr {
+      padding: 40px 20px;
+      margin: 20px auto;
+      max-width: 1200px;
+      background-color: white;
+      border-radius: 10px; /* Rounded corners */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+      text-align: center; /* Center the text */
+    }
+    
+    /* Header styling */
+    .section__headerrr {
+      font-size: 1em; /* Larger font size */
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-transform: uppercase; /* Uppercase letters */
+      letter-spacing: 2px; /* Space between letters */
+      color: #333; /* Dark text color */
+    }
+    
+    .instagram__container {
+      overflow: hidden;
+    }
+    
+    .instagram__container1 {
+      overflow: hidden;
+    }
+    
+    /* Base styles for .instagram__flex */
+    .instagram__flex, .instagram__flex1 {
+      margin-top: 2rem;
+      width: max-content;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      animation: scroll-large 20s linear infinite;
+    }
+    
+    .instagram__flex img, .instagram__flex1 img {
+      width: 200px;
+      height: 200px;
+    }
+    
+    /* Keyframes for larger screens */
+    @keyframes scroll-large {
+      to {
+        transform: translateX(calc(-50% - 1rem));
+      }
+    }
+    
+    /* Keyframes for medium screens */
+    @keyframes scroll-medium {
+      to {
+        transform: translateX(calc(-50% - 1rem));
+      }
+    }
+    
+    /* Keyframes for small screens */
+    @keyframes scroll-small {
+      to {
+        transform: translateX(calc(-100% - 1rem));
+      }
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 1200px) {
+      .instagram__flex, .instagram__flex1 {
+        animation: scroll-medium 20s linear infinite;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .instagram__flex, .instagram__flex1 {
+        animation: scroll-small 20s linear infinite;
+      }
+    }
+    
+    /* General styling for both blog sections */
+    .blog, .blog1 {
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      height: 150px; /* Set the height */
+      width: calc(100% - 40px); /* Adjust width to leave margin on both sides */
+      margin: 20px auto; /* Centered margin with top and bottom spacing */
+      padding: 20px; /* Inner padding for content */
+      box-sizing: border-box; /* Include padding and border in element's width and height */
+      border-radius: 10px; /* Rounded corners */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+      transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition effects */
+    }
+    
+    /* Specific background images */
+    .blog {
+      background-image: url("images/pla/1.png");
+    }
+    
+    .blog1 {
+      background-image: url("images/pla/2.png");
+    }
+    
+    
+      </style>
+    </html>
+    
