@@ -59,6 +59,17 @@
     </header><br><br><br>
 
     <section id="about" class="section__container register__container">
+      <center><h2 class="section__header">Announcement</h2></center><br>
+      <div class="register__grid">
+        <div class="register__content">
+
+          <!-- Announcement Section -->
+
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section__container register__container">
       <center><h2 class="section__header">ABOUT US</h2></center><br>
       <div class="register__grid">
         <div class="register__content">
@@ -73,67 +84,6 @@
         </div>
       </div>
     </section>
-
-    <section id="about" class="section__container register__container">
-      <center><h2 class="section__header">Announcement</h2></center><br>
-      <div class="register__grid">
-          <div class="register__content">
-              <!-- Announcement content will be loaded here dynamically -->
-              <div id="announcement-container">
-                  <p>Loading the latest announcement...</p>
-              </div>
-          </div>
-      </div>
-  </section>
-  
-  <script>
-// Function to load the announcement
-function loadAnnouncement() {
-    // Create an AJAX request
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'get_announcement.php', true);
-
-    // When the request state changes
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4) {
-            // Check if the request was successful (status 200)
-            if (xhr.status == 200) {
-                try {
-                    // Parse the response JSON
-                    var response = JSON.parse(xhr.responseText);
-                    console.log(response);  // Log the response for debugging
-
-                    // Get the container where the announcement will be shown
-                    var announcementContainer = document.getElementById('announcement-container');
-                    
-                    // Check if there's a successful announcement response
-                    if (response.success) {
-                        // Display the announcement title and content
-                        announcementContainer.innerHTML = '<h3>' + response.title + '</h3><p>' + response.content + '</p>';
-                    } else {
-                        // If no announcement found, show a message
-                        announcementContainer.innerHTML = '<p>' + response.message + '</p>';
-                    }
-                } catch (e) {
-                    // Handle JSON parsing error
-                    console.error('Error parsing JSON response:', e);
-                    announcementContainer.innerHTML = '<p>Error loading announcement. Please try again later.</p>';
-                }
-            } else {
-                // If the HTTP request failed (not status 200)
-                console.error('Failed to load announcement. HTTP Status: ' + xhr.status);
-                document.getElementById('announcement-container').innerHTML = '<p>Failed to load announcement. Please try again later.</p>';
-            }
-        }
-    };
-
-    // Send the request
-    xhr.send();
-}
-
-// Load the announcement when the page loads
-window.onload = loadAnnouncement;
-</script>
 
 <section class="discover section" id="discover">        
     <div class="wrapper">
