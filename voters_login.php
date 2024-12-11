@@ -563,6 +563,10 @@ main.sign-up-mode .carousel {
                 </div>
 
                 <div style="text-align: right; margin-bottom: 10px;">
+                  <input type="checkbox" name="agree_terms" required> I agree to the <a href="terms_and_condition.php" target="_blank">Terms and Conditions</a>
+                </div>
+
+                <div style="text-align: right; margin-bottom: 10px;">
                     <a href="forgot_pass.php" style="font-size: 15px;">Forgot Password?</a>
                 </div>
 
