@@ -61,6 +61,7 @@
             <div class="tab" onclick="setActiveTab('restrictions_on_use')">Restrictions on Use</div>
             <div class="tab" onclick="setActiveTab('liability')">Liability</div>
             <div class="tab" onclick="setActiveTab('contact_info')">Contact Information</div>
+            <div class="tab" onclick="setActiveTab('suspension_termination')">Suspension or Termination of Accounts</div>
           </div>
 
           <div class="content" id="content">
@@ -252,6 +253,19 @@
         <li style="text-align: justify;"><strong>Support Hours:</strong> Our support team is available Monday through Friday from 9:00 AM to 5:00 PM (local time). We are closed on weekends and public holidays, but we will address all inquiries on the next business day.</li>
         <li style="text-align: justify;"><strong>Social Media:</strong> Stay connected with us through our official social media channels for updates, announcements, and support. Follow us on [list social media platforms] for the latest news and alerts.</li>
         <li style="text-align: justify;"><strong>Feedback:</strong> We welcome feedback to help improve vosys.org. If you have suggestions or improvements to recommend, please do not hesitate to contact us using any of the methods above.</li>
+      </ul>
+    `;
+    break;
+    case 'suspension_termination':
+    title.textContent = 'Suspension or Termination of Accounts';
+    description.innerHTML = `
+      <ul style="text-align: justify; list-style-type: none; padding-left: 0;">
+        <li style="text-align: justify;"><strong>Suspension:</strong> vosys.org reserves the right to suspend or terminate user accounts if any violation of the Terms of Service occurs. Suspended accounts may be temporarily disabled, and users may be notified of the suspension. Suspended users will not be allowed to access the platform or participate in the voting process during this period.</li>
+        <li style="text-align: justify;"><strong>Termination:</strong> Accounts may be permanently terminated if users are found to be ineligible, engaged in fraudulent activities, or participating in behavior that violates the integrity of the voting process. This includes, but is not limited to, activities such as vote manipulation, impersonation, or the use of multiple accounts.</li>
+        <li style="text-align: justify;"><strong>Appeal Process:</strong> Users whose accounts have been suspended or terminated may appeal the decision. Appeals should be submitted within 30 days of the suspension or termination, and the appeal will be reviewed by the relevant authorities at vosys.org. The decision regarding the appeal will be final.</li>
+        <li style="text-align: justify;"><strong>Reinstatement of Account:</strong> In some cases, accounts may be reinstated if the suspension was due to a temporary violation or misunderstanding. Reinstatement will be subject to the approval of vosys.org and may require the user to fulfill specific requirements to ensure compliance with the platform’s rules.</li>
+        <li style="text-align: justify;"><strong>Impact on Voting Rights:</strong> Suspended or terminated users will lose their voting rights during the period of suspension or permanently upon termination. They will not be able to participate in any ongoing or future voting events.</li>
+        <li style="text-align: justify;"><strong>Consequences of False Information:</strong> Submitting false or misleading information to bypass eligibility criteria or manipulate the voting process can result in immediate termination of the user’s account and possible legal action.</li>
       </ul>
     `;
     break;
