@@ -4,14 +4,14 @@
     <?php include 'includes/session.php'; ?>
     <?php include 'includes/header.php'; ?>
     <style>
-    /* .box-title {
+        .box-title {
             text-align: center;
             width: 100%;
             display: inline-block;
             font-size: 24px;
             font-weight: bold;
             color: #333;
-        } */
+        } 
 
         #back-to-top {
             position: fixed;
@@ -36,7 +36,7 @@
             background-color: #0056b3;
         }
 
-        .chart-container {
+       /* .chart-container {
             position: relative;
             margin-bottom: 40px;
             display: flex;
@@ -45,7 +45,7 @@
             border-radius: 12px;
             padding: 20px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
+        } */
 
         .candidate-images {
             display: flex;
