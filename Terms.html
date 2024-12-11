@@ -35,7 +35,6 @@
       <div class="dropdown-content">
         <a href="about.html" id="aboutusLink">About Us</a>
         <a href="walkthrough.html" id="walkthroughLink">System Walkthrough</a>
-        <a href="Terms.html" id="termsLink">System Walkthrough</a>
       </div>
     </li>
     <li><a href="index.html#services">Services</a></li>
@@ -179,33 +178,33 @@
     }
   </script>
 
-  <script>
-    // Get the dropdown elements
-  const dropdown = document.querySelector(".dropdown");
-  const dropdownContent = document.querySelector(".dropdown-content");
-  
-  // Get other navigation links
-  const otherNavLinks = document.querySelectorAll(".navbar li:not(.dropdown) a");
-  
-  // Prevent dropdown from disappearing on hover or click
-  dropdown.addEventListener("click", function (e) {
-    e.stopPropagation(); // Stop event bubbling
-    dropdownContent.classList.toggle("hide"); // Toggle visibility
-  });
-  
-  // Hide dropdown when clicking another nav item
-  otherNavLinks.forEach(link => {
-    link.addEventListener("click", function () {
-      dropdownContent.classList.add("hide"); // Hide dropdown
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const dropdowns = document.querySelectorAll(".dropdown");
+
+    dropdowns.forEach(function (dropdown) {
+      const dropbtn = dropdown.querySelector(".dropbtn");
+      const dropdownContent = dropdown.querySelector(".dropdown-content");
+
+      // Toggle dropdown visibility when clicking the button
+      dropbtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        dropdownContent.classList.toggle("show"); // Toggle visibility of the dropdown
+      });
+    });
+
+    // Hide all dropdowns when clicking anywhere outside
+    document.addEventListener("click", function (e) {
+      dropdowns.forEach(function (dropdown) {
+        const dropdownContent = dropdown.querySelector(".dropdown-content");
+        if (!dropdown.contains(e.target)) {
+          dropdownContent.classList.remove("show"); // Hide the dropdown
+        }
+      });
     });
   });
-  
-  // Hide dropdown when clicking anywhere outside
-  document.addEventListener("click", function () {
-    dropdownContent.classList.add("hide");
-  });
-  
-    </script>
+</script>
+
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
   

@@ -29,25 +29,19 @@
     </div>
   </div>
   <ul class="nav__links" id="nav-links">
-    <li><a href="#">Home</a></li>
+    <li><a href="index.html#">Home</a></li>
     <li class="dropdown">
       <a href="javascript:void(0)" class="dropbtn">About</a>
       <div class="dropdown-content">
-        <a href="about.html" id="aboutLink">About Us</a>
+        <a href="about.html" id="aboutusLink">About Us</a>
         <a href="walkthrough.html" id="walkthroughLink">System Walkthrough</a>
       </div>
     </li>
-    <li class="dropdown">
-    <a href="javascript:void(0)" class="dropbtn">Services</a>
-    <div class="dropdown-content">
-      <a href="services.html" id="servicesLink">Services</a>
-      <a href="Terms.html" id="termsLink">Terms of Services</a>
-    </div>
-    </li>
-    <li><a href="#organizations">Organizations</a></li>
-    <li><a href="#location">Location</a></li>
-    <li><a href="#discover">Countdown</a></li>
-    <li><a href="#candidate">Candidates</a></li>
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#organizations">Organizations</a></li>
+    <li><a href="index.html#location">Location</a></li>
+    <li><a href="index.html#discover">Countdown</a></li>
+    <li><a href="index.html#candidate">Candidates</a></li>
     <li><a href="voters_login.php"><button class="btn">Login</button></a></li>
   </ul>
 </nav>
@@ -195,26 +189,33 @@ menuBtn.addEventListener("click", function () {
   navMenu.classList.toggle("active"); // This will show or hide the menu
 });
     </script>
-  <script>
-    // Get the dropdown elements
-    const dropdown = document.querySelector(".dropdown");
-    const dropdownContent = document.querySelector(".dropdown-content");
-    const dropbtn = document.querySelector(".dropbtn"); // The dropdown button (About link)
-    
-    // Toggle dropdown visibility when clicking the "About" link
-    dropbtn.addEventListener("click", function (e) {
-      e.stopPropagation(); // Prevent the click event from bubbling
-      dropdownContent.classList.toggle("show"); // Toggle visibility of the dropdown
+ <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const dropdowns = document.querySelectorAll(".dropdown");
+  
+      dropdowns.forEach(function (dropdown) {
+        const dropbtn = dropdown.querySelector(".dropbtn");
+        const dropdownContent = dropdown.querySelector(".dropdown-content");
+  
+        // Toggle dropdown visibility when clicking the button
+        dropbtn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          dropdownContent.classList.toggle("show"); // Toggle visibility of the dropdown
+        });
+      });
+  
+      // Hide all dropdowns when clicking anywhere outside
+      document.addEventListener("click", function (e) {
+        dropdowns.forEach(function (dropdown) {
+          const dropdownContent = dropdown.querySelector(".dropdown-content");
+          if (!dropdown.contains(e.target)) {
+            dropdownContent.classList.remove("show"); // Hide the dropdown
+          }
+        });
+      });
     });
-    
-    // Hide dropdown when clicking anywhere outside the dropdown
-    document.addEventListener("click", function (e) {
-      if (!dropdown.contains(e.target)) { // Check if the click was outside of the dropdown
-        dropdownContent.classList.remove("show"); // Hide the dropdown
-      }
-    });
-    
-      </script>
+  </script>
+  
       </body>
       <style>
         @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
