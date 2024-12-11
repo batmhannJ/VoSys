@@ -562,8 +562,8 @@ main.sign-up-mode .carousel {
                   <span class="form-control-feedback"></span>
                 </div>
 
-                <div style="text-align: right; margin-bottom: 10px;">
-                  <input type="checkbox" name="agree_terms" required> I agree to the <a href="terms_and_condition.php" target="_blank">Terms and Conditions</a>
+                <div style="text-align: left; margin-bottom: 10px;">
+                  <input type="checkbox" name="agree_terms" required> I agree to the <a href="Terms.html" target="_blank">Terms and Conditions</a>
                 </div>
 
                 <div style="text-align: right; margin-bottom: 10px;">
