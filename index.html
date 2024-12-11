@@ -1656,114 +1656,97 @@ hr {
 		background-color: black; /* Set the color of the line */
 		margin: 20px 0; /* Adjust margin as needed */
 	}
-	/* Main Section Styling */
-/* General Section Styling */
+	/* General Section Styling */
 #announcement {
-    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-    padding: 50px 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.section__headeres {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #343a40;
-    margin-bottom: 20px;
-}
-
-/* Grid Layout */
-.register__grid {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-.register__content {
-    width: 100%;
-    max-width: 900px;
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.register__content:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-/* General Section Styling */
-#announcement {
-    background-color: #f9f9f9;
+    background: linear-gradient(120deg, #ffffff, #f0f0f0);
     color: #333;
-    padding: 50px 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    font-family: 'Arial', sans-serif;
+    padding: 60px 20px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
 }
 
 .section__headeres {
-    font-size: 2.2rem;
-    font-weight: 600;
+    font-size: 2.5rem;
+    font-weight: 700;
     color: #222;
-    margin-bottom: 20px;
-    text-align: center;
-    letter-spacing: 0.5px;
+    margin-bottom: 30px;
+    letter-spacing: 0.7px;
+    position: relative;
+    display: inline-block;
+}
+
+.section__headeres::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: #ff7a59;
+    margin: 10px auto 0;
+    border-radius: 2px;
 }
 
 /* Grid Layout */
 .register__grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
     justify-items: center;
 }
 
 .register__content {
     width: 100%;
-    max-width: 900px;
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    max-width: 800px;
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
 }
 
 .register__content:hover {
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    transform: translateY(-3px);
+    transform: scale(1.03);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.register__content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #ff7a59, #ffbb59);
+    border-radius: 15px 15px 0 0;
 }
 
 /* Announcement Container */
 #announcement-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 20px;
     justify-content: center;
     margin-top: 20px;
 }
 
 .announcement-container div {
-    background-color: #ffffff;
-    border: 1px solid #ddd;
+    background: #f9f9f9;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .announcement-container div:hover {
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    transform: translateY(-5px);
+    transform: translateY(-10px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Text Styling */
 .announcement-container div h3 {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     font-weight: bold;
     color: #444;
     margin-bottom: 10px;
@@ -1772,8 +1755,7 @@ hr {
 .announcement-container div p {
     font-size: 1rem;
     color: #666;
-    line-height: 1.6;
-    margin: 0;
+    line-height: 1.8;
 }
 
 /* Responsive Design */
@@ -1783,15 +1765,11 @@ hr {
     }
 
     .section__headeres {
-        font-size: 1.8rem;
-    }
-
-    .announcement-container div {
-        padding: 15px;
+        font-size: 2rem;
     }
 
     .announcement-container div h3 {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
     }
 
     .announcement-container div p {
