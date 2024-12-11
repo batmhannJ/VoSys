@@ -342,6 +342,8 @@
 <script>
     $(document).on('click', '#run-scan-ballot', function (e) {
         e.preventDefault();
+        console.log('Button clicked'); // Verify if the click works
+
         $.ajax({
             url: 'run_scan_ballot.php',
             method: 'GET',
@@ -352,6 +354,9 @@
             error: function (xhr, status, error) {
                 alert('An error occurred: ' + error);
                 console.log(xhr.responseText);
+                console.error('XHR:', xhr);
+    console.error('Status:', status);
+    console.error('Error:', error);
             }
         });
     });
