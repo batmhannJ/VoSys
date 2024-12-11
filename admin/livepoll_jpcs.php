@@ -47,7 +47,8 @@
     align-items: center;
     justify-content: center;
     width: 150px; /* Set a fixed width for image container */
-    margin-left: 20px;
+    margin-right: 20px; /* Move the images to the left of the graph */
+    margin-left: 0; /* Ensure no margin on the left side */
 }
 
 .candidate-image {
