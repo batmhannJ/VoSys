@@ -571,8 +571,18 @@
 
       // Toggle dropdown visibility when clicking the button
       dropbtn.addEventListener("click", function (e) {
-        e.stopPropagation();
-        dropdownContent.classList.toggle("show"); // Toggle visibility of the dropdown
+        e.stopPropagation(); // Prevent the click event from bubbling
+
+        // Close all dropdowns first
+        dropdowns.forEach(function (otherDropdown) {
+          const otherDropdownContent = otherDropdown.querySelector(".dropdown-content");
+          if (otherDropdown !== dropdown) {
+            otherDropdownContent.classList.remove("show");
+          }
+        });
+
+        // Toggle the clicked dropdown
+        dropdownContent.classList.toggle("show");
       });
     });
 
@@ -587,6 +597,7 @@
     });
   });
 </script>
+
 
   </body>
   <style>
@@ -666,6 +677,11 @@ body {
   display: block;
   opacity: 1;
   visibility: visible;
+}
+
+/* Ensure the dropdown content is correctly aligned */
+.dropdown {
+  position: relative;
 }
 
 /* Dropdown links */
