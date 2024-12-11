@@ -1,42 +1,34 @@
 <?php
-// Include database connection
-include 'includes/conn.php';
+// Database connection parameters
+$servername = "localhost";
+$username = "u247141684_vosys";
+$password = "vosysOlshco5";
+$dbname = "u247141684_votesystem";
 
-// Perform a query to fetch the most recent announcement
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
 $query = "SELECT * FROM announcement ORDER BY id_announcement DESC LIMIT 1";
 $result = $conn->query($query);
 
-// Debugging: Check if the query was successful
 if (!$result) {
-    die('Query Error: ' . $conn->error);  // Print error if query failed
+    die(json_encode(['success' => false, 'message' => 'Query failed: ' . $conn->error]));
 }
 
-// Check if there are rows in the result
 if ($result->num_rows > 0) {
-    // Fetch the row as an associative array
     $row = $result->fetch_assoc();
-    
-    // Debugging: Check if row is not empty
-    if ($row) {
-        echo json_encode([
-            'success' => true,
-            'title' => $row['title'], // Assuming 'title' is a field in your announcement table
-            'content' => $row['content'] // Assuming 'content' is a field in your announcement table
-        ]);
-    } else {
-        echo json_encode([
-            'success' => false,
-            'message' => 'No announcement data found in the row.'
-        ]);
-    }
-} else {
-    // If no rows returned, indicate no announcements
     echo json_encode([
-        'success' => false,
-        'message' => 'No current announcements.'
+        'success' => true,
+        'title' => $row['title'],
+        'content' => $row['content'],
+        'addedby' => $row['addedby']
     ]);
+} else {
+    echo json_encode(['success' => false, 'message' => 'No announcements found.']);
 }
-
-// Close the database connection if needed
-// $conn->close();
 ?>
