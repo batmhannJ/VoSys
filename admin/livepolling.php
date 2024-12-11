@@ -98,6 +98,11 @@
                     <select id="organization-select" name="organization">
                         <option value="jpcs">JPCS</option>
                     </select>
+                    <label for="graph-select">Select Graph Type:</label>
+                    <select id="graph-select" name="graph-type">
+                        <option value="bar">Bar Graph</option>
+                        <option value="pie">Pie Chart</option>
+                    </select>
                     <button type="submit">Show Results</button>
                 </form>
                 <br>
@@ -121,12 +126,6 @@
             // Ensure images match the data points by iterating in the same order
             var imageContainer = document.getElementById(imageContainerId);
             imageContainer.innerHTML = '';
-            // Swap positions of the first two images for demonstration
-            if (dataPoints.length > 1) {
-                var temp = dataPoints[0].image;
-                dataPoints[0].image = dataPoints[1].image;
-                dataPoints[1].image = temp;
-            }
             dataPoints.forEach(dataPoint => {
                 var candidateDiv = document.createElement('div');
                 candidateDiv.className = 'candidate-image';
@@ -168,7 +167,40 @@
             chart.render();
         }
 
-        function fetchAndGenerateGraphs(organization) {
+        function generatePieChart(dataPoints, containerId, imageContainerId) {
+            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+
+            // Ensure images match the data points by iterating in the same order
+            var imageContainer = document.getElementById(imageContainerId);
+            imageContainer.innerHTML = '';
+            dataPoints.forEach(dataPoint => {
+                var candidateDiv = document.createElement('div');
+                candidateDiv.className = 'candidate-image';
+                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
+                imageContainer.appendChild(candidateDiv);
+            });
+
+            var chart = new CanvasJS.Chart(containerId, {
+                animationEnabled: true,
+                animationDuration: 3000,
+                animationEasing: "easeInOutBounce",
+                title: {
+                    text: "Vote Counts"
+                },
+                data: [{
+                    type: "pie",
+                    indexLabel: "{label} - {percent}%",
+                    indexLabelFontColor: "white",
+                    dataPoints: dataPoints.map(dataPoint => ({
+                        ...dataPoint,
+                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                    }))
+                }]
+            });
+            chart.render();
+        }
+
+        function fetchAndGenerateGraphs(organization, graphType) {
             $.ajax({
                 url: 'update_jpcs_data.php',
                 method: 'GET',
@@ -221,8 +253,12 @@
                                 </div>`;
                             $('#results-container').append(containerHtml);
 
-                            // Generate the bar graph for the category
-                            generateBarGraph(response[category], category + 'Graph', category + 'Image');
+                            // Generate the selected graph type for the category
+                            if (graphType === 'bar') {
+                                generateBarGraph(response[category], category + 'Graph', category + 'Image');
+                            } else if (graphType === 'pie') {
+                                generatePieChart(response[category], category + 'Graph', category + 'Image');
+                            }
                         }
                     });
                 },
@@ -233,14 +269,15 @@
         }
 
         $(document).ready(function () {
-            // Fetch and generate graphs for the default organization (JPCS)
-            fetchAndGenerateGraphs('jpcs');
+            // Fetch and generate graphs for the default organization (JPCS) and default graph type (Bar Graph)
+            fetchAndGenerateGraphs('jpcs', 'bar');
 
             // Handle form submission
             $('#organization-form').submit(function (event) {
                 event.preventDefault();
                 const selectedOrganization = $('#organization-select').val();
-                fetchAndGenerateGraphs(selectedOrganization);
+                const selectedGraphType = $('#graph-select').val();
+                fetchAndGenerateGraphs(selectedOrganization, selectedGraphType);
             });
 
             $(window).scroll(function () {
