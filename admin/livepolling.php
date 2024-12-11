@@ -57,9 +57,16 @@
             position: relative;
         }
 
-        /* Hide the candidate images */
+        /* Hide the candidate images and names */
         .candidate-images {
-            display: none;
+            display: none;  /* Hides the images */
+        }
+
+        /* Optional: Adjust graph position when images are hidden */
+        #results-container .col-md-12 {
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
     </style>
 </head>
@@ -165,6 +172,7 @@
                                     </div>
                                     <div class='box-body'>
                                         <div class='chart-wrapper'>
+                                            <div class='candidate-images' id='${category}Image'></div> <!-- Hidden -->
                                             <div id='${category}Graph' style='height: 300px; width: 80%;'></div>
                                         </div>
                                     </div>
