@@ -1,19 +1,7 @@
 <?php
-// Database connection parameters
-$servername = "localhost";
-$username = "u247141684_vosys";
-$password = "vosysOlshco5";
-$dbname = "u247141684_votesystem";
+include 'includes/conn.php';
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-$query = "SELECT * FROM announcement ORDER BY id DESC LIMIT 1";;
+$query = "SELECT * FROM announcement ORDER BY id DESC LIMIT 1";
 $result = $conn->query($query);
 
 if (!$result) {
