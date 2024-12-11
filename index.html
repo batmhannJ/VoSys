@@ -74,7 +74,7 @@
       </div>
     </section>
 
-    <section id="about" class="section__container register__container">
+    <section id="announcement" class="section__container register__container">
       <center><h2 class="section__header">Announcement</h2></center><br>
       <div class="register__grid">
         <div class="register__content">
@@ -1656,131 +1656,123 @@ hr {
 		background-color: black; /* Set the color of the line */
 		margin: 20px 0; /* Adjust margin as needed */
 	}
-	/* Main Section Styling */
-.announcement__section {
-  padding: 60px 20px;
-  background: linear-gradient(135deg, #f0f0f5, #ffffff);
+/* General Section Styling */
+.section__container {
+  padding: 50px 20px;
+  background: #f1f4f8;
   text-align: center;
+  border-top: 5px solid #4a90e2; /* Accent border at the top */
 }
 
-.announcement__header {
+.announcement-header {
   margin-bottom: 40px;
 }
 
-.announcement__title {
-  font-size: 3rem;
-  font-weight: bold;
+.section__header {
+  font-size: 2.5rem;
+  font-weight: 600;
   color: #333;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 10px;
 }
 
-.announcement__subheading {
-  font-size: 1.2rem;
-  color: #555;
-  font-weight: 300;
-  font-style: italic;
+/* Grid Layout for Announcement Cards */
+.announcement-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 0 20px;
+}
+
+/* Container for Announcement Cards */
+.announcement-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Individual Announcement Card Styling */
+.announcement-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  max-width: 400px;
+  cursor: pointer;
+  border-left: 5px solid #4a90e2; /* Accent border on left side */
+}
+
+.announcement-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Announcement Card Header */
+.announcement-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.announcement-title {
+  font-size: 1.6rem;
+  color: #333;
+  margin: 0;
+  font-weight: 600;
+}
+
+.announcement-date {
+  font-size: 0.9rem;
+  color: #888;
   margin-top: 5px;
 }
 
-/* Cards Layout */
-.announcement__cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 30px;
-  margin: 0 auto;
-  padding: 0 20px;
-  max-width: 1200px;
-}
-
-/* Announcement Card */
-.announcement__card {
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-  cursor: pointer;
-  overflow: hidden;
-  border: 1px solid #ddd;
-}
-
-.announcement__card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-}
-
-/* Announcement Image */
-.announcement__card .announcement__image {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  filter: brightness(0.85);
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-}
-
-/* Card Content */
-.announcement__card .announcement__content {
-  padding: 20px;
-}
-
-.announcement__card .announcement__date {
-  font-size: 0.9rem;
-  color: #777;
-  font-weight: 500;
-  margin-bottom: 10px;
-}
-
-.announcement__card .announcement__text {
+/* Announcement Body */
+.announcement-body {
   font-size: 1.1rem;
-  color: #333;
   line-height: 1.6;
+  color: #555;
+  margin-bottom: 15px;
 }
 
-.announcement__card .announcement__readmore {
-  margin-top: 20px;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #0066cc;
+/* Read More Link */
+.announcement-readmore {
+  color: #4a90e2;
   text-decoration: none;
+  font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease-in-out;
 }
 
-.announcement__card .announcement__readmore:hover {
-  color: #004d99;
+.announcement-readmore:hover {
+  color: #333;
+  text-decoration: underline;
 }
 
-/* Responsive Design */
+/* Mobile Responsiveness */
 @media (max-width: 768px) {
-  .announcement__title {
-    font-size: 2.5rem;
-  }
-
-  .announcement__subheading {
-    font-size: 1rem;
-  }
-
-  .announcement__cards {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (max-width: 480px) {
-  .announcement__title {
+  .section__header {
     font-size: 2rem;
   }
 
-  .announcement__subheading {
-    font-size: 0.9rem;
+  .announcement-card {
+    padding: 15px;
   }
 
-  .announcement__cards {
-    grid-template-columns: 1fr;
+  .announcement-title {
+    font-size: 1.4rem;
+  }
+
+  .announcement-body {
+    font-size: 1rem;
   }
 }
+
 
 
   </style>
