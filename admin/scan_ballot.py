@@ -1,14 +1,6 @@
 import sys
 print(sys.executable)
-import logging
-
-logging.basicConfig(filename='/path/to/logfile.log', level=logging.DEBUG)
-
-try:
-    import cv2
-except Exception as e:
-    logging.error(f"Error importing cv2: {e}")
-    sys.exit(1)
+import cv2
 import mysql.connector
 
 # Check if the voter has already voted
