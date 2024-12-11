@@ -3,6 +3,7 @@
 <head>
     <?php include 'includes/session.php'; ?>
     <?php include 'includes/header_jpcs.php'; ?>
+
     <style>
         .box-title {
             text-align: center;
@@ -76,6 +77,8 @@
             }
         }
     </style>
+
+
 </head>
 <body class="hold-transition skin-green sidebar-mini">
     <div class="wrapper">
@@ -190,10 +193,16 @@
                 title: {
                     text: "Vote Counts"
                 },
+                toolTip: {
+                    content: "{label}: {y} Votes ({percent}%)",
+                    backgroundColor: "#F1F1F1",
+                    borderColor: "#666",
+                    borderThickness: 1
+                },
                 data: [{
                     type: "pie",
                     indexLabel: "{label} - {percent}%",
-                    indexLabelFontColor: "white",
+                    indexLabelFontColor: "gray",
                     dataPoints: dataPoints.map(dataPoint => ({
                         ...dataPoint,
                         percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
@@ -224,14 +233,27 @@
                     text: "Vote Counts"
                 },
                 axisX: {
-                    title: "Candidates"
+                    title: "",
+                    includeZero: true,
+                    interval: 1,
+                    labelFormatter: function () {
+                        return " ";
+                    }
                 },
                 axisY: {
-                    title: "Votes"
+                    title: "",
+                    interval: Math.ceil(totalVotes / 10)
                 },
                 data: [{
                     type: "line",
-                    dataPoints: dataPoints
+                    indexLabel: "{label} - {percent}%",
+                    indexLabelPlacement: "inside",
+                    indexLabelFontColor: "gray",
+                    indexLabelFontSize: 14,
+                    dataPoints: dataPoints.map(dataPoint => ({
+                        ...dataPoint,
+                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                    }))
                 }]
             });
             chart.render();
@@ -257,10 +279,17 @@
                 title: {
                     text: "Vote Counts"
                 },
+                toolTip: {
+                    content: "{label}: {y} Votes ({percent}%)",
+                    backgroundColor: "#F1F1F1",
+                    borderColor: "#666",
+                    borderThickness: 1
+                },
                 data: [{
                     type: "doughnut",
+                    innerRadius: "70%", // This will create the donut shape
                     indexLabel: "{label} - {percent}%",
-                    indexLabelFontColor: "white",
+                    indexLabelFontColor: "gray",
                     dataPoints: dataPoints.map(dataPoint => ({
                         ...dataPoint,
                         percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
@@ -291,14 +320,27 @@
                     text: "Vote Counts"
                 },
                 axisX: {
-                    title: "Candidates"
+                    title: "",
+                    includeZero: true,
+                    interval: 1,
+                    labelFormatter: function () {
+                        return " ";
+                    }
                 },
                 axisY: {
-                    title: "Votes"
+                    title: "",
+                    interval: Math.ceil(totalVotes / 10)
                 },
                 data: [{
                     type: "stackedArea",
-                    dataPoints: dataPoints
+                    indexLabel: "{label} - {percent}%",
+                    indexLabelPlacement: "inside",
+                    indexLabelFontColor: "gray",
+                    indexLabelFontSize: 14,
+                    dataPoints: dataPoints.map(dataPoint => ({
+                        ...dataPoint,
+                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                    }))
                 }]
             });
             chart.render();
@@ -342,7 +384,7 @@
                     Object.keys(selectedCategories).forEach(function (category) {
                         if (response[category]) {
                             // Create container for each category
-                            var containerHtml = `
+                            var containerHtml = ` 
                                 <div class='col-md-12'>
                                     <div class='box'>
                                         <div class='box-header with-border'>
@@ -350,15 +392,16 @@
                                         </div>
                                         <div class='box-body'>
                                             <div class='chart-container'>
-                                                <div class='candidate-images' id='${category}Image'></div>
-                                                <div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div>
+                                                <div id='${category}Graph' style='height: 300px; width: 80%;'></div>
+                                                <div id='${category}Image' class='candidate-images'></div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>`;
+                                </div>
+                            `;
                             $('#results-container').append(containerHtml);
 
-                            // Generate the selected graph type for the category
+                            // Call the respective function based on graph type
                             if (graphType === 'bar') {
                                 generateBarGraph(response[category], category + 'Graph', category + 'Image');
                             } else if (graphType === 'pie') {
@@ -372,24 +415,19 @@
                             }
                         }
                     });
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error fetching data: ", status, error);
                 }
             });
         }
 
         // Event listener for form submission
-        $('#organization-form').on('submit', function (e) {
-            e.preventDefault();
-
+        $('#organization-form').on('submit', function (event) {
+            event.preventDefault();
             var organization = $('#organization-select').val();
             var graphType = $('#graph-select').val();
-
             fetchAndGenerateGraphs(organization, graphType);
         });
 
-        // Scroll to top button
+        // Back to top functionality
         $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
                 $('#back-to-top').fadeIn();
@@ -404,4 +442,4 @@
         });
     </script>
 </body>
-</html>  
+</html>
