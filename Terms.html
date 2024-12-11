@@ -4,14 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link
-      href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css"
-      rel="stylesheet"
-    >
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-    >
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <title>OLSHCO College Online Voting System</title>
     <link href="images/olshco.png" rel="icon">
     <link href="images/olshco.png" rel="apple-touch-icon">
@@ -19,182 +13,174 @@
   <body>
     <header class="header">
       <nav>
-  <div class="nav__header">
-    <div class="nav__logo">
-      <img src="images/logo.png" alt="" class="nav__logo-img"> 
-      <h2>VOSYS</h2>
-    </div>
-    <div class="nav__menu__btn" id="menu-btn">
-      <span><i class="ri-menu-line"></i></span>
-    </div>
-  </div>
-  <ul class="nav__links" id="nav-links">
-    <li><a href="index.html#">Home</a></li>
-    <li class="dropdown">
-      <a href="javascript:void(0)" class="dropbtn">About</a>
-      <div class="dropdown-content">
-        <a href="about.html" id="aboutusLink">About Us</a>
-        <a href="walkthrough.html" id="walkthroughLink">System Walkthrough</a>
-      </div>
-    </li>
-    <li class="dropdown">
-      <a href="javascript:void(0)" class="dropbtn">Services</a>
-      <div class="dropdown-content">
-        <a href="services.html" id="services">Our Services</a>
-        <a href="Terms.html" id="termsOfServiceLink">Terms of Service</a>
-      </div>
-    </li>    
-    <li><a href="index.html#organizations">Organizations</a></li>
-    <li><a href="index.html#location">Location</a></li>
-    <li><a href="index.html#discover">Countdown</a></li>
-    <li><a href="index.html#candidate">Candidates</a></li>
-    <li><a href="voters_login.php"><button class="btn">Login</button></a></li>
-  </ul>
-</nav>
-
-<section id="terms" class="section__container location__container">
-  <h2 class="section__header">Terms of Service</h2>
-      <div class="terms">
-          <div class="terms-container">
-              <!-- Sidebar with the tabs -->
-              <div class="sidebar">
-                  <div class="tab active" onclick="setActiveTab('terms_of_use')">Terms of use</div>
-                  <div class="tab" onclick="setActiveTab('User Eligibility')">Intellectual property rights</div>
-                  <div class="tab" onclick="setActiveTab('prohibited_activities')">Prohibited activities</div>
-                  <div class="tab" onclick="setActiveTab('termination_clause')">Termination clause</div>
-                  <div class="tab" onclick="setActiveTab('governing_law')">Governing law</div>
-              </div>
-
-              <!-- Content corresponding to the active tab -->
-              <div class="content" id="content">
-                  <h3 id="tab-title">Terms of use</h3>
-                  <p id="tab-description">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. At fugit praesentium reiciendis aut debitis minima earum fugiat quam aspernatur qui.
-                  </p>
-              </div>
+        <div class="nav__header">
+          <div class="nav__logo">
+            <img src="images/logo.png" alt="" class="nav__logo-img"> 
+            <h2>VOSYS</h2>
           </div>
-      </div>
-  </div>
-</section>
-
-    <!--==================== FOOTER ====================-->
-        <footer class="footer section">
-            <div class="footer__container container grid">
-                <div class="footer__content grid">
-                    <div class="footer__data">
-                        <h3 class="footer__title">VOTE</h3><br>
-                        <p class="footer__description">Take a decision today, <br> to ensure a better <br> tomorrow.
-                        </p>
-                      
-                    </div>
-    
-                    <div class="footer__data">
-                        <h3 class="footer__subtitle">About</h3><br>
-                        <ul>
-                            <li class="footer__item">
-                                <a href="about" class="footer__link">About</a>
-                            </li>
-                            <li class="footer__item">
-                                <a href="#service" class="footer__link">Services</a>
-                            </li>
-                            <li class="footer__item">
-                                <a href="#place" class="footer__link">Organizations</a>
-                            </li>
-                        </ul>
-                    </div>
-    
-                    <div class="footer__data">
-                        <h3 class="footer__subtitle">Socials</h3><br>
-                        <ul>
-                            <li class="footer__item">
-                                <a href="" class="footer__link">Facebook</a>
-                            </li>
-                            <li class="footer__item">
-                                <a href="" class="footer__link">Instagram</a>
-                            </li>
-                            <li class="footer__item">
-                                <a href="" class="footer__link">Twitter</a>
-                            </li>
-                        </ul>
-                    </div>
-    
-                    <div class="footer__data">
-                        <h3 class="footer__subtitle">Support</h3><br>
-                        <ul>
-                            <li class="footer__item">
-                                <a href="" class="footer__link">FAQs</a>
-                            </li>
-                            <li class="footer__item">
-                                <a href="" class="footer__link">Support Center</a>
-                            </li>
-                            <li class="footer__item">
-                                <a href="" class="footer__link">Contact Us</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div><br>
-
-                <a href="developers.html"><div class="footer__rights">
-                    <p class="footer__copy" style="color: #fff;">&#169; VOSYS DEVELOPERS 2024</p>
-                </div></a>
+          <div class="nav__menu__btn" id="menu-btn">
+            <span><i class="ri-menu-line"></i></span>
+          </div>
+        </div>
+        <ul class="nav__links" id="nav-links">
+          <li><a href="index.html#">Home</a></li>
+          <li class="dropdown">
+            <a href="javascript:void(0)" class="dropbtn">About</a>
+            <div class="dropdown-content">
+              <a href="about.html" id="aboutusLink">About Us</a>
+              <a href="walkthrough.html" id="walkthroughLink">System Walkthrough</a>
             </div>
-        </footer>
-  </body>
-
-  <script>
-    // This script will handle switching the active tab and content
-    function setActiveTab(tabId) {
-      const tabs = document.querySelectorAll('.tab');
-      const content = document.getElementById('content');
-      const title = document.getElementById('tab-title');
-      const description = document.getElementById('tab-description');
-
-      // Reset active class on all tabs
-      tabs.forEach(tab => tab.classList.remove('active'));
-      
-      // Set the active class to the clicked tab
-      const activeTab = document.querySelector(`.tab[onclick="setActiveTab('${tabId}')"]`);
-      activeTab.classList.add('active');
-
-      // Set content based on active tab
-      switch (tabId) {
-        case 'terms_of_use':
-          title.textContent = 'Terms of use';
-          description.textContent = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At fugit praesentium reiciendis aut debitis minima earum fugiat quam aspernatur qui.';
-          break;
-          case 'user eligibility':
-    title.textContent = 'user eligibility';
-    description.innerHTML = `
-        <ul style="text-align: justify; list-style-type: none; padding-left: 0;">
-            <li style="text-align: justify;"><strong>Registered Members:</strong> Only current students, faculty, and staff of OLSHCO with an active account on vosys.org are eligible to vote.</li>
-            <li style="text-align: justify;"><strong>Eligibility Verification:</strong> Users must meet specific eligibility criteria, such as enrollment or employment status, as determined by OLSHCO.</li>
-            <li style="text-align: justify;"><strong>Active Account:</strong> Users must have a verified account with valid login credentials and email.</li>
-            <li style="text-align: justify;"><strong>Fraudulent Activities:</strong> vosys.org reserves the right to revoke or suspend voting rights for fraudulent activities, including vote manipulation or providing false information.</li>
-            <li style="text-align: justify;"><strong>Suspension of Rights:</strong> Voting rights may be suspended for misconduct such as impersonation or interfering with the voting process.</li>
-            <li style="text-align: justify;"><strong>Termination of Access:</strong> Users found ineligible may be permanently banned from voting.</li>
-            <li style="text-align: justify;"><strong>Appeals:</strong> Users can appeal eligibility suspensions or revocations. The appeal will be reviewed for potential reinstatement.</li>
+          </li>
+          <li class="dropdown">
+            <a href="javascript:void(0)" class="dropbtn">Services</a>
+            <div class="dropdown-content">
+              <a href="services.html" id="services">Our Services</a>
+              <a href="Terms.html" id="termsOfServiceLink">Terms of Service</a>
+            </div>
+          </li>    
+          <li><a href="index.html#organizations">Organizations</a></li>
+          <li><a href="index.html#location">Location</a></li>
+          <li><a href="index.html#discover">Countdown</a></li>
+          <li><a href="index.html#candidate">Candidates</a></li>
+          <li><a href="voters_login.php"><button class="btn">Login</button></a></li>
         </ul>
-    `;
-    break;
+      </nav>
+    </header>
 
+    <section id="terms" class="section__container location__container">
+      <h2 class="section__header">Terms of Service</h2>
+      <div class="terms">
+        <div class="terms-container">
+          <div class="sidebar">
+            <div class="tab active" onclick="setActiveTab('terms_of_use')">Terms of use</div>
+            <div class="tab" onclick="setActiveTab('user_eligibility')">Intellectual property rights</div>
+            <div class="tab" onclick="setActiveTab('prohibited_activities')">Prohibited activities</div>
+            <div class="tab" onclick="setActiveTab('termination_clause')">Termination clause</div>
+            <div class="tab" onclick="setActiveTab('governing_law')">Governing law</div>
+          </div>
 
-        case 'prohibited_activities':
-          title.textContent = 'Prohibited activities';
-          description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque molestias fugiat quibusdam explicabo!';
-          break;
-        case 'termination_clause':
-          title.textContent = 'Termination clause';
-          description.textContent = 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Amet rem doloremque suscipit.';
-          break;
-        case 'governing_law':
-          title.textContent = 'Governing law';
-          description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem animi laborum.';
-          break;
-        default:
-          break;
+          <div class="content" id="content">
+            <h3 id="tab-title">Terms of use</h3>
+            <p id="tab-description">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. At fugit praesentium reiciendis aut debitis minima earum fugiat quam aspernatur qui.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer section">
+      <div class="footer__container container grid">
+        <div class="footer__content grid">
+          <div class="footer__data">
+            <h3 class="footer__title">VOTE</h3><br>
+            <p class="footer__description">Take a decision today, <br> to ensure a better <br> tomorrow.</p>
+          </div>
+          <div class="footer__data">
+            <h3 class="footer__subtitle">About</h3><br>
+            <ul>
+              <li class="footer__item">
+                <a href="about" class="footer__link">About</a>
+              </li>
+              <li class="footer__item">
+                <a href="#service" class="footer__link">Services</a>
+              </li>
+              <li class="footer__item">
+                <a href="#place" class="footer__link">Organizations</a>
+              </li>
+            </ul>
+          </div>
+          <div class="footer__data">
+            <h3 class="footer__subtitle">Socials</h3><br>
+            <ul>
+              <li class="footer__item">
+                <a href="" class="footer__link">Facebook</a>
+              </li>
+              <li class="footer__item">
+                <a href="" class="footer__link">Instagram</a>
+              </li>
+              <li class="footer__item">
+                <a href="" class="footer__link">Twitter</a>
+              </li>
+            </ul>
+          </div>
+          <div class="footer__data">
+            <h3 class="footer__subtitle">Support</h3><br>
+            <ul>
+              <li class="footer__item">
+                <a href="" class="footer__link">FAQs</a>
+              </li>
+              <li class="footer__item">
+                <a href="" class="footer__link">Support Center</a>
+              </li>
+              <li class="footer__item">
+                <a href="" class="footer__link">Contact Us</a>
+              </li>
+            </ul>
+          </div>
+        </div><br>
+        <a href="developers.html">
+          <div class="footer__rights">
+            <p class="footer__copy" style="color: #fff;">&#169; VOSYS DEVELOPERS 2024</p>
+          </div>
+        </a>
+      </div>
+    </footer>
+
+    <script>
+      function setActiveTab(tabId) {
+        const tabs = document.querySelectorAll('.tab');
+        const content = document.getElementById('content');
+        const title = document.getElementById('tab-title');
+        const description = document.getElementById('tab-description');
+
+        // Reset active class on all tabs
+        tabs.forEach(tab => tab.classList.remove('active'));
+        
+        // Set the active class to the clicked tab
+        const activeTab = document.querySelector(`.tab[onclick="setActiveTab('${tabId}')"]`);
+        activeTab.classList.add('active');
+
+        // Set content based on active tab
+        switch (tabId) {
+          case 'terms_of_use':
+            title.textContent = 'Terms of use';
+            description.textContent = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At fugit praesentium reiciendis aut debitis minima earum fugiat quam aspernatur qui.';
+            break;
+          case 'user_eligibility':
+            title.textContent = 'User Eligibility';
+            description.innerHTML = `
+              <ul style="text-align: justify; list-style-type: none; padding-left: 0;">
+                <li style="text-align: justify;"><strong>Registered Members:</strong> Only current students, faculty, and staff of OLSHCO with an active account on vosys.org are eligible to vote.</li>
+                <li style="text-align: justify;"><strong>Eligibility Verification:</strong> Users must meet specific eligibility criteria, such as enrollment or employment status, as determined by OLSHCO.</li>
+                <li style="text-align: justify;"><strong>Active Account:</strong> Users must have a verified account with valid login credentials and email.</li>
+                <li style="text-align: justify;"><strong>Fraudulent Activities:</strong> vosys.org reserves the right to revoke or suspend voting rights for fraudulent activities, including vote manipulation or providing false information.</li>
+                <li style="text-align: justify;"><strong>Suspension of Rights:</strong> Voting rights may be suspended for misconduct such as impersonation or interfering with the voting process.</li>
+                <li style="text-align: justify;"><strong>Termination of Access:</strong> Users found ineligible may be permanently banned from voting.</li>
+                <li style="text-align: justify;"><strong>Appeals:</strong> Users can appeal eligibility suspensions or revocations within 30 days.</li>
+              </ul>
+            `;
+            break;
+          case 'prohibited_activities':
+            title.textContent = 'Prohibited Activities';
+            description.innerHTML = 'Details on prohibited activities, including vote tampering, impersonation, and misconduct.';
+            break;
+          case 'termination_clause':
+            title.textContent = 'Termination Clause';
+            description.innerHTML = 'Information regarding the termination of accounts or access under specific conditions.';
+            break;
+          case 'governing_law':
+            title.textContent = 'Governing Law';
+            description.innerHTML = 'This section outlines the legal jurisdiction and governing laws that apply to the terms of service.';
+            break;
+          default:
+            break;
+        }
       }
-    }
-  </script>
+
+      // Set the default active tab
+      setActiveTab('terms_of_use');
+    </script>
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
