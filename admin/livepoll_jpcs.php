@@ -27,6 +27,7 @@
             line-height: 50px;
             cursor: pointer;
             z-index: 1000;
+            transition: background-color 0.3s ease;
         }
 
         #back-to-top:hover {
@@ -35,37 +36,45 @@
 
         .chart-container {
             position: relative;
-            margin-bottom: 40px;
             display: flex;
+            justify-content: space-between;
             align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
         }
 
         .candidate-images {
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            margin-right: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-right: 20px;
+            flex-basis: 20%;
         }
 
         .candidate-image {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .candidate-image:hover {
+            transform: scale(1.1);
         }
 
         .candidate-image img {
             width: 60px;
             height: 60px;
-            margin-right: -10px;
-            margin-bottom: 25px;
-            margin-top: 35px;
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
         }
 
         @media (max-width: 768px) {
             .candidate-image img {
-                width: 75px;
-                height: 75px;
+                width: 80px;
+                height: 80px;
             }
         }
 
@@ -190,6 +199,12 @@
                 title: {
                     text: "Vote Counts"
                 },
+                toolTip: {
+                    content: "{label}: {y} Votes ({percent}%)",
+                    backgroundColor: "#F1F1F1",
+                    borderColor: "#666",
+                    borderThickness: 1
+                },
                 data: [{
                     type: "pie",
                     indexLabel: "{label} - {percent}%",
@@ -198,107 +213,6 @@
                         ...dataPoint,
                         percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
                     }))
-                }]
-            });
-            chart.render();
-        }
-
-        // Line Chart
-        function generateLineChart(dataPoints, containerId, imageContainerId) {
-            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
-
-            var imageContainer = document.getElementById(imageContainerId);
-            imageContainer.innerHTML = '';
-            dataPoints.forEach(dataPoint => {
-                var candidateDiv = document.createElement('div');
-                candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
-                imageContainer.appendChild(candidateDiv);
-            });
-
-            var chart = new CanvasJS.Chart(containerId, {
-                animationEnabled: true,
-                animationDuration: 3000,
-                animationEasing: "easeInOutBounce",
-                title: {
-                    text: "Vote Counts"
-                },
-                axisX: {
-                    title: "Candidates"
-                },
-                axisY: {
-                    title: "Votes"
-                },
-                data: [{
-                    type: "line",
-                    dataPoints: dataPoints
-                }]
-            });
-            chart.render();
-        }
-
-        // Donut Chart
-        function generateDonutChart(dataPoints, containerId, imageContainerId) {
-            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
-
-            var imageContainer = document.getElementById(imageContainerId);
-            imageContainer.innerHTML = '';
-            dataPoints.forEach(dataPoint => {
-                var candidateDiv = document.createElement('div');
-                candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
-                imageContainer.appendChild(candidateDiv);
-            });
-
-            var chart = new CanvasJS.Chart(containerId, {
-                animationEnabled: true,
-                animationDuration: 3000,
-                animationEasing: "easeInOutBounce",
-                title: {
-                    text: "Vote Counts"
-                },
-                data: [{
-                    type: "doughnut",
-                    indexLabel: "{label} - {percent}%",
-                    indexLabelFontColor: "white",
-                    dataPoints: dataPoints.map(dataPoint => ({
-                        ...dataPoint,
-                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-                    }))
-                }]
-            });
-            chart.render();
-        }
-
-        // Stacked Area Chart
-        function generateStackedAreaChart(dataPoints, containerId, imageContainerId) {
-            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
-
-            var imageContainer = document.getElementById(imageContainerId);
-            imageContainer.innerHTML = '';
-            dataPoints.forEach(dataPoint => {
-                var candidateDiv = document.createElement('div');
-                candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
-                imageContainer.appendChild(candidateDiv);
-            });
-
-            var chart = new CanvasJS.Chart(containerId, {
-                animationEnabled: true,
-                animationDuration: 3000,
-                animationEasing: "easeInOutBounce",
-                title: {
-                    text: "Vote Counts"
-                },
-                axisX: {
-                    title: "Candidates"
-                },
-                axisY: {
-                    title: "Votes"
-                },
-                data: [{
-                    type: "stackedArea",
-                    dataPoints: dataPoints
                 }]
             });
             chart.render();
@@ -342,7 +256,7 @@
                     Object.keys(selectedCategories).forEach(function (category) {
                         if (response[category]) {
                             // Create container for each category
-                            var containerHtml = `
+                            var containerHtml = ` 
                                 <div class='col-md-12'>
                                     <div class='box'>
                                         <div class='box-header with-border'>
@@ -363,12 +277,6 @@
                                 generateBarGraph(response[category], category + 'Graph', category + 'Image');
                             } else if (graphType === 'pie') {
                                 generatePieChart(response[category], category + 'Graph', category + 'Image');
-                            } else if (graphType === 'line') {
-                                generateLineChart(response[category], category + 'Graph', category + 'Image');
-                            } else if (graphType === 'donut') {
-                                generateDonutChart(response[category], category + 'Graph', category + 'Image');
-                            } else if (graphType === 'stacked') {
-                                generateStackedAreaChart(response[category], category + 'Graph', category + 'Image');
                             }
                         }
                     });
@@ -404,4 +312,4 @@
         });
     </script>
 </body>
-</html>  
+</html>
