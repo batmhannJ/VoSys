@@ -59,7 +59,7 @@
               <!-- Sidebar with the tabs -->
               <div class="sidebar">
                   <div class="tab active" onclick="setActiveTab('terms_of_use')">Terms of use</div>
-                  <div class="tab" onclick="setActiveTab('intellectual_property')">Intellectual property rights</div>
+                  <div class="tab" onclick="setActiveTab('User Eligibility')">Intellectual property rights</div>
                   <div class="tab" onclick="setActiveTab('prohibited_activities')">Prohibited activities</div>
                   <div class="tab" onclick="setActiveTab('termination_clause')">Termination clause</div>
                   <div class="tab" onclick="setActiveTab('governing_law')">Governing law</div>
@@ -162,10 +162,21 @@
           title.textContent = 'Terms of use';
           description.textContent = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At fugit praesentium reiciendis aut debitis minima earum fugiat quam aspernatur qui.';
           break;
-        case 'intellectual_property':
-          title.textContent = 'Intellectual property rights';
-          description.textContent = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit quos minima quia.';
-          break;
+          case 'User Eligibility':
+    title.textContent = 'User Eligibility';
+    description.innerHTML = `
+        <ul>
+            <li><strong>Registered Members:</strong> Only current students, faculty, and staff of OLSHCO with an active account on vosys.org are eligible to vote.</li>
+            <li><strong>Eligibility Verification:</strong> Users must meet specific eligibility criteria, such as enrollment or employment status, as determined by OLSHCO.</li>
+            <li><strong>Active Account:</strong> Users must have a verified account with valid login credentials and email.</li>
+            <li><strong>Fraudulent Activities:</strong> vosys.org reserves the right to revoke or suspend voting rights for fraudulent activities, including vote manipulation or providing false information.</li>
+            <li><strong>Suspension of Rights:</strong> Voting rights may be suspended for misconduct such as impersonation or interfering with the voting process.</li>
+            <li><strong>Termination of Access:</strong> Users found ineligible may be permanently banned from voting.</li>
+            <li><strong>Appeals:</strong> Users can appeal eligibility suspensions or revocations. The appeal will be reviewed for potential reinstatement.</li>
+        </ul>
+    `;
+    break;
+
         case 'prohibited_activities':
           title.textContent = 'Prohibited activities';
           description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque molestias fugiat quibusdam explicabo!';
