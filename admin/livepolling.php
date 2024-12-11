@@ -91,6 +91,7 @@
             </section>
 
             <section class="content">
+                <!-- Organization Selection Form -->
                 <form id="organization-form">
                     <label for="organization-select">Select Organization:</label>
                     <select id="organization-select" name="organization">
@@ -113,7 +114,9 @@
                 </form>
                 <br>
 
-                <div class="row justify-content-center" id="results-container"></div>
+                <div class="row justify-content-center" id="results-container">
+                    <!-- Results will be dynamically inserted here -->
+                </div>
             </section>
 
             <button id="back-to-top" title="Back to top">&uarr;</button>
@@ -121,12 +124,7 @@
         <?php include 'includes/footer.php'; ?>
     </div>
     <?php include 'includes/scripts.php'; ?>
-    
-    <!-- amCharts -->
-    <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
-    <script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
-    <script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
-    
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="path/to/jquery.min.js"></script>
     <script>
         function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
@@ -137,95 +135,42 @@
             dataPoints.forEach(dataPoint => {
                 var candidateDiv = document.createElement('div');
                 candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
+                candidateDiv.innerHTML = <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">;
                 imageContainer.appendChild(candidateDiv);
             });
 
-            am4core.useTheme(am4themes_animated);
+            var chart = new CanvasJS.Chart(containerId, {
+                animationEnabled: true,
+                title: { text: "Vote Counts" },
+                data: [{
+                    type: graphType,
+                    indexLabel: "{label} - {percent}%",
+                    indexLabelPlacement: "inside",
+                    indexLabelFontColor: "white",
+                    indexLabelFontSize: 14,
+                    dataPoints: dataPoints.map(dataPoint => ({
+                        ...dataPoint,
+                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                    }))
+                }]
+            });
 
-            if (graphType === 'pie') {
-                var chart = am4core.create(containerId, am4charts.PieChart);
-                chart.data = dataPoints.map((dataPoint) => ({
-                    category: dataPoint.label,
-                    value: dataPoint.y,
-                    percentage: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-                }));
-
-                var series = chart.series.push(new am4charts.PieSeries());
-                series.dataFields.value = "value";
-                series.dataFields.category = "category";
-                series.slices.template.tooltipText = "{category}: [bold]{value} votes ({percentage}%)";
-                series.slices.template.fill = am4core.color("#FF0000");
-
-                series.slices.template.events.on("hit", function(event) {
-                    event.target.fill = am4core.color("#0000FF");
-                });
-            } else if (graphType === 'line') {
-                var chart = am4core.create(containerId, am4charts.XYChart);
-                chart.data = dataPoints.map((dataPoint) => ({
-                    category: dataPoint.label,
-                    value: dataPoint.y,
-                    percentage: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-                }));
-
-                var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-                categoryAxis.dataFields.category = "category";
-                categoryAxis.renderer.grid.template.location = 0;
-
-                var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-
-                var series = chart.series.push(new am4charts.LineSeries());
-                series.dataFields.valueY = "value";
-                series.dataFields.categoryX = "category";
-                series.name = "Votes";
-                series.strokeWidth = 3;
-                series.tensionX = 0.8;
-                series.tooltipText = "{category}: [bold]{valueY} votes ({percentage}%)";
-
-                var bullet = series.bullets.push(new am4charts.CircleBullet());
-                bullet.circle.fill = am4core.color("#fff");
-                bullet.circle.strokeWidth = 2;
-                bullet.circle.stroke = am4core.color("#FF0000");
-                bullet.circle.radius = 5;
-
-                chart.cursor = new am4charts.XYCursor();
-                chart.cursor.snapToSeries = series;
-            } else {
-                var chart = am4core.create(containerId, am4charts.XYChart);
-                chart.data = dataPoints.map((dataPoint, index) => ({
-                    category: dataPoint.label,
-                    value: dataPoint.y,
-                    percentage: ((dataPoint.y / totalVotes) * 100).toFixed(2),
-                    color: index % 2 === 0 ? am4core.color("#FF0000") : am4core.color("#0000FF")
-                }));
-
-                var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
-                categoryAxis.dataFields.category = "category";
-                categoryAxis.renderer.grid.template.location = 0;
-
-                var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
-
-                var series = chart.series.push(new am4charts.ColumnSeries());
-                series.dataFields.valueX = "value";
-                series.dataFields.categoryY = "category";
-                series.columns.template.propertyFields.fill = "color";
-                series.columns.template.tooltipText = "{category}: [bold]{valueX} votes ({percentage}%)[/]";
-
-                // Control Bar Width (narrower bars)
-                series.columns.template.width = am4core.percent(20); // Adjust the percentage for narrower bars
-
-                // Add candidate names and percentages inside the bars (centered)
-                var labelBullet = series.bullets.push(new am4charts.LabelBullet());
-                labelBullet.label.text = "{category}: {percentage}% ({valueX} votes)";
-                labelBullet.label.fill = am4core.color("#fff");
-                labelBullet.label.fontSize = 12;  // Adjust font size as needed
-                labelBullet.label.horizontalCenter = "middle";  // Center the text horizontally
-                labelBullet.label.verticalCenter = "middle";    // Center the text vertically
-                labelBullet.label.padding(0, 100, 0, 0);           // Optional: Remove extra padding
-
-                chart.cursor = new am4charts.XYCursor();
-                chart.cursor.snapToSeries = series;
+            if (graphType === 'bar') {
+                chart.options.axisX = {
+                    title: "",
+                    includeZero: true,
+                    interval: 1,
+                    labelFormatter: function () {
+                        return " ";
+                    }
+                };
+                chart.options.axisY = {
+                    title: "",
+                    interval: Math.ceil(totalVotes / 10)
+                };
             }
+
+            chart.render();
         }
 
         function fetchAndGenerateGraphs(organization) {
@@ -246,7 +191,13 @@
                             'treasurer': 'Treasurer',
                             'auditor': 'Auditor',
                             'p.r.o': 'P.R.O',
-                            'businessManager': 'Business Manager'
+                            'businessManager': 'Business Manager',
+                            'beedRep': 'BEED Representative',
+                            'bsedRep': 'BSED Representative',
+                            'bshmRep': 'BSHM Representative',
+                            'bsoadRep': 'BSOAD Representative',
+                            'bs crimRep': 'BS Crim Representative',
+                            'bsitRep': 'BSIT Representative'
                         }
                     };
 
@@ -254,7 +205,7 @@
 
                     Object.keys(selectedCategories).forEach(function (category) {
                         if (response[category]) {
-                            var containerHtml = ` 
+                            var containerHtml = 
                                 <div class='col-md-12'>
                                     <div class='box'>
                                         <div class='box-header with-border'>
@@ -263,12 +214,13 @@
                                         <div class='box-body'>
                                             <div class='chart-container'>
                                                 <div class='candidate-images' id='${category}Image'></div>
-                                                <div id='${category}Graph' style='height: 300px; width: 1000px;'></div>
+                                                <div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>`;
+                                </div>;
                             $('#results-container').append(containerHtml);
+
                             generateGraph(response[category], category + 'Graph', category + 'Image', graphType);
                         }
                     });
@@ -291,8 +243,17 @@
                 fetchAndGenerateGraphs($('#organization-select').val());
             });
 
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 100) {
+                    $('#back-to-top').fadeIn();
+                } else {
+                    $('#back-to-top').fadeOut();
+                }
+            });
+
             $('#back-to-top').click(function () {
                 $('html, body').animate({ scrollTop: 0 }, 600);
+                return false;
             });
         });
     </script>
