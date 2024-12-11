@@ -151,7 +151,7 @@
             dataPoints.forEach((dataPoint, index) => {
                 var candidateDiv = document.createElement('div');
                 candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
+                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}">`;
                 imageContainer.appendChild(candidateDiv);
 
                 // Assign a color based on the index (repeating the custom color palette)
@@ -169,10 +169,10 @@
                         color: dataPoint.color || "#4F81BC", // Default color if not assigned
                         indexLabel: `${dataPoint.label} - ${(dataPoint.y / totalVotes * 100).toFixed(2)}%`,  // Keep label inside the bar
                         indexLabelFontColor: "black",
-                        
+                        indexLabelPlacement: "outside",  // Place labels outside the bars
                         indexLabelFontSize: 14,
                         indexLabelFontWeight: "bold",
-                        
+                        indexLabelAlign: "left"  // Align labels to the left outside
                     }))
                 }]
             };
