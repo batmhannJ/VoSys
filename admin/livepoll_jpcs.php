@@ -102,6 +102,9 @@
                     <select id="graph-select" name="graph-type">
                         <option value="bar">Bar Graph</option>
                         <option value="pie">Pie Chart</option>
+                        <option value="line">Line Chart</option>
+                        <option value="donut">Donut Chart</option>
+                        <option value="stacked">Stacked Area Chart</option>
                     </select>
                     <button type="submit">Show Results</button>
                 </form>
@@ -120,10 +123,10 @@
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="path/to/jquery.min.js"></script>
     <script>
+        // Bar Graph
         function generateBarGraph(dataPoints, containerId, imageContainerId) {
             var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
-            // Ensure images match the data points by iterating in the same order
             var imageContainer = document.getElementById(imageContainerId);
             imageContainer.innerHTML = '';
             dataPoints.forEach(dataPoint => {
@@ -167,10 +170,10 @@
             chart.render();
         }
 
+        // Pie Chart
         function generatePieChart(dataPoints, containerId, imageContainerId) {
             var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
-            // Ensure images match the data points by iterating in the same order
             var imageContainer = document.getElementById(imageContainerId);
             imageContainer.innerHTML = '';
             dataPoints.forEach(dataPoint => {
@@ -200,6 +203,108 @@
             chart.render();
         }
 
+        // Line Chart
+        function generateLineChart(dataPoints, containerId, imageContainerId) {
+            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+
+            var imageContainer = document.getElementById(imageContainerId);
+            imageContainer.innerHTML = '';
+            dataPoints.forEach(dataPoint => {
+                var candidateDiv = document.createElement('div');
+                candidateDiv.className = 'candidate-image';
+                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
+                imageContainer.appendChild(candidateDiv);
+            });
+
+            var chart = new CanvasJS.Chart(containerId, {
+                animationEnabled: true,
+                animationDuration: 3000,
+                animationEasing: "easeInOutBounce",
+                title: {
+                    text: "Vote Counts"
+                },
+                axisX: {
+                    title: "Candidates"
+                },
+                axisY: {
+                    title: "Votes"
+                },
+                data: [{
+                    type: "line",
+                    dataPoints: dataPoints
+                }]
+            });
+            chart.render();
+        }
+
+        // Donut Chart
+        function generateDonutChart(dataPoints, containerId, imageContainerId) {
+            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+
+            var imageContainer = document.getElementById(imageContainerId);
+            imageContainer.innerHTML = '';
+            dataPoints.forEach(dataPoint => {
+                var candidateDiv = document.createElement('div');
+                candidateDiv.className = 'candidate-image';
+                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
+                imageContainer.appendChild(candidateDiv);
+            });
+
+            var chart = new CanvasJS.Chart(containerId, {
+                animationEnabled: true,
+                animationDuration: 3000,
+                animationEasing: "easeInOutBounce",
+                title: {
+                    text: "Vote Counts"
+                },
+                data: [{
+                    type: "doughnut",
+                    indexLabel: "{label} - {percent}%",
+                    indexLabelFontColor: "white",
+                    dataPoints: dataPoints.map(dataPoint => ({
+                        ...dataPoint,
+                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                    }))
+                }]
+            });
+            chart.render();
+        }
+
+        // Stacked Area Chart
+        function generateStackedAreaChart(dataPoints, containerId, imageContainerId) {
+            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+
+            var imageContainer = document.getElementById(imageContainerId);
+            imageContainer.innerHTML = '';
+            dataPoints.forEach(dataPoint => {
+                var candidateDiv = document.createElement('div');
+                candidateDiv.className = 'candidate-image';
+                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
+                imageContainer.appendChild(candidateDiv);
+            });
+
+            var chart = new CanvasJS.Chart(containerId, {
+                animationEnabled: true,
+                animationDuration: 3000,
+                animationEasing: "easeInOutBounce",
+                title: {
+                    text: "Vote Counts"
+                },
+                axisX: {
+                    title: "Candidates"
+                },
+                axisY: {
+                    title: "Votes"
+                },
+                data: [{
+                    type: "stackedArea",
+                    dataPoints: dataPoints
+                }]
+            });
+            chart.render();
+        }
+
+        // Fetch and generate graphs
         function fetchAndGenerateGraphs(organization, graphType) {
             $.ajax({
                 url: 'update_jpcs_data.php',
@@ -258,6 +363,12 @@
                                 generateBarGraph(response[category], category + 'Graph', category + 'Image');
                             } else if (graphType === 'pie') {
                                 generatePieChart(response[category], category + 'Graph', category + 'Image');
+                            } else if (graphType === 'line') {
+                                generateLineChart(response[category], category + 'Graph', category + 'Image');
+                            } else if (graphType === 'donut') {
+                                generateDonutChart(response[category], category + 'Graph', category + 'Image');
+                            } else if (graphType === 'stacked') {
+                                generateStackedAreaChart(response[category], category + 'Graph', category + 'Image');
                             }
                         }
                     });
@@ -268,31 +379,29 @@
             });
         }
 
-        $(document).ready(function () {
-            // Fetch and generate graphs for the default organization (JPCS) and default graph type (Bar Graph)
-            fetchAndGenerateGraphs('jpcs', 'bar');
+        // Event listener for form submission
+        $('#organization-form').on('submit', function (e) {
+            e.preventDefault();
 
-            // Handle form submission
-            $('#organization-form').submit(function (event) {
-                event.preventDefault();
-                const selectedOrganization = $('#organization-select').val();
-                const selectedGraphType = $('#graph-select').val();
-                fetchAndGenerateGraphs(selectedOrganization, selectedGraphType);
-            });
+            var organization = $('#organization-select').val();
+            var graphType = $('#graph-select').val();
 
-            $(window).scroll(function () {
-                if ($(this).scrollTop() > 100) {
-                    $('#back-to-top').fadeIn();
-                } else {
-                    $('#back-to-top').fadeOut();
-                }
-            });
+            fetchAndGenerateGraphs(organization, graphType);
+        });
 
-            $('#back-to-top').click(function () {
-                $('html, body').animate({ scrollTop: 0 }, 600);
-                return false;
-            });
+        // Scroll to top button
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 100) {
+                $('#back-to-top').fadeIn();
+            } else {
+                $('#back-to-top').fadeOut();
+            }
+        });
+
+        $('#back-to-top').click(function () {
+            $('html, body').animate({ scrollTop: 0 }, 500);
+            return false;
         });
     </script>
 </body>
-</html> 
+</html>  
