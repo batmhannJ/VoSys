@@ -11,6 +11,13 @@ if (isset($_POST['login'])) {
     $voter = $_POST['voter'];
     $password = $_POST['password'];
 
+    // Check if the Terms and Conditions checkbox is checked
+    if (!isset($_POST['terms'])) {
+        $_SESSION['error'] = 'You must agree to the Terms and Conditions before logging in.';
+        header('location: voters_login.php');
+        exit();
+    }
+
     if (strpos($voter, "'") !== false) {
         header('location: VotersLogin.php');
         exit();

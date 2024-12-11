@@ -562,6 +562,14 @@ main.sign-up-mode .carousel {
                   <span class="form-control-feedback"></span>
                 </div>
 
+                <!-- Add a Terms and Conditions checkbox -->
+                <div class="input-wrap">
+                    <label for="terms" style="font-size: 15px;">
+                        <input type="checkbox" name="terms" id="terms" required>
+                        I agree to the <a href="terms_and_conditions.php" target="_blank">Terms and Conditions</a>
+                    </label>
+                </div>
+
                 <div style="text-align: right; margin-bottom: 10px;">
                     <a href="forgot_pass.php" style="font-size: 15px;">Forgot Password?</a>
                 </div>
