@@ -48,13 +48,13 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
-        /* Align images next to graphs */
         .chart-wrapper {
             display: flex;
-            justify-content: flex-start; /* Align to the left */
-            align-items: center; /* Vertically align items */
+            justify-content: center;
+            align-items: center;
             width: 100%;
             margin: 20px 0;
+            position: relative;
         }
 
         .candidate-images {
@@ -63,7 +63,9 @@
             justify-content: center;
             align-items: center;
             margin-right: 20px; /* Space between image and graph */
-            width: 100px; /* Fixed width for image container */
+            width: 100px;
+            position: absolute;
+            top: 10px;
         }
 
         .candidate-image img {
@@ -87,6 +89,7 @@
                 height: 100px;
             }
         }
+
     </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -155,6 +158,7 @@
             ];
             
             dataPoints.forEach((dataPoint, index) => {
+                // Add images directly next to the bars
                 var candidateDiv = document.createElement('div');
                 candidateDiv.className = 'candidate-image';
                 candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
