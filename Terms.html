@@ -55,7 +55,7 @@
             <div class="tab active" onclick="setActiveTab('terms_of_use')">Terms of use</div>
             <div class="tab" onclick="setActiveTab('user_eligibility')">User Eligibility</div>
             <div class="tab" onclick="setActiveTab('account_security')">Account Security</div>
-            <div class="tab" onclick="setActiveTab('termination_clause')">Termination clause</div>
+            <div class="tab" onclick="setActiveTab('rights_responsibilities')">Voting Rights and Responsibilities</div>
             <div class="tab" onclick="setActiveTab('governing_law')">Governing law</div>
           </div>
 
@@ -169,18 +169,27 @@
         <li style="text-align: justify;"><strong>Security:</strong> You must not share your account credentials with others. Any activities occurring under your account are your responsibility. Ensure that you log out of your account when using a shared or public computer.</li>
         <li style="text-align: justify;"><strong>One-Time Password (OTP):</strong> Users may be required to verify their identity using a one-time password (OTP) sent via email or other means. It is important to keep your email account secure to prevent unauthorized access.</li>
         <li style="text-align: justify;"><strong>Multi-Factor Authentication:</strong> For added security, users are encouraged to enable multi-factor authentication (MFA) on their accounts, which adds an extra layer of protection when accessing your account.</li>
-        <li style="text-align: justify;"><strong>Password Management:</strong> Your password should be unique, strong, and should not be easily guessed. We recommend using a combination of uppercase and lowercase letters, numbers, and special characters. Avoid reusing passwords across different sites.</li>
+        <li style="text-align: justify;"><strong>Email Verification:</strong> vosys.org will send your generated Voter ID and password to your registered email address or other means. It is important to keep your email account secure to prevent unauthorized access and ensure that you can complete the verification process.</li>
+        <li style="text-align: justify;"><strong>Password Management:</strong> Update your password it should be unique, strong, and should not be easily guessed. We recommend using a combination of uppercase and lowercase letters, numbers, and special characters. Avoid reusing passwords across different sites.</li>
         <li style="text-align: justify;"><strong>Account Monitoring:</strong> Regularly monitor your account activity for any suspicious actions. If you notice any unusual activity, immediately change your password and report the incident to support.</li>
-        <li style="text-align: justify;"><strong>Account Locking:</strong> After multiple failed login attempts, your account may be temporarily locked to prevent unauthorized access. You may need to follow the account recovery process to regain access.</li>
         <li style="text-align: justify;"><strong>Phishing Attempts:</strong> Be cautious of phishing attempts. Do not respond to unsolicited emails or messages asking for your login credentials or personal information. Always verify the source before clicking on any links.</li>
       </ul>
     `;
     break;
 
-          case 'termination_clause':
-            title.textContent = 'Termination Clause';
-            description.innerHTML = 'Information regarding the termination of accounts or access under specific conditions.';
-            break;
+    case 'rights_responsibilities':
+    title.textContent = 'Voting Rights and Responsibilities';
+    description.innerHTML = `
+      <ul style="text-align: justify; list-style-type: none; padding-left: 0;">
+        <li style="text-align: justify;"><strong>Voting Process:</strong> Each eligible user will be allowed to cast their vote through the vosys.org platform, where all votes will be registered securely. The platform ensures that all votes are confidential and counted accurately.</li>
+<li style="text-align: justify;"><strong>One Vote Per User:</strong> Each user is allowed only one vote per election or decision, unless otherwise specified. Multiple votes from the same user will not be counted, and any attempt to cast more than one vote may lead to disqualification.</li>
+<li style="text-align: justify;"><strong>Non-transferability:</strong> Voting rights are non-transferable. Users must cast their vote personally and are prohibited from attempting to influence or impersonate others in the voting process. Any violation of this may result in the suspension or revocation of voting rights.</li>
+<li style="text-align: justify;"><strong>Fraudulent Activity:</strong> Any attempt to manipulate, alter, or falsify voting outcomes, including but not limited to voting through multiple accounts, is considered a violation of vosys.org policies. Such activities will lead to immediate disqualification and possible legal action.</li>
+<li style="text-align: justify;"><strong>Voting Integrity:</strong> vosys.org employs security measures to ensure the integrity of the voting process, including encryption and verification techniques to prevent tampering and protect voter anonymity.</li>
+<li style="text-align: justify;"><strong>Monitoring and Audits:</strong> The vosys.org platform may conduct random audits and monitor voting activities to detect any suspicious behavior. Users who are found in violation of the voting policies may face penalties, including the suspension of voting rights.</li>
+      </ul>
+    `;
+    break;
           case 'governing_law':
             title.textContent = 'Governing Law';
             description.innerHTML = 'This section outlines the legal jurisdiction and governing laws that apply to the terms of service.';
