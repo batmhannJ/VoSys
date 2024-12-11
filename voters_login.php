@@ -517,102 +517,98 @@ main.sign-up-mode .carousel {
 </style>
 
 <body>
-    <main>
-      <div class="box">
-        <div class="inner-box">
-          <div class="forms-wrap">
-            <form action="login.php" method="post" autocomplete="off" class="sign-in-form">
-              <div class="logo">
-                <img src="./images/olshco.png" alt="easyclass" />
-                <h4 style="font-size:28px; color: maroon;"><b>VOSYS - OLSHCO</b></h4>
-              </div>
-
-              <div class="heading">
-                <center><h2>Voters Login Page</h2></center>
-                <hr>
-              </div>
-
-              <div class="actual-form has-feedback">
-                 <div class="input-wrap">
-                  <input
-                    type="text"
-                    minlength="4"
-                    class="input-field"
-                    name="voter"
-                    placeholder="Voter's ID" style="font-size: 15px;"
-                    required
-                  />
-                    <span class="form-control-feedback"></span>
-                  <label style="font-size:15px;"></label>
-                </div>
-
-                <div class="input-wrap has-feedback">
-                  <input
-                      id="current-password"
-                      type="password"
-                      minlength="8"
-                      class="input-field"
-                      name="password"
-                      placeholder="Password"
-                      autocomplete="off"
-                      required
-                  />
-                  <label style="font-size:15px;"></label>
-                  <i class="fa fa-fw fa-eye togglePassword" id="togglePassword"></i>
-                  <span class="form-control-feedback"></span>
-                </div>
-
-                <!-- Add a Terms and Conditions checkbox -->
-                <div class="input-wrap">
-                    <label for="terms" style="font-size: 15px;">
-                        <input type="checkbox" name="terms" id="terms" required>
-                        I agree to the <a href="terms_and_conditions.php" target="_blank">Terms and Conditions</a>
-                    </label>
-                </div>
-
-                <div style="text-align: right; margin-bottom: 10px;">
-                    <a href="forgot_pass.php" style="font-size: 15px;">Forgot Password?</a>
-                </div>
-
-                <div class="form-group has-feedback">
-                    <div class="g-recaptcha" data-sitekey="6LddHcIpAAAAAJS6Wnenkllxyr3tWUSlSCu8o9eO">
-                </div>
-            </div>
-
-                <input type="submit" name="login" value="Login" class="sign-btn" style="font-size:15px;">
-                <!--<p style="text-align: center;">or</p>-->
-                <!--<input type="submit" name="signup" value="Sign Up" class="signup-btn" style="font-size:15px;" onclick="window.location.href = 'register.php';">-->
-                <input type="button" value="Back to Homepage" class="back-btn" style="font-size:15px;" onclick="window.location.href = 'index.html';">
-
-                        <?php
-                if (isset($_SESSION['error'])) {
-                    echo "
-                        <div class='callout callout-danger text-center mt20' style='width: 300px; margin: 0 auto;'>
-                            <p>" . $_SESSION['error'] . "</p> 
-                        </div>
-                    ";
-                    unset($_SESSION['error']);
-                }
-                ?>
-                
-              </div>
-            </form>
+<main>
+  <div class="box">
+    <div class="inner-box">
+      <div class="forms-wrap">
+        <form action="login.php" method="post" autocomplete="off" class="sign-in-form">
+          <div class="logo">
+            <img src="./images/olshco.png" alt="easyclass" />
+            <h4 style="font-size:28px; color: maroon;"><b>VOSYS - OLSHCO</b></h4>
           </div>
 
-          
+          <div class="heading">
+            <center><h2>Voters Login Page</h2></center>
+            <hr>
+          </div>
 
-          <div class="carousel">
-            <div class="images-wrapper">
-              <img src="./images/c.png" class="image img-1 show" alt="" />
-              <img src="./images/j.png" class="image img-2 show" alt="" />
-              <img src="./images/y.png" class="image img-3 show" alt="" />
-              <img src="./images/ct.png" class="image img-4 show" alt="" />
-              <img src="./images/p.png" class="image img-5 shozw" alt="" />
-              <img src="./images/h.png" class="image img-6 show" alt="" />
+          <div class="actual-form has-feedback">
+            <div class="input-wrap">
+              <input
+                type="text"
+                minlength="4"
+                class="input-field"
+                name="voter"
+                placeholder="Voter's ID" style="font-size: 15px;"
+                required
+              />
+              <span class="form-control-feedback"></span>
+              <label style="font-size:15px;"></label>
             </div>
+
+            <div class="input-wrap has-feedback">
+              <input
+                id="current-password"
+                type="password"
+                minlength="8"
+                class="input-field"
+                name="password"
+                placeholder="Password"
+                autocomplete="off"
+                required
+              />
+              <label style="font-size:15px;"></label>
+              <i class="fa fa-fw fa-eye togglePassword" id="togglePassword"></i>
+              <span class="form-control-feedback"></span>
+            </div>
+
+            <div style="text-align: right; margin-bottom: 10px;">
+              <a href="forgot_pass.php" style="font-size: 15px;">Forgot Password?</a>
+            </div>
+
+            <div class="form-group has-feedback">
+              <div class="g-recaptcha" data-sitekey="6LddHcIpAAAAAJS6Wnenkllxyr3tWUSlSCu8o9eO"></div>
+            </div>
+
+            <!-- Terms and Conditions Checkbox -->
+            <div class="input-wrap">
+              <label>
+                <input type="checkbox" name="agree_terms" required> I agree to the <a href="terms_and_condition.php" target="_blank">Terms and Conditions</a>.
+              </label>
+            </div>
+
+            <input type="submit" name="login" value="Login" class="sign-btn" style="font-size:15px;">
+            <!--<p style="text-align: center;">or</p>-->
+            <!--<input type="submit" name="signup" value="Sign Up" class="signup-btn" style="font-size:15px;" onclick="window.location.href = 'register.php';">-->
+            <input type="button" value="Back to Homepage" class="back-btn" style="font-size:15px;" onclick="window.location.href = 'index.html';">
+
+            <?php
+            if (isset($_SESSION['error'])) {
+              echo "
+                <div class='callout callout-danger text-center mt20' style='width: 300px; margin: 0 auto;'>
+                  <p>" . $_SESSION['error'] . "</p> 
+                </div>
+              ";
+              unset($_SESSION['error']);
+            }
+            ?>
+          </div>
+        </form>
+      </div>
+
+      <div class="carousel">
+        <div class="images-wrapper">
+          <img src="./images/c.png" class="image img-1 show" alt="" />
+          <img src="./images/j.png" class="image img-2 show" alt="" />
+          <img src="./images/y.png" class="image img-3 show" alt="" />
+          <img src="./images/ct.png" class="image img-4 show" alt="" />
+          <img src="./images/p.png" class="image img-5 show" alt="" />
+          <img src="./images/h.png" class="image img-6 show" alt="" />
         </div>
       </div>
-    </main>
+    </div>
+  </div>
+</main>
 
         </div>
     </div>
