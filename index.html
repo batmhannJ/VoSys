@@ -1662,53 +1662,62 @@ hr {
 margin: 20px 0;
 }
 
-/* Individual announcement card */
+.announcement-container {
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  align-items: center; /* Centers vertically */
+  min-height: 100vh; /* Full viewport height */
+  padding: 20px; /* Optional padding */
+}
+
 .announcement {
-background-color: #f8f9fa; /* Light gray background */
-border: 2px solid #006400; /* Matte blue border */
-border-radius: 20px; /* Increased border radius for a rounded look */
-padding: 20px;
-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added transition for transform and box-shadow */
+  background-color: #f8f9fa; /* Light gray background */
+  border: 2px solid #006400; /* Matte blue border */
+  border-radius: 20px; /* Increased border radius for a rounded look */
+  padding: 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added transition for transform and box-shadow */
+  width: 100%; /* Makes the announcement responsive */
+  max-width: 600px; /* Set a max width for larger screens */
 }
 
 .announcement:hover {
-transform: translateY(-5px); /* Move the card up slightly on hover */
-box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15); /* Enhance shadow on hover */
+  transform: translateY(-5px); /* Move the card up slightly on hover */
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15); /* Enhance shadow on hover */
 }
 
 /* Header of the announcement */
 .announcement-header {
-display: flex;
-justify-content: space-between;
-align-items: center;
-margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
 .announcement-header h3 {
-color: #006400; /* Matte blue color for header text */
-margin: 0;
-font-size: 24px; /* Increased font size for header */
+  color: #006400; /* Matte blue color for header text */
+  margin: 0;
+  font-size: 24px; /* Increased font size for header */
 }
 
 /* Date of the announcement */
 .announcement-date {
-color: #777;
-font-size: 14px;
+  color: #777;
+  font-size: 14px;
 }
 
 /* Body text of the announcement */
 .announcement-body {
-font-size: 20px;
-line-height: 1.6;
-color: #000; /* Dark gray color for body text */
+  font-size: 20px;
+  line-height: 1.6;
+  color: #000; /* Dark gray color for body text */
 }
 
 /* Author of the announcement */
 .announcement-author {
-color: #999; /* Light gray color for author */
-font-style: italic;
-font-size: 13px;
+  color: #999; /* Light gray color for author */
+  font-style: italic;
+  font-size: 13px;
 }
 
   </style>
