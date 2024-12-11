@@ -40,97 +40,83 @@
             align-items: center;
         }
 
-      /* Main container for images */
-.candidate-wrapper {
-    display: inline-block;
-    position: relative;
-    margin: 10px;  /* Smaller margin for compact display */
-    width: 100px;  /* Smaller width for each image container */
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-radius: 50%;
+      /* Container to hold images and bar chart */
+#chartContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
-/* Hover effect for the entire wrapper */
-.candidate-wrapper:hover {
-    transform: translateY(-8px);  /* Slightly smaller hover effect */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);  /* Slightly smaller shadow */
-}
-
-/* Style the candidate image */
-/* General styles for the container */
+/* Image container styling */
 #image-container {
     display: flex;
-    justify-content: space-around;
-    margin: 20px 0;
-    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
 }
 
-/* Wrapper for each candidate image and name */
+/* Candidate image styling */
 .candidate-wrapper {
-    display: inline-block;
-    text-align: center;
-    margin: 10px;
-    width: 100px;
-    position: relative;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
 }
 
-/* Hover effect for candidate wrapper */
-.candidate-wrapper:hover {
-    transform: translateY(-10px);
-    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-/* Image styling */
+/* Image circle styling */
 .image-container {
-    width: 80px;  /* Adjust image size */
+    width: 80px;
     height: 80px;
     overflow: hidden;
     border-radius: 50%;
     margin-bottom: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Styling the images */
+/* Styling for images inside the circle */
 .candidate-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
 }
 
-/* Hover effect to slightly enlarge the image */
-.candidate-wrapper:hover .candidate-image {
-    transform: scale(1.1);
-}
-
-/* Styling for the candidate names */
+/* Styling for candidate names */
 .name-label {
     font-size: 14px;
     font-weight: bold;
     color: #333;
+    text-align: center;
     margin-top: 5px;
-    transition: opacity 0.3s ease;
-    opacity: 0;
 }
 
-/* Show name on hover */
-.candidate-wrapper:hover .name-label {
-    opacity: 1;
+/* Bar chart styles */
+canvas {
+    max-width: 100% !important;
 }
 
-/* Responsive styling for smaller screens */
+/* Responsive design for smaller screens */
 @media (max-width: 768px) {
-    .candidate-wrapper {
-        width: 80px;  /* Smaller width for mobile */
-    }
-    .image-container {
-        width: 70px;
-        height: 70px;
+    #barGraphContainer {
+        width: 100%;
     }
 }
 
+
+        @media (max-width: 768px) {
+            .candidate-image img {
+                width: 75px;
+                height: 75px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .candidate-image img {
+                width: 100px;
+                height: 100px;
+            }
+        }
     </style>
 </head>
 <body class="hold-transition skin-green sidebar-mini">
