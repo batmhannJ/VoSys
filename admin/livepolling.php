@@ -169,9 +169,10 @@
                         color: dataPoint.color || "#4F81BC", // Default color if not assigned
                         indexLabel: `${dataPoint.label} - ${(dataPoint.y / totalVotes * 100).toFixed(2)}%`,
                         indexLabelFontColor: "black",
-                        indexLabelPlacement: "inside",
+                        indexLabelPlacement: "outside",  // Move labels outside the bars
                         indexLabelFontSize: 14,
-                        indexLabelFontWeight: "bold"
+                        indexLabelFontWeight: "bold",
+                        indexLabelAlign: "left"  // Align labels to the left outside
                     }))
                 }]
             };
