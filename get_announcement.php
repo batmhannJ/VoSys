@@ -14,6 +14,7 @@ if ($result && $result->num_rows > 0) {
     echo json_encode([
         'success' => true,
         'id_announcement' => $row['id_announcement'],
+        'announcement' => $row['announcement'],
         'startdate' => $row['startdate'],
         'addedby' => $row['addedby']
     ]);
