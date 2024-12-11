@@ -59,17 +59,6 @@
     </header><br><br><br>
 
     <section id="about" class="section__container register__container">
-      <center><h2 class="section__header">Announcement</h2></center><br>
-      <div class="register__grid">
-        <div class="register__content">
-
-          <!-- Announcement Section -->
-
-        </div>
-      </div>
-    </section>
-
-    <section id="about" class="section__container register__container">
       <center><h2 class="section__header">ABOUT US</h2></center><br>
       <div class="register__grid">
         <div class="register__content">
@@ -84,6 +73,52 @@
         </div>
       </div>
     </section>
+
+    <section id="about" class="section__container register__container">
+      <center><h2 class="section__header">Announcement</h2></center><br>
+      <div class="register__grid">
+        <div class="register__content">
+          <!-- Announcement Section -->
+          <div id="announcement-container" class="announcement-container">
+            <!-- Announcement will be dynamically loaded here -->
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <script>
+      // Function to fetch and display the latest announcement
+      function loadAnnouncement() {
+        fetch('get_announcement.php')
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              const announcementHTML = `
+                <div class="announcement">
+                  <div class="announcement-header">
+                    <b><h3>${data.title}</h3></b>
+                    <p class="announcement-date">${new Date().toLocaleDateString()}</p>
+                  </div>
+                  <div class="announcement-body">
+                    <hr>
+                    <p class="announcement-text">${data.content}</p>
+                    <p class="announcement-author">Posted by: ${data.addedby}</p>
+                  </div>
+                </div>
+              `;
+              document.getElementById('announcement-container').innerHTML = announcementHTML;
+            } else {
+              document.getElementById('announcement-container').innerHTML = '<p>No announcements found.</p>';
+            }
+          })
+          .catch(error => {
+            console.error('Error fetching announcement:', error);
+          });
+      }
+    
+      // Load the announcement when the page is loaded
+      window.onload = loadAnnouncement;
+    </script>    
 
 <section class="discover section" id="discover">        
     <div class="wrapper">
