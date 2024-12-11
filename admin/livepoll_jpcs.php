@@ -33,40 +33,35 @@
         #back-to-top:hover {
             background-color: #555;
         }
+
         .chart-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-bottom: 40px;
-}
+            display: flex;
+            justify-content: flex-start; /* Align items at the start */
+            align-items: flex-start; /* Align items to the top */
+            margin-bottom: 40px;
+        }
 
-.candidate-images {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 150px; /* Set a fixed width for image container */
-    margin-right: 20px; /* Move the images to the left of the graph */
-    margin-left: 0; /* Ensure no margin on the left side */
-}
+        .candidate-images {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 150px; /* Set a fixed width for image container */
+            margin-right: 20px; /* Space between the images and the graph */
+        }
 
-.candidate-image {
-    margin-bottom: 10px;
-}
+        .candidate-image img {
+            margin-bottom: 10px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
 
-.candidate-image img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
-}
-
-.candidate-image:hover {
-    transform: scale(1.1);
-}
-
+        .candidate-image:hover {
+            transform: scale(1.1);
+        }
 
         @media (max-width: 768px) {
             .candidate-image img {
@@ -383,65 +378,70 @@
                     // Get categories for the selected organization
                     var selectedCategories = categories[organization];
 
-                    // Generate graphs for the selected categories
+                    // Loop through each category and generate a chart
                     Object.keys(selectedCategories).forEach(function (category) {
-                        if (response[category]) {
-                            // Create container for each category
-                            var containerHtml = ` 
-                                <div class='col-md-12'>
-                                    <div class='box'>
-                                        <div class='box-header with-border'>
-                                            <h3 class='box-title'><b>${selectedCategories[category]}</b></h3>
-                                        </div>
-                                        <div class='box-body'>
-                                            <div class='chart-container'>
-                                                <div id='${category}Graph' style='height: 400px; width: 100%;'></div>
-                                                <div id='${category}Image' class='candidate-images'></div>
-                                            </div>
-                                        </div>
+                        var categoryName = selectedCategories[category];
+                        var dataPoints = response[category]; // Data for the current category
+
+                        // Create containers for the graph and images
+                        var resultContainer = document.createElement('div');
+                        resultContainer.className = 'col-md-6 col-lg-4';
+                        resultContainer.innerHTML = `
+                            <div class="box box-primary">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">${categoryName}</h3>
+                                </div>
+                                <div class="box-body">
+                                    <div class="chart-container">
+                                        <div id="candidate-images-${category}" class="candidate-images"></div>
+                                        <div id="graph-${category}" class="graph"></div>
                                     </div>
                                 </div>
-                            `;
-                            $('#results-container').append(containerHtml);
+                            </div>
+                        `;
+                        $('#results-container').append(resultContainer);
 
-                            // Call the respective function based on graph type
-                            if (graphType === 'bar') {
-                                generateBarGraph(response[category], category + 'Graph', category + 'Image');
-                            } else if (graphType === 'pie') {
-                                generatePieChart(response[category], category + 'Graph', category + 'Image');
-                            } else if (graphType === 'line') {
-                                generateLineChart(response[category], category + 'Graph', category + 'Image');
-                            } else if (graphType === 'donut') {
-                                generateDonutChart(response[category], category + 'Graph', category + 'Image');
-                            } else if (graphType === 'stacked') {
-                                generateStackedAreaChart(response[category], category + 'Graph', category + 'Image');
-                            }
+                        // Call the function to generate the graph based on selected type
+                        if (graphType === 'bar') {
+                            generateBarGraph(dataPoints, `graph-${category}`, `candidate-images-${category}`);
+                        } else if (graphType === 'pie') {
+                            generatePieChart(dataPoints, `graph-${category}`, `candidate-images-${category}`);
+                        } else if (graphType === 'line') {
+                            generateLineChart(dataPoints, `graph-${category}`, `candidate-images-${category}`);
+                        } else if (graphType === 'donut') {
+                            generateDonutChart(dataPoints, `graph-${category}`, `candidate-images-${category}`);
+                        } else if (graphType === 'stacked') {
+                            generateStackedAreaChart(dataPoints, `graph-${category}`, `candidate-images-${category}`);
                         }
                     });
                 }
             });
         }
 
-        // Event listener for form submission
-        $('#organization-form').on('submit', function (event) {
-            event.preventDefault();
-            var organization = $('#organization-select').val();
-            var graphType = $('#graph-select').val();
-            fetchAndGenerateGraphs(organization, graphType);
-        });
+        $(document).ready(function () {
+            // Fetch and generate graphs based on initial selections
+            $('#organization-form').submit(function (event) {
+                event.preventDefault();
 
-        // Back to top functionality
-        $(window).scroll(function () {
-            if ($(this).scrollTop() > 100) {
-                $('#back-to-top').fadeIn();
-            } else {
-                $('#back-to-top').fadeOut();
-            }
-        });
+                var organization = $('#organization-select').val();
+                var graphType = $('#graph-select').val();
 
-        $('#back-to-top').click(function () {
-            $('html, body').animate({ scrollTop: 0 }, 500);
-            return false;
+                fetchAndGenerateGraphs(organization, graphType);
+            });
+
+            // Back to Top button functionality
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 100) {
+                    $('#back-to-top').fadeIn();
+                } else {
+                    $('#back-to-top').fadeOut();
+                }
+            });
+
+            $('#back-to-top').click(function () {
+                $('html, body').animate({ scrollTop: 0 }, 500);
+                return false;
+            });
         });
     </script>
 </body>
