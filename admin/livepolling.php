@@ -11,7 +11,7 @@
             font-size: 24px;
             font-weight: bold;
             color: #333;
-        } 
+        }
 
         #back-to-top {
             position: fixed;
@@ -40,25 +40,30 @@
             position: relative;
             margin-bottom: 40px;
             display: flex;
-            
+            justify-content: space-between;
+            align-items: center;
             background-color: #f4f6f9;
             border-radius: 12px;
-            padding: 40px;
+            padding: 20px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        /* Align images next to graphs */
+        .chart-wrapper {
+            display: flex;
+            justify-content: flex-start; /* Align to the left */
+            align-items: center; /* Vertically align items */
+            width: 100%;
+            margin: 20px 0;
         }
 
         .candidate-images {
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            margin-right: 15px;
-        }
-
-        .candidate-image {
-            display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            margin-bottom: 20px;
+            margin-right: 20px; /* Space between image and graph */
+            width: 100px; /* Fixed width for image container */
         }
 
         .candidate-image img {
@@ -68,6 +73,7 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
+        /* Adjust for smaller screens */
         @media (max-width: 768px) {
             .candidate-image img {
                 width: 75px;
@@ -137,7 +143,7 @@
             var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
             var imageContainer = document.getElementById(imageContainerId);
             imageContainer.innerHTML = '';
-            
+
             // Define custom colors based on your request
             const candidateColors = [
                 "rgb(43, 8, 168)",   // Blue color
@@ -204,9 +210,9 @@
                                         <h3 class='box-title'><b>${category}</b></h3>
                                     </div>
                                     <div class='box-body'>
-                                        <div class='chart-container'>
+                                        <div class='chart-wrapper'>
                                             <div class='candidate-images' id='${category}Image'></div>
-                                            <div id='${category}Graph' style='height: 300px; width: 100%;'></div>
+                                            <div id='${category}Graph' style='height: 300px; width: 80%;'></div>
                                         </div>
                                     </div>
                                 </div>
