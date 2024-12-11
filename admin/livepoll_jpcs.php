@@ -33,41 +33,40 @@
         #back-to-top:hover {
             background-color: #555;
         }
+
         .chart-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-bottom: 40px;
-}
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
 
-.candidate-images {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 150px; /* Set a fixed width for image container */
-    margin-right: 20px; /* Move the images to the left of the graph */
-    margin-left: 0; /* Ensure no margin on the left side */
-}
+        .candidate-images {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 150px; /* Set a fixed width for image container */
+            margin-left: 20px; /* Move the images to the right of the graph */
+            margin-right: 0; /* Ensure no margin on the right side */
+        }
 
-.candidate-image {
-    margin-bottom: 10px;
-    margin-right: 50px;
-}
+        .candidate-image {
+            margin-bottom: 10px;
+        }
 
-.candidate-image img {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
-}
+        .candidate-image img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
 
-.candidate-image:hover {
-    transform: scale(1.1);
-}
-
+        .candidate-image:hover {
+            transform: scale(1.1);
+        }
 
         @media (max-width: 768px) {
             .candidate-image img {
@@ -389,15 +388,15 @@
                         if (response[category]) {
                             // Create container for each category
                             var containerHtml = ` 
-                                <div class='col-md-12'>
-                                    <div class='box'>
-                                        <div class='box-header with-border'>
-                                            <h3 class='box-title'><b>${selectedCategories[category]}</b></h3>
+                                <div class="col-md-6" id="container-${category}">
+                                    <div class="box">
+                                        <div class="box-header">
+                                            <h3 class="box-title">${selectedCategories[category]}</h3>
                                         </div>
-                                        <div class='box-body'>
-                                            <div class='chart-container'>
-                                                <div id='${category}Graph' style='height: 300px; width: 80%;'></div>
-                                                <div id='${category}Image' class='candidate-images'></div>
+                                        <div class="box-body" id="container-${category}-chart">
+                                            <div class="chart-container">
+                                                <div class="chart" id="container-${category}-graph"></div>
+                                                <div class="candidate-images" id="container-${category}-images"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -405,17 +404,26 @@
                             `;
                             $('#results-container').append(containerHtml);
 
-                            // Call the respective function based on graph type
+                            // Prepare data for the graph
+                            var dataPoints = response[category].map(function (item) {
+                                return {
+                                    label: item.name,
+                                    y: item.vote_count,
+                                    image: item.image
+                                };
+                            });
+
+                            // Generate the selected graph type
                             if (graphType === 'bar') {
-                                generateBarGraph(response[category], category + 'Graph', category + 'Image');
+                                generateBarGraph(dataPoints, `container-${category}-graph`, `container-${category}-images`);
                             } else if (graphType === 'pie') {
-                                generatePieChart(response[category], category + 'Graph', category + 'Image');
+                                generatePieChart(dataPoints, `container-${category}-graph`, `container-${category}-images`);
                             } else if (graphType === 'line') {
-                                generateLineChart(response[category], category + 'Graph', category + 'Image');
+                                generateLineChart(dataPoints, `container-${category}-graph`, `container-${category}-images`);
                             } else if (graphType === 'donut') {
-                                generateDonutChart(response[category], category + 'Graph', category + 'Image');
+                                generateDonutChart(dataPoints, `container-${category}-graph`, `container-${category}-images`);
                             } else if (graphType === 'stacked') {
-                                generateStackedAreaChart(response[category], category + 'Graph', category + 'Image');
+                                generateStackedAreaChart(dataPoints, `container-${category}-graph`, `container-${category}-images`);
                             }
                         }
                     });
@@ -423,15 +431,15 @@
             });
         }
 
-        // Event listener for form submission
-        $('#organization-form').on('submit', function (event) {
-            event.preventDefault();
+        // Handle form submission for graph generation
+        $(document).on('submit', '#organization-form', function (e) {
+            e.preventDefault();
             var organization = $('#organization-select').val();
             var graphType = $('#graph-select').val();
             fetchAndGenerateGraphs(organization, graphType);
         });
 
-        // Back to top functionality
+        // Back to Top button functionality
         $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
                 $('#back-to-top').fadeIn();
@@ -442,7 +450,6 @@
 
         $('#back-to-top').click(function () {
             $('html, body').animate({ scrollTop: 0 }, 500);
-            return false;
         });
     </script>
 </body>
