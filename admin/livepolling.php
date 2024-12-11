@@ -51,7 +51,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            margin-left: 20px;
+            margin-right: 15px;
         }
 
         .candidate-image {
@@ -151,7 +151,7 @@
             dataPoints.forEach((dataPoint, index) => {
                 var candidateDiv = document.createElement('div');
                 candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}">`;
+                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
                 imageContainer.appendChild(candidateDiv);
 
                 // Assign a color based on the index (repeating the custom color palette)
@@ -167,12 +167,11 @@
                     dataPoints: dataPoints.map(dataPoint => ({
                         ...dataPoint,
                         color: dataPoint.color || "#4F81BC", // Default color if not assigned
-                        indexLabel: `${dataPoint.label} - ${(dataPoint.y / totalVotes * 100).toFixed(2)}%`,  // Keep label inside the bar
+                        indexLabel: `${dataPoint.label} - ${(dataPoint.y / totalVotes * 100).toFixed(2)}%`,
                         indexLabelFontColor: "black",
-                        indexLabelPlacement: "outside",  // Place labels outside the bars
+                        indexLabelPlacement: "inside",
                         indexLabelFontSize: 14,
-                        indexLabelFontWeight: "bold",
-                        indexLabelAlign: "left"  // Align labels to the left outside
+                        indexLabelFontWeight: "bold"
                     }))
                 }]
             };
