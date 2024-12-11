@@ -40,63 +40,70 @@
             align-items: center;
         }
 
-        /* Container to hold images and bar chart */
-        #chartContainer {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
+      /* Container to hold images and bar chart */
+#chartContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 20px;
+}
 
-        /* Image container styling */
-        #image-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-        }
+/* Image container styling */
+#image-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
 
-        /* Candidate image styling */
-        .candidate-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin-top: 10px;
-        }
+/* Candidate image styling */
+.candidate-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
 
-        /* Image circle styling */
-        .image-container {
-            width: 80px;
-            height: 80px;
-            overflow: hidden;
-            border-radius: 50%;
-            margin-bottom: 10px;
-        }
+/* Image circle styling */
+.image-container {
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
 
-        /* Styling for images inside the circle */
-        .candidate-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+/* Styling for images inside the circle */
+.candidate-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
-        /* Styling for candidate names */
-        .name-label {
-            font-size: 14px;
-            font-weight: bold;
-            color: #333;
-            text-align: center;
-            margin-top: 5px;
-        }
+/* Styling for candidate names */
+.name-label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-top: 5px;
+}
 
-        /* Bar chart styles */
-        canvas {
-            max-width: 100% !important;
-        }
+/* Bar chart styles */
+canvas {
+    max-width: 100% !important;
+}
 
-        /* Responsive design for smaller screens */
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    #barGraphContainer {
+        width: 100%;
+    }
+}
+
+
         @media (max-width: 768px) {
             .candidate-image img {
                 width: 75px;
@@ -158,80 +165,79 @@
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="path/to/jquery.min.js"></script>
     <script>
-        // Bar Graph with Dynamic Image and Name Layout
-        function generateBarGraph(dataPoints, containerId, imageContainerId) {
-            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+       // Bar Graph with Dynamic Image and Name Layout
+function generateBarGraph(dataPoints, containerId, imageContainerId) {
+    var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
-            // Clear previous images in the container
-            var imageContainer = document.getElementById(imageContainerId);
-            imageContainer.innerHTML = '';
+    // Clear previous images in the container
+    var imageContainer = document.getElementById(imageContainerId);
+    imageContainer.innerHTML = '';
 
-            // Loop to create unique and dynamic display for each candidate
-            dataPoints.forEach(dataPoint => {
-                var candidateDiv = document.createElement('div');
-                candidateDiv.className = 'candidate-wrapper';
+    // Loop to create unique and dynamic display for each candidate
+    dataPoints.forEach(dataPoint => {
+        var candidateDiv = document.createElement('div');
+        candidateDiv.className = 'candidate-wrapper';
 
-                // Create image container
-                var imgContainer = document.createElement('div');
-                imgContainer.className = 'image-container';
-                var imgElement = document.createElement('img');
-                imgElement.src = dataPoint.image;
-                imgElement.alt = dataPoint.label;
-                imgElement.title = dataPoint.label;
-                imgElement.className = 'candidate-image';
+        // Create image container
+        var imgContainer = document.createElement('div');
+        imgContainer.className = 'image-container';
+        var imgElement = document.createElement('img');
+        imgElement.src = dataPoint.image;
+        imgElement.alt = dataPoint.label;
+        imgElement.title = dataPoint.label;
+        imgElement.className = 'candidate-image';
 
-                // Create name label that appears below the image
-                var nameLabel = document.createElement('div');
-                nameLabel.className = 'name-label';
-                nameLabel.innerText = dataPoint.label;
+        // Create name label that appears below the image
+        var nameLabel = document.createElement('div');
+        nameLabel.className = 'name-label';
+        nameLabel.innerText = dataPoint.label;
 
-                // Append image and name label to the wrapper
-                imgContainer.appendChild(imgElement);
-                candidateDiv.appendChild(imgContainer);
-                candidateDiv.appendChild(nameLabel);
+        // Append image and name label to the wrapper
+        imgContainer.appendChild(imgElement);
+        candidateDiv.appendChild(imgContainer);
+        candidateDiv.appendChild(nameLabel);
 
-                // Append to the image container
-                imageContainer.appendChild(candidateDiv);
-            });
+        // Append to the image container
+        imageContainer.appendChild(candidateDiv);
+    });
 
-            // Generate the bar graph
-            var chart = new CanvasJS.Chart(containerId, {
-                animationEnabled: true,
-                animationDuration: 3000,
-                animationEasing: "easeInOutBounce",
-                title: {
-                    text: "Vote Counts"
-                },
-                axisX: {
-                    title: "",
-                    includeZero: true,
-                    interval: 1,
-                    labelFormatter: function () {
-                        return " ";
-                    }
-                },
-                axisY: {
-                    title: "",
-                    interval: Math.ceil(totalVotes / 10)
-                },
-                data: [{
-                    type: "bar",
-                    indexLabel: "{label} - {percent}%",
-                    indexLabelPlacement: "inside",
-                    indexLabelFontColor: "white",
-                    indexLabelFontSize: 14,
-                    dataPoints: dataPoints.map(dataPoint => ({
-                        ...dataPoint,
-                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-                    }))
-                }]
-            });
+    // Generate the bar graph
+    var chart = new CanvasJS.Chart(containerId, {
+        animationEnabled: true,
+        animationDuration: 3000,
+        animationEasing: "easeInOutBounce",
+        title: {
+            text: "Vote Counts"
+        },
+        axisX: {
+            title: "",
+            includeZero: true,
+            interval: 1,
+            labelFormatter: function () {
+                return " ";
+            }
+        },
+        axisY: {
+            title: "",
+            interval: Math.ceil(totalVotes / 10)
+        },
+        data: [{
+            type: "bar",
+            indexLabel: "{label} - {percent}%",
+            indexLabelPlacement: "inside",
+            indexLabelFontColor: "white",
+            indexLabelFontSize: 14,
+            dataPoints: dataPoints.map(dataPoint => ({
+                ...dataPoint,
+                percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+            }))
+        }]
+    });
 
-            chart.render();
-        }
+    chart.render();
+}
 
-        // Other graph generation functions (Pie, Line, Donut, Stacked) with images inside the graph container.
-
+        // Pie Chart
         function generatePieChart(dataPoints, containerId, imageContainerId) {
             var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
@@ -239,8 +245,8 @@
             imageContainer.innerHTML = '';
             dataPoints.forEach(dataPoint => {
                 var candidateDiv = document.createElement('div');
-                candidateDiv.className = 'candidate-wrapper';
-                candidateDiv.innerHTML = `<div class="image-container"><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"></div>`;
+                candidateDiv.className = 'candidate-image';
+                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
                 imageContainer.appendChild(candidateDiv);
             });
 
@@ -264,6 +270,7 @@
             chart.render();
         }
 
+        // Line Chart
         function generateLineChart(dataPoints, containerId, imageContainerId) {
             var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
@@ -271,8 +278,8 @@
             imageContainer.innerHTML = '';
             dataPoints.forEach(dataPoint => {
                 var candidateDiv = document.createElement('div');
-                candidateDiv.className = 'candidate-wrapper';
-                candidateDiv.innerHTML = `<div class="image-container"><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"></div>`;
+                candidateDiv.className = 'candidate-image';
+                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
                 imageContainer.appendChild(candidateDiv);
             });
 
@@ -297,6 +304,7 @@
             chart.render();
         }
 
+        // Donut Chart
         function generateDonutChart(dataPoints, containerId, imageContainerId) {
             var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
@@ -304,8 +312,8 @@
             imageContainer.innerHTML = '';
             dataPoints.forEach(dataPoint => {
                 var candidateDiv = document.createElement('div');
-                candidateDiv.className = 'candidate-wrapper';
-                candidateDiv.innerHTML = `<div class="image-container"><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"></div>`;
+                candidateDiv.className = 'candidate-image';
+                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
                 imageContainer.appendChild(candidateDiv);
             });
 
@@ -329,6 +337,7 @@
             chart.render();
         }
 
+        // Stacked Area Chart
         function generateStackedAreaChart(dataPoints, containerId, imageContainerId) {
             var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
@@ -336,8 +345,8 @@
             imageContainer.innerHTML = '';
             dataPoints.forEach(dataPoint => {
                 var candidateDiv = document.createElement('div');
-                candidateDiv.className = 'candidate-wrapper';
-                candidateDiv.innerHTML = `<div class="image-container"><img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}"></div>`;
+                candidateDiv.className = 'candidate-image';
+                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
                 imageContainer.appendChild(candidateDiv);
             });
 
@@ -457,7 +466,8 @@
         });
 
         $('#back-to-top').click(function () {
-            $('html, body').animate({ scrollTop: 0 }, 'fast');
+            $('html, body').animate({ scrollTop: 0 }, 500);
+            return false;
         });
     </script>
 </body>
