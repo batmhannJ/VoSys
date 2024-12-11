@@ -169,7 +169,7 @@
                 chart.options.data[0].cornerRadius = 5; // Rounded bar corners
                 chart.options.data[0].bevelEnabled = true; // Bevel 3D effect
                 chart.options.data[0].indexLabelFontWeight = "bold";
-                chart.options.data[0].indexLabelFontColor = "#ffffff";
+                chart.options.data[0].indexLabelFontColor = "black";
 
                 chart.options.data[0].dataPoints = dataPoints.map(dataPoint => ({
                     ...dataPoint,
