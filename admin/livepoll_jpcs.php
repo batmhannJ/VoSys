@@ -40,12 +40,12 @@
             align-items: center;
         }
 
-        /* Main container for images */
+      /* Main container for images */
 .candidate-wrapper {
     display: inline-block;
     position: relative;
-    margin: 20px;
-    width: 150px;  /* Fixed size for each image container */
+    margin: 10px;  /* Smaller margin for compact display */
+    width: 100px;  /* Smaller width for each image container */
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border-radius: 50%;
@@ -53,19 +53,19 @@
 
 /* Hover effect for the entire wrapper */
 .candidate-wrapper:hover {
-    transform: translateY(-10px);  /* Pop effect when hovering over */
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);  /* Subtle shadow effect */
+    transform: translateY(-8px);  /* Slightly smaller hover effect */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);  /* Slightly smaller shadow */
 }
 
 /* Style the candidate image */
 .image-container {
     position: relative;
     overflow: hidden;
-    height: 120px;
-    width: 120px;
-    margin: 0 auto 10px;
+    height: 80px;  /* Smaller height for images */
+    width: 80px;   /* Smaller width for images */
+    margin: 0 auto 8px;  /* Adjusted margin for better spacing */
     border-radius: 50%;  /* Circular image container */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);  /* Soft shadow */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Soft shadow */
 }
 
 .candidate-image {
@@ -82,7 +82,7 @@
 
 /* Name label for the candidate */
 .name-label {
-    font-size: 14px;
+    font-size: 12px;  /* Smaller font size for the name */
     font-weight: bold;
     color: #333;
     opacity: 0;
@@ -99,7 +99,7 @@
 /* Responsive: Adjust layout for smaller screens */
 @media (max-width: 768px) {
     .candidate-wrapper {
-        width: 120px;  /* Make images slightly smaller on mobile */
+        width: 80px;  /* Make images even smaller on mobile */
     }
     .candidate-image {
         width: 100%;  /* Ensure image fits well on smaller screens */
