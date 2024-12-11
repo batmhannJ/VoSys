@@ -131,58 +131,51 @@
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="path/to/jquery.min.js"></script>
     <script>
-       function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
-    var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
-    var imageContainer = document.getElementById(imageContainerId);
-    imageContainer.innerHTML = '';
+        function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
+            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+            var imageContainer = document.getElementById(imageContainerId);
+            imageContainer.innerHTML = '';
+            
+            // Define custom colors based on your request
+            const candidateColors = [
+                "rgb(43, 8, 168)",   // Blue color (5, 3, 107)
+                "rgb(158, 9, 29)",  // Red color (133, 4, 21)
+                "rgb(43, 8, 168)",   // Blue color (repeating the color)
+                "rgb(158, 9, 29)",  // Red color (repeating the color)
+                "rgb(43, 8, 168)",   // Blue color (repeating the color)
+                "rgb(158, 9, 29)"   // Red color (repeating the color)
+            ];
+            
+            dataPoints.forEach((dataPoint, index) => {
+                var candidateDiv = document.createElement('div');
+                candidateDiv.className = 'candidate-image';
+                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
+                imageContainer.appendChild(candidateDiv);
 
-    // Define custom colors based on your request
-    const candidateColors = [
-        "rgb(43, 8, 168)",   // Blue color (5, 3, 107)
-        "rgb(158, 9, 29)",  // Red color (133, 4, 21)
-        "rgb(43, 8, 168)",   // Blue color (repeating the color)
-        "rgb(158, 9, 29)",  // Red color (repeating the color)
-        "rgb(43, 8, 168)",   // Blue color (repeating the color)
-        "rgb(158, 9, 29)"   // Red color (repeating the color)
-    ];
+                // Assign a color based on the index (repeating the custom color palette)
+                dataPoint.color = candidateColors[index % candidateColors.length];
+            });
 
-    dataPoints.forEach((dataPoint, index) => {
-        var candidateDiv = document.createElement('div');
-        candidateDiv.className = 'candidate-image';
-        candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
-        imageContainer.appendChild(candidateDiv);
+            var chart = new CanvasJS.Chart(containerId, {
+                animationEnabled: true,
+                theme: "light2",
+                title: { text: "Vote Counts" },
+                data: [{
+                    type: graphType,
+                    dataPoints: dataPoints.map(dataPoint => ({
+                        ...dataPoint,
+                        color: dataPoint.color || "#4F81BC", // Default color if not assigned
+                        indexLabel: `${dataPoint.label} - ${(dataPoint.y / totalVotes * 100).toFixed(2)}%`,
+                        indexLabelFontColor: "black",
+                        indexLabelPlacement: "inside",
+                        indexLabelFontSize: 14,
+                        indexLabelFontWeight: "bold"
+                    }))
+                }]
+            });
 
-        // Assign a color based on the index (repeating the custom color palette)
-        dataPoint.color = candidateColors[index % candidateColors.length];
-    });
-
-    var chart = new CanvasJS.Chart(containerId, {
-        animationEnabled: true,
-        theme: "light2",
-        title: { text: "Vote Counts" },
-        data: [{
-            type: graphType,
-            dataPoints: dataPoints.map(dataPoint => ({
-                ...dataPoint,
-                color: dataPoint.color || "#4F81BC", // Default color if not assigned
-                indexLabel: `${dataPoint.label} - ${(dataPoint.y / totalVotes * 100).toFixed(2)}%`,
-                indexLabelFontColor: "black",
-                indexLabelPlacement: "inside",
-                indexLabelFontSize: 14,
-                indexLabelFontWeight: "bold"
-            }))
-        }],
-        axisX: {
-            interval: 1, // Set interval for spacing between labels (adjust this)
-            labelMaxWidth: 20, // Control the maximum width of the labels
-            labelFontSize: 12, // Font size of the x-axis labels
-            labelFontWeight: "bold"
+            chart.render();
         }
-    });
-
-    chart.render();
-}
-
 
         function fetchAndGenerateGraphs(organization) {
             const graphType = $('#graph-type').val();
