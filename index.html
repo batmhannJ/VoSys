@@ -395,43 +395,51 @@
 
 <script>
   function fetchAnnouncement() {
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', 'get_announcement.php', true); // Adjust the path if necessary
-  xhr.onreadystatechange = function () {
-if (xhr.readyState === 4 && xhr.status === 200) {
-    console.log(xhr.responseText); // Log the raw response
-    try {
-        var data = JSON.parse(xhr.responseText);
-        console.log(data); // Log parsed data
-        if (data.success) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'get_announcement.php', true); // Adjust the path if necessary
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        console.log(xhr.responseText); // Log the raw response
+        try {
+          var data = JSON.parse(xhr.responseText); // Parse the JSON response
+          console.log(data); // Log parsed data
+          if (data.success) {
+            // Create announcement HTML from the received data
             var announcementHTML = `
-                <div class="announcement">
-                    <div class="announcement-header">
-                        <b><h3>${data.title}</h3></b>
-                        <p class="announcement-date">${new Date().toLocaleDateString()}</p>
-                    </div>
-                    <div class="announcement-body">
-                        <hr>
-                        <p class="announcement-text">${data.content}</p>
-                        <p class="announcement-author">Posted by: ${data.addedby}</p>
-                    </div>
+              <div class="announcement">
+                <div class="announcement-header">
+                  <b><h3>${data.title}</h3></b>
+                  <p class="announcement-date">${new Date().toLocaleDateString()}</p>
                 </div>
+                <div class="announcement-body">
+                  <hr>
+                  <p class="announcement-text">${data.content}</p>
+                  <p class="announcement-author">Posted by: ${data.addedby}</p>
+                </div>
+              </div>
             `;
+            // Insert the announcement into the container
             document.getElementById('announcement-container').innerHTML = announcementHTML;
-        } else {
+          } else {
+            // No announcements found
             document.getElementById('announcement-container').innerHTML = '<p>No announcements found.</p>';
+          }
+        } catch (error) {
+          console.error('Error parsing JSON response:', error);
+          document.getElementById('announcement-container').innerHTML = '<p>Error loading announcement.</p>';
         }
-    } catch (error) {
-        console.error('Error parsing JSON response:', error);
-    }
-}
-};
-  xhr.onerror = function () {
+      }
+    };
+
+    xhr.onerror = function () {
       console.error('Error making the request.');
       document.getElementById('announcement-container').innerHTML = '<p>Error loading announcement.</p>';
-  };
-  xhr.send();
+    };
+
+    xhr.send();
   }
+
+  // Call the fetchAnnouncement function to load the announcement
   fetchAnnouncement();
 </script>
 
