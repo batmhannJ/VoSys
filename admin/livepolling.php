@@ -136,10 +136,10 @@
     var imageContainer = document.getElementById(imageContainerId);
     imageContainer.innerHTML = '';
     
-    // Define maroon and dark blue colors for candidates
+    // Define custom maroon and dark blue colors
     const candidateColors = [
-        "#800000", "#9B1C1C", "#B30000", "#660000", "#004080", "#003366", // Maroon and dark blue shades
-        "#1D2951", "#003B5C", "#4B0082", "#2A3D66" // More dark blue and purple shades
+        "#800000", "#9B1C1C", "#B30000", // Maroon shades
+        "#004080", "#003366", "#1D2951"  // Dark Blue shades
     ];
     
     dataPoints.forEach((dataPoint, index) => {
@@ -148,7 +148,7 @@
         candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
         imageContainer.appendChild(candidateDiv);
 
-        // Assigning a unique color to each candidate
+        // Assign a color based on the index (repeating the color palette)
         dataPoint.color = candidateColors[index % candidateColors.length];
     });
 
@@ -160,7 +160,7 @@
             type: graphType,
             dataPoints: dataPoints.map(dataPoint => ({
                 ...dataPoint,
-                color: dataPoint.color || "#4F81BC", // Use assigned color if available
+                color: dataPoint.color || "#4F81BC", // Default color if not assigned
                 indexLabel: `${dataPoint.label} - ${(dataPoint.y / totalVotes * 100).toFixed(2)}%`,
                 indexLabelFontColor: "black",
                 indexLabelPlacement: "inside",
