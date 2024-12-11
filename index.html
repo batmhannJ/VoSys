@@ -1683,44 +1683,58 @@ hr {
 }
 
 .announcement-section {
-  padding: 2rem;
-  background: linear-gradient(135deg, #f3f4f6, #ffffff);
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  font-family: 'Poppins', sans-serif;
+  padding: 3rem 1rem;
+  background-color: #fefefe;
+  border: 2px solid #eaeaea;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  max-width: 1000px;
   margin: 2rem auto;
-  max-width: 900px;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+}
+
+.announcement-section:hover {
+  transform: scale(1.02);
 }
 
 .announcement-header {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #2c3e50;
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.5rem;
+  color: #4a4a4a;
+  text-transform: uppercase;
   margin-bottom: 1rem;
+  letter-spacing: 2px;
 }
 
 .announcement-content {
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 1.5rem;
-  min-height: 200px;
-  color: #7f8c8d;
+  min-height: 150px;
+  border: 1px dashed #d3d3d3;
   text-align: center;
+  transition: background 0.3s ease-in-out;
+}
+
+.announcement-content:hover {
+  background: #f1f1f1;
 }
 
 .announcement-container {
-  font-size: 1rem;
-  color: #34495e;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.2rem;
+  color: #707070;
 }
 
 .announcement-container::before {
-  content: "No announcements available.";
-  font-style: italic;
-  color: #bdc3c7;
+  content: "🚀 Stay tuned for updates!";
+  font-style: normal;
+  color: #b3b3b3;
+  font-size: 1rem;
 }
 
 
