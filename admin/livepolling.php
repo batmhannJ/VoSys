@@ -143,7 +143,7 @@
                     type: graphType,
                     indexLabel: "{label} - {percent}%",
                     indexLabelPlacement: "inside",
-                    indexLabelFontColor: "white",
+                    indexLabelFontColor: "black",
                     indexLabelFontSize: 14,
                     dataPoints: dataPoints.map(dataPoint => ({
                         ...dataPoint,
