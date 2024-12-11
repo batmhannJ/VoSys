@@ -132,10 +132,11 @@
     <script src="path/to/jquery.min.js"></script>
     <script>
         function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
+            const colors = ["#4F81BC", "#C0504D", "#9BBB59", "#8064A2", "#4BACC6", "#F79646", "#A2C4C9"];
             var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
             var imageContainer = document.getElementById(imageContainerId);
             imageContainer.innerHTML = '';
-            dataPoints.forEach(dataPoint => {
+            dataPoints.forEach((dataPoint, index) => {
                 var candidateDiv = document.createElement('div');
                 candidateDiv.className = 'candidate-image';
                 candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
@@ -148,9 +149,9 @@
                 title: { text: "Vote Counts" },
                 data: [{
                     type: graphType,
-                    dataPoints: dataPoints.map(dataPoint => ({
+                    dataPoints: dataPoints.map((dataPoint, index) => ({
                         ...dataPoint,
-                        color: dataPoint.color || "#4F81BC",
+                        color: colors[index % colors.length],
                         indexLabel: `${dataPoint.label} - ${(dataPoint.y / totalVotes * 100).toFixed(2)}%`,
                         indexLabelFontColor: "black",
                         indexLabelPlacement: "inside",
@@ -195,14 +196,6 @@
                 }
             });
         }
-
-        $(document).ready(function () {
-            fetchAndGenerateGraphs('csc');
-            $('#organization-form').submit(function (event) {
-                event.preventDefault();
-                fetchAndGenerateGraphs($('#organization-select').val());
-            });
-        });
     </script>
 </body>
 </html>
