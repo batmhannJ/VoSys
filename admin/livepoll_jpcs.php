@@ -214,6 +214,140 @@
             chart.render();
         }
 
+        // Line Chart
+        function generateLineChart(dataPoints, containerId, imageContainerId) {
+            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+
+            var imageContainer = document.getElementById(imageContainerId);
+            imageContainer.innerHTML = '';
+            dataPoints.forEach(dataPoint => {
+                var candidateDiv = document.createElement('div');
+                candidateDiv.className = 'candidate-image';
+                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
+                imageContainer.appendChild(candidateDiv);
+            });
+
+            var chart = new CanvasJS.Chart(containerId, {
+                animationEnabled: true,
+                animationDuration: 3000,
+                animationEasing: "easeInOutBounce",
+                title: {
+                    text: "Vote Counts"
+                },
+                axisX: {
+                    title: "",
+                    includeZero: true,
+                    interval: 1,
+                    labelFormatter: function () {
+                        return " ";
+                    }
+                },
+                axisY: {
+                    title: "",
+                    interval: Math.ceil(totalVotes / 10)
+                },
+                data: [{
+                    type: "line",
+                    indexLabel: "{label} - {percent}%",
+                    indexLabelPlacement: "inside",
+                    indexLabelFontColor: "white",
+                    indexLabelFontSize: 14,
+                    dataPoints: dataPoints.map(dataPoint => ({
+                        ...dataPoint,
+                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                    }))
+                }]
+            });
+            chart.render();
+        }
+
+        // Donut Chart
+        function generateDonutChart(dataPoints, containerId, imageContainerId) {
+            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+
+            var imageContainer = document.getElementById(imageContainerId);
+            imageContainer.innerHTML = '';
+            dataPoints.forEach(dataPoint => {
+                var candidateDiv = document.createElement('div');
+                candidateDiv.className = 'candidate-image';
+                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
+                imageContainer.appendChild(candidateDiv);
+            });
+
+            var chart = new CanvasJS.Chart(containerId, {
+                animationEnabled: true,
+                animationDuration: 3000,
+                animationEasing: "easeInOutBounce",
+                title: {
+                    text: "Vote Counts"
+                },
+                toolTip: {
+                    content: "{label}: {y} Votes ({percent}%)",
+                    backgroundColor: "#F1F1F1",
+                    borderColor: "#666",
+                    borderThickness: 1
+                },
+                data: [{
+                    type: "doughnut",
+                    innerRadius: "70%", // This will create the donut shape
+                    indexLabel: "{label} - {percent}%",
+                    indexLabelFontColor: "white",
+                    dataPoints: dataPoints.map(dataPoint => ({
+                        ...dataPoint,
+                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                    }))
+                }]
+            });
+            chart.render();
+        }
+
+        // Stacked Area Chart
+        function generateStackedAreaChart(dataPoints, containerId, imageContainerId) {
+            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+
+            var imageContainer = document.getElementById(imageContainerId);
+            imageContainer.innerHTML = '';
+            dataPoints.forEach(dataPoint => {
+                var candidateDiv = document.createElement('div');
+                candidateDiv.className = 'candidate-image';
+                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
+                imageContainer.appendChild(candidateDiv);
+            });
+
+            var chart = new CanvasJS.Chart(containerId, {
+                animationEnabled: true,
+                animationDuration: 3000,
+                animationEasing: "easeInOutBounce",
+                title: {
+                    text: "Vote Counts"
+                },
+                axisX: {
+                    title: "",
+                    includeZero: true,
+                    interval: 1,
+                    labelFormatter: function () {
+                        return " ";
+                    }
+                },
+                axisY: {
+                    title: "",
+                    interval: Math.ceil(totalVotes / 10)
+                },
+                data: [{
+                    type: "stackedArea",
+                    indexLabel: "{label} - {percent}%",
+                    indexLabelPlacement: "inside",
+                    indexLabelFontColor: "white",
+                    indexLabelFontSize: 14,
+                    dataPoints: dataPoints.map(dataPoint => ({
+                        ...dataPoint,
+                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                    }))
+                }]
+            });
+            chart.render();
+        }
+
         // Fetch and generate graphs
         function fetchAndGenerateGraphs(organization, graphType) {
             $.ajax({
@@ -260,40 +394,42 @@
                                         </div>
                                         <div class='box-body'>
                                             <div class='chart-container'>
-                                                <div class='candidate-images' id='${category}Image'></div>
-                                                <div id='${category}Graph' style='height: 300px; width: calc(100% - 120px);'></div>
+                                                <div id='${category}Graph' style='height: 400px; width: 100%;'></div>
+                                                <div id='${category}Image' class='candidate-images'></div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>`;
+                                </div>
+                            `;
                             $('#results-container').append(containerHtml);
 
-                            // Generate the selected graph type for the category
+                            // Call the respective function based on graph type
                             if (graphType === 'bar') {
                                 generateBarGraph(response[category], category + 'Graph', category + 'Image');
                             } else if (graphType === 'pie') {
                                 generatePieChart(response[category], category + 'Graph', category + 'Image');
+                            } else if (graphType === 'line') {
+                                generateLineChart(response[category], category + 'Graph', category + 'Image');
+                            } else if (graphType === 'donut') {
+                                generateDonutChart(response[category], category + 'Graph', category + 'Image');
+                            } else if (graphType === 'stacked') {
+                                generateStackedAreaChart(response[category], category + 'Graph', category + 'Image');
                             }
                         }
                     });
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error fetching data: ", status, error);
                 }
             });
         }
 
         // Event listener for form submission
-        $('#organization-form').on('submit', function (e) {
-            e.preventDefault();
-
+        $('#organization-form').on('submit', function (event) {
+            event.preventDefault();
             var organization = $('#organization-select').val();
             var graphType = $('#graph-select').val();
-
             fetchAndGenerateGraphs(organization, graphType);
         });
 
-        // Scroll to top button
+        // Back to top functionality
         $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
                 $('#back-to-top').fadeIn();
