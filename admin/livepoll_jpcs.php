@@ -58,69 +58,79 @@
 }
 
 /* Style the candidate image */
-.image-container {
-    position: relative;
-    overflow: hidden;
-    height: 80px;  /* Smaller height for images */
-    width: 80px;   /* Smaller width for images */
-    margin: 0 auto 8px;  /* Adjusted margin for better spacing */
-    border-radius: 50%;  /* Circular image container */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Soft shadow */
+/* General styles for the container */
+#image-container {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+    flex-wrap: wrap;
 }
 
+/* Wrapper for each candidate image and name */
+.candidate-wrapper {
+    display: inline-block;
+    text-align: center;
+    margin: 10px;
+    width: 100px;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect for candidate wrapper */
+.candidate-wrapper:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Image styling */
+.image-container {
+    width: 80px;  /* Adjust image size */
+    height: 80px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling the images */
 .candidate-image {
     width: 100%;
     height: 100%;
-    object-fit: cover;  /* Make sure image fits perfectly in the circle */
-    transition: transform 0.3s ease;  /* Image zoom effect */
+    object-fit: cover;
+    transition: transform 0.3s ease;
 }
 
-/* Image zoom effect on hover */
+/* Hover effect to slightly enlarge the image */
 .candidate-wrapper:hover .candidate-image {
-    transform: scale(1.1);  /* Slight zoom-in effect */
+    transform: scale(1.1);
 }
 
-/* Name label for the candidate */
+/* Styling for the candidate names */
 .name-label {
-    font-size: 12px;  /* Smaller font size for the name */
+    font-size: 14px;
     font-weight: bold;
     color: #333;
+    margin-top: 5px;
+    transition: opacity 0.3s ease;
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* Show name label with smooth transition */
+/* Show name on hover */
 .candidate-wrapper:hover .name-label {
     opacity: 1;
-    transform: translateY(0);
 }
 
-/* Responsive: Adjust layout for smaller screens */
+/* Responsive styling for smaller screens */
 @media (max-width: 768px) {
     .candidate-wrapper {
-        width: 80px;  /* Make images even smaller on mobile */
+        width: 80px;  /* Smaller width for mobile */
     }
-    .candidate-image {
-        width: 100%;  /* Ensure image fits well on smaller screens */
-        height: 100%;
+    .image-container {
+        width: 70px;
+        height: 70px;
     }
 }
 
-
-        @media (max-width: 768px) {
-            .candidate-image img {
-                width: 75px;
-                height: 75px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .candidate-image img {
-                width: 100px;
-                height: 100px;
-            }
-        }
     </style>
 </head>
 <body class="hold-transition skin-green sidebar-mini">
