@@ -59,7 +59,7 @@
               <!-- Sidebar with the tabs -->
               <div class="sidebar">
                   <div class="tab active" onclick="setActiveTab('terms_of_use')">Terms of use</div>
-                  <div class="tab" onclick="setActiveTab('intellectual_property')">Intellectual property rights</div>
+                  <div class="tab" onclick="setActiveTab('User Eligibility')">Intellectual property rights</div>
                   <div class="tab" onclick="setActiveTab('prohibited_activities')">Prohibited activities</div>
                   <div class="tab" onclick="setActiveTab('termination_clause')">Termination clause</div>
                   <div class="tab" onclick="setActiveTab('governing_law')">Governing law</div>
@@ -162,16 +162,22 @@
           title.textContent = 'Terms of use';
           description.textContent = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. At fugit praesentium reiciendis aut debitis minima earum fugiat quam aspernatur qui.';
           break;
-          case 'intellectual_property':
-    title.textContent = 'User Eligibility';
+          case 'user eligibility':
+    title.textContent = 'user eligibility';
     description.innerHTML = `
-      <ul style="text-align: justify; margin: 0; padding: 0 1rem;">
-        <li>Users must be registered with OLSHCO and have an active account on vosys.org to cast votes.</li>
-        <li>Users must be registered with OLSHCO and have an active account on vosys.org to cast votes.</li>
-        <li>Voting rights may be revoked or suspended if eligibility criteria are not met or if fraudulent activity is detected.</li>
-      </ul>
+        <ul style="text-align: justify; list-style-type: none; padding-left: 0;">
+            <li style="text-align: justify;"><strong>Registered Members:</strong> Only current students, faculty, and staff of OLSHCO with an active account on vosys.org are eligible to vote.</li>
+            <li style="text-align: justify;"><strong>Eligibility Verification:</strong> Users must meet specific eligibility criteria, such as enrollment or employment status, as determined by OLSHCO.</li>
+            <li style="text-align: justify;"><strong>Active Account:</strong> Users must have a verified account with valid login credentials and email.</li>
+            <li style="text-align: justify;"><strong>Fraudulent Activities:</strong> vosys.org reserves the right to revoke or suspend voting rights for fraudulent activities, including vote manipulation or providing false information.</li>
+            <li style="text-align: justify;"><strong>Suspension of Rights:</strong> Voting rights may be suspended for misconduct such as impersonation or interfering with the voting process.</li>
+            <li style="text-align: justify;"><strong>Termination of Access:</strong> Users found ineligible may be permanently banned from voting.</li>
+            <li style="text-align: justify;"><strong>Appeals:</strong> Users can appeal eligibility suspensions or revocations. The appeal will be reviewed for potential reinstatement.</li>
+        </ul>
     `;
     break;
+
+
         case 'prohibited_activities':
           title.textContent = 'Prohibited activities';
           description.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque molestias fugiat quibusdam explicabo!';

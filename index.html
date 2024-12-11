@@ -74,7 +74,114 @@
       </div>
     </section>
 
-    
+    <section id="about" class="section__container register__container">
+      <center><h2 class="section__header">Announcement</h2></center><br>
+      <div class="register__grid">
+          <div class="register__content">
+              <!-- Announcement content will be loaded here dynamically -->
+              <div id="announcement-container">
+                  <p>Loading the latest announcement...</p>
+              </div>
+          </div>
+      </div>
+  </section>
+  
+  <script>
+    // Function to load the announcement
+    function loadAnnouncement() {
+        // Create an AJAX request
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'get_announcement.php', true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                // Parse the response JSON
+                var response = JSON.parse(xhr.responseText);
+
+                console.log(response);  // Debugging: Log the response to check
+
+                // Get the container where the announcement will be shown
+                var announcementContainer = document.getElementById('announcement-container');
+                
+                if (response.success) {
+                    // If there's an announcement, display it
+                    announcementContainer.innerHTML = '<h3>' + response.title + '</h3><p>' + response.content + '</p>';
+                } else {
+                    // If no announcement, show a message
+                    announcementContainer.innerHTML = '<p>' + response.message + '</p>';
+                }
+            }
+        };
+        xhr.send();
+    }
+
+    // Load the announcement when the page loads
+    window.onload = loadAnnouncement;
+</script>
+  
+  <style>		
+    hr {
+      border: none; /* Remove default border */
+      height: 3px; /* Set the height to make it thicker */
+      background-color: black; /* Set the color of the line */
+      margin: 20px 0; /* Adjust margin as needed */
+    }
+    /* Container for announcements */
+  /* Container for announcements */
+  .announcement-container {
+  margin: 20px 0;
+  }
+  
+  /* Individual announcement card */
+  .announcement {
+  background-color: #f8f9fa; /* Light gray background */
+  border: 2px solid #006400; /* Matte blue border */
+  border-radius: 20px; /* Increased border radius for a rounded look */
+  padding: 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Added transition for transform and box-shadow */
+  }
+  
+  .announcement:hover {
+  transform: translateY(-5px); /* Move the card up slightly on hover */
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15); /* Enhance shadow on hover */
+  }
+  
+  /* Header of the announcement */
+  .announcement-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  }
+  
+  .announcement-header h3 {
+  color: #006400; /* Matte blue color for header text */
+  margin: 0;
+  font-size: 24px; /* Increased font size for header */
+  }
+  
+  /* Date of the announcement */
+  .announcement-date {
+  color: #777;
+  font-size: 14px;
+  }
+  
+  /* Body text of the announcement */
+  .announcement-body {
+  font-size: 20px;
+  line-height: 1.6;
+  color: #000; /* Dark gray color for body text */
+  }
+  
+  /* Author of the announcement */
+  .announcement-author {
+  color: #999; /* Light gray color for author */
+  font-style: italic;
+  font-size: 13px;
+  }
+  
+  
+  </style>
 
 <section class="discover section" id="discover">        
     <div class="wrapper">
