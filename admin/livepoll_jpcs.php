@@ -36,46 +36,38 @@
         .chart-container {
             position: relative;
             margin-bottom: 40px;
-            display: flex;
-            align-items: center;
         }
 
         .candidate-images {
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            margin-right: 10px;
-        }
-
-        .candidate-image {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: center;
             margin-bottom: 10px;
         }
 
         .candidate-image img {
-            width: 60px;
-            height: 60px;
-            margin-right: -10px;
-            margin-bottom: 25px;
-            margin-top: 35px;
+            width: 75px;
+            height: 75px;
+            margin: 0 10px;
+            border-radius: 50%;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         @media (max-width: 768px) {
             .candidate-image img {
-                width: 75px;
-                height: 75px;
+                width: 60px;
+                height: 60px;
             }
         }
 
         @media (max-width: 480px) {
             .candidate-image img {
-                width: 100px;
-                height: 100px;
+                width: 50px;
+                height: 50px;
             }
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body class="hold-transition skin-green sidebar-mini">
     <div class="wrapper">
@@ -116,88 +108,91 @@
         </div>
         <?php include 'includes/footer.php'; ?>
     </div>
+
     <?php include 'includes/scripts.php'; ?>
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-    <script src="path/to/jquery.min.js"></script>
     <script>
-        function generateBarGraph(dataPoints, containerId, imageContainerId) {
-            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+        function generateBarGraph(dataPoints, containerId) {
+            const ctx = document.getElementById(containerId).getContext('2d');
+            const totalVotes = dataPoints.reduce((acc, dp) => acc + dp.y, 0);
+            const backgroundColors = dataPoints.map(() => `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.7)`);
 
-            // Ensure images match the data points by iterating in the same order
-            var imageContainer = document.getElementById(imageContainerId);
-            imageContainer.innerHTML = '';
-            dataPoints.forEach(dataPoint => {
-                var candidateDiv = document.createElement('div');
-                candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
-                imageContainer.appendChild(candidateDiv);
-            });
-
-            var chart = new CanvasJS.Chart(containerId, {
-                animationEnabled: true,
-                animationDuration: 3000,
-                animationEasing: "easeInOutBounce",
-                title: {
-                    text: "Vote Counts"
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: dataPoints.map(dp => dp.label),
+                    datasets: [{
+                        label: 'Votes',
+                        data: dataPoints.map(dp => dp.y),
+                        backgroundColor: backgroundColors,
+                        borderColor: backgroundColors.map(color => color.replace('0.7', '1')),
+                        borderWidth: 1
+                    }]
                 },
-                axisX: {
-                    title: "",
-                    includeZero: true,
-                    interval: 1,
-                    labelFormatter: function () {
-                        return " ";
+                options: {
+                    responsive: true,
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const percent = ((context.raw / totalVotes) * 100).toFixed(2);
+                                    return `${context.label}: ${context.raw} votes (${percent}%)`;
+                                }
+                            }
+                        },
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: Math.ceil(totalVotes / 10)
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 2000,
+                        easing: 'easeOutBounce'
                     }
-                },
-                axisY: {
-                    title: "",
-                    interval: Math.ceil(totalVotes / 10)
-                },
-                data: [{
-                    type: "bar",
-                    indexLabel: "{label} - {percent}%",
-                    indexLabelPlacement: "inside",
-                    indexLabelFontColor: "white",
-                    indexLabelFontSize: 14,
-                    dataPoints: dataPoints.map(dataPoint => ({
-                        ...dataPoint,
-                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-                    }))
-                }]
+                }
             });
-            chart.render();
         }
 
-        function generatePieChart(dataPoints, containerId, imageContainerId) {
-            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+        function generatePieChart(dataPoints, containerId) {
+            const ctx = document.getElementById(containerId).getContext('2d');
+            const totalVotes = dataPoints.reduce((acc, dp) => acc + dp.y, 0);
+            const backgroundColors = dataPoints.map(() => `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.7)`);
 
-            // Ensure images match the data points by iterating in the same order
-            var imageContainer = document.getElementById(imageContainerId);
-            imageContainer.innerHTML = '';
-            dataPoints.forEach(dataPoint => {
-                var candidateDiv = document.createElement('div');
-                candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
-                imageContainer.appendChild(candidateDiv);
-            });
-
-            var chart = new CanvasJS.Chart(containerId, {
-                animationEnabled: true,
-                animationDuration: 3000,
-                animationEasing: "easeInOutBounce",
-                title: {
-                    text: "Vote Counts"
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: dataPoints.map(dp => dp.label),
+                    datasets: [{
+                        data: dataPoints.map(dp => dp.y),
+                        backgroundColor: backgroundColors,
+                        borderColor: backgroundColors.map(color => color.replace('0.7', '1')),
+                        borderWidth: 1
+                    }]
                 },
-                data: [{
-                    type: "pie",
-                    indexLabel: "{label} - {percent}%",
-                    indexLabelFontColor: "white",
-                    dataPoints: dataPoints.map(dataPoint => ({
-                        ...dataPoint,
-                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-                    }))
-                }]
+                options: {
+                    responsive: true,
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const percent = ((context.raw / totalVotes) * 100).toFixed(2);
+                                    return `${context.label}: ${context.raw} votes (${percent}%)`;
+                                }
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 2000,
+                        easing: 'easeInOutCubic'
+                    }
+                }
             });
-            chart.render();
         }
 
         function fetchAndGenerateGraphs(organization, graphType) {
@@ -205,12 +200,12 @@
                 url: 'update_jpcs_data.php',
                 method: 'GET',
                 dataType: 'json',
-                success: function (response) {
+                success: function(response) {
                     // Clear previous results
                     $('#results-container').empty();
 
                     // Define categories for each organization
-                    var categories = {
+                    const categories = {
                         'jpcs': {
                             'president': 'President',
                             'vp for internal affairs': 'VP for Internal Affairs',
@@ -230,14 +225,11 @@
                         }
                     };
 
-                    // Get categories for the selected organization
-                    var selectedCategories = categories[organization];
+                    const selectedCategories = categories[organization];
 
-                    // Generate graphs for the selected categories
-                    Object.keys(selectedCategories).forEach(function (category) {
+                    Object.keys(selectedCategories).forEach(function(category) {
                         if (response[category]) {
-                            // Create container for each category
-                            var containerHtml = `
+                            const containerHtml = `
                                 <div class='col-md-12'>
                                     <div class='box'>
                                         <div class='box-header with-border'>
@@ -245,42 +237,38 @@
                                         </div>
                                         <div class='box-body'>
                                             <div class='chart-container'>
-                                                <div class='candidate-images' id='${category}Image'></div>
-                                                <div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div>
+                                                <canvas id='${category}Graph'></canvas>
                                             </div>
                                         </div>
                                     </div>
                                 </div>`;
                             $('#results-container').append(containerHtml);
 
-                            // Generate the selected graph type for the category
                             if (graphType === 'bar') {
-                                generateBarGraph(response[category], category + 'Graph', category + 'Image');
+                                generateBarGraph(response[category], `${category}Graph`);
                             } else if (graphType === 'pie') {
-                                generatePieChart(response[category], category + 'Graph', category + 'Image');
+                                generatePieChart(response[category], `${category}Graph`);
                             }
                         }
                     });
                 },
-                error: function (xhr, status, error) {
+                error: function(xhr, status, error) {
                     console.error("Error fetching data: ", status, error);
                 }
             });
         }
 
-        $(document).ready(function () {
-            // Fetch and generate graphs for the default organization (JPCS) and default graph type (Bar Graph)
+        $(document).ready(function() {
             fetchAndGenerateGraphs('jpcs', 'bar');
 
-            // Handle form submission
-            $('#organization-form').submit(function (event) {
+            $('#organization-form').submit(function(event) {
                 event.preventDefault();
                 const selectedOrganization = $('#organization-select').val();
                 const selectedGraphType = $('#graph-select').val();
                 fetchAndGenerateGraphs(selectedOrganization, selectedGraphType);
             });
 
-            $(window).scroll(function () {
+            $(window).scroll(function() {
                 if ($(this).scrollTop() > 100) {
                     $('#back-to-top').fadeIn();
                 } else {
@@ -288,7 +276,7 @@
                 }
             });
 
-            $('#back-to-top').click(function () {
+            $('#back-to-top').click(function() {
                 $('html, body').animate({ scrollTop: 0 }, 600);
                 return false;
             });
