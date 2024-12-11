@@ -131,47 +131,47 @@
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="path/to/jquery.min.js"></script>
     <script>
-        function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
-            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
-            var imageContainer = document.getElementById(imageContainerId);
-            imageContainer.innerHTML = '';
-            
-            // Define a list of colors to use for each candidate
-            const candidateColors = [
-                "#FF5733", "#33FF57", "#3357FF", "#F1C40F", "#9B59B6", "#E74C3C",
-                "#1ABC9C", "#F39C12", "#D35400", "#2ECC71"
-            ];
-            
-            dataPoints.forEach((dataPoint, index) => {
-                var candidateDiv = document.createElement('div');
-                candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
-                imageContainer.appendChild(candidateDiv);
+       function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
+    var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+    var imageContainer = document.getElementById(imageContainerId);
+    imageContainer.innerHTML = '';
+    
+    // Define maroon and dark blue colors for candidates
+    const candidateColors = [
+        "#800000", "#9B1C1C", "#B30000", "#660000", "#004080", "#003366", // Maroon and dark blue shades
+        "#1D2951", "#003B5C", "#4B0082", "#2A3D66" // More dark blue and purple shades
+    ];
+    
+    dataPoints.forEach((dataPoint, index) => {
+        var candidateDiv = document.createElement('div');
+        candidateDiv.className = 'candidate-image';
+        candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
+        imageContainer.appendChild(candidateDiv);
 
-                // Assigning a unique color to each candidate
-                dataPoint.color = candidateColors[index % candidateColors.length];
-            });
+        // Assigning a unique color to each candidate
+        dataPoint.color = candidateColors[index % candidateColors.length];
+    });
 
-            var chart = new CanvasJS.Chart(containerId, {
-                animationEnabled: true,
-                theme: "light2",
-                title: { text: "Vote Counts" },
-                data: [{
-                    type: graphType,
-                    dataPoints: dataPoints.map(dataPoint => ({
-                        ...dataPoint,
-                        color: dataPoint.color || "#4F81BC", // Use assigned color if available
-                        indexLabel: `${dataPoint.label} - ${(dataPoint.y / totalVotes * 100).toFixed(2)}%`,
-                        indexLabelFontColor: "black",
-                        indexLabelPlacement: "inside",
-                        indexLabelFontSize: 14,
-                        indexLabelFontWeight: "bold"
-                    }))
-                }]
-            });
+    var chart = new CanvasJS.Chart(containerId, {
+        animationEnabled: true,
+        theme: "light2",
+        title: { text: "Vote Counts" },
+        data: [{
+            type: graphType,
+            dataPoints: dataPoints.map(dataPoint => ({
+                ...dataPoint,
+                color: dataPoint.color || "#4F81BC", // Use assigned color if available
+                indexLabel: `${dataPoint.label} - ${(dataPoint.y / totalVotes * 100).toFixed(2)}%`,
+                indexLabelFontColor: "black",
+                indexLabelPlacement: "inside",
+                indexLabelFontSize: 14,
+                indexLabelFontWeight: "bold"
+            }))
+        }]
+    });
 
-            chart.render();
-        }
+    chart.render();
+}
 
         function fetchAndGenerateGraphs(organization) {
             const graphType = $('#graph-type').val();
