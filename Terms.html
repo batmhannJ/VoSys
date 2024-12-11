@@ -56,7 +56,7 @@
             <div class="tab" onclick="setActiveTab('user_eligibility')">User Eligibility</div>
             <div class="tab" onclick="setActiveTab('account_security')">Account Security</div>
             <div class="tab" onclick="setActiveTab('rights_responsibilities')">Voting Rights and Responsibilities</div>
-            <div class="tab" onclick="setActiveTab('governing_law')">Governing law</div>
+            <div class="tab" onclick="setActiveTab('privacy_data_protection')">Privacy and Data Protection</div>
           </div>
 
           <div class="content" id="content">
@@ -190,12 +190,21 @@
       </ul>
     `;
     break;
-          case 'governing_law':
-            title.textContent = 'Governing Law';
-            description.innerHTML = 'This section outlines the legal jurisdiction and governing laws that apply to the terms of service.';
-            break;
-          default:
-            break;
+    case 'privacy_data_protection':
+    title.textContent = 'Privacy and Data Protection';
+    description.innerHTML = `
+      <ul style="text-align: justify; list-style-type: none; padding-left: 0;">
+        <li style="text-align: justify;"><strong>Personal Information:</strong> vosys.org collects and stores personal information necessary for authentication, account management, and voting purposes only. This includes your name, email address, student ID, and other details required for registration and identity verification. All personal data is handled with care and in compliance with relevant data protection regulations.</li>
+        <li style="text-align: justify;"><strong>Data Security:</strong> We implement reasonable security measures, such as encryption and secure servers, to protect your data from unauthorized access, alteration, and destruction. While we strive to ensure your data's security, please be aware that no data transmission over the internet is entirely secure. Thus, we cannot guarantee absolute security, and users are advised to take personal precautions when accessing the platform.</li>
+        <li style="text-align: justify;"><strong>Voting Privacy:</strong> Your voting choices are confidential and are not shared with any third parties unless required by law, for auditing purposes, or to ensure compliance with OLSHCO rules. vosys.org employs measures to safeguard voter anonymity and protect the integrity of the voting process.</li>
+        <li style="text-align: justify;"><strong>Access and Control:</strong> You have the right to access, update, or delete your personal information at any time by logging into your account. If you wish to deactivate your account or request the deletion of your data, please contact the vosys.org support team for assistance.</li>
+        <li style="text-align: justify;"><strong>Data Retention:</strong> vosys.org retains personal data only for as long as necessary to fulfill the purposes for which it was collected, such as account management, voting, and compliance with legal obligations. After this period, your data will be securely deleted or anonymized in accordance with applicable laws.</li>
+        <li style="text-align: justify;"><strong>Third-Party Services:</strong> vosys.org may engage trusted third-party services to assist with system operations, such as email verification or data storage. These third-party providers are obligated to follow strict privacy and security guidelines, ensuring your personal data is protected at all times.</li>
+        <li style="text-align: justify;"><strong>Changes to Privacy Policy:</strong> vosys.org reserves the right to update or modify this privacy policy to reflect changes in our practices or legal requirements. Any updates will be communicated to users via email or through the platform. Please review the policy regularly to stay informed about how we are protecting your data.</li>
+      </ul>
+    `;
+    break;
+
         }
       }
 
