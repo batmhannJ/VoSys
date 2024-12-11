@@ -205,8 +205,7 @@
             <i class="fa fa-black-tie"></i>
         </div>
         <a href="turnout.php" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-    </div>
-    <div class="col-lg-3 col-xs-6">
+        <div class="col-lg-3 col-xs-6">
     <!-- small box -->
     <div class="small-box">
         <div class="inner">
@@ -217,6 +216,7 @@
             <i class="fa fa-file-text"></i>
         </div>
         <a href="#" class="small-box-footer" id="run-scan-ballot">Run Scan <i class="fa fa-arrow-circle-right"></i></a>
+    </div>
     </div>
 </div>
 </div>
