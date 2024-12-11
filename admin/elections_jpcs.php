@@ -114,29 +114,134 @@
     </div>
 </div>
 
+<!-- Activation Modal -->
+<div class="modal fade" id="activationModal" tabindex="-1" role="dialog" aria-labelledby="activationModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="activationForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="activationModalLabel">Set Activation Duration</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="activation_id" name="id">
+                    <div class="form-group">
+                        <label for="start_time">Start Time</label>
+                        <input type="datetime-local" id="start_time" name="starttime" class="form-control" required min="<?php echo date('Y-m-d\TH:i'); ?>">
+                    </div>
+                    <div class="form-group">
+                        <label for="end_time">End Time</label>
+                        <input type="datetime-local" id="end_time" name="endtime" class="form-control" required min="<?php echo date('Y-m-d\TH:i'); ?>">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="activationSubmit">Activate</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> 
+
+<!-- Deactivation Modal -->
+<div class="modal fade" id="deactivationModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Deactivate Election</h5>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to deactivate this election?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="deactivationSubmit">Deactivate</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Election Modal -->
+<div class="modal fade" id="editElection" tabindex="-1" role="dialog" aria-labelledby="editElectionLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="editElectionForm">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editElectionLabel">Edit Election</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="edit_title">Election Title</label>
+                        <input type="text" id="edit_title" name="title" class="form-control" required>
+                        <input type="hidden" id="edit_id" name="id">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="editSubmit">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 </div>
 <?php include 'includes/scripts.php'; ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 <script>
-$(function(){
-  $(document).on('click', '.edit', function(e){
+$(function() {
+  $(document).on('click', '.edit', function(e) {
     e.preventDefault();
-    $('#edit').modal('show');
     var id = $(this).data('id');
     getRow(id);
   });
 
-  $(document).on('click', '.delete', function(e){
+  function getRow(id) {
+    $.ajax({
+      type: 'POST',
+      url: 'election_row.php',
+      data: {id: id},
+      dataType: 'json',
+      success: function(response) {
+        $('#edit_title').val(response.title);
+        $('#edit_id').val(response.id);
+        $('#editElection').modal('show');
+      },
+      error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+      }
+    });
+  }
+
+  // Handle form submission
+  $('#editElectionForm').on('submit', function(e) {
     e.preventDefault();
-    $('#delete').modal('show');
-    var id = $(this).data('id');
-    getRow(id);
+    var id = $('#edit_id').val();
+    var title = $('#edit_title').val();
+
+    $.ajax({
+      type: 'POST',
+      url: 'election_edit_jpcs.php',
+      data: {id: id, title: title},
+      success: function(response) {
+        $('#editElection').modal('hide');
+        location.reload();
+      },
+      error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+      }
+    });
   });
-
-
 });
+
 function getRow(id){
   $.ajax({
     type: 'POST',
@@ -173,44 +278,54 @@ function getRow(id){
   });
 
 
-    $(document).on('click', '.election-status', function(e) {
+  $(document).on('click', '.election-status', function(e) {
     e.preventDefault();
+    var id = $(this).data('id');
+    var status = $(this).data('status'); // 1 = Activate, 0 = Deactivate
 
-    var electionId = $(this).data('id');
-    var status = $(this).data('status');
-    var statusName = $(this).data('name'); // Corrected attribute name
-
-    var confirmed = confirm('Are you sure you want to ' + statusName + ' this Election?');
-
-    if (confirmed) {
-        $.ajax({
-            type: 'POST',
-            url: 'change_status.php',
-            data: {
-                election_id: electionId,
-                status: status
-            },
-            dataType: 'json',
-            beforeSend: function() {
-                showLoadingOverlay();
-            },
-            success: function(response) {
-                if (response.success) {
-                    location.reload(); // Reload page after successful update
-                } else {
-                    toastr.error('Failed to update status.');
-                }
-                hideLoadingOverlay();
-            },
-            error: function(xhr, status, error) {
-                console.error('AJAX Error:', error);
-                toastr.error('An error occurred. Please try again.');
-                hideLoadingOverlay();
-            }
-        });
-    } else {
-        toastr.info('Status change canceled.');
+    if (status === 1) { // Activate
+        $('#activationModal').modal('show');
+        $('#activationSubmit').attr('data-id', id);
+    } else { // Deactivate
+        $('#deactivationModal').modal('show');
+        $('#deactivationSubmit').attr('data-id', id);
     }
+});
+
+// Event handler for activation modal submit button
+$('#activationSubmit').on('click', function() {
+    var id = $(this).data('id');
+    var starttime = $('#start_time').val(); // Corrected to use the correct input ID
+    var endtime = $('#end_time').val(); // Corrected to use the correct input ID
+
+    $.ajax({
+        type: 'POST',
+        url: 'change_status.php',
+        data: { id: id, status: 1, starttime: starttime, endtime: endtime },
+        success: function(response) {
+            location.reload();
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
+});
+
+// Event handler for deactivation modal submit button
+$('#deactivationSubmit').on('click', function() {
+    var id = $(this).data('id');
+
+    $.ajax({
+        type: 'POST',
+        url: 'change_status.php',
+        data: { id: id, status: 0 },
+        success: function(response) {
+            location.reload();
+        },
+        error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+        }
+    });
 });
 
 function archiveElection(id) {
