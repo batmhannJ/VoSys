@@ -40,7 +40,6 @@
             position: relative;
             margin-bottom: 40px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
             background-color: #f4f6f9;
             border-radius: 12px;
@@ -53,7 +52,6 @@
             flex-direction: column;
             justify-content: space-between;
             margin-right: 15px;
-            width: 80px;
         }
 
         .candidate-image {
@@ -83,14 +81,6 @@
                 height: 100px;
             }
         }
-
-        /* Ensure the graph container has space for images and graphs */
-        .chart-wrapper {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-        }
-
     </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -147,7 +137,7 @@
             var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
             var imageContainer = document.getElementById(imageContainerId);
             imageContainer.innerHTML = '';
-
+            
             // Define custom colors based on your request
             const candidateColors = [
                 "rgb(43, 8, 168)",   // Blue color
@@ -214,9 +204,9 @@
                                         <h3 class='box-title'><b>${category}</b></h3>
                                     </div>
                                     <div class='box-body'>
-                                        <div class='chart-wrapper'>
+                                        <div class='chart-container'>
                                             <div class='candidate-images' id='${category}Image'></div>
-                                            <div id='${category}Graph' style='height: 300px; width: 80%;'></div>
+                                            <div id='${category}Graph' style='height: 300px; width: 100%;'></div>
                                         </div>
                                     </div>
                                 </div>
