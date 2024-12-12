@@ -353,27 +353,30 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Call the backend endpoint
         fetch('run_scan_ballot.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-          console.log('Response:', data);  // Log the server response
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    }
+})
+.then(response => {
+    if (!response.ok) {
+        throw new Error('Server responded with status: ' + response.status);
+    }
+    return response.json();
+})
+.then(data => {
+    if (data.status === 'success') {
+        alert('Scan initiated successfully!');
+        console.log('Output:', data.output);
+    } else {
+        alert('Failed to start scan: ' + data.message);
+    }
+})
+.catch(error => {
+    console.error('Error:', error);
+    alert('An error occurred while running the scan.');
+});
 
-            if (data.status === 'success') {
-                alert('Scan initiated successfully!');
-                console.log('Output:', data.output);
-                // Optionally trigger the camera or further actions
-            } else {
-                alert('Failed to start scan: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred while running the scan.');
-        });
     });
 });
 </script>
