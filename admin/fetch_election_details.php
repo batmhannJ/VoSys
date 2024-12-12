@@ -80,7 +80,7 @@ if (isset($_POST['election_id'])) {
                 : '';
             
             $winner_container_style = ($is_winner_marked < $max_vote) 
-                ? 'background-color: green; color: white; border: 2px solid #fff;' // Green background and white border for winner
+                ? 'background-color: rgba(76, 175, 80, 0.2); color: #333; border: 2px solid rgba(76, 175, 80, 0.4);' // Softer green with transparency
                 : '';
             
             if ($is_winner_marked < $max_vote) {
