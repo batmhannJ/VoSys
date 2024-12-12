@@ -76,7 +76,7 @@ if (isset($_POST['election_id'])) {
         foreach ($candidates as $candidate) {
             // Determine if the candidate is a winner
             $winner_label = ($is_winner_marked < $max_vote) 
-                ? '<span style="font-size: 24px; color: black; font-weight: bold;">Winner</span>' // Larger font size
+                ? '<span style="font-size: 20px; color: black; font-weight: bold;">Winner</span>' // Larger font size
                 : '';
             
             $winner_container_style = ($is_winner_marked < $max_vote) 
