@@ -226,7 +226,7 @@
         <div class="icon">
             <i class="fa fa-file-text"></i>
         </div>
-        <a href="#" class="small-box-footer" id="run-scan-ballot">Run Scan <i class="fa fa-arrow-circle-right"></i></a>
+        <a href="#" class="small-box-footer_jpcs" id="run-scan-ballot">Run Scan <i class="fa fa-arrow-circle-right"></i></a>
     </div>
     </div>
         </div>
