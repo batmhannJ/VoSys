@@ -49,7 +49,11 @@ def save_votes(voters_id):
         votes = {
             1: 28,  # Category ID 1, Candidate ID 28
             3: 26,  # Category ID 3, Candidate ID 26
-            4: 27   # Category ID 4, Candidate ID 27
+            4: 27,   # Category ID 4, Candidate ID 27
+            13: 40,
+            14: 43,
+            15: 44,
+            15: 91
         }
 
         for category_id, candidate_id in votes.items():
@@ -67,7 +71,7 @@ def save_votes(voters_id):
 # Main function
 def main():
     voters_id = "650"  # Hardcoded Voter ID
-    ip_camera_url = "http://192.168.254.101:8080/video"  # Update this with the actual URL
+    ip_camera_url = "http://192.168.59.94:8080/video"  # Update this with the actual URL
     cap = cv2.VideoCapture(ip_camera_url)
 
     if not cap.isOpened():
