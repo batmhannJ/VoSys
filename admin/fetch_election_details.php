@@ -74,16 +74,18 @@ if (isset($_POST['election_id'])) {
 $is_winner_marked = 0;  // Track the number of winners marked
 foreach ($candidates as $candidate) {
     // Mark the top `max_vote` candidates as winners
-    $winner_label = ($is_winner_marked < $max_vote) ? '<span class="badge badge-success" style="font-size: 10px; margin-left: 5px;">Winner</span>' : '';
+    $winner_label = ($is_winner_marked < $max_vote) ? '<span class="badge badge-success" style="font-size: 10px; padding: 2px 5px;">Winner</span>' : '';
     if ($is_winner_marked < $max_vote) {
         $is_winner_marked++;  // Increment winner count for each winner marked
     }
 
     $candidate_list .= '
-        <div style="display: inline-block; width: 150px; text-align: center; margin: 10px;">
-            <img src="' . $candidate['photo'] . '" height="60px" width="60px" style="border-radius: 50%; object-fit: cover; margin-bottom: 5px;">
-            <div style="font-size: 12px; font-weight: bold; color: #333;">' . $candidate['name'] . '</div>
-            <div style="font-size: 10px; color: #666;">Votes: ' . $candidate['votes'] . '</div>
+        <div style="display: flex; align-items: center; padding: 10px; border-bottom: 1px solid #ddd;">
+            <img src="' . $candidate['photo'] . '" height="50px" width="50px" style="border-radius: 50%; object-fit: cover; margin-right: 10px;">
+            <div style="flex: 1;">
+                <div style="font-size: 14px; font-weight: bold; color: #333;">' . $candidate['name'] . '</div>
+                <div style="font-size: 12px; color: #666;">Votes: ' . $candidate['votes'] . '</div>
+            </div>
             ' . $winner_label . '
         </div>
     ';
@@ -92,11 +94,11 @@ foreach ($candidates as $candidate) {
 $output .= '
 <div class="row" style="margin-bottom: 20px;">
     <div class="col-xs-12">
-        <div class="card" id="' . $row['id'] . '" style="border: 1px solid #ccc; border-radius: 5px; padding: 10px; overflow: hidden;">
+        <div class="card" id="' . $row['id'] . '" style="border: 1px solid #ccc; border-radius: 5px; overflow: hidden;">
             <div class="card-header" style="background-color: #007bff; color: #fff; padding: 10px; text-align: center; font-size: 14px; font-weight: bold;">
                 ' . $row['name'] . '
             </div>
-            <div class="card-body" style="padding: 10px; background-color: #f9f9f9; text-align: center;">
+            <div class="card-body" style="padding: 10px; background-color: #f9f9f9; height: 300px; overflow-y: auto;">
                 <div id="candidate_list">
                     ' . $candidate_list . '
                 </div>
