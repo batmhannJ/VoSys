@@ -343,19 +343,24 @@
 
 <script>
  document.getElementById('run-scan-ballot').addEventListener('click', () => {
-  fetch('https://vosys.org/run-scan-ballot', { method: 'POST' })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
+  fetch('https://vosys.org/run-scan-ballot', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ key: 'value' }),
+})
+    .then((response) => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
     })
-    .then(data => {
-      console.log('Scan completed:', data);
+    .then((data) => {
+        console.log(data);
     })
-    .catch(error => {
-      console.error('Error:', error);
+    .catch((error) => {
+        console.error('Error:', error);
     });
+
 });
 
 </script>
