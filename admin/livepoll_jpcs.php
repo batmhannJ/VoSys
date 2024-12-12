@@ -246,7 +246,7 @@ function generateBarGraph(dataPoints, containerId, imageContainerId) {
             dataPoints.forEach(dataPoint => {
                 var candidateDiv = document.createElement('div');
                 candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
+                candidateDiv.innerHTML = <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">;
                 imageContainer.appendChild(candidateDiv);
             });
 
@@ -279,7 +279,7 @@ function generateBarGraph(dataPoints, containerId, imageContainerId) {
             dataPoints.forEach(dataPoint => {
                 var candidateDiv = document.createElement('div');
                 candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
+                candidateDiv.innerHTML = <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">;
                 imageContainer.appendChild(candidateDiv);
             });
 
@@ -313,7 +313,7 @@ function generateBarGraph(dataPoints, containerId, imageContainerId) {
             dataPoints.forEach(dataPoint => {
                 var candidateDiv = document.createElement('div');
                 candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
+                candidateDiv.innerHTML = <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">;
                 imageContainer.appendChild(candidateDiv);
             });
 
@@ -346,7 +346,7 @@ function generateBarGraph(dataPoints, containerId, imageContainerId) {
             dataPoints.forEach(dataPoint => {
                 var candidateDiv = document.createElement('div');
                 candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
+                candidateDiv.innerHTML = <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">;
                 imageContainer.appendChild(candidateDiv);
             });
 
@@ -409,7 +409,7 @@ function generateBarGraph(dataPoints, containerId, imageContainerId) {
                     Object.keys(selectedCategories).forEach(function (category) {
                         if (response[category]) {
                             // Create container for each category
-                            var containerHtml = `
+                            var containerHtml = 
                                 <div class='col-md-12'>
                                     <div class='box'>
                                         <div class='box-header with-border'>
@@ -422,7 +422,7 @@ function generateBarGraph(dataPoints, containerId, imageContainerId) {
                                             </div>
                                         </div>
                                     </div>
-                                </div>`;
+                                </div>;
                             $('#results-container').append(containerHtml);
 
                             // Generate the selected graph type for the category
