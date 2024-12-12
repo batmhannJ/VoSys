@@ -196,31 +196,42 @@ menuBtn.addEventListener("click", function () {
 });
     </script>
  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const dropdowns = document.querySelectorAll(".dropdown");
-  
-      dropdowns.forEach(function (dropdown) {
-        const dropbtn = dropdown.querySelector(".dropbtn");
-        const dropdownContent = dropdown.querySelector(".dropdown-content");
-  
-        // Toggle dropdown visibility when clicking the button
-        dropbtn.addEventListener("click", function (e) {
-          e.stopPropagation();
-          dropdownContent.classList.toggle("show"); // Toggle visibility of the dropdown
-        });
-      });
-  
-      // Hide all dropdowns when clicking anywhere outside
-      document.addEventListener("click", function (e) {
-        dropdowns.forEach(function (dropdown) {
-          const dropdownContent = dropdown.querySelector(".dropdown-content");
-          if (!dropdown.contains(e.target)) {
-            dropdownContent.classList.remove("show"); // Hide the dropdown
+  document.addEventListener("DOMContentLoaded", function () {
+    const dropdowns = document.querySelectorAll(".dropdown");
+
+    dropdowns.forEach(function (dropdown) {
+      const dropbtn = dropdown.querySelector(".dropbtn");
+      const dropdownContent = dropdown.querySelector(".dropdown-content");
+
+      // Toggle dropdown visibility when clicking the button
+      dropbtn.addEventListener("click", function (e) {
+        e.stopPropagation(); // Prevent the click event from bubbling
+
+        // Close all dropdowns first
+        dropdowns.forEach(function (otherDropdown) {
+          const otherDropdownContent = otherDropdown.querySelector(".dropdown-content");
+          if (otherDropdown !== dropdown) {
+            otherDropdownContent.classList.remove("show");
           }
         });
+
+        // Toggle the clicked dropdown
+        dropdownContent.classList.toggle("show");
       });
     });
-  </script>
+
+    // Hide all dropdowns when clicking anywhere outside
+    document.addEventListener("click", function (e) {
+      dropdowns.forEach(function (dropdown) {
+        const dropdownContent = dropdown.querySelector(".dropdown-content");
+        if (!dropdown.contains(e.target)) {
+          dropdownContent.classList.remove("show"); // Hide the dropdown
+        }
+      });
+    });
+  });
+</script>
+
   
       </body>
       <style>
