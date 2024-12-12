@@ -342,27 +342,38 @@
     </script>
 
 <script>
- document.getElementById('run-scan-ballot').addEventListener('click', () => {
-  fetch('https://vosys.org/run-scan-ballot', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ key: 'value' }),
-})
-    .then((response) => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('run-scan-ballot').addEventListener('click', function (e) {
+        e.preventDefault();
+
+        // Confirm before running
+        if (!confirm('Are you sure you want to run the ballot scanning?')) {
+            return;
         }
-        return response.json();
-    })
-    .then((data) => {
-        console.log(data);
-    })
-    .catch((error) => {
-        console.error('Error:', error);
+
+        // Call the backend endpoint
+        fetch('run_scan_ballot.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert('Scan initiated successfully!');
+                console.log('Output:', data.output);
+                // Optionally trigger the camera or further actions
+            } else {
+                alert('Failed to start scan: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while running the scan.');
+        });
     });
-
 });
-
 </script>
 
     <?php
