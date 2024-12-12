@@ -343,19 +343,20 @@
 
 <script>
     document.getElementById('run-scan-ballot').addEventListener('click', async (e) => {
-        e.preventDefault();
-        try {
-            const response = await fetch('/run-scan', { method: 'POST' });
-            const result = await response.json();
-            if (result.status === 'success') {
-                alert('Scan started:\n' + result.output);
-            } else {
-                alert('Error:\n' + result.message);
-            }
-        } catch (error) {
-            alert('An error occurred:\n' + error.message);
+    e.preventDefault();
+    try {
+        const response = await fetch('http://127.0.0.1:5000/run-scan', { method: 'POST' });
+        const result = await response.json();
+        if (result.status === 'success') {
+            alert('Scan started:\n' + result.output);
+        } else {
+            alert('Error:\n' + result.message);
         }
-    });
+    } catch (error) {
+        alert('An error occurred:\n' + error.message);
+    }
+});
+
 </script>
 
 
