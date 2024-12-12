@@ -76,20 +76,20 @@ if (isset($_POST['election_id'])) {
         foreach ($candidates as $candidate) {
             // Determine if the candidate is a winner
             $winner_label = ($is_winner_marked < $max_vote) 
-                ? '<span style="font-size: 12px; color: white; font-weight: bold;">Winner</span>' 
+                ? '<span style="font-size: 18px; color: white; font-weight: bold;">Winner</span>' // Larger font size
                 : '';
             
             $winner_container_style = ($is_winner_marked < $max_vote) 
-                ? 'background-color: green; color: white;' // Green background for winner
+                ? 'background-color: green; color: white; border: 2px solid #fff;' // Green background and white border for winner
                 : '';
             
             if ($is_winner_marked < $max_vote) {
                 $is_winner_marked++; // Increment winner count
             }
         
-            // Build candidate item
+            // Build candidate item with additional styling for winner highlight
             $candidate_list .= '
-                <div style="display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #ddd;">
+                <div style="display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #ddd; ' . $winner_container_style . '">
                     <div style="flex: 0 0 80px; text-align: center;">
                         <img src="' . $candidate['photo'] . '" height="70px" width="70px" style="border-radius: 50%; object-fit: cover; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
                     </div>
@@ -97,7 +97,7 @@ if (isset($_POST['election_id'])) {
                         <div style="font-size: 16px; font-weight: bold; color: #333;">' . $candidate['name'] . '</div>
                         <div style="font-size: 14px; color: #666; margin-top: 5px;">Votes: ' . $candidate['votes'] . '</div>
                     </div>
-                    <div style="flex: 0 0 auto; text-align: center; ' . $winner_container_style . ' padding: 5px 10px; border-radius: 5px;">
+                    <div style="flex: 0 0 auto; text-align: center; padding: 5px 10px; border-radius: 5px;">
                         ' . $winner_label . '
                     </div>
                 </div>
