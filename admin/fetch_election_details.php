@@ -76,11 +76,11 @@ if (isset($_POST['election_id'])) {
         foreach ($candidates as $candidate) {
             // Determine if the candidate is a winner
             $winner_label = ($is_winner_marked < $max_vote) 
-                ? '<span style="font-size: 18px; color: white; font-weight: bold;">Winner</span>' // Larger font size
+                ? '<span style="font-size: 18px; color: black; font-weight: bold;">Winner</span>' // Black text for winner
                 : '';
             
             $winner_container_style = ($is_winner_marked < $max_vote) 
-                ? 'background-color: rgba(76, 175, 80, 0.2); color: #333; border: 2px solid rgba(76, 175, 80, 0.4);' // Softer green with transparency
+                ? 'background-color: #388E3C; color: white; border: 2px solid #1B5E20;' // Dark green background for winner position
                 : '';
             
             if ($is_winner_marked < $max_vote) {
