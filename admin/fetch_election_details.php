@@ -90,28 +90,39 @@ if (isset($_POST['election_id'])) {
         }
 
         $output .= '
-        <div class="row" style="margin-bottom: 20px;">
-            <div class="col-xs-12">
-                <div class="box box-solid" id="' . $row['id'] . '" style="border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
-                    <div class="box-header with-border" style="background-color: #f4f4f4; padding: 15px;">
-                        <h3 class="box-title" style="font-size: 18px; font-weight: bold; color: #333;">' . $row['name'] . '</h3>
+    <div class="row" style="margin-bottom: 20px;">
+        <div class="col-xs-12">
+            <div class="box box-solid" style="border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
+                <div class="box-header with-border" style="background-color: #f4f4f4; padding: 15px;">
+                    <h3 class="box-title" style="font-size: 18px; font-weight: bold; color: #333;">Candidates List</h3>
+                </div>
+                <div class="box-body" style="padding: 15px; background-color: #fff; max-height: 400px; overflow-y: auto;">
+                    <div id="candidate_list">
+                        <ul style="list-style-type: none; padding-left: 0; margin: 0;">
+';
+
+foreach ($rows as $row) { // Assuming $rows contains all candidates
+    $output .= '
+                            <li style="padding: 10px; border-bottom: 1px solid #ddd;">
+                                <strong style="font-size: 16px;">' . $row['name'] . '</strong>
+                                <p style="margin: 5px 0; font-size: 14px; color: #666;">' . $row['description'] . '</p>
+                            </li>
+    ';
+}
+
+$output .= '
+                        </ul>
                     </div>
-                    <div class="box-body" style="padding: 15px; background-color: #fff; max-height: 300px; overflow-y: auto;">
-                        <div id="candidate_list">
-                            <ul style="list-style-type: none; padding-left: 0; margin: 0;">
-                                ' . $candidate_list . '
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="box-footer" style="padding: 10px; background-color: #f9f9f9; text-align: center;">
-                        <button class="btn btn-primary btn-sm" onclick="navigatePage(\'prev\')" style="margin-right: 5px;">Previous</button>
-                        <button class="btn btn-primary btn-sm" onclick="navigatePage(\'next\')">Next</button>
-                    </div>
+                </div>
+                <div class="box-footer" style="padding: 10px; background-color: #f9f9f9; text-align: center;">
+                    <button class="btn btn-primary btn-sm" onclick="navigatePage(\'prev\')" style="margin-right: 5px;">Previous</button>
+                    <button class="btn btn-primary btn-sm" onclick="navigatePage(\'next\')">Next</button>
                 </div>
             </div>
         </div>
-        ';
-    }        
+    </div>
+';
+    }
     // Include the election title, academic year, voter statistics, and content in the response
     $response = [
         'title' => $election_title,
