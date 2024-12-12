@@ -90,23 +90,23 @@ if (isset($_POST['election_id'])) {
         }
 
         $output .= '
-        <div class="row" style="margin-bottom: 20px;">
-            <div class="col-xs-12">
-                <div class="box box-solid" id="' . $row['id'] . '" style="border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
-                    <div class="box-header with-border" style="background-color: #f4f4f4; padding: 15px;">
-                        <h3 class="box-title" style="font-size: 18px; font-weight: bold; color: #333;">' . $row['name'] . '</h3>
-                    </div>
-                    <div class="box-body" style="padding: 15px; background-color: #fff;">
-                        <div id="candidate_list">
-                            <ul style="list-style-type: none; padding-left: 0;">
-                                ' . $candidate_list . '
-                            </ul>
-                        </div>
+    <div class="row" style="margin-bottom: 15px;">
+        <div class="col-xs-12 col-sm-6 col-md-4" style="padding: 10px;">
+            <div class="box box-solid" id="' . $row['id'] . '" style="border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); background-color: #f9f9f9;">
+                <div class="box-header" style="background-color: #eaeaea; padding: 10px;">
+                    <h3 class="box-title" style="font-size: 16px; font-weight: bold; color: #333;">' . $row['name'] . '</h3>
+                </div>
+                <div class="box-body" style="padding: 10px; background-color: #fff;">
+                    <div id="candidate_list">
+                        <ul style="list-style-type: none; padding-left: 0; margin: 0;">
+                            ' . $candidate_list . '
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
-    ';
+    </div>
+';
     }    
     // Include the election title, academic year, voter statistics, and content in the response
     $response = [
