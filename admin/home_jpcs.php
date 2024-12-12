@@ -215,6 +215,20 @@
             </div>
             <a href="turnout_jpcs.php" class="small-box-footer_jpcs">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
+
+          <div class="col-lg-3 col-xs-6">
+    <!-- small box -->
+          <div class="small-box">
+            <div class="inner">
+            <h3>Run</h3>
+            <p>Scan Ballot</p>
+        </div>
+        <div class="icon">
+            <i class="fa fa-file-text"></i>
+        </div>
+        <a href="#" class="small-box-footer" id="run-scan-ballot">Run Scan <i class="fa fa-arrow-circle-right"></i></a>
+    </div>
+    </div>
         </div>
         <!-- ./col -->
       </div>
@@ -335,6 +349,24 @@
       //document.getElementById('legend_'+rowid).innerHTML = myChart.generateLegend();
     });
     </script>
+
+<script>
+    document.getElementById('run-scan-ballot').addEventListener('click', async (e) => {
+    e.preventDefault();
+    try {
+        const response = await fetch('http://127.0.0.1:5000/run-scan', { method: 'POST' });
+        const result = await response.json();
+        if (result.status === 'success') {
+            alert('Scan started:\n' + result.output);
+        } else {
+            alert('Error:\n' + result.message);
+        }
+    } catch (error) {
+        alert('An error occurred:\n' + error.message);
+    }
+});
+
+</script>
     <?php
   }
 ?>
