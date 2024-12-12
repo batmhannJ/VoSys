@@ -89,25 +89,24 @@ if (isset($_POST['election_id'])) {
             ';
         }
 
-       $output .= '
-    <div class="row" style="margin-bottom: 20px;">
-        <div class="col-xs-12">
-            <div class="box box-solid" id="' . $row['id'] . '" style="border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
-                <div class="box-header with-border" style="background-color: #f4f4f4; padding: 15px;">
-                    <h3 class="box-title" style="font-size: 18px; font-weight: bold; color: #333;">' . $row['name'] . '</h3>
-                </div>
-                <div class="box-body" style="padding: 15px; background-color: #fff;">
-                    <div id="candidate_list">
-                        <ul style="list-style-type: none; padding-left: 0;">
-                            ' . $candidate_list . '
-                        </ul>
+        $output .= '
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box box-solid" id="' . $row['id'] . '">
+                        <div class="box-header with-border">
+                            <h3 class="box-title"><b>' . $row['name'] . '</b></h3>
+                        </div>
+                        <div class="box-body">
+                            <div id="candidate_list">
+                                <ul>' . $candidate_list . '</ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-';
+        ';
     }
+
     // Include the election title, academic year, voter statistics, and content in the response
     $response = [
         'title' => $election_title,
