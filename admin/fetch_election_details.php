@@ -71,41 +71,41 @@ if (isset($_POST['election_id'])) {
         });
 
         $candidate_list = '';
-$is_winner_marked = 0;  // Track the number of winners marked
-foreach ($candidates as $candidate) {
-    // Mark the top `max_vote` candidates as winners
-    $winner_label = ($is_winner_marked < $max_vote) ? '<span class="badge badge-success" style="font-size: 10px; padding: 2px 5px;">Winner</span>' : '';
-    if ($is_winner_marked < $max_vote) {
-        $is_winner_marked++;  // Increment winner count for each winner marked
-    }
+        $is_winner_marked = 0;  // Track the number of winners marked
+        foreach ($candidates as $candidate) {
+            // Mark the top `max_vote` candidates as winners
+            $winner_label = ($is_winner_marked < $max_vote) ? '<span class="label label-success">Winner</span>' : '';
+            if ($is_winner_marked < $max_vote) {
+                $is_winner_marked++;  // Increment winner count for each winner marked
+            }
 
-    $candidate_list .= '
-        <div style="display: flex; align-items: center; padding: 10px; border-bottom: 1px solid #ddd;">
-            <img src="' . $candidate['photo'] . '" height="50px" width="50px" style="border-radius: 50%; object-fit: cover; margin-right: 10px;">
-            <div style="flex: 1;">
-                <div style="font-size: 14px; font-weight: bold; color: #333;">' . $candidate['name'] . '</div>
-                <div style="font-size: 12px; color: #666;">Votes: ' . $candidate['votes'] . '</div>
-            </div>
-            ' . $winner_label . '
-        </div>
-    ';
-}
+            $candidate_list .= '
+                <li>
+                    <img src="' . $candidate['photo'] . '" height="100px" width="100px" class="clist">
+                    <span class="cname clist">' . $candidate['name'] . '</span>
+                    <span class="votes clist">Votes: ' . $candidate['votes'] . '</span>
+                    ' . $winner_label . '
+                </li>
+            ';
+        }
 
-$output .= '
-<div class="row" style="margin-bottom: 20px;">
-    <div class="col-xs-12">
-        <div class="card" id="' . $row['id'] . '" style="border: 1px solid #ccc; border-radius: 5px; overflow: hidden;">
-            <div class="card-header" style="background-color: #007bff; color: #fff; padding: 10px; text-align: center; font-size: 14px; font-weight: bold;">
-                ' . $row['name'] . '
-            </div>
-            <div class="card-body" style="padding: 10px; background-color: #f9f9f9; height: 300px; overflow-y: auto;">
-                <div id="candidate_list">
-                    ' . $candidate_list . '
+       $output .= '
+    <div class="row" style="margin-bottom: 20px;">
+        <div class="col-xs-12">
+            <div class="box box-solid" id="' . $row['id'] . '" style="border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
+                <div class="box-header with-border" style="background-color: #f4f4f4; padding: 15px;">
+                    <h3 class="box-title" style="font-size: 18px; font-weight: bold; color: #333;">' . $row['name'] . '</h3>
+                </div>
+                <div class="box-body" style="padding: 15px; background-color: #fff;">
+                    <div id="candidate_list">
+                        <ul style="list-style-type: none; padding-left: 0;">
+                            ' . $candidate_list . '
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 ';
     }
     // Include the election title, academic year, voter statistics, and content in the response
