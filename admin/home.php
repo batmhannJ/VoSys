@@ -342,44 +342,23 @@
     </script>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('run-scan-ballot').addEventListener('click', function (e) {
-        e.preventDefault();
-
-        // Confirm before running
-        if (!confirm('Are you sure you want to run the ballot scanning?')) {
-            return;
+    document.getElementById('run-scan-ballot').addEventListener('click', async (e) => {
+    e.preventDefault();
+    try {
+        const response = await fetch('http://127.0.0.1:5000/run-scan', { method: 'POST' });
+        const result = await response.json();
+        if (result.status === 'success') {
+            alert('Scan started:\n' + result.output);
+        } else {
+            alert('Error:\n' + result.message);
         }
-
-        // Call the backend endpoint
-        fetch('run_scan_ballot.php', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
+    } catch (error) {
+        alert('An error occurred:\n' + error.message);
     }
-})
-.then(response => {
-    if (!response.ok) {
-        throw new Error('Server responded with status: ' + response.status);
-    }
-    return response.json();
-})
-.then(data => {
-    if (data.status === 'success') {
-        alert('Scan initiated successfully!');
-        console.log('Output:', data.output);
-    } else {
-        alert('Failed to start scan: ' + data.message);
-    }
-})
-.catch(error => {
-    console.error('Error:', error);
-    alert('An error occurred while running the scan.');
 });
 
-    });
-});
 </script>
+
 
     <?php
   }

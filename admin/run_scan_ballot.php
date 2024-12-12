@@ -8,18 +8,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exec($command, $output, $return_var);
 
     // Log the output and error for debugging
-    file_put_contents('scan_ballot_log.txt', "Command executed: $command\n", FILE_APPEND);
     file_put_contents('scan_ballot_log.txt', implode("\n", $output), FILE_APPEND);
     file_put_contents('scan_ballot_log.txt', "Return Code: " . $return_var . "\n", FILE_APPEND);
 
     if ($return_var === 0) {
         echo json_encode([
-            'message' => 'Scan executed successfully.',
+            'status' => 'success',
+            'message' => 'Scan initiated successfully.',
             'output' => implode("\n", $output)
         ]);
     } else {
         http_response_code(500);
         echo json_encode([
+            'status' => 'error',
             'message' => 'Failed to execute scan.',
             'error' => implode("\n", $output),
             'return_var' => $return_var
