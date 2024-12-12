@@ -33,17 +33,17 @@
     <li class="dropdown">
       <a href="javascript:void(0)" class="dropbtn">About</a>
       <div class="dropdown-content">
-        <a href="about.html" id="aboutusLink">About Us</a>
+        <a href="about.html" id="aboutLink">About Us</a>
         <a href="walkthrough.html" id="walkthroughLink">System Walkthrough</a>
       </div>
     </li>
     <li class="dropdown">
-        <a href="javascript:void(0)" class="dropbtn">Services</a>
-        <div class="dropdown-content">
-          <a href="services.html" id="services">Our Services</a>
-          <a href="Terms.html" id="termsOfServiceLink">Terms of Service</a>
-        </div>
-      </li>    
+      <a href="javascript:void(0)" class="dropbtn">Services</a>
+      <div class="dropdown-content">
+        <a href="services.html" id="services">Our Services</a>
+        <a href="Terms.html" id="termsOfServiceLink">Terms of Service</a>
+      </div>
+    </li>    
     <li><a href="index.html#organizations">Organizations</a></li>
     <li><a href="index.html#location">Location</a></li>
     <li><a href="index.html#discover">Countdown</a></li>
@@ -196,31 +196,42 @@ menuBtn.addEventListener("click", function () {
 });
     </script>
  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const dropdowns = document.querySelectorAll(".dropdown");
-  
-      dropdowns.forEach(function (dropdown) {
-        const dropbtn = dropdown.querySelector(".dropbtn");
-        const dropdownContent = dropdown.querySelector(".dropdown-content");
-  
-        // Toggle dropdown visibility when clicking the button
-        dropbtn.addEventListener("click", function (e) {
-          e.stopPropagation();
-          dropdownContent.classList.toggle("show"); // Toggle visibility of the dropdown
-        });
-      });
-  
-      // Hide all dropdowns when clicking anywhere outside
-      document.addEventListener("click", function (e) {
-        dropdowns.forEach(function (dropdown) {
-          const dropdownContent = dropdown.querySelector(".dropdown-content");
-          if (!dropdown.contains(e.target)) {
-            dropdownContent.classList.remove("show"); // Hide the dropdown
+  document.addEventListener("DOMContentLoaded", function () {
+    const dropdowns = document.querySelectorAll(".dropdown");
+
+    dropdowns.forEach(function (dropdown) {
+      const dropbtn = dropdown.querySelector(".dropbtn");
+      const dropdownContent = dropdown.querySelector(".dropdown-content");
+
+      // Toggle dropdown visibility when clicking the button
+      dropbtn.addEventListener("click", function (e) {
+        e.stopPropagation(); // Prevent the click event from bubbling
+
+        // Close all dropdowns first
+        dropdowns.forEach(function (otherDropdown) {
+          const otherDropdownContent = otherDropdown.querySelector(".dropdown-content");
+          if (otherDropdown !== dropdown) {
+            otherDropdownContent.classList.remove("show");
           }
         });
+
+        // Toggle the clicked dropdown
+        dropdownContent.classList.toggle("show");
       });
     });
-  </script>
+
+    // Hide all dropdowns when clicking anywhere outside
+    document.addEventListener("click", function (e) {
+      dropdowns.forEach(function (dropdown) {
+        const dropdownContent = dropdown.querySelector(".dropdown-content");
+        if (!dropdown.contains(e.target)) {
+          dropdownContent.classList.remove("show"); // Hide the dropdown
+        }
+      });
+    });
+  });
+</script>
+
   
       </body>
       <style>
@@ -262,78 +273,78 @@ menuBtn.addEventListener("click", function () {
     }
     
     .dropdown {
-  position: relative;
-}
-
-/* General styles for dropdown button */
-.dropbtn {
-  font-size: 16px;
-  color: #fff;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 12px 16px;
-  font-weight: normal; /* Not bold */
-  text-transform: none; /* Remove uppercase */
-  letter-spacing: 1px;
-  position: relative;
-  transition: color 0.3s ease;
-}
-
-/* Dropdown content */
-.dropdown-content {
-  display: none; /* Initially hidden */
-  position: absolute;
-  background-color: maroon; /* Maroon background */
-  min-width: 200px;
-  border-radius: 4px;
-  top: 170%; /* Adjusted from 100% to 170% to move it downward */
-  left: 0;
-  z-index: 1;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s ease;
-}
-
-/* Show the dropdown when the .show class is added */
-.dropdown-content.show {
-  display: block;
-  opacity: 1;
-  visibility: visible;
-}
-
-/* Ensure the dropdown content is correctly aligned */
-.dropdown {
-  position: relative;
-}
-
-/* Dropdown links */
-.dropdown-content a {
-  color: #fff;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  font-size: 16px;
-  border-bottom: 1px solid #444;
-  transition: background-color 0.3s ease;
-}
-
-/* Remove border from the last link */
-.dropdown-content a:last-child {
-  border-bottom: none;
-}
-
-/* Mobile responsive dropdown */
-@media (max-width: 768px) {
-  .dropdown-content {
-    position: static;
-    min-width: 100%; /* Full width on small screens */
-  }
-  .dropdown .dropdown-content a {
-    padding: 10px 15px;
-    font-size: 14px;
-  }
-}
+      position: relative;
+    }
+    
+    /* General styles for dropdown button */
+    .dropbtn {
+      font-size: 16px;
+      color: #fff;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 12px 16px;
+      font-weight: normal; /* Not bold */
+      text-transform: none; /* Remove uppercase */
+      letter-spacing: 1px;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+    
+    /* Dropdown content */
+    .dropdown-content {
+      display: none; /* Initially hidden */
+      position: absolute;
+      background-color: maroon; /* Maroon background */
+      min-width: 200px;
+      border-radius: 4px;
+      top: 170%; /* Adjusted from 100% to 170% to move it downward */
+      left: 0;
+      z-index: 1;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    /* Show the dropdown when the .show class is added */
+    .dropdown-content.show {
+      display: block;
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    /* Ensure the dropdown content is correctly aligned */
+    .dropdown {
+      position: relative;
+    }
+    
+    /* Dropdown links */
+    .dropdown-content a {
+      color: #fff;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      font-size: 16px;
+      border-bottom: 1px solid #444;
+      transition: background-color 0.3s ease;
+    }
+    
+    /* Remove border from the last link */
+    .dropdown-content a:last-child {
+      border-bottom: none;
+    }
+    
+    /* Mobile responsive dropdown */
+    @media (max-width: 768px) {
+      .dropdown-content {
+        position: static;
+        min-width: 100%; /* Full width on small screens */
+      }
+      .dropdown .dropdown-content a {
+        padding: 10px 15px;
+        font-size: 14px;
+      }
+    }
     
     .btn {
       padding: .5rem 1.5rem;
@@ -362,6 +373,30 @@ menuBtn.addEventListener("click", function () {
       transition: 0.3s;
     }
     
+    
+    /* CSS Animation for Slideshow */
+    @keyframes slideshow {
+      0% {
+        background-image: url("images/one.png");
+      }
+      50% {
+        background-image: url("images/two.png");
+      }
+      75% {
+        background-image: url("images/three.png");
+      }
+      100% {
+        background-image: url("images/four.png");
+      }
+    }
+    
+    .header {
+      background-size: cover;
+      height: calc(700px + 100px); /* Adjust the value (100px) for the margin-top height */
+      background-position: center top; /* Adjust the vertical position here */
+      background-repeat: no-repeat;
+      animation: slideshow 10s infinite; /* Set the duration and timing of the slideshow */
+    }
     
     
     nav {
@@ -1188,7 +1223,111 @@ menuBtn.addEventListener("click", function () {
       background-image: url("images/pla/2.png");
     }
     
+    hr {
+        border: none; /* Remove default border */
+        height: 3px; /* Set the height to make it thicker */
+        background-color: black; /* Set the color of the line */
+        margin: 20px 0; /* Adjust margin as needed */
+      }
+      /* Section Container */
+    #announcement {
+      padding: 40px 0;
+      background-color: #fff;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Enhanced shadow for depth */
+      margin-bottom: 40px;
+      border-radius: 12px;
+    }
+    
+    /* Header Styling */
+    #announcement h2 {
+      font-size: 5rem; /* Increased font size */
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: bold;
+      text-transform: uppercase;
+      border-bottom: 3px solid #800000; /* Maroon color for the border */
+      padding-bottom: 10px;
+    }
+    
+    /* Announcement Grid */
+    .register__gridss {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    /* Individual Announcement Box */
+    .register__contentss {
+      background-color: #fafafa;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
+      border-left: 6px solid #800000; /* Maroon border for a pop of color */
+    }
+    
+    /* Announcement Container */
+    .announcement-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    /* Announcement Item */
+    .announcement-item {
+      background-color: #fff;
+      border-left: 6px solid #800000; /* Maroon accent on the left side */
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    }
+    
+    /* Announcement Item Title */
+    .announcement-item h3 {
+      color: #333;
+      font-size: 5rem; /* Increased font size */
+      margin-bottom: 10px;
+    }
+    
+    /* Announcement Item Text */
+    .announcement-item p {
+      color: #555;
+      font-size: 3rem; /* Increased font size */
+      line-height: 1.6;
+    }
+    
+    /* Date Styling */
+    .announcement-item .date {
+      font-size: 1.5rem; /* Increased font size */
+      color: #777;
+      margin-top: 10px;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .register__gridss {
+        grid-template-columns: 1fr;
+      }
+    
+      #announcement h2 {
+        font-size: 4rem; /* Adjusted font size for mobile */
+      }
+    
+      .announcement-item h3 {
+        font-size: 4rem; /* Adjusted font size for mobile */
+      }
+    
+      .announcement-item p {
+        font-size: 2.5rem; /* Adjusted font size for mobile */
+      }
+    
+      .announcement-item .date {
+        font-size: 1.25rem; /* Adjusted font size for mobile */
+      }
+    }
     
       </style>
     </html>
-    
