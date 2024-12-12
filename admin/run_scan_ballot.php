@@ -2,8 +2,10 @@
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Path to Python script
     $command = "cd /home/u247141684/domains/vosys.org/public_html/admin && python scan_ballot.py 2>&1";
-exec($command, $output, $return_var);
-
+    error_log("Command: " . $command);
+    error_log("Return code: " . $return_var);
+    error_log("Output: " . implode("\n", $output));
+    
 if ($return_var === 0) {
     echo json_encode([
         'message' => 'Scan executed successfully.',

@@ -360,6 +360,8 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(response => response.json())
         .then(data => {
+          console.log('Response:', data);  // Log the server response
+
             if (data.status === 'success') {
                 alert('Scan initiated successfully!');
                 console.log('Output:', data.output);
