@@ -39,64 +39,10 @@ if (isset($_POST['election_id'])) {
     $query = $conn->query($sql);
 
     $output = '';
-    
-    // Output the design structure
-    $output .= '
-    <div class="container mt-4">
-        <!-- Election Header Section -->
-        <div class="text-center mb-4">
-            <h2><strong>' . $election_title . '</strong></h2>
-            <p class="text-muted">' . $academic_yr . ' Election</p>
-        </div>
-
-        <!-- Voter Stats Section -->
-        <div class="row mb-4">
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header bg-primary text-white">
-                        <h5>Total Voters</h5>
-                    </div>
-                    <div class="card-body">
-                        <h3>' . $total_voters . '</h3>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header bg-success text-white">
-                        <h5>Voters Voted</h5>
-                    </div>
-                    <div class="card-body">
-                        <h3>' . $voters_voted . '</h3>
-                        <div class="progress">
-                            <div class="progress-bar bg-success" style="width: ' . (($voters_voted / $total_voters) * 100) . '%"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header bg-warning text-white">
-                        <h5>Remaining Voters</h5>
-                    </div>
-                    <div class="card-body">
-                        <h3>' . $remaining_voters . '</h3>
-                        <div class="progress">
-                            <div class="progress-bar bg-warning" style="width: ' . (($remaining_voters / $total_voters) * 100) . '%"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Categories and Candidates Section -->
-        <div class="row">
-    ';
 
     while ($row = $query->fetch_assoc()) {
         $max_vote = $row['max_vote'];  // Fetch max_vote for the category
 
-        // Fetch candidates for the category
         $sql = "SELECT * FROM candidates WHERE category_id='" . $row['id'] . "'";
         $cquery = $conn->query($sql);
         
@@ -128,42 +74,40 @@ if (isset($_POST['election_id'])) {
         $is_winner_marked = 0;  // Track the number of winners marked
         foreach ($candidates as $candidate) {
             // Mark the top `max_vote` candidates as winners
-            $winner_label = ($is_winner_marked < $max_vote) ? '<span class="badge badge-success">Winner</span>' : '';
+            $winner_label = ($is_winner_marked < $max_vote) ? '<span class="label label-success">Winner</span>' : '';
             if ($is_winner_marked < $max_vote) {
                 $is_winner_marked++;  // Increment winner count for each winner marked
             }
 
             $candidate_list .= '
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <img src="' . $candidate['photo'] . '" height="100px" width="100px" class="rounded-circle mr-3">
-                    <div>
-                        <span class="font-weight-bold">' . $candidate['name'] . '</span><br>
-                        <small>Votes: ' . $candidate['votes'] . '</small>
-                    </div>
+                <li>
+                    <img src="' . $candidate['photo'] . '" height="100px" width="100px" class="clist">
+                    <span class="cname clist">' . $candidate['name'] . '</span>
+                    <span class="votes clist">Votes: ' . $candidate['votes'] . '</span>
                     ' . $winner_label . '
                 </li>
             ';
         }
 
         $output .= '
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card">
-                    <div class="card-header bg-dark text-white">
-                        <h5>' . $row['name'] . '</h5>
+        <div class="row" style="margin-bottom: 20px;">
+            <div class="col-xs-12">
+                <div class="box box-solid" id="' . $row['id'] . '" style="border: 1px solid #ddd; border-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
+                    <div class="box-header with-border" style="background-color: #f4f4f4; padding: 15px;">
+                        <h3 class="box-title" style="font-size: 18px; font-weight: bold; color: #333;">' . $row['name'] . '</h3>
                     </div>
-                    <div class="card-body">
-                        <ul class="list-group">' . $candidate_list . '</ul>
+                    <div class="box-body" style="padding: 15px; background-color: #fff;">
+                        <div id="candidate_list">
+                            <ul style="list-style-type: none; padding-left: 0;">
+                                ' . $candidate_list . '
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-        ';
-    }
-
-    $output .= '
         </div>
-    </div>
     ';
-
+    }    
     // Include the election title, academic year, voter statistics, and content in the response
     $response = [
         'title' => $election_title,
@@ -179,4 +123,3 @@ if (isset($_POST['election_id'])) {
     echo json_encode('Invalid Request');
 }
 ?>
-
