@@ -1,8 +1,27 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $output = shell_exec('python3 /home/u247141684/domains/vosys.org/public_html/admin/scan_ballot.py 2>&1'); // Adjust the path
-    echo json_encode(['status' => 'success', 'output' => $output]);
+    // Set the command to change directory and run the Python script
+    $command = "cd admin && python3 scan_ballot.py";
+
+    // Execute the command
+    $output = [];
+    $return_var = 0;
+    exec($command, $output, $return_var);
+
+    if ($return_var === 0) {
+        echo json_encode([
+            'message' => 'Scan executed successfully.',
+            'output' => implode("\n", $output)
+        ]);
+    } else {
+        http_response_code(500);
+        echo json_encode([
+            'message' => 'Failed to execute scan.',
+            'error' => implode("\n", $output)
+        ]);
+    }
 } else {
-    echo json_encode(['status' => 'error', 'message' => 'Invalid request']);
+    http_response_code(405);
+    echo json_encode(['message' => 'Method not allowed.']);
 }
 ?>

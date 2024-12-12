@@ -342,38 +342,17 @@
     </script>
 
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('run-scan-ballot').addEventListener('click', function (e) {
+    document.getElementById('run-scan-ballot').addEventListener('click', async (e) => {
         e.preventDefault();
-
-        // Confirm before running
-        if (!confirm('Are you sure you want to run the ballot scanning?')) {
-            return;
+        try {
+            const response = await fetch('/run-scan-ballot', { method: 'POST' });
+            const result = await response.json();
+            alert(result.message);
+        } catch (error) {
+            console.error(error);
+            alert('Failed to execute scan.');
         }
-
-        // Call the backend endpoint
-        fetch('run_scan_ballot.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('Scan initiated successfully!');
-                console.log('Output:', data.output);
-                // Optionally trigger the camera or further actions
-            } else {
-                alert('Failed to start scan: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred while running the scan.');
-        });
     });
-});
 </script>
 
     <?php
