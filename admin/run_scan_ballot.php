@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Path to Python script
     $command = "cd /home/u247141684/domains/vosys.org/public_html/admin && python scan_ballot.py 2>&1";
