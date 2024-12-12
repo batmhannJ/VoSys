@@ -1,7 +1,7 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Set the command to change directory and run the Python script
-    $command = "cd admin && python3 scan_ballot.py";
+    // Path to Python script
+    $command = "cd /home/u247141684/domains/vosys.org/public_html/admin && python3 scan_ballot.py";
 
     // Execute the command
     $output = [];
