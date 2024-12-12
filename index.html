@@ -1659,8 +1659,9 @@ hr {
 #announcement {
   padding: 40px 0;
   background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Enhanced shadow for depth */
   margin-bottom: 40px;
+  border-radius: 12px;
 }
 
 /* Header Styling */
@@ -1671,6 +1672,8 @@ hr {
   margin-bottom: 20px;
   font-weight: bold;
   text-transform: uppercase;
+  border-bottom: 3px solid #800000; /* Maroon color for the border */
+  padding-bottom: 10px;
 }
 
 /* Announcement Grid */
@@ -1683,40 +1686,46 @@ hr {
   padding: 0 20px;
 }
 
+/* Individual Announcement Box */
 .register__contentss {
   background-color: #fafafa;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
+  border-left: 6px solid #800000; /* Maroon border for a pop of color */
 }
 
-/* Individual Announcement Box */
+/* Announcement Container */
 .announcement-container {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
+/* Announcement Item */
 .announcement-item {
   background-color: #fff;
-  border-left: 4px solid #007bff;
+  border-left: 6px solid #800000; /* Maroon accent on the left side */
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
+/* Announcement Item Title */
 .announcement-item h3 {
   color: #333;
   font-size: 1.25rem;
   margin-bottom: 10px;
 }
 
+/* Announcement Item Text */
 .announcement-item p {
   color: #555;
   font-size: 1rem;
   line-height: 1.6;
 }
 
+/* Date Styling */
 .announcement-item .date {
   font-size: 0.875rem;
   color: #777;
@@ -1729,6 +1738,7 @@ hr {
     grid-template-columns: 1fr;
   }
 }
+
 
   </style>
 </html>
