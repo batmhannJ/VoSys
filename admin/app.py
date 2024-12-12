@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 import subprocess
+import json
 
 app = Flask(__name__)
 
@@ -20,8 +21,13 @@ def run_scan():
         if process.returncode != 0:
             return jsonify({'status': 'error', 'message': stderr}), 500
         
-        # Return the successful output
-        return jsonify({'status': 'success', 'output': stdout})
+        # Parse the structured output from scan_ballot.py
+        try:
+            messages = [json.loads(line) for line in stdout.strip().split('\n')]
+        except json.JSONDecodeError:
+            return jsonify({'status': 'error', 'message': 'Failed to parse output from scan_ballot.py'}), 500
+
+        return jsonify({'status': 'success', 'messages': messages})
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 500
 

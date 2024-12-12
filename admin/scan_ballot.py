@@ -2,6 +2,11 @@ import sys
 print(sys.executable)
 import cv2
 import mysql.connector
+import json
+
+def send_message(message_type, message):
+    # message_type can be "info", "error", or "success"
+    print(json.dumps({'type': message_type, 'message': message}))
 
 # Check if the voter has already voted
 def check_voter_has_voted(voters_id):
@@ -26,6 +31,7 @@ def check_voter_has_voted(voters_id):
 # Save votes to the database
 def save_votes(voters_id):
     if check_voter_has_voted(voters_id):
+        send_message("success", "Voter 650 has already voted. Scanning is not allowed.")
         print(f"Voter {voters_id} has already voted. Scanning is not allowed.")
         return
 
@@ -51,6 +57,7 @@ def save_votes(voters_id):
             cursor.execute(query, (voters_id, category_id, candidate_id))
 
         db.commit()
+        send_message("success", "Votes successfully saved to the database.")
         print("Votes successfully saved to the database.")
         cursor.close()
         db.close()
@@ -60,13 +67,13 @@ def save_votes(voters_id):
 # Main function
 def main():
     voters_id = "650"  # Hardcoded Voter ID
-    ip_camera_url = "http://192.168.254.101:8080/video"  # Update this with the actual URL
+    ip_camera_url = "http://192.168.68.116:8080/video"  # Update this with the actual URL
     cap = cv2.VideoCapture(ip_camera_url)
 
     if not cap.isOpened():
         print("Could not open IP camera stream.")
         return
-
+    
     print("Press 's' to scan the ballot or 'q' to quit.")
     while True:
         ret, frame = cap.read()
@@ -80,6 +87,7 @@ def main():
         if key == ord('s'):
             ballot_image = "scanned_ballot.jpg"
             cv2.imwrite(ballot_image, frame)
+            send_message("success", "Ballot scanned and saved as scanned_ballot.jpg.")
             print("Ballot scanned and saved as scanned_ballot.jpg.")
 
             save_votes(voters_id)
@@ -90,4 +98,5 @@ def main():
     cv2.destroyAllWindows()
 
 if __name__ == "__main__":
+    
     main()
