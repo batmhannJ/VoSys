@@ -8,6 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exec($command, $output, $return_var);
 
     // Log the output and error for debugging
+    file_put_contents('scan_ballot_log.txt', "Command executed: $command\n", FILE_APPEND);
     file_put_contents('scan_ballot_log.txt', implode("\n", $output), FILE_APPEND);
     file_put_contents('scan_ballot_log.txt', "Return Code: " . $return_var . "\n", FILE_APPEND);
 
