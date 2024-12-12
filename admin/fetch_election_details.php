@@ -90,21 +90,23 @@ if (isset($_POST['election_id'])) {
         }
 
         $output .= '
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="box box-solid" id="' . $row['id'] . '">
-                        <div class="box-header with-border">
-                            <h3 class="box-title"><b>' . $row['name'] . '</b></h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="candidate_list">
-                                <ul>' . $candidate_list . '</ul>
-                            </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card" id="' . $row['id'] . '">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="card-title"><b>' . $row['name'] . '</b></h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="candidate_list">
+                            <ul class="list-group">
+                                ' . $candidate_list . '
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
-        ';
+        </div>
+    ';    
     }
 
     // Include the election title, academic year, voter statistics, and content in the response
@@ -122,3 +124,40 @@ if (isset($_POST['election_id'])) {
     echo json_encode('Invalid Request');
 }
 ?>
+
+<style>
+    /* Custom card header style */
+.card-header {
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 15px;
+    border-bottom: 2px solid #ddd;
+}
+
+/* Custom list style for candidate list */
+#candidate_list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#candidate_list li {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+#candidate_list li:hover {
+    background-color: #e9ecef;
+}
+
+/* Styling for overall card */
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+</style>
