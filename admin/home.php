@@ -342,17 +342,22 @@
     </script>
 
 <script>
-    document.getElementById('run-scan-ballot').addEventListener('click', async (e) => {
-        e.preventDefault();
-        try {
-            const response = await fetch('/run-scan-ballot', { method: 'POST' });
-            const result = await response.json();
-            alert(result.message);
-        } catch (error) {
-            console.error(error);
-            alert('Failed to execute scan.');
-        }
+ document.getElementById('run-scan-ballot').addEventListener('click', () => {
+  fetch('https://vosys.org/run-scan-ballot', { method: 'POST' })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Scan completed:', data);
+    })
+    .catch(error => {
+      console.error('Error:', error);
     });
+});
+
 </script>
 
     <?php
