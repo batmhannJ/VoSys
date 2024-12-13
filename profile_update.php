@@ -23,7 +23,7 @@ if (isset($_POST['save'])) {
     if (password_verify($curr_password, $voter['password'])) {
 
         // Process photo upload
-        if (!empty($photo)) {
+        /*if (!empty($photo)) {
             $fileTmpName = $_FILES['photo']['tmp_name'];
             $fileMimeType = mime_content_type($fileTmpName);
             $allowedMimeTypes = ['image/jpeg', 'image/png'];
@@ -62,7 +62,7 @@ if (isset($_POST['save'])) {
         } else {
             // Retain the existing photo if no new one is uploaded
             $photo = $voter['photo'];
-        }
+        }*/
 
         // Hash the new password if it's changed
         if (empty($password)) {
