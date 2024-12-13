@@ -139,7 +139,7 @@
                         <td>".$row['title']."</td>
                         <td>".$row['academic_yr']."</td>
                         <td>
-                          <button class='btn btn-warning btn-sm restore-election btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#electionConfirmationModal'><i class='fa fa-reply'></i> Restore</button>
+                          
                           <button class='btn btn-primary btn-sm view-election btn-flat' data-id='" . $row['id'] . "'><i class='fa fa-eye'></i> View Election</button>
                         </td>
                       </tr>
@@ -148,6 +148,7 @@
                 }
               ?>
             </tbody>
+            <!--<button class='btn btn-warning btn-sm restore-election btn-flat' data-id='".$row['id']."' data-toggle='modal' data-target='#electionConfirmationModal'><i class='fa fa-reply'></i> Restore</button>-->
           </table>
         </div>
       </div>
