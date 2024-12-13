@@ -129,6 +129,7 @@
         candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
         imageContainer.appendChild(candidateDiv);
     });
+}
 
         var chart = new CanvasJS.Chart(containerId, {
             animationEnabled: true,
