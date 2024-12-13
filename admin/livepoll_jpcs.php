@@ -115,152 +115,151 @@
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="path/to/jquery.min.js"></script>
     <script>
-        function generateBarGraph(dataPoints, containerId, imageContainerId) {
-            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+    // Store previous response to compare changes
+    let previousResponse = null;
 
-            // Ensure images match the data points by iterating in the same order
-            var imageContainer = document.getElementById(imageContainerId);
-            imageContainer.innerHTML = '';
-            // Swap positions of the first two images for demonstration
-            if (dataPoints.length > 1) {
-                var temp = dataPoints[0].image;
-                dataPoints[0].image = dataPoints[1].image;
-                dataPoints[1].image = temp;
-            }
-            dataPoints.forEach(dataPoint => {
-                var candidateDiv = document.createElement('div');
-                candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
-                imageContainer.appendChild(candidateDiv);
-            });
+    function generateBarGraph(dataPoints, containerId, imageContainerId) {
+        var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
-            var chart = new CanvasJS.Chart(containerId, {
-                animationEnabled: true,
-                animationDuration: 3000,
-                animationEasing: "easeInOutBounce",
-                title: {
-                    text: "Vote Counts"
-                },
-                axisX: {
-                    title: "",
-                    includeZero: true,
-                    interval: 1,
-                    labelFormatter: function () {
-                        return " ";
+        var imageContainer = document.getElementById(imageContainerId);
+        imageContainer.innerHTML = '';
+        dataPoints.forEach(dataPoint => {
+            var candidateDiv = document.createElement('div');
+            candidateDiv.className = 'candidate-image';
+            candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
+            imageContainer.appendChild(candidateDiv);
+        });
+
+        var chart = new CanvasJS.Chart(containerId, {
+            animationEnabled: true,
+            animationDuration: 2000,
+            title: {
+                text: "Vote Counts"
+            },
+            axisX: {
+                interval: 1,
+                labelFormatter: function () {
+                    return " ";
+                }
+            },
+            axisY: {
+                interval: Math.ceil(totalVotes / 10)
+            },
+            data: [{
+                type: "bar",
+                indexLabel: "{label} - {percent}%",
+                indexLabelPlacement: "inside",
+                indexLabelFontColor: "white",
+                indexLabelFontSize: 14,
+                dataPoints: dataPoints.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                }))
+            }]
+        });
+        chart.render();
+    }
+
+    function fetchAndGenerateGraphs(organization) {
+        $.ajax({
+            url: 'update_jpcs_data.php',
+            method: 'GET',
+            dataType: 'json',
+            data: { t: new Date().getTime() }, // Prevent caching
+            success: function (response) {
+                // Compare the new response with the previous one
+                if (!hasDataChanged(previousResponse, response)) {
+                    // If data has not changed, do nothing
+                    return;
+                }
+
+                // Store new response as the current state
+                previousResponse = response;
+
+                $('#results-container').empty();
+                var categories = {
+                    'jpcs': {
+                        'president': 'President',
+                        'vp for internal affairs': 'VP for Internal Affairs',
+                        'vp for external affairs': 'VP for External Affairs',
+                        'secretary': 'Secretary',
+                        'treasurer': 'Treasurer',
+                        'auditor': 'Auditor',
+                        'p.r.o': 'P.R.O',
+                        'dir. for membership': 'Dir. for Membership',
+                        'dir. for special project': 'Dir. for Special Project'
                     }
-                },
-                axisY: {
-                    title: "",
-                    interval: Math.ceil(totalVotes / 10)
-                },
-                data: [{
-                    type: "bar",
-                    indexLabel: "{label} - {percent}%",
-                    indexLabelPlacement: "inside",
-                    indexLabelFontColor: "white",
-                    indexLabelFontSize: 14,
-                    dataPoints: dataPoints.map(dataPoint => ({
-                        ...dataPoint,
-                        percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
-                    }))
-                }]
-            });
-            chart.render();
-        }
-
-        function fetchAndGenerateGraphs(organization) {
-            $.ajax({
-                url: 'update_jpcs_data.php',
-                method: 'GET',
-                dataType: 'json',
-                success: function (response) {
-                    // Clear previous results
-                    $('#results-container').empty();
-
-                    // Define categories for each organization
-                    var categories = {
-                        'jpcs': {
-                            'president': 'President',
-                            'vp for internal affairs': 'VP for Internal Affairs',
-                            'vp for external affairs': 'VP for External Affairs',
-                            'secretary': 'Secretary',
-                            'treasurer': 'Treasurer',
-                            'auditor': 'Auditor',
-                            'p.r.o': 'P.R.O',
-                            'dir. for membership': 'Dir. for Membership',
-                            'dir. for special project': 'Dir. for Special Project',
-                            '2-ARep': '2-A Rep',
-                            '2-BRep': '2-B Rep',
-                            '3-ARep': '3-A Rep',
-                            '3-BRep': '3-B Rep',
-                            '4-ARep': '4-A Rep',
-                            '4-BRep': '4-B Rep'
-                        }
-                    };
-
-                    // Get categories for the selected organization
-                    var selectedCategories = categories[organization];
-
-                    // Generate graphs for the selected categories
-                    Object.keys(selectedCategories).forEach(function (category) {
-                        if (response[category]) {
-                            // Create container for each category
-                            var containerHtml = `
-                                <div class='col-md-12'>
-                                    <div class='box'>
-                                        <div class='box-header with-border'>
-                                            <h3 class='box-title'><b>${selectedCategories[category]}</b></h3>
-                                        </div>
-                                        <div class='box-body'>
-                                            <div class='chart-container'>
-                                                <div class='candidate-images' id='${category}Image'></div>
-                                                <div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div>
-                                            </div>
+                };
+                var selectedCategories = categories[organization];
+                Object.keys(selectedCategories).forEach(function (category) {
+                    if (response[category]) {
+                        var containerHtml = `
+                            <div class='col-md-12'>
+                                <div class='box'>
+                                    <div class='box-header with-border'>
+                                        <h3 class='box-title'><b>${selectedCategories[category]}</b></h3>
+                                    </div>
+                                    <div class='box-body'>
+                                        <div class='chart-container'>
+                                            <div class='candidate-images' id='${category}Image'></div>
+                                            <div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div>
                                         </div>
                                     </div>
-                                </div>`;
-                            $('#results-container').append(containerHtml);
-
-                            // Generate the bar graph for the category
-                            generateBarGraph(response[category], category + 'Graph', category + 'Image');
-                        }
-                    });
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error fetching data: ", status, error);
-                }
-            });
-        }
-
-        $(document).ready(function () {
-            // Fetch and generate graphs for the default organization (CSC) initially
-            fetchAndGenerateGraphs('jpcs');
-
-            // Handle form submission
-            $('#organization-form').submit(function (event) {
-                event.preventDefault();
-                const selectedOrganization = $('#organization-select').val();
-                fetchAndGenerateGraphs(selectedOrganization);
-            });
-
-            $(window).scroll(function () {
-                if ($(this).scrollTop() > 100) {
-                    $('#back-to-top').fadeIn();
-                } else {
-                    $('#back-to-top').fadeOut();
-                }
-            });
-
-            $('#back-to-top').click(function () {
-                $('html, body').animate({ scrollTop: 0 }, 600);
-                return false;
-            });
-
-            // Refresh data every 3 seconds
-            setInterval(function () {
-                fetchAndGenerateGraphs('jpcs');
-            }, 3000); // 3 seconds
+                                </div>
+                            </div>`;
+                        $('#results-container').append(containerHtml);
+                        generateBarGraph(response[category], category + 'Graph', category + 'Image');
+                    }
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error("Error fetching data: ", status, error);
+            }
         });
-    </script>
+    }
+
+    /**
+     * Compares two sets of vote data to see if anything has changed.
+     * @param {Object} oldData - The old vote data.
+     * @param {Object} newData - The new vote data.
+     * @return {boolean} True if data has changed, false otherwise.
+     */
+    function hasDataChanged(oldData, newData) {
+        if (!oldData) return true; // If there's no previous data, assume it's new
+        if (JSON.stringify(oldData) !== JSON.stringify(newData)) {
+            return true; // If the new data is different from the old one, refresh
+        }
+        return false;
+    }
+
+    $(document).ready(function () {
+        fetchAndGenerateGraphs('jpcs');
+        
+        $('#organization-form').submit(function (event) {
+            event.preventDefault();
+            const selectedOrganization = $('#organization-select').val();
+            fetchAndGenerateGraphs(selectedOrganization);
+        });
+
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 100) {
+                $('#back-to-top').fadeIn();
+            } else {
+                $('#back-to-top').fadeOut();
+            }
+        });
+
+        $('#back-to-top').click(function () {
+            $('html, body').animate({ scrollTop: 0 }, 600);
+            return false;
+        });
+
+        // Check for new votes every 3 seconds
+        setInterval(function () {
+            fetchAndGenerateGraphs('jpcs');
+        }, 3000); // 3 seconds
+    });
+</script>
+
 </body>
 </html>
