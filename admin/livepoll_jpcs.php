@@ -255,6 +255,11 @@
                 $('html, body').animate({ scrollTop: 0 }, 600);
                 return false;
             });
+
+            // Refresh data every 3 seconds
+            setInterval(function () {
+                fetchAndGenerateGraphs('jpcs');
+            }, 3000); // 3 seconds
         });
     </script>
 </body>
