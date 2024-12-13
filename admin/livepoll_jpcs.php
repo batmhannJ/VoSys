@@ -147,6 +147,7 @@
             },
             data: [{
                 type: "bar",
+                color: "#4F81BC", // Custom color
                 indexLabel: "{label} - {percent}%",
                 indexLabelPlacement: "inside",
                 indexLabelFontColor: "white",
@@ -160,6 +161,60 @@
         chart.render();
     }
 
+    function generateLineGraph(dataPoints, containerId) {
+        var chart = new CanvasJS.Chart(containerId, {
+            animationEnabled: true,
+            title: { text: "Vote Trend" },
+            axisX: { labelFontSize: 12 },
+            axisY: { labelFontSize: 12 },
+            data: [{
+                type: "line",
+                lineColor: "#1589FF",
+                dataPoints: dataPoints.map((dataPoint, index) => ({
+                    x: index + 1,
+                    y: dataPoint.y,
+                    label: dataPoint.label
+                }))
+            }]
+        });
+        chart.render();
+    }
+
+    function generatePieChart(dataPoints, containerId) {
+        var chart = new CanvasJS.Chart(containerId, {
+            animationEnabled: true,
+            title: { text: "Vote Distribution" },
+            data: [{
+                type: "pie",
+                indexLabel: "{label} - {percent}%",
+                indexLabelFontSize: 14,
+                dataPoints: dataPoints.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / dataPoints.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
+                }))
+            }]
+        });
+        chart.render();
+    }
+
+    function generateDoughnutChart(dataPoints, containerId) {
+        var chart = new CanvasJS.Chart(containerId, {
+            animationEnabled: true,
+            title: { text: "Vote Composition" },
+            data: [{
+                type: "doughnut",
+                innerRadius: 70,
+                indexLabel: "{label} - {percent}%",
+                indexLabelFontSize: 14,
+                dataPoints: dataPoints.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / dataPoints.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
+                }))
+            }]
+        });
+        chart.render();
+    }
+
     function fetchAndGenerateGraphs(organization) {
         $.ajax({
             url: 'update_jpcs_data.php',
@@ -167,13 +222,10 @@
             dataType: 'json',
             data: { t: new Date().getTime() }, // Prevent caching
             success: function (response) {
-                // Compare the new response with the previous one
                 if (!hasDataChanged(previousResponse, response)) {
-                    // If data has not changed, do nothing
-                    return;
+                    return; // If data has not changed, do nothing
                 }
 
-                // Store new response as the current state
                 previousResponse = response;
 
                 $('#results-container').empty();
@@ -190,6 +242,7 @@
                         'dir. for special project': 'Dir. for Special Project'
                     }
                 };
+
                 var selectedCategories = categories[organization];
                 Object.keys(selectedCategories).forEach(function (category) {
                     if (response[category]) {
@@ -202,13 +255,20 @@
                                     <div class='box-body'>
                                         <div class='chart-container'>
                                             <div class='candidate-images' id='${category}Image'></div>
-                                            <div id='${category}Graph' style='height: 300px; width: calc(100% - 80px);'></div>
+                                            <div id='${category}BarGraph' style='height: 300px; width: 100%;'></div>
+                                            <div id='${category}LineGraph' style='height: 300px; width: 100%;'></div>
+                                            <div id='${category}PieChart' style='height: 300px; width: 100%;'></div>
+                                            <div id='${category}DoughnutChart' style='height: 300px; width: 100%;'></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>`;
                         $('#results-container').append(containerHtml);
-                        generateBarGraph(response[category], category + 'Graph', category + 'Image');
+                        const categoryData = response[category];
+                        generateBarGraph(categoryData, category + 'BarGraph', category + 'Image');
+                        generateLineGraph(categoryData, category + 'LineGraph');
+                        generatePieChart(categoryData, category + 'PieChart');
+                        generateDoughnutChart(categoryData, category + 'DoughnutChart');
                     }
                 });
             },
@@ -218,16 +278,10 @@
         });
     }
 
-    /**
-     * Compares two sets of vote data to see if anything has changed.
-     * @param {Object} oldData - The old vote data.
-     * @param {Object} newData - The new vote data.
-     * @return {boolean} True if data has changed, false otherwise.
-     */
     function hasDataChanged(oldData, newData) {
-        if (!oldData) return true; // If there's no previous data, assume it's new
+        if (!oldData) return true;
         if (JSON.stringify(oldData) !== JSON.stringify(newData)) {
-            return true; // If the new data is different from the old one, refresh
+            return true;
         }
         return false;
     }
@@ -254,12 +308,12 @@
             return false;
         });
 
-        // Check for new votes every 3 seconds
         setInterval(function () {
             fetchAndGenerateGraphs('jpcs');
-        }, 3000); // 3 seconds
+        }, 3000);
     });
 </script>
+
 
 </body>
 </html>
