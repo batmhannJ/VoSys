@@ -46,19 +46,20 @@ def save_votes(voters_id):
         query = "INSERT INTO votes (election_id, voters_id, category_id, candidate_id, organization) VALUES (1, %s, %s, %s, 'JPCS')"
 
         # Hardcoded category and candidate IDs
-        votes = {
-            1: 28,  # Category ID 1, Candidate ID 28
-            3: 26,  # Category ID 3, Candidate ID 26
-            4: 27,   # Category ID 4, Candidate ID 27
-            13: 40,
-            14: 43,
-            15: 44,
-            15: 91
-        }
+        votes = [
+            (1, 28),   # Category ID 1, Candidate ID 28
+            (3, 26),   # Category ID 3, Candidate ID 26
+            (4, 27),   # Category ID 4, Candidate ID 27
+            (13, 40),  # Category ID 13, Candidate ID 40
+            (14, 43),  # Category ID 14, Candidate ID 43
+            (15, 44),  # Category ID 15, Candidate ID 44
+            (15, 91)   # Category ID 15, Candidate ID 91
+        ]
 
-        for category_id, candidate_id in votes.items():
+        for category_id, candidate_id in votes:
             print(f"Executing query: {query} with values ({voters_id}, {category_id}, {candidate_id})")
             cursor.execute(query, (voters_id, category_id, candidate_id))
+
 
         db.commit()
         send_message("success", "Votes successfully saved to the database.")
@@ -71,7 +72,7 @@ def save_votes(voters_id):
 # Main function
 def main():
     voters_id = "650"  # Hardcoded Voter ID
-    ip_camera_url = "http://192.168.59.94:8080/video"  # Update this with the actual URL
+    ip_camera_url = "http://192.168.162.94:8080/video"  # Update this with the actual URL
     cap = cv2.VideoCapture(ip_camera_url)
 
     if not cap.isOpened():
