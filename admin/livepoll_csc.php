@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html>
-<?php
-include 'includes/session.php';
-include 'includes/header_csc.php';
-?>
+<html lang="en">
 <head>
+    <?php include 'includes/session.php'; ?>
+    <?php include 'includes/header.php'; ?>
     <style>
         .box-title {
             text-align: center;
             width: 100%;
             display: inline-block;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
         }
 
-        /* Back to Top button styles */
         #back-to-top {
             position: fixed;
             bottom: 40px;
             right: 40px;
             display: none;
-            background-color: #000;
+            background-color: #007BFF;
             color: #fff;
             border: none;
             border-radius: 50%;
@@ -29,47 +29,43 @@ include 'includes/header_csc.php';
             line-height: 50px;
             cursor: pointer;
             z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         #back-to-top:hover {
-            background-color: #555;
+            background-color: #0056b3;
         }
 
         .chart-container {
-            display: flex;
-            align-items: flex-start;
+            position: relative;
             margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            background-color: #f4f6f9;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
         .candidate-images {
-            flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
-            padding: 10px;
-            margin-right: 20px; /* Add spacing between images and chart */
-        }
-
-        .chart {
-            flex: 3;
-            height: 300px;
+            justify-content: space-between;
+            margin-right: 15px;
         }
 
         .candidate-image {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
 
         .candidate-image img {
-            width: 50px;
-            height: 50px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
-            margin-right: 10px;
-        }
-
-        .candidate-label {
-            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         @media (max-width: 768px) {
@@ -87,183 +83,151 @@ include 'includes/header_csc.php';
         }
     </style>
 </head>
-<body class="hold-transition skin-black sidebar-mini">
-<div class="wrapper">
-    <?php include 'includes/navbar_csc.php'; ?>
-    <?php include 'includes/menubar_csc.php'; ?>
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        <?php include 'includes/navbar.php'; ?>
+        <?php include 'includes/menubar.php'; ?>
 
-    <div class="content-wrapper">
-        <section class="content-header">
-            <h1>Election Results</h1>
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li class="active">Results</li>
-            </ol>
-        </section>
+        <div class="content-wrapper">
+            <section class="content-header">
+                <h1>Election Results</h1>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                    <li class="active">Results</li>
+                </ol>
+            </section>
 
-        <section class="content">
-            <div class="row justify-content-center">
-                <?php
-                $categories = [
-                    'president' => 'President',
-                    'vice president' => 'Vice President',
-                    'secretary' => 'Secretary',
-                    'treasurer' => 'Treasurer',
-                    'auditor' => 'Auditor',
-                    'p.r.o' => 'P.R.O',
-                    'businessManager' => 'Business Manager',
-                    'beedRep' => 'BEED Rep',
-                    'bsedRep' => 'BSED Rep',
-                    'bshmRep' => 'BSHM Rep',
-                    'bsoadRep' => 'BSOAD Rep',
-                    'bs crimRep' => 'BS CRIM Rep',
-                    'bsitRep' => 'BSIT Rep'
-                ];
+            <section class="content">
+                <form id="organization-form">
+                    <label for="organization-select">Select Organization:</label>
+                    <select id="organization-select" name="organization">
+                        <option value="csc">CSC</option>
+                        <option value="jpcs">JPCS</option>
+                        <option value="ymf">YMF</option>
+                        <option value="pasoa">PASOA</option>
+                        <option value="code-tg">CODE-TG</option>
+                        <option value="hmso">HMSO</option>
+                    </select>
 
-                foreach ($categories as $categoryKey => $categoryName) {
-                    echo "
-                    <div class='col-md-12'>
-                        <div class='box'>
-                            <div class='box-header with-border'>
-                                <h3 class='box-title'><b>$categoryName</b></h3>
-                            </div>
-                            <div class='box-body'>
-                                <div class='chart-container'>
-                                    <div class='candidate-images' id='{$categoryKey}Image'></div>
-                                    <div id='{$categoryKey}Graph' class='chart'></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>";
-                }
-                ?>
-            </div>
-        </section>
+                    <label for="graph-type">Select Graph Type:</label>
+                    <select id="graph-type">
+                        <option value="bar">Bar Chart</option>
+                        <option value="pie">Pie Chart</option>
+                        <option value="line">Line Chart</option>
+                        <option value="stackedArea">Stacked Area Chart</option>
+                        <option value="doughnut">Donut Chart</option>
+                    </select>
 
-        <button id="back-to-top" title="Back to top">&uarr;</button>
+                    <button type="submit">Show Results</button>
+                </form>
+                <br>
+
+                <div class="row justify-content-center" id="results-container"></div>
+            </section>
+
+            <button id="back-to-top" title="Back to top">&uarr;</button>
+        </div>
+        <?php include 'includes/footer.php'; ?>
     </div>
-    <?php include 'includes/footer.php'; ?>
-</div>
-<?php include 'includes/scripts.php'; ?>
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-<script>
-    // Store chart instances globally
-    var charts = {};
+    <?php include 'includes/scripts.php'; ?>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="path/to/jquery.min.js"></script>
+    <script>
+        function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
+            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+            var imageContainer = document.getElementById(imageContainerId);
+            imageContainer.innerHTML = '';
+            
+            // Define custom colors based on your request
+            const candidateColors = [
+                "rgb(43, 8, 168)",   // Blue color
+                "rgb(158, 9, 29)",   // Red color
+                "rgb(43, 8, 168)",   // Blue color (repeating the color)
+                "rgb(158, 9, 29)",   // Red color (repeating the color)
+                "rgb(43, 8, 168)",   // Blue color (repeating the color)
+                "rgb(158, 9, 29)"    // Red color (repeating the color)
+            ];
+            
+            dataPoints.forEach((dataPoint, index) => {
+                var candidateDiv = document.createElement('div');
+                candidateDiv.className = 'candidate-image';
+                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
+                imageContainer.appendChild(candidateDiv);
 
-    function initializeCharts() {
-        var categories = [
-            'president', 'vice president', 'secretary', 'treasurer', 'auditor',
-            'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
-            'bsoadRep', 'bs crimRep', 'bsitRep'
-        ];
-        
-        // Initialize empty charts for each category
-        categories.forEach(function(category) {
-            var chart = new CanvasJS.Chart(category + 'Graph', {
-                animationEnabled: true,
-                animationDuration: 1000,
-                animationEasing: "easeInOutBounce",
-                title: {
-                    text: "Vote Counts"
-                },
-                axisX: {
-                    title: "",
-                    includeZero: true,
-                    interval: 1,
-                    labelFormatter: function () {
-                        return " ";
-                    }
-                },
-                axisY: {
-                    title: "",
-                    interval: 1
-                },
-                data: [{
-                    type: "bar",
-                    indexLabel: "{label} - {percent}%",
-                    indexLabelPlacement: "inside",
-                    indexLabelFontColor: "white",
-                    indexLabelFontSize: 14,
-                    dataPoints: []
-                }]
+                // Assign a color based on the index (repeating the custom color palette)
+                dataPoint.color = candidateColors[index % candidateColors.length];
             });
+
+            var chartOptions = {
+                animationEnabled: true,
+                theme: "light2",
+                title: { text: "Vote Counts" },
+                data: [{
+                    type: graphType,
+                    dataPoints: dataPoints.map(dataPoint => ({
+                        ...dataPoint,
+                        color: dataPoint.color || "#4F81BC", // Default color if not assigned
+                        indexLabel: `${dataPoint.label} - ${(dataPoint.y / totalVotes * 100).toFixed(2)}%`,
+                        indexLabelFontColor: "lightgray",  // Changed to light gray
+                        indexLabelPlacement: "inside",
+                        indexLabelFontSize: 14,
+                        indexLabelFontWeight: "bold"
+                    }))
+                }]
+            };
+
+            // Add specific options for stacked area and donut charts
+            if (graphType === "stackedArea") {
+                chartOptions.data[0].type = "stackedArea";
+            } else if (graphType === "doughnut") {
+                chartOptions.data[0].type = "doughnut";
+                chartOptions.data[0].innerRadius = 70; // Create a donut effect
+            }
+
+            var chart = new CanvasJS.Chart(containerId, chartOptions);
             chart.render();
-            charts[category] = chart;
-        });
-    }
-
-    function updateCharts(data) {
-        // Update all charts with new data
-        for (var category in data) {
-            if (charts[category]) {
-                var dataPoints = data[category];
-                var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
-                
-                // Update chart data
-                charts[category].options.data[0].dataPoints = dataPoints.map(dataPoint => ({
-                    ...dataPoint,
-                    percent: totalVotes > 0 ? ((dataPoint.y / totalVotes) * 100).toFixed(2) : 0
-                }));
-                
-                // Calculate new interval for Y-axis
-                var maxVotes = Math.max(...dataPoints.map(dp => dp.y), 1);
-                charts[category].options.axisY.interval = Math.ceil(maxVotes / 10) || 1;
-                
-                charts[category].render();
-                
-                // Update candidate images
-                var imageContainer = document.getElementById(category + 'Image');
-                if (imageContainer) {
-                    imageContainer.innerHTML = dataPoints.map(dataPoint =>
-                        `<div class="candidate-image">
-                            <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">
-                            <span class="candidate-label">${dataPoint.label}</span>
-                        </div>`
-                    ).join('');
-                }
-            }
         }
-    }
 
-    function fetchResults() {
-        $.ajax({
-            url: 'update_data_csc.php',
-            method: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                updateCharts(response);
-                // Fetch results again after the current request completes
-                setTimeout(fetchResults, 1000); // Adjust the delay as needed
-            },
-            error: function(xhr, status, error) {
-                console.error("Error fetching data: ", status, error);
-                // Retry fetching results after an error
-                setTimeout(fetchResults, 3000); // Retry after 3 seconds
-            }
+        function fetchAndGenerateGraphs(organization) {
+            const graphType = $('#graph-type').val();
+            $.ajax({
+                url: 'update_data.php',
+                method: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    $('#results-container').empty();
+                    Object.keys(response).forEach(function (category) {
+                        var containerHtml = ` 
+                            <div class='col-md-12'>
+                                <div class='box'>
+                                    <div class='box-header with-border'>
+                                        <h3 class='box-title'><b>${category}</b></h3>
+                                    </div>
+                                    <div class='box-body'>
+                                        <div class='chart-container'>
+                                            <div class='candidate-images' id='${category}Image'></div>
+                                            <div id='${category}Graph' style='height: 300px; width: 100%;'></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+                        $('#results-container').append(containerHtml);
+                        generateGraph(response[category], category + 'Graph', category + 'Image', graphType);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching data: ", status, error);
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            fetchAndGenerateGraphs('csc');
+            $('#organization-form').submit(function (event) {
+                event.preventDefault();
+                fetchAndGenerateGraphs($('#organization-select').val());
+            });
         });
-    }
-
-    $(document).ready(function() {
-        // Initialize charts first
-        initializeCharts();
-
-        // Start fetching results
-        fetchResults();
-
-        // Back to top button
-        $(window).scroll(function() {
-            if ($(this).scrollTop() > 100) {
-                $('#back-to-top').fadeIn();
-            } else {
-                $('#back-to-top').fadeOut();
-            }
-        });
-
-        $('#back-to-top').click(function() {
-            $('html, body').animate({ scrollTop: 0 }, 600);
-            return false;
-        });
-    });
-</script>
+    </script>
 </body>
 </html>
