@@ -213,11 +213,8 @@ include 'includes/header_csc.php';
     }
 
     $(document).ready(function () {
-        // Fetch and generate graphs initially
-        fetchAndGenerateGraphs();
-
-        // Set interval to update graphs every 10 seconds (10000 milliseconds)
-        setInterval(fetchAndGenerateGraphs, 10000);
+        // Ensure no automatic update intervals
+        // Fetch and generate graphs only when triggered by a vote submission
 
         $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
@@ -230,6 +227,13 @@ include 'includes/header_csc.php';
         $('#back-to-top').click(function () {
             $('html, body').animate({ scrollTop: 0 }, 600);
             return false;
+        });
+
+        // Trigger fetchAndGenerateGraphs after vote submission
+        $('#submit-vote').on('click', function (e) {
+            e.preventDefault();
+            // Perform vote submission logic here
+            fetchAndGenerateGraphs();
         });
     });
 </script>

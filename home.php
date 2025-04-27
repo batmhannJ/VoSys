@@ -76,15 +76,25 @@ if(!is_active_election($conn)){
 					        unset($_SESSION['error']);
 					    }
 					    if(isset($_SESSION['success'])){
-					        echo "
-					            <div class='alert alert-success alert-dismissible' id='success-alert'>
-					                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-					                <h4><i class='icon fa fa-check'></i> Success!</h4>
-					                ".$_SESSION['success']."
-					            </div>
-					        ";
-					        unset($_SESSION['success']);
-					    }
+                            echo "
+                                <div class='alert alert-success alert-dismissible' id='success-alert'>
+                                    <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                    <h4><i class='icon fa fa-check'></i> Success!</h4>
+                                    ".$_SESSION['success']."
+                                </div>
+                                <script>
+                                    // Trigger confetti effect when success alert is shown
+                                    document.addEventListener('DOMContentLoaded', function() {
+                                        confetti({
+                                            particleCount: 100,
+                                            spread: 70,
+                                            origin: { y: 0.6 }
+                                        });
+                                    });
+                                </script>
+                            ";
+                            unset($_SESSION['success']);
+                        }
 					?>
 
 					<div class="alert alert-danger alert-dismissible" id="alert" style="display:none;">
@@ -95,12 +105,12 @@ if(!is_active_election($conn)){
 			        <script>
 					    // Function to hide alerts after 3 seconds
 					    function hideAlerts() {
-					        setTimeout(function() {
-					            document.getElementById('error-alert').style.display = 'none';
-					            document.getElementById('success-alert').style.display = 'none';
-					            document.getElementById('alert').style.display = 'none';
-					        }, 3000); // 3 seconds
-					    }
+                            setTimeout(function() {
+                                document.getElementById('error-alert').style.display = 'none';
+                                document.getElementById('success-alert').style.display = 'none';
+                                document.getElementById('alert').style.display = 'none';
+                            }, 5000); // Increase to 5 seconds to enjoy the confetti
+                        }
 
 					    // Call the function when the page is loaded
 					    window.onload = function() {
@@ -503,9 +513,32 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         // Handle confirmation modal submission
-        $('#confirmSubmit').click(function() {
-            $('#ballotForm').submit();
+        $('#ballotForm').on('submit', function(e){
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: 'submit_ballot.php',
+            data: $(this).serialize(),
+            dataType: 'json',
+            success: function(response){
+                if(response.success){
+                    // Show success message
+                    $('#success-alert').show();
+                    // Trigger confetti effect
+                    confetti({
+                        particleCount: 150,
+                        spread: 90,
+                        origin: { y: 0.5 },
+                        colors: ['#ff0a54', '#ff477e', '#ff85a1', '#fbb1bd', '#f9bec7']
+                    });
+                } else {
+                    // Handle error
+                    $('.message').html(response.message);
+                    $('#alert').show();
+                }
+            }
         });
+    });
 
         $(document).on('click', '.platform', function(e){
             e.preventDefault();
