@@ -34,7 +34,7 @@ echo '<h3>Live Poll Results</h3>';
 echo '<div class="poll-results">';
 $prev_position = '';
 $color_index = 0;
-$colors = ['#006400', '#228B22', '#3CB371', '#90EE90']; // Dark green to light green shades
+$colors = ['#333333', '#4A4A4A', '#666666', '#808080']; // Dark gray shades
 
 while ($row = $result->fetch_assoc()) {
     // Display position name only once
@@ -56,9 +56,9 @@ while ($row = $result->fetch_assoc()) {
     $color = $colors[$color_index % count($colors)];
     $color_index++;
 
-    // Display anonymous result with vote count and percentage
+    // Display anonymous result with avatar and percentage
     echo "<div class='poll-item'>";
-    echo "<div class='vote-info'>{$row['total_votes']} votes</div>";
+    echo "<img src='images/default_avatar.png' class='avatar' alt='Candidate Avatar'>";
     echo "<div class='poll-bar-container'>";
     echo "<div class='poll-bar' style='width: {$vote_percentage}%; background-color: {$color};'>";
     echo "<span class='poll-percentage'>{$vote_percentage}%</span>";
@@ -88,7 +88,7 @@ if ($total_votes == 0) {
 
 .position-title {
     font-size: 1.2rem;
-    color: darkgreen;
+    color: #333333;
     margin: 10px 0;
     font-weight: bold;
 }
@@ -100,10 +100,11 @@ if ($total_votes == 0) {
     gap: 15px;
 }
 
-.vote-info {
-    flex: 1;
-    font-size: 1rem;
-    color: #333;
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .poll-bar-container {
