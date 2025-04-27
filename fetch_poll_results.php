@@ -8,7 +8,6 @@ $sql_results = "SELECT
                     candidates.id AS candidate_id,
                     candidates.firstname AS firstname,
                     candidates.lastname AS lastname, 
-                    candidates.photo AS photo,
                     COUNT(votes_csc.id) AS total_votes
                 FROM 
                     votes_csc
@@ -59,9 +58,6 @@ while ($row = $result->fetch_assoc()) {
     // Select color
     $color = $colors[$color_index % count($colors)];
     $color_index++;
-
-    // Get candidate photo or use default
-    $photo = !empty($row['photo']) ? 'images/'.$row['photo'] : 'images/profile.jpg';
 
     // Display result with candidate avatar and percentage
     echo "<div class='poll-item'>";
@@ -155,8 +151,12 @@ if ($total_votes == 0) {
 /* Responsive design */
 @media (max-width: 768px) {
     .poll-item {
-        flex-direction: column;
-        align-items: flex-start;
+        flex-direction: row;
+        align-items: center;
+    }
+    
+    .avatar {
+        display: none; /* Hide avatar on small screens */
     }
 
     .poll-bar-container {
