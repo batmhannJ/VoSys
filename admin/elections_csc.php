@@ -53,11 +53,23 @@
         // Function to update election status based on end time
         function updateElectionStatusBasedOnTime($conn) {
             try {
+                // Log current server time and query for debugging
+                error_log("Running updateElectionStatusBasedOnTime at " . date('Y-m-d H:i:s'));
+                
                 // Deactivate expired elections
                 $sql = "UPDATE election SET status = 0 WHERE status = 1 AND endtime <= NOW() AND organization = 'CSC' AND archived = FALSE";
                 $stmt = $conn->prepare($sql);
-                $stmt->execute();
+                if (!$stmt) {
+                    throw new Exception("Prepare failed: " . $conn->error);
+                }
+                if (!$stmt->execute()) {
+                    throw new Exception("Execute failed: " . $stmt->error);
+                }
+                $affected_rows = $stmt->affected_rows;
                 $stmt->close();
+                
+                // Log affected rows for debugging
+                error_log("Updated $affected_rows elections to Not Active");
             } catch (Exception $e) {
                 error_log("Error updating election status: " . $e->getMessage());
             }
@@ -305,6 +317,7 @@ $(function(){
   function checkElectionEndTimes() {
     const activeElections = $('.election-status[data-status="0"]');
     let earliestEndTime = null;
+    let earliestEndTimeStr = null;
 
     activeElections.each(function() {
       const endTimeStr = $(this).data('endtime');
@@ -312,20 +325,29 @@ $(function(){
         const endTime = new Date(endTimeStr);
         if (!isNaN(endTime.getTime()) && (earliestEndTime === null || endTime < earliestEndTime)) {
           earliestEndTime = endTime;
+          earliestEndTimeStr = endTimeStr;
         }
       }
     });
 
     if (earliestEndTime && earliestEndTime > new Date()) {
       const timeUntilEnd = earliestEndTime - new Date();
+      console.log(`Scheduling reload for ${earliestEndTimeStr} in ${timeUntilEnd / 1000} seconds`);
+      
+      // Add 5-second buffer to ensure server-side update occurs
       setTimeout(function() {
         console.log('Election endtime reached, reloading page...');
-        location.reload();
-      }, timeUntilEnd);
+        toastr.info('An election has ended, reloading page...');
+        setTimeout(function() {
+          location.reload();
+        }, 2000);
+      }, timeUntilEnd + 5000); // 5-second buffer
+    } else {
+      console.log('No valid future endtimes found or all endtimes passed');
     }
 
-    // Check again after 1 minute as a fallback
-    setTimeout(checkElectionEndTimes, 60000);
+    // Check again after 30 seconds
+    setTimeout(checkElectionEndTimes, 30000);
   }
 
   // Start checking end times on page load
