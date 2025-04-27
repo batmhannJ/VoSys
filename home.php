@@ -241,9 +241,6 @@ if (isset($voter['id'])) {
                                                     <ul>';
                                                     $sql = "SELECT * FROM candidates WHERE category_id='" . $row['id'] . "'";
                                                     $cquery = $conn->query($sql);
-                                                    if ($cquery->num_rows == 0) {
-                                                        echo "No candidates found for category ID: " . $row['id'];
-                                                    }
                                                     
                                                     while ($crow = $cquery->fetch_assoc()) {
                                                         $slug = slugify($row['name']);
@@ -314,7 +311,7 @@ if (isset($voter['id'])) {
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-success btn-flat" id="preview_jpcs"><i class="fa fa-file-text"></i> Preview</button> 
-                                            <button type="submit" class="btn btn-primary" id="submitBtn" name="vote_jpcs">Yes, Submit</button>
+                                            <button type="submit" class="btn btn-primary" id="submitBtn" name="vote">Yes, Submit</button>
                                         </div>
                                     </div>
                                 </div>
