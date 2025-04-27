@@ -36,21 +36,29 @@ include 'includes/header_csc.php';
         }
 
         .chart-container {
-            position: relative;
+            display: flex;
+            align-items: flex-start;
             margin-bottom: 40px;
         }
 
+        .chart {
+            flex: 3;
+            height: 300px;
+            margin-right: 20px;
+        }
+
         .candidate-images {
+            flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: flex-start;
             padding: 10px;
         }
 
         .candidate-image {
             display: flex;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         .candidate-image img {
@@ -61,7 +69,6 @@ include 'includes/header_csc.php';
         }
 
         .candidate-label {
-            margin-left: 10px;
             font-weight: bold;
         }
 
@@ -122,9 +129,9 @@ include 'includes/header_csc.php';
                             </div>
                             <div class='box-body'>
                                 <div class='chart-container'>
-                                    <div id='{$categoryKey}Graph' style='height: 300px; width: calc(100% - 70px); margin-left: 70px;'></div>
+                                    <div id='{$categoryKey}Graph' class='chart'></div>
+                                    <div class='candidate-images' id='{$categoryKey}Image'></div>
                                 </div>
-                                <div class='candidate-images' id='{$categoryKey}Image'></div>
                             </div>
                         </div>
                     </div>";
