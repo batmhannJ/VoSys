@@ -87,7 +87,7 @@
           <div class="small-box">
             <div class="inner">
               <?php
-                $sql = "SELECT * FROM candidates WHERE election_id = 20";
+                $sql = "SELECT * FROM candidates WHERE election_id = 20 AND archived = 0";
                 $query = $conn->query($sql);
 
                 echo "<h3>".$query->num_rows."</h3>";
@@ -268,7 +268,7 @@
   $sql = "SELECT * FROM positions ORDER BY priority ASC";
   $query = $conn->query($sql);
   while($row = $query->fetch_assoc()){
-    $sql = "SELECT * FROM candidates WHERE position_id = '".$row['id']."' AND archived = 0";
+    $sql = "SELECT * FROM candidates WHERE position_id = '".$row['id']."'";
     $cquery = $conn->query($sql);
     $carray = array();
     $varray = array();
