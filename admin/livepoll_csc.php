@@ -142,7 +142,7 @@ include 'includes/header_csc.php';
 <script>
     // Store chart instances globally
     var charts = {};
-    
+
     function initializeCharts() {
         var categories = [
             'president', 'vice president', 'secretary', 'treasurer', 'auditor',
@@ -225,9 +225,13 @@ include 'includes/header_csc.php';
             dataType: 'json',
             success: function(response) {
                 updateCharts(response);
+                // Fetch results again after the current request completes
+                setTimeout(fetchResults, 1000); // Adjust the delay as needed
             },
             error: function(xhr, status, error) {
                 console.error("Error fetching data: ", status, error);
+                // Retry fetching results after an error
+                setTimeout(fetchResults, 3000); // Retry after 3 seconds
             }
         });
     }
@@ -235,12 +239,9 @@ include 'includes/header_csc.php';
     $(document).ready(function() {
         // Initialize charts first
         initializeCharts();
-        
-        // Fetch initial data
+
+        // Start fetching results
         fetchResults();
-        
-        // Set up polling every 3 seconds
-        
 
         // Back to top button
         $(window).scroll(function() {
