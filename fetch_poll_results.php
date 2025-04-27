@@ -38,7 +38,7 @@ echo '<h3>Live Poll Results</h3>';
 echo '<div class="poll-results">';
 $prev_position = '';
 $color_index = 0;
-$colors = ['#4A4A4A', '#6B6B6B', '#8C8C8C', '#ADADAD']; // Lighter gray shades starting from #4A4A4A
+$colors = ['#000', '#6B6B6B', '#8C8C8C', '#ADADAD']; // Lighter gray shades starting from #4A4A4A
 
 while ($row = $result->fetch_assoc()) {
     // Display position name only once
