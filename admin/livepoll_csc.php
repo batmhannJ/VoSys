@@ -240,7 +240,7 @@ include 'includes/header_csc.php';
         fetchResults();
         
         // Set up polling every 3 seconds
-        setInterval(fetchResults, 3000);
+        
 
         // Back to top button
         $(window).scroll(function() {
