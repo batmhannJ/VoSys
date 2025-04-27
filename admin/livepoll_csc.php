@@ -39,64 +39,46 @@ include 'includes/header_csc.php';
             position: relative;
             margin-bottom: 40px;
             display: flex;
+            flex-direction: column;
             align-items: center;
         }
 
-        .chart-wrapper {
-            flex-grow: 1;
-            margin-left: 20px;
-        }
-
         .candidate-images {
-            width: 200px;
-            min-width: 200px;
-            padding: 10px;
             display: flex;
-            flex-direction: column;
             justify-content: center;
+            margin-bottom: 15px;
         }
 
         .candidate-image {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            margin-bottom: 15px;
+            margin: 0 10px;
         }
 
         .candidate-image img {
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            margin-right: 10px;
+            margin-bottom: 5px;
             object-fit: cover;
         }
 
         .candidate-label {
             font-weight: bold;
+            text-align: center;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
         @media (max-width: 992px) {
-            .chart-container {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
             .candidate-images {
-                width: 100%;
-                flex-direction: row;
                 flex-wrap: wrap;
-                margin-bottom: 20px;
             }
-            
+
             .candidate-image {
-                margin-right: 20px;
-            }
-            
-            .chart-wrapper {
-                margin-left: 0;
-                width: 100%;
+                margin: 10px;
             }
         }
 
@@ -108,10 +90,6 @@ include 'includes/header_csc.php';
         }
 
         @media (max-width: 480px) {
-            .candidate-images {
-                flex-direction: column-reverse;
-            }
-            
             .candidate-image img {
                 width: 70px;
                 height: 70px;
@@ -245,7 +223,7 @@ include 'includes/header_csc.php';
                 
                 charts[category].render();
                 
-                // Update candidate images - now placed beside the chart
+                // Update candidate images above the chart
                 var imageContainer = document.getElementById(category + 'Image');
                 if (imageContainer) {
                     imageContainer.innerHTML = dataPoints.map(dataPoint =>
