@@ -77,7 +77,7 @@
         }
     </style>
 </head>
-<body class="hold-transition skin-black sidebar-mini">
+<body class="hold-transition skin-maroon sidebar-mini">
     <div class="wrapper">
         <?php include 'includes/navbar.php'; ?>
         <?php include 'includes/menubar.php'; ?>
@@ -208,7 +208,7 @@
 
     function fetchAndGenerateGraphs(organization) {
         $.ajax({
-            url: 'update_jpcs_data.php',
+            url: 'update_data_csc.php',
             method: 'GET',
             dataType: 'json',
             data: { t: new Date().getTime() }, // Prevent caching
@@ -283,7 +283,7 @@
     }
 
     $(document).ready(function () {
-        fetchAndGenerateGraphs('jpcs');
+        fetchAndGenerateGraphs('csc');
         
         $('#organization-form').submit(function (event) {
             event.preventDefault();
