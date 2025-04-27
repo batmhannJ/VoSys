@@ -287,7 +287,7 @@ if (isset($voter['id'])) {
                                       echo '
                                     <div class="position-container">
                                         <div class="box box-solid" id="'.$row['id'].'">
-                                            <div class="box-header" style="background-color: darkgreen;">
+                                            <div class="box-header" style="background-color: #000000;">
                                                 <h3 class="box-title" style="color: #fff;">'.$row['name'].'</h3>
                                                 <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="'.slugify($row['name']).'"><i class="fa fa-refresh"></i> Reset</button>
                                             </div>
@@ -332,7 +332,7 @@ if (isset($voter['id'])) {
                                                                     data-max-vote="' . $maxVote . '">
                                                                 <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image"> <br>
                                                                 <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span> <br>
-                                                                 <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
+                                                                 <button type="button" style="background-color: #000000;" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
                                                                 </button>
                                                             </div>';
                                                     
