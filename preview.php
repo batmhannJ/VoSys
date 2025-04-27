@@ -25,11 +25,15 @@
 						$cmquery = $conn->query($sql);
 						$cmrow = $cmquery->fetch_assoc();
 						$output['list'] .= "
-							<div class='row votelist'>
-								<span class='col-sm-5'><span class='pull-right'><b>" . $row['name'] . " :</b></span></span> 
-								<span class='col-sm-7'>" . $cmrow['firstname'] . " " . $cmrow['lastname'] . "</span>
-							</div>
-						";
+    <div class='row votelist'>
+        <div class='col-xs-5 col-sm-5 text-right'>
+            <strong>" . $row['name'] . ":</strong>
+        </div>
+        <div class='col-xs-7 col-sm-7'>
+            " . $csrow['firstname'] . " " . $csrow['lastname'] . "
+        </div>
+    </div>
+";
 					}
 				}
 			}
@@ -41,11 +45,15 @@
 				$csrow = $csquery->fetch_assoc();
 				// Include both the candidate's name and position
 				$output['list'] .= "
-					<div class='row votelist'>
-						<span class='col-sm-5'><span class='pull-right'><b>" . $row['name'] . " :</b></span></span> 
-						<span class='col-sm-7'>" . $csrow['firstname'] . " " . $csrow['lastname'] . "</span>
-					</div>
-				";
+    <div class='row votelist'>
+        <div class='col-xs-5 col-sm-5 text-right'>
+            <strong>" . $row['name'] . ":</strong>
+        </div>
+        <div class='col-xs-7 col-sm-7'>
+            " . $csrow['firstname'] . " " . $csrow['lastname'] . "
+        </div>
+    </div>
+";
 			}
 		}
 	}
