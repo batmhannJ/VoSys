@@ -15,16 +15,175 @@
     <title>OLSHCO College Online Voting System</title>
     <link href="images/olshco.png" rel="icon">
     <link href="images/olshco.png" rel="apple-touch-icon">
-    <script>
-        // Check if the URL contains the query parameter "loading=true"
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('loading') === 'true') {
-            // Redirect to the loading screen
-            window.location.href = "loading_screen.html";
+    <style>
+        /* Loading screen styles */
+        :root {
+            --maroon: #800000;
+            --gold: #FFD700;
+            --white: #ffffff;
+            --light-gold: rgba(255, 215, 0, 0.2);
         }
-    </script>
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--maroon);
+            color: var(--white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .logo-container {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin-bottom: 25px;
+        }
+
+        .logo-ring {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            border-top-color: transparent;
+            border-bottom-color: transparent;
+            animation: spin 2s linear infinite;
+        }
+
+        .logo-ring-2 {
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            border-left-color: transparent;
+            border-right-color: transparent;
+            animation: spin-reverse 1.5s linear infinite;
+        }
+
+        .logo-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .logo {
+            width: 85%;
+            height: 85%;
+            object-fit: contain;
+            animation: spin 2s linear infinite;
+        }
+
+        .loading-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 5px;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .loading-subtitle {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--gold);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            position: relative;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--gold), #FFA500, var(--gold));
+            background-size: 200% 100%;
+            border-radius: 4px;
+            animation: gradient-shift 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes spin-reverse {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(-360deg); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.98); opacity: 0.8; }
+            50% { transform: scale(1.02); opacity: 1; }
+            100% { transform: scale(0.98); opacity: 0.8; }
+        }
+
+        @keyframes gradient-shift {
+            0% { background-position: 0% 0; }
+            100% { background-position: 200% 0; }
+        }
+    </style>
   </head>
   <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-container">
+            <div class="logo-container">
+                <div class="logo-ring"></div>
+                <div class="logo-ring-2"></div>
+                <div class="logo-bg">
+                    <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-TnwmhgZsEabpupamBloTqjAGPyNfdU.png" alt="Sacred Heart College Logo" class="logo">
+                </div>
+            </div>
+            <h1 class="loading-title">Sacred Heart College</h1>
+            <h2 class="loading-subtitle">Online Voting System</h2>
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+    </div>
+
     <header class="header">
       <nav>
   <div class="nav__header">
@@ -664,6 +823,21 @@
       });
     });
   });
+
+  // Simulate loading progress
+  const progressBar = document.getElementById('progressBar');
+  const loadingScreen = document.getElementById('loadingScreen');
+  let progress = 0;
+
+  const interval = setInterval(() => {
+      progress += 20;
+      progressBar.style.width = `${progress}%`;
+
+      if (progress >= 100) {
+          clearInterval(interval);
+          loadingScreen.style.display = 'none'; // Hide loading screen
+      }
+  }, 500); // Adjust timing as needed
 </script>
 
 
