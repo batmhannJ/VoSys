@@ -5,9 +5,7 @@ include 'includes/conn.php';
 // Fetch live poll results
 $sql_results = "SELECT 
                     categories.name AS position_name, 
-                    COUNT(votes_csc.id) AS total_votes,
-                    candidates.firstname, 
-                    candidates.lastname
+                    COUNT(votes_csc.id) AS total_votes
                 FROM 
                     votes_csc
                 LEFT JOIN 
@@ -15,7 +13,7 @@ $sql_results = "SELECT
                 LEFT JOIN 
                     categories ON votes_csc.category_id = categories.id
                 WHERE 
-                    votes_csc.election_id = 1
+                    votes_csc.election_id = 20
                 GROUP BY 
                     categories.name, candidates.id
                 ORDER BY 
@@ -58,9 +56,9 @@ while ($row = $result->fetch_assoc()) {
     $color = $colors[$color_index % count($colors)];
     $color_index++;
 
-    // Display candidate result with name and percentage
+    // Display anonymous result with vote count and percentage
     echo "<div class='poll-item'>";
-    echo "<div class='candidate-info'>{$row['firstname']} {$row['lastname']} ({$row['total_votes']} votes)</div>";
+    echo "<div class='vote-info'>{$row['total_votes']} votes</div>";
     echo "<div class='poll-bar-container'>";
     echo "<div class='poll-bar' style='width: {$vote_percentage}%; background-color: {$color};'>";
     echo "<span class='poll-percentage'>{$vote_percentage}%</span>";
@@ -102,7 +100,7 @@ if ($total_votes == 0) {
     gap: 15px;
 }
 
-.candidate-info {
+.vote-info {
     flex: 1;
     font-size: 1rem;
     color: #333;
