@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <?php include 'includes/session.php'; ?>
-    <?php include 'includes/header.php'; ?>
+    <?php include 'includes/header_csc.php'; ?>
     <style>
         .box-title {
             text-align: center;
@@ -77,10 +77,10 @@
         }
     </style>
 </head>
-<body class="hold-transition skin-maroon sidebar-mini">
+<body class="hold-transition skin-black sidebar-mini">
     <div class="wrapper">
-        <?php include 'includes/navbar.php'; ?>
-        <?php include 'includes/menubar.php'; ?>
+        <?php include 'includes/navbar_csc.php'; ?>
+        <?php include 'includes/menubar_csc.php'; ?>
 
         <div class="content-wrapper">
             <section class="content-header">
