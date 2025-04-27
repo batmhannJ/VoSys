@@ -142,14 +142,14 @@ include 'includes/header_csc.php';
 <script>
     // Store chart instances globally
     var charts = {};
-    
+
     function initializeCharts() {
         var categories = [
             'president', 'vice president', 'secretary', 'treasurer', 'auditor',
             'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
             'bsoadRep', 'bs crimRep', 'bsitRep'
         ];
-        
+
         // Initialize empty charts for each category
         categories.forEach(function(category) {
             var chart = new CanvasJS.Chart(category + 'Graph', {
@@ -191,19 +191,19 @@ include 'includes/header_csc.php';
             if (charts[category]) {
                 var dataPoints = data[category];
                 var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
-                
+
                 // Update chart data
                 charts[category].options.data[0].dataPoints = dataPoints.map(dataPoint => ({
                     ...dataPoint,
                     percent: totalVotes > 0 ? ((dataPoint.y / totalVotes) * 100).toFixed(2) : 0
                 }));
-                
+
                 // Calculate new interval for Y-axis
                 var maxVotes = Math.max(...dataPoints.map(dp => dp.y), 1);
                 charts[category].options.axisY.interval = Math.ceil(maxVotes / 10) || 1;
-                
+
                 charts[category].render();
-                
+
                 // Update candidate images
                 var imageContainer = document.getElementById(category + 'Image');
                 if (imageContainer) {
@@ -218,39 +218,51 @@ include 'includes/header_csc.php';
         }
     }
 
-    function setupEventSource() {
-        // Create a new EventSource connection
-        const eventSource = new EventSource('live_results_sse.php');
-        
-        eventSource.onmessage = function(event) {
-            const data = JSON.parse(event.data);
-            updateCharts(data);
-        };
-        
-        eventSource.onerror = function() {
-            console.error("EventSource failed.");
-            // Attempt to reconnect after 5 seconds
-            setTimeout(setupEventSource, 5000);
-        };
-    }
-
-    $(document).ready(function() {
-        // Initialize charts first
-        initializeCharts();
-        
-        // Fetch initial data
+    function fetchVoteData() {
         $.ajax({
             url: 'update_data_csc.php',
             method: 'GET',
             dataType: 'json',
             success: function(response) {
                 updateCharts(response);
-                // After initial load, set up SSE
-                setupEventSource();
             },
             error: function(xhr, status, error) {
-                console.error("Error fetching initial data: ", status, error);
+                console.error("Error fetching vote data: ", status, error);
             }
+        });
+    }
+
+    $(document).ready(function() {
+        // Initialize charts
+        initializeCharts();
+
+        // Fetch initial data
+        fetchVoteData();
+
+        // Handle vote submission
+        $('#voteForm').on('submit', function(e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+
+            $.ajax({
+                url: 'submitted_vote.php',
+                method: 'POST',
+                data: formData,
+                dataType: 'json',
+                success: function(response) {
+                    if (response.success) {
+                        // Fetch updated vote data after successful submission
+                        fetchVoteData();
+                        alert('Vote submitted successfully!');
+                    } else {
+                        alert('Error submitting vote: ' + response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error submitting vote: ", status, error);
+                    alert('Error submitting vote.');
+                }
+            });
         });
 
         // Back to top button
