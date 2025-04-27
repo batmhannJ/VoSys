@@ -714,7 +714,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-        $('#preview_jpcs').click(function(e){
+        $('#preview').click(function(e){
             e.preventDefault();
             var form = $('#ballotForm').serialize();
             if(form == ''){
