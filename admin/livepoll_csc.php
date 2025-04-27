@@ -39,7 +39,7 @@ include 'includes/header_csc.php';
             position: relative;
             margin-bottom: 40px;
             display: flex;
-            align-items: flex-start;
+            align-items: center;
         }
 
         .chart-wrapper {
@@ -53,13 +53,13 @@ include 'includes/header_csc.php';
             padding: 10px;
             display: flex;
             flex-direction: column;
+            justify-content: center;
         }
 
         .candidate-image {
             display: flex;
             align-items: center;
             margin-bottom: 15px;
-            height: 50px; /* Fixed height to match bar alignment */
         }
 
         .candidate-image img {
@@ -75,12 +75,6 @@ include 'includes/header_csc.php';
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-        }
-
-        /* Ensure bars and images align vertically */
-        .canvasjs-chart-container {
-            position: relative;
-            top: -25px; /* Adjust this to align bars with images */
         }
 
         @media (max-width: 992px) {
@@ -103,10 +97,6 @@ include 'includes/header_csc.php';
             .chart-wrapper {
                 margin-left: 0;
                 width: 100%;
-            }
-            
-            .canvasjs-chart-container {
-                top: 0;
             }
         }
 
@@ -224,7 +214,7 @@ include 'includes/header_csc.php';
                 },
                 data: [{
                     type: "bar",
-                    indexLabel: "{y} votes ({percent}%)",
+                    indexLabel: "{label} - {percent}%",
                     indexLabelPlacement: "inside",
                     indexLabelFontColor: "white",
                     indexLabelFontSize: 14,
@@ -243,14 +233,9 @@ include 'includes/header_csc.php';
                 var dataPoints = data[category];
                 var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
                 
-                // Sort candidates by votes (descending)
-                dataPoints.sort((a, b) => b.y - a.y);
-                
                 // Update chart data
-                charts[category].options.data[0].dataPoints = dataPoints.map((dataPoint, index) => ({
-                    label: dataPoint.label,
-                    y: dataPoint.y,
-                    color: getColorForIndex(index), // Assign different colors
+                charts[category].options.data[0].dataPoints = dataPoints.map(dataPoint => ({
+                    ...dataPoint,
                     percent: totalVotes > 0 ? ((dataPoint.y / totalVotes) * 100).toFixed(2) : 0
                 }));
                 
@@ -260,34 +245,18 @@ include 'includes/header_csc.php';
                 
                 charts[category].render();
                 
-                // Update candidate images - ensure same order as bars
+                // Update candidate images - now placed beside the chart
                 var imageContainer = document.getElementById(category + 'Image');
                 if (imageContainer) {
-                    imageContainer.innerHTML = dataPoints.map((dataPoint, index) => {
-                        // Shorten long names with ellipsis
-                        const shortName = dataPoint.label.length > 15 
-                            ? dataPoint.label.substring(0, 15) + '...' 
-                            : dataPoint.label;
-                            
-                        return `
-                        <div class="candidate-image" data-fullname="${dataPoint.label}">
+                    imageContainer.innerHTML = dataPoints.map(dataPoint =>
+                        `<div class="candidate-image">
                             <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">
-                            <span class="candidate-label">${shortName}</span>
-                        </div>`;
-                    }).join('');
+                            <span class="candidate-label">${dataPoint.label}</span>
+                        </div>`
+                    ).join('');
                 }
             }
         }
-    }
-
-    // Helper function to get distinct colors for bars
-    function getColorForIndex(index) {
-        const colors = [
-            "#2E86C1", "#E74C3C", "#F39C12", "#27AE60", 
-            "#8E44AD", "#16A085", "#D35400", "#2980B9",
-            "#C0392B", "#F1C40F", "#2ECC71", "#9B59B6"
-        ];
-        return colors[index % colors.length];
     }
 
     function fetchResults() {
@@ -296,16 +265,6 @@ include 'includes/header_csc.php';
             method: 'GET',
             dataType: 'json',
             success: function(response) {
-                // Ensure data is properly formatted
-                for (var category in response) {
-                    if (response[category]) {
-                        response[category] = response[category].map(item => ({
-                            label: item.firstname + ' ' + item.lastname,
-                            y: parseInt(item.votes),
-                            image: item.photo ? 'images/' + item.photo : 'images/profile.jpg'
-                        }));
-                    }
-                }
                 updateCharts(response);
             },
             error: function(xhr, status, error) {
