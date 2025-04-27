@@ -6,7 +6,9 @@
 		$firstname = $_POST['firstname'];
 		$lastname = $_POST['lastname'];
 		$position = $_POST['name'];
-		$platform = $_POST['platform'];
+		
+		// Properly escape the platform text to handle special characters and longer text
+		$platform = $conn->real_escape_string($_POST['platform']);
 
 		$sql = "UPDATE candidates SET firstname = '$firstname', lastname = '$lastname', category_id = '$position', platform = '$platform' WHERE id = '$id'";
 		if($conn->query($sql)){
@@ -21,5 +23,4 @@
 	}
 
 	header('location: candidates_csc.php');
-
 ?>

@@ -5,7 +5,10 @@
 		$firstname = $_POST['firstname'];
 		$lastname = $_POST['lastname'];
 		$position = $_POST['position'];
-		$platform = $_POST['platform'];
+		
+		// Properly escape the platform text to handle special characters and longer text
+		$platform = $conn->real_escape_string($_POST['platform']);
+		
 		$filename = $_FILES['photo']['name'];
 		if(!empty($filename)){
 			move_uploaded_file($_FILES['photo']['tmp_name'], '../images/'.$filename);	
