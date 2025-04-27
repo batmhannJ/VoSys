@@ -15,6 +15,14 @@
     <title>OLSHCO College Online Voting System</title>
     <link href="images/olshco.png" rel="icon">
     <link href="images/olshco.png" rel="apple-touch-icon">
+    <script>
+        // Check if the URL contains the query parameter "loading=true"
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('loading') === 'true') {
+            // Redirect to the loading screen
+            window.location.href = "loading_screen.html";
+        }
+    </script>
   </head>
   <body>
     <header class="header">
@@ -312,7 +320,7 @@
 
 
           
-    <section id="location" class="section__container location__container">
+    <section id="location" class="section__container location__container"></section>
       <h2 class="section__header">LOCATION</h2>
       <center><h4 style="font-weight: 200;">Afan Salvador St, Guimba, Nueva Ecija</h4></center><br>
   <div class="location__map">
