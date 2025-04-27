@@ -14,56 +14,8 @@ include 'includes/header_csc.php';
     <?php include 'includes/navbar_csc.php'; ?>
     <?php include 'includes/menubar_csc.php'; ?>
 
-    <div class="content-wrapper">
-        <section class="content-header">
-            <h1>Election Results</h1>
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li class="active">Results</li>
-            </ol>
-        </section>
+    <!-- Your existing HTML content here -->
 
-        <section class="content">
-            <div class="row justify-content-center">
-                <?php
-                $categories = [
-                    'president' => 'President',
-                    'vice president' => 'Vice President',
-                    'secretary' => 'Secretary',
-                    'treasurer' => 'Treasurer',
-                    'auditor' => 'Auditor',
-                    'p.r.o' => 'P.R.O',
-                    'businessManager' => 'Business Manager',
-                    'beedRep' => 'BEED Rep',
-                    'bsedRep' => 'BSED Rep',
-                    'bshmRep' => 'BSHM Rep',
-                    'bsoadRep' => 'BSOAD Rep',
-                    'bs crimRep' => 'BS CRIM Rep',
-                    'bsitRep' => 'BSIT Rep'
-                ];
-
-                foreach ($categories as $categoryKey => $categoryName) {
-                    echo "
-                    <div class='col-md-12'>
-                        <div class='box'>
-                            <div class='box-header with-border'>
-                                <h3 class='box-title'><b>$categoryName</b></h3>
-                            </div>
-                            <div class='box-body'>
-                                <div class='chart-container'>
-                                    <div id='{$categoryKey}Graph' style='height: 300px; width: calc(100% - 70px); margin-left: 70px;'></div>
-                                </div>
-                                <div class='candidate-images' id='{$categoryKey}Image'></div>
-                            </div>
-                        </div>
-                    </div>";
-                }
-                ?>
-            </div>
-        </section>
-
-        <button id="back-to-top" title="Back to top">&uarr;</button>
-    </div>
     <?php include 'includes/footer.php'; ?>
 </div>
 <?php include 'includes/scripts.php'; ?>
@@ -147,34 +99,20 @@ include 'includes/header_csc.php';
         }
     }
 
-    // Function to fetch updated results
-    function fetchUpdatedResults() {
-        $.ajax({
-            url: 'update_data_csc.php',
-            method: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                updateCharts(response);
-            },
-            error: function(xhr, status, error) {
-                console.error("Error fetching updated results: ", status, error);
-            }
-        });
-    }
-
-    // Listen for vote submission events
-    function setupVoteSubmissionListener() {
-        // This assumes your voting form submits via AJAX
-        $(document).ajaxComplete(function(event, xhr, settings) {
-            // Check if this was a vote submission
-            if (settings.url.includes('submit_vote.php')) {
-                fetchUpdatedResults();
-            }
-        });
+    function setupEventSource() {
+        // Create a new EventSource connection
+        const eventSource = new EventSource('live_results_sse.php');
         
-        // Alternative: If using form submission without AJAX
-        // You can use a server-side push mechanism (like SSE or WebSocket)
-        // when the vote is processed
+        eventSource.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            updateCharts(data);
+        };
+        
+        eventSource.onerror = function() {
+            console.error("EventSource failed.");
+            // Attempt to reconnect after 5 seconds
+            setTimeout(setupEventSource, 5000);
+        };
     }
 
     $(document).ready(function() {
@@ -182,10 +120,19 @@ include 'includes/header_csc.php';
         initializeCharts();
         
         // Fetch initial data
-        fetchUpdatedResults();
-        
-        // Set up vote submission listener
-        setupVoteSubmissionListener();
+        $.ajax({
+            url: 'update_data_csc.php',
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                updateCharts(response);
+                // After initial load, set up SSE
+                setupEventSource();
+            },
+            error: function(xhr, status, error) {
+                console.error("Error fetching initial data: ", status, error);
+            }
+        });
 
         // Back to top button
         $(window).scroll(function() {
