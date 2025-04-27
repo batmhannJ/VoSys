@@ -15,7 +15,7 @@ $sql_results = "SELECT
                 LEFT JOIN 
                     categories ON votes_csc.category_id = categories.id
                 WHERE 
-                    votes_csc.election_id = 20
+                    votes_csc.election_id = 1
                 GROUP BY 
                     categories.name, candidates.id
                 ORDER BY 
