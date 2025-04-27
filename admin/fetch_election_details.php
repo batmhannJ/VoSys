@@ -63,7 +63,7 @@ if (isset($_POST['election_id'])) {
                 'photo' => $image,
                 'votes' => $total_votes
             ];
-        }
+        } 
 
         // Sort candidates by total votes in descending order
         usort($candidates, function ($a, $b) {
