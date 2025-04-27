@@ -46,7 +46,7 @@ if (isset($_POST['vote'])) {
                     $candidate_row = $candidate_query->fetch_assoc();
                     $candidate_name = $candidate_row['firstname'] . ' ' . $candidate_row['lastname'];
 
-                    $sql_array[] = "INSERT INTO votes_csc (voters_id, election_id, candidate_id, category_id, organization) VALUES ('" . $voter['id'] . "', '1', '$candidate', '$pos_id', 'JPCS')";
+                    $sql_array[] = "INSERT INTO votes_csc (voters_id, election_id, candidate_id, category_id, organization) VALUES ('" . $voter['id'] . "', '20', '$candidate', '$pos_id', 'JPCS')";
                     $votes_info .= "Position: " . $row['name'] . "\n";
                     $votes_info .= "Candidate: $candidate_name \n\n";
                 }
