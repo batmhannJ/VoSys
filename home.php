@@ -158,12 +158,12 @@ if(!is_active_election($conn)){
     // Initial fetch and update every 5 seconds for smoother performance
     updatePollResults();
     setInterval(updatePollResults, 5000);
-    
 </script>
-<!-- Additional CSS for Live Poll Styling -->
+
+<!-- Updated CSS for Live Poll Styling -->
 <style>
     .poll-container {
-        background-color: #fff;
+        background-color: #f9f9f9;
         border-radius: 10px;
         padding: 20px;
         margin-top: 20px;
@@ -171,6 +171,7 @@ if(!is_active_election($conn)){
         max-width: 800px;
         margin-left: auto;
         margin-right: auto;
+        border: 2px solid darkgreen;
     }
 
     .poll-container h3 {
@@ -178,6 +179,7 @@ if(!is_active_election($conn)){
         font-size: 1.5rem;
         margin-bottom: 15px;
         text-align: center;
+        font-weight: bold;
     }
 
     .poll-container ul {
@@ -189,8 +191,9 @@ if(!is_active_election($conn)){
         display: flex;
         justify-content: space-between;
         padding: 10px 0;
-        border-bottom: 1px solid #eee;
+        border-bottom: 1px solid #ccc;
         font-size: 1rem;
+        color: #333;
     }
 
     .poll-container li:last-child {
@@ -475,9 +478,10 @@ if (isset($voter['id'])) {
             })();
         }
         
-        // Stop the confetti after 3 seconds
+        // Stop the confetti after 3 seconds and hide the canvas
         setTimeout(function() {
             stopConfetti();
+            confettiCanvas.style.display = 'none';
         }, 3000);
     }
 
