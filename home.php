@@ -76,25 +76,22 @@ if(!is_active_election($conn)){
 					        unset($_SESSION['error']);
 					    }
 					    if(isset($_SESSION['success'])){
-                            echo "
-                                <div class='alert alert-success alert-dismissible' id='success-alert'>
-                                    <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-                                    <h4><i class='icon fa fa-check'></i> Success!</h4>
-                                    ".$_SESSION['success']."
-                                </div>
-                                <script>
-                                    // Trigger confetti effect when success alert is shown
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        confetti({
-                                            particleCount: 100,
-                                            spread: 70,
-                                            origin: { y: 0.6 }
-                                        });
-                                    });
-                                </script>
-                            ";
-                            unset($_SESSION['success']);
-                        }
+					        echo "
+					            <div class='alert alert-success alert-dismissible' id='success-alert'>
+					                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+					                <h4><i class='icon fa fa-check'></i> Success!</h4>
+					                ".$_SESSION['success']."
+					            </div>
+					        ";
+					        unset($_SESSION['success']);
+                            
+                            // Trigger confetti when success message is shown
+                            echo "<script>
+                                  document.addEventListener('DOMContentLoaded', function() {
+                                      startConfetti();
+                                  });
+                                </script>";
+					    }
 					?>
 
 					<div class="alert alert-danger alert-dismissible" id="alert" style="display:none;">
@@ -105,12 +102,12 @@ if(!is_active_election($conn)){
 			        <script>
 					    // Function to hide alerts after 3 seconds
 					    function hideAlerts() {
-                            setTimeout(function() {
-                                document.getElementById('error-alert').style.display = 'none';
-                                document.getElementById('success-alert').style.display = 'none';
-                                document.getElementById('alert').style.display = 'none';
-                            }, 5000); // Increase to 5 seconds to enjoy the confetti
-                        }
+					        setTimeout(function() {
+					            document.getElementById('error-alert').style.display = 'none';
+					            document.getElementById('success-alert').style.display = 'none';
+					            document.getElementById('alert').style.display = 'none';
+					        }, 3000); // 3 seconds
+					    }
 
 					    // Call the function when the page is loaded
 					    window.onload = function() {
@@ -335,7 +332,115 @@ if (isset($voter['id'])) {
   	<?php include 'includes/ballot_modal.php'; ?>
 </div>
 
+<!-- Confetti Canvas -->
+<canvas id="confetti-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999;"></canvas>
+
 <?php include 'includes/scripts.php'; ?>
+
+<!-- Confetti JS Code -->
+<script>
+    // Confetti script
+    var confettiCanvas = document.getElementById('confetti-canvas');
+    var confettiContext = confettiCanvas.getContext('2d');
+    var supportsAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame;
+    var colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFC107', '#FF9800', '#FF5722'];
+    var streamingConfetti = false;
+    var animationTimer = null;
+    var particles = [];
+    var waveAngle = 0;
+
+    function resetParticle(particle, width, height) {
+        particle.color = colors[(Math.random() * colors.length) | 0];
+        particle.x = Math.random() * width;
+        particle.y = Math.random() * height - height;
+        particle.diameter = Math.random() * 10 + 5;
+        particle.tilt = Math.random() * 10 - 10;
+        particle.tiltAngleIncrement = Math.random() * 0.07 + 0.05;
+        particle.tiltAngle = 0;
+        return particle;
+    }
+
+    function startConfetti() {
+        var width = window.innerWidth;
+        var height = window.innerHeight;
+        confettiCanvas.width = width;
+        confettiCanvas.height = height;
+        
+        // Create particles
+        particles = [];
+        for (var i = 0; i < 150; i++) {
+            particles.push(resetParticle({}, width, height));
+        }
+        
+        streamingConfetti = true;
+        if (animationTimer === null) {
+            (function runAnimation() {
+                if (streamingConfetti) {
+                    confettiContext.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+                    
+                    // Update each particle
+                    for (var i = 0; i < particles.length; i++) {
+                        var particle = particles[i];
+                        particle.tiltAngle += particle.tiltAngleIncrement;
+                        particle.y += (Math.cos(waveAngle) + particle.diameter + 0.1) * 0.5;
+                        particle.tilt = Math.sin(particle.tiltAngle) * 15;
+                        
+                        // Check if particle is out of bounds
+                        if (particle.y > height) {
+                            if (!streamingConfetti && particles.length <= 0) {
+                                confettiContext.clearRect(0, 0, width, height);
+                                animationTimer = null;
+                                return;
+                            }
+                            
+                            if (streamingConfetti) {
+                                resetParticle(particle, width, height);
+                            } else {
+                                particles.splice(i, 1);
+                                i--;
+                                continue;
+                            }
+                        }
+                        
+                        // Draw particle
+                        confettiContext.beginPath();
+                        confettiContext.lineWidth = particle.diameter;
+                        confettiContext.strokeStyle = particle.color;
+                        var x = particle.x + particle.tilt;
+                        confettiContext.moveTo(x + particle.diameter / 2, particle.y);
+                        confettiContext.lineTo(x, particle.y + particle.tilt + particle.diameter / 2);
+                        confettiContext.stroke();
+                    }
+                    
+                    waveAngle += 0.01;
+                }
+                
+                if (supportsAnimationFrame) {
+                    animationTimer = requestAnimationFrame(runAnimation);
+                } else {
+                    animationTimer = setTimeout(runAnimation, 16.67); // 60 FPS
+                }
+            })();
+        }
+        
+        // Stop the confetti after 8 seconds
+        setTimeout(function() {
+            stopConfetti();
+        }, 8000);
+    }
+
+    function stopConfetti() {
+        streamingConfetti = false;
+    }
+
+    function resizeCanvas() {
+        confettiCanvas.width = window.innerWidth;
+        confettiCanvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resizeCanvas, false);
+</script>
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const candidateContainers = document.querySelectorAll('.candidate-container');
@@ -533,32 +638,14 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         // Handle confirmation modal submission
-        $('#ballotForm').on('submit', function(e){
-        e.preventDefault();
-        $.ajax({
-            type: 'POST',
-            url: 'submit_ballot.php',
-            data: $(this).serialize(),
-            dataType: 'json',
-            success: function(response){
-                if(response.success){
-                    // Show success message
-                    $('#success-alert').show();
-                    // Trigger confetti effect
-                    confetti({
-                        particleCount: 150,
-                        spread: 90,
-                        origin: { y: 0.5 },
-                        colors: ['#ff0a54', '#ff477e', '#ff85a1', '#fbb1bd', '#f9bec7']
-                    });
-                } else {
-                    // Handle error
-                    $('.message').html(response.message);
-                    $('#alert').show();
-                }
-            }
+        $('#confirmSubmit').click(function() {
+            $('#ballotForm').submit();
         });
-    });
+
+        // Trigger confetti when form is submitted
+        $('#ballotForm').on('submit', function() {
+            startConfetti();
+        });
 
         $(document).on('click', '.platform', function(e){
             e.preventDefault();
@@ -1221,6 +1308,17 @@ input[type="checkbox"]:checked + .clist {
     .digit_name {
         font-size: 12px;
     }
+}
+
+/* Styles for confetti effect */
+#confetti-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
 }
 </style>
 </body>
