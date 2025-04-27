@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sacred Heart College - Online Voting System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --maroon: #800000;
+            --gold: #FFD700;
+            --white: #ffffff;
+            --light-gold: rgba(255, 215, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--maroon);
+            color: var(--white);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Background particles */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background-color: var(--light-gold);
+            border-radius: 50%;
+            opacity: 0.5;
+        }
+
+        /* Generate 20 particles with different positions and animations */
+        .particle:nth-child(1) { top: 10%; left: 20%; animation: float 8s infinite linear; }
+        .particle:nth-child(2) { top: 20%; left: 80%; animation: float 10s infinite linear; }
+        .particle:nth-child(3) { top: 30%; left: 45%; animation: float 7s infinite linear; }
+        .particle:nth-child(4) { top: 40%; left: 15%; animation: float 9s infinite linear; }
+        .particle:nth-child(5) { top: 50%; left: 70%; animation: float 11s infinite linear; }
+        .particle:nth-child(6) { top: 60%; left: 35%; animation: float 8s infinite linear; }
+        .particle:nth-child(7) { top: 70%; left: 65%; animation: float 10s infinite linear; }
+        .particle:nth-child(8) { top: 80%; left: 25%; animation: float 9s infinite linear; }
+        .particle:nth-child(9) { top: 90%; left: 55%; animation: float 7s infinite linear; }
+        .particle:nth-child(10) { top: 15%; left: 90%; animation: float 12s infinite linear; }
+        .particle:nth-child(11) { top: 25%; left: 5%; animation: float 9s infinite linear; }
+        .particle:nth-child(12) { top: 35%; left: 75%; animation: float 8s infinite linear; }
+        .particle:nth-child(13) { top: 45%; left: 30%; animation: float 10s infinite linear; }
+        .particle:nth-child(14) { top: 55%; left: 85%; animation: float 7s infinite linear; }
+        .particle:nth-child(15) { top: 65%; left: 10%; animation: float 11s infinite linear; }
+        .particle:nth-child(16) { top: 75%; left: 50%; animation: float 8s infinite linear; }
+        .particle:nth-child(17) { top: 85%; left: 40%; animation: float 9s infinite linear; }
+        .particle:nth-child(18) { top: 95%; left: 60%; animation: float 10s infinite linear; }
+        .particle:nth-child(19) { top: 5%; left: 35%; animation: float 11s infinite linear; }
+        .particle:nth-child(20) { top: 15%; left: 65%; animation: float 7s infinite linear; }
+
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            max-width: 500px;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Logo container with glow effect */
+        .logo-container {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin-bottom: 25px;
+        }
+
+        /* Outer spinning ring */
+        .logo-ring {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            border-top-color: transparent;
+            border-bottom-color: transparent;
+            animation: spin 2s linear infinite;
+        }
+
+        /* Second spinning ring going the opposite direction */
+        .logo-ring-2 {
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 1px solid var(--gold);
+            border-radius: 50%;
+            border-left-color: transparent;
+            border-right-color: transparent;
+            animation: spin-reverse 1.5s linear infinite;
+        }
+
+        /* Logo background with glow */
+        .logo-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* The actual logo that spins */
+        .logo {
+            width: 85%;
+            height: 85%;
+            object-fit: contain;
+            animation: spin 2s linear infinite;
+        }
+
+        .loading-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 5px;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+            animation: fade-in 0.5s ease-out;
+        }
+
+        .loading-subtitle {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--gold);
+            margin-bottom: 25px;
+            text-align: center;
+            animation: fade-in 0.5s ease-out 0.2s both;
+        }
+
+        /* Progress bar container with glow */
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            position: relative;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+            animation: fade-in 0.5s ease-out 0.4s both;
+        }
+
+        /* Progress bar with animated gradient */
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--gold), #FFA500, var(--gold));
+            background-size: 200% 100%;
+            border-radius: 4px;
+            animation: 
+                progress 2s cubic-bezier(0.1, 0.5, 0.9, 1) forwards,
+                gradient-shift 2s linear infinite;
+        }
+
+        /* Loading text with fade effect */
+        .loading-text {
+            font-size: 16px;
+            color: var(--white);
+            opacity: 0.9;
+            animation: fade-in 0.5s ease-out 0.6s both;
+        }
+
+        /* Percentage counter */
+        .loading-percentage {
+            position: absolute;
+            bottom: -25px;
+            right: 0;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gold);
+        }
+
+        /* Animation keyframes */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes spin-reverse {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(-360deg); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.98); opacity: 0.8; }
+            50% { transform: scale(1.02); opacity: 1; }
+            100% { transform: scale(0.98); opacity: 0.8; }
+        }
+
+        @keyframes progress {
+            0% { width: 0%; }
+            10% { width: 15%; }
+            30% { width: 40%; }
+            50% { width: 65%; }
+            70% { width: 80%; }
+            90% { width: 90%; }
+            100% { width: 100%; }
+        }
+
+        @keyframes gradient-shift {
+            0% { background-position: 0% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0); }
+            25% { transform: translateY(-10px) translateX(10px); }
+            50% { transform: translateY(0) translateX(20px); }
+            75% { transform: translateY(10px) translateX(10px); }
+            100% { transform: translateY(0) translateX(0); }
+        }
+
+        @media (max-width: 480px) {
+            .logo-container {
+                width: 130px;
+                height: 130px;
+            }
+            
+            .loading-title {
+                font-size: 22px;
+            }
+            
+            .loading-subtitle {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background particles -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div class="loading-container">
+        <div class="logo-container">
+            <div class="logo-ring"></div>
+            <div class="logo-ring-2"></div>
+            <div class="logo-bg">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-TnwmhgZsEabpupamBloTqjAGPyNfdU.png" alt="Sacred Heart College Logo" class="logo">
+            </div>
+        </div>
+        <h1 class="loading-title">Sacred Heart College</h1>
+        <h2 class="loading-subtitle">Online Voting System</h2>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+            <div class="loading-percentage" id="percentage">0%</div>
+        </div>
+        <div class="loading-text" id="loadingText">Initializing system...</div>
+    </div>
+
+    <script>
+        // Advanced loading animation with percentage counter
+        const progressBar = document.getElementById('progressBar');
+        const percentage = document.getElementById('percentage');
+        const loadingText = document.getElementById('loadingText');
+        
+        // Loading messages
+        const loadingMessages = [
+            "Initializing system...",
+            "Connecting to server...",
+            "Loading election data...",
+            "Preparing ballot...",
+            "Ready!"
+        ];
+        
+        // Start the loading animation
+        let progress = 0;
+        let messageIndex = 0;
+        
+        // Update progress and message every 400ms
+        const interval = setInterval(() => {
+            progress += 20;
+            
+            if (progress <= 100) {
+                progressBar.style.width = `${progress}%`;
+                percentage.textContent = `${progress}%`;
+                
+                // Update loading message
+                if (messageIndex < loadingMessages.length - 1 && progress >= (messageIndex + 1) * 20) {
+                    messageIndex++;
+                    loadingText.textContent = loadingMessages[messageIndex];
+                    
+                    // Add a brief flash effect when message changes
+                    loadingText.style.opacity = "0.5";
+                    setTimeout(() => {
+                        loadingText.style.opacity = "0.9";
+                    }, 100);
+                }
+            }
+            
+            // When loading is complete
+            if (progress >= 100) {
+                clearInterval(interval);
+                
+                // In a real application, you would redirect here after a brief pause
+                setTimeout(() => {
+                    alert('Loading complete. Redirecting to voting system...');
+                }, 500);
+            }
+        }, 400); // 5 steps of 400ms each = 2 seconds total
+
+        // Redirect to index.html after the loading animation completes
+        setTimeout(() => {
+            window.location.href = "index.html"; // Redirect to the landing page
+        }, 5000); // Adjust the delay (in milliseconds) as needed
+    </script>
+</body>
+</html>

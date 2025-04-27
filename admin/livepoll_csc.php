@@ -6,7 +6,78 @@ include 'includes/header_csc.php';
 ?>
 <head>
     <style>
-        /* Your existing CSS styles here */
+        .box-title {
+            text-align: center;
+            width: 100%;
+            display: inline-block;
+        }
+
+        /* Back to Top button styles */
+        #back-to-top {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            display: none;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 22px;
+            line-height: 50px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        #back-to-top:hover {
+            background-color: #555;
+        }
+
+        .chart-container {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .candidate-images {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 10px;
+        }
+
+        .candidate-image {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .candidate-image img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .candidate-label {
+            margin-left: 10px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .candidate-image img {
+                width: 75px;
+                height: 75px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .candidate-image img {
+                width: 100px;
+                height: 100px;
+            }
+        }
     </style>
 </head>
 <body class="hold-transition skin-black sidebar-mini">
@@ -68,127 +139,87 @@ include 'includes/header_csc.php';
 </div>
 <?php include 'includes/scripts.php'; ?>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="path/to/jquery.min.js"></script>
 <script>
-    // Store chart instances globally
-    var charts = {};
-    
-    function initializeCharts() {
-        var categories = [
-            'president', 'vice president', 'secretary', 'treasurer', 'auditor',
-            'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
-            'bsoadRep', 'bs crimRep', 'bsitRep'
-        ];
-        
-        // Initialize empty charts for each category
-        categories.forEach(function(category) {
-            var chart = new CanvasJS.Chart(category + 'Graph', {
-                animationEnabled: true,
-                animationDuration: 1000,
-                animationEasing: "easeInOutBounce",
-                title: {
-                    text: "Vote Counts"
-                },
-                axisX: {
-                    title: "",
-                    includeZero: true,
-                    interval: 1,
-                    labelFormatter: function () {
-                        return " ";
-                    }
-                },
-                axisY: {
-                    title: "",
-                    interval: 1
-                },
-                data: [{
-                    type: "bar",
-                    indexLabel: "{label} - {percent}%",
-                    indexLabelPlacement: "inside",
-                    indexLabelFontColor: "white",
-                    indexLabelFontSize: 14,
-                    dataPoints: []
-                }]
-            });
-            chart.render();
-            charts[category] = chart;
-        });
-    }
+    function generateBarGraph(dataPoints, containerId, imageContainerId) {
+        var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
-    function updateCharts(data) {
-        // Update all charts with new data
-        for (var category in data) {
-            if (charts[category]) {
-                var dataPoints = data[category];
-                var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
-                
-                // Update chart data
-                charts[category].options.data[0].dataPoints = dataPoints.map(dataPoint => ({
-                    ...dataPoint,
-                    percent: totalVotes > 0 ? ((dataPoint.y / totalVotes) * 100).toFixed(2) : 0
-                }));
-                
-                // Calculate new interval for Y-axis
-                var maxVotes = Math.max(...dataPoints.map(dp => dp.y), 1);
-                charts[category].options.axisY.interval = Math.ceil(maxVotes / 10) || 1;
-                
-                charts[category].render();
-                
-                // Update candidate images
-                var imageContainer = document.getElementById(category + 'Image');
-                if (imageContainer) {
-                    imageContainer.innerHTML = dataPoints.map(dataPoint =>
-                        `<div class="candidate-image">
-                            <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">
-                            <span class="candidate-label">${dataPoint.label}</span>
-                        </div>`
-                    ).join('');
+        // Update the image container
+        var imageContainer = document.getElementById(imageContainerId);
+        imageContainer.innerHTML = dataPoints.map(dataPoint =>
+            `<div class="candidate-image">
+                <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">
+                <span class="candidate-label">${dataPoint.label}</span>
+            </div>`
+        ).join('');
+
+        var chart = new CanvasJS.Chart(containerId, {
+            animationEnabled: true,
+            animationDuration: 3000,
+            animationEasing: "easeInOutBounce",
+            title: {
+                text: "Vote Counts"
+            },
+            axisX: {
+                title: "",
+                includeZero: true,
+                interval: 1,
+                labelFormatter: function () {
+                    return " ";
                 }
-            }
-        }
+            },
+            axisY: {
+                title: "",
+                interval: Math.ceil(totalVotes / 10)
+            },
+            data: [{
+                type: "bar",
+                indexLabel: "{label} - {percent}%",
+                indexLabelPlacement: "inside",
+                indexLabelFontColor: "white",
+                indexLabelFontSize: 14,
+                dataPoints: dataPoints.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                }))
+            }]
+        });
+        chart.render();
     }
 
-    // Function to fetch updated results
-    function fetchUpdatedResults() {
+    function fetchAndGenerateGraphs() {
         $.ajax({
             url: 'update_data_csc.php',
             method: 'GET',
             dataType: 'json',
-            success: function(response) {
-                updateCharts(response);
+            success: function (response) {
+                // Generate graphs for all categories
+                var categories = [
+                    'president', 'vice president', 'secretary', 'treasurer', 'auditor',
+                    'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
+                    'bsoadRep', 'bs crimRep', 'bsitRep'
+                ];
+
+                categories.forEach(function (category) {
+                    if (response[category]) {
+                        generateBarGraph(response[category], category + 'Graph', category + 'Image');
+                    }
+                });
             },
-            error: function(xhr, status, error) {
-                console.error("Error fetching updated results: ", status, error);
+            error: function (xhr, status, error) {
+                console.error("Error fetching data: ", status, error);
             }
         });
     }
 
-    // Listen for vote submission events
-    function setupVoteSubmissionListener() {
-        // This assumes your voting form submits via AJAX
-        $(document).ajaxComplete(function(event, xhr, settings) {
-            // Check if this was a vote submission
-            if (settings.url.includes('submit_vote.php')) {
-                fetchUpdatedResults();
-            }
-        });
-        
-        // Alternative: If using form submission without AJAX
-        // You can use a server-side push mechanism (like SSE or WebSocket)
-        // when the vote is processed
-    }
+    $(document).ready(function () {
+        // Fetch and generate graphs initially
+        fetchAndGenerateGraphs();
 
-    $(document).ready(function() {
-        // Initialize charts first
-        initializeCharts();
-        
-        // Fetch initial data
-        fetchUpdatedResults();
-        
-        // Set up vote submission listener
-        setupVoteSubmissionListener();
+        // Set interval to update graphs every 10 seconds (10000 milliseconds)
+        setInterval(fetchAndGenerateGraphs, 10000);
 
-        // Back to top button
-        $(window).scroll(function() {
+        $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
                 $('#back-to-top').fadeIn();
             } else {
@@ -196,7 +227,7 @@ include 'includes/header_csc.php';
             }
         });
 
-        $('#back-to-top').click(function() {
+        $('#back-to-top').click(function () {
             $('html, body').animate({ scrollTop: 0 }, 600);
             return false;
         });
