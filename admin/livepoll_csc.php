@@ -38,19 +38,28 @@ include 'includes/header_csc.php';
         .chart-container {
             position: relative;
             margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        .chart-wrapper {
+            flex-grow: 1;
+            margin-left: 20px;
         }
 
         .candidate-images {
+            width: 200px;
+            min-width: 200px;
+            padding: 10px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            padding: 10px;
+            justify-content: center;
         }
 
         .candidate-image {
             display: flex;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .candidate-image img {
@@ -58,24 +67,54 @@ include 'includes/header_csc.php';
             height: 50px;
             border-radius: 50%;
             margin-right: 10px;
+            object-fit: cover;
         }
 
         .candidate-label {
-            margin-left: 10px;
             font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        @media (max-width: 992px) {
+            .chart-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .candidate-images {
+                width: 100%;
+                flex-direction: row;
+                flex-wrap: wrap;
+                margin-bottom: 20px;
+            }
+            
+            .candidate-image {
+                margin-right: 20px;
+            }
+            
+            .chart-wrapper {
+                margin-left: 0;
+                width: 100%;
+            }
         }
 
         @media (max-width: 768px) {
             .candidate-image img {
-                width: 75px;
-                height: 75px;
+                width: 60px;
+                height: 60px;
             }
         }
 
         @media (max-width: 480px) {
+            .candidate-images {
+                flex-direction: column;
+            }
+            
             .candidate-image img {
-                width: 100px;
-                height: 100px;
+                width: 70px;
+                height: 70px;
             }
         }
     </style>
@@ -122,9 +161,11 @@ include 'includes/header_csc.php';
                             </div>
                             <div class='box-body'>
                                 <div class='chart-container'>
-                                    <div id='{$categoryKey}Graph' style='height: 300px; width: calc(100% - 70px); margin-left: 70px;'></div>
+                                    <div class='candidate-images' id='{$categoryKey}Image'></div>
+                                    <div class='chart-wrapper'>
+                                        <div id='{$categoryKey}Graph' style='height: 300px; width: 100%;'></div>
+                                    </div>
                                 </div>
-                                <div class='candidate-images' id='{$categoryKey}Image'></div>
                             </div>
                         </div>
                     </div>";
@@ -204,7 +245,7 @@ include 'includes/header_csc.php';
                 
                 charts[category].render();
                 
-                // Update candidate images
+                // Update candidate images - now placed beside the chart
                 var imageContainer = document.getElementById(category + 'Image');
                 if (imageContainer) {
                     imageContainer.innerHTML = dataPoints.map(dataPoint =>
@@ -239,9 +280,6 @@ include 'includes/header_csc.php';
         // Fetch initial data
         fetchResults();
         
-        // Set up polling every 3 seconds
-        
-
         // Back to top button
         $(window).scroll(function() {
             if ($(this).scrollTop() > 100) {
