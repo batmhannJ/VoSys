@@ -245,13 +245,13 @@ include 'includes/header_csc.php';
                 
                 charts[category].render();
                 
-                // Update candidate images and names beside their respective bars
+                // Update candidate images - now placed beside the chart
                 var imageContainer = document.getElementById(category + 'Image');
                 if (imageContainer) {
                     imageContainer.innerHTML = dataPoints.map(dataPoint =>
-                        `<div class="candidate-image" style="display: flex; align-items: center; margin-bottom: 10px;">
-                            <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
-                            <span class="candidate-label" style="font-weight: bold;">${dataPoint.label}</span>
+                        `<div class="candidate-image">
+                            <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">
+                            <span class="candidate-label">${dataPoint.label}</span>
                         </div>`
                     ).join('');
                 }
