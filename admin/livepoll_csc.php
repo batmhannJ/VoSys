@@ -41,18 +41,18 @@ include 'includes/header_csc.php';
             margin-bottom: 40px;
         }
 
-        .chart {
-            flex: 3;
-            height: 300px;
-            margin-right: 20px;
-        }
-
         .candidate-images {
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             padding: 10px;
+            margin-right: 20px; /* Add spacing between images and chart */
+        }
+
+        .chart {
+            flex: 3;
+            height: 300px;
         }
 
         .candidate-image {
@@ -129,8 +129,8 @@ include 'includes/header_csc.php';
                             </div>
                             <div class='box-body'>
                                 <div class='chart-container'>
-                                    <div id='{$categoryKey}Graph' class='chart'></div>
                                     <div class='candidate-images' id='{$categoryKey}Image'></div>
+                                    <div id='{$categoryKey}Graph' class='chart'></div>
                                 </div>
                             </div>
                         </div>
