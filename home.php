@@ -349,7 +349,7 @@ if (isset($voter['id'])) {
             ?>
             
                                 <div class="text-center">
-                                    <button type="button" class="btn btn-primary btn-flat" style="background-color: darkgreen;" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
+                                    <button type="button" class="btn btn-primary btn-flat" style="background-color: black;" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
                                 </div>
 
                                 <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
@@ -366,7 +366,7 @@ if (isset($voter['id'])) {
                                             <p>Are you sure you want to submit your vote?</p>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-success btn-flat" id="preview_jpcs"><i class="fa fa-file-text"></i> Preview</button> 
+                                            <button type="button" class="btn btn-success btn-flat" id="preview"><i class="fa fa-file-text"></i> Preview</button> 
                                             <button type="submit" class="btn btn-primary" id="submitBtn" name="vote">Yes, Submit</button>
                                         </div>
                                     </div>
