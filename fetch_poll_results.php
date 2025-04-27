@@ -2,9 +2,13 @@
 include 'includes/session.php';
 include 'includes/conn.php';
 
-// Fetch live poll results
+// Fetch live poll results - GROUP BY candidate_id to count votes per candidate
 $sql_results = "SELECT 
-                    categories.name AS position_name, 
+                    categories.name AS position_name,
+                    candidates.id AS candidate_id,
+                    candidates.firstname AS firstname,
+                    candidates.lastname AS lastname, 
+                    candidates.photo AS photo,
                     COUNT(votes_csc.id) AS total_votes
                 FROM 
                     votes_csc
@@ -56,9 +60,12 @@ while ($row = $result->fetch_assoc()) {
     $color = $colors[$color_index % count($colors)];
     $color_index++;
 
-    // Display anonymous result with avatar and percentage
+    // Get candidate photo or use default
+    $photo = !empty($row['photo']) ? 'images/'.$row['photo'] : 'images/profile.jpg';
+
+    // Display result with candidate avatar and percentage
     echo "<div class='poll-item'>";
-    echo "<img src='images/profile.jpg' class='avatar' alt='Candidate Avatar'>";
+    echo "<img src='{$photo}' class='avatar' alt='Candidate Avatar'>";
     echo "<div class='poll-bar-container'>";
     echo "<div class='poll-bar' style='width: {$vote_percentage}%; background-color: {$color};'>";
     echo "<span class='poll-percentage'>{$vote_percentage}%</span>";
@@ -135,6 +142,13 @@ if ($total_votes == 0) {
     color: #666;
     text-align: center;
     font-style: italic;
+    margin-top: 20px;
+}
+
+.poll-error {
+    color: #d32f2f;
+    text-align: center;
+    font-weight: bold;
     margin-top: 20px;
 }
 
