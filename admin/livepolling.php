@@ -133,33 +133,61 @@
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="path/to/jquery.min.js"></script>
     <script>
-        function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
+function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
     var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
     var imageContainer = document.getElementById(imageContainerId);
     imageContainer.innerHTML = '';
     
-    // Define custom colors based on your request
+    // Define custom colors
     const candidateColors = [
         "rgb(43, 8, 168)",   // Blue color
         "rgb(158, 9, 29)",   // Red color
-        "rgb(43, 8, 168)",   // Blue color (repeating the color)
-        "rgb(158, 9, 29)",   // Red color (repeating the color)
-        "rgb(43, 8, 168)",   // Blue color (repeating the color)
-        "rgb(158, 9, 29)"    // Red color (repeating the color)
+        "rgb(43, 8, 168)",   // Blue color
+        "rgb(158, 9, 29)",   // Red color
+        "rgb(43, 8, 168)",   // Blue color
+        "rgb(158, 9, 29)"    // Red color
     ];
     
-    // Sort dataPoints by their labels to ensure consistent ordering
-    dataPoints.sort((a, b) => a.label.localeCompare(b.label));
+    // Make a copy of dataPoints to avoid modifying the original
+    let sortedDataPoints = [...dataPoints];
     
+    // Render the chart first using the original dataPoints order
+    var chartOptions = {
+        animationEnabled: true,
+        theme: "light2",
+        title: { text: "Vote Counts" },
+        data: [{
+            type: graphType,
+            dataPoints: dataPoints.map((dataPoint, index) => ({
+                ...dataPoint,
+                color: candidateColors[index % candidateColors.length],
+                indexLabel: `${dataPoint.label} - ${(dataPoint.y / totalVotes * 100).toFixed(2)}%`,
+                indexLabelFontColor: "lightgray",
+                indexLabelPlacement: "inside",
+                indexLabelFontSize: 14,
+                indexLabelFontWeight: "bold"
+            }))
+        }]
+    };
+    
+    // Add specific options for different chart types
+    if (graphType === "stackedArea") {
+        chartOptions.data[0].type = "stackedArea";
+    } else if (graphType === "doughnut") {
+        chartOptions.data[0].type = "doughnut";
+        chartOptions.data[0].innerRadius = 70;
+    }
+    
+    var chart = new CanvasJS.Chart(containerId, chartOptions);
+    chart.render();
+    
+    // Now create the images in the same order as the chart data
     dataPoints.forEach((dataPoint, index) => {
         var candidateDiv = document.createElement('div');
         candidateDiv.className = 'candidate-image';
         candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">
                                   <div style="text-align: center; margin-top: 5px;">${dataPoint.label}</div>`;
         imageContainer.appendChild(candidateDiv);
-
-        // Assign a color based on the index (repeating the custom color palette)
-        dataPoint.color = candidateColors[index % candidateColors.length];
     });
 
 
