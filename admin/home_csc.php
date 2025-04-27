@@ -87,7 +87,7 @@
           <div class="small-box">
             <div class="inner">
               <?php
-                $sql = "SELECT * FROM candidates WHERE election_id = 20";
+                $sql = "SELECT * FROM candidates WHERE election_id = 20 AND archived = 0";
                 $query = $conn->query($sql);
 
                 echo "<h3>".$query->num_rows."</h3>";
