@@ -127,11 +127,34 @@ if(!is_active_election($conn)){
 					    		<h3>You have already voted for this election.</h3>
 					    		<a href="#view" data-toggle="modal" class="btn btn-flat btn-primary btn-lg">View Ballot</a>
 					    	</div>
-				    		<?php
-				    	}
-				    	else{
-				    		?>
+				    		<h2 class="text-center">Live Poll Results</h2>
+<div id="live-poll-results">
+    <!-- Poll results will be loaded here using AJAX -->
+</div>
+<script>
+    // Function to fetch and update poll results
+    function updatePollResults() {
+        // Send AJAX request to fetch updated poll results
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                // Update the live poll results div with the fetched data
+                document.getElementById("live-poll-results").innerHTML = this.responseText;
+            }
+        };
+        // Specify the PHP file that fetches the poll results
+        xhttp.open("GET", "fetch_poll_results.php", true);
+        xhttp.send();
+    }
 
+    // Call the update function every 2 seconds
+    setInterval(updatePollResults, 2000);
+</script>
+        </div>
+        <?php
+    }
+    else{
+				    		?>
 			    			<!-- Voting Ballot -->
 						    <form method="POST" id="ballotForm" action="submit_ballot.php">
                             <?php
