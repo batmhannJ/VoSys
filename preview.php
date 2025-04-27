@@ -13,7 +13,6 @@
 		$pos_id = $row['id'];
 
 		if (isset($_POST[$position])) {
-			// Handle multiple selections (max_vote > 1)
 			if ($row['max_vote'] > 1) {
 				// Check if the number of selected candidates exceeds max_vote
 				if (count($_POST[$position]) > $row['max_vote']) {
