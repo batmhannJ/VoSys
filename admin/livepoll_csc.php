@@ -213,7 +213,7 @@ include 'includes/header_csc.php';
     }
 
     $(document).ready(function () {
-        // Remove the automatic update interval
+        // Ensure no automatic update intervals
         // Fetch and generate graphs only when triggered by a vote submission
 
         $(window).scroll(function () {
@@ -229,12 +229,10 @@ include 'includes/header_csc.php';
             return false;
         });
 
-        // Example: Trigger fetchAndGenerateGraphs after vote submission
-        // Replace '#submit-vote' with the actual ID or class of your vote submission button/form
+        // Trigger fetchAndGenerateGraphs after vote submission
         $('#submit-vote').on('click', function (e) {
             e.preventDefault();
-            // Perform vote submission logic here (e.g., AJAX request to submit votes)
-            // After successful submission, update the graphs
+            // Perform vote submission logic here
             fetchAndGenerateGraphs();
         });
     });
