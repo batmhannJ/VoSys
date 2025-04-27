@@ -39,7 +39,7 @@ include 'includes/header_csc.php';
             position: relative;
             margin-bottom: 40px;
             display: flex;
-            align-items: flex-start; /* Adjust alignment to match bars */
+            align-items: center;
         }
 
         .chart-wrapper {
@@ -48,23 +48,23 @@ include 'includes/header_csc.php';
         }
 
         .candidate-images {
-            width: auto; /* Adjust width to fit content dynamically */
-            min-width: 150px; /* Set a minimum width */
+            width: 200px;
+            min-width: 200px;
             padding: 10px;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start; /* Align images with the top of the chart */
+            justify-content: center;
         }
 
         .candidate-image {
             display: flex;
             align-items: center;
-            margin-bottom: 10px; /* Reduce spacing for better alignment */
+            margin-bottom: 15px;
         }
 
         .candidate-image img {
-            width: 40px; /* Adjust size for better alignment */
-            height: 40px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             margin-right: 10px;
             object-fit: cover;
@@ -75,7 +75,6 @@ include 'includes/header_csc.php';
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            font-size: 14px; /* Adjust font size for better fit */
         }
 
         @media (max-width: 992px) {
@@ -103,8 +102,8 @@ include 'includes/header_csc.php';
 
         @media (max-width: 768px) {
             .candidate-image img {
-                width: 50px;
-                height: 50px;
+                width: 60px;
+                height: 60px;
             }
         }
 
@@ -114,8 +113,8 @@ include 'includes/header_csc.php';
             }
             
             .candidate-image img {
-                width: 60px;
-                height: 60px;
+                width: 70px;
+                height: 70px;
             }
         }
     </style>
@@ -246,11 +245,11 @@ include 'includes/header_csc.php';
                 
                 charts[category].render();
                 
-                // Update candidate images - ensure alignment with bars
+                // Update candidate images - now placed beside the chart
                 var imageContainer = document.getElementById(category + 'Image');
                 if (imageContainer) {
-                    imageContainer.innerHTML = dataPoints.map((dataPoint, index) =>
-                        `<div class="candidate-image" style="order: ${index};">
+                    imageContainer.innerHTML = dataPoints.map(dataPoint =>
+                        `<div class="candidate-image">
                             <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">
                             <span class="candidate-label">${dataPoint.label}</span>
                         </div>`
