@@ -8,17 +8,15 @@
             text-align: center;
             width: 100%;
             display: inline-block;
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
         }
 
+        /* Back to Top button styles */
         #back-to-top {
             position: fixed;
             bottom: 40px;
             right: 40px;
             display: none;
-            background-color: #007BFF;
+            background-color: #000;
             color: #fff;
             border: none;
             border-radius: 50%;
@@ -29,11 +27,10 @@
             line-height: 50px;
             cursor: pointer;
             z-index: 1000;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         #back-to-top:hover {
-            background-color: #0056b3;
+            background-color: #555;
         }
 
         .chart-container {
@@ -41,31 +38,28 @@
             margin-bottom: 40px;
             display: flex;
             align-items: center;
-            background-color: #f4f6f9;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
 
         .candidate-images {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            margin-right: 15px;
+            margin-right: 10px;
         }
 
         .candidate-image {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         .candidate-image img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 60px;
+            height: 60px;
+            margin-right: -10px;
+            margin-bottom: 25px;
+            margin-top: 35px;
         }
 
         @media (max-width: 768px) {
@@ -83,7 +77,7 @@
         }
     </style>
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-black sidebar-mini">
     <div class="wrapper">
         <?php include 'includes/navbar.php'; ?>
         <?php include 'includes/menubar.php'; ?>
@@ -98,31 +92,19 @@
             </section>
 
             <section class="content">
+                <!-- Organization Selection Form -->
                 <form id="organization-form">
                     <label for="organization-select">Select Organization:</label>
                     <select id="organization-select" name="organization">
-                        <option value="csc">CSC</option>
                         <option value="jpcs">JPCS</option>
-                        <option value="ymf">YMF</option>
-                        <option value="pasoa">PASOA</option>
-                        <option value="code-tg">CODE-TG</option>
-                        <option value="hmso">HMSO</option>
                     </select>
-
-                    <label for="graph-type">Select Graph Type:</label>
-                    <select id="graph-type">
-                        <option value="bar">Bar Chart</option>
-                        <option value="pie">Pie Chart</option>
-                        <option value="line">Line Chart</option>
-                        <option value="stackedArea">Stacked Area Chart</option>
-                        <option value="doughnut">Donut Chart</option>
-                    </select>
-
                     <button type="submit">Show Results</button>
                 </form>
                 <br>
 
-                <div class="row justify-content-center" id="results-container"></div>
+                <div class="row justify-content-center" id="results-container">
+                    <!-- Results will be dynamically inserted here -->
+                </div>
             </section>
 
             <button id="back-to-top" title="Back to top">&uarr;</button>
@@ -133,101 +115,201 @@
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="path/to/jquery.min.js"></script>
     <script>
-        function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
-            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
-            var imageContainer = document.getElementById(imageContainerId);
-            imageContainer.innerHTML = '';
-            
-            // Define custom colors based on your request
-            const candidateColors = [
-                "rgb(43, 8, 168)",   // Blue color
-                "rgb(158, 9, 29)",   // Red color
-                "rgb(43, 8, 168)",   // Blue color (repeating the color)
-                "rgb(158, 9, 29)",   // Red color (repeating the color)
-                "rgb(43, 8, 168)",   // Blue color (repeating the color)
-                "rgb(158, 9, 29)"    // Red color (repeating the color)
-            ];
-            
-            dataPoints.forEach((dataPoint, index) => {
-                var candidateDiv = document.createElement('div');
-                candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
-                imageContainer.appendChild(candidateDiv);
+    // Store previous response to compare changes
+    let previousResponse = null;
 
-                // Assign a color based on the index (repeating the custom color palette)
-                dataPoint.color = candidateColors[index % candidateColors.length];
-            });
+    function generateBarGraph(dataPoints, containerId, imageContainerId) {
+        var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
-            var chartOptions = {
-                animationEnabled: true,
-                theme: "light2",
-                title: { text: "Vote Counts" },
-                data: [{
-                    type: graphType,
-                    dataPoints: dataPoints.map(dataPoint => ({
-                        ...dataPoint,
-                        color: dataPoint.color || "#4F81BC", // Default color if not assigned
-                        indexLabel: `${dataPoint.label} - ${(dataPoint.y / totalVotes * 100).toFixed(2)}%`,
-                        indexLabelFontColor: "lightgray",  // Changed to light gray
-                        indexLabelPlacement: "inside",
-                        indexLabelFontSize: 14,
-                        indexLabelFontWeight: "bold"
-                    }))
-                }]
-            };
+        var chart = new CanvasJS.Chart(containerId, {
+            animationEnabled: true,
+            animationDuration: 2000,
+            title: {
+                text: "Vote Counts"
+            },
+            axisX: {
+                interval: 1,
+                labelFormatter: function () {
+                    return " ";
+                }
+            },
+            axisY: {
+                interval: Math.ceil(totalVotes / 10)
+            },
+            data: [{
+                type: "bar",
+                color: "#4F81BC", // Custom color
+                indexLabel: "{label} - {percent}%",
+                indexLabelPlacement: "inside",
+                indexLabelFontColor: "white",
+                indexLabelFontSize: 14,
+                dataPoints: dataPoints.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                }))
+            }]
+        });
+        chart.render();
+    }
 
-            // Add specific options for stacked area and donut charts
-            if (graphType === "stackedArea") {
-                chartOptions.data[0].type = "stackedArea";
-            } else if (graphType === "doughnut") {
-                chartOptions.data[0].type = "doughnut";
-                chartOptions.data[0].innerRadius = 70; // Create a donut effect
-            }
+    function generateLineGraph(dataPoints, containerId) {
+        var chart = new CanvasJS.Chart(containerId, {
+            animationEnabled: true,
+            title: { text: "Vote Trend" },
+            axisX: { labelFontSize: 12 },
+            axisY: { labelFontSize: 12 },
+            data: [{
+                type: "line",
+                lineColor: "#1589FF",
+                dataPoints: dataPoints.map((dataPoint, index) => ({
+                    x: index + 1,
+                    y: dataPoint.y,
+                    label: dataPoint.label
+                }))
+            }]
+        });
+        chart.render();
+    }
 
-            var chart = new CanvasJS.Chart(containerId, chartOptions);
-            chart.render();
-        }
+    function generatePieChart(dataPoints, containerId) {
+        var chart = new CanvasJS.Chart(containerId, {
+            animationEnabled: true,
+            title: { text: "Vote Distribution" },
+            data: [{
+                type: "pie",
+                indexLabel: "{label} - {percent}%",
+                indexLabelFontSize: 14,
+                dataPoints: dataPoints.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / dataPoints.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
+                }))
+            }]
+        });
+        chart.render();
+    }
 
-        function fetchAndGenerateGraphs(organization) {
-            const graphType = $('#graph-type').val();
-            $.ajax({
-                url: 'update_data.php',
-                method: 'GET',
-                dataType: 'json',
-                success: function (response) {
-                    $('#results-container').empty();
-                    Object.keys(response).forEach(function (category) {
-                        var containerHtml = ` 
+    function generateDoughnutChart(dataPoints, containerId) {
+        var chart = new CanvasJS.Chart(containerId, {
+            animationEnabled: true,
+            title: { text: "Vote Composition" },
+            data: [{
+                type: "doughnut",
+                innerRadius: 70,
+                indexLabel: "{label} - {percent}%",
+                indexLabelFontSize: 14,
+                dataPoints: dataPoints.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / dataPoints.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
+                }))
+            }]
+        });
+        chart.render();
+    }
+
+    function fetchAndGenerateGraphs(organization) {
+        $.ajax({
+            url: 'update_jpcs_data.php',
+            method: 'GET',
+            dataType: 'json',
+            data: { t: new Date().getTime() }, // Prevent caching
+            success: function (response) {
+                if (!hasDataChanged(previousResponse, response)) {
+                    return; // If data has not changed, do nothing
+                }
+
+                previousResponse = response;
+
+                $('#results-container').empty();
+                var categories = {
+                    'csc': {
+                        'president': 'President', 
+                        'vice president': 'Vice President',
+                        'secretary': 'Secretary', 
+                        'treasurer': 'Treasurer', 
+                        'auditor': 'Auditor',
+                        'p.r.o': 'P.R.O', 
+                        'businessManager': 'Business Manager', 
+                        'beedRep': 'BEED Representative', 
+                        'bsedRep': 'BSED Representative', 
+                        'bshmRep': 'BSHM Representative',
+                        'bsoadRep': 'BSOAd Representative', 
+                        'bs crimRep': 'BSCrim Representative', 
+                        'bsitRep': 'BSIT Representative'
+                                
+                        }
+                    };
+
+                var selectedCategories = categories[organization];
+                Object.keys(selectedCategories).forEach(function (category) {
+                    if (response[category]) {
+                        var containerHtml = `
                             <div class='col-md-12'>
                                 <div class='box'>
                                     <div class='box-header with-border'>
-                                        <h3 class='box-title'><b>${category}</b></h3>
+                                        <h3 class='box-title'><b>${selectedCategories[category]}</b></h3>
                                     </div>
                                     <div class='box-body'>
                                         <div class='chart-container'>
                                             <div class='candidate-images' id='${category}Image'></div>
-                                            <div id='${category}Graph' style='height: 300px; width: 100%;'></div>
+                                            <div id='${category}BarGraph' style='height: 300px; width: 100%;'></div>
+                                            <div id='${category}LineGraph' style='height: 300px; width: 100%;'></div>
+                                            <div id='${category}PieChart' style='height: 300px; width: 100%;'></div>
+                                            <div id='${category}DoughnutChart' style='height: 300px; width: 100%;'></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>`;
                         $('#results-container').append(containerHtml);
-                        generateGraph(response[category], category + 'Graph', category + 'Image', graphType);
-                    });
-                },
-                error: function (xhr, status, error) {
-                    console.error("Error fetching data: ", status, error);
-                }
-            });
-        }
-
-        $(document).ready(function () {
-            fetchAndGenerateGraphs('csc');
-            $('#organization-form').submit(function (event) {
-                event.preventDefault();
-                fetchAndGenerateGraphs($('#organization-select').val());
-            });
+                        const categoryData = response[category];
+                        generateBarGraph(categoryData, category + 'BarGraph', category + 'Image');
+                        generateLineGraph(categoryData, category + 'LineGraph');
+                        generatePieChart(categoryData, category + 'PieChart');
+                        generateDoughnutChart(categoryData, category + 'DoughnutChart');
+                    }
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error("Error fetching data: ", status, error);
+            }
         });
-    </script>
+    }
+
+    function hasDataChanged(oldData, newData) {
+        if (!oldData) return true;
+        if (JSON.stringify(oldData) !== JSON.stringify(newData)) {
+            return true;
+        }
+        return false;
+    }
+
+    $(document).ready(function () {
+        fetchAndGenerateGraphs('jpcs');
+        
+        $('#organization-form').submit(function (event) {
+            event.preventDefault();
+            const selectedOrganization = $('#organization-select').val();
+            fetchAndGenerateGraphs(selectedOrganization);
+        });
+
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 100) {
+                $('#back-to-top').fadeIn();
+            } else {
+                $('#back-to-top').fadeOut();
+            }
+        });
+
+        $('#back-to-top').click(function () {
+            $('html, body').animate({ scrollTop: 0 }, 600);
+            return false;
+        });
+
+        setInterval(function () {
+            fetchAndGenerateGraphs('csc');
+        }, 3000);
+    });
+</script>
+
+
 </body>
 </html>
