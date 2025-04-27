@@ -87,7 +87,7 @@
           <div class="small-box">
             <div class="inner">
               <?php
-                $sql = "SELECT * FROM candidates WHERE election_id = 20";
+                $sql = "SELECT * FROM candidates WHERE election_id = 20 AND archived = 0";
                 $query = $conn->query($sql);
 
                 echo "<h3>".$query->num_rows."</h3>";
@@ -204,7 +204,7 @@
                   $percentage = number_format($percentage, 1);
                   echo "<h3>" . $percentage . "%" ."</h3>";
               } else {
-                  echo "Total number of voters is 0. Cannot calculate percentage.";
+                  echo "0";
               }
               ?>
 
