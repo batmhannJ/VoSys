@@ -204,7 +204,7 @@
                   $percentage = number_format($percentage, 1);
                   echo "<h3>" . $percentage . "%" ."</h3>";
               } else {
-                  echo "Total number of voters is 0. Cannot calculate percentage.";
+                  echo "Total number of voters is 0.";
               }
               ?>
 
@@ -268,7 +268,7 @@
   $sql = "SELECT * FROM positions ORDER BY priority ASC";
   $query = $conn->query($sql);
   while($row = $query->fetch_assoc()){
-    $sql = "SELECT * FROM candidates WHERE position_id = '".$row['id']."'";
+    $sql = "SELECT * FROM candidates WHERE position_id = '".$row['id']."' AND archived = 0";
     $cquery = $conn->query($sql);
     $carray = array();
     $varray = array();
