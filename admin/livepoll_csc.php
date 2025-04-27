@@ -91,6 +91,22 @@
                 </ol>
             </section>
 
+            <section class="content">
+                <!-- Organization Selection Form -->
+                <form id="organization-form">
+                    <label for="organization-select">Select Organization:</label>
+                    <select id="organization-select" name="organization">
+                        <option value="jpcs">CSC</option>
+                    </select>
+                    <!--<button type="submit">Show Results</button>-->
+                </form>
+                <br>
+
+                <div class="row justify-content-center" id="results-container">
+                    <!-- Results will be dynamically inserted here -->
+                </div>
+            </section>
+
             <button id="back-to-top" title="Back to top">&uarr;</button>
         </div>
         <?php include 'includes/footer.php'; ?>
