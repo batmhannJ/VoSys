@@ -218,18 +218,20 @@ include 'includes/header_csc.php';
         }
     }
 
-    function fetchResults() {
-        $.ajax({
-            url: 'update_data_csc.php',
-            method: 'GET',
-            dataType: 'json',
-            success: function(response) {
-                updateCharts(response);
-            },
-            error: function(xhr, status, error) {
-                console.error("Error fetching data: ", status, error);
-            }
-        });
+    function setupEventSource() {
+        // Create a new EventSource connection
+        const eventSource = new EventSource('live_results_sse.php');
+        
+        eventSource.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            updateCharts(data);
+        };
+        
+        eventSource.onerror = function() {
+            console.error("EventSource failed.");
+            // Attempt to reconnect after 5 seconds
+            setTimeout(setupEventSource, 5000);
+        };
     }
 
     $(document).ready(function() {
@@ -237,10 +239,19 @@ include 'includes/header_csc.php';
         initializeCharts();
         
         // Fetch initial data
-        fetchResults();
-        
-        // Set up polling every 3 seconds
-        setInterval(fetchResults, 3000);
+        $.ajax({
+            url: 'update_data_csc.php',
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                updateCharts(response);
+                // After initial load, set up SSE
+                setupEventSource();
+            },
+            error: function(xhr, status, error) {
+                console.error("Error fetching initial data: ", status, error);
+            }
+        });
 
         // Back to top button
         $(window).scroll(function() {
