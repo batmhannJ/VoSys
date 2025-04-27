@@ -39,7 +39,7 @@ include 'includes/header_csc.php';
             position: relative;
             margin-bottom: 40px;
             display: flex;
-            align-items: center;
+            align-items: flex-start; /* Adjust alignment to match bars */
         }
 
         .chart-wrapper {
@@ -48,23 +48,23 @@ include 'includes/header_csc.php';
         }
 
         .candidate-images {
-            width: 200px;
-            min-width: 200px;
+            width: auto; /* Adjust width to fit content dynamically */
+            min-width: 150px; /* Set a minimum width */
             padding: 10px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start; /* Align images with the top of the chart */
         }
 
         .candidate-image {
             display: flex;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 10px; /* Reduce spacing for better alignment */
         }
 
         .candidate-image img {
-            width: 50px;
-            height: 50px;
+            width: 40px; /* Adjust size for better alignment */
+            height: 40px;
             border-radius: 50%;
             margin-right: 10px;
             object-fit: cover;
@@ -75,6 +75,7 @@ include 'includes/header_csc.php';
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            font-size: 14px; /* Adjust font size for better fit */
         }
 
         @media (max-width: 992px) {
@@ -102,8 +103,8 @@ include 'includes/header_csc.php';
 
         @media (max-width: 768px) {
             .candidate-image img {
-                width: 60px;
-                height: 60px;
+                width: 50px;
+                height: 50px;
             }
         }
 
@@ -113,8 +114,8 @@ include 'includes/header_csc.php';
             }
             
             .candidate-image img {
-                width: 70px;
-                height: 70px;
+                width: 60px;
+                height: 60px;
             }
         }
     </style>
@@ -232,50 +233,28 @@ include 'includes/header_csc.php';
             if (charts[category]) {
                 var dataPoints = data[category];
                 var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
-
+                
                 // Update chart data
                 charts[category].options.data[0].dataPoints = dataPoints.map(dataPoint => ({
                     ...dataPoint,
-                    percent: totalVotes > 0 ? ((dataPoint.y / totalVotes) * 100).toFixed(2) : 0,
-                    toolTipContent: `<img src='${dataPoint.image}' style='width:30px;height:30px;border-radius:50%;margin-right:5px;'> ${dataPoint.label} - {y} votes`
+                    percent: totalVotes > 0 ? ((dataPoint.y / totalVotes) * 100).toFixed(2) : 0
                 }));
-
-                // Render the chart
+                
+                // Calculate new interval for Y-axis
+                var maxVotes = Math.max(...dataPoints.map(dp => dp.y), 1);
+                charts[category].options.axisY.interval = Math.ceil(maxVotes / 10) || 1;
+                
                 charts[category].render();
-
-                // Add candidate images inside the bars
-                const chartContainer = document.getElementById(category + 'Graph');
-                if (chartContainer) {
-                    const chartBars = chartContainer.querySelectorAll('.canvasjs-chart-bar');
-                    chartBars.forEach((bar, index) => {
-                        const dataPoint = dataPoints[index];
-                        if (dataPoint) {
-                            // Image inside the bar
-                            const imgInside = document.createElement('img');
-                            imgInside.src = dataPoint.image;
-                            imgInside.alt = dataPoint.label;
-                            imgInside.style.position = 'absolute';
-                            imgInside.style.width = '30px';
-                            imgInside.style.height = '30px';
-                            imgInside.style.borderRadius = '50%';
-                            imgInside.style.transform = 'translate(-50%, -50%)';
-                            imgInside.style.left = `${bar.getBoundingClientRect().left + bar.offsetWidth / 2}px`;
-                            imgInside.style.top = `${bar.getBoundingClientRect().top + bar.offsetHeight / 2}px`;
-                            chartContainer.appendChild(imgInside);
-
-                            // Image beside the bar
-                            const imgBeside = document.createElement('img');
-                            imgBeside.src = dataPoint.image;
-                            imgBeside.alt = dataPoint.label;
-                            imgBeside.style.position = 'absolute';
-                            imgBeside.style.width = '30px';
-                            imgBeside.style.height = '30px';
-                            imgBeside.style.borderRadius = '50%';
-                            imgBeside.style.left = `${bar.getBoundingClientRect().right + 10}px`;
-                            imgBeside.style.top = `${bar.getBoundingClientRect().top + bar.offsetHeight / 2}px`;
-                            chartContainer.appendChild(imgBeside);
-                        }
-                    });
+                
+                // Update candidate images - ensure alignment with bars
+                var imageContainer = document.getElementById(category + 'Image');
+                if (imageContainer) {
+                    imageContainer.innerHTML = dataPoints.map((dataPoint, index) =>
+                        `<div class="candidate-image" style="order: ${index};">
+                            <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">
+                            <span class="candidate-label">${dataPoint.label}</span>
+                        </div>`
+                    ).join('');
                 }
             }
         }
