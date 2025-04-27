@@ -1,15 +1,10 @@
 <?php
 session_start();
-include 'includes/conn.php'; // Database connection
-
-// Set JSON header
+include 'includes/conn.php';
 header('Content-Type: application/json');
-
-// Disable PHP warnings and notices to prevent JSON corruption
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Sanitize and validate inputs
     $id = isset($_POST['id']) ? intval($_POST['id']) : 0;
     $status = isset($_POST['status']) ? intval($_POST['status']) : 0;
     $starttime = isset($_POST['starttime']) && !empty($_POST['starttime']) ? $_POST['starttime'] : null;
@@ -52,7 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'message' => 'Invalid request method.'
     ]);
 }
-
 $conn->close();
 exit;
 ?>
