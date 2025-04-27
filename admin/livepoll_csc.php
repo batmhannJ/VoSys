@@ -250,17 +250,30 @@ include 'includes/header_csc.php';
                     chartBars.forEach((bar, index) => {
                         const dataPoint = dataPoints[index];
                         if (dataPoint) {
-                            const img = document.createElement('img');
-                            img.src = dataPoint.image;
-                            img.alt = dataPoint.label;
-                            img.style.position = 'absolute';
-                            img.style.width = '30px';
-                            img.style.height = '30px';
-                            img.style.borderRadius = '50%';
-                            img.style.transform = 'translate(-50%, -50%)';
-                            img.style.left = `${bar.getBoundingClientRect().left + bar.offsetWidth / 2}px`;
-                            img.style.top = `${bar.getBoundingClientRect().top + bar.offsetHeight / 2}px`;
-                            chartContainer.appendChild(img);
+                            // Image inside the bar
+                            const imgInside = document.createElement('img');
+                            imgInside.src = dataPoint.image;
+                            imgInside.alt = dataPoint.label;
+                            imgInside.style.position = 'absolute';
+                            imgInside.style.width = '30px';
+                            imgInside.style.height = '30px';
+                            imgInside.style.borderRadius = '50%';
+                            imgInside.style.transform = 'translate(-50%, -50%)';
+                            imgInside.style.left = `${bar.getBoundingClientRect().left + bar.offsetWidth / 2}px`;
+                            imgInside.style.top = `${bar.getBoundingClientRect().top + bar.offsetHeight / 2}px`;
+                            chartContainer.appendChild(imgInside);
+
+                            // Image beside the bar
+                            const imgBeside = document.createElement('img');
+                            imgBeside.src = dataPoint.image;
+                            imgBeside.alt = dataPoint.label;
+                            imgBeside.style.position = 'absolute';
+                            imgBeside.style.width = '30px';
+                            imgBeside.style.height = '30px';
+                            imgBeside.style.borderRadius = '50%';
+                            imgBeside.style.left = `${bar.getBoundingClientRect().right + 10}px`;
+                            imgBeside.style.top = `${bar.getBoundingClientRect().top + bar.offsetHeight / 2}px`;
+                            chartContainer.appendChild(imgBeside);
                         }
                     });
                 }
