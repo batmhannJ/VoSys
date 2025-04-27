@@ -939,7 +939,7 @@ body {
 
 /* Highlight the selected candidate with border and scale effect */
 .candidate-container.selected {
-    border: 4px solid darkgreen;  /* Border color for selected */
+    border: 4px solid black;  /* Border color for selected */
     opacity: 1;  /* Ensure the selected one remains fully visible */
     transform: scale(1.10);  /* Make the selected candidate "pop" slightly */
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.9); /* Optional shadow for selected candidates */
