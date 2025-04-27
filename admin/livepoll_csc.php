@@ -52,7 +52,7 @@ include 'includes/header_csc.php';
             min-width: 200px;
             padding: 10px;
             display: flex;
-            flex-direction: column;
+            flex-direction: column-reverse;
             justify-content: center;
         }
 
