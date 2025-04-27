@@ -125,28 +125,84 @@ if(!is_active_election($conn)){
 					    		<a href="#view" data-toggle="modal" class="btn btn-flat btn-primary btn-lg">View Ballot</a>
 					    	</div>
 				    		<h2 class="text-center">Live Poll Results</h2>
-<div id="live-poll-results">
+                            <div id="live-poll-results" class="poll-container">
     <!-- Poll results will be loaded here using AJAX -->
 </div>
 <script>
-    // Function to fetch and update poll results
     function updatePollResults() {
-        // Send AJAX request to fetch updated poll results
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                // Update the live poll results div with the fetched data
-                document.getElementById("live-poll-results").innerHTML = this.responseText;
-            }
-        };
-        // Specify the PHP file that fetches the poll results
-        xhttp.open("GET", "fetch_poll_results.php", true);
-        xhttp.send();
+        fetch('fetch_poll_results.php')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                const pollContainer = document.getElementById("live-poll-results");
+                pollContainer.innerHTML = data;
+                
+                // Add animation for updated results
+                pollContainer.style.transition = 'opacity 0.5s ease';
+                pollContainer.style.opacity = '0';
+                setTimeout(() => {
+                    pollContainer.style.opacity = '1';
+                }, 100);
+            })
+            .catch(error => {
+                console.error('Error fetching poll results:', error);
+                document.getElementById("live-poll-results").innerHTML = 
+                    '<p class="poll-error">Unable to load poll results. Please try again later.</p>';
+            });
     }
 
-    // Call the update function every 2 seconds
-    setInterval(updatePollResults, 2000);
+    // Initial fetch and update every 5 seconds for smoother performance
+    updatePollResults();
+    setInterval(updatePollResults, 5000);
+    
 </script>
+<!-- Additional CSS for Live Poll Styling -->
+<style>
+    .poll-container {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .poll-container h3 {
+        color: darkgreen;
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    .poll-container ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .poll-container li {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+        font-size: 1rem;
+    }
+
+    .poll-container li:last-child {
+        border-bottom: none;
+    }
+
+    .poll-error {
+        color: #dc3545;
+        text-align: center;
+        font-size: 1rem;
+    }
+</style>
         </div>
         <?php
     }
@@ -366,7 +422,6 @@ if (isset($voter['id'])) {
         confettiCanvas.width = width;
         confettiCanvas.height = height;
         
-        // Create particles
         particles = [];
         for (var i = 0; i < 150; i++) {
             particles.push(resetParticle({}, width, height));
@@ -378,14 +433,12 @@ if (isset($voter['id'])) {
                 if (streamingConfetti) {
                     confettiContext.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
                     
-                    // Update each particle
                     for (var i = 0; i < particles.length; i++) {
                         var particle = particles[i];
                         particle.tiltAngle += particle.tiltAngleIncrement;
                         particle.y += (Math.cos(waveAngle) + particle.diameter + 0.1) * 0.5;
                         particle.tilt = Math.sin(particle.tiltAngle) * 15;
                         
-                        // Check if particle is out of bounds
                         if (particle.y > height) {
                             if (!streamingConfetti && particles.length <= 0) {
                                 confettiContext.clearRect(0, 0, width, height);
@@ -402,7 +455,6 @@ if (isset($voter['id'])) {
                             }
                         }
                         
-                        // Draw particle
                         confettiContext.beginPath();
                         confettiContext.lineWidth = particle.diameter;
                         confettiContext.strokeStyle = particle.color;
@@ -418,15 +470,15 @@ if (isset($voter['id'])) {
                 if (supportsAnimationFrame) {
                     animationTimer = requestAnimationFrame(runAnimation);
                 } else {
-                    animationTimer = setTimeout(runAnimation, 16.67); // 60 FPS
+                    animationTimer = setTimeout(runAnimation, 16.67);
                 }
             })();
         }
         
-        // Stop the confetti after 8 seconds
+        // Stop the confetti after 3 seconds
         setTimeout(function() {
             stopConfetti();
-        }, 8000);
+        }, 3000);
     }
 
     function stopConfetti() {
