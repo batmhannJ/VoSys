@@ -58,7 +58,7 @@ while ($row = $result->fetch_assoc()) {
 
     // Display anonymous result with avatar and percentage
     echo "<div class='poll-item'>";
-    echo "<img src='images/default_avatar.png' class='avatar' alt='Candidate Avatar'>";
+    echo "<img src='images/profile.jpg' class='avatar' alt='Candidate Avatar'>";
     echo "<div class='poll-bar-container'>";
     echo "<div class='poll-bar' style='width: {$vote_percentage}%; background-color: {$color};'>";
     echo "<span class='poll-percentage'>{$vote_percentage}%</span>";
