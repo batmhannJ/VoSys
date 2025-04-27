@@ -39,46 +39,64 @@ include 'includes/header_csc.php';
             position: relative;
             margin-bottom: 40px;
             display: flex;
-            flex-direction: column;
             align-items: center;
         }
 
+        .chart-wrapper {
+            flex-grow: 1;
+            margin-left: 20px;
+        }
+
         .candidate-images {
+            width: 200px;
+            min-width: 200px;
+            padding: 10px;
             display: flex;
+            flex-direction: column;
             justify-content: center;
-            margin-bottom: 15px;
         }
 
         .candidate-image {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            margin: 0 10px;
+            margin-bottom: 15px;
         }
 
         .candidate-image img {
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            margin-bottom: 5px;
+            margin-right: 10px;
             object-fit: cover;
         }
 
         .candidate-label {
             font-weight: bold;
-            text-align: center;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
         @media (max-width: 992px) {
-            .candidate-images {
-                flex-wrap: wrap;
+            .chart-container {
+                flex-direction: column;
+                align-items: flex-start;
             }
-
+            
+            .candidate-images {
+                width: 100%;
+                flex-direction: row;
+                flex-wrap: wrap;
+                margin-bottom: 20px;
+            }
+            
             .candidate-image {
-                margin: 10px;
+                margin-right: 20px;
+            }
+            
+            .chart-wrapper {
+                margin-left: 0;
+                width: 100%;
             }
         }
 
@@ -90,6 +108,10 @@ include 'includes/header_csc.php';
         }
 
         @media (max-width: 480px) {
+            .candidate-images {
+                flex-direction: column;
+            }
+            
             .candidate-image img {
                 width: 70px;
                 height: 70px;
@@ -210,28 +232,37 @@ include 'includes/header_csc.php';
             if (charts[category]) {
                 var dataPoints = data[category];
                 var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
-                
+
                 // Update chart data
                 charts[category].options.data[0].dataPoints = dataPoints.map(dataPoint => ({
                     ...dataPoint,
-                    percent: totalVotes > 0 ? ((dataPoint.y / totalVotes) * 100).toFixed(2) : 0
+                    percent: totalVotes > 0 ? ((dataPoint.y / totalVotes) * 100).toFixed(2) : 0,
+                    toolTipContent: `<img src='${dataPoint.image}' style='width:30px;height:30px;border-radius:50%;margin-right:5px;'> ${dataPoint.label} - {y} votes`
                 }));
-                
-                // Calculate new interval for Y-axis
-                var maxVotes = Math.max(...dataPoints.map(dp => dp.y), 1);
-                charts[category].options.axisY.interval = Math.ceil(maxVotes / 10) || 1;
-                
+
+                // Render the chart
                 charts[category].render();
-                
-                // Update candidate images above the chart
-                var imageContainer = document.getElementById(category + 'Image');
-                if (imageContainer) {
-                    imageContainer.innerHTML = dataPoints.map(dataPoint =>
-                        `<div class="candidate-image">
-                            <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">
-                            <span class="candidate-label">${dataPoint.label}</span>
-                        </div>`
-                    ).join('');
+
+                // Add candidate images inside the bars
+                const chartContainer = document.getElementById(category + 'Graph');
+                if (chartContainer) {
+                    const chartBars = chartContainer.querySelectorAll('.canvasjs-chart-bar');
+                    chartBars.forEach((bar, index) => {
+                        const dataPoint = dataPoints[index];
+                        if (dataPoint) {
+                            const img = document.createElement('img');
+                            img.src = dataPoint.image;
+                            img.alt = dataPoint.label;
+                            img.style.position = 'absolute';
+                            img.style.width = '30px';
+                            img.style.height = '30px';
+                            img.style.borderRadius = '50%';
+                            img.style.transform = 'translate(-50%, -50%)';
+                            img.style.left = `${bar.getBoundingClientRect().left + bar.offsetWidth / 2}px`;
+                            img.style.top = `${bar.getBoundingClientRect().top + bar.offsetHeight / 2}px`;
+                            chartContainer.appendChild(img);
+                        }
+                    });
                 }
             }
         }
