@@ -1,43 +1,58 @@
 <?php
-include 'includes/session.php';
-include 'includes/conn.php';
+session_start();
+include 'includes/conn.php'; // Database connection
 
-if (isset($_POST['id']) && isset($_POST['status'])) {
-    $id = $_POST['id'];
-    $status = $_POST['status'];
+// Set JSON header
+header('Content-Type: application/json');
 
-    // Handle activation
-    if ($status == 1) {
-        if (isset($_POST['starttime']) && isset($_POST['endtime'])) {
-            $starttime = $_POST['starttime'];
-            $endtime = $_POST['endtime'];
+// Disable PHP warnings and notices to prevent JSON corruption
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 
-            $sql = "UPDATE election SET status = 1, starttime = ?, endtime = ? WHERE id = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param('ssi', $starttime, $endtime, $id);
-        } else {
-            $_SESSION['error'] = 'Start and End Time are required for activation.';
-            header('location: elections_jpcs.php');
-            exit();
-        }
-    } 
-    // Handle deactivation
-    else if ($status == 0) {
-        $sql = "UPDATE election SET status = 0 WHERE id = ?";
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Sanitize and validate inputs
+    $id = isset($_POST['id']) ? intval($_POST['id']) : 0;
+    $status = isset($_POST['status']) ? intval($_POST['status']) : 0;
+    $starttime = isset($_POST['starttime']) && !empty($_POST['starttime']) ? $_POST['starttime'] : null;
+    $endtime = isset($_POST['endtime']) && !empty($_POST['endtime']) ? $_POST['endtime'] : null;
+
+    if ($id <= 0 || !in_array($status, [0, 1])) {
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Invalid input parameters.'
+        ]);
+        exit;
+    }
+
+    try {
+        $sql = "UPDATE election SET status = ?, starttime = ?, endtime = ? WHERE id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param('i', $id);
-    }
+        $stmt->bind_param('issi', $status, $starttime, $endtime, $id);
 
-    if ($stmt->execute()) {
-        $_SESSION['success'] = 'Election status updated successfully';
-    } else {
-        $_SESSION['error'] = 'Error updating election status: ' . $stmt->error;
+        if ($stmt->execute()) {
+            echo json_encode([
+                'status' => 'success',
+                'message' => $status == 1 ? 'Election activated successfully.' : 'Election deactivated successfully.'
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Failed to update election status.'
+            ]);
+        }
+        $stmt->close();
+    } catch (Exception $e) {
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'An error occurred: ' . $e->getMessage()
+        ]);
     }
-
-    $stmt->close();
 } else {
-    $_SESSION['error'] = 'Invalid request';
+    echo json_encode([
+        'status' => 'error',
+        'message' => 'Invalid request method.'
+    ]);
 }
 
-header('location: elections_jpcs.php');
+$conn->close();
+exit;
 ?>
