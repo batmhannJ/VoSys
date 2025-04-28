@@ -2,9 +2,12 @@
 include 'includes/session.php';
 include 'includes/conn.php';
 
-// Fetch live poll results
+// Fetch live poll results - GROUP BY candidate_id to count votes per candidate
 $sql_results = "SELECT 
-                    categories.name AS position_name, 
+                    categories.name AS position_name,
+                    candidates.id AS candidate_id,
+                    candidates.firstname AS firstname,
+                    candidates.lastname AS lastname, 
                     COUNT(votes_csc.id) AS total_votes
                 FROM 
                     votes_csc
@@ -34,7 +37,7 @@ echo '<h3>Live Poll Results</h3>';
 echo '<div class="poll-results">';
 $prev_position = '';
 $color_index = 0;
-$colors = ['#4A4A4A', '#6B6B6B', '#8C8C8C', '#ADADAD']; // Lighter gray shades starting from #4A4A4A
+$colors = ['#000', '#6B6B6B', '#8C8C8C', '#ADADAD']; // Lighter gray shades starting from #4A4A4A
 
 while ($row = $result->fetch_assoc()) {
     // Display position name only once
@@ -56,7 +59,7 @@ while ($row = $result->fetch_assoc()) {
     $color = $colors[$color_index % count($colors)];
     $color_index++;
 
-    // Display anonymous result with avatar and percentage
+    // Display result with candidate avatar and percentage
     echo "<div class='poll-item'>";
     echo "<img src='images/profile.jpg' class='avatar' alt='Candidate Avatar'>";
     echo "<div class='poll-bar-container'>";
@@ -138,11 +141,22 @@ if ($total_votes == 0) {
     margin-top: 20px;
 }
 
+.poll-error {
+    color: #d32f2f;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
     .poll-item {
-        flex-direction: column;
-        align-items: flex-start;
+        flex-direction: row;
+        align-items: center;
+    }
+    
+    .avatar {
+        display: none; /* Hide avatar on small screens */
     }
 
     .poll-bar-container {

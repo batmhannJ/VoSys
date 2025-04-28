@@ -1,10 +1,8 @@
 <!DOCTYPE html>
-<html>
-<?php
-include 'includes/session.php';
-include 'includes/header_csc.php';
-?>
+<html lang="en">
 <head>
+    <?php include 'includes/session.php'; ?>
+    <?php include 'includes/header_csc.php'; ?>
     <style>
         .box-title {
             text-align: center;
@@ -36,40 +34,32 @@ include 'includes/header_csc.php';
         }
 
         .chart-container {
-            display: flex;
-            align-items: flex-start;
+            position: relative;
             margin-bottom: 40px;
+            display: flex;
+            align-items: center;
         }
 
         .candidate-images {
-            flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
-            padding: 10px;
-            margin-right: 20px; /* Add spacing between images and chart */
-        }
-
-        .chart {
-            flex: 3;
-            height: 300px;
+            justify-content: space-between;
+            margin-right: 10px;
         }
 
         .candidate-image {
             display: flex;
+            flex-direction: column;
             align-items: center;
             margin-bottom: 10px;
         }
 
         .candidate-image img {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-
-        .candidate-label {
-            font-weight: bold;
+            width: 60px;
+            height: 60px;
+            margin-right: -10px;
+            margin-bottom: 25px;
+            margin-top: 35px;
         }
 
         @media (max-width: 768px) {
@@ -88,170 +78,220 @@ include 'includes/header_csc.php';
     </style>
 </head>
 <body class="hold-transition skin-black sidebar-mini">
-<div class="wrapper">
-    <?php include 'includes/navbar_csc.php'; ?>
-    <?php include 'includes/menubar_csc.php'; ?>
+    <div class="wrapper">
+        <?php include 'includes/navbar_csc.php'; ?>
+        <?php include 'includes/menubar_csc.php'; ?>
 
-    <div class="content-wrapper">
-        <section class="content-header">
-            <h1>Election Results</h1>
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li class="active">Results</li>
-            </ol>
-        </section>
+        <div class="content-wrapper">
+            <section class="content-header">
+                <h1>Election Results</h1>
+                <ol class="breadcrumb">
+                    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                    <li class="active">Results</li>
+                </ol>
+            </section>
 
-        <section class="content">
-            <div class="row justify-content-center">
-                <?php
-                $categories = [
-                    'president' => 'President',
-                    'vice president' => 'Vice President',
-                    'secretary' => 'Secretary',
-                    'treasurer' => 'Treasurer',
-                    'auditor' => 'Auditor',
-                    'p.r.o' => 'P.R.O',
-                    'businessManager' => 'Business Manager',
-                    'beedRep' => 'BEED Rep',
-                    'bsedRep' => 'BSED Rep',
-                    'bshmRep' => 'BSHM Rep',
-                    'bsoadRep' => 'BSOAD Rep',
-                    'bs crimRep' => 'BS CRIM Rep',
-                    'bsitRep' => 'BSIT Rep'
-                ];
+            <section class="content">
+                <!-- Organization Selection Form -->
+                <form id="organization-form">
+                    <label for="organization-select">Select Organization:</label>
+                    <select id="organization-select" name="organization">
+                        <option value="jpcs">CSC</option>
+                    </select>
+                    <!--<button type="submit">Show Results</button>-->
+                </form>
+                <br>
 
-                foreach ($categories as $categoryKey => $categoryName) {
-                    echo "
-                    <div class='col-md-12'>
-                        <div class='box'>
-                            <div class='box-header with-border'>
-                                <h3 class='box-title'><b>$categoryName</b></h3>
-                            </div>
-                            <div class='box-body'>
-                                <div class='chart-container'>
-                                    <div class='candidate-images' id='{$categoryKey}Image'></div>
-                                    <div id='{$categoryKey}Graph' class='chart'></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>";
-                }
-                ?>
-            </div>
-        </section>
+                <div class="row justify-content-center" id="results-container">
+                    <!-- Results will be dynamically inserted here -->
+                </div>
+            </section>
 
-        <button id="back-to-top" title="Back to top">&uarr;</button>
+            <button id="back-to-top" title="Back to top">&uarr;</button>
+        </div>
+        <?php include 'includes/footer.php'; ?>
     </div>
-    <?php include 'includes/footer.php'; ?>
-</div>
-<?php include 'includes/scripts.php'; ?>
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-<script>
-    // Store chart instances globally
-    var charts = {};
+    <?php include 'includes/scripts.php'; ?>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="path/to/jquery.min.js"></script>
+    <script>
+    // Store previous response to compare changes
+    let previousResponse = null;
 
-    function initializeCharts() {
-        var categories = [
-            'president', 'vice president', 'secretary', 'treasurer', 'auditor',
-            'p.r.o', 'businessManager', 'beedRep', 'bsedRep', 'bshmRep',
-            'bsoadRep', 'bs crimRep', 'bsitRep'
-        ];
-        
-        // Initialize empty charts for each category
-        categories.forEach(function(category) {
-            var chart = new CanvasJS.Chart(category + 'Graph', {
-                animationEnabled: true,
-                animationDuration: 1000,
-                animationEasing: "easeInOutBounce",
-                title: {
-                    text: "Vote Counts"
-                },
-                axisX: {
-                    title: "",
-                    includeZero: true,
-                    interval: 1,
-                    labelFormatter: function () {
-                        return " ";
-                    }
-                },
-                axisY: {
-                    title: "",
-                    interval: 1
-                },
-                data: [{
-                    type: "bar",
-                    indexLabel: "{label} - {percent}%",
-                    indexLabelPlacement: "inside",
-                    indexLabelFontColor: "white",
-                    indexLabelFontSize: 14,
-                    dataPoints: []
-                }]
-            });
-            chart.render();
-            charts[category] = chart;
-        });
-    }
+    function generateBarGraph(dataPoints, containerId, imageContainerId) {
+        var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
 
-    function updateCharts(data) {
-        // Update all charts with new data
-        for (var category in data) {
-            if (charts[category]) {
-                var dataPoints = data[category];
-                var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
-                
-                // Update chart data
-                charts[category].options.data[0].dataPoints = dataPoints.map(dataPoint => ({
-                    ...dataPoint,
-                    percent: totalVotes > 0 ? ((dataPoint.y / totalVotes) * 100).toFixed(2) : 0
-                }));
-                
-                // Calculate new interval for Y-axis
-                var maxVotes = Math.max(...dataPoints.map(dp => dp.y), 1);
-                charts[category].options.axisY.interval = Math.ceil(maxVotes / 10) || 1;
-                
-                charts[category].render();
-                
-                // Update candidate images
-                var imageContainer = document.getElementById(category + 'Image');
-                if (imageContainer) {
-                    imageContainer.innerHTML = dataPoints.map(dataPoint =>
-                        `<div class="candidate-image">
-                            <img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">
-                            <span class="candidate-label">${dataPoint.label}</span>
-                        </div>`
-                    ).join('');
+        var chart = new CanvasJS.Chart(containerId, {
+            animationEnabled: true,
+            animationDuration: 2000,
+            title: {
+                text: "Vote Counts"
+            },
+            axisX: {
+                interval: 1,
+                labelFormatter: function () {
+                    return " ";
                 }
-            }
-        }
+            },
+            axisY: {
+                interval: Math.ceil(totalVotes / 10)
+            },
+            data: [{
+                type: "bar",
+                color: "#4F81BC", // Custom color
+                indexLabel: "{label} - {percent}%",
+                indexLabelPlacement: "inside",
+                indexLabelFontColor: "white",
+                indexLabelFontSize: 14,
+                dataPoints: dataPoints.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / totalVotes) * 100).toFixed(2)
+                }))
+            }]
+        });
+        chart.render();
     }
 
-    function fetchResults() {
+    function generateLineGraph(dataPoints, containerId) {
+        var chart = new CanvasJS.Chart(containerId, {
+            animationEnabled: true,
+            title: { text: "Vote Trend" },
+            axisX: { labelFontSize: 12 },
+            axisY: { labelFontSize: 12 },
+            data: [{
+                type: "line",
+                lineColor: "#1589FF",
+                dataPoints: dataPoints.map((dataPoint, index) => ({
+                    x: index + 1,
+                    y: dataPoint.y,
+                    label: dataPoint.label
+                }))
+            }]
+        });
+        chart.render();
+    }
+
+    function generatePieChart(dataPoints, containerId) {
+        var chart = new CanvasJS.Chart(containerId, {
+            animationEnabled: true,
+            title: { text: "Vote Distribution" },
+            data: [{
+                type: "pie",
+                indexLabel: "{label} - {percent}%",
+                indexLabelFontSize: 14,
+                dataPoints: dataPoints.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / dataPoints.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
+                }))
+            }]
+        });
+        chart.render();
+    }
+
+    function generateDoughnutChart(dataPoints, containerId) {
+        var chart = new CanvasJS.Chart(containerId, {
+            animationEnabled: true,
+            title: { text: "Vote Composition" },
+            data: [{
+                type: "doughnut",
+                innerRadius: 70,
+                indexLabel: "{label} - {percent}%",
+                indexLabelFontSize: 14,
+                dataPoints: dataPoints.map(dataPoint => ({
+                    ...dataPoint,
+                    percent: ((dataPoint.y / dataPoints.reduce((acc, dp) => acc + dp.y, 0)) * 100).toFixed(2)
+                }))
+            }]
+        });
+        chart.render();
+    }
+
+    function fetchAndGenerateGraphs(organization) {
         $.ajax({
             url: 'update_data_csc.php',
             method: 'GET',
             dataType: 'json',
-            success: function(response) {
-                updateCharts(response);
-                // Fetch results again after the current request completes
-                setTimeout(fetchResults, 1000); // Adjust the delay as needed
+            data: { t: new Date().getTime() }, // Prevent caching
+            success: function (response) {
+                if (!hasDataChanged(previousResponse, response)) {
+                    return; // If data has not changed, do nothing
+                }
+
+                previousResponse = response;
+
+                $('#results-container').empty();
+                var categories = {
+                    'csc': {
+                        'president': 'President', 
+                        'vice president': 'Vice President',
+                        'secretary': 'Secretary', 
+                        'treasurer': 'Treasurer', 
+                        'auditor': 'Auditor',
+                        'p.r.o': 'P.R.O', 
+                        'businessManager': 'Business Manager', 
+                        'beedRep': 'BEED Representative', 
+                        'bsedRep': 'BSED Representative', 
+                        'bshmRep': 'BSHM Representative',
+                        'bsoadRep': 'BSOAd Representative', 
+                        'bs crimRep': 'BSCrim Representative', 
+                        'bsitRep': 'BSIT Representative'
+                                
+                        }
+                    };
+
+                var selectedCategories = categories[organization];
+                Object.keys(selectedCategories).forEach(function (category) {
+                    if (response[category]) {
+                        var containerHtml = `
+                            <div class='col-md-12'>
+                                <div class='box'>
+                                    <div class='box-header with-border'>
+                                        <h3 class='box-title'><b>${selectedCategories[category]}</b></h3>
+                                    </div>
+                                    <div class='box-body'>
+                                        <div class='chart-container'>
+                                            <div class='candidate-images' id='${category}Image'></div>
+                                            <div id='${category}BarGraph' style='height: 300px; width: 100%;'></div>
+                                            <div id='${category}LineGraph' style='height: 300px; width: 100%;'></div>
+                                            <div id='${category}PieChart' style='height: 300px; width: 100%;'></div>
+                                            <div id='${category}DoughnutChart' style='height: 300px; width: 100%;'></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+                        $('#results-container').append(containerHtml);
+                        const categoryData = response[category];
+                        generateBarGraph(categoryData, category + 'BarGraph', category + 'Image');
+                        generateLineGraph(categoryData, category + 'LineGraph');
+                        generatePieChart(categoryData, category + 'PieChart');
+                        generateDoughnutChart(categoryData, category + 'DoughnutChart');
+                    }
+                });
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error("Error fetching data: ", status, error);
-                // Retry fetching results after an error
-                setTimeout(fetchResults, 3000); // Retry after 3 seconds
             }
         });
     }
 
-    $(document).ready(function() {
-        // Initialize charts first
-        initializeCharts();
+    function hasDataChanged(oldData, newData) {
+        if (!oldData) return true;
+        if (JSON.stringify(oldData) !== JSON.stringify(newData)) {
+            return true;
+        }
+        return false;
+    }
 
-        // Start fetching results
-        fetchResults();
+    $(document).ready(function () {
+        fetchAndGenerateGraphs('csc');
+        
+        $('#organization-form').submit(function (event) {
+            event.preventDefault();
+            const selectedOrganization = $('#organization-select').val();
+            fetchAndGenerateGraphs(selectedOrganization);
+        });
 
-        // Back to top button
-        $(window).scroll(function() {
+        $(window).scroll(function () {
             if ($(this).scrollTop() > 100) {
                 $('#back-to-top').fadeIn();
             } else {
@@ -259,11 +299,17 @@ include 'includes/header_csc.php';
             }
         });
 
-        $('#back-to-top').click(function() {
+        $('#back-to-top').click(function () {
             $('html, body').animate({ scrollTop: 0 }, 600);
             return false;
         });
+
+        setInterval(function () {
+            fetchAndGenerateGraphs('csc');
+        }, 3000);
     });
 </script>
+
+
 </body>
 </html>

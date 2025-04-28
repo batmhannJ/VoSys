@@ -124,7 +124,6 @@ if(!is_active_election($conn)){
 					    		<h3>You have already voted for this election.</h3>
 					    		<a href="#view" data-toggle="modal" class="btn btn-flat btn-primary btn-lg">View Ballot</a>
 					    	</div>
-				    		<h2 class="text-center">Live Poll Results</h2>
                             <div id="live-poll-results" class="poll-container">
     <!-- Poll results will be loaded here using AJAX -->
 </div>
@@ -171,11 +170,11 @@ if(!is_active_election($conn)){
         max-width: 800px;
         margin-left: auto;
         margin-right: auto;
-        border: 2px solid darkgreen;
+        border: 2px solid black;
     }
 
     .poll-container h3 {
-        color: darkgreen;
+        color: black;
         font-size: 1.5rem;
         margin-bottom: 15px;
         text-align: center;
@@ -287,7 +286,7 @@ if (isset($voter['id'])) {
                                       echo '
                                     <div class="position-container">
                                         <div class="box box-solid" id="'.$row['id'].'">
-                                            <div class="box-header" style="background-color: darkgreen;">
+                                            <div class="box-header" style="background-color: #000000;">
                                                 <h3 class="box-title" style="color: #fff;">'.$row['name'].'</h3>
                                                 <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="'.slugify($row['name']).'"><i class="fa fa-refresh"></i> Reset</button>
                                             </div>
@@ -332,7 +331,7 @@ if (isset($voter['id'])) {
                                                                     data-max-vote="' . $maxVote . '">
                                                                 <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image"> <br>
                                                                 <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span> <br>
-                                                                 <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
+                                                                 <button type="button" style="background-color: #000000;" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
                                                                 </button>
                                                             </div>';
                                                     
@@ -355,7 +354,7 @@ if (isset($voter['id'])) {
                                 <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
-                                        <div class="modal-header">
+                                        <div class="modal-header" style="background-color: black">
                                             <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
@@ -366,7 +365,7 @@ if (isset($voter['id'])) {
                                             <p>Are you sure you want to submit your vote?</p>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-success btn-flat" id="preview_jpcs"><i class="fa fa-file-text"></i> Preview</button> 
+                                            <button type="button" class="btn btn-success btn-flat" id="preview"><i class="fa fa-file-text"></i> Preview</button> 
                                             <button type="submit" class="btn btn-primary" id="submitBtn" name="vote">Yes, Submit</button>
                                         </div>
                                     </div>
@@ -714,7 +713,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-        $('#preview_jpcs').click(function(e){
+        $('#preview').click(function(e){
             e.preventDefault();
             var form = $('#ballotForm').serialize();
             if(form == ''){
@@ -939,7 +938,7 @@ body {
 
 /* Highlight the selected candidate with border and scale effect */
 .candidate-container.selected {
-    border: 4px solid darkgreen;  /* Border color for selected */
+    border: 4px solid black;  /* Border color for selected */
     opacity: 1;  /* Ensure the selected one remains fully visible */
     transform: scale(1.10);  /* Make the selected candidate "pop" slightly */
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.9); /* Optional shadow for selected candidates */
@@ -1181,7 +1180,7 @@ input[type="checkbox"]:checked + .clist {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: darkgreen;
+    background-color: black;
     color: #fff;
 }
 

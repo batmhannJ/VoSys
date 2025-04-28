@@ -134,29 +134,34 @@
     <script src="path/to/jquery.min.js"></script>
     <script>
         function generateGraph(dataPoints, containerId, imageContainerId, graphType) {
-            var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
-            var imageContainer = document.getElementById(imageContainerId);
-            imageContainer.innerHTML = '';
-            
-            // Define custom colors based on your request
-            const candidateColors = [
-                "rgb(43, 8, 168)",   // Blue color
-                "rgb(158, 9, 29)",   // Red color
-                "rgb(43, 8, 168)",   // Blue color (repeating the color)
-                "rgb(158, 9, 29)",   // Red color (repeating the color)
-                "rgb(43, 8, 168)",   // Blue color (repeating the color)
-                "rgb(158, 9, 29)"    // Red color (repeating the color)
-            ];
-            
-            dataPoints.forEach((dataPoint, index) => {
-                var candidateDiv = document.createElement('div');
-                candidateDiv.className = 'candidate-image';
-                candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">`;
-                imageContainer.appendChild(candidateDiv);
+    var totalVotes = dataPoints.reduce((acc, dataPoint) => acc + dataPoint.y, 0);
+    var imageContainer = document.getElementById(imageContainerId);
+    imageContainer.innerHTML = '';
+    
+    // Define custom colors based on your request
+    const candidateColors = [
+        "rgb(43, 8, 168)",   // Blue color
+        "rgb(158, 9, 29)",   // Red color
+        "rgb(43, 8, 168)",   // Blue color (repeating the color)
+        "rgb(158, 9, 29)",   // Red color (repeating the color)
+        "rgb(43, 8, 168)",   // Blue color (repeating the color)
+        "rgb(158, 9, 29)"    // Red color (repeating the color)
+    ];
+    
+    // Sort dataPoints by their labels to ensure consistent ordering
+    dataPoints.sort((a, b) => a.label.localeCompare(b.label));
+    
+    dataPoints.forEach((dataPoint, index) => {
+        var candidateDiv = document.createElement('div');
+        candidateDiv.className = 'candidate-image';
+        candidateDiv.innerHTML = `<img src="${dataPoint.image}" alt="${dataPoint.label}" title="${dataPoint.label}">
+                                  <div style="text-align: center; margin-top: 5px;">${dataPoint.label}</div>`;
+        imageContainer.appendChild(candidateDiv);
 
-                // Assign a color based on the index (repeating the custom color palette)
-                dataPoint.color = candidateColors[index % candidateColors.length];
-            });
+        // Assign a color based on the index (repeating the custom color palette)
+        dataPoint.color = candidateColors[index % candidateColors.length];
+    });
+
 
             var chartOptions = {
                 animationEnabled: true,
