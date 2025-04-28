@@ -920,6 +920,22 @@
         }
       });
     });
+
+    const navLinks = document.querySelectorAll(".nav__links a, .dropdown-content a");
+
+    navLinks.forEach(function (link) {
+      link.addEventListener("click", function (e) {
+        // Show the loading screen
+        const loadingScreen = document.getElementById("loadingScreen");
+        loadingScreen.style.display = "flex";
+
+        // Allow navigation after a short delay
+        setTimeout(() => {
+          window.location.href = this.href;
+        }, 500); // Adjust the delay as needed
+        e.preventDefault(); // Prevent immediate navigation
+      });
+    });
   });
 
   // Simulate loading progress
