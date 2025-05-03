@@ -44,8 +44,10 @@ if (isset($_POST['add'])) {
     } while ($resultVoter->num_rows > 0);
 
     // Generate a password with format: lastname + 4 random numbers
+    $specialChars = '!@#$%^&*()-_=+[]{}|;:,.<>?';
+    $randomSpecialChar = $specialChars[rand(0, strlen($specialChars) - 1)];
     $randomNumbers = substr(str_shuffle('0123456789'), 0, 4);
-    $randomPassword = $lastname . $randomNumbers;
+    $randomPassword = $lastname . $randomSpecialChar . $randomNumbers;
     $password = password_hash($randomPassword, PASSWORD_DEFAULT);
     
     // Insert the new voter into the database
