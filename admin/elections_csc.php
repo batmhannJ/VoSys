@@ -325,30 +325,46 @@ $(function(){
     let earliestEndTimeStr = null;
 
     activeElections.each(function() {
-      const endTimeStr = $(this).data('endtime');
-      if (endTimeStr) {
-        const endTime = new Date(endTimeStr);
-        if (!isNaN(endTime.getTime()) && (earliestEndTime === null || endTime < earliestEndTime)) {
-          earliestEndTime = endTime;
-          earliestEndTimeStr = endTimeStr;
+        const endTimeStr = $(this).data('endtime');
+        if (endTimeStr) {
+            const endTime = new Date(endTimeStr);
+            if (!isNaN(endTime.getTime()) && (earliestEndTime === null || endTime < earliestEndTime)) {
+                earliestEndTime = endTime;
+                earliestEndTimeStr = endTimeStr;
+            }
         }
-      }
     });
 
     if (earliestEndTime && earliestEndTime > new Date()) {
-      const timeUntilEnd = earliestEndTime - new Date();
-      console.log(`Scheduling reload for ${earliestEndTimeStr} in ${timeUntilEnd / 1000} seconds`);
-      
-      // Add 5-second buffer to ensure server-side update occurs
-      setTimeout(function() {
-        console.log('Election endtime reached, reloading page...');
-        toastr.info('An election has ended, reloading page...');
+        const timeUntilEnd = earliestEndTime - new Date();
+        console.log(`Scheduling status update and reload for ${earliestEndTimeStr} in ${timeUntilEnd / 1000} seconds`);
+        
         setTimeout(function() {
-          location.reload();
-        }, 2000);
-      }, timeUntilEnd + 5000); // 5-second buffer
+            console.log('Election endtime reached, updating statuses...');
+            $.ajax({
+                type: 'POST',
+                url: 'update_expired_elections.php',
+                dataType: 'json',
+                success: function(response) {
+                    if (response && response.status === 'success') {
+                        console.log(response.message);
+                        toastr.info('An election has ended, reloading page...');
+                        setTimeout(function() {
+                            location.reload();
+                        }, 2000);
+                    } else {
+                        console.error('Failed to update election statuses:', response.message);
+                        toastr.error(response.message || 'Failed to update election statuses.');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error (Status Update):', status, error, xhr.responseText);
+                    toastr.error('An error occurred while updating election statuses.');
+                }
+            });
+        }, timeUntilEnd + 5000); // 5-second buffer
     } else {
-      console.log('No valid future endtimes found or all endtimes passed');
+        console.log('No valid future endtimes found or all endtimes passed');
     }
 
     // Check again after 30 seconds
