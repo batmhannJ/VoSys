@@ -4,10 +4,26 @@
         <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
+                  <span aria-hidden="true">×</span></button>
               <h4 class="modal-title"><b><span class="fullname"></span></b></h4>
             </div>
             <div class="modal-body">
+                <style>
+                    #desc {
+                        white-space: pre-wrap;
+                        font-family: Arial, sans-serif;
+                        font-size: 14px;
+                        line-height: 1.6;
+                        margin: 0;
+                    }
+                    #desc ul {
+                        padding-left: 20px;
+                        margin: 10px 0;
+                    }
+                    #desc li {
+                        margin-bottom: 10px;
+                    }
+                </style>
                 <p id="desc"></p>
             </div>
             <div class="modal-footer">
@@ -23,7 +39,7 @@
         <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
+                  <span aria-hidden="true">×</span></button>
               <h4 class="modal-title"><b>Add New Candidate</b></h4>
             </div>
             <div class="modal-body">
@@ -71,7 +87,7 @@
                     <label for="platform" class="col-sm-3 control-label">Platform</label>
 
                     <div class="col-sm-9">
-                      <textarea class="form-control" id="platform" name="platform" rows="7"></textarea>
+                      <textarea class="form-control" id="platform" name="platform" rows="7" style="white-space: pre-wrap;"></textarea>
                     </div>
                 </div>
             </div>
@@ -90,7 +106,7 @@
         <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
+                  <span aria-hidden="true">×</span></button>
               <h4 class="modal-title"><b>Edit Voter</b></h4>
             </div>
             <div class="modal-body">
@@ -132,7 +148,7 @@
                     <label for="edit_platform" class="col-sm-3 control-label">Platform</label>
 
                     <div class="col-sm-9">
-                      <textarea class="form-control" id="edit_platform" name="platform" rows="7"></textarea>
+                      <textarea class="form-control" id="edit_platform" name="platform" rows="7" style="white-space: pre-wrap;"></textarea>
                     </div>
                 </div>
             </div>
@@ -151,7 +167,7 @@
         <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
+                  <span aria-hidden="true">×</span></button>
               <h4 class="modal-title"><b>Deleting...</b></h4>
             </div>
             <div class="modal-body">
@@ -177,7 +193,7 @@
         <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span></button>
+                  <span aria-hidden="true">×</span></button>
               <h4 class="modal-title"><b><span class="fullname"></span></b></h4>
             </div>
             <div class="modal-body">
@@ -199,7 +215,3 @@
         </div>
     </div>
 </div>
-
-
-
-     
