@@ -52,50 +52,55 @@
 
         // Function to update election status based on end time
         function updateElectionStatusBasedOnTime($conn) {
-          try {
-              $currentTime = date('Y-m-d H:i:s');
-              error_log("Running updateElectionStatusBasedOnTime at $currentTime");
-      
-              // Check active elections before updating
-              $checkSql = "SELECT id, endtime, status FROM election WHERE status = 1 AND endtime <= ? AND organization = 'CSC' AND archived = FALSE";
-              $checkStmt = $conn->prepare($checkSql);
-              if (!$checkStmt) {
-                  throw new Exception("Check prepare failed: " . $conn->error);
-              }
-              $checkStmt->bind_param('s', $currentTime);
-              $checkStmt->execute();
-              $result = $checkStmt->get_result();
-              $electionsToUpdate = [];
-              while ($row = $result->fetch_assoc()) {
-                  $electionsToUpdate[] = $row['id'] . ' (endtime: ' . $row['endtime'] . ', status: ' . $row['status'] . ')';
-              }
-              $electionsToUpdateCount = count($electionsToUpdate);
-              error_log("Found $electionsToUpdateCount elections to deactivate: " . implode(', ', $electionsToUpdate) . " at $currentTime");
-              $checkStmt->close();
-      
-              // Deactivate expired elections
-              $sql = "UPDATE election SET status = 0 WHERE status = 1 AND endtime <= ? AND organization = 'CSC' AND archived = FALSE";
-              $stmt = $conn->prepare($sql);
-              if (!$stmt) {
-                  throw new Exception("Prepare failed: " . $conn->error);
-              }
-              $stmt->bind_param('s', $currentTime);
-              if (!$stmt->execute()) {
-                  throw new Exception("Execute failed: " . $stmt->error);
-              }
-              $affected_rows = $stmt->affected_rows;
-              $stmt->close();
-      
-              error_log("Updated $affected_rows elections to Not Active at $currentTime");
-              return $affected_rows;
-          } catch (Exception $e) {
-              error_log("Error updating election status: " . $e->getMessage());
-              return false;
-          }
-      }
+            try {
+                $currentTime = date('Y-m-d H:i:s');
+                error_log("Running updateElectionStatusBasedOnTime at $currentTime");
+
+                // Check active elections before updating
+                $checkSql = "SELECT id, endtime, status FROM election WHERE status = 1 AND endtime <= ? AND organization = 'CSC' AND archived = FALSE";
+                $checkStmt = $conn->prepare($checkSql);
+                if (!$checkStmt) {
+                    throw new Exception("Check prepare failed: " . $conn->error);
+                }
+                $checkStmt->bind_param('s', $currentTime);
+                $checkStmt->execute();
+                $result = $checkStmt->get_result();
+                $electionsToUpdate = [];
+                while ($row = $result->fetch_assoc()) {
+                    $electionsToUpdate[] = $row['id'] . ' (endtime: ' . $row['endtime'] . ', status: ' . $row['status'] . ')';
+                }
+                $electionsToUpdateCount = count($electionsToUpdate);
+                error_log("Found $electionsToUpdateCount elections to deactivate: " . implode(', ', $electionsToUpdate) . " at $currentTime");
+                $checkStmt->close();
+
+                // Deactivate expired elections
+                $sql = "UPDATE election SET status = 0 WHERE status = 1 AND endtime <= ? AND organization = 'CSC' AND archived = FALSE";
+                $stmt = $conn->prepare($sql);
+                if (!$stmt) {
+                    throw new Exception("Prepare failed: " . $conn->error);
+                }
+                $stmt->bind_param('s', $currentTime);
+                if (!$stmt->execute()) {
+                    throw new Exception("Execute failed: " . $stmt->error);
+                }
+                $affected_rows = $stmt->affected_rows;
+                $stmt->close();
+
+                error_log("Updated $affected_rows elections to Not Active at $currentTime");
+                return $affected_rows;
+            } catch (Exception $e) {
+                error_log("Error updating election status: " . $e->getMessage());
+                return false;
+            }
+        }
 
         // Call the function to update statuses before displaying the table
-        updateElectionStatusBasedOnTime($conn);
+        $result = updateElectionStatusBasedOnTime($conn);
+        if ($result === false) {
+            error_log("Failed to run updateElectionStatusBasedOnTime before rendering table on " . date('Y-m-d H:i:s'));
+        } else {
+            error_log("Successfully ran updateElectionStatusBasedOnTime, updated $result rows on " . date('Y-m-d H:i:s'));
+        }
       ?>
       <div class="row">
         <div class="col-xs-12">
@@ -332,7 +337,7 @@ $(function(){
     });
   });
 
-    function checkElectionEndTimes() {
+  function checkElectionEndTimes() {
       const activeElections = $('.election-status[data-status="0"]');
       let earliestEndTime = null;
       let earliestEndTimeStr = null;
