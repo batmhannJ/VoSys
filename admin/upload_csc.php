@@ -96,7 +96,7 @@ if (isset($_POST['save_excel_data'])) {
                         // Include major in email if it's YMF
                         $majorInfo = ($organization == 'YMF' && !empty($major)) ? "Major: $major\n" : "";
                         
-                        $mail->Body = "Hello $firstname $lastname,\n\nYou have been registered as a voter.\n\nVoter ID: $voter\nPassword: $randomPassword\nOrganization: $organization\n$majorInfo"."Kindly click this link to redirect to vosys.org: https://vosys.org/\nPlease keep this information confidential.\n\nRegards,\nJPCS Election Commitee";
+                        $mail->Body = "Hello $firstname $lastname,\n\nYou have been registered as a voter.\n\nVoter ID: $voter\nPassword: $randomPassword"."Kindly click this link to redirect to vosys.org: https://vosys.org/\nPlease keep this information confidential.\n\nRegards,\nJPCS Election Commitee";
 
                         // Enable debug mode
                         $mail->SMTPDebug = SMTP::DEBUG_SERVER;
