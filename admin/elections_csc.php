@@ -52,27 +52,32 @@
 
         // Function to update election status based on end time
         function updateElectionStatusBasedOnTime($conn) {
-            try {
-                // Log current server time and query for debugging
-                error_log("Running updateElectionStatusBasedOnTime at " . date('Y-m-d H:i:s'));
-                
-                // Deactivate expired elections
-                $sql = "UPDATE election SET status = 0 WHERE status = 1 AND endtime <= NOW() AND organization = 'CSC' AND archived = FALSE";
-                $stmt = $conn->prepare($sql);
-                if (!$stmt) {
-                    throw new Exception("Prepare failed: " . $conn->error);
-                }
-                if (!$stmt->execute()) {
-                    throw new Exception("Execute failed: " . $stmt->error);
-                }
-                $affected_rows = $stmt->affected_rows;
-                $stmt->close();
-                
-                // Log affected rows for debugging
-                error_log("Updated $affected_rows elections to Not Active");
-            } catch (Exception $e) {
-                error_log("Error updating election status: " . $e->getMessage());
-            }
+          try {
+              // Log current server time for debugging
+              $currentTime = date('Y-m-d H:i:s');
+              error_log("Running updateElectionStatusBasedOnTime at $currentTime");
+              
+              // Deactivate expired elections
+              $sql = "UPDATE election SET status = 0 WHERE status = 1 AND endtime <= ? AND organization = 'CSC' AND archived = FALSE";
+              $stmt = $conn->prepare($sql);
+              if (!$stmt) {
+                  throw new Exception("Prepare failed: " . $conn->error);
+              }
+              $stmt->bind_param('s', $currentTime);
+              if (!$stmt->execute()) {
+                  throw new Exception("Execute failed: " . $stmt->error);
+              }
+              $affected_rows = $stmt->affected_rows;
+              $stmt->close();
+              
+              // Log affected rows for debugging
+              error_log("Updated $affected_rows elections to Not Active at $currentTime");
+              
+              return $affected_rows;
+          } catch (Exception $e) {
+              error_log("Error updating election status: " . $e->getMessage());
+              return false;
+          }
         }
 
         // Call the function to update statuses before displaying the table
