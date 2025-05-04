@@ -727,7 +727,7 @@ document.addEventListener('DOMContentLoaded', function () {
             $('#plat_view').html(platform);
         });
 
-        $('#preview_jpcs').click(function(e){
+        $('#preview').click(function(e){
             e.preventDefault();
             var form = $('#ballotForm').serialize();
             if(form == ''){
