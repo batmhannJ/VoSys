@@ -42,6 +42,13 @@ if (isset($_POST['save_excel_data'])) {
                 $email = $row['2'];
                 $organization = $row['3'];
                 $yearlvl = $row['4'];
+                
+                // Check if organization is YMF, then read the major field
+                $major = '';
+                if ($organization == 'YMF') {
+                    // For YMF, expect major in column 5 (index 5)
+                    $major = isset($row['5']) ? $row['5'] : '';
+                }
 
                 $existingQuery = "SELECT * FROM voters WHERE firstname = '$firstname' AND lastname = '$lastname' AND email = '$email'";
                 $existingResult = mysqli_query($conn, $existingQuery);
@@ -58,46 +65,58 @@ if (isset($_POST['save_excel_data'])) {
                     
                     $password = password_hash($randomPassword, PASSWORD_DEFAULT);
 
-                    $studentQuery = "INSERT INTO voters (voters_id,genPass,password,firstname,lastname,email,organization,yearLvl) VALUES ('$voter','$randomPassword','$password','$firstname','$lastname','$email','$organization','$yearlvl')";
+                    // Add major field to the SQL query for YMF organization
+                    if ($organization == 'YMF') {
+                        $studentQuery = "INSERT INTO voters (voters_id, genPass, password, firstname, lastname, email, organization, yearLvl, major) 
+                                        VALUES ('$voter', '$randomPassword', '$password', '$firstname', '$lastname', '$email', '$organization', '$yearlvl', '$major')";
+                    } else {
+                        $studentQuery = "INSERT INTO voters (voters_id, genPass, password, firstname, lastname, email, organization, yearLvl) 
+                                        VALUES ('$voter', '$randomPassword', '$password', '$firstname', '$lastname', '$email', '$organization', '$yearlvl')";
+                    }
+                    
                     $result = mysqli_query($conn, $studentQuery);
-                $msg = true;
+                    $msg = true;
 
-                $mail = new PHPMailer();
-                try {
-                    // Configure SMTP settings
-                    $mail->isSMTP();
-                    $mail->Host = 'smtp.gmail.com';
-                    $mail->SMTPAuth = true;
-                    $mail->Username = 'olshco.electionupdates@gmail.com'; // Gmail email
-                    $mail->Password = 'ljzujblsyyprijmx'; // Gmail app password
-                    $mail->SMTPSecure = 'tls';
-                    $mail->Port = 587;
+                    $mail = new PHPMailer();
+                    try {
+                        // Configure SMTP settings
+                        $mail->isSMTP();
+                        $mail->Host = 'smtp.gmail.com';
+                        $mail->SMTPAuth = true;
+                        $mail->Username = 'olshco.electionupdates@gmail.com'; // Gmail email
+                        $mail->Password = 'ljzujblsyyprijmx'; // Gmail app password
+                        $mail->SMTPSecure = 'tls';
+                        $mail->Port = 587;
 
-                    // Set email content
-                    $mail->setFrom('olshco.electionupdates@gmail.com', 'EL-UPS OLSHCO');
-                    $mail->addAddress($email);
-                    $mail->Subject = 'Voter Registration';
-                    $mail->Body = "Hello $firstname $lastname,\n\nYou have been registered as a voter.\n\nVoter ID: $voter\nPassword: $randomPassword\nKindly click this link to redirect to vosys.org: https://vosys.org/\nPlease keep this information confidential.\n\nRegards,\nJPCS Election Commitee";
+                        // Set email content
+                        $mail->setFrom('olshco.electionupdates@gmail.com', 'EL-UPS OLSHCO');
+                        $mail->addAddress($email);
+                        $mail->Subject = 'Voter Registration';
+                        
+                        // Include major in email if it's YMF
+                        $majorInfo = ($organization == 'YMF' && !empty($major)) ? "Major: $major\n" : "";
+                        
+                        $mail->Body = "Hello $firstname $lastname,\n\nYou have been registered as a voter.\n\nVoter ID: $voter\nPassword: $randomPassword\nOrganization: $organization\n$majorInfo"."Kindly click this link to redirect to vosys.org: https://vosys.org/\nPlease keep this information confidential.\n\nRegards,\nJPCS Election Commitee";
 
-                    // Enable debug mode
-                    $mail->SMTPDebug = SMTP::DEBUG_SERVER;
-                    $mail->Debugoutput = function ($str, $level) {
-                        // Log or echo the debug output
-                        file_put_contents('smtp_debug.log', $str . PHP_EOL, FILE_APPEND);
-                    };
+                        // Enable debug mode
+                        $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+                        $mail->Debugoutput = function ($str, $level) {
+                            // Log or echo the debug output
+                            file_put_contents('smtp_debug.log', $str . PHP_EOL, FILE_APPEND);
+                        };
 
-                    // Send email
-                    $mail->send();
-                    echo 'Confirmation email sent.';
-                } catch (Exception $e) {
-                    file_put_contents('error.log', 'Error sending confirmation email: ' . $mail->ErrorInfo . PHP_EOL, FILE_APPEND);
-                    echo 'Error sending confirmation email. Error: ' . $mail->ErrorInfo;
+                        // Send email
+                        $mail->send();
+                        echo 'Confirmation email sent.';
+                    } catch (Exception $e) {
+                        file_put_contents('error.log', 'Error sending confirmation email: ' . $mail->ErrorInfo . PHP_EOL, FILE_APPEND);
+                        echo 'Error sending confirmation email. Error: ' . $mail->ErrorInfo;
+                    }
+                    
+                } else {
+                    // Voter already exists, skip insertion
+                    echo "Voter with email $email and name $firstname $lastname already exists. Skipped.";
                 }
-                
-            } else {
-                // Voter already exists, skip insertion
-                echo "Voter with email $email and name $firstname $lastname already exists. Skipped.";
-            }
             } else {
                 $count = 1;
             }
