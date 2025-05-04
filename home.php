@@ -36,12 +36,7 @@ if(!is_active_election($conn)){
                 <b>COLLEGE STUDENT COUNCIL <br> ELECTIONS</b>
             </h1>
             <section class="discover section" id="discover">         
-        <!--<center><h4 id="electionTitle" class="heading">Remaining time to vote</h4></center>-->
         <div class="timer">
-            <!--<div class="sub_timer">
-                <h1 id="day" class="digit">00</h1>
-                <p class="digit_name">Days</p>
-            </div>-->
             <div class="sub_timer">
                 <h1 id="hour" class="digit">00</h1>
                 <p class="digit_name">Hours</p>
@@ -63,7 +58,7 @@ if(!is_active_election($conn)){
                         if(isset($_SESSION['error'])){
                             ?>
                             <div class="alert alert-danger alert-dismissible" id="error-alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                                 <ul>
                                     <?php
                                         foreach($_SESSION['error'] as $error){
@@ -78,7 +73,7 @@ if(!is_active_election($conn)){
                         if(isset($_SESSION['success'])){
                             echo "
                                 <div class='alert alert-success alert-dismissible' id='success-alert'>
-                                    <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
+                                    <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
                                     <h4><i class='icon fa fa-check'></i> Success!</h4>
                                     ".$_SESSION['success']."
                                 </div>
@@ -95,7 +90,7 @@ if(!is_active_election($conn)){
                     ?>
 
                     <div class="alert alert-danger alert-dismissible" id="alert" style="display:none;">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                         <span class="message"></span>
                     </div>
 
@@ -268,11 +263,8 @@ if (isset($voter['id'])) {
                                             $positions[] = 'BSOAD Rep';
                                             break;
                                         case 'YMF':
-                                            if (isset($_SESSION['major']) && $_SESSION['major'] == 'BSED') {
-                                                $positions[] = 'BSED Rep';
-                                            } elseif (isset($_SESSION['major']) && $_SESSION['major'] == 'BEED') {
-                                                $positions[] = 'BEED Rep';
-                                            }
+                                            $positions[] = 'BSED Rep';
+                                            $positions[] = 'BEED Rep';
                                             break;
                                         case 'CODE-TG':
                                             $positions[] = 'BS CRIM Rep';
@@ -361,7 +353,7 @@ if (isset($voter['id'])) {
                                         <div class="modal-header" style="background-color: black">
                                             <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
+                                                <span aria-hidden="true">×</span>
                                             </button>
                                         </div>
 
@@ -393,25 +385,14 @@ if (isset($voter['id'])) {
       <?php include 'includes/footer.php'; ?>
       <?php include 'includes/ballot_modal.php'; ?>
 
-      <!-- Election End Modal -->
-      <div class="modal fade" id="electionEndModal" tabindex="-1" role="dialog" aria-labelledby="electionEndModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: black">
-                    <h5 class="modal-title" id="electionEndModalLabel">Election Ended</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>The election has ended. Thank you for your participation!</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="confirmElectionEnd">Confirm</button>
-                </div>
-            </div>
-        </div>
-    </div>
+      <!-- Election End Alert -->
+      <div id="electionEndAlert" class="election-end-alert" style="display: none;">
+          <div class="alert-content">
+              <h2>Election Ended</h2>
+              <p>The election has ended. Thank you for your participation!</p>
+              <button id="confirmElectionEnd" class="btn btn-primary">Confirm</button>
+          </div>
+      </div>
 
 </div>
 
@@ -655,30 +636,31 @@ document.addEventListener('DOMContentLoaded', function () {
         var now = new Date();
         var timeRemaining = endTime - now;
         
-        // If time remaining is negative or zero, show the modal and stop the countdown
+        // If time remaining is negative or zero, show the alert and stop the countdown
         if (timeRemaining <= 0) {
-            //document.getElementById("day").innerText = "00";
             document.getElementById("hour").innerText = "00";
             document.getElementById("min").innerText = "00";
             document.getElementById("sec").innerText = "00";
-            //document.getElementById("electionTitle").innerText = "NO ONGOING ELECTION. Stay Tuned, Madlang Pipol!";
             
-            // Show the election end modal only once
-            if (!sessionStorage.getItem('electionEndModalShown')) {
-                $('#electionEndModal').modal('show');
-                sessionStorage.setItem('electionEndModalShown', 'true');
+            // Show the election end alert only once
+            if (!sessionStorage.getItem('electionEndAlertShown')) {
+                document.getElementById('electionEndAlert').style.display = 'flex';
+                sessionStorage.setItem('electionEndAlertShown', 'true');
+
+                // Automatically redirect after 10 seconds
+                setTimeout(function() {
+                    window.location.href = 'no_active_election_home.php';
+                }, 10000); // 10 seconds
             }
             return;
         }
 
-        // Calculate days, hours, minutes, and seconds remaining
-        //var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+        // Calculate hours, minutes, and seconds remaining
         var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
         
         // Update the HTML elements with the new countdown values
-        //document.getElementById("day").innerText = formatTime(days);
         document.getElementById("hour").innerText = formatTime(hours);
         document.getElementById("min").innerText = formatTime(minutes);
         document.getElementById("sec").innerText = formatTime(seconds);
@@ -1398,6 +1380,76 @@ input[type="checkbox"]:checked + .clist {
     height: 100%;
     pointer-events: none;
     z-index: 9999;
+}
+
+/* Election End Alert Styling */
+.election-end-alert {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000; /* High z-index to appear above everything */
+}
+
+.alert-content {
+    background: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+}
+
+.alert-content h2 {
+    color: darkgreen;
+    font-size: 36px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.alert-content p {
+    font-size: 20px;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.alert-content .btn-primary {
+    background-color: darkgreen;
+    border: none;
+    padding: 12px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.alert-content .btn-primary:hover {
+    background-color: #006400;
+}
+
+/* Responsive styling for the alert */
+@media (max-width: 768px) {
+    .alert-content {
+        padding: 20px;
+    }
+
+    .alert-content h2 {
+        font-size: 28px;
+    }
+
+    .alert-content p {
+        font-size: 16px;
+    }
+
+    .alert-content .btn-primary {
+        padding: 10px 20px;
+        font-size: 16px;
+    }
 }
 </style>
 </body>
