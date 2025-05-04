@@ -556,7 +556,7 @@ menuBtn.addEventListener("click", function () {
       background-color: transparent;
     }
     
-    .header__container form input {
+    .header__container form input { 
       width: 100%;
       outline: none;
       border: none;
@@ -1151,7 +1151,7 @@ menuBtn.addEventListener("click", function () {
     }
     
     /* Base styles for .instagram__flex */
-    .instagram__flex, .instagram__flex1 {
+    .instagram__flex {
       margin-top: 2rem;
       width: max-content;
       display: flex;
@@ -1160,9 +1160,45 @@ menuBtn.addEventListener("click", function () {
       animation: scroll-large 20s linear infinite;
     }
     
+    /* Base styles for .instagram__flex */
+    .instagram__flex1 {
+      margin: 2rem auto; /* Center the container horizontally with auto margins */
+      width: max-content;
+      display: flex;
+      align-items: center;
+      justify-content: center; /* Center the flex items horizontally */
+      gap: 1rem;
+      padding: 0 1rem; /* Add padding for better spacing on smaller screens */
+    }
+    
     .instagram__flex img, .instagram__flex1 img {
       width: 200px;
       height: 200px;
+    }
+    
+    /* Responsive adjustments for smaller screens */
+    @media (max-width: 768px) {
+      .instagram__flex1 {
+        gap: 0.75rem; /* Slightly reduce gap for medium screens */
+      }
+    
+      .instagram__flex img, .instagram__flex1 img {
+        width: 150px; /* Reduce image size for medium screens */
+        height: 150px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .instagram__flex1 {
+        gap: 0.5rem; /* Further reduce gap for small screens */
+        flex-wrap: wrap; /* Allow wrapping for very small screens */
+        padding: 0 0.5rem; /* Adjust padding for small screens */
+      }
+    
+      .instagram__flex img, .instagram__flex1 img {
+        width: 120px; /* Further reduce image size for small screens */
+        height: 120px;
+      }
     }
     
     /* Keyframes for larger screens */
@@ -1188,13 +1224,13 @@ menuBtn.addEventListener("click", function () {
     
     /* Responsive adjustments */
     @media (max-width: 1200px) {
-      .instagram__flex, .instagram__flex1 {
+      .instagram__flex {
         animation: scroll-medium 20s linear infinite;
       }
     }
     
     @media (max-width: 768px) {
-      .instagram__flex, .instagram__flex1 {
+      .instagram__flex {
         animation: scroll-small 20s linear infinite;
       }
     }
