@@ -119,7 +119,6 @@ if(!is_active_election($conn)){
                                 <h3>You have already voted for this election.</h3>
                                 <a href="#view" data-toggle="modal" class="btn btn-flat btn-primary btn-lg">View Ballot</a>
                             </div>
-                            <h2 class="text-center">Live Poll Results</h2>
                             <div id="live-poll-results" class="poll-container">
     <!-- Poll results will be loaded here using AJAX -->
 </div>
@@ -166,11 +165,11 @@ if(!is_active_election($conn)){
         max-width: 800px;
         margin-left: auto;
         margin-right: auto;
-        border: 2px solid darkgreen;
+        border: 2px solid black;
     }
 
     .poll-container h3 {
-        color: darkgreen;
+        color: black;
         font-size: 1.5rem;
         margin-bottom: 15px;
         text-align: center;
@@ -801,7 +800,7 @@ body {
         }
 
         .box-header {
-            background-color: darkgreen;
+            background-color: black;
             color: #fff;
             padding: 15px;
             display: flex;
