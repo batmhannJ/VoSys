@@ -268,8 +268,11 @@ if (isset($voter['id'])) {
                                             $positions[] = 'BSOAD Rep';
                                             break;
                                         case 'YMF':
-                                            $positions[] = 'BSED Rep';
-                                            $positions[] = 'BEED Rep';
+                                            if (isset($_SESSION['major']) && $_SESSION['major'] == 'BSED') {
+                                                $positions[] = 'BSED Rep';
+                                            } elseif (isset($_SESSION['major']) && $_SESSION['major'] == 'BEED') {
+                                                $positions[] = 'BEED Rep';
+                                            }
                                             break;
                                         case 'CODE-TG':
                                             $positions[] = 'BS CRIM Rep';
