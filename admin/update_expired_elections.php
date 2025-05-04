@@ -8,6 +8,18 @@ function updateElectionStatusBasedOnTime($conn) {
         $currentTime = date('Y-m-d H:i:s');
         error_log("Running updateElectionStatusBasedOnTime at $currentTime");
         
+        $checkSql = "SELECT id, endtime FROM election WHERE status = 1 AND endtime <= ? AND organization = 'CSC' AND archived = FALSE";
+        $checkStmt = $conn->prepare($checkSql);
+        if (!$checkStmt) {
+            throw new Exception("Check prepare failed: " . $conn->error);
+        }
+        $checkStmt->bind_param('s', $currentTime);
+        $checkStmt->execute();
+        $result = $checkStmt->get_result();
+        $electionsToUpdate = $result->num_rows;
+        error_log("Found $electionsToUpdate elections to deactivate at $currentTime");
+        $checkStmt->close();
+
         $sql = "UPDATE election SET status = 0 WHERE status = 1 AND endtime <= ? AND organization = 'CSC' AND archived = FALSE";
         $stmt = $conn->prepare($sql);
         if (!$stmt) {
@@ -21,7 +33,6 @@ function updateElectionStatusBasedOnTime($conn) {
         $stmt->close();
         
         error_log("Updated $affected_rows elections to Not Active at $currentTime");
-        
         return $affected_rows;
     } catch (Exception $e) {
         error_log("Error updating election status: " . $e->getMessage());
