@@ -67,8 +67,8 @@ if (isset($_POST['save_excel_data'])) {
 
                     // Add major field to the SQL query for YMF organization
                     if ($organization == 'YMF') {
-                        $studentQuery = "INSERT INTO voters (voters_id, genPass, password, firstname, lastname, email, organization, yearLvl, major) 
-                                        VALUES ('$voter', '$randomPassword', '$password', '$firstname', '$lastname', '$email', '$organization', '$yearlvl', '$major')";
+                        $studentQuery = "INSERT INTO voters (voters_id, genPass, password, firstname, lastname, email, organization, major, yearLvl) 
+                                        VALUES ('$voter', '$randomPassword', '$password', '$firstname', '$lastname', '$email', '$organization', '$major', '$yearlvl')";
                     } else {
                         $studentQuery = "INSERT INTO voters (voters_id, genPass, password, firstname, lastname, email, organization, yearLvl) 
                                         VALUES ('$voter', '$randomPassword', '$password', '$firstname', '$lastname', '$email', '$organization', '$yearlvl')";
