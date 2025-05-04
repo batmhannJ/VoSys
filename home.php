@@ -124,29 +124,87 @@ if(!is_active_election($conn)){
 					    		<h3>You have already voted for this election.</h3>
 					    		<a href="#view" data-toggle="modal" class="btn btn-flat btn-primary btn-lg">View Ballot</a>
 					    	</div>
-				    		<h2 class="text-center">Live Poll Results</h2>
-<div id="live-poll-results">
+                            <div id="live-poll-results" class="poll-container">
     <!-- Poll results will be loaded here using AJAX -->
 </div>
 <script>
-    // Function to fetch and update poll results
     function updatePollResults() {
-        // Send AJAX request to fetch updated poll results
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                // Update the live poll results div with the fetched data
-                document.getElementById("live-poll-results").innerHTML = this.responseText;
-            }
-        };
-        // Specify the PHP file that fetches the poll results
-        xhttp.open("GET", "fetch_poll_results.php", true);
-        xhttp.send();
+        fetch('fetch_poll_results.php')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.text();
+            })
+            .then(data => {
+                const pollContainer = document.getElementById("live-poll-results");
+                pollContainer.innerHTML = data;
+                
+                // Add animation for updated results
+                pollContainer.style.transition = 'opacity 0.5s ease';
+                pollContainer.style.opacity = '0';
+                setTimeout(() => {
+                    pollContainer.style.opacity = '1';
+                }, 100);
+            })
+            .catch(error => {
+                console.error('Error fetching poll results:', error);
+                document.getElementById("live-poll-results").innerHTML = 
+                    '<p class="poll-error">Unable to load poll results. Please try again later.</p>';
+            });
     }
 
-    // Call the update function every 2 seconds
-    setInterval(updatePollResults, 2000);
+    // Initial fetch and update every 5 seconds for smoother performance
+    updatePollResults();
+    setInterval(updatePollResults, 5000);
 </script>
+
+<!-- Updated CSS for Live Poll Styling -->
+<style>
+    .poll-container {
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        border: 2px solid black;
+    }
+
+    .poll-container h3 {
+        color: black;
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .poll-container ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .poll-container li {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #ccc;
+        font-size: 1rem;
+        color: #333;
+    }
+
+    .poll-container li:last-child {
+        border-bottom: none;
+    }
+
+    .poll-error {
+        color: #dc3545;
+        text-align: center;
+        font-size: 1rem;
+    }
+</style>
         </div>
         <?php
     }
@@ -228,7 +286,7 @@ if (isset($voter['id'])) {
                                       echo '
                                     <div class="position-container">
                                         <div class="box box-solid" id="'.$row['id'].'">
-                                            <div class="box-header" style="background-color: darkgreen;">
+                                            <div class="box-header" style="background-color: #000000;">
                                                 <h3 class="box-title" style="color: #fff;">'.$row['name'].'</h3>
                                                 <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="'.slugify($row['name']).'"><i class="fa fa-refresh"></i> Reset</button>
                                             </div>
@@ -273,7 +331,7 @@ if (isset($voter['id'])) {
                                                                     data-max-vote="' . $maxVote . '">
                                                                 <img src="' . $image . '" alt="' . $crow['firstname'] . ' ' . $crow['lastname'] . '" class="candidate-image"> <br>
                                                                 <span class="candidate-name">' . $crow['firstname'] . ' ' . $crow['lastname'] . '</span> <br>
-                                                                 <button type="button" style="background-color: darkgreen;" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
+                                                                 <button type="button" style="background-color: #000000;" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
                                                                 </button>
                                                             </div>';
                                                     
@@ -296,7 +354,7 @@ if (isset($voter['id'])) {
                                 <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
-                                        <div class="modal-header">
+                                        <div class="modal-header" style="background-color: black">
                                             <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
@@ -307,7 +365,7 @@ if (isset($voter['id'])) {
                                             <p>Are you sure you want to submit your vote?</p>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-success btn-flat" id="preview_jpcs"><i class="fa fa-file-text"></i> Preview</button> 
+                                            <button type="button" class="btn btn-success btn-flat" id="preview"><i class="fa fa-file-text"></i> Preview</button> 
                                             <button type="submit" class="btn btn-primary" id="submitBtn" name="vote">Yes, Submit</button>
                                         </div>
                                     </div>
@@ -366,7 +424,6 @@ if (isset($voter['id'])) {
         confettiCanvas.width = width;
         confettiCanvas.height = height;
         
-        // Create particles
         particles = [];
         for (var i = 0; i < 150; i++) {
             particles.push(resetParticle({}, width, height));
@@ -378,14 +435,12 @@ if (isset($voter['id'])) {
                 if (streamingConfetti) {
                     confettiContext.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
                     
-                    // Update each particle
                     for (var i = 0; i < particles.length; i++) {
                         var particle = particles[i];
                         particle.tiltAngle += particle.tiltAngleIncrement;
                         particle.y += (Math.cos(waveAngle) + particle.diameter + 0.1) * 0.5;
                         particle.tilt = Math.sin(particle.tiltAngle) * 15;
                         
-                        // Check if particle is out of bounds
                         if (particle.y > height) {
                             if (!streamingConfetti && particles.length <= 0) {
                                 confettiContext.clearRect(0, 0, width, height);
@@ -402,7 +457,6 @@ if (isset($voter['id'])) {
                             }
                         }
                         
-                        // Draw particle
                         confettiContext.beginPath();
                         confettiContext.lineWidth = particle.diameter;
                         confettiContext.strokeStyle = particle.color;
@@ -418,15 +472,16 @@ if (isset($voter['id'])) {
                 if (supportsAnimationFrame) {
                     animationTimer = requestAnimationFrame(runAnimation);
                 } else {
-                    animationTimer = setTimeout(runAnimation, 16.67); // 60 FPS
+                    animationTimer = setTimeout(runAnimation, 16.67);
                 }
             })();
         }
         
-        // Stop the confetti after 8 seconds
+        // Stop the confetti after 3 seconds and hide the canvas
         setTimeout(function() {
             stopConfetti();
-        }, 8000);
+            confettiCanvas.style.display = 'none';
+        }, 3000);
     }
 
     function stopConfetti() {
@@ -658,7 +713,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-        $('#preview_jpcs').click(function(e){
+        $('#preview').click(function(e){
             e.preventDefault();
             var form = $('#ballotForm').serialize();
             if(form == ''){
@@ -872,10 +927,10 @@ body {
 }
 
 .candidate-container.selected {
-    border: 4px solid darkgreen;
-    opacity: 1;
-    transform: scale(1.10);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.9);
+    border: 4px solid black;  /* Border color for selected */
+    opacity: 1;  /* Ensure the selected one remains fully visible */
+    transform: scale(1.10);  /* Make the selected candidate "pop" slightly */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.9); /* Optional shadow for selected candidates */
 }
 
 .candidate-container.unselected:hover {
@@ -1087,7 +1142,7 @@ input[type="checkbox"]:checked + .clist {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: darkgreen;
+    background-color: black;
     color: #fff;
 }
 

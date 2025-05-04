@@ -44,8 +44,13 @@ if(isset($_POST['save_excel_data'])) {
                     // Voter does not exist, proceed with insertion
                     $set = '1234567890';
                     $voter = substr(str_shuffle($set), 0, 7);
-                    $setPass = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+-=[]{}|;:,.<>?";
-                    $randomPassword = substr(str_shuffle($setPass), 0, 10);
+                    
+                    // Generate a password with format: lastname + 1 special character + 4 random numbers
+                    $specialChars = '!@#$%^&*()-_=+[]{}|;:,.<>?';
+                    $randomSpecialChar = $specialChars[rand(0, strlen($specialChars) - 1)];
+                    $randomNumbers = substr(str_shuffle('0123456789'), 0, 4);
+                    $randomPassword = $lastname . $randomSpecialChar . $randomNumbers;
+                    
                     $password = password_hash($randomPassword, PASSWORD_DEFAULT);
 
                     $studentQuery = "INSERT INTO voters (voters_id,genPass,password,firstname,lastname,email,organization,yearLvl) VALUES ('$voter','$randomPassword','$password','$firstname','$lastname','$email','$organization','$yearlvl')";

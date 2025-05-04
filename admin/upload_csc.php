@@ -47,14 +47,19 @@ if (isset($_POST['save_excel_data'])) {
                 $existingResult = mysqli_query($conn, $existingQuery);
 
                 if(mysqli_num_rows($existingResult) == 0) {
-                $set = '1234567890';
-                $voter = substr(str_shuffle($set), 0, 7);
-                $setPass = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+-=[]{}|;:,.<>?";
-                $randomPassword = substr(str_shuffle($setPass), 0, 10);
-                $password = password_hash($randomPassword, PASSWORD_DEFAULT);
+                    $set = '1234567890';
+                    $voter = substr(str_shuffle($set), 0, 7);
+                    
+                    // Generate a password with format: lastname + 1 special character + 4 random numbers
+                    $specialChars = '!@#$%^&*()-_=+[]{}|;:,.<>?';
+                    $randomSpecialChar = $specialChars[rand(0, strlen($specialChars) - 1)];
+                    $randomNumbers = substr(str_shuffle('0123456789'), 0, 4);
+                    $randomPassword = $lastname . $randomSpecialChar . $randomNumbers;
+                    
+                    $password = password_hash($randomPassword, PASSWORD_DEFAULT);
 
-                $studentQuery = "INSERT INTO voters (voters_id,genPass,password,firstname,lastname,email,organization,yearLvl) VALUES ('$voter','$randomPassword','$password','$firstname','$lastname','$email','$organization','$yearlvl')";
-                $result = mysqli_query($conn, $studentQuery);
+                    $studentQuery = "INSERT INTO voters (voters_id,genPass,password,firstname,lastname,email,organization,yearLvl) VALUES ('$voter','$randomPassword','$password','$firstname','$lastname','$email','$organization','$yearlvl')";
+                    $result = mysqli_query($conn, $studentQuery);
                 $msg = true;
 
                 $mail = new PHPMailer();

@@ -13,6 +13,7 @@
             --gold: #FFD700;
             --white: #ffffff;
             --light-gold: rgba(255, 215, 0, 0.2);
+            --dark-maroon: #600000;
         }
 
         * {
@@ -23,7 +24,7 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: var(--maroon);
+            background: radial-gradient(circle at center, var(--maroon) 0%, var(--dark-maroon) 100%);
             color: var(--white);
             height: 100vh;
             display: flex;
@@ -33,7 +34,7 @@
             position: relative;
         }
 
-        /* Background particles */
+        /* Background particles with improved animation */
         .particles {
             position: absolute;
             top: 0;
@@ -46,34 +47,33 @@
 
         .particle {
             position: absolute;
-            width: 6px;
-            height: 6px;
             background-color: var(--light-gold);
             border-radius: 50%;
             opacity: 0.5;
+            filter: blur(1px);
         }
 
-        /* Generate 20 particles with different positions and animations */
-        .particle:nth-child(1) { top: 10%; left: 20%; animation: float 8s infinite linear; }
-        .particle:nth-child(2) { top: 20%; left: 80%; animation: float 10s infinite linear; }
-        .particle:nth-child(3) { top: 30%; left: 45%; animation: float 7s infinite linear; }
-        .particle:nth-child(4) { top: 40%; left: 15%; animation: float 9s infinite linear; }
-        .particle:nth-child(5) { top: 50%; left: 70%; animation: float 11s infinite linear; }
-        .particle:nth-child(6) { top: 60%; left: 35%; animation: float 8s infinite linear; }
-        .particle:nth-child(7) { top: 70%; left: 65%; animation: float 10s infinite linear; }
-        .particle:nth-child(8) { top: 80%; left: 25%; animation: float 9s infinite linear; }
-        .particle:nth-child(9) { top: 90%; left: 55%; animation: float 7s infinite linear; }
-        .particle:nth-child(10) { top: 15%; left: 90%; animation: float 12s infinite linear; }
-        .particle:nth-child(11) { top: 25%; left: 5%; animation: float 9s infinite linear; }
-        .particle:nth-child(12) { top: 35%; left: 75%; animation: float 8s infinite linear; }
-        .particle:nth-child(13) { top: 45%; left: 30%; animation: float 10s infinite linear; }
-        .particle:nth-child(14) { top: 55%; left: 85%; animation: float 7s infinite linear; }
-        .particle:nth-child(15) { top: 65%; left: 10%; animation: float 11s infinite linear; }
-        .particle:nth-child(16) { top: 75%; left: 50%; animation: float 8s infinite linear; }
-        .particle:nth-child(17) { top: 85%; left: 40%; animation: float 9s infinite linear; }
-        .particle:nth-child(18) { top: 95%; left: 60%; animation: float 10s infinite linear; }
-        .particle:nth-child(19) { top: 5%; left: 35%; animation: float 11s infinite linear; }
-        .particle:nth-child(20) { top: 15%; left: 65%; animation: float 7s infinite linear; }
+        /* Generate particles with different sizes and animations */
+        .particle:nth-child(1) { top: 10%; left: 20%; width: 8px; height: 8px; animation: float 8s infinite ease-in-out; }
+        .particle:nth-child(2) { top: 20%; left: 80%; width: 12px; height: 12px; animation: float 10s infinite ease-in-out; }
+        .particle:nth-child(3) { top: 30%; left: 45%; width: 6px; height: 6px; animation: float 7s infinite ease-in-out; }
+        .particle:nth-child(4) { top: 40%; left: 15%; width: 10px; height: 10px; animation: float 9s infinite ease-in-out; }
+        .particle:nth-child(5) { top: 50%; left: 70%; width: 7px; height: 7px; animation: float 11s infinite ease-in-out; }
+        .particle:nth-child(6) { top: 60%; left: 35%; width: 9px; height: 9px; animation: float 8s infinite ease-in-out; }
+        .particle:nth-child(7) { top: 70%; left: 65%; width: 11px; height: 11px; animation: float 10s infinite ease-in-out; }
+        .particle:nth-child(8) { top: 80%; left: 25%; width: 8px; height: 8px; animation: float 9s infinite ease-in-out; }
+        .particle:nth-child(9) { top: 90%; left: 55%; width: 6px; height: 6px; animation: float 7s infinite ease-in-out; }
+        .particle:nth-child(10) { top: 15%; left: 90%; width: 10px; height: 10px; animation: float 12s infinite ease-in-out; }
+        .particle:nth-child(11) { top: 25%; left: 5%; width: 7px; height: 7px; animation: float 9s infinite ease-in-out; }
+        .particle:nth-child(12) { top: 35%; left: 75%; width: 9px; height: 9px; animation: float 8s infinite ease-in-out; }
+        .particle:nth-child(13) { top: 45%; left: 30%; width: 8px; height: 8px; animation: float 10s infinite ease-in-out; }
+        .particle:nth-child(14) { top: 55%; left: 85%; width: 6px; height: 6px; animation: float 7s infinite ease-in-out; }
+        .particle:nth-child(15) { top: 65%; left: 10%; width: 11px; height: 11px; animation: float 11s infinite ease-in-out; }
+        .particle:nth-child(16) { top: 75%; left: 50%; width: 9px; height: 9px; animation: float 8s infinite ease-in-out; }
+        .particle:nth-child(17) { top: 85%; left: 40%; width: 7px; height: 7px; animation: float 9s infinite ease-in-out; }
+        .particle:nth-child(18) { top: 95%; left: 60%; width: 10px; height: 10px; animation: float 10s infinite ease-in-out; }
+        .particle:nth-child(19) { top: 5%; left: 35%; width: 8px; height: 8px; animation: float 11s infinite ease-in-out; }
+        .particle:nth-child(20) { top: 15%; left: 65%; width: 6px; height: 6px; animation: float 7s infinite ease-in-out; }
 
         .loading-container {
             display: flex;
@@ -81,49 +81,52 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            max-width: 500px;
+            max-width: 600px;
+            width: 90%;
             padding: 20px;
             position: relative;
             z-index: 1;
         }
 
-        /* Logo container with glow effect */
+        /* Logo container with enhanced glow effect */
         .logo-container {
             position: relative;
-            width: 160px;
-            height: 160px;
-            margin-bottom: 25px;
+            width: 180px;
+            height: 180px;
+            margin-bottom: 30px;
         }
 
-        /* Outer spinning ring */
+        /* Outer spinning ring with particle trail effect */
         .logo-ring {
             position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            border: 2px solid var(--gold);
+            top: -15px;
+            left: -15px;
+            right: -15px;
+            bottom: -15px;
+            border: 3px solid var(--gold);
             border-radius: 50%;
             border-top-color: transparent;
             border-bottom-color: transparent;
-            animation: spin 2s linear infinite;
+            animation: spin 4s linear infinite;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
         }
 
         /* Second spinning ring going the opposite direction */
         .logo-ring-2 {
             position: absolute;
-            top: -5px;
-            left: -5px;
-            right: -5px;
-            bottom: -5px;
-            border: 1px solid var(--gold);
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            border: 2px solid var(--gold);
             border-radius: 50%;
             border-left-color: transparent;
             border-right-color: transparent;
-            animation: spin-reverse 1.5s linear infinite;
+            animation: spin-reverse 3s linear infinite;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
         }
 
-        /* Logo background with glow */
+        /* Logo background with enhanced glow */
         .logo-bg {
             position: absolute;
             top: 0;
@@ -135,78 +138,101 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
             animation: pulse 2s ease-in-out infinite;
+            overflow: hidden;
         }
 
-        /* The actual logo that spins */
+        /* The actual logo - now with spin animation */
         .logo {
             width: 85%;
             height: 85%;
             object-fit: contain;
-            animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite; /* Added spin animation */
         }
 
         .loading-title {
-            font-size: 28px;
+            font-size: 38px;
             font-weight: 700;
             color: var(--white);
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             text-align: center;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
             animation: fade-in 0.5s ease-out;
+            letter-spacing: 0.5px;
         }
 
         .loading-subtitle {
-            font-size: 18px;
+            font-size: 22px;
             font-weight: 500;
             color: var(--gold);
-            margin-bottom: 25px;
+            margin-bottom: 45px;
             text-align: center;
             animation: fade-in 0.5s ease-out 0.2s both;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
         }
 
-        /* Progress bar container with glow */
+        /* Progress bar container with enhanced glow */
         .progress-container {
             width: 100%;
-            height: 8px;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 4px;
+            max-width: 500px;
+            height: 12px;
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
             overflow: hidden;
-            margin-bottom: 15px;
+            margin-bottom: 25px;
             position: relative;
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.2), 
+                        inset 0 0 5px rgba(0, 0, 0, 0.3);
             animation: fade-in 0.5s ease-out 0.4s both;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* Progress bar with animated gradient */
+        /* Progress bar with enhanced animated gradient */
         .progress-bar {
             height: 100%;
             width: 0;
-            background: linear-gradient(90deg, var(--gold), #FFA500, var(--gold));
-            background-size: 200% 100%;
-            border-radius: 4px;
-            animation: 
-                progress 2s cubic-bezier(0.1, 0.5, 0.9, 1) forwards,
-                gradient-shift 2s linear infinite;
+            background: linear-gradient(90deg, var(--gold), #FFA500, #FFB700, var(--gold));
+            background-size: 300% 100%;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            animation: gradient-shift 3s linear infinite;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* Loading text with fade effect */
+        /* Shimmer effect on progress bar */
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 1.5s infinite;
+        }
+
+        /* Loading text with enhanced fade effect */
         .loading-text {
-            font-size: 16px;
+            font-size: 20px;
             color: var(--white);
             opacity: 0.9;
             animation: fade-in 0.5s ease-out 0.6s both;
+            margin-bottom: 10px;
+            font-weight: 500;
         }
 
-        /* Percentage counter */
+        /* Percentage counter with enhanced styling */
         .loading-percentage {
-            position: absolute;
-            bottom: -25px;
-            right: 0;
-            font-size: 14px;
+            font-size: 18px;
             font-weight: 600;
             color: var(--gold);
+            margin-top: 5px;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+            letter-spacing: 1px;
         }
 
         /* Animation keyframes */
@@ -221,50 +247,69 @@
         }
 
         @keyframes pulse {
-            0% { transform: scale(0.98); opacity: 0.8; }
-            50% { transform: scale(1.02); opacity: 1; }
-            100% { transform: scale(0.98); opacity: 0.8; }
-        }
-
-        @keyframes progress {
-            0% { width: 0%; }
-            10% { width: 15%; }
-            30% { width: 40%; }
-            50% { width: 65%; }
-            70% { width: 80%; }
-            90% { width: 90%; }
-            100% { width: 100%; }
+            0% { transform: scale(0.97); opacity: 0.8; }
+            50% { transform: scale(1.03); opacity: 1; }
+            100% { transform: scale(0.97); opacity: 0.8; }
         }
 
         @keyframes gradient-shift {
             0% { background-position: 0% 0; }
-            100% { background-position: 200% 0; }
+            100% { background-position: 300% 0; }
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
 
         @keyframes fade-in {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes float {
-            0% { transform: translateY(0) translateX(0); }
-            25% { transform: translateY(-10px) translateX(10px); }
-            50% { transform: translateY(0) translateX(20px); }
-            75% { transform: translateY(10px) translateX(10px); }
-            100% { transform: translateY(0) translateX(0); }
+            0% { transform: translateY(0) translateX(0) rotate(0deg); }
+            25% { transform: translateY(-15px) translateX(10px) rotate(90deg); }
+            50% { transform: translateY(0) translateX(20px) rotate(180deg); }
+            75% { transform: translateY(15px) translateX(10px) rotate(270deg); }
+            100% { transform: translateY(0) translateX(0) rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .loading-title {
+                font-size: 32px;
+            }
+            
+            .loading-subtitle {
+                font-size: 18px;
+                margin-bottom: 35px;
+            }
         }
 
         @media (max-width: 480px) {
             .logo-container {
-                width: 130px;
-                height: 130px;
+                width: 140px;
+                height: 140px;
             }
             
             .loading-title {
-                font-size: 22px;
+                font-size: 28px;
             }
             
             .loading-subtitle {
+                font-size: 16px;
+                margin-bottom: 30px;
+            }
+            
+            .progress-container {
+                height: 10px;
+            }
+            
+            .loading-text {
+                font-size: 16px;
+            }
+            
+            .loading-percentage {
                 font-size: 14px;
             }
         }
@@ -308,66 +353,82 @@
         <h2 class="loading-subtitle">Online Voting System</h2>
         <div class="progress-container">
             <div class="progress-bar" id="progressBar"></div>
-            <div class="loading-percentage" id="percentage">0%</div>
         </div>
         <div class="loading-text" id="loadingText">Initializing system...</div>
+        <div class="loading-percentage" id="percentage">0%</div>
     </div>
 
     <script>
-        // Advanced loading animation with percentage counter
+        // Enhanced loading animation with smoother progress
         const progressBar = document.getElementById('progressBar');
         const percentage = document.getElementById('percentage');
         const loadingText = document.getElementById('loadingText');
         
-        // Loading messages
+        // Loading messages with more detailed steps
         const loadingMessages = [
             "Initializing system...",
-            "Connecting to server...",
+            "Connecting to secure server...",
+            "Authenticating connection...",
             "Loading election data...",
-            "Preparing ballot...",
-            "Ready!"
+            "Preparing ballot interface...",
+            "Verifying system integrity...",
+            "Ready to vote!"
         ];
         
-        // Start the loading animation
+        // Start with smoother animation
         let progress = 0;
         let messageIndex = 0;
+        let targetProgress = 0;
         
-        // Update progress and message every 400ms
-        const interval = setInterval(() => {
-            progress += 20;
-            
-            if (progress <= 100) {
+        // Function to animate progress smoothly
+        function animateProgress() {
+            if (progress < targetProgress) {
+                progress += 0.5;
                 progressBar.style.width = `${progress}%`;
-                percentage.textContent = `${progress}%`;
+                percentage.textContent = `${Math.round(progress)}%`;
                 
-                // Update loading message
-                if (messageIndex < loadingMessages.length - 1 && progress >= (messageIndex + 1) * 20) {
-                    messageIndex++;
-                    loadingText.textContent = loadingMessages[messageIndex];
+                requestAnimationFrame(animateProgress);
+            }
+        }
+        
+        // Update target progress at intervals
+        function updateProgress() {
+            if (targetProgress < 100) {
+                // Calculate next target (non-linear to simulate real loading)
+                const nextIncrement = Math.random() * 15 + 5; // Random increment between 5-20%
+                targetProgress = Math.min(targetProgress + nextIncrement, 100);
+                
+                // Start animation to the new target
+                requestAnimationFrame(animateProgress);
+                
+                // Update loading message based on progress
+                const newMessageIndex = Math.floor(targetProgress / (100 / (loadingMessages.length - 1)));
+                if (newMessageIndex > messageIndex) {
+                    messageIndex = newMessageIndex;
                     
-                    // Add a brief flash effect when message changes
-                    loadingText.style.opacity = "0.5";
+                    // Add a fade effect when message changes
+                    loadingText.style.opacity = "0";
                     setTimeout(() => {
+                        loadingText.textContent = loadingMessages[messageIndex];
                         loadingText.style.opacity = "0.9";
-                    }, 100);
+                    }, 300);
                 }
-            }
-            
-            // When loading is complete
-            if (progress >= 100) {
-                clearInterval(interval);
                 
-                // In a real application, you would redirect here after a brief pause
+                // Schedule next update with variable timing to simulate real loading
+                const delay = Math.random() * 500 + 300; // Random delay between 300-800ms
+                setTimeout(updateProgress, delay);
+            } else {
+                // When loading is complete
                 setTimeout(() => {
-                    alert('Loading complete. Redirecting to voting system...');
-                }, 500);
+                    // In a real application, you would redirect here
+                    alert('Loading complete! Redirecting to voting system...');
+                    // window.location.href = "voting.html"; // Uncomment to enable redirect
+                }, 800);
             }
-        }, 400); // 5 steps of 400ms each = 2 seconds total
-
-        // Redirect to index.html after the loading animation completes
-        setTimeout(() => {
-            window.location.href = "index.html"; // Redirect to the landing page
-        }, 5000); // Adjust the delay (in milliseconds) as needed
+        }
+        
+        // Start the progress updates after a short delay
+        setTimeout(updateProgress, 500);
     </script>
 </body>
 </html>

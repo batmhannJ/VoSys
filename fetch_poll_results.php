@@ -1,61 +1,166 @@
 <?php
-
 include 'includes/session.php';
-
 include 'includes/conn.php';
 
-include 'includes/header_code.php';
-            // Fetch live poll results
-            $sql_results = "SELECT 
-                                categories.name AS position_name, 
-                                COUNT(votes_csc.id) AS total_votes,
-                                candidates.firstname, 
-                                candidates.lastname
-                            FROM 
-                                votes_csc
-                            LEFT JOIN 
-                                candidates ON votes_csc.candidate_id = candidates.id
-                            LEFT JOIN 
-                                categories ON votes_csc.category_id = categories.id
-                            WHERE 
-                                votes_csc.election_id = 20
-                            GROUP BY 
-                                categories.name, candidates.id
-                            ORDER BY 
-                                categories.priority ASC, total_votes DESC";
-            $result = $conn->query($sql_results);
+// Fetch live poll results - GROUP BY candidate_id to count votes per candidate
+$sql_results = "SELECT 
+                    categories.name AS position_name,
+                    candidates.id AS candidate_id,
+                    candidates.firstname AS firstname,
+                    candidates.lastname AS lastname, 
+                    COUNT(votes_csc.id) AS total_votes
+                FROM 
+                    votes_csc
+                LEFT JOIN 
+                    candidates ON votes_csc.candidate_id = candidates.id
+                LEFT JOIN 
+                    categories ON votes_csc.category_id = categories.id
+                WHERE 
+                    votes_csc.election_id = 20
+                GROUP BY 
+                    categories.name, candidates.id
+                ORDER BY 
+                    categories.priority ASC, total_votes DESC";
+$result = $conn->query($sql_results);
 
-            // Get total number of votes for all positions
-            $total_votes = 0;
-            while($row = $result->fetch_assoc()) {
-                $total_votes += $row['total_votes'];
-            }
-            $result->data_seek(0); // Reset result pointer
-            
-            // Generate bar graph
-            $is_blue = true; // Initialize color
-            while($row = $result->fetch_assoc()) {
-                // Display position name only once
-                static $prev_position = '';
-                if ($row['position_name'] != $prev_position) {
-                    echo "<div style='margin-top: 20px; font-size: 20px;'><strong>{$row['position_name']}</strong></div>";
-                    $prev_position = $row['position_name'];
-                }
+// Get total number of votes for all positions
+$total_votes = 0;
+$position_votes = []; // Track votes per position
+while ($row = $result->fetch_assoc()) {
+    $total_votes += $row['total_votes'];
+    $position_votes[$row['position_name']] = ($position_votes[$row['position_name']] ?? 0) + $row['total_votes'];
+}
+$result->data_seek(0); // Reset result pointer
 
-                // Calculate percentage based on total votes for the position
-                $vote_percentage = number_format(($row['total_votes'] / $total_votes) * 100, 2);
-                
-                // Alternate color between blue and red
-                $color = $is_blue ? 'blue' : 'red';
+// Generate output
+echo '<h3>Live Poll Results</h3>';
+echo '<div class="poll-results">';
+$prev_position = '';
+$color_index = 0;
+$colors = ['#000', '#6B6B6B', '#8C8C8C', '#ADADAD']; // Lighter gray shades starting from #4A4A4A
 
-                // Display candidate result without names and with percentage rounded to 2 decimal places
-                echo "<div style='margin: 10px 0;'>
-                        <div style='background-color: #f0f0f0; width: 100%; height: 30px; border: 1px solid #ccc; border-color: #f0f0f0; border-radius: 5px;'>
-                            <div style='width: {$vote_percentage}%; background-color: $color; color: white; height: 100%; text-align: center; line-height: 30px; border-radius: 5px;'>
-                                {$vote_percentage}%
-                            </div>
-                        </div>
-                      </div>";
-                $is_blue = !$is_blue; // Toggle color
-            }
-            ?>
+while ($row = $result->fetch_assoc()) {
+    // Display position name only once
+    if ($row['position_name'] != $prev_position) {
+        if ($prev_position != '') {
+            echo '</div>'; // Close previous position div
+        }
+        echo "<div class='position-group'>";
+        echo "<h4 class='position-title'>{$row['position_name']}</h4>";
+        $prev_position = $row['position_name'];
+        $color_index = 0; // Reset color index for new position
+    }
+
+    // Calculate percentage based on total votes for the position
+    $position_total = $position_votes[$row['position_name']] ?? 1; // Avoid division by zero
+    $vote_percentage = number_format(($row['total_votes'] / $position_total) * 100, 2);
+    
+    // Select color
+    $color = $colors[$color_index % count($colors)];
+    $color_index++;
+
+    // Display result with candidate avatar and percentage
+    echo "<div class='poll-item'>";
+    echo "<img src='images/profile.jpg' class='avatar' alt='Candidate Avatar'>";
+    echo "<div class='poll-bar-container'>";
+    echo "<div class='poll-bar' style='width: {$vote_percentage}%; background-color: {$color};'>";
+    echo "<span class='poll-percentage'>{$vote_percentage}%</span>";
+    echo "</div>";
+    echo "</div>";
+    echo "</div>";
+}
+
+if ($prev_position != '') {
+    echo '</div>'; // Close last position div
+}
+echo '</div>';
+
+if ($total_votes == 0) {
+    echo '<p class="poll-empty">No votes recorded yet.</p>';
+}
+?>
+
+<style>
+.poll-results {
+    font-family: Arial, sans-serif;
+}
+
+.position-group {
+    margin-bottom: 20px;
+}
+
+.position-title {
+    font-size: 1.2rem;
+    color: #333333;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+.poll-item {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.poll-bar-container {
+    flex: 2;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    height: 30px;
+    overflow: hidden;
+}
+
+.poll-bar {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    border-radius: 5px;
+    transition: width 0.5s ease;
+}
+
+.poll-percentage {
+    color: white;
+    font-size: 0.9rem;
+    padding-right: 5px;
+    font-weight: bold;
+}
+
+.poll-empty {
+    color: #666;
+    text-align: center;
+    font-style: italic;
+    margin-top: 20px;
+}
+
+.poll-error {
+    color: #d32f2f;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .poll-item {
+        flex-direction: row;
+        align-items: center;
+    }
+    
+    .avatar {
+        display: none; /* Hide avatar on small screens */
+    }
+
+    .poll-bar-container {
+        width: 100%;
+    }
+}
+</style>
