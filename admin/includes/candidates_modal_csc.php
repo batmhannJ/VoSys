@@ -5,7 +5,7 @@
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">×</span></button>
-              <h4 class="modal-title"><b><span class="fullname" style="background-color: #f0e68c; padding: 5px 10px; border-radius: 5px; display: inline-block;"></span></b></h4>
+              <h4 class="modal-title text-center"><b><span class="fullname" style="background-color: #000000; color: #ffffff; padding: 5px 15px; border-radius: 5px; display: inline-block;"></span></b></h4>
             </div>
             <div class="modal-body">
                 <style>
@@ -22,6 +22,10 @@
                     }
                     #desc li {
                         margin-bottom: 10px;
+                    }
+                    .modal-title {
+                        text-align: center;
+                        width: 100%;
                     }
                 </style>
                 <p id="desc"></p>
