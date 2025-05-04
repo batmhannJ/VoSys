@@ -4,19 +4,19 @@ include 'includes/session.php';
 include 'includes/header_code.php';
 
 function is_active_election($conn){
-	$sql = "SELECT * FROM election WHERE title = 'CSC - College of Student Council Election' && status = 1";
-	$result = $conn->query($sql);
+    $sql = "SELECT * FROM election WHERE title = 'CSC - College of Student Council Election' && status = 1";
+    $result = $conn->query($sql);
 
-	if($result->num_rows > 0){
-		return true;
-	} else{
-		return false;
-	}
+    if($result->num_rows > 0){
+        return true;
+    } else{
+        return false;
+    }
 }
 
 if(!is_active_election($conn)){
-	header("location: no_active_election_home.php");
-	exit();
+    header("location: no_active_election_home.php");
+    exit();
 }
 
 ?>
@@ -24,24 +24,19 @@ if(!is_active_election($conn)){
 <body class="hold-transition skin-black layout-top-nav">
 <div class="wrapper">
 
-	<?php include 'includes/navbar_code.php'; ?>
-	 
-	  <div class="content-wrapper">
-	    <div class="container">
+    <?php include 'includes/navbar_code.php'; ?>
+     
+      <div class="content-wrapper">
+        <div class="container">
 
-	      <!-- Main content -->
-	      <section class="content">
+          <!-- Main content -->
+          <section class="content">
           <div class="image-container">
-	      	<h1 class="page-header text-center title">
-	      		<b>COLLEGE STUDENT COUNCIL <br> ELECTIONS</b>
+            <h1 class="page-header text-center title">
+                <b>COLLEGE STUDENT COUNCIL <br> ELECTIONS</b>
             </h1>
             <section class="discover section" id="discover">         
-        <!--<center><h4 id="electionTitle" class="heading">Remaining time to vote</h4></center>-->
         <div class="timer">
-            <!--<div class="sub_timer">
-                <h1 id="day" class="digit">00</h1>
-                <p class="digit_name">Days</p>
-            </div>-->
             <div class="sub_timer">
                 <h1 id="hour" class="digit">00</h1>
                 <p class="digit_name">Hours</p>
@@ -57,33 +52,33 @@ if(!is_active_election($conn)){
         </div>
     </section>
 </div>
-	        <div class="row">
-	        	<div class="col-sm-10 col-sm-offset-1">
-	        		<?php
-					    if(isset($_SESSION['error'])){
-					        ?>
-					        <div class="alert alert-danger alert-dismissible" id="error-alert">
-					            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-					            <ul>
-					                <?php
-					                    foreach($_SESSION['error'] as $error){
-					                        echo "<li>".$error."</li>";
-					                    }
-					                ?>
-					            </ul>
-					        </div>
-					        <?php
-					        unset($_SESSION['error']);
-					    }
-					    if(isset($_SESSION['success'])){
-					        echo "
-					            <div class='alert alert-success alert-dismissible' id='success-alert'>
-					                <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
-					                <h4><i class='icon fa fa-check'></i> Success!</h4>
-					                ".$_SESSION['success']."
-					            </div>
-					        ";
-					        unset($_SESSION['success']);
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1">
+                    <?php
+                        if(isset($_SESSION['error'])){
+                            ?>
+                            <div class="alert alert-danger alert-dismissible" id="error-alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                <ul>
+                                    <?php
+                                        foreach($_SESSION['error'] as $error){
+                                            echo "<li>".$error."</li>";
+                                        }
+                                    ?>
+                                </ul>
+                            </div>
+                            <?php
+                            unset($_SESSION['error']);
+                        }
+                        if(isset($_SESSION['success'])){
+                            echo "
+                                <div class='alert alert-success alert-dismissible' id='success-alert'>
+                                    <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>×</button>
+                                    <h4><i class='icon fa fa-check'></i> Success!</h4>
+                                    ".$_SESSION['success']."
+                                </div>
+                            ";
+                            unset($_SESSION['success']);
                             
                             // Trigger confetti when success message is shown
                             echo "<script>
@@ -91,40 +86,40 @@ if(!is_active_election($conn)){
                                       startConfetti();
                                   });
                                 </script>";
-					    }
-					?>
+                        }
+                    ?>
 
-					<div class="alert alert-danger alert-dismissible" id="alert" style="display:none;">
-					    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-					    <span class="message"></span>
-					</div>
+                    <div class="alert alert-danger alert-dismissible" id="alert" style="display:none;">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <span class="message"></span>
+                    </div>
 
-			        <script>
-					    // Function to hide alerts after 3 seconds
-					    function hideAlerts() {
-					        setTimeout(function() {
-					            document.getElementById('error-alert').style.display = 'none';
-					            document.getElementById('success-alert').style.display = 'none';
-					            document.getElementById('alert').style.display = 'none';
-					        }, 3000); // 3 seconds
-					    }
+                    <script>
+                        // Function to hide alerts after 3 seconds
+                        function hideAlerts() {
+                            setTimeout(function() {
+                                document.getElementById('error-alert').style.display = 'none';
+                                document.getElementById('success-alert').style.display = 'none';
+                                document.getElementById('alert').style.display = 'none';
+                            }, 3000); // 3 seconds
+                        }
 
-					    // Call the function when the page is loaded
-					    window.onload = function() {
-					        hideAlerts();
-					    };
-					</script>
+                        // Call the function when the page is loaded
+                        window.onload = function() {
+                            hideAlerts();
+                        };
+                    </script>
 
-				    <?php
-				    	$sql = "SELECT * FROM votes_csc WHERE voters_id = '".$voter['id']."'";
-				    	$vquery = $conn->query($sql);
-				    	if($vquery->num_rows > 0){
-				    		?>
-				    		<div class="text-center">
-					    		<h3>You have already voted for this election.</h3>
-					    		<a href="#view" data-toggle="modal" class="btn btn-flat btn-primary btn-lg">View Ballot</a>
-					    	</div>
-				    		<h2 class="text-center">Live Poll Results</h2>
+                    <?php
+                        $sql = "SELECT * FROM votes_csc WHERE voters_id = '".$voter['id']."'";
+                        $vquery = $conn->query($sql);
+                        if($vquery->num_rows > 0){
+                            ?>
+                            <div class="text-center">
+                                <h3>You have already voted for this election.</h3>
+                                <a href="#view" data-toggle="modal" class="btn btn-flat btn-primary btn-lg">View Ballot</a>
+                            </div>
+                            <h2 class="text-center">Live Poll Results</h2>
                             <div id="live-poll-results" class="poll-container">
     <!-- Poll results will be loaded here using AJAX -->
 </div>
@@ -210,9 +205,9 @@ if(!is_active_election($conn)){
         <?php
     }
     else{
-				    		?>
-			    			<!-- Voting Ballot -->
-						    <form method="POST" id="ballotForm" action="submit_ballot.php">
+                            ?>
+                            <!-- Voting Ballot -->
+                            <form method="POST" id="ballotForm" action="submit_ballot.php">
                             <?php
 session_start();
 
@@ -268,11 +263,8 @@ if (isset($voter['id'])) {
                                             $positions[] = 'BSOAD Rep';
                                             break;
                                         case 'YMF':
-                                            if (isset($_SESSION['major']) && $_SESSION['major'] == 'BSED') {
-                                                $positions[] = 'BSED Rep';
-                                            } elseif (isset($_SESSION['major']) && $_SESSION['major'] == 'BEED') {
-                                                $positions[] = 'BEED Rep';
-                                            }
+                                            $positions[] = 'BSED Rep';
+                                            $positions[] = 'BEED Rep';
                                             break;
                                         case 'CODE-TG':
                                             $positions[] = 'BS CRIM Rep';
@@ -361,7 +353,7 @@ if (isset($voter['id'])) {
                                         <div class="modal-header" style="background-color: black">
                                             <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
+                                                <span aria-hidden="true">×</span>
                                             </button>
                                         </div>
 
@@ -377,21 +369,31 @@ if (isset($voter['id'])) {
                             </div>
 
                             </form>
-				        	<!-- End Voting Ballot -->
-				    		<?php
-				    	}
+                            <!-- End Voting Ballot -->
+                            <?php
+                        }
 
-				    ?>
+                    ?>
 
-	        	</div>
-	        </div>
-	      </section>
-	     
-	    </div>
-	  </div>
+                </div>
+            </div>
+          </section>
+         
+        </div>
+      </div>
   
-  	<?php include 'includes/footer.php'; ?>
-  	<?php include 'includes/ballot_modal.php'; ?>
+      <?php include 'includes/footer.php'; ?>
+      <?php include 'includes/ballot_modal.php'; ?>
+
+      <!-- Election End Alert -->
+      <div id="electionEndAlert" class="election-end-alert" style="display: none;">
+          <div class="alert-content">
+              <h2>Election Ended</h2>
+              <p>The election has ended. Thank you for your participation!</p>
+              <button id="confirmElectionEnd" class="btn btn-primary">Confirm</button>
+          </div>
+      </div>
+
 </div>
 
 <!-- Confetti Canvas -->
@@ -634,24 +636,28 @@ document.addEventListener('DOMContentLoaded', function () {
         var now = new Date();
         var timeRemaining = endTime - now;
         
-        // If time remaining is negative or zero, display message
+        // If time remaining is negative or zero, show the alert and stop the countdown
         if (timeRemaining <= 0) {
-            //document.getElementById("day").innerText = "00";
             document.getElementById("hour").innerText = "00";
             document.getElementById("min").innerText = "00";
             document.getElementById("sec").innerText = "00";
-            document.getElementById("electionTitle").innerText = "NO ONGOING ELECTION. Stay Tuned, Madlang Pipol!";
+            
+            // Show the election end alert every time the countdown ends
+            document.getElementById('electionEndAlert').style.display = 'flex';
+
+            // Automatically redirect after 10 seconds
+            setTimeout(function() {
+                window.location.href = 'no_active_election_home.php';
+            }, 10000); // 10 seconds
             return;
         }
 
-        // Calculate days, hours, minutes, and seconds remaining
-        //var days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+        // Calculate hours, minutes, and seconds remaining
         var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
         var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
         
         // Update the HTML elements with the new countdown values
-        //document.getElementById("day").innerText = formatTime(days);
         document.getElementById("hour").innerText = formatTime(hours);
         document.getElementById("min").innerText = formatTime(minutes);
         document.getElementById("sec").innerText = formatTime(seconds);
@@ -680,6 +686,12 @@ document.addEventListener('DOMContentLoaded', function () {
         xhr.send();
     }
     fetchEndTime();
+
+    // Redirect to no_active_election_home.php when Confirm is clicked
+    document.getElementById('confirmElectionEnd').addEventListener('click', function() {
+        window.location.href = 'no_active_election_home.php';
+    });
+
     $(function(){
         $('.content').iCheck({
             checkboxClass: 'icheckbox_flat-green',
@@ -715,9 +727,7 @@ document.addEventListener('DOMContentLoaded', function () {
             $('#plat_view').html(platform);
         });
 
-
-
-        $('#preview').click(function(e){
+        $('#preview_jpcs').click(function(e){
             e.preventDefault();
             var form = $('#ballotForm').serialize();
             if(form == ''){
@@ -745,7 +755,6 @@ document.addEventListener('DOMContentLoaded', function () {
                             $('.message').html(errmsg);
                             $('#alert').show();
 
-
                             // Hide the alert after 3 seconds
                             setTimeout(function() {
                                 $('#alert').hide();
@@ -766,7 +775,6 @@ document.addEventListener('DOMContentLoaded', function () {
 </body>
 
 <style>
-
 
 body {
             font-family: Arial, sans-serif;
@@ -1004,7 +1012,6 @@ body {
     background-color: #c82333;
 }
 
-
 /* Media query para sa mas maliit na mga screen */
 @media (max-width: 768px) {
     .platform {
@@ -1033,8 +1040,6 @@ body {
     transform: scale(1.1); /* Make the image slightly larger on hover */
 }
 }
-
-
 
 /* Adjusted style for candidate name */
 .cname {
@@ -1084,7 +1089,6 @@ body {
         margin: 10px auto; /* Igitna ang platform button */
     }
 
-
     .platform i.fa {
         margin-right: 0; /* Remove right margin for icon */
     }
@@ -1110,7 +1114,6 @@ input[type="checkbox"]:checked + .clist {
     border-color: green; /* Highlight the selected image */
     transform: scale(1.1); /* Slightly enlarge the selected image */
 }
-
 
 /* Media query for smaller screens */
 @media (max-width: 768px) {
@@ -1217,8 +1220,6 @@ input[type="checkbox"]:checked + .clist {
     text-align: center;
 }
 
-
-
 .content {
     max-width: 1000px;
     margin: 0 auto;
@@ -1257,7 +1258,6 @@ input[type="checkbox"]:checked + .clist {
     transform: translate(-50%, -50%); /* Center the image */
 }
 
-
 .title {
     font-size: 40px; /* Decrease font size */
     margin-bottom: 10px; /* Decrease margin bottom */
@@ -1290,7 +1290,6 @@ input[type="checkbox"]:checked + .clist {
         font-size: 14px; /* Decrease font size for smaller screens */
     }
 }
-
 
 .timer {
     position: fixed;
@@ -1378,6 +1377,76 @@ input[type="checkbox"]:checked + .clist {
     height: 100%;
     pointer-events: none;
     z-index: 9999;
+}
+
+/* Election End Alert Styling */
+.election-end-alert {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000; /* High z-index to appear above everything */
+}
+
+.alert-content {
+    background: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+}
+
+.alert-content h2 {
+    color: darkgreen;
+    font-size: 36px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.alert-content p {
+    font-size: 20px;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.alert-content .btn-primary {
+    background-color: darkgreen;
+    border: none;
+    padding: 12px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.alert-content .btn-primary:hover {
+    background-color: #006400;
+}
+
+/* Responsive styling for the alert */
+@media (max-width: 768px) {
+    .alert-content {
+        padding: 20px;
+    }
+
+    .alert-content h2 {
+        font-size: 28px;
+    }
+
+    .alert-content p {
+        font-size: 16px;
+    }
+
+    .alert-content .btn-primary {
+        padding: 10px 20px;
+        font-size: 16px;
+    }
 }
 </style>
 </body>
