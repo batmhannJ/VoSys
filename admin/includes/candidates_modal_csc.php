@@ -5,7 +5,7 @@
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">×</span></button>
-              <h4 class="modal-title"><b><span class="fullname"></span></b></h4>
+              <h4 class="modal-title"><b><span class="fullname" style="background-color: #f0e68c; padding: 5px 10px; border-radius: 5px; display: inline-block;"></span></b></h4>
             </div>
             <div class="modal-body">
                 <style>
