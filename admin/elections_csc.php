@@ -75,13 +75,13 @@
             }
         }
 
-        // Function to insert announcement
+        // Function to insert announcement when election ends
         function insertElectionEndAnnouncement($conn) {
             try {
                 // Hard-coded announcement message
                 $announcement = "Voting time has ended. Casting of votes is disabled. Thank you.";
                 $startdate = date('Y-m-d H:i:s'); // Current date and time
-                $addedby = "johnnel Villanueva"; // Hard-coded as "System" since this is an automated action
+                $addedby = "Villanueva, Johnnel"; // Hard-coded as "System" since this is an automated action
 
                 // Prepare the SQL query to insert data into the database using prepared statements
                 $sql = "INSERT INTO announcement (announcement, startdate, addedby) VALUES (?, ?, ?)";
@@ -103,36 +103,35 @@
             }
         }
 
-        // Handle AJAX request to update status and insert announcement
-        if (isset($_POST['action']) && $_POST['action'] === 'update_status_and_announce') {
+        // Handle AJAX request from checkElectionEndTimes
+        if (isset($_POST['id']) && isset($_POST['status'])) {
             $id = $_POST['id'];
-            $response = ['status' => 'error', 'message' => 'Failed to deactivate election.'];
+            $status = $_POST['status'];
+            $starttime = isset($_POST['starttime']) ? $_POST['starttime'] : null;
+            $endtime = isset($_POST['endtime']) ? $_POST['endtime'] : null;
 
-            // Update election status to 0 (deactivate)
-            $sql = "UPDATE election SET status = 0, starttime = NULL, endtime = NULL WHERE id = ?";
+            $sql = "UPDATE election SET status = ?, starttime = ?, endtime = ? WHERE id = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("i", $id);
-            if ($stmt->execute()) {
-                $stmt->close();
+            $stmt->bind_param("issi", $status, $starttime, $endtime, $id);
 
-                // Insert the announcement
-                $announceResult = insertElectionEndAnnouncement($conn);
-                if ($announceResult['status'] === 'success') {
-                    $response = [
-                        'status' => 'success',
-                        'message' => 'Election has ended and is now deactivated. Announcement added.'
-                    ];
-                } else {
-                    $response = [
-                        'status' => 'success_with_warning',
-                        'message' => 'Election deactivated, but failed to add announcement: ' . $announceResult['message']
-                    ];
+            $response = [];
+            if ($stmt->execute()) {
+                $response = ['status' => 'success', 'message' => $status == 1 ? 'Election activated successfully.' : 'Election has ended and is now deactivated.'];
+
+                // If the election is being deactivated, insert the announcement
+                if ($status == 0) {
+                    $announceResult = insertElectionEndAnnouncement($conn);
+                    if ($announceResult['status'] === 'success') {
+                        $response['message'] .= ' Announcement added successfully.';
+                    } else {
+                        $response['message'] .= ' Failed to add announcement: ' . $announceResult['message'];
+                    }
                 }
             } else {
-                $response['message'] = 'Failed to deactivate election: ' . $stmt->error;
-                $stmt->close();
+                $response = ['status' => 'error', 'message' => 'Failed to update election status: ' . $stmt->error];
             }
 
+            $stmt->close();
             echo json_encode($response);
             exit();
         }
@@ -185,7 +184,7 @@
   </div>
 
   <?php include 'includes/footer.php'; ?>
-  <?php include 'includes/election_modal_csc.php'; ?>
+  <?php include 'includes/eduction_modal_csc.php'; ?>
 
   <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -401,26 +400,15 @@ $(function(){
                 const endTimeStr = $(this).data('endtime');
                 if (endTimeStr && new Date(endTimeStr) <= new Date()) {
                     const id = $(this).data('id');
-                    // Update the status and insert announcement
+                    // Update the status in the database
                     $.ajax({
                         type: 'POST',
-                        url: 'elections_csc.php', // Call the same file
-                        data: { action: 'update_status_and_announce', id: id },
+                        url: 'change_status.php',
+                        data: { id: id, status: 0, starttime: null, endtime: null },
                         dataType: 'json',
                         success: function(response) {
                             if (response && response.status === 'success') {
                                 toastr.success(response.message);
-                                // Update the button without reloading
-                                $(`a.election-status[data-id="${id}"]`)
-                                    .removeClass('btn-success')
-                                    .addClass('btn-secondary')
-                                    .text('Not Active')
-                                    .data('status', 1)
-                                    .attr('data-status', 1)
-                                    .removeAttr('data-endtime')
-                                    .removeAttr('data-starttime');
-                            } else if (response && response.status === 'success_with_warning') {
-                                toastr.warning(response.message);
                                 // Update the button without reloading
                                 $(`a.election-status[data-id="${id}"]`)
                                     .removeClass('btn-success')
