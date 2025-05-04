@@ -927,10 +927,10 @@ body {
 }
 
 .candidate-container.selected {
-    border: 4px solid darkgreen;
-    opacity: 1;
-    transform: scale(1.10);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.9);
+    border: 4px solid black;  /* Border color for selected */
+    opacity: 1;  /* Ensure the selected one remains fully visible */
+    transform: scale(1.10);  /* Make the selected candidate "pop" slightly */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.9); /* Optional shadow for selected candidates */
 }
 
 .candidate-container.unselected:hover {
@@ -1142,7 +1142,7 @@ input[type="checkbox"]:checked + .clist {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: darkgreen;
+    background-color: black;
     color: #fff;
 }
 
@@ -1157,159 +1157,134 @@ input[type="checkbox"]:checked + .clist {
     opacity: 0.5;
 }
 
-/* New Platform Modal Styling */
+/* Updated Platform Modal Styling */
 .modal.fade .modal-dialog {
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    transform: scale(0.8);
-    opacity: 0;
+    transition: transform 0.3s ease-out;
+    transform: translate(0, -50px);
 }
 
 .modal.in .modal-dialog {
-    transform: scale(1);
-    opacity: 1;
+    transform: translate(0, 0);
 }
 
 .modal-content {
-    border-radius: 16px;
+    border-radius: 12px;
     border: none;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    background: #fff;
 }
 
 .modal-header {
-    background: linear-gradient(135deg, darkgreen, #2e7d32);
+    background-color: darkgreen;
     color: white;
-    padding: 20px 25px;
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
+    padding: 20px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
 .modal-title {
-    font-size: 1.6rem;
-    font-weight: 700;
+    font-size: 1.5rem;
+    font-weight: 600;
     margin: 0;
-    letter-spacing: 0.5px;
 }
 
 .modal-header .close {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     color: white;
-    opacity: 0.7;
-    transition: opacity 0.3s, transform 0.3s;
+    opacity: 0.8;
+    transition: opacity 0.3s;
 }
 
 .modal-header .close:hover {
     opacity: 1;
-    transform: rotate(90deg);
 }
 
 .modal-body {
-    padding: 35px;
-    background: transparent;
+    padding: 30px;
+    background-color: #f8f9fa;
 }
 
 .platform-card {
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 12px;
-    padding: 30px;
-    border-left: 5px solid #2e7d32;
-    transition: transform 0.3s ease;
-}
-
-.platform-card:hover {
-    transform: translateY(-5px);
+    background: white;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
 
 .platform-card h4 {
-    font-size: 1.5rem;
-    color: #1a3c34;
-    margin-bottom: 15px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    font-size: 1.4rem;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid darkgreen;
+    font-weight: 600;
 }
 
 .platform-content {
-    font-size: 1.15rem;
-    color: #263238;
-    line-height: 1.9;
+    font-size: 1.1rem;
+    color: #34495e;
+    line-height: 1.8;
     margin: 0;
 }
 
 .platform-content p {
-    margin-bottom: 20px;
-    padding: 10px;
-    background: rgba(46, 125, 50, 0.05);
-    border-radius: 8px;
+    margin-bottom: 15px;
 }
 
 .platform-content ul, .platform-content ol {
-    padding-left: 25px;
-    margin-bottom: 20px;
+    padding-left: 20px;
+    margin-bottom: 15px;
 }
 
 .platform-content li {
-    margin-bottom: 12px;
-    position: relative;
-    padding-left: 15px;
-}
-
-.platform-content li::before {
-    content: '•';
-    color: #2e7d32;
-    font-size: 1.5rem;
-    position: absolute;
-    left: 0;
-    top: 0;
+    margin-bottom: 10px;
 }
 
 .modal-footer {
-    padding: 20px 25px;
+    padding: 20px;
     border-top: none;
-    background: transparent;
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
+    background-color: #f8f9fa;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
     justify-content: flex-end;
 }
 
 .modal-footer .btn-secondary {
-    background: #455a64;
+    background-color: #6c757d;
     border: none;
-    border-radius: 8px;
-    padding: 12px 25px;
-    font-size: 1.1rem;
-    font-weight: 500;
-    transition: background 0.3s, transform 0.3s;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    transition: background-color 0.3s;
 }
 
 .modal-footer .btn-secondary:hover {
-    background: #37474f;
-    transform: scale(1.05);
+    background-color: #5a6268;
 }
 
 @media (max-width: 768px) {
     .modal-dialog {
-        margin: 15px;
+        margin: 10px;
     }
 
     .modal-content {
-        border-radius: 12px;
+        border-radius: 8px;
     }
 
     .modal-header {
-        padding: 15px 20px;
+        padding: 15px;
     }
 
     .modal-title {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
     }
 
     .modal-body {
-        padding: 25px;
+        padding: 20px;
     }
 
     .platform-card {
@@ -1317,7 +1292,7 @@ input[type="checkbox"]:checked + .clist {
     }
 
     .platform-card h4 {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
     }
 
     .platform-content {
@@ -1325,12 +1300,7 @@ input[type="checkbox"]:checked + .clist {
     }
 
     .modal-footer {
-        padding: 15px 20px;
-    }
-
-    .modal-footer .btn-secondary {
-        padding: 10px 20px;
-        font-size: 1rem;
+        padding: 15px;
     }
 }
 
