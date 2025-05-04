@@ -357,6 +357,28 @@ $(function(){
                                     .attr('data-status', 1)
                                     .removeAttr('data-endtime')
                                     .removeAttr('data-starttime');
+
+                                // Insert announcement after deactivation
+                                $.ajax({
+                                    type: 'POST',
+                                    url: 'insert_announcement.php', // New PHP script to handle announcement insertion
+                                    data: { 
+                                        announcement: `The election with ID ${id} has ended.`, 
+                                        addedby: 'System' // You can modify this to use the logged-in user's name if available
+                                    },
+                                    dataType: 'json',
+                                    success: function(announcementResponse) {
+                                        if (announcementResponse && announcementResponse.status === 'success') {
+                                            toastr.success('Announcement added successfully.');
+                                        } else {
+                                            toastr.error(announcementResponse.message || 'Failed to add announcement.');
+                                        }
+                                    },
+                                    error: function(xhr, status, error) {
+                                        console.error('AJAX Error (Announcement Insertion):', { status, error, responseText: xhr.responseText });
+                                        toastr.error('An error occurred while adding the announcement.');
+                                    }
+                                });
                             } else {
                                 toastr.error(response.message || 'Failed to deactivate election.');
                             }
