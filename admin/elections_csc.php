@@ -75,67 +75,6 @@
             }
         }
 
-        // Function to insert announcement when election ends
-        function insertElectionEndAnnouncement($conn) {
-            try {
-                // Hard-coded announcement message
-                $announcement = "Voting time has ended. Casting of votes is disabled. Thank you.";
-                $startdate = date('Y-m-d H:i:s'); // Current date and time
-                $addedby = "Villanueva, Johnnel"; // Hard-coded as "System" since this is an automated action
-
-                // Prepare the SQL query to insert data into the database using prepared statements
-                $sql = "INSERT INTO announcement (announcement, startdate, addedby) VALUES (?, ?, ?)";
-                $stmt = $conn->prepare($sql);
-                if (!$stmt) {
-                    throw new Exception("Prepare failed: " . $conn->error);
-                }
-                $stmt->bind_param("sss", $announcement, $startdate, $addedby);
-
-                // Execute the statement
-                if (!$stmt->execute()) {
-                    throw new Exception("Execute failed: " . $stmt->error);
-                }
-                $stmt->close();
-                return ['status' => 'success', 'message' => 'Announcement added successfully'];
-            } catch (Exception $e) {
-                error_log("Error inserting announcement: " . $e->getMessage());
-                return ['status' => 'error', 'message' => 'Failed to add announcement: ' . $e->getMessage()];
-            }
-        }
-
-        // Handle AJAX request from checkElectionEndTimes
-        if (isset($_POST['id']) && isset($_POST['status'])) {
-            $id = $_POST['id'];
-            $status = $_POST['status'];
-            $starttime = isset($_POST['starttime']) ? $_POST['starttime'] : null;
-            $endtime = isset($_POST['endtime']) ? $_POST['endtime'] : null;
-
-            $sql = "UPDATE election SET status = ?, starttime = ?, endtime = ? WHERE id = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("issi", $status, $starttime, $endtime, $id);
-
-            $response = [];
-            if ($stmt->execute()) {
-                $response = ['status' => 'success', 'message' => $status == 1 ? 'Election activated successfully.' : 'Election has ended and is now deactivated.'];
-
-                // If the election is being deactivated, insert the announcement
-                if ($status == 0) {
-                    $announceResult = insertElectionEndAnnouncement($conn);
-                    if ($announceResult['status'] === 'success') {
-                        $response['message'] .= ' Announcement added successfully.';
-                    } else {
-                        $response['message'] .= ' Failed to add announcement: ' . $announceResult['message'];
-                    }
-                }
-            } else {
-                $response = ['status' => 'error', 'message' => 'Failed to update election status: ' . $stmt->error];
-            }
-
-            $stmt->close();
-            echo json_encode($response);
-            exit();
-        }
-
         // Call the function to update statuses before displaying the table
         updateElectionStatusBasedOnTime($conn);
       ?>
@@ -184,7 +123,7 @@
   </div>
 
   <?php include 'includes/footer.php'; ?>
-  <?php include 'includes/eduction_modal_csc.php'; ?>
+  <?php include 'includes/election_modal_csc.php'; ?>
 
   <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -408,7 +347,7 @@ $(function(){
                         dataType: 'json',
                         success: function(response) {
                             if (response && response.status === 'success') {
-                                toastr.success(response.message);
+                                toastr.success('Election has ended and is now deactivated.');
                                 // Update the button without reloading
                                 $(`a.election-status[data-id="${id}"]`)
                                     .removeClass('btn-success')
