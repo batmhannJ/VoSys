@@ -42,12 +42,12 @@
 
         // Function to display election status
         function displayElectionStatus($row) {
-            $data_attributes = $row['status'] === 1 ? ' data-endtime="' . htmlspecialchars($row['endtime']) . '" data-starttime="' . htmlspecialchars($row['starttime']) . '"' : '';
-            if ($row['status'] === 0) {
-                return '<td><a href="#" name="status" class="btn badge rounded-pill btn-secondary election-status" data-id="' . $row['id'] . '" data-status="1" data-name="Activate">Not Active</a></td>';
-            } else {
-                return '<td><a href="#" name="status" class="btn badge rounded-pill btn-success election-status"' . $data_attributes . ' data-id="' . $row['id'] . '" data-status="0" data-name="Deactivate">Active</a></td>';
-            }
+          $data_attributes = $row['status'] === 1 ? ' data-endtime="' . htmlspecialchars($row['endtime']) . '" data-starttime="' . htmlspecialchars($row['starttime']) . '"' : '';
+          if ($row['status'] === 0) {
+              return '<td><a href="#" name="status" class="btn badge rounded-pill btn-secondary election-status" data-id="' . $row['id'] . '" data-status="1" data-name="Activate">Not Active</a></td>';
+          } else {
+              return '<td><a href="#" name="status" class="btn badge rounded-pill btn-success election-status"' . $data_attributes . ' data-id="' . $row['id'] . '" data-status="0" data-name="Deactivate">Active</a></td>';
+          }
         }
 
         // Function to update election status based on end time
@@ -320,35 +320,62 @@ $(function(){
     let earliestEndTimeStr = null;
 
     activeElections.each(function() {
-      const endTimeStr = $(this).data('endtime');
-      if (endTimeStr) {
-        const endTime = new Date(endTimeStr);
-        if (!isNaN(endTime.getTime()) && (earliestEndTime === null || endTime < earliestEndTime)) {
-          earliestEndTime = endTime;
-          earliestEndTimeStr = endTimeStr;
+        const endTimeStr = $(this).data('endtime');
+        if (endTimeStr) {
+            const endTime = new Date(endTimeStr);
+            if (!isNaN(endTime.getTime()) && (earliestEndTime === null || endTime < earliestEndTime)) {
+                earliestEndTime = endTime;
+                earliestEndTimeStr = endTimeStr;
+            }
         }
-      }
     });
 
     if (earliestEndTime && earliestEndTime > new Date()) {
-      const timeUntilEnd = earliestEndTime - new Date();
-      console.log(`Scheduling reload for ${earliestEndTimeStr} in ${timeUntilEnd / 1000} seconds`);
-      
-      // Add 5-second buffer to ensure server-side update occurs
-      setTimeout(function() {
-        console.log('Election endtime reached, reloading page...');
-        toastr.info('An election has ended, reloading page...');
+        const timeUntilEnd = earliestEndTime - new Date();
+        console.log(`Scheduling status update for ${earliestEndTimeStr} in ${timeUntilEnd / 1000} seconds`);
+
         setTimeout(function() {
-          location.reload();
-        }, 2000);
-      }, timeUntilEnd + 5000); // 5-second buffer
+            activeElections.each(function() {
+                const endTimeStr = $(this).data('endtime');
+                if (endTimeStr && new Date(endTimeStr) <= new Date()) {
+                    const id = $(this).data('id');
+                    // Update the status in the database
+                    $.ajax({
+                        type: 'POST',
+                        url: 'change_status.php',
+                        data: { id: id, status: 0, starttime: null, endtime: null },
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response && response.status === 'success') {
+                                toastr.success('Election has ended and is now deactivated.');
+                                // Update the button without reloading
+                                $(`a.election-status[data-id="${id}"]`)
+                                    .removeClass('btn-success')
+                                    .addClass('btn-secondary')
+                                    .text('Not Active')
+                                    .data('status', 1)
+                                    .attr('data-status', 1)
+                                    .removeAttr('data-endtime')
+                                    .removeAttr('data-starttime');
+                            } else {
+                                toastr.error(response.message || 'Failed to deactivate election.');
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('AJAX Error (Auto-Deactivation):', { status, error, responseText: xhr.responseText });
+                            toastr.error('An error occurred during auto-deactivation.');
+                        }
+                    });
+                }
+            });
+        }, timeUntilEnd);
     } else {
-      console.log('No valid future endtimes found or all endtimes passed');
+        console.log('No valid future endtimes found or all endtimes passed');
     }
 
     // Check again after 30 seconds
     setTimeout(checkElectionEndTimes, 30000);
-  }
+}
 
   // Start checking end times on page load
   checkElectionEndTimes();
