@@ -292,12 +292,15 @@ if (isset($voter['id'])) {
                                                     <ul>';
                                                     $sql = "SELECT * FROM candidates WHERE category_id='" . $row['id'] . "'";
                                                     $cquery = $conn->query($sql);
+                                                    
                                                     while ($crow = $cquery->fetch_assoc()) {
                                                         $slug = slugify($row['name']);
                                                         $image = (!empty($crow['photo'])) ? 'images/' . $crow['photo'] : 'images/profile.jpg';
-                                                        $maxVote = $row['max_vote'];
+                                                        $maxVote = $row['max_vote']; // Fetch max vote per position
+                                                        
                                                         if(isset($_SESSION['post'][$slug])){
                                                             $value = $_SESSION['post'][$slug];
+                                                        
                                                             if(is_array($value)){
                                                                 foreach($value as $val){
                                                                     if($val == $crow['id']){
@@ -311,10 +314,13 @@ if (isset($voter['id'])) {
                                                                 }
                                                             }
                                                         }
-                                                        $inputId = $slug.'_'.$crow['id'];
+                                                    
+                                                        $inputId = $slug.'_'.$crow['id']; // Generate a unique ID for the input
                                                         $input = ($maxVote > 1) ? 
                                                             '<input type="checkbox" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.$slug."[]".'" value="'.$crow['id'].'" '.$checked.'>' : 
                                                             '<input type="radio" id="'.$inputId.'" class="flat-red '.$slug.'" name="'.slugify($row['name']).'" value="'.$crow['id'].'" '.$checked.'>';
+                                                    
+                                                        // Generate candidate container
                                                         echo '<div class="candidate-container" 
                                                                     data-id="' . $crow['id'] . '" 
                                                                     data-position="' . $slug . '" 
@@ -324,60 +330,77 @@ if (isset($voter['id'])) {
                                                                  <button type="button" style="background-color: #000000;" class="btn btn-primary btn-sm btn-flat platform" data-platform="'.$crow['platform'].'" data-fullname="'.$crow['firstname'].' '.$crow['lastname'].'">PLATFORM</button>
                                                                 </button>
                                                             </div>';
-                                                    }                    
-                                    echo '</ul>
+                                                    
+                                                    
+}                    
+                                    
+                                echo '</ul>
                             </div>
                         </div>
                     </div>
                 </div>';
+                
             }
             ?>
-            <div class="text-center">
-                <button type="button" class="btn btn-primary btn-flat" style="background-color: darkgreen;" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
-            </div>
-            <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header" style="background-color: black">
-                            <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Are you sure you want to submit your vote?</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-success btn-flat" id="preview"><i class="fa fa-file-text"></i> Preview</button> 
-                            <button type="submit" class="btn btn-primary" id="submitBtn" name="vote">Yes, Submit</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-primary btn-flat" style="background-color: darkgreen;" id="submitBtn"><i class="fa fa-check-square-o"></i> Submit</button>
+                                </div>
+
+                                <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header" style="background-color: black">
+                                            <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <p>Are you sure you want to submit your vote?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-success btn-flat" id="preview"><i class="fa fa-file-text"></i> Preview</button> 
+                                            <button type="submit" class="btn btn-primary" id="submitBtn" name="vote">Yes, Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             </form>
                             <!-- End Voting Ballot -->
                             <?php
                         }
+
                     ?>
+
                 </div>
             </div>
           </section>
+         
         </div>
       </div>
-    <?php include 'includes/footer.php'; ?>
-    <?php include 'includes/ballot_modal.php'; ?>
-    <!-- Election End Alert -->
-    <div id="electionEndAlert" class="election-end-alert" style="display: none;">
-        <div class="alert-content">
-            <h2>Election Ended</h2>
-            <p>The election has ended. Thank you for your participation!</p>
-            <button id="confirmElectionEnd" class="btn btn-primary">Confirm</button>
-        </div>
-    </div>
+  
+      <?php include 'includes/footer.php'; ?>
+      <?php include 'includes/ballot_modal.php'; ?>
+
+      <!-- Election End Alert -->
+      <div id="electionEndAlert" class="election-end-alert" style="display: none;">
+          <div class="alert-content">
+              <h2>Election Ended</h2>
+              <p>The election has ended. Thank you for your participation!</p>
+              <button id="confirmElectionEnd" class="btn btn-primary">Confirm</button>
+          </div>
+      </div>
+
 </div>
+
 <!-- Confetti Canvas -->
 <canvas id="confetti-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999;"></canvas>
+
 <?php include 'includes/scripts.php'; ?>
+
 <!-- Confetti JS Code -->
 <script>
     // Confetti script
@@ -619,16 +642,13 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById("min").innerText = "00";
             document.getElementById("sec").innerText = "00";
             
-            // Show the election end alert only once
-            if (!sessionStorage.getItem('electionEndAlertShown')) {
-                document.getElementById('electionEndAlert').style.display = 'flex';
-                sessionStorage.setItem('electionEndAlertShown', 'true');
+            // Show the election end alert every time the countdown ends
+            document.getElementById('electionEndAlert').style.display = 'flex';
 
-                // Automatically redirect after 10 seconds
-                setTimeout(function() {
-                    window.location.href = 'no_active_election_home.php';
-                }, 10000); // 10 seconds
-            }
+            // Automatically redirect after 10 seconds
+            setTimeout(function() {
+                window.location.href = 'no_active_election_home.php';
+            }, 10000); // 10 seconds
             return;
         }
 
