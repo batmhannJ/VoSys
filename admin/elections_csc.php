@@ -337,13 +337,8 @@ $(function(){
         setTimeout(function() {
             activeElections.each(function() {
                 const endTimeStr = $(this).data('endtime');
-                const id = $(this).data('id');
-                
-                // Skip if this election has already been processed
-                if (endTimeStr && new Date(endTimeStr) <= new Date() && !announcedElections.includes(id)) {
-                    // Mark this election as processed
-                    announcedElections.push(id);
-
+                if (endTimeStr && new Date(endTimeStr) <= new Date()) {
+                    const id = $(this).data('id');
                     // Update the status in the database
                     $.ajax({
                         type: 'POST',
@@ -366,10 +361,10 @@ $(function(){
                                 // Insert announcement after deactivation
                                 $.ajax({
                                     type: 'POST',
-                                    url: 'insert_announcement.php',
+                                    url: 'insert_announcement.php', // New PHP script to handle announcement insertion
                                     data: { 
-                                        announcement: `The election with ID ${id} has ended.`, 
-                                        addedby: 'System'
+                                        announcement: `Voting time has ended. Casting of votes is disabled. Thank you.`, 
+                                        addedby: 'Villanueva, Johnnel' // You can modify this to use the logged-in user's name if available
                                     },
                                     dataType: 'json',
                                     success: function(announcementResponse) {
@@ -402,7 +397,7 @@ $(function(){
 
     // Check again after 30 seconds
     setTimeout(checkElectionEndTimes, 30000);
-  }
+}
 
   // Start checking end times on page load
   checkElectionEndTimes();
