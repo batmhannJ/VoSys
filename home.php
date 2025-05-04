@@ -221,12 +221,13 @@ if (isset($voter['id'])) {
 
     // Fetch the user's organization and set it in the session (if not already set)
     if (!isset($_SESSION['organization'])) {
-        $userQuery = "SELECT organization FROM voters WHERE id = '$userId'";
+        $userQuery = "SELECT organization, major FROM voters WHERE id = '$userId'";
         $userResult = $conn->query($userQuery);
         if ($userResult) {
             if ($userResult->num_rows > 0) {
                 $userRow = $userResult->fetch_assoc();
                 $_SESSION['organization'] = $userRow['organization'];
+                $_SESSION['major'] = $userRow['major']; // Store the major in session
             } else {
                 echo "No organization found for user ID: $userId";
             }
@@ -262,8 +263,11 @@ if (isset($voter['id'])) {
                                             $positions[] = 'BSOAD Rep';
                                             break;
                                         case 'YMF':
-                                            $positions[] = 'BSED Rep';
-                                            $positions[] = 'BEED Rep';
+                                            if (isset($_SESSION['major']) && $_SESSION['major'] == 'BSED') {
+                                                $positions[] = 'BSED Rep';
+                                            } elseif (isset($_SESSION['major']) && $_SESSION['major'] == 'BEED') {
+                                                $positions[] = 'BEED Rep';
+                                            }
                                             break;
                                         case 'CODE-TG':
                                             $positions[] = 'BS CRIM Rep';
