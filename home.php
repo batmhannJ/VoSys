@@ -708,70 +708,69 @@ document.addEventListener('DOMContentLoaded', function () {
 
 <style>
 
-
 body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f5f5f5;
-        }
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
 
-        .position-container {
-            max-width: 1500px;
-            margin: 5px auto;
-            padding: 5px;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
+.position-container {
+    max-width: 1500px;
+    margin: 5px auto;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
 
-        .box {
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            background: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
+.box {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
 
-        .box-header {
-            background-color: darkgreen;
-            color: #fff;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+.box-header {
+    background-color: darkgreen;
+    color: #fff;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-        .box-header h3 {
-            margin: 0;
-            font-size: 1.00rem;
-        }
+.box-header h3 {
+    margin: 0;
+    font-size: 1.00rem;
+}
 
-        .box-header button {
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 4px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+.box-header button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
 
-        .box-header button:hover {
-            background-color: #000000;
-        }
+.box-header button:hover {
+    background-color: #000000;
+}
 
-        .box-body {
-            padding: 20px;
-            background-color: #f9f9f9;
-        }
+.box-body {
+    padding: 20px;
+    background-color: #f9f9f9;
+}
 
-        .instruction {
-            font-size: 1rem;
-            margin-bottom: 15px;
-            color: #555;
-        }
+.instruction {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    color: #555;
+}
 
 .reset {
     background-color: #dc3545;
@@ -779,53 +778,49 @@ body {
     border: none;
     border-radius: 5px;
     padding: 10px 15px;
-    font-size: 14px; /* Increased font size */
-    font-weight: bold; /* Make text bold */
+    font-size: 14px;
+    font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-left: auto; /* Align reset button to the right */
+    margin-left: auto;
 }
 
 .reset:hover {
     background-color: #c82333;
 }
 
-/* Style for the box title */
 .box-title {
     margin: 0;
     font-size: 15px;
     font-weight: 300;
 }
 
-/* Style for the box body */
 .box-body {
     padding: 10px;
     display: flex;
-    flex-direction: column; /* Stack elements vertically */
-    align-items: center; /* Center align all the children */
+    flex-direction: column;
+    align-items: center;
 }
 
-/* Style for the voting instructions */
 .instruction {
     font-size: 16px;
     margin-bottom: 10px;
 }
 
-/* Style for the candidate list */
 .candidate-list ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
     display: flex;
-    flex-wrap: wrap; /* Allow wrapping of candidates */
-    justify-content: center; /* Center align candidate items */
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .candidate-list li {
     display: flex;
-    flex-direction: column; /* Stack elements vertically */
+    flex-direction: column;
     justify-content: center;
-    align-items: center; /* Center content inside each list item */
+    align-items: center;
     border-radius: 10px;
     padding: 10px;
     margin: 10px;
@@ -833,27 +828,24 @@ body {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     border: 2px solid #ccc;
     transition: transform 0.3s;
-    width: 200px; /* Set a fixed width for each candidate item */
+    width: 200px;
 }
 
-/* Hover effect for candidate list item */
 .candidate-list li:hover {
-    transform: scale(1.05); /* Slight zoom effect */
+    transform: scale(1.05);
 }
 
 .candidate-list li img {
-    width: 120px; /* Adjust width for smaller screens */
-    height: 120px; /* Adjust height */
+    width: 120px;
+    height: 120px;
     border-radius: 8px;
     transition: transform 0.3s;
 }
 
-/* Hover effect for candidate images */
 .candidate-list li:hover img {
-    transform: scale(1.1); /* Slightly enlarge image on hover */
+    transform: scale(1.1);
 }
 
-/* Style for candidate container */
 .candidate-container {
     display: inline-block;
     text-align: center;
@@ -866,37 +858,32 @@ body {
     transition: transform 0.3s, border-color 0.3s, opacity 0.3s;
     cursor: pointer;
     width: 200px;
-    position: relative; /* Make sure the platform button stays inside the candidate container */
-    opacity: 1;  /* Full opacity by default */
-    transform: scale(1);  /* Default scale */
+    position: relative;
+    opacity: 1;
+    transform: scale(1);
 }
 
-/* Hover effect for candidate container */
 .candidate-container:hover {
     transform: scale(1.05);
 }
 
-/* When no candidate is selected, darken the unselected ones */
 .candidate-container.unselected {
-    opacity: 0.5; /* Darken the unselected candidates */
+    opacity: 0.5;
 }
 
-/* Highlight the selected candidate with border and scale effect */
 .candidate-container.selected {
-    border: 4px solid darkgreen;  /* Border color for selected */
-    opacity: 1;  /* Ensure the selected one remains fully visible */
-    transform: scale(1.10);  /* Make the selected candidate "pop" slightly */
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.9); /* Optional shadow for selected candidates */
+    border: 4px solid darkgreen;
+    opacity: 1;
+    transform: scale(1.10);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.9);
 }
 
-/* Optional: Add a hover effect for unselected candidates */
 .candidate-container.unselected:hover {
     opacity: 0.9;
     transform: scale(1.10);
-    box-shadow: 0 15px 15px rgba(0.1, 0.1, 0.1, 0.7); /* Stronger shadow on hover */
+    box-shadow: 0 15px 15px rgba(0.1, 0.1, 0.1, 0.7);
 }
 
-/* Candidate image style */
 .candidate-image {
     width: 120px;
     height: 120px;
@@ -904,16 +891,14 @@ body {
     transition: transform 0.3s;
 }
 
-/* Candidate name style */
 .candidate-name {
     margin-top: 10px;
     font-size: 14px;
     font-weight: bold;
 }
 
-/* Style for the platform button */
 .platform-button {
-    margin-top: 10px; /* Space between the candidate's name and the button */
+    margin-top: 10px;
     font-size: 14px;
     background-color: #000000;
     color: #fff;
@@ -924,12 +909,10 @@ body {
     transition: background-color 0.3s;
 }
 
-/* Hover effect for platform button */
 .platform-button:hover {
     background-color: #000000;
 }
 
-/* Consolidated reset button styles */
 .reset {
     background-color: #dc3545;
     color: #fff;
@@ -938,71 +921,64 @@ body {
     padding: 5px 10px;
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-left: auto; /* Align to the right */
+    margin-left: auto;
 }
 
 .reset:hover {
     background-color: #c82333;
 }
 
-
-/* Media query para sa mas maliit na mga screen */
 @media (max-width: 768px) {
     .platform {
-        padding: 6px 16px; /* I-adjust ang padding para sa mas maliit na screen */
-        font-size: 14px; /* I-adjust ang font size */
-        width: auto; /* I-adjust ang lapad */
-        font-family: sans-serif; /* Change the font family to Arial or any desired font */
+        padding: 6px 16px;
+        font-size: 14px;
+        width: auto;
+        font-family: sans-serif;
     }
     .candidate-list li {
-        flex-direction: column; /* Baguhin ang direksyon ng flex container sa column */
-        align-items: center; /* I-align ang mga item sa gitna */
-        padding: 15px; /* I-adjust ang padding para sa mas maliit na screen */
-        border: 2px solid #ccc; /* Add border */
-    border-radius: 10px; /* Rounded corners */
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+        border: 2px solid #ccc;
+        border-radius: 10px;
     }
 
     .candidate-list li img {
-        width: 100px; /* I-adjust ang lapad ng mga larawan para sa mas maliit na screen */
-        height: 100px; /* I-adjust ang taas ng mga larawan para sa mas maliit na screen */
-        margin: 0 auto; /* Ilipat ang mga larawan sa gitna */
-        display: block; /* Make the image a block element */
-        transition: transform 0.3s; /* Add transition effect */
-}
+        width: 100px;
+        height: 100px;
+        margin: 0 auto;
+        display: block;
+        transition: transform 0.3s;
+    }
 
-.candidate-list li:hover img {
-    transform: scale(1.1); /* Make the image slightly larger on hover */
-}
-}
-
-
-
-/* Adjusted style for candidate name */
-.cname {
-    font-size: 18px; /* Default font size */
-    margin-left: auto; /* Push candidate name to the end */
-    font-weight: bold;
-}
-
-/* Media query for smaller screens */
-@media (max-width: 768px) {
-    .cname {
-        font-size: 15px; /* Reduce font size on smaller screens */
+    .candidate-list li:hover img {
+        transform: scale(1.1);
     }
 }
 
-/* Adjusted style for platform button */
+.cname {
+    font-size: 18px;
+    margin-left: auto;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .cname {
+        font-size: 15px;
+    }
+}
+
 .platform {
     background-color: #007bff;
     color: #fff;
     border: none;
-    border-radius: 20px; /* Make it pill-shaped */
-    padding: 8px 20px; /* Add padding */
+    border-radius: 20px;
+    padding: 8px 20px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-left: auto; /* Push platform button to the end */
-    display: flex; /* Use flexbox to align icon and text */
-    align-items: center; /* Center items vertically */
+    margin-left: auto;
+    display: flex;
+    align-items: center;
 }
 
 .platform:hover {
@@ -1010,37 +986,33 @@ body {
 }
 
 .platform i {
-    font-style: normal; /* Ibalik ang font style sa normal */
-    font-weight: bold; /* I-set ang font weight sa bold */
-    font-size: 14px; /* I-adjust ang font size */
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
 }
 
-/* Media query for smaller screens */
 @media (max-width: 768px) {
-  
     .platform {
-        padding: 6px 16px; /* I-adjust ang padding para sa mas maliit na screen */
-        font-size: 14px; /* I-adjust ang font size */
-        width: auto; /* I-adjust ang lapad */
-        margin: 10px auto; /* Igitna ang platform button */
+        padding: 6px 16px;
+        font-size: 14px;
+        width: auto;
+        margin: 10px auto;
     }
 
-
     .platform i.fa {
-        margin-right: 0; /* Remove right margin for icon */
+        margin-right: 0;
     }
 
     .platform span.text {
-        display: none; /* Hide text on smaller screens */
+        display: none;
     }
 }
 
-/* Style for the image to make it visually interactive */
 .clist {
     width: 100px;
     height: 100px;
     object-fit: cover;
-    border-radius: 50%; /* Circular image */
+    border-radius: 50%;
     border: 2px solid transparent;
     transition: border-color 0.3s, transform 0.3s;
     cursor: pointer;
@@ -1048,24 +1020,20 @@ body {
 
 input[type="radio"]:checked + .clist,
 input[type="checkbox"]:checked + .clist {
-    border-color: green; /* Highlight the selected image */
-    transform: scale(1.1); /* Slightly enlarge the selected image */
+    border-color: green;
+    transform: scale(1.1);
 }
 
-
-/* Media query for smaller screens */
 @media (max-width: 768px) {
     .position-container {
-        padding: 10px; /* Adjust padding for smaller screens */
+        padding: 10px;
     }
 }
 
-/* Media query for larger screens */
 @media (min-width: 768px) {
-    /* Apply flex-end alignment to candidate image */
     .candidate-list li {
         display: flex;
-        justify-content: space-between; /* Align items to the end of the container */
+        justify-content: space-between;
         align-items: center;
         border: 1px solid #ccc;
         border-radius: 5px;
@@ -1074,7 +1042,6 @@ input[type="checkbox"]:checked + .clist {
         background-color: #f9f9f9;
     }
 
-    /* Updated styles for candidate image */
     .clist {
         width: 100px;
         height: 100px;
@@ -1084,43 +1051,38 @@ input[type="checkbox"]:checked + .clist {
         grid-column: span 1;
     }
 
-    /* Media query for smaller screens */
     @media (max-width: 768px) {
         .candidate-list li {
             display: flex;
-            align-items: center; /* Center items vertically */
+            align-items: center;
             margin-bottom: 10px;
         }
 
         .clist {
-            width: 80px; /* Reduce image width on smaller screens */
-            height: 80px; /* Reduce image height on smaller screens */
-            margin-right: 10px; /* Adjust margin for smaller screens */
+            width: 80px;
+            height: 80px;
+            margin-right: 10px;
         }
     }
 }
 
-              /* Style for the primary button */
-              .btn-primary {
+.btn-primary {
     background-color: black;
     color: #fff;
     border-color: #007bff;
 }
 
-/* Style for the success button */
 .btn-success {
     background-color: #28a745;
     color: #fff;
     border-color: #28a745;
 }
 
-/* Style for the secondary button */
 .btn-secondary {
     color: #6c757d;
     border-color: #6c757d;
 }
 
-/* Style for the modal header */
 .modal-header {
     display: flex;
     justify-content: space-between;
@@ -1129,36 +1091,163 @@ input[type="checkbox"]:checked + .clist {
     color: #fff;
 }
 
-/* Style for the modal title */
 .modal-title {
-    margin-right: auto; /* Pushes the modal title to the left */
+    margin-right: auto;
     font-weight: bold;
 }
 
-/* Style for the close button in the modal header */
 .modal-header .close {
-    padding-left: 20px; /* Adds space to the left of the close button */
+    padding-left: 20px;
     color: #fff;
     opacity: 0.5;
 }
 
-/* Style for the modal body */
-.modal-body {
-    padding: 20px;
+/* Updated Platform Modal Styling */
+.modal.fade .modal-dialog {
+    transition: transform 0.3s ease-out;
+    transform: translate(0, -50px);
 }
 
-/* Style for the modal footer */
-.modal-footer {
+.modal.in .modal-dialog {
+    transform: translate(0, 0);
+}
+
+.modal-content {
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    background: #fff;
+}
+
+.modal-header {
+    background-color: darkgreen;
+    color: white;
+    padding: 20px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    display: flex;
+    align-items: center;
     justify-content: space-between;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.modal-header .close {
+    font-size: 1.5rem;
+    color: white;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+
+.modal-header .close:hover {
+    opacity: 1;
+}
+
+.modal-body {
+    padding: 30px;
+    background-color: #f8f9fa;
+}
+
+.platform-card {
+    background: white;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.platform-card h4 {
+    font-size: 1.4rem;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid darkgreen;
+    font-weight: 600;
+}
+
+.platform-content {
+    font-size: 1.1rem;
+    color: #34495e;
+    line-height: 1.8;
+    margin: 0;
+}
+
+.platform-content p {
+    margin-bottom: 15px;
+}
+
+.platform-content ul, .platform-content ol {
+    padding-left: 20px;
+    margin-bottom: 15px;
+}
+
+.platform-content li {
+    margin-bottom: 10px;
+}
+
+.modal-footer {
     padding: 20px;
+    border-top: none;
+    background-color: #f8f9fa;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    justify-content: flex-end;
 }
 
-/* Center the text in the text-center div */
-.text-center {
-    text-align: center;
+.modal-footer .btn-secondary {
+    background-color: #6c757d;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    transition: background-color 0.3s;
 }
 
+.modal-footer .btn-secondary:hover {
+    background-color: #5a6268;
+}
 
+@media (max-width: 768px) {
+    .modal-dialog {
+        margin: 10px;
+    }
+
+    .modal-content {
+        border-radius: 8px;
+    }
+
+    .modal-header {
+        padding: 15px;
+    }
+
+    .modal-title {
+        font-size: 1.3rem;
+    }
+
+    .modal-body {
+        padding: 20px;
+    }
+
+    .platform-card {
+        padding: 20px;
+    }
+
+    .platform-card h4 {
+        font-size: 1.2rem;
+    }
+
+    .platform-content {
+        font-size: 1rem;
+    }
+
+    .modal-footer {
+        padding: 15px;
+    }
+}
 
 .content {
     max-width: 1000px;
@@ -1170,68 +1259,66 @@ input[type="checkbox"]:checked + .clist {
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
 .page-header {
-    margin-top: 10px; /* Increase margin from the top */
-    padding: 80px 20px; /* Increase padding on top and bottom to expand the box */
-    background-image: url('images/bj.png'); /* Add background image */
-    background-size: cover; /* Cover the entire background */
-    background-repeat: no-repeat; /* Prevent background image from repeating */
-    background-position: center; /* Center the background image */
+    margin-top: 10px;
+    padding: 80px 20px;
+    background-image: url('images/bj.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     width: auto;
     height: auto;
-    color: #fff; /* Text color */
-    text-align: center; /* Center-align text */
-    border-bottom: 2px solid #0056b3; /* Add a solid border at the bottom */
-    border-radius: 10px; /* Add border radius for rounded corners */
-    position: relative; /* Position the content relative to the box */
+    color: #fff;
+    text-align: center;
+    border-bottom: 2px solid #0056b3;
+    border-radius: 10px;
+    position: relative;
 }
 
 .page-header img {
-    width: 100px; /* Adjust image width */
-    height: 70px; /* Adjust image height */
-    border-radius: 50%; /* Circular image */
-    margin-bottom: 10px; /* Add margin at the bottom */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow */
-    position: absolute; /* Position the image */
-    top: 50%; /* Position from the top */
-    left: 50%; /* Position from the left */
-    transform: translate(-50%, -50%); /* Center the image */
+    width: 100px;
+    height: 70px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-
 .title {
-    font-size: 40px; /* Decrease font size */
-    margin-bottom: 10px; /* Decrease margin bottom */
-    font-family: 'Arial', sans-serif; /* Change font family */
-    font-weight: bold; /* Bold font weight */
-    text-transform: uppercase; /* Uppercase text */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9); /* Add shadow effect */
+    font-size: 40px;
+    margin-bottom: 10px;
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
 }
 
 .subtitle {
-    font-size: 18px; /* Decrease font size */
-    font-weight: 300; /* Decrease font weight */
+    font-size: 18px;
+    font-weight: 300;
 }
 
-/* Responsive Styling */
 @media (max-width: 768px) {
     .page-header {
-        padding: 100px 20px; /* Adjust padding for smaller screens */
+        padding: 100px 20px;
     }
     
     .page-header img {
-        width: 100px; /* Adjust image width for smaller screens */
+        width: 100px;
     }
 
     .title {
-        font-size: 24px; /* Decrease font size for smaller screens */
+        font-size: 24px;
     }
 
     .subtitle {
-        font-size: 14px; /* Decrease font size for smaller screens */
+        font-size: 14px;
     }
 }
-
 
 .timer {
     position: fixed;
@@ -1270,7 +1357,6 @@ input[type="checkbox"]:checked + .clist {
     font-size: 15px;
 }
 
-/* Media query for larger screens */
 @media (min-width: 1024px) {
     .timer {
         position: fixed;
@@ -1282,11 +1368,10 @@ input[type="checkbox"]:checked + .clist {
         justify-content: center;
         margin-bottom: 30px;
         margin-right: 12px;
-        margin-top: 50px; /* Override margin-top */
+        margin-top: 50px;
     }
 }
 
-/* Media query for smaller screens */
 @media (max-width: 768px) {
     .timer {
         position: relative;
@@ -1310,7 +1395,6 @@ input[type="checkbox"]:checked + .clist {
     }
 }
 
-/* Styles for confetti effect */
 #confetti-canvas {
     position: fixed;
     top: 0;
