@@ -75,6 +75,68 @@
             }
         }
 
+        // Function to insert announcement
+        function insertElectionEndAnnouncement($conn) {
+            try {
+                // Hard-coded announcement message
+                $announcement = "Voting time has ended. Casting of votes is disabled. Thank you.";
+                $startdate = date('Y-m-d H:i:s'); // Current date and time
+                $addedby = "johnnel Villanueva"; // Hard-coded as "System" since this is an automated action
+
+                // Prepare the SQL query to insert data into the database using prepared statements
+                $sql = "INSERT INTO announcement (announcement, startdate, addedby) VALUES (?, ?, ?)";
+                $stmt = $conn->prepare($sql);
+                if (!$stmt) {
+                    throw new Exception("Prepare failed: " . $conn->error);
+                }
+                $stmt->bind_param("sss", $announcement, $startdate, $addedby);
+
+                // Execute the statement
+                if (!$stmt->execute()) {
+                    throw new Exception("Execute failed: " . $stmt->error);
+                }
+                $stmt->close();
+                return ['status' => 'success', 'message' => 'Announcement added successfully'];
+            } catch (Exception $e) {
+                error_log("Error inserting announcement: " . $e->getMessage());
+                return ['status' => 'error', 'message' => 'Failed to add announcement: ' . $e->getMessage()];
+            }
+        }
+
+        // Handle AJAX request to update status and insert announcement
+        if (isset($_POST['action']) && $_POST['action'] === 'update_status_and_announce') {
+            $id = $_POST['id'];
+            $response = ['status' => 'error', 'message' => 'Failed to deactivate election.'];
+
+            // Update election status to 0 (deactivate)
+            $sql = "UPDATE election SET status = 0, starttime = NULL, endtime = NULL WHERE id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $id);
+            if ($stmt->execute()) {
+                $stmt->close();
+
+                // Insert the announcement
+                $announceResult = insertElectionEndAnnouncement($conn);
+                if ($announceResult['status'] === 'success') {
+                    $response = [
+                        'status' => 'success',
+                        'message' => 'Election has ended and is now deactivated. Announcement added.'
+                    ];
+                } else {
+                    $response = [
+                        'status' => 'success_with_warning',
+                        'message' => 'Election deactivated, but failed to add announcement: ' . $announceResult['message']
+                    ];
+                }
+            } else {
+                $response['message'] = 'Failed to deactivate election: ' . $stmt->error;
+                $stmt->close();
+            }
+
+            echo json_encode($response);
+            exit();
+        }
+
         // Call the function to update statuses before displaying the table
         updateElectionStatusBasedOnTime($conn);
       ?>
@@ -339,15 +401,26 @@ $(function(){
                 const endTimeStr = $(this).data('endtime');
                 if (endTimeStr && new Date(endTimeStr) <= new Date()) {
                     const id = $(this).data('id');
-                    // Update the status in the database
+                    // Update the status and insert announcement
                     $.ajax({
                         type: 'POST',
-                        url: 'change_status.php',
-                        data: { id: id, status: 0, starttime: null, endtime: null },
+                        url: 'elections_csc.php', // Call the same file
+                        data: { action: 'update_status_and_announce', id: id },
                         dataType: 'json',
                         success: function(response) {
                             if (response && response.status === 'success') {
-                                toastr.success('Election has ended and is now deactivated.');
+                                toastr.success(response.message);
+                                // Update the button without reloading
+                                $(`a.election-status[data-id="${id}"]`)
+                                    .removeClass('btn-success')
+                                    .addClass('btn-secondary')
+                                    .text('Not Active')
+                                    .data('status', 1)
+                                    .attr('data-status', 1)
+                                    .removeAttr('data-endtime')
+                                    .removeAttr('data-starttime');
+                            } else if (response && response.status === 'success_with_warning') {
+                                toastr.warning(response.message);
                                 // Update the button without reloading
                                 $(`a.election-status[data-id="${id}"]`)
                                     .removeClass('btn-success')
