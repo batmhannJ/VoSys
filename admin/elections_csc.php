@@ -53,54 +53,30 @@
         // Function to update election status based on end time
         function updateElectionStatusBasedOnTime($conn) {
             try {
-                $currentTime = date('Y-m-d H:i:s');
-                error_log("Running updateElectionStatusBasedOnTime at $currentTime");
-
-                // Check active elections before updating
-                $checkSql = "SELECT id, endtime, status FROM election WHERE status = 1 AND endtime <= ? AND organization = 'CSC' AND archived = FALSE";
-                $checkStmt = $conn->prepare($checkSql);
-                if (!$checkStmt) {
-                    throw new Exception("Check prepare failed: " . $conn->error);
-                }
-                $checkStmt->bind_param('s', $currentTime);
-                $checkStmt->execute();
-                $result = $checkStmt->get_result();
-                $electionsToUpdate = [];
-                while ($row = $result->fetch_assoc()) {
-                    $electionsToUpdate[] = $row['id'] . ' (endtime: ' . $row['endtime'] . ', status: ' . $row['status'] . ')';
-                }
-                $electionsToUpdateCount = count($electionsToUpdate);
-                error_log("Found $electionsToUpdateCount elections to deactivate: " . implode(', ', $electionsToUpdate) . " at $currentTime");
-                $checkStmt->close();
-
+                // Log current server time and query for debugging
+                error_log("Running updateElectionStatusBasedOnTime at " . date('Y-m-d H:i:s'));
+                
                 // Deactivate expired elections
-                $sql = "UPDATE election SET status = 0 WHERE status = 1 AND endtime <= ? AND organization = 'CSC' AND archived = FALSE";
+                $sql = "UPDATE election SET status = 0 WHERE status = 1 AND endtime <= NOW() AND organization = 'CSC' AND archived = FALSE";
                 $stmt = $conn->prepare($sql);
                 if (!$stmt) {
                     throw new Exception("Prepare failed: " . $conn->error);
                 }
-                $stmt->bind_param('s', $currentTime);
                 if (!$stmt->execute()) {
                     throw new Exception("Execute failed: " . $stmt->error);
                 }
                 $affected_rows = $stmt->affected_rows;
                 $stmt->close();
-
-                error_log("Updated $affected_rows elections to Not Active at $currentTime");
-                return $affected_rows;
+                
+                // Log affected rows for debugging
+                error_log("Updated $affected_rows elections to Not Active");
             } catch (Exception $e) {
                 error_log("Error updating election status: " . $e->getMessage());
-                return false;
             }
         }
 
         // Call the function to update statuses before displaying the table
-        $result = updateElectionStatusBasedOnTime($conn);
-        if ($result === false) {
-            error_log("Failed to run updateElectionStatusBasedOnTime before rendering table on " . date('Y-m-d H:i:s'));
-        } else {
-            error_log("Successfully ran updateElectionStatusBasedOnTime, updated $result rows on " . date('Y-m-d H:i:s'));
-        }
+        updateElectionStatusBasedOnTime($conn);
       ?>
       <div class="row">
         <div class="col-xs-12">
@@ -337,56 +313,41 @@ $(function(){
     });
   });
 
+  // Auto-reload when an election's endtime is reached
   function checkElectionEndTimes() {
-      const activeElections = $('.election-status[data-status="0"]');
-      let earliestEndTime = null;
-      let earliestEndTimeStr = null;
+    const activeElections = $('.election-status[data-status="0"]');
+    let earliestEndTime = null;
+    let earliestEndTimeStr = null;
 
-      activeElections.each(function() {
-          const endTimeStr = $(this).data('endtime');
-          if (endTimeStr) {
-              const endTime = new Date(endTimeStr);
-              if (!isNaN(endTime.getTime()) && (earliestEndTime === null || endTime < earliestEndTime)) {
-                  earliestEndTime = endTime;
-                  earliestEndTimeStr = endTimeStr;
-              }
-          }
-      });
-
-      if (earliestEndTime && earliestEndTime > new Date()) {
-          const timeUntilEnd = earliestEndTime - new Date();
-          console.log(`Scheduling status update and reload for ${earliestEndTimeStr} in ${timeUntilEnd / 1000} seconds`);
-          
-          setTimeout(function() {
-              console.log('Election endtime reached, updating statuses...');
-              $.ajax({
-                  type: 'POST',
-                  url: 'update_expired_elections.php',
-                  dataType: 'json',
-                  success: function(response) {
-                      if (response && response.status === 'success') {
-                          console.log(response.message);
-                          toastr.info('An election has ended, reloading page...');
-                          setTimeout(function() {
-                              location.reload();
-                          }, 2000);
-                      } else {
-                          console.error('Failed to update election statuses:', response.message);
-                          toastr.error(response.message || 'Failed to update election statuses.');
-                      }
-                  },
-                  error: function(xhr, status, error) {
-                      console.error('AJAX Error (Status Update):', status, error, xhr.responseText);
-                      toastr.error('An error occurred while updating election statuses.');
-                  }
-              });
-          }, timeUntilEnd + 5000); // 5-second buffer
-      } else {
-          console.log('No valid future endtimes found or all endtimes passed');
+    activeElections.each(function() {
+      const endTimeStr = $(this).data('endtime');
+      if (endTimeStr) {
+        const endTime = new Date(endTimeStr);
+        if (!isNaN(endTime.getTime()) && (earliestEndTime === null || endTime < earliestEndTime)) {
+          earliestEndTime = endTime;
+          earliestEndTimeStr = endTimeStr;
+        }
       }
+    });
 
-      // Check again after 30 seconds
-      setTimeout(checkElectionEndTimes, 30000);
+    if (earliestEndTime && earliestEndTime > new Date()) {
+      const timeUntilEnd = earliestEndTime - new Date();
+      console.log(`Scheduling reload for ${earliestEndTimeStr} in ${timeUntilEnd / 1000} seconds`);
+      
+      // Add 5-second buffer to ensure server-side update occurs
+      setTimeout(function() {
+        console.log('Election endtime reached, reloading page...');
+        toastr.info('An election has ended, reloading page...');
+        setTimeout(function() {
+          location.reload();
+        }, 2000);
+      }, timeUntilEnd + 5000); // 5-second buffer
+    } else {
+      console.log('No valid future endtimes found or all endtimes passed');
+    }
+
+    // Check again after 30 seconds
+    setTimeout(checkElectionEndTimes, 30000);
   }
 
   // Start checking end times on page load
