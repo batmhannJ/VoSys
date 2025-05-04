@@ -312,7 +312,7 @@
     <li><a href="#organizations">Organizations</a></li>
     <li><a href="#location">Location</a></li>
     <li><a href="#discover">Countdown</a></li>
-    <!--<li><a href="#candidate">Candidates</a></li>-->
+    <li><a href="#candidate">Candidates</a></li>
     <li><a href="voters_login.php"><button class="btn">Login</button></a></li>
   </ul>
 </nav>
@@ -1861,17 +1861,44 @@ hr {
 }
 
 /* Base styles for .instagram__flex */
- .instagram__flex1 {
-  margin-top: 2rem;
+.instagram__flex1 {
+  margin: 2rem auto; /* Center the container horizontally with auto margins */
   width: max-content;
   display: flex;
   align-items: center;
+  justify-content: center; /* Center the flex items horizontally */
   gap: 1rem;
+  padding: 0 1rem; /* Add padding for better spacing on smaller screens */
 }
 
 .instagram__flex img, .instagram__flex1 img {
   width: 200px;
   height: 200px;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  .instagram__flex1 {
+    gap: 0.75rem; /* Slightly reduce gap for medium screens */
+  }
+
+  .instagram__flex img, .instagram__flex1 img {
+    width: 150px; /* Reduce image size for medium screens */
+    height: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .instagram__flex1 {
+    gap: 0.5rem; /* Further reduce gap for small screens */
+    flex-wrap: wrap; /* Allow wrapping for very small screens */
+    padding: 0 0.5rem; /* Adjust padding for small screens */
+  }
+
+  .instagram__flex img, .instagram__flex1 img {
+    width: 120px; /* Further reduce image size for small screens */
+    height: 120px;
+  }
 }
 
 /* Keyframes for larger screens */
