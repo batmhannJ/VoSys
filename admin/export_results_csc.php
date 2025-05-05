@@ -125,32 +125,36 @@ tr:nth-child(odd) {
 .signature-section h3 {
   text-align: center;
   margin-bottom: 25px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
 }
 .sig-grid {
   width: 100%;
-  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 .sig-item {
-  display: inline-block;
-  width: 32%;
-  margin-bottom: 25px;
-  vertical-align: top;
+  width: 30%;
+  margin-bottom: 35px;
+  text-align: center;
 }
 .sig-name {
   display: block;
   font-weight: bold;
   border-bottom: 1px solid black;
-  width: 80%;
-  margin: 0 auto 2px auto;
-  padding-bottom: 2px;
-  font-size: 12px;
+  padding-top: 30px;
+  width: 90%;
+  margin: 0 auto 5px auto;
+  font-size: 14px;
 }
 .sig-position {
   display: block;
-  font-size: 10px;
+  font-size: 12px;
   margin-top: 2px;
+}
+.sig-grid-two .sig-item {
+  width: 45%;
 }
 </style>
 <div class='header-container'>
@@ -212,7 +216,7 @@ $pdfContent .= "
 <p style='text-align: left;'><b>Voter Turnout:</b> {$voter_turnout}%</p>
 
 <div class='signature-section'>
-  <h3>ELECTION BOARD MEMBERS</h3>
+  <h3>ELECTION BOARD MEMBERS:</h3>
   <div class='sig-grid'>
     <div class='sig-item'>
       <span class='sig-name'>JOHN MICHAEL DANCEL</span>
@@ -257,18 +261,18 @@ $pdfContent .= "
       <span class='sig-position'>BSIT Tech Team</span>
     </div>
     <div class='sig-item'>
-      <span class='sig-name'>SANTY BALMORES</span>
+      <span class='sig-name'>MARIE LORAIN PERONA</span>
       <span class='sig-position'>BSIT Tech Team</span>
     </div>
     <div class='sig-item'>
-      <span class='sig-name'>MARIE LORAIN PERONA</span>
+      <span class='sig-name'>SANTY BALMORES</span>
       <span class='sig-position'>BSIT Tech Team</span>
     </div>
   </div>
 </div>
 
 <div class='signature-section'>
-  <div class='sig-grid'>
+  <div class='sig-grid sig-grid-two'>
     <div class='sig-item'>
       <span class='sig-name'>JOHNNEL VILLANUEVA</span>
       <span class='sig-position'>CSC ADVISER</span>
@@ -276,10 +280,6 @@ $pdfContent .= "
     <div class='sig-item'>
       <span class='sig-name'>REYNALDO MILLAN, MAEDA</span>
       <span class='sig-position'>Adviser</span>
-    </div>
-    <div class='sig-item'>
-      <span class='sig-name'>LUIS B. TADENA</span>
-      <span class='sig-position'>Head of COMELEC</span>
     </div>
   </div>
 </div>
