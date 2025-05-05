@@ -120,36 +120,37 @@ tr:nth-child(odd) {
   font-size: 20px;
 }
 .signature-section {
-  margin-top: 30px;
+  margin-top: 40px;
 }
 .signature-section h3 {
   text-align: center;
-  margin-bottom: 15px;
-  font-size: 16px;
+  margin-bottom: 25px;
+  font-size: 14px;
   font-weight: bold;
 }
-.signature-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-.signature-block {
-  width: 30%;
+.sig-grid {
+  width: 100%;
   text-align: center;
-  margin-bottom: 20px;
+}
+.sig-item {
   display: inline-block;
+  width: 32%;
+  margin-bottom: 25px;
   vertical-align: top;
 }
-.signature-block .name {
-  border-bottom: 1px solid #000;
-  display: inline-block;
-  margin-bottom: 5px;
-  font-weight: bold;
-  width: 80%;
-}
-.signature-block .role {
+.sig-name {
   display: block;
-  font-size: 11px;
+  font-weight: bold;
+  border-bottom: 1px solid black;
+  width: 80%;
+  margin: 0 auto 2px auto;
+  padding-bottom: 2px;
+  font-size: 12px;
+}
+.sig-position {
+  display: block;
+  font-size: 10px;
+  margin-top: 2px;
 }
 </style>
 <div class='header-container'>
@@ -209,74 +210,80 @@ $pdfContent .= "
 <p style='text-align: left;'><b>Voters Voted:</b> {$voted_voters}</p>
 <p style='text-align: left;'><b>Remaining Voters:</b> {$remaining_voters}</p>
 <p style='text-align: left;'><b>Voter Turnout:</b> {$voter_turnout}%</p>
-<br>
 
 <div class='signature-section'>
   <h3>ELECTION BOARD MEMBERS</h3>
-  <div class='signature-container'>
-    <div class='signature-block'>
-      <span class='name'>JOHN MICHAEL DANCEL</span>
-      <span class='role'>Chairman</span>
+  <div class='sig-grid'>
+    <div class='sig-item'>
+      <span class='sig-name'>JOHN MICHAEL DANCEL</span>
+      <span class='sig-position'>Chairman</span>
     </div>
-    <div class='signature-block'>
-      <span class='name'>EIDEL RAY REYES</span>
-      <span class='role'>Co-Chairman</span>
+    <div class='sig-item'>
+      <span class='sig-name'>EIDEL RAY REYES</span>
+      <span class='sig-position'>Co-Chairman</span>
     </div>
-    <div class='signature-block'>
-      <span class='name'>TUZSHA MAE BONDOC</span>
-      <span class='role'>PASOA Representative</span>
+    <div class='sig-item'>
+      <span class='sig-name'>TUZSHA MAE BONDOC</span>
+      <span class='sig-position'>PASOA Representative</span>
     </div>
-    <div class='signature-block'>
-      <span class='name'>JOVAN GRAGASIN LAZARO</span>
-      <span class='role'>CODE-TG Representative</span>
+    <div class='sig-item'>
+      <span class='sig-name'>JOVAN GRAGASIN LAZARO</span>
+      <span class='sig-position'>CODE-TG Representative</span>
     </div>
-    <div class='signature-block'>
-      <span class='name'>MARVIN ACE DE GUZMAN</span>
-      <span class='role'>HMSO Representative</span>
+    <div class='sig-item'>
+      <span class='sig-name'>MARVIN ACE DE GUZMAN</span>
+      <span class='sig-position'>HMSO Representative</span>
     </div>
-    <div class='signature-block'>
-      <span class='name'>EJAY DE VERA</span>
-      <span class='role'>YMF Representative</span>
+    <div class='sig-item'>
+      <span class='sig-name'>EJAY DE VERA</span>
+      <span class='sig-position'>YMF Representative</span>
     </div>
-    
+  </div>
+</div>
+
 <div class='signature-section'>
   <h3>BSIT/JPCS TECH TEAM (VOSYS)</h3>
-  <div class='signature-container'>
-    <div class='signature-block'>
-      <span class='name'>HANNAH JOY REYES</span>
-      <span class='role'>BSIT Tech Team</span>
+  <div class='sig-grid'>
+    <div class='sig-item'>
+      <span class='sig-name'>HANNAH JOY REYES</span>
+      <span class='sig-position'>BSIT Tech Team</span>
     </div>
-    <div class='signature-block'>
-      <span class='name'>CHARMAINE JOYCE COLOMA</span>
-      <span class='role'>BSIT Tech Team</span>
+    <div class='sig-item'>
+      <span class='sig-name'>CHARMAINE JOYCE COLOMA</span>
+      <span class='sig-position'>BSIT Tech Team</span>
     </div>
-    <div class='signature-block'>
-      <span class='name'>LYKA REFUGIA</span>
-      <span class='role'>BSIT Tech Team</span>
+    <div class='sig-item'>
+      <span class='sig-name'>LYKA REFUGIA</span>
+      <span class='sig-position'>BSIT Tech Team</span>
     </div>
-    <div class='signature-block'>
-      <span class='name'>SANTY BALMORES</span>
-      <span class='role'>BSIT Tech Team</span>
+    <div class='sig-item'>
+      <span class='sig-name'>SANTY BALMORES</span>
+      <span class='sig-position'>BSIT Tech Team</span>
     </div>
-    <div class='signature-block'>
-      <span class='name'>MARIE LORAIN PERONA</span>
-      <span class='role'>BSIT Tech Team</span>
-    </div>
-  </div>
-</div>
-    <div class='signature-block'>
-      <span class='name'>JOHNNEL VILLANUEVA</span>
-      <span class='role'>CSC ADVISER</span>
-    </div>
-    <div class='signature-block'>
-      <span class='name'>REYNALDO MILLAN, MAEDA</span>
-      <span class='role'>Adviser</span>
+    <div class='sig-item'>
+      <span class='sig-name'>MARIE LORAIN PERONA</span>
+      <span class='sig-position'>BSIT Tech Team</span>
     </div>
   </div>
 </div>
 
+<div class='signature-section'>
+  <div class='sig-grid'>
+    <div class='sig-item'>
+      <span class='sig-name'>JOHNNEL VILLANUEVA</span>
+      <span class='sig-position'>CSC ADVISER</span>
+    </div>
+    <div class='sig-item'>
+      <span class='sig-name'>REYNALDO MILLAN, MAEDA</span>
+      <span class='sig-position'>Adviser</span>
+    </div>
+    <div class='sig-item'>
+      <span class='sig-name'>LUIS B. TADENA</span>
+      <span class='sig-position'>Head of COMELEC</span>
+    </div>
+  </div>
+</div>
 ";
-
 
 // Create PDF using mPDF library
 $mpdf = new \Mpdf\Mpdf();
