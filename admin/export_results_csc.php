@@ -70,6 +70,7 @@ $remaining_voters = $total_voters - $voted_voters;
 // Calculate voter turnout percentage with two decimal places
 $voter_turnout = number_format(($total_voters > 0) ? (($voted_voters / $total_voters) * 100) : 0, 2);
 $currentDate = date('F j, Y'); 
+
 // Create PDF content
 $pdfContent = "
 <style>
@@ -87,7 +88,7 @@ th, td {
 
 th {
   color: #fff;
-  background-color: maroon; /* Light gray background for table headers */
+  background-color: maroon; /* Maroon background for table headers */
   font-weight: bold;
 }
 
@@ -102,68 +103,107 @@ tr:nth-child(odd) {
 .highlight {
   background-color: #ffe6e6; /* Light red background for highest count of votes */
 }
+
 .header-container {
   text-align: center;
   margin-bottom: 10px;
   margin: 0;
   padding: 0;
 }
+
 .header-container img {
   height: 100px;
   width: 100px;
 }
+
 .header-container .school-name {
   font-size: 22px;
   font-weight: bold;
 }
+
 .header-container .report-title {
   font-size: 20px;
 }
-.signature-section {
-  margin-top: 40px;
-}
-.signature-section h3 {
+
+.signature-block {
   text-align: center;
-  margin-bottom: 25px;
-  font-size: 16px;
+  margin-top: 30px;
+}
+
+.signature-block .name {
+  border-bottom: 1px solid #000;
+  display: inline-block;
+  margin-bottom: 5px;
   font-weight: bold;
 }
-.sig-grid {
-  width: 100%;
+
+.signature-block .role {
+  display: block;
+}
+
+.election-board {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.board-title {
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.board-members {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
 }
-.sig-item {
+
+.board-member {
   width: 30%;
-  margin-bottom: 35px;
+  margin: 10px;
   text-align: center;
 }
-.sig-name {
-  display: block;
+
+.board-member .name {
   font-weight: bold;
-  border-bottom: 1px solid black;
-  padding-top: 30px;
-  width: 90%;
-  margin: 0 auto 5px auto;
-  font-size: 14px;
 }
-.sig-position {
-  display: block;
+
+.board-member .role {
   font-size: 12px;
-  margin-top: 2px;
 }
-.sig-grid-two .sig-item {
-  width: 45%;
+
+.tech-team-title {
+  font-weight: bold;
+  font-size: 16px;
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.advisers {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.adviser {
+  width: 30%;
+  margin: 10px;
+  text-align: center;
 }
 </style>
+
 <div class='header-container'>
   <img src='images/logo.png' alt='Logo' style='height: 70px; width: 70px; float: left;'>
   <img src='images/j.png' alt='Logo' style='height: 70px; width: 70px; float: right;'>
   <p class='school-name' style='font-size: 16px; font-weight: bold; margin-top: -10px; margin-left: 10px; margin-right: 10px;'>Our Lady of the Sacred Heart College of Guimba, Inc.<br>Guimba, Nueva Ecija</p>
   <p class='report-title' style='font-size: 16px; margin-top: 50px; margin-bottom: 10px;'>2025 Election Results</p>
 </div>
+
 <p style='text-align: right; padding-top: 0;'>As of {$currentDate}</p>
+
 <table>
     <thead>
     <tr>
@@ -215,73 +255,112 @@ $pdfContent .= "
 <p style='text-align: left;'><b>Remaining Voters:</b> {$remaining_voters}</p>
 <p style='text-align: left;'><b>Voter Turnout:</b> {$voter_turnout}%</p>
 
-<div class='signature-section'>
-  <h3>ELECTION BOARD MEMBERS:</h3>
-  <div class='sig-grid'>
-    <div class='sig-item'>
-      <span class='sig-name'>JOHN MICHAEL DANCEL</span>
-      <span class='sig-position'>Chairman</span>
+<div class='election-board'>
+  <div class='board-title'>ELECTION BOARD MEMBERS:</div>
+  
+  <div class='board-members'>
+    <div class='board-member'>
+      <div class='name'>JOHN MICHAEL DANCEL</div>
+      <div class='role'>Chairman</div>
     </div>
-    <div class='sig-item'>
-      <span class='sig-name'>EIDEL RAY REYES</span>
-      <span class='sig-position'>Co-Chairman</span>
+    
+    <div class='board-member'>
+      <div class='name'>EIDEL RAY REYES</div>
+      <div class='role'>Co-Chairman</div>
     </div>
-    <div class='sig-item'>
-      <span class='sig-name'>TUZSHA MAE BONDOC</span>
-      <span class='sig-position'>PASOA Representative</span>
+    
+    <div class='board-member'>
+      <div class='name'>TUZSHA MAE BONDOC</div>
+      <div class='role'>PASOA Representative</div>
     </div>
-    <div class='sig-item'>
-      <span class='sig-name'>JOVAN GRAGASIN LAZARO</span>
-      <span class='sig-position'>CODE-TG Representative</span>
+    
+    <div class='board-member'>
+      <div class='name'>JOVAN GRAGASIN LAZARO</div>
+      <div class='role'>CODE-TG Representative</div>
     </div>
-    <div class='sig-item'>
-      <span class='sig-name'>MARVIN ACE DE GUZMAN</span>
-      <span class='sig-position'>HMSO Representative</span>
+    
+    <div class='board-member'>
+      <div class='name'>MARVIN ACE DE GUZMAN</div>
+      <div class='role'>CODE-TG Representative</div>
     </div>
-    <div class='sig-item'>
-      <span class='sig-name'>EJAY DE VERA</span>
-      <span class='sig-position'>YMF Representative</span>
+    
+    <div class='board-member'>
+      <div class='name'>EJAY DE VERA</div>
+      <div class='role'>YMF Representative</div>
+    </div>
+  </div>
+  
+  <div class='tech-team-title'>BSIT/JPCS TECH TEAM (VOSYS)</div>
+  
+  <div class='board-members'>
+    <div class='board-member'>
+      <div class='name'>HANNAH JOY REYES</div>
+      <div class='role'>BSIT Tech Team</div>
+    </div>
+    
+    <div class='board-member'>
+      <div class='name'>CHARMAINE JOYCE COLOMA</div>
+      <div class='role'>BSIT Tech Team</div>
+    </div>
+    
+    <div class='board-member'>
+      <div class='name'>LYKA REFUGIA</div>
+      <div class='role'>BSIT Tech Team</div>
+    </div>
+    
+    <div class='board-member'>
+      <div class='name'>MARIE LORAIN PERONA</div>
+      <div class='role'>BSIT Tech Team</div>
+    </div>
+    
+    <div class='board-member'>
+      <div class='name'>SANTY BALMORES</div>
+      <div class='role'>BSIT Tech Team</div>
+    </div>
+  </div>
+  
+  <div class='advisers'>
+    <div class='adviser'>
+      <div class='name'>JOHNNEL VILLANUEVA</div>
+      <div class='role'>CSC ADVISER</div>
+    </div>
+    
+    <div class='adviser'>
+      <div class='name'>REYNALDO MILLAN, MAEDA</div>
+      <div class='role'>Adviser</div>
     </div>
   </div>
 </div>
 
-<div class='signature-section'>
-  <h3>BSIT/JPCS TECH TEAM (VOSYS)</h3>
-  <div class='sig-grid'>
-    <div class='sig-item'>
-      <span class='sig-name'>HANNAH JOY REYES</span>
-      <span class='sig-position'>BSIT Tech Team</span>
-    </div>
-    <div class='sig-item'>
-      <span class='sig-name'>CHARMAINE JOYCE COLOMA</span>
-      <span class='sig-position'>BSIT Tech Team</span>
-    </div>
-    <div class='sig-item'>
-      <span class='sig-name'>LYKA REFUGIA</span>
-      <span class='sig-position'>BSIT Tech Team</span>
-    </div>
-    <div class='sig-item'>
-      <span class='sig-name'>MARIE LORAIN PERONA</span>
-      <span class='sig-position'>BSIT Tech Team</span>
-    </div>
-    <div class='sig-item'>
-      <span class='sig-name'>SANTY BALMORES</span>
-      <span class='sig-position'>BSIT Tech Team</span>
-    </div>
-  </div>
+<br>
+<p><b>Signatures:</b></p>
+<div class='signature-block'>
+  <span class='name'>HANNAH JOY REYES</span><br>
+  <span class='role'>Tabulator</span>
 </div>
-
-<div class='signature-section'>
-  <div class='sig-grid sig-grid-two'>
-    <div class='sig-item'>
-      <span class='sig-name'>JOHNNEL VILLANUEVA</span>
-      <span class='sig-position'>CSC ADVISER</span>
-    </div>
-    <div class='sig-item'>
-      <span class='sig-name'>REYNALDO MILLAN, MAEDA</span>
-      <span class='sig-position'>Adviser</span>
-    </div>
-  </div>
+<div class='signature-block'>
+  <span class='name'>CHARMAINE JOYCE COLOMA</span><br>
+  <span class='role'>Tabulator</span>
+</div>
+<div class='signature-block'>
+  <span class='name'>LYKA REFUGIA</span><br>
+  <span class='role'>Tabulator</span>
+</div>
+<div class='signature-block'>
+  <span class='name'>MARIE LORAIN PERONA</span> <br>
+  <span class='role'>Tabulator</span>
+</div>
+<div class='signature-block'>
+  <span class='name'>SANTY P. BALMORES</span> <br>
+  <span class='role'>Tabulator</span>
+</div>
+<div class='signature-block'>
+  <span class='name'>LUIS B. TADENA</span> <br>
+  <span class='role'>Head of COMELEC</span>
+</div>
+<div class='signature-block'>
+  <span class='name'>JESSICA MAE C. SALAZAR</span> <br>
+  <span class='role'>Student Affair Officer</span>
 </div>
 ";
 
