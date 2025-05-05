@@ -290,7 +290,7 @@ if (isset($voter['id'])) {
                                                 <button type="button" class="btn btn-success btn-sm btn-flat reset" data-desc="'.slugify($row['name']).'"><i class="fa fa-refresh"></i> Reset</button>
                                             </div>
                                             <div class="box-body">
-                                                <p class="instruction">You may select up to '.$row['max_vote'].' candidates</p>
+                                                <p class="instruction">You may select up to '.$row['max_vote'].' candidate</p>
                                                 <div class="candidate-list">
                                                     <ul>';
                                                     $sql = "SELECT * FROM candidates WHERE category_id='" . $row['id'] . "'";
