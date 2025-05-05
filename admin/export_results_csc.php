@@ -154,18 +154,16 @@ tr:nth-child(odd) {
   margin-bottom: 20px;
 }
 
-/* New styles for two-column layout */
-.board-row {
+.board-members {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  margin-bottom: 20px;
-  width: 100%;
 }
 
 .board-member {
-  width: 40%;
+  width: 30%;
+  margin: 10px;
   text-align: center;
-  margin: 0 5%;
 }
 
 .board-member .name {
@@ -194,36 +192,6 @@ tr:nth-child(odd) {
   width: 30%;
   margin: 10px;
   text-align: center;
-}
-
-/* Final signatories section with different styling */
-.final-signatories {
-  margin-top: 30px;
-  text-align: center;
-}
-
-.final-signatories .signature-row {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.final-signatories .signature-block {
-  width: 40%;
-  margin: 0 5%;
-  text-align: center;
-}
-
-.final-signatories .name {
-  border-bottom: 1px solid #000;
-  display: inline-block;
-  margin-bottom: 5px;
-  font-weight: bold;
-  min-width: 200px;
-}
-
-.final-signatories .role {
-  display: block;
 }
 </style>
 
@@ -290,8 +258,7 @@ $pdfContent .= "
 <div class='election-board'>
   <div class='board-title'>ELECTION BOARD MEMBERS:</div>
   
-  <!-- First row with 2 members -->
-  <div class='board-row'>
+  <div class='board-members'>
     <div class='board-member'>
       <div class='name'>JOHN MICHAEL DANCEL</div>
       <div class='role'>Chairman</div>
@@ -301,10 +268,7 @@ $pdfContent .= "
       <div class='name'>EIDEL RAY REYES</div>
       <div class='role'>Co-Chairman</div>
     </div>
-  </div>
-  
-  <!-- Second row with 2 members -->
-  <div class='board-row'>
+    
     <div class='board-member'>
       <div class='name'>TUZSHA MAE BONDOC</div>
       <div class='role'>PASOA Representative</div>
@@ -314,10 +278,7 @@ $pdfContent .= "
       <div class='name'>JOVAN GRAGASIN LAZARO</div>
       <div class='role'>CODE-TG Representative</div>
     </div>
-  </div>
-  
-  <!-- Third row with 2 members -->
-  <div class='board-row'>
+    
     <div class='board-member'>
       <div class='name'>MARVIN ACE DE GUZMAN</div>
       <div class='role'>CODE-TG Representative</div>
@@ -331,8 +292,7 @@ $pdfContent .= "
   
   <div class='tech-team-title'>BSIT/JPCS TECH TEAM (VOSYS)</div>
   
-  <!-- First row of tech team -->
-  <div class='board-row'>
+  <div class='board-members'>
     <div class='board-member'>
       <div class='name'>HANNAH JOY REYES</div>
       <div class='role'>BSIT Tech Team</div>
@@ -342,10 +302,7 @@ $pdfContent .= "
       <div class='name'>CHARMAINE JOYCE COLOMA</div>
       <div class='role'>BSIT Tech Team</div>
     </div>
-  </div>
-  
-  <!-- Second row of tech team -->
-  <div class='board-row'>
+    
     <div class='board-member'>
       <div class='name'>LYKA REFUGIA</div>
       <div class='role'>BSIT Tech Team</div>
@@ -355,79 +312,22 @@ $pdfContent .= "
       <div class='name'>MARIE LORAIN PERONA</div>
       <div class='role'>BSIT Tech Team</div>
     </div>
-  </div>
-  
-  <!-- Third row of tech team (only one member) -->
-  <div class='board-row'>
+    
     <div class='board-member'>
       <div class='name'>SANTY BALMORES</div>
       <div class='role'>BSIT Tech Team</div>
     </div>
   </div>
   
-  <!-- Advisers row -->
-  <div class='board-row'>
-    <div class='board-member'>
+  <div class='advisers' style='display: flex; '>
+    <div class='adviser'>
       <div class='name'>JOHNNEL VILLANUEVA</div>
       <div class='role'>CSC ADVISER</div>
     </div>
     
-    <div class='board-member'>
+    <div class='adviser'>
       <div class='name'>REYNALDO MILLAN, MAEDA</div>
       <div class='role'>Adviser</div>
-    </div>
-  </div>
-</div>
-
-<br>
-<p><b>Signatures:</b></p>
-
-<!-- Tabulator signatures with special styling -->
-<div class='final-signatories'>
-  <!-- First row of signatories -->
-  <div class='signature-row'>
-    <div class='signature-block'>
-      <span class='name'>HANNAH JOY REYES</span><br>
-      <span class='role'>Tabulator</span>
-    </div>
-    
-    <div class='signature-block'>
-      <span class='name'>CHARMAINE JOYCE COLOMA</span><br>
-      <span class='role'>Tabulator</span>
-    </div>
-  </div>
-  
-  <!-- Second row of signatories -->
-  <div class='signature-row'>
-    <div class='signature-block'>
-      <span class='name'>LYKA REFUGIA</span><br>
-      <span class='role'>Tabulator</span>
-    </div>
-    
-    <div class='signature-block'>
-      <span class='name'>MARIE LORAIN PERONA</span><br>
-      <span class='role'>Tabulator</span>
-    </div>
-  </div>
-  
-  <!-- Third row of signatories -->
-  <div class='signature-row'>
-    <div class='signature-block'>
-      <span class='name'>SANTY P. BALMORES</span><br>
-      <span class='role'>Tabulator</span>
-    </div>
-  </div>
-  
-  <!-- Fourth row of signatories -->
-  <div class='signature-row'>
-    <div class='signature-block'>
-      <span class='name'>LUIS B. TADENA</span><br>
-      <span class='role'>Head of COMELEC</span>
-    </div>
-    
-    <div class='signature-block'>
-      <span class='name'>JESSICA MAE C. SALAZAR</span><br>
-      <span class='role'>Student Affair Officer</span>
     </div>
   </div>
 </div>
