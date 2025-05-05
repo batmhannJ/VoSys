@@ -319,7 +319,7 @@ $pdfContent .= "
     </div>
   </div>
   
-  <div class='advisers'>
+  <div class='advisers' style='display: flex; '>
     <div class='adviser'>
       <div class='name'>JOHNNEL VILLANUEVA</div>
       <div class='role'>CSC ADVISER</div>
@@ -330,37 +330,6 @@ $pdfContent .= "
       <div class='role'>Adviser</div>
     </div>
   </div>
-</div>
-
-<br>
-<p><b>Signatures:</b></p>
-<div class='signature-block'>
-  <span class='name'>HANNAH JOY REYES</span><br>
-  <span class='role'>Tabulator</span>
-</div>
-<div class='signature-block'>
-  <span class='name'>CHARMAINE JOYCE COLOMA</span><br>
-  <span class='role'>Tabulator</span>
-</div>
-<div class='signature-block'>
-  <span class='name'>LYKA REFUGIA</span><br>
-  <span class='role'>Tabulator</span>
-</div>
-<div class='signature-block'>
-  <span class='name'>MARIE LORAIN PERONA</span> <br>
-  <span class='role'>Tabulator</span>
-</div>
-<div class='signature-block'>
-  <span class='name'>SANTY P. BALMORES</span> <br>
-  <span class='role'>Tabulator</span>
-</div>
-<div class='signature-block'>
-  <span class='name'>LUIS B. TADENA</span> <br>
-  <span class='role'>Head of COMELEC</span>
-</div>
-<div class='signature-block'>
-  <span class='name'>JESSICA MAE C. SALAZAR</span> <br>
-  <span class='role'>Student Affair Officer</span>
 </div>
 ";
 
