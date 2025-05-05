@@ -119,25 +119,44 @@ tr:nth-child(odd) {
 .header-container .report-title {
   font-size: 20px;
 }
-.signature-block {
-  text-align: center;
+.signature-section {
   margin-top: 30px;
+}
+.signature-section h3 {
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 16px;
+  font-weight: bold;
+}
+.signature-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.signature-block {
+  width: 30%;
+  text-align: center;
+  margin-bottom: 20px;
+  display: inline-block;
+  vertical-align: top;
 }
 .signature-block .name {
   border-bottom: 1px solid #000;
   display: inline-block;
   margin-bottom: 5px;
   font-weight: bold;
+  width: 80%;
 }
 .signature-block .role {
   display: block;
+  font-size: 11px;
 }
 </style>
 <div class='header-container'>
   <img src='images/logo.png' alt='Logo' style='height: 70px; width: 70px; float: left;'>
   <img src='images/j.png' alt='Logo' style='height: 70px; width: 70px; float: right;'>
   <p class='school-name' style='font-size: 16px; font-weight: bold; margin-top: -10px; margin-left: 10px; margin-right: 10px;'>Our Lady of the Sacred Heart College of Guimba, Inc.<br>Guimba, Nueva Ecija</p>
-  <p class='report-title' style='font-size: 16px; margin-top: 50px; margin-bottom: 10px;'>2024 Election Results</p>
+  <p class='report-title' style='font-size: 16px; margin-top: 50px; margin-bottom: 10px;'>2025 Election Results</p>
 </div>
 <p style='text-align: right; padding-top: 0;'>As of {$currentDate}</p>
 <table>
@@ -185,41 +204,77 @@ while ($row = $result->fetch_assoc()) {
 $pdfContent .= "
   </tbody>
 </table>
-<br><br>
+<br>
 <p style='text-align: left;'><b>Total Voters:</b> {$total_voters}</p>
 <p style='text-align: left;'><b>Voters Voted:</b> {$voted_voters}</p>
 <p style='text-align: left;'><b>Remaining Voters:</b> {$remaining_voters}</p>
 <p style='text-align: left;'><b>Voter Turnout:</b> {$voter_turnout}%</p>
-<br><br>
-<p><b>Signatures:</b></p>
-<div class='signature-block'>
-  <span class='name'>HANNAH JOY REYES</span><br>
-  <span class='role'>Tabulator</span>
+<br>
+
+<div class='signature-section'>
+  <h3>ELECTION BOARD MEMBERS</h3>
+  <div class='signature-container'>
+    <div class='signature-block'>
+      <span class='name'>JOHN MICHAEL DANCEL</span>
+      <span class='role'>Chairman</span>
+    </div>
+    <div class='signature-block'>
+      <span class='name'>EIDEL RAY REYES</span>
+      <span class='role'>Co-Chairman</span>
+    </div>
+    <div class='signature-block'>
+      <span class='name'>TUZSHA MAE BONDOC</span>
+      <span class='role'>PASOA Representative</span>
+    </div>
+    <div class='signature-block'>
+      <span class='name'>JOVAN GRAGASIN LAZARO</span>
+      <span class='role'>CODE-TG Representative</span>
+    </div>
+    <div class='signature-block'>
+      <span class='name'>MARVIN ACE DE GUZMAN</span>
+      <span class='role'>HMSO Representative</span>
+    </div>
+    <div class='signature-block'>
+      <span class='name'>EJAY DE VERA</span>
+      <span class='role'>YMF Representative</span>
+    </div>
+    
+<div class='signature-section'>
+  <h3>BSIT/JPCS TECH TEAM (VOSYS)</h3>
+  <div class='signature-container'>
+    <div class='signature-block'>
+      <span class='name'>HANNAH JOY REYES</span>
+      <span class='role'>BSIT Tech Team</span>
+    </div>
+    <div class='signature-block'>
+      <span class='name'>CHARMAINE JOYCE COLOMA</span>
+      <span class='role'>BSIT Tech Team</span>
+    </div>
+    <div class='signature-block'>
+      <span class='name'>LYKA REFUGIA</span>
+      <span class='role'>BSIT Tech Team</span>
+    </div>
+    <div class='signature-block'>
+      <span class='name'>SANTY BALMORES</span>
+      <span class='role'>BSIT Tech Team</span>
+    </div>
+    <div class='signature-block'>
+      <span class='name'>MARIE LORAIN PERONA</span>
+      <span class='role'>BSIT Tech Team</span>
+    </div>
+  </div>
 </div>
-<div class='signature-block'>
-  <span class='name'>CHARMAINE JOYCE COLOMA</span><br>
-  <span class='role'>Tabulator</span>
+    <div class='signature-block'>
+      <span class='name'>JOHNNEL VILLANUEVA</span>
+      <span class='role'>CSC ADVISER</span>
+    </div>
+    <div class='signature-block'>
+      <span class='name'>REYNALDO MILLAN, MAEDA</span>
+      <span class='role'>Adviser</span>
+    </div>
+  </div>
 </div>
-<div class='signature-block'>
-  <span class='name'>LYKA REFUGIA</span><br>
-  <span class='role'>Tabulator</span>
-</div>
-<div class='signature-block'>
-  <span class='name'>MARIE LORAIN PERONA</span> <br>
-  <span class='role'>Tabulator</span>
-</div>
-<div class='signature-block'>
-  <span class='name'>SANTY P. BALMORES</span> <br>
-  <span class='role'>Tabulator</span>
-</div>
-<div class='signature-block'>
-  <span class='name'>LUIS B. TADENA</span> <br>
-  <span class='role'>Head of COMELEC</span>
-</div>
-<div class='signature-block'>
-  <span class='name'>JESSICA MAE C. SALAZAR</span> <br>
-  <span class='role'>Student Affair Officer</span>
-</div>
+
 ";
 
 
