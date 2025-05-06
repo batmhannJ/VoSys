@@ -260,32 +260,32 @@ $pdfContent .= "
   
   <div class='board-members'>
     <div class='board-member'>
-      <div class='name'>JOHN MICHAEL DANCEL</div>
+      <div class='name'><u>JOHN MICHAEL DANCEL</u></div>
       <div class='role'>Chairman</div>
     </div>
     
     <div class='board-member'>
-      <div class='name'>EIDEL RAY REYES</div>
+      <div class='name'><u>EIDEL RAY REYES</u></div>
       <div class='role'>Co-Chairman</div>
     </div>
     
     <div class='board-member'>
-      <div class='name'>TUZSHA MAE BONDOC</div>
+      <div class='name'><u>TUZSHA MAE BONDOC</u></div>
       <div class='role'>PASOA Representative</div>
     </div>
     
     <div class='board-member'>
-      <div class='name'>JOVAN GRAGASIN LAZARO</div>
+      <div class='name'><u>JOVAN GRAGASIN LAZARO</u></div>
       <div class='role'>CODE-TG Representative</div>
     </div>
     
     <div class='board-member'>
-      <div class='name'>MARVIN ACE DE GUZMAN</div>
+      <div class='name'><u>MARVIN ACE DE GUZMAN</u></div>
       <div class='role'>CODE-TG Representative</div>
     </div>
     
     <div class='board-member'>
-      <div class='name'>EJAY DE VERA</div>
+      <div class='name'><u>EJAY DE VERA</u></div>
       <div class='role'>YMF Representative</div>
     </div>
   </div>
@@ -294,39 +294,39 @@ $pdfContent .= "
   
   <div class='board-members'>
     <div class='board-member'>
-      <div class='name'>HANNAH JOY REYES</div>
+      <div class='name'><u>HANNAH JOY REYES</u></div>
       <div class='role'>BSIT Tech Team</div>
     </div>
     
     <div class='board-member'>
-      <div class='name'>CHARMAINE JOYCE COLOMA</div>
+      <div class='name'><u>CHARMAINE JOYCE COLOMA</u></div>
       <div class='role'>BSIT Tech Team</div>
     </div>
     
     <div class='board-member'>
-      <div class='name'>LYKA REFUGIA</div>
+      <div class='name'><u>LYKA REFUGIA</u></div>
       <div class='role'>BSIT Tech Team</div>
     </div>
     
     <div class='board-member'>
-      <div class='name'>MARIE LORAIN PERONA</div>
+      <div class='name'><u>MARIE LORAIN PERONA</u></div>
       <div class='role'>BSIT Tech Team</div>
     </div>
     
     <div class='board-member'>
-      <div class='name'>SANTY BALMORES</div>
+      <div class='name'><u>SANTY BALMORES</u></div>
       <div class='role'>BSIT Tech Team</div>
     </div>
   </div>
   
   <div class='advisers' style='display: flex; '>
     <div class='adviser'>
-      <div class='name'>JOHNNEL VILLANUEVA</div>
+      <div class='name'><u>JOHNNEL VILLANUEVA</u>/div>
       <div class='role'>CSC Adviser</div>
     </div>
     
     <div class='adviser'>
-      <div class='name'>REYNALDO MILLAN, MAEDA</div>
+      <div class='name'><u>REYNALDO MILLAN, MAEDA</u></div>
       <div class='role'>CSC Comelec Head</div>
     </div>
   </div>
