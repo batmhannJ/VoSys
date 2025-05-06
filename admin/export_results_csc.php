@@ -321,7 +321,7 @@ $pdfContent .= "
   
   <div class='advisers' style='display: flex; '>
     <div class='adviser'>
-      <div class='name'><u>JOHNNEL VILLANUEVA</u>/div>
+      <div class='name'><u>JOHNNEL VILLANUEVA</u></div>
       <div class='role'>CSC Adviser</div>
     </div>
     
