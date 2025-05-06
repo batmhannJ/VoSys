@@ -322,12 +322,12 @@ $pdfContent .= "
   <div class='advisers' style='display: flex; '>
     <div class='adviser'>
       <div class='name'>JOHNNEL VILLANUEVA</div>
-      <div class='role'>CSC ADVISER</div>
+      <div class='role'>CSC Adviser</div>
     </div>
     
     <div class='adviser'>
       <div class='name'>REYNALDO MILLAN, MAEDA</div>
-      <div class='role'>Adviser</div>
+      <div class='role'>CSC Comelec Head</div>
     </div>
   </div>
 </div>
